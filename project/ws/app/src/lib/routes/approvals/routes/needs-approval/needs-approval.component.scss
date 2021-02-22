@@ -4,6 +4,7 @@
   border-radius: 4px;
   padding: 9px;
   font: 400 14px Lato;
+  vertical-align: middle;
 }
 
 .appr-text-label{
@@ -12,17 +13,44 @@
 }
 
 .accept {
-  color: green;
-  font-size: 49px;
+  // color: green;
+  // font-size: 49px;
 }
 /* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
 .accept svg {
-    fill: green;
+    // fill: green;
+}
+#accept {
+  background: #1D8923;
+    border-radius: 4px;
+    width: auto;
+    height: auto;
+    line-height: 1.2;
+    padding: 0.35em 0.5em;
+    margin: 0 0px 0 14px;
+
+    .accept {
+      color: #ffffff;
+    }
+}
+
+#reject { 
+  background: #D13924;
+    border-radius: 4px;
+    width: auto;
+    height: auto;
+    line-height: 1.2;
+    padding: 0.35em 0.5em;
+    margin: 0 0px 0 14px;
+
+    .reject {
+      color: #ffffff;
+    }
 }
 
 .reject {
-  color: red;
-  font-size: 49px;
+  // color: red;
+  // font-size: 49px;
 }
 /* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
 .reject svg {
@@ -79,7 +107,7 @@
   font-size: 14px;
   font-weight: 400;
   margin-left: 15px;
-  background-color:  red !important;
+  background-color:  #D13924 !important;
 }
 
 .goback-dialog-btn{
