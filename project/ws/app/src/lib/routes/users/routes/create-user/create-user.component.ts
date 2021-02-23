@@ -104,7 +104,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     this.usersSvc.createUser(newobj).subscribe(res => {
       // let user
       // const deptRole = this.department.rolesInfo.filter((role: { roleName: string }) => role.roleName === 'MEMBER')[0]
-      this.openSnackbar(res.data)
+      // this.openSnackbar(res.data)
       if (res) {
         const req = {
           departments: [
@@ -132,6 +132,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
           if (dres) {
             this.createUserForm.reset({ fname: '', lname: '', email: '', department: this.departmentName, roles: '' })
+            this.openSnackbar('User Created Successfully')
             this.router.navigate(['/app/home/users'])
           }
         })

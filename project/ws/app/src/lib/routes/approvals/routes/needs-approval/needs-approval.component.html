@@ -19,12 +19,12 @@
               </div>
               <div>
                 <input type="text" class="appr-text-field" [value]="field.value">
-                <button mat-icon-button aria-label="Reject" (click)="onClickHandleWorkflow(field,'REJECT')">
-                  <mat-icon class="reject">cancel_presentation</mat-icon>
+                <button mat-icon-button aria-label="Reject" id="reject" (click)="onClickHandleWorkflow(field,'REJECT')">
+                  <mat-icon class="reject">close</mat-icon>
                 </button>
-                <button mat-icon-button aria-label="Accept" class="accept-btn"
+                <button mat-icon-button aria-label="Accept" id="accept" class="accept-btn"
                   (click)="onClickHandleWorkflow(field,'APPROVE')">
-                  <mat-icon class="accept">check_box</mat-icon>
+                  <mat-icon class="accept">check</mat-icon>
                 </button>
               </div>
             </ng-container>
