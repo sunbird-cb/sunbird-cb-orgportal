@@ -218,7 +218,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         // })
       }
     },                                         (err: { error: string }) => {
-      this.openSnackbar(err.error.split(':')[1])
+      this.openSnackbar(err.error)
     })
   }
 
