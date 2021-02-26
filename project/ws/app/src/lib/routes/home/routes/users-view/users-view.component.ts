@@ -206,7 +206,13 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         })
         break
       case 'active':
-        _.set(user, 'isActive', true)
+      const state = _.get(user, 'isBlocked')
+        if (state === true) {
+          _.set(user, 'isActive', true)
+          _.set(user, 'isBlocked', false)
+        } else {
+          _.set(user, 'isActive', true)
+        }
         _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i.roleName))
         this.usersService.deActiveUser(user).subscribe(response => {
           if (response) {
