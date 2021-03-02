@@ -3,9 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import { UsersService } from '../../services/users.service'
 import { MatSnackBar } from '@angular/material'
-import { ILeftMenu } from '@ws-widget/collection'
-import { NsWidgetResolver } from 'library/ws-widget/resolver/src/public-api'
-import { ConfigurationsService, ValueService } from '@ws-widget/utils/src/public-api'
+import { ILeftMenu } from '@sunbird-cb/collection'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */
@@ -72,7 +72,9 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         this.department = this.activeRoute.snapshot.data.department.data
         this.departmentName = this.department ? this.department.deptName : ''
         this.rolesList = this.department.rolesInfo
-        this.configService.departName = this.departmentName
+        if (this.configService.userProfile && this.configService.userProfile.departmentName) {
+          this.configService.userProfile.departmentName = this.departmentName
+        }
       }
     })
     this.createUserForm = new FormGroup({

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import moment from 'moment'
-import { ConfigurationsService } from '../../../../../../../../../library/ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { NeedApprovalsService } from '../../services/need-approvals.service'
 
 @Component({
@@ -90,7 +90,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   getDepartment() {
     this.needApprService.getMyDepartment().subscribe(res => {
       if (res && res.deptName) {
-        this.configSvc.departName = res.deptName
+        if (this.configSvc.userProfile && this.configSvc.userProfile.departmentName) {
+          this.configSvc.userProfile.departmentName = res.deptName
+        }
+
       }
     })
   }

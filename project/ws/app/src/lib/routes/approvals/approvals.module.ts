@@ -4,7 +4,7 @@ import { HomeComponent } from './routes/home/home.component'
 
 import { RouterModule } from '@angular/router'
 import { ApprovalsRoutingModule } from './approvals.routing.module'
-import { BtnPageBackModule, ScrollspyLeftMenuModule } from '@ws-widget/collection'
+import { BtnPageBackModule, ScrollspyLeftMenuModule } from '@sunbird-cb/collection'
 import {
   MatSidenavModule, MatGridListModule, MatListModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatIconModule, MatButtonModule, MatRadioModule, MatDialogModule,

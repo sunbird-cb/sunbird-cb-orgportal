@@ -33,12 +33,12 @@ import {
   PipeContentRouteModule,
   BtnKbAnalyticsModule,
   UserAutocompleteModule,
-} from '@ws-widget/collection'
-import { WidgetResolverModule } from '@ws-widget/resolver'
+} from '@sunbird-cb/collection'
+import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import {
   DefaultThumbnailModule,
   HorizontalScrollerModule, PipeDurationTransformModule, PipeLimitToModule, PipePartialContentModule,
-} from '@ws-widget/utils/src/public-api'
+} from '@sunbird-cb/utils'
 // import { TrainingApiService } from '../infy/routes/training/apis/training-api.service'
 // import { TrainingService } from '../infy/routes/training/services/training.service'
 import { BlogsCardComponent } from './components/blogs-card/blogs-card.component'

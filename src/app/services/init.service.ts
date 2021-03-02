@@ -4,13 +4,13 @@ import { HttpClient } from '@angular/common/http'
 import { Inject, Injectable } from '@angular/core'
 import { MatIconRegistry } from '@angular/material'
 import { DomSanitizer } from '@angular/platform-browser'
-import { BtnSettingsService } from '@ws-widget/collection'
+import { BtnSettingsService } from '@sunbird-cb/collection'
 import {
   hasPermissions,
   hasUnitPermission,
   NsWidgetResolver,
   WidgetResolverService,
-} from '@ws-widget/resolver'
+} from '@sunbird-cb/resolver'
 import {
   AuthKeycloakService,
   ConfigurationsService,
@@ -19,7 +19,7 @@ import {
   NsInstanceConfig,
   NsUser,
   UserPreferenceService,
-} from '@ws-widget/utils'
+} from '@sunbird-cb/utils'
 import { retry } from 'rxjs/operators'
 import { environment } from '../../environments/environment'
 /* tslint:disable*/
@@ -236,6 +236,7 @@ export class InitService {
 
   private async fetchStartUpDetails(): Promise<any> {
     const userRoles: string[] = []
+
     if (this.configSvc.instanceConfig && !Boolean(this.configSvc.instanceConfig.disablePidCheck)) {
       let userPidProfile: NsUser.IUserPidProfileV2 | null = null
       try {
@@ -318,7 +319,7 @@ export class InitService {
         throw new Error('Invalid user')
       }
       if (userPidProfileV2) {
-        const userData: any = _.first(userPidProfileV2.result.UserProfile)
+        const userData: any = _.first(endpoint.profileV2)
         this.configSvc.userProfileV2 = {
           userId: _.get(userData, 'userId'),
           firstName: _.get(userData, 'personalDetails.firstname'),

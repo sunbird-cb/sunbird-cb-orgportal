@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Router, Event, NavigationEnd, ActivatedRoute } from '@angular/router'
-import { ILeftMenuWithoutLogo } from '@ws-widget/collection'
-import { NsWidgetResolver } from 'library/ws-widget/resolver/src/public-api'
-import { ConfigurationsService, ValueService } from '@ws-widget/utils/src/public-api'
+import { ILeftMenuWithoutLogo } from '@sunbird-cb/collection'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
+import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
 /* tslint:disable */
 import _ from 'lodash'

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core'
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
 import { EMPTY, Observable, of } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
-import { } from '@ws-widget/collection'
-import { ConfigurationsService, IResolveResponse } from '@ws-widget/utils'
+import { } from '@sunbird-cb/collection'
+import { ConfigurationsService, IResolveResponse } from '@sunbird-cb/utils'
 import { NeedApprovalsService } from '../services/need-approvals.service'
 import { NSProfileDataV2 } from '../models/profile-v2.model'
 
@@ -19,7 +19,7 @@ export class WorkflowResolve
 
   ): Observable<IResolveResponse<NSProfileDataV2.IProfile>> {
     const path = _route.routeConfig && _route.routeConfig.path
-    const departName = this.configSvc.departName
+    const departName = this.configSvc.userProfile && this.configSvc.userProfile.departmentName || ''
     let userId = ''
     if (path !== 'me') {
       userId = _route.params.userId

@@ -11,8 +11,8 @@ import {
   MatButtonModule,
 } from '@angular/material'
 import { RouterModule } from '@angular/router'
-import { BtnPageBackModule } from '@ws-widget/collection'
-import { PipeSafeSanitizerModule } from '../../../../../../../../library/ws-widget/utils/src/public-api'
+import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [FaqHomeComponent],

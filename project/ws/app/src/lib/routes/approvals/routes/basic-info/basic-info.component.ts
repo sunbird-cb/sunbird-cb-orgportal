@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-basic-info',
@@ -17,7 +17,9 @@ export class BasicInfoComponent implements OnInit {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         const profileData = this.activeRoute.snapshot.data.profileData.data.result.UserProfile[0] || {}
-        this.configSvc.departName = _.get(this.activeRoute, 'snapshot.data.department.data.deptName')
+        if (this.configSvc.userProfile && this.configSvc.userProfile.departmentName) {
+          this.configSvc.userProfile.departmentName = _.get(this.activeRoute, 'snapshot.data.department.data.deptName')
+        }
         this.basicInfo = profileData.personalDetails
         this.imagePath = profileData.photo
       }

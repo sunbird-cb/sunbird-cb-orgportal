@@ -1,7 +1,7 @@
 import { ProfileV2Service } from './../../../home/services/home.servive'
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
 import { Router } from '@angular/router'
-import { ITableData } from '../../../../../../../../../library/ws-widget/collection/src/public-api'
+import { ITableData } from '@sunbird-cb/collection'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { UsersService } from '../../services/users.service'
 /* tslint:disable */

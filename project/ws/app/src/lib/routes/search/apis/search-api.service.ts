@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { ISocialSearchRequest, ISocialSearchResult, ISearchAutoComplete } from '../models/search.model'
 import { KeycloakService } from 'keycloak-angular'
-import { NSSearch } from '@ws-widget/collection'
+import { NSSearch } from '@sunbird-cb/collection'
 import { map } from 'rxjs/operators'
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {

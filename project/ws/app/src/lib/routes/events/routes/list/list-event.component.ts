@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
 import { Router } from '@angular/router'
 import { EventsService } from '../../services/events.service'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import * as moment from 'moment'
 
 @Component({

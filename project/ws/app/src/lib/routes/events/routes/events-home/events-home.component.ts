@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, HostListener, ViewChild } from '@angular/core'
 import { Router, Event, NavigationEnd, ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, ValueService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
-import { NsWidgetResolver } from 'library/ws-widget/resolver/src/public-api'
+import { NsWidgetResolver } from '@sunbird-cb/resolver'
 /* tslint:disable */
 import _ from 'lodash'
-import { ILeftMenu } from '@ws-widget/collection'
+import { ILeftMenu } from '@sunbird-cb/collection'
 /* tslint:enable */
 
 @Component({

@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { NSProfileDataV2 } from '../../models/profile-v2.model'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
-import { ConfigurationsService } from '@ws-widget/utils/src/public-api'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { UsersService } from '../../../users/services/users.service'
 /* tslint:disable */
 import _ from 'lodash'
 import { environment } from 'src/environments/environment'
-import { ITableData } from '../../../../../../../../../library/ws-widget/collection/src/public-api'
+import { ITableData } from '@sunbird-cb/collection'
 import { MatSnackBar } from '@angular/material'
 
 @Component({

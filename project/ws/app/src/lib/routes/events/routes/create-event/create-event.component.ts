@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { ParticipantsComponent } from '../../components/participants/participants.component'
 import { SuccessComponent } from '../../components/success/success.component'
 import { Router } from '@angular/router'
-import { ConfigurationsService } from '@ws-widget/utils'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import * as moment from 'moment'
 
 @Component({

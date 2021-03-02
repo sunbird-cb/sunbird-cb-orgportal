@@ -7,7 +7,7 @@ import { AboutComponent } from './routes/about/about.component'
 import { HomeComponent } from './routes/home/home.component'
 import { UsersViewComponent } from './routes/users-view/users-view.component'
 import { RolesAccessComponent } from './routes/roles-access/roles-access.component'
-// import { PageResolve } from '@ws-widget/utils'
+// import { PageResolve } from '@sunbird-cb/utils'
 import { ApprovalsComponent } from './routes/approvals/approvals.component'
 
 const routes: Routes = [

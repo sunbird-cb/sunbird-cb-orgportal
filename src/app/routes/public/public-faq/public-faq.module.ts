@@ -11,7 +11,7 @@ import {
   MatButtonModule,
 } from '@angular/material'
 import { RouterModule } from '@angular/router'
-import { BtnPageBackModule } from '@ws-widget/collection'
+import { BtnPageBackModule } from '@sunbird-cb/collection'
 
 @NgModule({
   declarations: [PublicFaqComponent],

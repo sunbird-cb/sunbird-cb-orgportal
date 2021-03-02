@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs'
 import { ActivatedRoute } from '@angular/router'
 import { map } from 'rxjs/operators'
 
-import { ValueService, ConfigurationsService, EFeatures, NsPage } from '@ws-widget/utils'
+import { ValueService, ConfigurationsService, EFeatures, NsPage } from '@sunbird-cb/utils'
 import { IFAQ, IContent } from '../faq.model'
 
 @Component({

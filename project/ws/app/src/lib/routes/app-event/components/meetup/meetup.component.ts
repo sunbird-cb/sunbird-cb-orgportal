@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ConfigurationsService, NsPage, ValueService } from '@ws-widget/utils'
+import { ConfigurationsService, NsPage, ValueService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 
 @Component({
