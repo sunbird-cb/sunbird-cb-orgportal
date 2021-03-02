@@ -4,7 +4,7 @@
 
 export const environment: IEnvironment = {
   production: false,
-  sitePath: 'mdo_3000',
+  sitePath: 'localhost_3000',
   karmYogiPath: 'https://igot-sunbird.idc.tarento.com',
 }
 interface IEnvironment {
