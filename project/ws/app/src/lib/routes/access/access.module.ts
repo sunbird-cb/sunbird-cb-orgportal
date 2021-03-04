@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common'
 import { AccessRoutingModule } from './access-routing.module'
 import { HomeComponent } from './routes/home/home.component'
 import { PrivilegesComponent } from './routes/privileges/privileges.component'
-import { BtnPageBackModule, LeftMenuWithoutLogoModule, GroupCheckboxModule, UITableModule } from '@sunbird-cb/collection'
+import { BtnPageBackModule, LeftMenuWithoutLogoModule, GroupCheckboxModule, UIORGTableModule } from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { HomeModule } from '../home/home.module'
 import { RouterModule } from '@angular/router'
@@ -18,7 +18,7 @@ import { MatCardModule } from '@angular/material/card'
 @NgModule({
   declarations: [HomeComponent, PrivilegesComponent, UsersComponent],
   imports: [CommonModule, AccessRoutingModule, BtnPageBackModule, LeftMenuWithoutLogoModule, WidgetResolverModule,
-    MatSidenavModule, MatIconModule, GroupCheckboxModule, HomeModule, RouterModule, UITableModule, MatCardModule],
+    MatSidenavModule, MatIconModule, GroupCheckboxModule, HomeModule, RouterModule, UIORGTableModule, MatCardModule],
   exports: [UsersComponent],
   providers: [UsersService],
 })

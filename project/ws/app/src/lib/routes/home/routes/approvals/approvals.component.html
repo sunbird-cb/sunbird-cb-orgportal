@@ -21,8 +21,8 @@
         </div>
       </div>
       <ng-container *ngIf="getTableData && getTableData.length>0">
-        <ws-widget-ui-user-table [tableData]='tabledata' [data]='getTableData' (eOnRowClick)="onApprovalClick($event)">
-        </ws-widget-ui-user-table>
+        <ws-widget-org-user-table [tableData]='tabledata' [data]='getTableData' (eOnRowClick)="onApprovalClick($event)">
+        </ws-widget-org-user-table>
       </ng-container>
       <ng-container *ngIf="!getTableData || getTableData.length<=0">
         <p class="text-center">No Approvals Pending</p>
