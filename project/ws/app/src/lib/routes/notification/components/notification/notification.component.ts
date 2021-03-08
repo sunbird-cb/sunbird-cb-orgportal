@@ -35,8 +35,8 @@ export class NotificationComponent implements OnInit {
 
   fetchSharedPlaylist() {
     this.playlistSvc.getPlaylists(NsPlaylist.EPlaylistTypes.PENDING).subscribe(
-      data => {
-        data.forEach(playlist => {
+      (data: any) => {
+        data.forEach((playlist: any) => {
           playlist.sharedBy = (playlist.sharedBy || '').split('@')[0]
         })
         this.sharedPlaylists = data

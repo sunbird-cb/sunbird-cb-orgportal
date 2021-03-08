@@ -40,7 +40,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         const profileData = this.activeRoute.snapshot.data.profileData.data.result.UserProfile[0] || {}
         this.basicInfo = profileData.personalDetails
         this.academicDetails = profileData.academics
-        this.professionalDetails = profileData.professionalDetails[0]
+        this.professionalDetails = profileData.professionalDetails ? profileData.professionalDetails[0] : []
         this.employmentDetails = profileData.employmentDetails
         this.skillDetails = profileData.skills
         this.interests = profileData.interests

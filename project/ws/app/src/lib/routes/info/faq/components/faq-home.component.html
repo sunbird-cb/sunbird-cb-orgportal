@@ -2,8 +2,8 @@
   <button type="button" mat-icon-button *ngIf="faqConfigs?.length > 1" (click)="sideNavBarOpened = !sideNavBarOpened">
     <mat-icon>menu</mat-icon>
   </button>
-  <ws-widget-btn-page-back [widgetData]="{ url: 'home',titles:[{title:'Support',url:'none'}] }">
-  </ws-widget-btn-page-back>
+  <ws-widget-breadcrumbs-org [widgetData]="{ url: 'home',titles:[{title:'Support',url:'none'}] }">
+  </ws-widget-breadcrumbs-org>
   <!-- <span class="margin-left-xs text-truncate">
     <span i18n="page title: faq" class="margin-left-xs">Support</span>
   </span> -->

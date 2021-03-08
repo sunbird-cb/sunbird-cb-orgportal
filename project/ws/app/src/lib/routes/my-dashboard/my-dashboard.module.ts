@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatButtonModule, MatCardModule, MatIconModule, MatToolbarModule } from '@angular/material'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BreadcrumbsOrgModule } from '@sunbird-cb/collection'
 import { MyDashboardHomeComponent } from './components/my-dashboard-home/my-dashboard-home.component'
 import { MyDashboardRoutingModule } from './my-dashboard-routing.module'
 
@@ -14,7 +14,7 @@ import { MyDashboardRoutingModule } from './my-dashboard-routing.module'
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
-    BtnPageBackModule,
+    BreadcrumbsOrgModule,
   ], exports: [MyDashboardHomeComponent],
 })
 export class MyDashboardModule { }

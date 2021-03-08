@@ -4,7 +4,7 @@ import { CreateUserComponent } from './routes/create-user/create-user.component'
 import { ViewUserComponent } from './routes/view-user/view-user.component'
 import { RouterModule } from '@angular/router'
 import { UsersRoutingModule } from './users.routing.module'
-import { BtnPageBackModule, ScrollspyLeftMenuModule } from '@sunbird-cb/collection'
+import { BreadcrumbsOrgModule, ScrollspyLeftMenuModule } from '@sunbird-cb/collection'
 import {
   MatSidenavModule, MatGridListModule, MatListModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatIconModule, MatButtonModule, MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,
@@ -18,7 +18,7 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 @NgModule({
   declarations: [CreateUserComponent, ViewUserComponent],
   imports: [
-    CommonModule, RouterModule, UsersRoutingModule, BtnPageBackModule,
+    CommonModule, RouterModule, UsersRoutingModule, BreadcrumbsOrgModule,
     MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule,

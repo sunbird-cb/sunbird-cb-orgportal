@@ -26,7 +26,7 @@ import {
   LocaleTranslatorModule,
   LanguageSelectorModule,
   AppTourDialogModule,
-  BtnPageBackModule,
+  BreadcrumbsOrgModule,
 } from '@sunbird-cb/collection'
 import { AboutVideoModule } from '../info/about-video/about-video.module'
 import { HomeComponent } from './components/home/home.component'
@@ -69,7 +69,7 @@ import { Globals } from './globals'
     MatCheckboxModule,
     PipeSafeSanitizerModule,
     MatToolbarModule,
-    BtnPageBackModule,
+    BreadcrumbsOrgModule,
 
     // SettingsModule,
     AboutVideoModule,

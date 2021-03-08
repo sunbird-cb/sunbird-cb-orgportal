@@ -11,7 +11,7 @@ import {
   MatButtonModule,
 } from '@angular/material'
 import { RouterModule } from '@angular/router'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BreadcrumbsOrgModule } from '@sunbird-cb/collection'
 
 @NgModule({
   declarations: [PublicFaqComponent],
@@ -24,7 +24,7 @@ import { BtnPageBackModule } from '@sunbird-cb/collection'
     MatDividerModule,
     MatListModule,
     RouterModule,
-    BtnPageBackModule,
+    BreadcrumbsOrgModule,
     MatButtonModule,
   ],
   exports: [PublicFaqComponent],

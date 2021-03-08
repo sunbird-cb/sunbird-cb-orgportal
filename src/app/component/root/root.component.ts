@@ -15,7 +15,7 @@ import {
   Router,
 } from '@angular/router'
 // import { interval, concat, timer } from 'rxjs'
-import { BtnPageBackService } from '@sunbird-cb/collection'
+import { BreadcrumbsOrgService } from '@sunbird-cb/collection'
 import {
   AuthKeycloakService,
   ConfigurationsService,
@@ -60,7 +60,7 @@ export class RootComponent implements OnInit, AfterViewInit {
     private telemetrySvc: TelemetryService,
     private mobileAppsSvc: MobileAppsService,
     private rootSvc: RootService,
-    private btnBackSvc: BtnPageBackService,
+    private btnBackSvc: BreadcrumbsOrgService,
     private changeDetector: ChangeDetectorRef,
   ) {
     this.mobileAppsSvc.init()

@@ -72,7 +72,7 @@ export class GeneralGuard implements CanActivate {
       //   state.url &&
       //   !state.url.includes('/app/setup/') &&
       //   !state.url.includes('/app/tnc') &&
-      //   !state.url.includes('/page/home')
+      //   !state.url.includes('/app/home')
       // ) {
       //   this.configSvc.userUrl = state.url
       // }

@@ -27,7 +27,7 @@ import {
   BtnContentMailMeModule,
   // BtnContentShareModule,
   // BtnGoalsModule,
-  BtnPageBackModule,
+  BreadcrumbsOrgModule,
   BtnPlaylistModule,
   DisplayContentTypeModule,
   PipeContentRouteModule,
@@ -77,7 +77,7 @@ import { SearchInputHomeComponent } from './components/search-input-home/search-
   imports: [
     CommonModule,
     SearchRoutingModule,
-    BtnPageBackModule,
+    BreadcrumbsOrgModule,
     MatToolbarModule,
     MatTabsModule,
     FormsModule,

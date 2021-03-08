@@ -8,7 +8,7 @@ import {
   MatIconModule,
   MatExpansionModule,
 } from '@angular/material'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BreadcrumbsOrgModule } from '@sunbird-cb/collection'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 
 @NgModule({
@@ -17,7 +17,7 @@ import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
     CommonModule,
     MatToolbarModule,
     MatCardModule,
-    BtnPageBackModule,
+    BreadcrumbsOrgModule,
     MatDividerModule,
     MatIconModule,
     MatExpansionModule,

@@ -4,7 +4,7 @@ import { HomeComponent } from './routes/home/home.component'
 
 import { RouterModule } from '@angular/router'
 import { ApprovalsRoutingModule } from './approvals.routing.module'
-import { BtnPageBackModule, ScrollspyLeftMenuModule } from '@sunbird-cb/collection'
+import { BreadcrumbsOrgModule, ScrollspyLeftMenuModule } from '@sunbird-cb/collection'
 import {
   MatSidenavModule, MatGridListModule, MatListModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatIconModule, MatButtonModule, MatRadioModule, MatDialogModule,
@@ -19,7 +19,7 @@ import { CertificationAndSkillsComponent } from './routes/certification-and-skil
   declarations: [HomeComponent, NeedsApprovalComponent, BasicInfoComponent, PositionComponent,
     EducationComponent, CertificationAndSkillsComponent],
   imports: [
-    CommonModule, RouterModule, ApprovalsRoutingModule, BtnPageBackModule,
+    CommonModule, RouterModule, ApprovalsRoutingModule, BreadcrumbsOrgModule,
     MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule,

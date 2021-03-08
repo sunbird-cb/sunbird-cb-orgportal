@@ -8,7 +8,7 @@ import {
   MatIconModule,
   MatButtonModule,
 } from '@angular/material'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BreadcrumbsOrgModule } from '@sunbird-cb/collection'
 
 @NgModule({
   declarations: [MobileAppHomeComponent],
@@ -19,7 +19,7 @@ import { BtnPageBackModule } from '@sunbird-cb/collection'
     MatTabsModule,
     MatIconModule,
     MatButtonModule,
-    BtnPageBackModule,
+    BreadcrumbsOrgModule,
   ],
   exports: [MobileAppHomeComponent],
 })

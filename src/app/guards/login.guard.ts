@@ -39,6 +39,6 @@ export class LoginGuard implements CanActivate {
       const ref = decodeURIComponent(next.queryParamMap.get('ref') || '')
       return this.router.parseUrl(ref || '')
     }
-    return this.router.parseUrl('page/home')
+    return this.router.parseUrl('app/home')
   }
 }

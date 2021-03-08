@@ -15,7 +15,7 @@ import { AppGalleryComponent } from './components/app-gallery/app-gallery.compon
 import { EventService } from './services/event.service'
 import { IframeLoaderComponent } from './components/iframe-loader/iframe-loader.component'
 import { MatToolbarModule } from '@angular/material/toolbar'
-import { BtnPageBackModule, BtnFullscreenModule } from '@sunbird-cb/collection'
+import { BreadcrumbsOrgModule, BtnFullscreenModule } from '@sunbird-cb/collection'
 import { MeetupComponent } from './components/meetup/meetup.component'
 import { CardDetailsModule } from './components/card-details/card-details.module'
 
@@ -42,7 +42,7 @@ import { CardDetailsModule } from './components/card-details/card-details.module
     HorizontalScrollerModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-    BtnPageBackModule,
+    BreadcrumbsOrgModule,
     ProfileDetailModule,
     MatSelectModule,
     MatTabsModule,

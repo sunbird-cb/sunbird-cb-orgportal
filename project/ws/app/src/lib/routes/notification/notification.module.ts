@@ -11,7 +11,7 @@ import {
 } from '@angular/material'
 import { NotificationRoutingModule } from './notification-routing.module'
 import { NotificationComponent } from './components/notification/notification.component'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BreadcrumbsOrgModule } from '@sunbird-cb/collection'
 import { PipeLimitToModule } from '@sunbird-cb/utils'
 
 @NgModule({
@@ -26,7 +26,7 @@ import { PipeLimitToModule } from '@sunbird-cb/utils'
     MatCardModule,
     MatDividerModule,
 
-    BtnPageBackModule,
+    BreadcrumbsOrgModule,
     PipeLimitToModule,
     MatProgressSpinnerModule,
   ],

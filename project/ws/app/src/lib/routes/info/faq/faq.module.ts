@@ -11,7 +11,7 @@ import {
   MatButtonModule,
 } from '@angular/material'
 import { RouterModule } from '@angular/router'
-import { BtnPageBackModule } from '@sunbird-cb/collection'
+import { BreadcrumbsOrgModule } from '@sunbird-cb/collection'
 import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 
 @NgModule({
@@ -25,7 +25,7 @@ import { PipeSafeSanitizerModule } from '@sunbird-cb/utils'
     MatDividerModule,
     RouterModule,
     MatIconModule,
-    BtnPageBackModule,
+    BreadcrumbsOrgModule,
     MatButtonModule,
     PipeSafeSanitizerModule,
   ],
