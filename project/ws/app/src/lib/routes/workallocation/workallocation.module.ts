@@ -15,17 +15,19 @@ import { MatDividerModule } from '@angular/material/divider'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { ExportAsModule } from 'ngx-export-as'
+import { UpdateWorkallocationComponent } from './routes/update-workallocation/update-workallocation.component'
+import { MatMenuModule } from '@angular/material/menu'
 
 @NgModule({
-  declarations: [CreateWorkallocationComponent, DownloadAllocationComponent],
+  declarations: [CreateWorkallocationComponent, DownloadAllocationComponent, UpdateWorkallocationComponent],
   imports: [
     CommonModule, RouterModule, WorkallocationRoutingModule, BreadcrumbsOrgModule,
     MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule,
-    UIORGTableModule, ExportAsModule,
+    UIORGTableModule, ExportAsModule, MatMenuModule,
   ],
-  exports: [DownloadAllocationComponent],
+  exports: [DownloadAllocationComponent, UpdateWorkallocationComponent],
 })
 export class WorkallocationModule { }
