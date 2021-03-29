@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core'
-import { ConfigurationsService } from '@sunbird-cb/utils'
 import { ITableData } from '@sunbird-cb/collection'
 import { MatPaginator } from '@angular/material'
 import { Router } from '@angular/router'
@@ -14,16 +13,9 @@ import { WorkallocationService } from '../../services/workallocation.service'
   styleUrls: ['./workallocation.component.scss'],
 })
 export class WorkallocationComponent implements OnInit, OnDestroy  {
-  /* tslint:disable */
-  Math: any
-  /* tslint:enable */
   currentFilter = 'active'
-  discussionList!: any
-  discussProfileData!: any
-  location!: string | null
   tabs: any
   currentUser!: string | null
-  connectionRequests!: any[]
   tabledata!: ITableData
   data: any = []
   term!: string | null
@@ -32,6 +24,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
   pageSizeOptions = [5, 10, 20]
   paginator!: MatPaginator
   departmentName: any
+  departmentID: any
 
   config: ExportAsConfig = {
     type: 'pdf',
@@ -51,11 +44,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
     }
   }
 
-  constructor(private exportAsService: ExportAsService, private configSvc: ConfigurationsService, private router: Router,
-              private workallocationSrvc: WorkallocationService) {
-    this.Math = Math
-    this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
-  }
+  constructor(private exportAsService: ExportAsService, private router: Router,
+              private workallocationSrvc: WorkallocationService) { }
 
   ngOnInit() {
     this.tabledata = {
@@ -71,8 +61,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
       sortState: 'asc',
       needUserMenus: true,
     }
-    this.getAllUsers()
-    this.departmentName = 'JPAL'
+    this.getdeptUsers()
   }
 
   // Download format
@@ -98,11 +87,20 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
     }
   }
 
+  getdeptUsers() {
+    this.workallocationSrvc.getAllUsers().subscribe(res => {
+      console.log('all users ', res)
+      this.departmentName = res.deptName
+      this.departmentID = res.id
+      this.getAllUsers()
+    })
+  }
+
   getAllUsers() {
     const req = {
       pageNo : 0,
       pageSize : 20,
-      departmentName : 'JPAL',
+      departmentName : this.departmentName,
     }
     this.workallocationSrvc.getUsers(req).subscribe(res => {
       this.userslist = res.result.data
@@ -121,7 +119,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
             fullname: user ? `${user.userDetails.first_name} ${user.userDetails.last_name}` : null,
             email: user.userDetails.email,
             roles: user.allocationDetails.activeList,
-            userId: user.userDetails.email.wid,
+            userId: user.userDetails.wid,
             position: user.userDetails.position,
             phone: user.userDetails.phone,
           })
@@ -130,7 +128,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
             fullname: user ? `${user.userDetails.first_name} ${user.userDetails.last_name}` : null,
             email: user.userDetails.email,
             roles: user.allocationDetails.archivedList,
-            userId: user.userDetails.email.wid,
+            userId: user.userDetails.wid,
             position: user.userDetails.position,
             phone: user.userDetails.phone,
           })
@@ -176,5 +174,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
 
   onNewAllocationClick() {
     this.router.navigate([`/app/workallocation/create`])
+  }
+
+  viewAllocation(data: any) {
+    this.router.navigate([`/app/workallocation/details/${data.userId}`])
   }
 }

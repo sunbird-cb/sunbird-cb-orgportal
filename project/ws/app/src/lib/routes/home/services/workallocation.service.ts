@@ -4,6 +4,7 @@ import { Observable } from 'rxjs'
 
 const API_END_POINTS = {
   USERS: '/apis/protected/v8/workallocation/userSearch',
+  GET_ALL_USERS: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
 }
 
 @Injectable({
@@ -14,5 +15,9 @@ export class WorkallocationService {
 
   getUsers(req: any): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.USERS}`, req)
+  }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get<any>(`${API_END_POINTS.GET_ALL_USERS}`)
   }
 }

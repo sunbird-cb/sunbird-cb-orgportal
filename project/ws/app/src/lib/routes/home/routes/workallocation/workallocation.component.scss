@@ -215,6 +215,7 @@ a:not([href]):not([tabindex]) {
  
   tr.data-row {
     border-bottom: 1px solid #cccccc;
+    cursor: pointer;
   }
 }
 

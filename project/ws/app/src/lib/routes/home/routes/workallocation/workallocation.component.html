@@ -53,7 +53,7 @@
                 <th>Activities</th>
                 <th></th>
             </tr>
-            <tr *ngFor="let d of data | filter: term" class="data-row">
+            <tr *ngFor="let d of data | filter: term" class="data-row" (click)="viewAllocation(d)">
                 <td><input type="checkbox"></td>
                 <td aria-rowspan="d.roles.length+1">{{d.fullname}}</td>
                 <td colspan="2">
@@ -103,5 +103,4 @@
     </mat-card>
 
     <ws-app-download-allocation id="downloadtemp" [data]="data" [deptname]="departmentName"></ws-app-download-allocation>
-    
   </div>
