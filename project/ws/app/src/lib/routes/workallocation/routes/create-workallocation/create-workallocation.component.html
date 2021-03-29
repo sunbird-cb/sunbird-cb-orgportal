@@ -7,7 +7,8 @@
                 [widgetData]="{titles:[{title:'Work allocation', url:'/app/home/workallocation'},{title:'New', url:'none'}] }">
             </ws-widget-breadcrumbs-org>
     
-            <button mat-raised-button type="submit" (click)="onSubmit()" class="text-white btn-success btn-responsive" [disabled]="newAllocationForm?.invalid" id="savebtn">
+            <button mat-raised-button type="submit" (click)="onSubmit()" class="text-white btn-success btn-responsive" 
+            [disabled]="newAllocationForm?.invalid" id="savebtn">
                 <span class="text-white" i18n>Save</span>
             </button>
         </div>
@@ -119,7 +120,7 @@
                             <div class="margin-top-m new-mobile" formArrayName="rolelist">
                                 <div class="flex flex-wrap mobile-break">
                                     <ul class="rolesactivities-ul">
-                                        <li *ngFor="let rl of newAllocationForm.get('rolelist')['controls']; let ri=index">
+                                        <li *ngFor="let rl of newroleControls; let ri=index">
                                             <div [formGroupName]="ri">
                                             <div class="roles-div">
                                                 <label for="name" class="margin-remove-bottom form-label"
@@ -149,7 +150,7 @@
 
                                             <div class="activitieslist margin-bottom-m" *ngIf="activitieslist && activitieslist.length > 0">
                                                 <h3>Associated activities</h3>
-                                                <p><span *ngFor="let a of activitieslist">{{a}}</span></p>
+                                                <p><span *ngFor="let a of activitieslist">{{a.name}}</span></p>
                                             </div>
                                             <button mat-raised-button class="text-white btn-success btn-responsive" id="addtolist-btn" (click)="addRolesActivity(ri)">
                                                 <span class="text-white" i18n>Add to the list</span>
@@ -166,16 +167,37 @@
                                         <tr>
                                             <th class="padding-s">Roles</th>
                                             <th class="padding-s">Activities</th>
+                                            <th></th>
                                         </tr>
                                         <tr *ngFor="let r of ralist">
                                             <td class="font-bold padding-s">{{r.name}}</td>
-                                            <td class="padding-s"><span *ngFor="let a of r.childNodes">{{a}}</span></td>
+                                            <td class="padding-s"><span *ngFor="let a of r.childNodes">{{a.name}}</span></td>
+                                            <td class="action-cell">
+                                                <button type="button" mat-icon-button i18n-aria-label aria-label="action items"
+                                                    [matMenuTriggerFor]="cardMenu" [matMenuTriggerData]="{'data':r}" class="action-btn">
+                                                    <mat-icon>more_horiz</mat-icon>
+                                                </button>
+                                            </td>
                                         </tr>
                                         <tr *ngIf="ralist && ralist.length === 0" class="nodata">
                                             <td class="padding-s nodata">Roles you add will appear here</td>
                                             <td class="padding-s nodata">Activities you add under the role will appear here</td>
+                                            <td></td>
                                         </tr>
                                     </table>
+
+                                    <mat-menu #cardMenu="matMenu">
+                                        <ng-template matMenuContent let-rowData="data">
+                                            <!-- <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
+                                                aria-label="Analytics">
+                                                <mat-icon>archive</mat-icon> <span>Archive role</span>
+                                            </button> -->
+                                            <button (click)="buttonClick('Delete', rowData)" mat-menu-item name="channel-analytics-button"
+                                                class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
+                                                <mat-icon>delete</mat-icon> <span>Delete role</span>
+                                            </button>
+                                        </ng-template>
+                                    </mat-menu>
                                 </div>
                             </div>
                         </mat-card-content>
@@ -183,9 +205,9 @@
                     </mat-card>
                     </form>
 
-                    <!-- Form value: {{ newAllocationForm?.getRawValue() | json }}
+                    Form value: {{ newAllocationForm?.getRawValue() | json }}
                     <hr>
-                    Form Status: {{newAllocationForm.status}} -->
+                    Form Status: {{newAllocationForm.status}}
                     </div>
                 </div>
             </div>

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms'
+import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms'
 import { AllocationService } from '../../services/allocation.service'
-import { ActivatedRoute, Router,  Event, NavigationEnd } from '@angular/router'
+import { Router } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
+import { MatSnackBar } from '@angular/material'
 
 @Component({
   selector: 'ws-app-create-workallocation',
@@ -31,7 +32,6 @@ export class CreateWorkallocationComponent implements OnInit {
   selectedUser: any
   selectedRole: any
   ralist: any [] = []
-  department: any
   departmentName: any
   departmentID: any
 
@@ -47,25 +47,17 @@ export class CreateWorkallocationComponent implements OnInit {
   }
   activitieslist: any[] = []
 
-  constructor(private exportAsService: ExportAsService,
+  constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
               private fb: FormBuilder, private allocateSrvc: AllocationService,
-              private router: Router, private activeRoute: ActivatedRoute) {
+              private router: Router) {
     this.newAllocationForm = this.fb.group({
       fname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      position: ['', Validators.required],
-      rolelist: this.fb.array([]),
+      position: [''],
+      rolelist: this.fb.array([this.newRole()]),
     })
 
-    this.setRole()
-
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
-        this.department = this.activeRoute.snapshot.data.department ? this.activeRoute.snapshot.data.department.data : ''
-        this.departmentName = this.department ? this.department.deptName : ''
-        this.departmentID = this.department ? this.department.id : ''
-      }
-    })
+    // this.setRole()
   }
 
   ngOnInit() {
@@ -89,6 +81,15 @@ export class CreateWorkallocationComponent implements OnInit {
       //   enabled: true,
       // },
     ]
+
+    this.getdeptUsers()
+  }
+
+  getdeptUsers() {
+    this.allocateSrvc.getAllUsers().subscribe(res => {
+      this.departmentName = res.deptName
+      this.departmentID = res.id
+    })
   }
 
   export() {
@@ -123,7 +124,7 @@ export class CreateWorkallocationComponent implements OnInit {
 
   // to set roles array field
   setRole() {
-    const control = <FormArray>this.newAllocationForm.controls.rolelist
+    const control = this.newAllocationForm.get('rolelist') as FormArray
     this.formdata.rolelist.forEach((x: any) => {
       control.push(this.fb.group({
         name: x.name,
@@ -133,11 +134,23 @@ export class CreateWorkallocationComponent implements OnInit {
   }
 
   // to set new roles array field
+  // newRole(): FormGroup {
+  //   return this.fb.group({
+  //     name: '',
+  //     childNodes: '',
+  //   })
+  // }
+
   newRole(): FormGroup {
     return this.fb.group({
-      name: '',
-      childNodes: '',
+      name: new FormControl('', [Validators.required]),
+      childNodes: new FormControl('', [Validators.required]),
     })
+  }
+
+  get newroleControls() {
+    const rl = this.newAllocationForm.get('rolelist')
+    return (<any>rl)['controls']
   }
 
   // to get suggested similar users in right sidebar
@@ -176,7 +189,7 @@ export class CreateWorkallocationComponent implements OnInit {
     this.newAllocationForm.patchValue({
       fname: this.selectedUser.userDetails.first_name,
       email: this.selectedUser.userDetails.email,
-      position: this.selectedUser.userDetails.position,
+      position: this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '',
     })
   }
   removeSelectedUSer() {
@@ -187,27 +200,29 @@ export class CreateWorkallocationComponent implements OnInit {
   // to add the selected role to form value
   selectRole(role: any) {
     this.selectedRole = role
+    this.activitieslist = this.selectedRole.childNodes
     this.similarRoles = []
+
+    const formatselectedRole = role
     const actnodes: any[] = []
-    this.selectedRole.childNodes.forEach((x: any) => {
+    formatselectedRole.childNodes.forEach((x: any) => {
       actnodes.push(x.name)
     })
-
-    this.selectedRole.childNodes = actnodes
+    formatselectedRole.childNodes = actnodes
     const newrole = this.newAllocationForm.get('rolelist') as FormArray
     // newrole.push(this.newRole())
-    newrole.at(0).patchValue(this.selectedRole)
-    this.activitieslist = this.selectedRole.childNodes
+    newrole.at(0).patchValue(formatselectedRole)
   }
 
   // to push new obj to rolelist
   addRolesActivity(index: number) {
     if (index === 0 && this.selectedRole) {
+      this.selectedRole.childNodes = this.activitieslist
       this.ralist.push(this.selectedRole)
       this.selectedRole = ''
       this.activitieslist = []
 
-      const control = <FormArray>this.newAllocationForm.controls['rolelist']
+      const control = this.newAllocationForm.get('rolelist') as FormArray
       // tslint:disable-next-line:no-increment-decrement
       for (let i = control.length - 1; i >= 0; i--) {
           control.removeAt(i)
@@ -218,18 +233,29 @@ export class CreateWorkallocationComponent implements OnInit {
 
       this.newAllocationForm.value.rolelist = this.ralist
     } else {
-      const ra = []
-      ra.push(this.newAllocationForm.value.rolelist[0].childNodes)
-      const nrole = {
+      // const ra = []
+      // ra.push(this.activitieslist)
+      // const nrole = {
+      //   name: this.newAllocationForm.value.rolelist[0].name,
+      //   childNodes: ra,
+      // }
+
+      const newroleformat = {
+        description: '',
+        id: '',
         name: this.newAllocationForm.value.rolelist[0].name,
-        childNodes: ra,
+        source: 'ISTM',
+        status: 'UNVERIFIED',
+        type: 'ROLE',
+        childNodes: this.activitieslist,
       }
 
-      const newrole = this.newAllocationForm.get('rolelist') as FormArray
-      newrole.at(0).patchValue(nrole)
-      this.ralist.push(nrole)
+      // const newrole = this.newAllocationForm.get('rolelist') as FormArray
+      // newrole.at(0).patchValue(newroleformat)
+      this.ralist.push(newroleformat)
+      this.activitieslist = []
 
-      const control = <FormArray>this.newAllocationForm.controls['rolelist']
+      const control = this.newAllocationForm.get('rolelist') as FormArray
       // tslint:disable-next-line:no-increment-decrement
       for (let i = control.length - 1; i >= 0; i--) {
           control.removeAt(i)
@@ -243,13 +269,62 @@ export class CreateWorkallocationComponent implements OnInit {
   }
 
   addActivity() {
-    const newactivity = this.newAllocationForm.value.rolelist[0].childNodes
-    this.activitieslist.push(newactivity)
+    if (!this.selectedRole) {
+      const newactivity = this.newAllocationForm.value.rolelist[0].childNodes
+      const activityformat = {
+        description: '',
+        id: '',
+        name: newactivity,
+        parentRole: '',
+        source: 'ISTM',
+        status: 'UNVERIFIED',
+        type: 'ACTIVITY',
+      }
+      this.activitieslist.push(activityformat)
+      this.newAllocationForm.value.rolelist[0].childNodes = ''
+    }
+  }
+
+  buttonClick(action: string, row: any) {
+    if (this.ralist) {
+      if (action === 'Delete') {
+        const index = this.ralist.indexOf(row)
+        if (index >= 0) {
+          this.ralist.splice(index, 1)
+        }
+      }
+    }
   }
 
   // final form submit
   onSubmit() {
+    this.ralist.forEach((r: any) => {
+      r.isArchived = false
+    })
     this.newAllocationForm.value.rolelist = this.ralist
-    // console.log(this.newAllocationForm.value)
+    const reqdata = {
+      userId: this.selectedUser.userDetails.wid,
+      deptId: this.departmentID,
+      deptName: this.departmentName,
+      activeList: this.ralist,
+      archivedList: [],
+    }
+
+    this.allocateSrvc.createAllocation(reqdata).subscribe(res => {
+      if (res) {
+        this.openSnackbar('Work Allocated Successfully')
+      this.newAllocationForm.reset()
+      this.selectedUser = ''
+      this.selectedRole = ''
+      this.ralist = []
+      this.router.navigate(['/app/home/workallocation'])
+      }
+    })
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 }

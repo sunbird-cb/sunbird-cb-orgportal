@@ -22,6 +22,9 @@
     font-weight: 700;
     font-size: 14px;
   }
+  #savebtn[disabled] {
+    opacity: 0.4;
+  }
 }
 .flex-3 {
   flex: 3;
