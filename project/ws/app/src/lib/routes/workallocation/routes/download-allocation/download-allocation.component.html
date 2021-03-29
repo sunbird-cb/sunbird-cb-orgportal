@@ -1,0 +1,30 @@
+<div class="download-template" id="downloadtemplate">
+    <div class="dwnld-header margin-top-l margin-bottom-l">
+        <h2 class="margin-bottom-s">Work allocation summary</h2>
+        <p>As of {{today | date:'shortTime'}} {{today | date}}</p>
+    </div>
+    <div class="dwnld-table margin-bottom-l">
+        <table>
+            <tr>
+                <th>Full name</th>
+                <th>Roles</th>
+                <th>Activities</th>
+            </tr>
+            <tr *ngFor="let d of data; let i=index">
+                <td>{{d.fullname}}</td>
+                <td colspan="2">
+                    <ul>
+                        <li *ngFor="let r of d.roles">
+                            <div class="dwnld-role">
+                                {{r.name}}
+                            </div>
+                            <div class="dwnld-activity">
+                                <span *ngFor="let a of r.childNodes">{{a.name}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
