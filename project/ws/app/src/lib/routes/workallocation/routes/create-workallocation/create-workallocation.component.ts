@@ -56,8 +56,6 @@ export class CreateWorkallocationComponent implements OnInit {
       position: [''],
       rolelist: this.fb.array([this.newRole()]),
     })
-
-    // this.setRole()
   }
 
   ngOnInit() {
@@ -74,12 +72,6 @@ export class CreateWorkallocationComponent implements OnInit {
         render: true,
         enabled: true,
       },
-      // {
-      //   name: 'Archived',
-      //   key: 'archived',
-      //   render: true,
-      //   enabled: true,
-      // },
     ]
 
     this.getdeptUsers()
@@ -135,16 +127,16 @@ export class CreateWorkallocationComponent implements OnInit {
 
   // to set new roles array field
   // newRole(): FormGroup {
-  //   return this.fb.group({
-  //     name: '',
-  //     childNodes: '',
-  //   })
+  //  return this.fb.group({
+  //   name: new FormControl('', [Validators.required]),
+  //   childNodes: new FormControl('', [Validators.required]),
+  // })
   // }
 
   newRole(): FormGroup {
     return this.fb.group({
-      name: new FormControl('', [Validators.required]),
-      childNodes: new FormControl('', [Validators.required]),
+      name: new FormControl(''),
+      childNodes: new FormControl(''),
     })
   }
 
@@ -191,6 +183,10 @@ export class CreateWorkallocationComponent implements OnInit {
       email: this.selectedUser.userDetails.email,
       position: this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '',
     })
+
+    if (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.activeList.length > 0) {
+      this.ralist = this.selectedUser.allocationDetails.activeList
+    }
   }
   removeSelectedUSer() {
     this.selectedUser = ''
@@ -250,8 +246,6 @@ export class CreateWorkallocationComponent implements OnInit {
         childNodes: this.activitieslist,
       }
 
-      // const newrole = this.newAllocationForm.get('rolelist') as FormArray
-      // newrole.at(0).patchValue(newroleformat)
       this.ralist.push(newroleformat)
       this.activitieslist = []
 
@@ -263,6 +257,9 @@ export class CreateWorkallocationComponent implements OnInit {
 
       const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
       newrolefield.push(this.newRole())
+
+      // const newrole = this.newAllocationForm.get('rolelist') as FormArray
+      // newrole.at(0).patchValue(newroleformat)
 
       this.newAllocationForm.value.rolelist = this.ralist
     }

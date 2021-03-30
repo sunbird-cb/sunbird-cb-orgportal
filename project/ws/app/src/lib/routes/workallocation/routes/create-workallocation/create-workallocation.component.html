@@ -8,7 +8,7 @@
             </ws-widget-breadcrumbs-org>
     
             <button mat-raised-button type="submit" (click)="onSubmit()" class="text-white btn-success btn-responsive" 
-            [disabled]="newAllocationForm?.invalid" id="savebtn">
+            [disabled]="newAllocationForm?.invalid || ralist.length === 0" id="savebtn">
                 <span class="text-white" i18n>Save</span>
             </button>
         </div>
@@ -205,9 +205,9 @@
                     </mat-card>
                     </form>
 
-                    Form value: {{ newAllocationForm?.getRawValue() | json }}
+                    <!-- Form value: {{ newAllocationForm?.getRawValue() | json }}
                     <hr>
-                    Form Status: {{newAllocationForm.status}}
+                    Form Status: {{newAllocationForm.status}} -->
                     </div>
                 </div>
             </div>

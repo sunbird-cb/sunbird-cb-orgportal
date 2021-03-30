@@ -10,21 +10,28 @@
   .top-bar {
     position: relative;
     min-width: 25% !important;
-  
-    #savebtn {
+    
+    .btn-div {
       position: absolute;
-      right: 2em;
-      top: 0.8em;
-      width: auto;
-      background: #0075B7 !important;
-      color: white !important;
-      font-family: 'Lato';
-      font-weight: 700;
-      font-size: 14px;
+      right: 0.5em;
+      top: 0.6em;
     }
 
-    #savebtn[disabled] {
-      opacity: 0.4;
+    button {
+      min-width: 100px;
+      width: auto;
+      border: 1px solid #DEDEDE;
+      border-radius: 4px;
+      margin: 0 12px 0 5px;
+      color: #848484 !important;
+      font-family: "Lato";
+      font-weight: 700;
+      font-size: 14px;
+
+      .mat-icon {
+        padding-right: 4px;
+        margin-top: -4px;
+      }
     }
   }
   .flex-3 {
@@ -32,6 +39,10 @@
   }
   .flex-4 {
     flex: 4;
+  }
+
+  #downloadtemp {
+    display: none !important;
   }
   
   .addbtn {
@@ -324,6 +335,17 @@
     }
     td {
       color: rgba(0, 0, 0, 0.87);
+      font-size: 14px;
+      vertical-align: top;
+
+      p {
+        margin-bottom: 4px;
+      }
+
+      .archvtime {
+        font-size: 13px;
+        color: rgba(0, 0, 0, 0.60);
+      }
   
       span {
         background: rgba(0,0,0,0.08);
@@ -334,8 +356,18 @@
         display: inline-block
       }
     }
+
+    td:first-child { 
+      width: 30%;
+    }
     .nodata {
       color: rgba(0, 0, 0, 0.4) !important;
+    }
+  }
+
+  #archivedtable {
+    span {
+      background: #ffffff !important;
     }
   }
   

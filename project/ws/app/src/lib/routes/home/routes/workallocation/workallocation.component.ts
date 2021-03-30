@@ -123,7 +123,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
             position: user.userDetails.position,
             phone: user.userDetails.phone,
           })
-        } else if (user.allocationDetails.archivedList.length > 0) {
+        }
+        if (user.allocationDetails.archivedList.length > 0) {
           archiveUsersData.push({
             fullname: user ? `${user.userDetails.first_name} ${user.userDetails.last_name}` : null,
             email: user.userDetails.email,

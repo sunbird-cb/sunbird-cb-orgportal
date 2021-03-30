@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms'
 import { AllocationService } from '../../services/allocation.service'
-import { Router, ActivatedRoute } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 import { MatSnackBar } from '@angular/material'
-import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'ws-app-update-workallocation',
   templateUrl: './update-workallocation.component.html',
   styleUrls: ['./update-workallocation.component.scss'],
-  providers: [DatePipe],
 })
 export class UpdateWorkallocationComponent implements OnInit {
   tabsData!: any[]
@@ -38,12 +36,12 @@ export class UpdateWorkallocationComponent implements OnInit {
 
   config: ExportAsConfig = {
     type: 'pdf',
-    elementIdOrContent: 'mytable',
+    elementIdOrContent: 'downloadtemp',
     options: {
       jsPDF: {
         orientation: 'landscape',
       },
-      pdfCallbackFn: this.pdfCallbackFn, // to add header and footer
+      // pdfCallbackFn: this.pdfCallbackFn, // to add header and footer
     },
   }
   activitieslist: any[] = []
@@ -53,8 +51,7 @@ export class UpdateWorkallocationComponent implements OnInit {
   currentTime = new Date()
 
   constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
-              private fb: FormBuilder, private allocateSrvc: AllocationService,
-              private router: Router, private activeRoute: ActivatedRoute, private datePipe: DatePipe) {
+              private fb: FormBuilder, private allocateSrvc: AllocationService, private activeRoute: ActivatedRoute) {
             this.allocateduserID = this.activeRoute.snapshot.params.userId
 
             this.newAllocationForm = this.fb.group({
@@ -115,7 +112,7 @@ export class UpdateWorkallocationComponent implements OnInit {
             this.newAllocationForm.patchValue({
               fname: this.selectedUser.userDetails.first_name,
               email: this.selectedUser.userDetails.email,
-              position: this.selectedUser.allocationDetails.userPosition,
+              position: this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '',
             })
 
             this.setRole()
@@ -275,9 +272,10 @@ export class UpdateWorkallocationComponent implements OnInit {
         if (index >= 0) {
           this.ralist.splice(index, 1)
         }
-        row.archived = true
-        row.archivedAt  =  this.datePipe.transform(this.currentTime, 'medium')
+        row.isArchived = true
         this.archivedlist.push(row)
+
+        this.onSubmit()
       }
     }
   }
@@ -304,7 +302,8 @@ export class UpdateWorkallocationComponent implements OnInit {
         this.selectedRole = ''
         this.ralist = []
         this.archivedlist = []
-        this.router.navigate(['/app/home/workallocation'])
+        // this.router.navigate(['/app/home/workallocation'])
+        this.getAllUsers()
       }
     })
   }
