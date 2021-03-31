@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms'
 import { AllocationService } from '../../services/allocation.service'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 import { MatSnackBar } from '@angular/material'
 
@@ -11,6 +11,8 @@ import { MatSnackBar } from '@angular/material'
   styleUrls: ['./update-workallocation.component.scss'],
 })
 export class UpdateWorkallocationComponent implements OnInit {
+  @ViewChild('childNodes', { static: false })
+  inputvar!: ElementRef
   tabsData!: any[]
   userslist!: any[]
   currentTab = 'officer'
@@ -29,10 +31,18 @@ export class UpdateWorkallocationComponent implements OnInit {
   }
   similarUsers!: any []
   similarRoles!: any []
+  similarPositions!: any []
+  similarActivities!: any []
   selectedUser: any
+  orgselectedUser: any
   selectedRole: any
+  selectedActivity: any
+  selectedPosition: any
   ralist: any [] = []
   archivedlist: any [] = []
+  data: any = []
+  showRAerror = false
+  today: number = Date.now()
 
   config: ExportAsConfig = {
     type: 'pdf',
@@ -50,7 +60,7 @@ export class UpdateWorkallocationComponent implements OnInit {
   departmentID: any
   currentTime = new Date()
 
-  constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
+  constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar, private router: Router,
               private fb: FormBuilder, private allocateSrvc: AllocationService, private activeRoute: ActivatedRoute) {
             this.allocateduserID = this.activeRoute.snapshot.params.userId
 
@@ -105,26 +115,37 @@ export class UpdateWorkallocationComponent implements OnInit {
     this.allocateSrvc.getUsers(req).subscribe(res => {
       const userslist = res.result.data
       userslist.forEach((user: any) => {
-        if (this.allocateduserID === user.userDetails.wid) {
-          this.selectedUser = user
+        if (user.userDetails) {
+          if (this.allocateduserID === user.userDetails.wid) {
+            this.orgselectedUser = user
+            this.selectedUser = user
 
-          if (this.selectedUser) {
-            this.newAllocationForm.patchValue({
-              fname: this.selectedUser.userDetails.first_name,
-              email: this.selectedUser.userDetails.email,
-              position: this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '',
-            })
+            if (this.selectedUser) {
+              this.newAllocationForm.patchValue({
+                fname: this.selectedUser.userDetails.first_name,
+                email: this.selectedUser.userDetails.email,
+                position: this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '',
+              })
 
-            this.setRole()
-            // const newrole = this.newAllocationForm.get('rolelist') as FormArray
-            // newrole.at(0).patchValue(this.selectedUser.allocationDetails.activeList)
+              const downloaddata = {
+                fullname: user.userDetails ? `${user.userDetails.first_name} ${user.userDetails.last_name}` : null,
+                email: user.userDetails ? user.userDetails.email : '',
+                roles: user.allocationDetails.activeList,
+                userId: user.userDetails ? user.userDetails.wid : '',
+              }
+              this.data.push(downloaddata)
+              console.log('data', this.data)
 
-            this.ralist = this.selectedUser.allocationDetails.activeList
-            this.archivedlist = this.selectedUser.allocationDetails.archivedList
+              this.setRole()
+              // const newrole = this.newAllocationForm.get('rolelist') as FormArray
+              // newrole.at(0).patchValue(this.selectedUser.allocationDetails.activeList)
 
-            this.newAllocationForm.controls['fname'].disable()
-            this.newAllocationForm.controls['email'].disable()
-            this.newAllocationForm.controls['position'].disable()
+              this.ralist = this.selectedUser.allocationDetails.activeList
+              this.archivedlist = this.selectedUser.allocationDetails.archivedList
+
+              this.newAllocationForm.controls['fname'].disable()
+              this.newAllocationForm.controls['email'].disable()
+            }
           }
         }
       })
@@ -133,10 +154,12 @@ export class UpdateWorkallocationComponent implements OnInit {
 
   export() {
     // download the file using old school javascript method
-    this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
-      // save started
-    })
-    // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+    if (this.data) {
+      this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
+        // save started
+      })
+    }
+     // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
     // this.exportAsService.get(this.config).subscribe(content => {
     //   console.log(content)
     // })
@@ -185,6 +208,25 @@ export class UpdateWorkallocationComponent implements OnInit {
     return (<any>rl)['controls']
   }
 
+   // to get suggested position in right sidebar
+   onSearchPosition(event: any) {
+    const val = event.target.value
+    if (val.length > 2) {
+      const req = {
+        searches: [
+            {
+                type: 'POSITION',
+                field: 'name',
+                keyword: val,
+            },
+        ],
+    }
+      this.allocateSrvc.onSearchPosition(req).subscribe(res => {
+        this.similarPositions = res.responseData
+      })
+    }
+  }
+
   // to get suggested similar roles in right sidebar
   onSearchRole(event: any) {
     const val = event.target.value
@@ -192,6 +234,30 @@ export class UpdateWorkallocationComponent implements OnInit {
       this.similarRoles = []
       this.allocateSrvc.onSearchRole(val).subscribe(res => {
         this.similarRoles = res
+      })
+    }
+  }
+
+  onSearchActivity (event: any) {
+    const val = event.target.value
+    if (val.length > 2) {
+      this.similarActivities = []
+      const req = {
+        searches: [
+          {
+            type: 'ACTIVITY',
+            field: 'name',
+            keyword: val,
+          },
+          {
+            type: 'ACTIVITY',
+            field: 'status',
+            keyword: 'VERIFIED',
+          },
+        ],
+      }
+      this.allocateSrvc.onSearchActivity(req).subscribe(res => {
+        this.similarActivities = res.responseData
       })
     }
   }
@@ -213,51 +279,90 @@ export class UpdateWorkallocationComponent implements OnInit {
     newrole.at(0).patchValue(formatselectedRole)
   }
 
+  selectActivity(activity: any) {
+    this.selectedActivity = activity
+    this.similarActivities = []
+    this.inputvar.nativeElement.value = ''
+    this.activitieslist.push(activity)
+    this.selectedActivity = ''
+  }
+
+  selectPosition (pos: any) {
+    this.selectedPosition = pos
+    this.similarPositions = []
+    this.newAllocationForm.patchValue({
+      position: this.selectedPosition.name,
+    })
+  }
+
   // to push new obj to rolelist
   addRolesActivity(index: number) {
     if (index === 0 && this.selectedRole) {
-      this.ralist.push(this.selectedRole)
-      this.selectedRole = ''
-      this.activitieslist = []
+      if (this.activitieslist.length > 0) {
+        this.showRAerror =  false
+        this.selectedRole.childNodes = this.activitieslist
+        this.ralist.push(this.selectedRole)
+        this.selectedRole = ''
+        this.activitieslist = []
 
-      const control = <FormArray>this.newAllocationForm.controls['rolelist']
-      // tslint:disable-next-line:no-increment-decrement
-      for (let i = control.length - 1; i >= 0; i--) {
-          control.removeAt(i)
+        const control = this.newAllocationForm.get('rolelist') as FormArray
+        // tslint:disable-next-line:no-increment-decrement
+        for (let i = control.length - 1; i >= 0; i--) {
+            control.removeAt(i)
+        }
+
+        const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
+        newrolefield.push(this.newRole())
+
+        this.newAllocationForm.value.rolelist = this.ralist
+      } else {
+        this.showRAerror =  true
       }
-
-      const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
-      newrolefield.push(this.newRole())
-
-      this.newAllocationForm.value.rolelist = this.ralist
     } else {
-      const ra = []
-      ra.push(this.activitieslist)
-      const nrole = {
-        name: this.newAllocationForm.value.rolelist[0].name,
-        childNodes: ra,
+      if (this.newAllocationForm.value.rolelist[0].name && this.activitieslist.length > 0) {
+        this.showRAerror = false
+        const newroleformat = {
+          description: '',
+          id: '',
+          name: this.newAllocationForm.value.rolelist[0].name,
+          source: 'ISTM',
+          status: 'UNVERIFIED',
+          type: 'ROLE',
+          childNodes: this.activitieslist,
+        }
+        this.ralist.push(newroleformat)
+        this.activitieslist = []
+
+        const control = this.newAllocationForm.get('rolelist') as FormArray
+        // tslint:disable-next-line:no-increment-decrement
+        for (let i = control.length - 1; i >= 0; i--) {
+            control.removeAt(i)
+        }
+        const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
+        newrolefield.push(this.newRole())
+        this.newAllocationForm.value.rolelist = this.ralist
+      } else  {
+        this.showRAerror =  true
       }
-
-      const newrole = this.newAllocationForm.get('rolelist') as FormArray
-      newrole.at(0).patchValue(nrole)
-      this.ralist.push(nrole)
-
-      const control = <FormArray>this.newAllocationForm.controls['rolelist']
-      // tslint:disable-next-line:no-increment-decrement
-      for (let i = control.length - 1; i >= 0; i--) {
-          control.removeAt(i)
-      }
-
-      const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
-      newrolefield.push(this.newRole())
-
-      this.newAllocationForm.value.rolelist = this.ralist
     }
   }
 
   addActivity() {
-    const newactivity = this.newAllocationForm.value.rolelist[0].childNodes
-    this.activitieslist.push(newactivity)
+    if (!this.selectedActivity) {
+      const newactivity = this.newAllocationForm.value.rolelist[0].childNodes
+      const activityformat = {
+        description: '',
+        id: '',
+        name: newactivity,
+        parentRole: '',
+        source: 'ISTM',
+        status: 'UNVERIFIED',
+        type: 'ACTIVITY',
+      }
+      this.activitieslist.push(activityformat)
+      this.inputvar.nativeElement.value = ''
+      this.newAllocationForm.value.rolelist[0].childNodes = ''
+    }
   }
 
   buttonClick(action: string, row: any) {
@@ -274,38 +379,37 @@ export class UpdateWorkallocationComponent implements OnInit {
         }
         row.isArchived = true
         this.archivedlist.push(row)
-
-        this.onSubmit()
       }
     }
   }
 
   // final form submit
   onSubmit() {
-    // this.ralist.forEach((r: any) => {
-    //   r.isArchived = false
-    // })
-    // this.newAllocationForm.value.rolelist = this.ralist
-    const reqdata = {
-      userId: this.selectedUser.userDetails.wid,
-      deptId: this.departmentID,
-      deptName: this.departmentName,
-      activeList: this.ralist,
-      archivedList: this.archivedlist,
-    }
-
-    this.allocateSrvc.updateAllocation(reqdata).subscribe(res => {
-      if (res) {
-        this.openSnackbar('Work Allocation updated Successfully')
-        this.newAllocationForm.reset()
-        this.selectedUser = ''
-        this.selectedRole = ''
-        this.ralist = []
-        this.archivedlist = []
-        // this.router.navigate(['/app/home/workallocation'])
-        this.getAllUsers()
+    // if (this.orgselectedUser !== this.selectedUser) {
+      const reqdata = {
+        userId: this.selectedUser.userDetails.wid,
+        deptId: this.departmentID,
+        deptName: this.departmentName,
+        activeList: this.ralist,
+        archivedList: this.archivedlist,
+        userPosition: this.selectedPosition ? this.selectedPosition.name : this.selectedUser.allocationDetails.userPosition,
       }
-    })
+
+      this.allocateSrvc.updateAllocation(reqdata).subscribe(res => {
+        if (res) {
+          this.openSnackbar('Work Allocation updated Successfully')
+          this.newAllocationForm.reset()
+          this.selectedUser = ''
+          this.selectedRole = ''
+          this.ralist = []
+          this.archivedlist = []
+          this.router.navigate(['/app/home/workallocation'])
+          // this.getAllUsers()
+        }
+      })
+    // } else {
+    //   this.openSnackbar('No changes to update')
+    // }
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

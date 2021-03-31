@@ -7,16 +7,15 @@
                     [widgetData]="{titles:[{title:'Work allocation', url:'/app/home/workallocation'},{title:'Active', url:'none'}] }">
                 </ws-widget-breadcrumbs-org>
         
-                <!-- <button mat-raised-button type="submit" (click)="onSubmit()" class="text-white btn-success btn-responsive" 
-                [disabled]="newAllocationForm?.invalid" id="savebtn">
-                    <span class="text-white" i18n>Save</span>
-                </button> -->
                 <div class="btn-div">  
                     <button type="button" mat-button class="downlaod-btn" (click)="export()">
                         <mat-icon>cloud_download</mat-icon> Download
                     </button>
-                    <button type="button" mat-button class="print-btn">
+                    <!-- <button type="button" mat-button class="print-btn">
                         <mat-icon>print</mat-icon> Print
+                    </button> -->
+                    <button mat-raised-button type="submit" (click)="onSubmit()" class="text-white btn-success btn-responsive" id="savebtn">
+                        <span class="text-white" i18n>Save</span>
                     </button>
                 </div>
             </div>
@@ -87,8 +86,7 @@
                                         Position
                                     </label>
                                     <mat-form-field appearance="outline" class="margin-top-xs">
-                                        <input type="text" id="position" matInput #fname formControlName="position" i18n-placeholder placeholder=""
-                                        i18n-aria-label aria-label="position input" class="form-input" autocomplete="off" [disabled]="true" />
+                                        <input type="text" id="position" matInput #fname formControlName="position" i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="position input" class="form-input" autocomplete="off" (keypress)="onSearchPosition($event)" (keyup)="onSearchPosition($event)" />
                                     </mat-form-field>
                                     </div>
                                 </div>
@@ -132,7 +130,7 @@
                                                         <input id="childNodes" matInput #childNodes formControlName="childNodes" i18n-placeholder 
                                                         placeholder="Activities here"
                                                         i18n-aria-label aria-label="childNodes input" class="form-input" autocomplete="off" />
-                                                        <span class="addbtn blue-color-text">Add</span>
+                                                        <span class="addbtn blue-color-text" (click)="addActivity()">Add</span>
                                                     </mat-form-field>
                                                 </div>
     
@@ -140,7 +138,8 @@
                                                     <h3>Associated activities</h3>
                                                     <p><span *ngFor="let a of activitieslist">{{a.name}}</span></p>
                                                 </div>
-                                                <button mat-raised-button class="text-white btn-success btn-responsive" id="addtolist-btn">
+                                                <p *ngIf="showRAerror" class="mat-error ss">Add both role & activities</p>
+                                                <button mat-raised-button class="text-white btn-success btn-responsive" id="addtolist-btn" (click)="addRolesActivity(ri)">
                                                     <span class="text-white" i18n>Add to the list</span>
                                                 </button>
                                                 </div>
@@ -240,21 +239,6 @@
             <ng-container id="changelog">
                 <div>
                 <label class="change-log-text margin-top-l margin-bottom-l margin-left-m margin-right-m">Similar items</label>
-                <div class="w-full similarUsersList" *ngIf="similarUsers && similarUsers.length > 0"> 
-                    <div class="suser-card" *ngFor="let user of similarUsers">
-                        <div class="padding-top-m padding-left-s padding-right-s">
-                            <span class="letter-color">{{user.userDetails.first_name.charAt(0)}}{{user.userDetails.last_name.charAt(0)}}</span> <mat-icon class="groupicon">group</mat-icon>
-                        </div>
-                        <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s">
-                            <p class="username">{{user.userDetails.first_name}} {{user.userDetails.last_name ? user.userDetails.last_name : ''}}</p>
-                            <p class="useremail">{{user.userDetails.email}}</p>
-                            <p class="userpos">{{user.userDetails.position ? user.userDetails.position : ''}}</p>
-                        </div>
-                        <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
-                            <button id="adduser" (click)="selectUser(user)">Add</button>
-                        </div>
-                    </div>
-                </div>
                 <div class="w-full similarUsersList" *ngIf="similarRoles && similarRoles.length > 0">
                     <div class="suser-card" *ngFor="let role of similarRoles">
                         <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
@@ -265,17 +249,28 @@
                             <button id="addrole" (click)="selectRole(role)">Add</button>
                         </div>
                     </div>
-    
+                </div>
+                <div class="w-full similarUsersList" *ngIf="similarPositions && similarPositions.length > 0">
+                    <div class="suser-card" *ngFor="let pos of similarPositions">
+                        <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                            <p class="username">{{pos.name}}</p>
+                            <!-- <p class="userpos">{{role.childNodes.length}} activities</p> -->
+                        </div>
+                        <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                            <button id="addrole" (click)="selectPosition(pos)">Add</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="no-request-text margin-m">
-                    <label *ngIf="!similarUsers && !similarRoles">System will recommend similar items to avoid duplication</label>
-                    <!-- <label *ngIf="similarUsers && similarUsers.length === 0">No users found</label>
-                    <label *ngIf="similarRoles && similarRoles.length === 0">No roles found</label> -->
+                    <label *ngIf="!similarPositions && !similarRoles">System will recommend similar items to avoid duplication</label>
+                    <label *ngIf="(similarUsers && similarUsers.length === 0) || (similarRoles && similarRoles.length === 0) || (similarPositions && similarPositions.length === 0)">No data found</label>
+                    <!-- <label *ngIf="similarRoles && similarRoles.length === 0">No roles found</label>
+                    <label *ngIf="similarPositions && similarPositions.length === 0">No position found</label> -->
                 </div>
                 </div>
             </ng-container>
             </div>
 
-            <!-- <ws-app-download-allocation id="downloadtemp" [data]="" [deptname]="departmentName"></ws-app-download-allocation> -->
+            <!-- <ws-app-download-allocation id="downloadtemp" [data]="data" [deptname]="departmentName" *ngIf="data"></ws-app-download-allocation> -->
         </div>
     </div>

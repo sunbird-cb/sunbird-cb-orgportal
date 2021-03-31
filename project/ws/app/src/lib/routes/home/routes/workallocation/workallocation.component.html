@@ -32,12 +32,12 @@
                       </div>
                   </div>
                   <div class="flex-3 right-align">
-                        <button type="button" mat-button class="downlaod-btn" (click)="export()">
+                        <!-- <button type="button" mat-button class="downlaod-btn" (click)="export()">
                             <mat-icon>cloud_download</mat-icon> Download
                         </button>
                         <button type="button" mat-button class="print-btn">
                             <mat-icon>print</mat-icon> Print
-                        </button>
+                        </button> -->
                         <button type="button" mat-button class="allocation-btn" (click)="onNewAllocationClick()">
                             New work allocation
                         </button>
@@ -47,16 +47,16 @@
 
           <table class="allocation-table" id="allocation-table" cell-spacing='0' cell-padding='0'>
             <tr>
-                <th><input type="checkbox"></th>
-                <th>Full name</th>
+                <!-- <th><input type="checkbox"></th> -->
+                <th (click)="sort()">Full name</th>
                 <th>Roles</th>
                 <th>Activities</th>
                 <th></th>
             </tr>
-            <tr *ngFor="let d of data | filter: term" class="data-row" (click)="viewAllocation(d)">
-                <td><input type="checkbox"></td>
-                <td aria-rowspan="d.roles.length+1">{{d.fullname}}</td>
-                <td colspan="2">
+            <tr *ngFor="let d of data | filter: term" class="data-row">
+                <!-- <td><input type="checkbox"></td> -->
+                <td aria-rowspan="d.roles.length+1" (click)="viewAllocation(d)">{{d.fullname}}</td>
+                <td colspan="2" (click)="viewAllocation(d)">
                     <ul>
                         <li *ngFor="let r of d.roles">
                             <div class="table-role">
@@ -76,7 +76,7 @@
                 </td>
             </tr>
           </table>
-          <mat-paginator [length]="length" [pageSize]="pageSize"  [pageSizeOptions]="pageSizeOptions" *ngIf="data && data.length > 0"></mat-paginator>
+          <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" *ngIf="data && data.length > 0"></mat-paginator>
 
           <div *ngIf="data && data.length === 0" class="margin-left-xs margin-l font-medium ">
             No data found
@@ -88,10 +88,10 @@
                     class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
                     <mat-icon>cloud_download</mat-icon> <span>Download</span>
                 </button>
-                <button (click)="buttonClick('Print',rowData)"mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
+                <!-- <button (click)="buttonClick('Print',rowData)"mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
                     aria-label="Analytics">
                     <mat-icon>print</mat-icon> <span>Print</span>
-                </button>
+                </button> -->
                 <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
                     aria-label="Analytics">
                     <mat-icon>archive</mat-icon> <span>Archive allocation</span>

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs'
 const API_END_POINTS = {
   SEARCH_USER: 'apis/protected/v8/workallocation/user/autocomplete',
   SEARCH_ROLE: 'apis/protected/v8/roleactivity',
+  SEARCH_NODES: 'apis/protected/v8/frac/searchNodes',
   CREATE_ALLOCATION: 'apis/protected/v8/workallocation/add',
   UPDATE_ALLOCATION: 'apis/protected/v8/workallocation/update',
   GET_ALL_USERS: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
@@ -24,6 +25,14 @@ export class AllocationService {
 
   onSearchRole(val: any): Observable<any> {
     return this.http.get<any>(`${API_END_POINTS.SEARCH_ROLE}/${val}`)
+  }
+
+  onSearchPosition(req: any): Observable<any> {
+    return this.http.post<any>(`${API_END_POINTS.SEARCH_NODES}`, req)
+  }
+
+  onSearchActivity(req: any): Observable<any> {
+    return this.http.post<any>(`${API_END_POINTS.SEARCH_NODES}`, req)
   }
 
   createAllocation(req: any): Observable<any> {

@@ -89,7 +89,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
 
   getdeptUsers() {
     this.workallocationSrvc.getAllUsers().subscribe(res => {
-      console.log('all users ', res)
       this.departmentName = res.deptName
       this.departmentID = res.id
       this.getAllUsers()
@@ -116,22 +115,22 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
       this.userslist.forEach((user: any) => {
         if (user.allocationDetails.activeList.length > 0) {
           activeUsersData.push({
-            fullname: user ? `${user.userDetails.first_name} ${user.userDetails.last_name}` : null,
-            email: user.userDetails.email,
+            fullname: user.userDetails ? `${user.userDetails.first_name} ${user.userDetails.last_name}` : null,
+            email: user.userDetails ? user.userDetails.email : '',
             roles: user.allocationDetails.activeList,
-            userId: user.userDetails.wid,
-            position: user.userDetails.position,
-            phone: user.userDetails.phone,
+            userId: user.userDetails ? user.userDetails.wid : '',
+            position: user.userDetails ? user.userDetails.position : '',
+            phone: user.userDetails ? user.userDetails.phone : '',
           })
         }
         if (user.allocationDetails.archivedList.length > 0) {
           archiveUsersData.push({
-            fullname: user ? `${user.userDetails.first_name} ${user.userDetails.last_name}` : null,
-            email: user.userDetails.email,
+            fullname: user.userDetails ? `${user.userDetails.first_name} ${user.userDetails.last_name}` : null,
+            email: user.userDetails ? user.userDetails.email : '',
             roles: user.allocationDetails.archivedList,
-            userId: user.userDetails.wid,
-            position: user.userDetails.position,
-            phone: user.userDetails.phone,
+            userId: user.userDetails ? user.userDetails.wid : '',
+            position: user.userDetails ? user.userDetails.position : '',
+            phone: user.userDetails ? user.userDetails.phone : '',
           })
         }
       })

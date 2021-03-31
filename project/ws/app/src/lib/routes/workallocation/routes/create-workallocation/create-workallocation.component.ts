@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms'
 import { AllocationService } from '../../services/allocation.service'
 import { Router } from '@angular/router'
@@ -11,6 +11,8 @@ import { MatSnackBar } from '@angular/material'
   styleUrls: ['./create-workallocation.component.scss'],
 })
 export class CreateWorkallocationComponent implements OnInit {
+  @ViewChild('childNodes', { static: false })
+  inputvar!: ElementRef
   tabsData!: any[]
   userslist!: any[]
   currentTab = 'officer'
@@ -29,11 +31,16 @@ export class CreateWorkallocationComponent implements OnInit {
   }
   similarUsers!: any []
   similarRoles!: any []
+  similarPositions!: any []
+  similarActivities!: any []
   selectedUser: any
   selectedRole: any
+  selectedActivity: any
+  selectedPosition: any
   ralist: any [] = []
   departmentName: any
   departmentID: any
+  showRAerror = false
 
   config: ExportAsConfig = {
     type: 'pdf',
@@ -53,7 +60,7 @@ export class CreateWorkallocationComponent implements OnInit {
     this.newAllocationForm = this.fb.group({
       fname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      position: [''],
+      position: ['', Validators.required],
       rolelist: this.fb.array([this.newRole()]),
     })
   }
@@ -125,14 +132,6 @@ export class CreateWorkallocationComponent implements OnInit {
     })
   }
 
-  // to set new roles array field
-  // newRole(): FormGroup {
-  //  return this.fb.group({
-  //   name: new FormControl('', [Validators.required]),
-  //   childNodes: new FormControl('', [Validators.required]),
-  // })
-  // }
-
   newRole(): FormGroup {
     return this.fb.group({
       name: new FormControl(''),
@@ -166,10 +165,50 @@ export class CreateWorkallocationComponent implements OnInit {
       this.allocateSrvc.onSearchRole(val).subscribe(res => {
         this.similarRoles = res
       })
+    }
+  }
 
-      // if (this.rolesList.filter((d: any) => (d.rolename.toLowerCase().includes(val.toLowerCase())))) {
-      //   this.similarRoles = this.rolesList.filter((d: any) => (d.rolename.toLowerCase().includes(val.toLowerCase())))
-      // }
+  onSearchActivity (event: any) {
+    const val = event.target.value
+    if (val.length > 2) {
+      this.similarActivities = []
+      const req = {
+        searches: [
+          {
+            type: 'ACTIVITY',
+            field: 'name',
+            keyword: val,
+          },
+          {
+            type: 'ACTIVITY',
+            field: 'status',
+            keyword: 'VERIFIED',
+          },
+        ],
+      }
+      this.allocateSrvc.onSearchActivity(req).subscribe(res => {
+        this.similarActivities = res.responseData
+      })
+    }
+  }
+
+  // to get suggested position in right sidebar
+  onSearchPosition(event: any) {
+    const val = event.target.value
+    if (val.length > 2) {
+      this.similarPositions = []
+      const req = {
+        searches: [
+            {
+                type: 'POSITION',
+                field: 'name',
+                keyword: val,
+            },
+        ],
+      }
+      this.allocateSrvc.onSearchPosition(req).subscribe(res => {
+        this.similarPositions = res.responseData
+      })
     }
   }
 
@@ -198,6 +237,7 @@ export class CreateWorkallocationComponent implements OnInit {
     this.selectedRole = role
     this.activitieslist = this.selectedRole.childNodes
     this.similarRoles = []
+    this.selectedActivity = ''
 
     const formatselectedRole = role
     const actnodes: any[] = []
@@ -210,63 +250,78 @@ export class CreateWorkallocationComponent implements OnInit {
     newrole.at(0).patchValue(formatselectedRole)
   }
 
+  selectActivity(activity: any) {
+    this.selectedActivity = activity
+    this.similarActivities = []
+    this.inputvar.nativeElement.value = ''
+    this.activitieslist.push(activity)
+    this.selectedActivity = ''
+  }
+
+  selectPosition (pos: any) {
+    this.selectedPosition = pos
+    this.similarPositions = []
+    this.newAllocationForm.patchValue({
+      position: this.selectedPosition.name,
+    })
+  }
+
   // to push new obj to rolelist
   addRolesActivity(index: number) {
     if (index === 0 && this.selectedRole) {
-      this.selectedRole.childNodes = this.activitieslist
-      this.ralist.push(this.selectedRole)
-      this.selectedRole = ''
-      this.activitieslist = []
+      if (this.activitieslist.length > 0) {
+        this.showRAerror =  false
+        this.selectedRole.childNodes = this.activitieslist
+        this.ralist.push(this.selectedRole)
+        this.selectedRole = ''
+        this.activitieslist = []
 
-      const control = this.newAllocationForm.get('rolelist') as FormArray
-      // tslint:disable-next-line:no-increment-decrement
-      for (let i = control.length - 1; i >= 0; i--) {
-          control.removeAt(i)
+        const control = this.newAllocationForm.get('rolelist') as FormArray
+        // tslint:disable-next-line:no-increment-decrement
+        for (let i = control.length - 1; i >= 0; i--) {
+            control.removeAt(i)
+        }
+
+        const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
+        newrolefield.push(this.newRole())
+
+        this.newAllocationForm.value.rolelist = this.ralist
+      } else {
+        this.showRAerror =  true
       }
-
-      const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
-      newrolefield.push(this.newRole())
-
-      this.newAllocationForm.value.rolelist = this.ralist
     } else {
-      // const ra = []
-      // ra.push(this.activitieslist)
-      // const nrole = {
-      //   name: this.newAllocationForm.value.rolelist[0].name,
-      //   childNodes: ra,
-      // }
+      if (this.newAllocationForm.value.rolelist[0].name && this.activitieslist.length > 0) {
+        this.showRAerror = false
+        const newroleformat = {
+          description: '',
+          id: '',
+          name: this.newAllocationForm.value.rolelist[0].name,
+          source: 'ISTM',
+          status: 'UNVERIFIED',
+          type: 'ROLE',
+          childNodes: this.activitieslist,
+        }
+        this.ralist.push(newroleformat)
+        this.activitieslist = []
 
-      const newroleformat = {
-        description: '',
-        id: '',
-        name: this.newAllocationForm.value.rolelist[0].name,
-        source: 'ISTM',
-        status: 'UNVERIFIED',
-        type: 'ROLE',
-        childNodes: this.activitieslist,
+        const control = this.newAllocationForm.get('rolelist') as FormArray
+        // tslint:disable-next-line:no-increment-decrement
+        for (let i = control.length - 1; i >= 0; i--) {
+            control.removeAt(i)
+        }
+        const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
+        newrolefield.push(this.newRole())
+        // const newrole = this.newAllocationForm.get('rolelist') as FormArray
+        // newrole.at(0).patchValue(newroleformat)
+        this.newAllocationForm.value.rolelist = this.ralist
+      } else  {
+        this.showRAerror =  true
       }
-
-      this.ralist.push(newroleformat)
-      this.activitieslist = []
-
-      const control = this.newAllocationForm.get('rolelist') as FormArray
-      // tslint:disable-next-line:no-increment-decrement
-      for (let i = control.length - 1; i >= 0; i--) {
-          control.removeAt(i)
-      }
-
-      const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
-      newrolefield.push(this.newRole())
-
-      // const newrole = this.newAllocationForm.get('rolelist') as FormArray
-      // newrole.at(0).patchValue(newroleformat)
-
-      this.newAllocationForm.value.rolelist = this.ralist
     }
   }
 
   addActivity() {
-    if (!this.selectedRole) {
+    if (!this.selectedActivity) {
       const newactivity = this.newAllocationForm.value.rolelist[0].childNodes
       const activityformat = {
         description: '',
@@ -278,6 +333,7 @@ export class CreateWorkallocationComponent implements OnInit {
         type: 'ACTIVITY',
       }
       this.activitieslist.push(activityformat)
+      this.inputvar.nativeElement.value = ''
       this.newAllocationForm.value.rolelist[0].childNodes = ''
     }
   }
@@ -300,11 +356,18 @@ export class CreateWorkallocationComponent implements OnInit {
     })
     this.newAllocationForm.value.rolelist = this.ralist
     const reqdata = {
-      userId: this.selectedUser.userDetails.wid,
+      userId: this.selectedUser ? this.selectedUser.userDetails.wid : '',
       deptId: this.departmentID,
       deptName: this.departmentName,
       activeList: this.ralist,
+      userName: this.newAllocationForm.value.fname,
+      userEmail: this.newAllocationForm.value.email,
+      userPosition: this.newAllocationForm.value.position,
       archivedList: [],
+    }
+
+    if (this.selectedUser && this.selectedUser.allocationDetails) {
+      reqdata.activeList = this.selectedUser.allocationDetails.archivedList
     }
 
     this.allocateSrvc.createAllocation(reqdata).subscribe(res => {

@@ -76,7 +76,8 @@
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-xs">
                                     <input id="email" matInput #email formControlName="email" i18n-placeholder placeholder="Type here"
-                                    i18n-aria-label aria-label="Email input" class="form-input" autocomplete="off" />
+                                    i18n-aria-label aria-label="Email input" class="form-input" autocomplete="off" 
+                                    (keypress)="onSearchUser($event)" (keyup)="onSearchUser($event)" />
                                     <mat-error [hidden]="false" i18n="Email Error|Explains name is required" i18n-aria-label
                                     aria-label="Email Error|Explains name is required "
                                     *ngIf="newAllocationForm?.controls['email']?.touched && newAllocationForm?.controls['email'].errors?.required">
@@ -94,12 +95,13 @@
                                     Position
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-xs">
-                                    <input type="text" id="position" matInput #fname formControlName="position" i18n-placeholder placeholder="Type here"
-                                    i18n-aria-label aria-label="position input" class="form-input" autocomplete="off" />
-                                    <mat-error [hidden]="false" i18n="First name Error|Explains name is required" i18n-aria-label
-                                    aria-label="First name Error|Explains name is required "
-                                    *ngIf="newAllocationForm?.controls['fname']?.touched && newAllocationForm?.controls['fname'].errors?.required">
-                                    Name is mandatory
+                                    <input type="text" id="position" matInput #position formControlName="position" i18n-placeholder placeholder="Type here"
+                                    i18n-aria-label aria-label="position input" class="form-input" autocomplete="off" 
+                                    (keypress)="onSearchPosition($event)" (keyup)="onSearchPosition($event)" />
+                                    <mat-error [hidden]="false" i18n="Position Error|Explains position is required" i18n-aria-label
+                                    aria-label="Position Error|Explains position is required "
+                                    *ngIf="newAllocationForm?.controls['position']?.touched && newAllocationForm?.controls['position'].errors?.required">
+                                    Position is mandatory
                                     </mat-error>
                                 </mat-form-field>
                                 </div>
@@ -143,7 +145,8 @@
                                                 <mat-form-field appearance="outline" class="margin-top-xs">
                                                     <input id="childNodes" matInput #childNodes formControlName="childNodes" i18n-placeholder 
                                                     placeholder="Activities here"
-                                                    i18n-aria-label aria-label="childNodes input" class="form-input" autocomplete="off" />
+                                                    i18n-aria-label aria-label="childNodes input" class="form-input" autocomplete="off" 
+                                                    (keypress)="onSearchActivity($event)" (keyup)="onSearchActivity($event)" />
                                                     <span (click)="addActivity()" class="addbtn blue-color-text">Add</span>
                                                 </mat-form-field>
                                             </div>
@@ -152,6 +155,7 @@
                                                 <h3>Associated activities</h3>
                                                 <p><span *ngFor="let a of activitieslist">{{a.name}}</span></p>
                                             </div>
+                                            <p *ngIf="showRAerror" class="mat-error font-xs">Add both role & activities</p>
                                             <button mat-raised-button class="text-white btn-success btn-responsive" id="addtolist-btn" (click)="addRolesActivity(ri)">
                                                 <span class="text-white" i18n>Add to the list</span>
                                             </button>
@@ -244,12 +248,36 @@
                         <button id="addrole" (click)="selectRole(role)">Add</button>
                     </div>
                 </div>
-
+            </div>
+            <div class="w-full similarUsersList" *ngIf="similarActivities && similarActivities.length > 0">
+                <div class="suser-card" *ngFor="let act of similarActivities">
+                    <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                        <p class="username">{{act.name}}</p>
+                    </div>
+                    <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                        <button id="addactivity" (click)="selectActivity(act)">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full similarUsersList" *ngIf="similarPositions && similarPositions.length > 0">
+                <div class="suser-card" *ngFor="let pos of similarPositions">
+                    <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                        <p class="username">{{pos.name}}</p>
+                    </div>
+                    <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                        <button id="addpos" (click)="selectPosition(pos)">Add</button>
+                    </div>
+                </div>
             </div>
             <div class="no-request-text margin-m">
-                <label *ngIf="!similarUsers && !similarRoles">System will recommend similar items to avoid duplication</label>
+                <label *ngIf="!similarUsers && !similarRoles && !similarActivities && !similarPositions">System will recommend similar items to avoid duplication</label>
+                <label *ngIf="(similarUsers && similarUsers.length === 0) || 
+                (similarRoles && similarRoles.length === 0) || 
+                (similarActivities && similarActivities.length === 0) ||
+                (similarPositions && similarPositions.length === 0)">No data found</label>
                 <!-- <label *ngIf="similarUsers && similarUsers.length === 0">No users found</label>
-                <label *ngIf="similarRoles && similarRoles.length === 0">No roles found</label> -->
+                <label *ngIf="similarRoles && similarRoles.length === 0">No roles found</label>
+                <label *ngIf="similarPositions && similarPositions.length === 0">No position found</label> -->
             </div>
             </div>
         </ng-container>
