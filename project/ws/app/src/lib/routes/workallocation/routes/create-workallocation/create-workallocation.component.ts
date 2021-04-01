@@ -238,7 +238,12 @@ export class CreateWorkallocationComponent implements OnInit {
   // to add the selected role to form value
   selectRole(role: any) {
     this.selectedRole = role
-    this.activitieslist = this.selectedRole.childNodes
+    // this.activitieslist = this.selectedRole.childNodes
+    this.selectedRole.childNodes.forEach((node: any) => {
+      if (node.name) {
+        this.activitieslist.push(node)
+      }
+    })
     this.similarRoles = []
     this.selectedActivity = ''
 

@@ -10,6 +10,10 @@
 .card-heading {
   padding: 0 !important;
 }
+::ng-deep.container-balanced{
+  max-width: 99% !important;
+}
+
 .top-bar {
   position: relative;
   min-width: 25% !important;
@@ -173,6 +177,7 @@
     font-family: "Lato";
     font-weight: 700;
     font-size: 14px;
+    display: block;
   }
 }
   
