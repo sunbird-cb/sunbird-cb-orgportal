@@ -147,7 +147,8 @@
                                                     placeholder="Activities here"
                                                     i18n-aria-label aria-label="childNodes input" class="form-input" autocomplete="off" 
                                                     (keypress)="onSearchActivity($event)" (keyup)="onSearchActivity($event)" />
-                                                    <span (click)="addActivity()" class="addbtn blue-color-text">Add</span>
+                                                    <span (click)="addActivity()" class="addbtn blue-color-text" 
+                                                    *ngIf="newAllocationForm.value.rolelist[0].childNodes">Add</span>
                                                 </mat-form-field>
                                             </div>
 

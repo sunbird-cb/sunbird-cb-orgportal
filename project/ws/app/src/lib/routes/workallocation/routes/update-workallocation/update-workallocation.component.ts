@@ -279,6 +279,8 @@ export class UpdateWorkallocationComponent implements OnInit {
     const newrole = this.newAllocationForm.get('rolelist') as FormArray
     // newrole.push(this.newRole())
     newrole.at(0).patchValue(formatselectedRole)
+    this.inputvar.nativeElement.value = ''
+    this.newAllocationForm.value.rolelist[0].childNodes = ''
   }
 
   selectActivity(activity: any) {
@@ -352,16 +354,18 @@ export class UpdateWorkallocationComponent implements OnInit {
   addActivity() {
     if (!this.selectedActivity) {
       const newactivity = this.newAllocationForm.value.rolelist[0].childNodes
-      const activityformat = {
-        description: '',
-        id: '',
-        name: newactivity,
-        parentRole: '',
-        source: 'ISTM',
-        status: 'UNVERIFIED',
-        type: 'ACTIVITY',
+      if (newactivity) {
+        const activityformat = {
+          description: '',
+          id: '',
+          name: newactivity,
+          parentRole: '',
+          source: 'ISTM',
+          status: 'UNVERIFIED',
+          type: 'ACTIVITY',
+        }
+        this.activitieslist.push(activityformat)
       }
-      this.activitieslist.push(activityformat)
       this.inputvar.nativeElement.value = ''
       this.newAllocationForm.value.rolelist[0].childNodes = ''
     }
@@ -380,6 +384,7 @@ export class UpdateWorkallocationComponent implements OnInit {
           this.ralist.splice(index, 1)
         }
         row.isArchived = true
+        row.archivedAt = new Date().getTime()
         this.archivedlist.push(row)
       }
     }
@@ -389,8 +394,10 @@ export class UpdateWorkallocationComponent implements OnInit {
   onSubmit() {
     // if (this.orgselectedUser !== this.selectedUser) {
       const reqdata = {
-        id: this.selectedUser.allocationDetails ?  this.selectedUser.allocationDetails.id : this.selectedUser.allocationDetails.userId,
-        userId: this.selectedUser.allocationDetails ?  this.selectedUser.allocationDetails.userId : this.selectedUser.allocationDetails.id,
+        id: (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.id !== null) ?
+        this.selectedUser.allocationDetails.id : '',
+        userId: (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.userId !== null) ?
+        this.selectedUser.allocationDetails.userId : '',
         deptId: this.departmentID,
         deptName: this.departmentName,
         activeList: this.ralist,
