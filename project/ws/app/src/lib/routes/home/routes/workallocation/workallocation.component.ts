@@ -29,15 +29,10 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
   config: ExportAsConfig = {
     type: 'pdf',
     elementIdOrContent: 'downloadtemplate',
-    options: {
-      jsPDF: {
-        orientation: 'landscape',
-      },
-      // pdfCallbackFn: this.pdfCallbackFn, // to add header and footer
-    },
   }
   userslist: any[] = []
   downloaddata: any = []
+  // paginationconfig: any
 
   ngOnDestroy() {
     if (this.tabs) {
@@ -88,6 +83,10 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
     }
   }
 
+  // pageChanged(event: any){
+  //   this.paginationconfig.currentPage = event;
+  // }
+
   getdeptUsers() {
     this.workallocationSrvc.getAllUsers().subscribe(res => {
       this.departmentName = res.deptName
@@ -119,7 +118,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
             fullname: user.allocationDetails.userName,
             email: user.allocationDetails.userEmail,
             roles: user.allocationDetails.activeList,
-            userId: user.allocationDetails.userId,
+            userId: user.allocationDetails.userId || user.allocationDetails.id,
             position: user.allocationDetails.userPosition,
             phone: user.userDetails ? user.userDetails.phone : '',
           })
@@ -129,7 +128,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
             fullname: user.allocationDetails.userName,
             email: user.allocationDetails.userEmail,
             roles: user.allocationDetails.archivedList,
-            userId: user.allocationDetails.userId,
+            userId: user.allocationDetails.userId || user.allocationDetails.id,
             position: user.allocationDetails.userPosition,
             phone: user.userDetails ? user.userDetails.phone : '',
           })
@@ -154,6 +153,13 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
 
     this.length = this.data.length
     // this.paginator.firstPage()
+
+    // this.paginationconfig = {
+    //   id: 'custom',
+    //   itemsPerPage: 2,
+    //   currentPage: 1,
+    //   totalItems: this.data.count
+    // };
   }
 
   // tslint:disable-next-line:use-lifecycle-interface

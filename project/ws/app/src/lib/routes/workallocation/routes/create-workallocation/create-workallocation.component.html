@@ -46,7 +46,7 @@
                                             <p class="userpos">{{selectedUser.userDetails.position}} at {{selectedUser.userDetails.department_name}}</p>
                                         </div>
                                         <div class="padding-m userinfo">
-                                            <p><mat-icon class="close-icon">phone</mat-icon> {{selectedUser.userDetails.phone}}</p>
+                                            <!-- <p><mat-icon class="close-icon">phone</mat-icon> {{selectedUser.userDetails.phone}}</p> -->
                                             <p><mat-icon class="close-icon">email</mat-icon> {{selectedUser.userDetails.email}}</p>
                                             <p class="blue-color-text"><mat-icon class="close-icon">group</mat-icon> Network Profile</p>
                                         </div>
@@ -271,10 +271,10 @@
             </div>
             <div class="no-request-text margin-m">
                 <label *ngIf="!similarUsers && !similarRoles && !similarActivities && !similarPositions">System will recommend similar items to avoid duplication</label>
-                <label *ngIf="(similarUsers && similarUsers.length === 0) || 
+                <!-- <label *ngIf="(similarUsers && similarUsers.length === 0) || 
                 (similarRoles && similarRoles.length === 0) || 
                 (similarActivities && similarActivities.length === 0) ||
-                (similarPositions && similarPositions.length === 0)">No data found</label>
+                (similarPositions && similarPositions.length === 0)">No data found</label> -->
                 <!-- <label *ngIf="similarUsers && similarUsers.length === 0">No users found</label>
                 <label *ngIf="similarRoles && similarRoles.length === 0">No roles found</label>
                 <label *ngIf="similarPositions && similarPositions.length === 0">No position found</label> -->

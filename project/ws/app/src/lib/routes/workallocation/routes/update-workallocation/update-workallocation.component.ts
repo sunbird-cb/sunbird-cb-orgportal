@@ -48,12 +48,12 @@ export class UpdateWorkallocationComponent implements OnInit {
   config: ExportAsConfig = {
     type: 'pdf',
     elementIdOrContent: 'downloadtemp',
-    options: {
-      jsPDF: {
-        orientation: 'landscape',
-      },
-      // pdfCallbackFn: this.pdfCallbackFn, // to add header and footer
-    },
+    // options: {
+    //   jsPDF: {
+    //     orientation: 'landscape',
+    //   },
+    //   pdfCallbackFn: this.pdfCallbackFn, // to add header and footer
+    // },
   }
   activitieslist: any[] = []
   allocateduserID: any
@@ -116,8 +116,8 @@ export class UpdateWorkallocationComponent implements OnInit {
     this.allocateSrvc.getUsers(req).subscribe(res => {
       const userslist = res.result.data
       userslist.forEach((user: any) => {
-        if (user.userDetails) {
-          if (this.allocateduserID === user.userDetails.wid) {
+        // if (user.userDetails) {
+          if (this.allocateduserID === (user.allocationDetails.id || user.allocationDetails.userId)) {
             this.orgselectedUser = user
             this.selectedUser = user
 
@@ -147,7 +147,7 @@ export class UpdateWorkallocationComponent implements OnInit {
               // this.newAllocationForm.controls['email'].disable()
             }
           }
-        }
+        // }
       })
     })
   }

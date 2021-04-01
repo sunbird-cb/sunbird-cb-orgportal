@@ -49,13 +49,14 @@
                                     <div class="officer-card">
                                         <div class="bg-grey"></div>
                                         <div class="padding-m userdata">
-                                            <p class="letter-color">{{selectedUser.userDetails.first_name.charAt(0)}}{{selectedUser.userDetails.last_name.charAt(0)}}</p>
-                                            <p class="username">{{selectedUser.userDetails.first_name}} {{selectedUser.userDetails.last_name ? selectedUser.userDetails.last_name : '' }}</p>
-                                            <p class="userpos">{{selectedUser.userDetails.position}} at {{selectedUser.userDetails.department_name}}</p>
+                                            <p class="letter-color" *ngIf="selectedUser.userDetails">{{selectedUser.userDetails.first_name.charAt(0)}}{{selectedUser.userDetails.last_name.charAt(0)}}</p>
+                                            <p class="letter-color" *ngIf="!selectedUser.userDetails">{{selectedUser.allocationDetails.userName.charAt(0)}}</p>
+                                            <p class="username">{{selectedUser.allocationDetails.userName}}</p>
+                                            <p class="userpos">{{selectedUser.allocationDetails.userPosition}} at {{selectedUser.allocationDetails.deptName}}</p>
                                         </div>
                                         <div class="padding-m userinfo">
-                                            <p><mat-icon class="close-icon">phone</mat-icon> {{selectedUser.userDetails.phone}}</p>
-                                            <p><mat-icon class="close-icon">email</mat-icon> {{selectedUser.userDetails.email}}</p>
+                                            <!-- <p><mat-icon class="close-icon">phone</mat-icon> {{selectedUser.userDetails.phone}}</p> -->
+                                            <p><mat-icon class="close-icon">email</mat-icon> {{selectedUser.allocationDetails.userEmail}}</p>
                                             <p class="blue-color-text"><mat-icon class="close-icon">group</mat-icon> Network Profile</p>
                                         </div>
                                     </div>
@@ -285,7 +286,7 @@
             </div>
             <div class="no-request-text margin-m">
                 <label *ngIf="!similarPositions && !similarRoles">System will recommend similar items to avoid duplication</label>
-                <label *ngIf="(similarUsers && similarUsers.length === 0) || (similarRoles && similarRoles.length === 0) || (similarPositions && similarPositions.length === 0)">No data found</label>
+                <!-- <label *ngIf="(similarUsers && similarUsers.length === 0) || (similarRoles && similarRoles.length === 0) || (similarPositions && similarPositions.length === 0)">No data found</label> -->
                 <!-- <label *ngIf="similarRoles && similarRoles.length === 0">No roles found</label>
                 <label *ngIf="similarPositions && similarPositions.length === 0">No position found</label> -->
             </div>
