@@ -216,9 +216,12 @@ export class CreateWorkallocationComponent implements OnInit {
   selectUser(user: any) {
     this.selectedUser = user
     this.similarUsers = []
+    // tslint:disable-next-line:prefer-template
+    const fullname = user.userDetails.last_name ? user.userDetails.first_name + ' ' +
+    user.userDetails.last_name : user.userDetails.first_name
 
     this.newAllocationForm.patchValue({
-      fname: this.selectedUser.userDetails.first_name,
+      fname: fullname,
       email: this.selectedUser.userDetails.email,
       position: this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '',
     })
@@ -363,13 +366,13 @@ export class CreateWorkallocationComponent implements OnInit {
       userName: this.newAllocationForm.value.fname,
       userEmail: this.newAllocationForm.value.email,
       userPosition: this.newAllocationForm.value.position,
+      positionId: this.selectedPosition ? this.selectedPosition.id : '',
       archivedList: [],
     }
 
     if (this.selectedUser && this.selectedUser.allocationDetails) {
       reqdata.activeList = this.selectedUser.allocationDetails.archivedList
     }
-
     this.allocateSrvc.createAllocation(reqdata).subscribe(res => {
       if (res) {
         this.openSnackbar('Work Allocated Successfully')

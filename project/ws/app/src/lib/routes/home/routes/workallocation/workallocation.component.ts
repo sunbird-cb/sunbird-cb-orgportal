@@ -20,7 +20,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
   data: any = []
   term!: string | null
   length!: number
-  pageSize = 5
+  pageSize = 10
   pageSizeOptions = [5, 10, 20]
   paginator!: MatPaginator
   departmentName: any
@@ -37,6 +37,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
     },
   }
   userslist: any[] = []
+  downloaddata: any = []
 
   ngOnDestroy() {
     if (this.tabs) {
@@ -115,21 +116,21 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
       this.userslist.forEach((user: any) => {
         if (user.allocationDetails.activeList.length > 0) {
           activeUsersData.push({
-            fullname: user.userDetails ? `${user.userDetails.first_name} ${user.userDetails.last_name}` : null,
-            email: user.userDetails ? user.userDetails.email : '',
+            fullname: user.allocationDetails.userName,
+            email: user.allocationDetails.userEmail,
             roles: user.allocationDetails.activeList,
-            userId: user.userDetails ? user.userDetails.wid : '',
-            position: user.userDetails ? user.userDetails.position : '',
+            userId: user.allocationDetails.userId,
+            position: user.allocationDetails.userPosition,
             phone: user.userDetails ? user.userDetails.phone : '',
           })
         }
         if (user.allocationDetails.archivedList.length > 0) {
           archiveUsersData.push({
-            fullname: user.userDetails ? `${user.userDetails.first_name} ${user.userDetails.last_name}` : null,
-            email: user.userDetails ? user.userDetails.email : '',
+            fullname: user.allocationDetails.userName,
+            email: user.allocationDetails.userEmail,
             roles: user.allocationDetails.archivedList,
-            userId: user.userDetails ? user.userDetails.wid : '',
-            position: user.userDetails ? user.userDetails.position : '',
+            userId: user.allocationDetails.userId,
+            position: user.allocationDetails.userPosition,
             phone: user.userDetails ? user.userDetails.phone : '',
           })
         }
@@ -178,5 +179,23 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
 
   viewAllocation(data: any) {
     this.router.navigate([`/app/workallocation/details/${data.userId}`])
+  }
+
+  buttonClick(action: string, row: any) {
+    this.downloaddata = []
+    if (action === 'Download') {
+      console.log('row data', row)
+      this.downloaddata.push(row)
+      this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
+        // save started
+      })
+    } else if (action === 'Archive') {
+      // const index = this.ralist.indexOf(row)
+      // if (index >= 0) {
+      //   this.ralist.splice(index, 1)
+      // }
+      // row.isArchived = true
+      // this.archivedlist.push(row)
+    }
   }
 }

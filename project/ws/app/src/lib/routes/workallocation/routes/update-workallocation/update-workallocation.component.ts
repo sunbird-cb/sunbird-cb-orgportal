@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms'
-import { AllocationService } from '../../services/allocation.service'
-import { ActivatedRoute, Router } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
+import { ActivatedRoute, Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
+import { AllocationService } from '../../services/allocation.service'
 
 @Component({
   selector: 'ws-app-update-workallocation',
@@ -43,6 +43,7 @@ export class UpdateWorkallocationComponent implements OnInit {
   data: any = []
   showRAerror = false
   today: number = Date.now()
+  displaytemplate = false
 
   config: ExportAsConfig = {
     type: 'pdf',
@@ -122,19 +123,18 @@ export class UpdateWorkallocationComponent implements OnInit {
 
             if (this.selectedUser) {
               this.newAllocationForm.patchValue({
-                fname: this.selectedUser.userDetails.first_name,
-                email: this.selectedUser.userDetails.email,
+                fname: this.selectedUser.allocationDetails.userName,
+                email: this.selectedUser.allocationDetails.userEmail,
                 position: this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '',
               })
 
               const downloaddata = {
-                fullname: user.userDetails ? `${user.userDetails.first_name} ${user.userDetails.last_name}` : null,
-                email: user.userDetails ? user.userDetails.email : '',
+                fullname: user.allocationDetails.userName,
+                email: user.allocationDetails.userEmail,
                 roles: user.allocationDetails.activeList,
-                userId: user.userDetails ? user.userDetails.wid : '',
+                userId: user.userDetails ? user.userDetails.wid : user.allocationDetails.userId,
               }
               this.data.push(downloaddata)
-              console.log('data', this.data)
 
               this.setRole()
               // const newrole = this.newAllocationForm.get('rolelist') as FormArray
@@ -143,8 +143,8 @@ export class UpdateWorkallocationComponent implements OnInit {
               this.ralist = this.selectedUser.allocationDetails.activeList
               this.archivedlist = this.selectedUser.allocationDetails.archivedList
 
-              this.newAllocationForm.controls['fname'].disable()
-              this.newAllocationForm.controls['email'].disable()
+              // this.newAllocationForm.controls['fname'].disable()
+              // this.newAllocationForm.controls['email'].disable()
             }
           }
         }
@@ -154,11 +154,13 @@ export class UpdateWorkallocationComponent implements OnInit {
 
   export() {
     // download the file using old school javascript method
-    if (this.data) {
+    // if (this.data) {
       this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
         // save started
+        this.displaytemplate = true
       })
-    }
+      this.displaytemplate = false
+    // }
      // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
     // this.exportAsService.get(this.config).subscribe(content => {
     //   console.log(content)
@@ -387,14 +389,17 @@ export class UpdateWorkallocationComponent implements OnInit {
   onSubmit() {
     // if (this.orgselectedUser !== this.selectedUser) {
       const reqdata = {
-        userId: this.selectedUser.userDetails.wid,
+        userId: this.selectedUser.userDetails ? this.selectedUser.userDetails.wid : this.selectedUser.allocationDetails.userId,
         deptId: this.departmentID,
         deptName: this.departmentName,
         activeList: this.ralist,
         archivedList: this.archivedlist,
-        userPosition: this.selectedPosition ? this.selectedPosition.name : this.selectedUser.allocationDetails.userPosition,
+        // userPosition: this.selectedPosition ? this.selectedPosition.name : this.selectedUser.allocationDetails.userPosition,
+        userName: this.newAllocationForm.value.fname,
+        userEmail: this.newAllocationForm.value.email,
+        userPosition: this.newAllocationForm.value.position,
+        positionId: this.selectedPosition ? this.selectedPosition.id : this.selectedUser.allocationDetails.positionId,
       }
-
       this.allocateSrvc.updateAllocation(reqdata).subscribe(res => {
         if (res) {
           this.openSnackbar('Work Allocation updated Successfully')
@@ -404,7 +409,6 @@ export class UpdateWorkallocationComponent implements OnInit {
           this.ralist = []
           this.archivedlist = []
           this.router.navigate(['/app/home/workallocation'])
-          // this.getAllUsers()
         }
       })
     // } else {

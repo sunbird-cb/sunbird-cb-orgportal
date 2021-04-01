@@ -28,6 +28,6 @@ import { MatMenuModule } from '@angular/material/menu'
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule,
     UIORGTableModule, ExportAsModule, MatMenuModule,
   ],
-  exports: [DownloadAllocationComponent, UpdateWorkallocationComponent],
+  exports: [DownloadAllocationComponent],
 })
 export class WorkallocationModule { }
