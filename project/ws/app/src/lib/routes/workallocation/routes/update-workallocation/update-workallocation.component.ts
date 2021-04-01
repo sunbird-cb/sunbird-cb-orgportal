@@ -110,7 +110,7 @@ export class UpdateWorkallocationComponent implements OnInit {
   getAllUsers() {
     const req = {
       pageNo : 0,
-      pageSize : 20,
+      pageSize : 50,
       departmentName : this.departmentName,
     }
     this.allocateSrvc.getUsers(req).subscribe(res => {
@@ -389,7 +389,8 @@ export class UpdateWorkallocationComponent implements OnInit {
   onSubmit() {
     // if (this.orgselectedUser !== this.selectedUser) {
       const reqdata = {
-        userId: this.selectedUser.userDetails ? this.selectedUser.userDetails.wid : this.selectedUser.allocationDetails.userId,
+        id: this.selectedUser.allocationDetails ?  this.selectedUser.allocationDetails.id : this.selectedUser.allocationDetails.userId,
+        userId: this.selectedUser.allocationDetails ?  this.selectedUser.allocationDetails.userId : this.selectedUser.allocationDetails.id,
         deptId: this.departmentID,
         deptName: this.departmentName,
         activeList: this.ralist,
