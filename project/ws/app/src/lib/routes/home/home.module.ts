@@ -36,6 +36,7 @@ import { WorkallocationComponent } from './routes/workallocation/workallocation.
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { ExportAsModule } from 'ngx-export-as'
 import { WorkallocationModule } from '../workallocation/workallocation.module'
+import { NgxPaginationModule } from 'ngx-pagination'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -87,6 +88,7 @@ import { WorkallocationModule } from '../workallocation/workallocation.module'
     MatRadioModule,
     ExportAsModule,
     WorkallocationModule,
+    NgxPaginationModule,
   ],
   entryComponents: [
   ],

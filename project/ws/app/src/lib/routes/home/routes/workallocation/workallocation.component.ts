@@ -32,7 +32,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
   }
   userslist: any[] = []
   downloaddata: any = []
-  // paginationconfig: any
+  totalusersCount: any
+  p: number = 1;
 
   ngOnDestroy() {
     if (this.tabs) {
@@ -83,10 +84,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
     }
   }
 
-  // pageChanged(event: any){
-  //   this.paginationconfig.currentPage = event;
-  // }
-
   getdeptUsers() {
     this.workallocationSrvc.getAllUsers().subscribe(res => {
       this.departmentName = res.deptName
@@ -98,11 +95,12 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
   getAllUsers() {
     const req = {
       pageNo : 0,
-      pageSize : 50,
+      pageSize : 100,
       departmentName : this.departmentName,
     }
     this.workallocationSrvc.getUsers(req).subscribe(res => {
       this.userslist = res.result.data
+      this.totalusersCount = res.result.totalhit
       this.filter(this.currentFilter)
     })
   }
@@ -151,15 +149,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
       }
     }
 
-    this.length = this.data.length
-    // this.paginator.firstPage()
-
-    // this.paginationconfig = {
-    //   id: 'custom',
-    //   itemsPerPage: 2,
-    //   currentPage: 1,
-    //   totalItems: this.data.count
-    // };
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
