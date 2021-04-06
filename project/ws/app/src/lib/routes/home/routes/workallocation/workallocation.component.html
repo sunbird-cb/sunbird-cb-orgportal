@@ -32,7 +32,7 @@
                       </div>
                   </div>
                   <div class="flex-2">
-                        <button type="button" mat-button class="downlaod-btn" (click)="export()">
+                        <button type="button" mat-button class="downlaod-btn" (click)="export()" *ngIf="data && data.length > 0">
                             <mat-icon>cloud_download</mat-icon> Download
                         </button>
                         <!-- <button type="button" mat-button class="print-btn">
