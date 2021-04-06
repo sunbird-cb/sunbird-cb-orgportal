@@ -217,6 +217,9 @@ export class UpdateWorkallocationComponent implements OnInit {
    onSearchPosition(event: any) {
     const val = event.target.value
     if (val.length > 2) {
+      this.similarRoles = []
+      this.similarActivities = []
+      this.similarPositions = []
       const req = {
         searches: [
             {
@@ -250,6 +253,8 @@ export class UpdateWorkallocationComponent implements OnInit {
     const val = event.target.value
     if (val.length > 2) {
       this.similarRoles = []
+      this.similarActivities = []
+      this.similarPositions = []
       this.allocateSrvc.onSearchRole(val).subscribe(res => {
         this.similarRoles = res
         if (this.similarRoles && this.similarRoles.length === 0) {
@@ -267,7 +272,9 @@ export class UpdateWorkallocationComponent implements OnInit {
   onSearchActivity (event: any) {
     const val = event.target.value
     if (val.length > 2) {
+      this.similarRoles = []
       this.similarActivities = []
+      this.similarPositions = []
       const req = {
         searches: [
           {

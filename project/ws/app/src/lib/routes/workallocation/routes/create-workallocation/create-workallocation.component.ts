@@ -153,6 +153,9 @@ export class CreateWorkallocationComponent implements OnInit {
     const val = event.target.value
     if (val.length > 2) {
       this.similarUsers = []
+      this.similarRoles = []
+      this.similarActivities = []
+      this.similarPositions = []
 
       this.allocateSrvc.onSearchUser(val).subscribe(res => {
         this.userslist = res.result.data
@@ -173,7 +176,10 @@ export class CreateWorkallocationComponent implements OnInit {
   onSearchRole(event: any) {
     const val = event.target.value
     if (val.length > 2) {
+      this.similarUsers = []
       this.similarRoles = []
+      this.similarActivities = []
+      this.similarPositions = []
       this.allocateSrvc.onSearchRole(val).subscribe(res => {
         this.similarRoles = res
         if (this.similarRoles && this.similarRoles.length === 0) {
@@ -191,7 +197,10 @@ export class CreateWorkallocationComponent implements OnInit {
   onSearchActivity (event: any) {
     const val = event.target.value
     if (val.length > 2) {
+      this.similarUsers = []
+      this.similarRoles = []
       this.similarActivities = []
+      this.similarPositions = []
       const req = {
         searches: [
           {
@@ -224,6 +233,9 @@ export class CreateWorkallocationComponent implements OnInit {
   onSearchPosition(event: any) {
     const val = event.target.value
     if (val.length > 2) {
+      this.similarUsers = []
+      this.similarRoles = []
+      this.similarActivities = []
       this.similarPositions = []
       const req = {
         searches: [
