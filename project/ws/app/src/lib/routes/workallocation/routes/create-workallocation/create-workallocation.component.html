@@ -270,15 +270,13 @@
                     </div>
                 </div>
             </div>
+            
             <div class="no-request-text margin-m">
                 <label *ngIf="!similarUsers && !similarRoles && !similarActivities && !similarPositions">System will recommend similar items to avoid duplication</label>
-                <!-- <label *ngIf="(similarUsers && similarUsers.length === 0) || 
-                (similarRoles && similarRoles.length === 0) || 
-                (similarActivities && similarActivities.length === 0) ||
-                (similarPositions && similarPositions.length === 0)">No data found</label> -->
-                <!-- <label *ngIf="similarUsers && similarUsers.length === 0">No users found</label>
-                <label *ngIf="similarRoles && similarRoles.length === 0">No roles found</label>
-                <label *ngIf="similarPositions && similarPositions.length === 0">No position found</label> -->
+                <label *ngIf="nosimilarUsers && similarUsers.length === 0">No users found</label>
+                <label *ngIf="nosimilarRoles && similarRoles.length === 0">No roles found</label>
+                <label *ngIf="nosimilarPositions && similarPositions.length === 0">No position found</label>
+                <label *ngIf="nosimilarActivities && similarActivities.length === 0">No activity found</label>
             </div>
             </div>
         </ng-container>

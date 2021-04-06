@@ -95,7 +95,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
   getAllUsers() {
     const req = {
       pageNo : 0,
-      pageSize : 100,
+      pageSize : 1000,
       departmentName : this.departmentName,
     }
     this.workallocationSrvc.getUsers(req).subscribe(res => {

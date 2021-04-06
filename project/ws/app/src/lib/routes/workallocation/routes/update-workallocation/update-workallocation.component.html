@@ -285,11 +285,21 @@
                     </div>
                 </div>
             </div>
+            <div class="w-full similarUsersList" *ngIf="similarActivities && similarActivities.length > 0">
+                <div class="suser-card" *ngFor="let act of similarActivities">
+                    <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                        <p class="username">{{act.name}}</p>
+                    </div>
+                    <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                        <button id="addactivity" (click)="selectActivity(act)">Add</button>
+                    </div>
+                </div>
+            </div>
             <div class="no-request-text margin-m">
-                <label *ngIf="!similarPositions && !similarRoles">System will recommend similar items to avoid duplication</label>
-                <!-- <label *ngIf="(similarUsers && similarUsers.length === 0) || (similarRoles && similarRoles.length === 0) || (similarPositions && similarPositions.length === 0)">No data found</label> -->
-                <!-- <label *ngIf="similarRoles && similarRoles.length === 0">No roles found</label>
-                <label *ngIf="similarPositions && similarPositions.length === 0">No position found</label> -->
+                <label *ngIf="!similarPositions && !similarActivities && !similarRoles">System will recommend similar items to avoid duplication</label>
+                <label *ngIf="nosimilarRoles && similarRoles.length === 0">No roles found</label>
+                <label *ngIf="nosimilarPositions && similarPositions.length === 0">No position found</label>
+                <label *ngIf="nosimilarActivities && similarActivities.length === 0">No activity found</label>
             </div>
             </div>
         </ng-container>

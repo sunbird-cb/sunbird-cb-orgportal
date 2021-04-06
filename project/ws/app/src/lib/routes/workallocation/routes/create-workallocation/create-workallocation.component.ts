@@ -30,9 +30,13 @@ export class CreateWorkallocationComponent implements OnInit {
     ],
   }
   similarUsers!: any []
+  nosimilarUsers = false
   similarRoles!: any []
+  nosimilarRoles = false
   similarPositions!: any []
+  nosimilarPositions = false
   similarActivities!: any []
+  nosimilarActivities = false
   selectedUser: any
   selectedRole: any
   selectedActivity: any
@@ -153,6 +157,14 @@ export class CreateWorkallocationComponent implements OnInit {
       this.allocateSrvc.onSearchUser(val).subscribe(res => {
         this.userslist = res.result.data
         this.similarUsers = this.userslist
+        if (this.similarUsers && this.similarUsers.length === 0) {
+          this.nosimilarUsers = true
+          this.nosimilarRoles = false
+          this.nosimilarPositions = false
+          this.nosimilarActivities = false
+        } else {
+          this.nosimilarUsers = false
+        }
       })
     }
   }
@@ -164,6 +176,14 @@ export class CreateWorkallocationComponent implements OnInit {
       this.similarRoles = []
       this.allocateSrvc.onSearchRole(val).subscribe(res => {
         this.similarRoles = res
+        if (this.similarRoles && this.similarRoles.length === 0) {
+          this.nosimilarUsers = false
+          this.nosimilarRoles = true
+          this.nosimilarPositions = false
+          this.nosimilarActivities = false
+        } else {
+          this.nosimilarRoles = false
+        }
       })
     }
   }
@@ -188,6 +208,14 @@ export class CreateWorkallocationComponent implements OnInit {
       }
       this.allocateSrvc.onSearchActivity(req).subscribe(res => {
         this.similarActivities = res.responseData
+        if (this.similarActivities && this.similarActivities.length === 0) {
+          this.nosimilarUsers = false
+          this.nosimilarRoles = false
+          this.nosimilarPositions = false
+          this.nosimilarActivities = true
+        } else {
+          this.nosimilarActivities = false
+        }
       })
     }
   }
@@ -199,15 +227,28 @@ export class CreateWorkallocationComponent implements OnInit {
       this.similarPositions = []
       const req = {
         searches: [
-            {
-                type: 'POSITION',
-                field: 'name',
-                keyword: val,
-            },
+          {
+            type: 'POSITION',
+            field: 'name',
+            keyword: val,
+          },
+          {
+            type: 'POSITION',
+            field: 'status',
+            keyword: 'VERIFIED',
+          },
         ],
       }
       this.allocateSrvc.onSearchPosition(req).subscribe(res => {
         this.similarPositions = res.responseData
+        if (this.similarPositions && this.similarPositions.length === 0) {
+          this.nosimilarUsers = false
+          this.nosimilarRoles = false
+          this.nosimilarPositions = true
+          this.nosimilarActivities = false
+        } else {
+          this.nosimilarPositions = false
+        }
       })
     }
   }

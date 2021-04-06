@@ -31,8 +31,11 @@ export class UpdateWorkallocationComponent implements OnInit {
   }
   similarUsers!: any []
   similarRoles!: any []
+  nosimilarRoles = false
   similarPositions!: any []
+  nosimilarPositions = false
   similarActivities!: any []
+  nosimilarActivities = false
   selectedUser: any
   orgselectedUser: any
   selectedRole: any
@@ -110,7 +113,7 @@ export class UpdateWorkallocationComponent implements OnInit {
   getAllUsers() {
     const req = {
       pageNo : 0,
-      pageSize : 50,
+      pageSize : 1000,
       departmentName : this.departmentName,
     }
     this.allocateSrvc.getUsers(req).subscribe(res => {
@@ -221,10 +224,23 @@ export class UpdateWorkallocationComponent implements OnInit {
                 field: 'name',
                 keyword: val,
             },
+            {
+              type: 'POSITION',
+              field: 'status',
+              keyword: 'VERIFIED',
+            },
         ],
     }
       this.allocateSrvc.onSearchPosition(req).subscribe(res => {
         this.similarPositions = res.responseData
+
+        if (this.similarPositions && this.similarPositions.length === 0) {
+          this.nosimilarRoles = false
+          this.nosimilarPositions = true
+          this.nosimilarActivities = false
+        } else {
+          this.nosimilarPositions = false
+        }
       })
     }
   }
@@ -236,6 +252,14 @@ export class UpdateWorkallocationComponent implements OnInit {
       this.similarRoles = []
       this.allocateSrvc.onSearchRole(val).subscribe(res => {
         this.similarRoles = res
+        if (this.similarRoles && this.similarRoles.length === 0) {
+          this.nosimilarRoles = true
+          this.nosimilarPositions = false
+          this.nosimilarActivities = false
+        } else {
+          this.nosimilarRoles = false
+          this.nosimilarActivities = false
+        }
       })
     }
   }
@@ -260,6 +284,14 @@ export class UpdateWorkallocationComponent implements OnInit {
       }
       this.allocateSrvc.onSearchActivity(req).subscribe(res => {
         this.similarActivities = res.responseData
+        if (this.similarActivities && this.similarActivities.length === 0) {
+          this.nosimilarRoles = false
+          this.nosimilarPositions = false
+          this.nosimilarActivities = true
+        } else {
+          this.nosimilarActivities = false
+          this.nosimilarRoles = false
+        }
       })
     }
   }
