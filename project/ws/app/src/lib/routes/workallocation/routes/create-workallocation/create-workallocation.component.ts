@@ -3,7 +3,8 @@ import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@ang
 import { AllocationService } from '../../services/allocation.service'
 import { Router } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
-import { MatSnackBar } from '@angular/material'
+import { MatSnackBar, MatDialog } from '@angular/material'
+import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
 
 @Component({
   selector: 'ws-app-create-workallocation',
@@ -60,7 +61,7 @@ export class CreateWorkallocationComponent implements OnInit {
 
   constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
               private fb: FormBuilder, private allocateSrvc: AllocationService,
-              private router: Router) {
+              private router: Router, public dialog: MatDialog) {
     this.newAllocationForm = this.fb.group({
       fname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -286,9 +287,21 @@ export class CreateWorkallocationComponent implements OnInit {
     }
   }
   removeSelectedUSer() {
-    this.selectedUser = ''
-    this.ralist = []
-    this.newAllocationForm.reset()
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+          data: {
+            title: 'Remove User',
+            body: 'Removing the selected user will clear all the form values',
+          },
+        })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedUser = ''
+        this.ralist = []
+        this.activitieslist = []
+        this.newAllocationForm.reset()
+      }
+    })
   }
   // to add the selected role to form value
   selectRole(role: any) {
