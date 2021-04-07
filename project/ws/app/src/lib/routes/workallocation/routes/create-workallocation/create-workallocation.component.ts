@@ -189,6 +189,7 @@ export class CreateWorkallocationComponent implements OnInit {
           this.nosimilarActivities = false
         } else {
           this.nosimilarRoles = false
+          this.nosimilarActivities = false
         }
       })
     }
@@ -224,6 +225,7 @@ export class CreateWorkallocationComponent implements OnInit {
           this.nosimilarActivities = true
         } else {
           this.nosimilarActivities = false
+          this.nosimilarRoles = false
         }
       })
     }
@@ -400,6 +402,19 @@ export class CreateWorkallocationComponent implements OnInit {
       }
       this.inputvar.nativeElement.value = ''
       this.newAllocationForm.value.rolelist[0].childNodes = ''
+    }
+  }
+
+  showRemoveActivity(index: any) {
+    const id = `showremove${index}`
+    // tslint:disable-next-line:no-non-null-assertion
+    const vart = document.getElementById(id)!
+    vart.style.display = 'block'
+  }
+
+  removeActivity(index: any) {
+    if (index >= 0) {
+      this.activitieslist.splice(index, 1)
     }
   }
 

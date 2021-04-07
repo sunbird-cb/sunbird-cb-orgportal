@@ -66,6 +66,7 @@
     font-size: 14px;
     font-weight: 400;
     font-family: 'Lato';
+    width: 86%;
   }
 
   .mat-form-field {
@@ -355,6 +356,22 @@
     border-radius: 18px;
     border: 1px solid rgba(0,0,0,0.08);
     margin: 0 8px 8px 0;
-    display: inline-block
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    .mat-icon {
+      position: absolute;
+      background: rgba(0,0,0,0.4);
+      color: #eee;
+      font-size: 16px;
+      border-radius: 50%;
+      text-align: center;
+      top: -6px;
+      right: -6px;
+      line-height: 1.5em;
+      display: none;
+      cursor: pointer;
+    }
   }
 }

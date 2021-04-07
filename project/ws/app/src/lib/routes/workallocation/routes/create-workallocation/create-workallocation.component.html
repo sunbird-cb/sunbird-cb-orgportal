@@ -131,7 +131,7 @@
                                                     Role
                                                 </label>
                                                 <mat-form-field appearance="outline" class="margin-top-xs">
-                                                    <input id="name" matInput #name formControlName="name" i18n-placeholder placeholder="Role label here"
+                                                    <input id="name" matInput #name formControlName="name" i18n-placeholder placeholder="Role label here" 
                                                     i18n-aria-label aria-label="name input" class="form-input" autocomplete="off" 
                                                     (keypress)="onSearchRole($event)" (keyup)="onSearchRole($event)" />
                                                 </mat-form-field>
@@ -154,7 +154,7 @@
 
                                             <div class="activitieslist margin-bottom-m" *ngIf="activitieslist && activitieslist.length > 0">
                                                 <h3>Associated activities</h3>
-                                                <p><span *ngFor="let a of activitieslist">{{a.name}}</span></p>
+                                                <p><span *ngFor="let a of activitieslist; let i = index" (click)="showRemoveActivity(i)">{{a.name}} <mat-icon id="showremove{{i}}" (click)="removeActivity(i)">close</mat-icon></span></p>
                                             </div>
                                             <p *ngIf="showRAerror" class="mat-error font-xs">Add both role & activities</p>
                                             <button mat-raised-button class="text-white btn-success btn-responsive" id="addtolist-btn" (click)="addRolesActivity(ri)">

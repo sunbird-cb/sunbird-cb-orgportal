@@ -69,7 +69,7 @@
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-xs">
                                     <input id="fname" matInput #fname formControlName="fname" i18n-placeholder placeholder=""
-                                    i18n-aria-label aria-label="First name input" class="form-input" autocomplete="off"  [disabled]="true" />
+                                    i18n-aria-label aria-label="First name input" class="form-input" autocomplete="off" />
                                     <mat-error [hidden]="false" i18n="First name Error|Explains name is required" i18n-aria-label
                                     aria-label="First name Error|Explains name is required "
                                     *ngIf="newAllocationForm?.controls['fname']?.touched && newAllocationForm?.controls['fname'].errors?.required">
@@ -84,7 +84,7 @@
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-xs">
                                     <input id="email" matInput #email formControlName="email" i18n-placeholder placeholder=""
-                                    i18n-aria-label aria-label="Email input" class="form-input" autocomplete="off" [disabled]="true" />
+                                    i18n-aria-label aria-label="Email input" class="form-input" autocomplete="off"/>
                                     <mat-error [hidden]="false" i18n="Email Error|Explains name is required" i18n-aria-label
                                     aria-label="Email Error|Explains name is required "
                                     *ngIf="newAllocationForm?.controls['email']?.touched && newAllocationForm?.controls['email'].errors?.required">
@@ -161,7 +161,8 @@
 
                                             <div class="activitieslist margin-bottom-m" *ngIf="activitieslist && activitieslist.length > 0">
                                                 <h3>Associated activities</h3>
-                                                <p><span *ngFor="let a of activitieslist">{{a.name}}</span></p>
+                                                <p><span *ngFor="let a of activitieslist; let i = index" (click)="showRemoveActivity(i)">{{a.name}} 
+                                                    <mat-icon id="showremove{{i}}" (click)="removeActivity(i)">close</mat-icon></span></p>
                                             </div>
                                             <p *ngIf="showRAerror" class="mat-error ss">Add both role & activities</p>
                                             <button mat-raised-button class="text-white btn-success btn-responsive" id="addtolist-btn" (click)="addRolesActivity(ri)">

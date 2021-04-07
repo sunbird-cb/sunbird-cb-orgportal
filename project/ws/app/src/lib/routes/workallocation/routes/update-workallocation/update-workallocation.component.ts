@@ -410,6 +410,19 @@ export class UpdateWorkallocationComponent implements OnInit {
     }
   }
 
+  showRemoveActivity(index: any) {
+    const id = `showremove${index}`
+    // tslint:disable-next-line:no-non-null-assertion
+    const vart = document.getElementById(id)!
+    vart.style.display = 'block'
+  }
+
+  removeActivity(index: any) {
+    if (index >= 0) {
+      this.activitieslist.splice(index, 1)
+    }
+  }
+
   buttonClick(action: string, row: any) {
     if (this.ralist) {
       if (action === 'Delete') {
