@@ -217,6 +217,8 @@ export class UpdateWorkallocationComponent implements OnInit {
    onSearchPosition(event: any) {
     const val = event.target.value
     if (val.length > 2) {
+      this.displayLoader('true')
+      this.nosimilarPositions = false
       this.similarRoles = []
       this.similarActivities = []
       this.similarPositions = []
@@ -236,13 +238,13 @@ export class UpdateWorkallocationComponent implements OnInit {
     }
       this.allocateSrvc.onSearchPosition(req).subscribe(res => {
         this.similarPositions = res.responseData
-
+        this.displayLoader('false')
         if (this.similarPositions && this.similarPositions.length === 0) {
           this.nosimilarRoles = false
           this.nosimilarPositions = true
           this.nosimilarActivities = false
         } else {
-          this.nosimilarPositions = false
+          this.setAllMsgFalse()
         }
       })
     }
@@ -252,18 +254,20 @@ export class UpdateWorkallocationComponent implements OnInit {
   onSearchRole(event: any) {
     const val = event.target.value
     if (val.length > 2) {
+      this.displayLoader('true')
+      this.nosimilarRoles = false
       this.similarRoles = []
       this.similarActivities = []
       this.similarPositions = []
       this.allocateSrvc.onSearchRole(val).subscribe(res => {
         this.similarRoles = res
+        this.displayLoader('false')
         if (this.similarRoles && this.similarRoles.length === 0) {
           this.nosimilarRoles = true
           this.nosimilarPositions = false
           this.nosimilarActivities = false
         } else {
-          this.nosimilarRoles = false
-          this.nosimilarActivities = false
+          this.setAllMsgFalse()
         }
       })
     }
@@ -272,6 +276,8 @@ export class UpdateWorkallocationComponent implements OnInit {
   onSearchActivity (event: any) {
     const val = event.target.value
     if (val.length > 2) {
+      this.displayLoader('true')
+      this.nosimilarActivities = false
       this.similarRoles = []
       this.similarActivities = []
       this.similarPositions = []
@@ -291,15 +297,31 @@ export class UpdateWorkallocationComponent implements OnInit {
       }
       this.allocateSrvc.onSearchActivity(req).subscribe(res => {
         this.similarActivities = res.responseData
+        this.displayLoader('false')
         if (this.similarActivities && this.similarActivities.length === 0) {
           this.nosimilarRoles = false
           this.nosimilarPositions = false
           this.nosimilarActivities = true
         } else {
-          this.nosimilarActivities = false
-          this.nosimilarRoles = false
+          this.setAllMsgFalse()
         }
       })
+    }
+  }
+
+  setAllMsgFalse() {
+    this.nosimilarRoles = false
+    this.nosimilarPositions = false
+    this.nosimilarActivities = false
+  }
+
+  displayLoader(value: any) {
+    // tslint:disable-next-line:no-non-null-assertion
+    const vart = document.getElementById('loader')!
+    if (value === 'true') {
+      vart.style.display = 'block'
+    }  else {
+      vart.style.display = 'none'
     }
   }
 
@@ -459,6 +481,11 @@ export class UpdateWorkallocationComponent implements OnInit {
         userEmail: this.newAllocationForm.value.email,
         userPosition: this.newAllocationForm.value.position,
         positionId: this.selectedPosition ? this.selectedPosition.id : this.selectedUser.allocationDetails.positionId,
+      }
+      if (!this.selectedPosition && this.selectedUser.allocationDetails.positionId) {
+        if (this.selectedUser.allocationDetails.userPosition !== this.newAllocationForm.value.position) {
+          reqdata.positionId = ''
+        }
       }
       this.allocateSrvc.updateAllocation(reqdata).subscribe(res => {
         if (res) {
