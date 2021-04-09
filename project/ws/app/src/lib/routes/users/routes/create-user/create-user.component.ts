@@ -100,6 +100,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
           userName : form.value.fname,
           firstName: form.value.fname,
           lastName: form.value.lname,
+          channel: this.department ? this.department.deptName : null,
       },
     }
 
@@ -138,86 +139,6 @@ export class CreateUserComponent implements OnInit, OnDestroy {
             this.router.navigate(['/app/home/users'])
           }
         })
-
-        // this.usersSvc.onSearchUserByEmail(form.value.email, req).subscribe(data => {
-        //   const userreq = {
-        //     personalDetails: {
-        //         firstname: data[0].first_name,
-        //         surname: data[0].last_name,
-        //         primaryEmail: data[0].email,
-        //     },
-        //     professionalDetails: [
-        //         {
-        //             name: data[0].department_name,
-        //         },
-        //     ],
-        //     academics: [
-        //       {
-        //         nameOfQualification: '',
-        //         yearOfPassing: '',
-        //         nameOfInstitute: '',
-        //         type: 'X_STANDARD',
-        //       },
-        //       {
-        //         nameOfQualification: '',
-        //         yearOfPassing: '',
-        //         nameOfInstitute: '',
-        //         type: 'XII_STANDARD',
-        //       },
-        //       {
-        //         nameOfQualification: '',
-        //         yearOfPassing: '',
-        //         nameOfInstitute: '',
-        //         type: 'GRADUATE',
-        //       },
-        //       {
-        //         nameOfQualification: '',
-        //         yearOfPassing: '',
-        //         nameOfInstitute: '',
-        //         type: 'POSTGRADUATE',
-        //       },
-        //     ],
-        //     interests: {
-        //       hobbies: [],
-        //       professional: [],
-        //     },
-        //     skills: {
-        //       certificateDetails: '',
-        //       additionalSkills: '',
-        //       osCreatedBy: '',
-        //     },
-        //     employmentDetails: {
-        //       departmentName: '',
-        //       officialPostalAddress: '',
-        //       employeeCode: '',
-        //       allotmentYearOfService: '',
-        //       payType: '',
-        //       civilListNo: '',
-        //       dojOfService: '',
-        //       service: '',
-        //       pinCode: '',
-        //       cadre: '',
-        //     },
-        //   }
-
-        //   this.usersSvc.createUserById(data[0].wid, userreq).subscribe(userdata => {
-        //     if (userdata) {
-        //       const dreq = {
-        //         userId: data[0] ? data[0].wid : null,
-        //         deptId: this.department ? this.department.id : null,
-        //         roles: form.value.roles,
-        //         isActive: true,
-        //         isBlocked: false,
-        //       }
-        //       this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
-        //         if (dres) {
-        //           this.createUserForm.reset({ fname: '', lname: '', email: '', department: this.departmentName, roles: '' })
-        //           this.router.navigate(['/app/home/users'])
-        //         }
-        //       })
-        //     }
-        //   })
-        // })
       }
     },                                         (err: { error: string }) => {
       this.openSnackbar(err.error)
