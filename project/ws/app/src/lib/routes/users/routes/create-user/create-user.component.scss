@@ -8,7 +8,9 @@
   min-height: 75vh;
   padding: 12px;
 }
-
+::ng-deep.container-balanced{
+  max-width: 99% !important;
+}
 .flex-align {
   align-items: center;
   justify-content: flex-start;

@@ -1,0 +1,78 @@
+// download-template
+.download-template {
+  margin: 3em auto;
+  width: 85%;
+  background: #ffffff;
+  .dwnld-header {
+    h3 {
+      font-size: 20px !important
+    }
+    p {
+      font-size: 16px !important
+    }
+
+  }
+  .dwnld-table {
+      font-size: 14px;
+      table {
+              border-spacing: unset;
+              margin: 0 auto;
+              width: 100%;
+          th {
+            font-weight: 600;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.04);
+            padding: 0.5em 1em;
+          }
+          td {
+              padding:0.5em 1em 0.2em 1em;
+              vertical-align: top;
+              border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  
+              ul {
+                  list-style-type: none;
+                  padding-left: 0;
+                  margin: 0 !important;
+                  li {
+                      border-bottom: 1px solid #dee2e6;
+                      margin-bottom: 2px;
+                      .dwnld-role {
+                        display: inline-block;
+                        width: 30%;
+                        margin-right: 1em;
+                        vertical-align: top;
+                      }
+                      .dwnld-activity {
+                        display: inline-block;
+                        width: 60%;
+          
+                          span { 
+                            white-space: break-spaces;
+                            background: #ededed;
+                            margin: 2px 2px 4px;
+                            border: 1px solid #ddd;
+                            padding: 1px 8px;
+                            border-radius: 16px;
+                            display: inherit;
+                          }
+                      }
+                  }
+      
+                  li:last-child {
+                      border-bottom: none !important;
+                  }
+              }
+          }
+
+          th:nth-child(1), td:nth-child(1) {
+            width: 20%
+          }
+          th:nth-child(2), td:nth-child(2) {
+            width: 24%
+          }
+          th:nth-child(3), td:nth-child(3) {
+            width: 50%
+          }
+      }
+  }
+}

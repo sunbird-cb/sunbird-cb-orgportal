@@ -9,6 +9,7 @@ import { UsersViewComponent } from './routes/users-view/users-view.component'
 import { RolesAccessComponent } from './routes/roles-access/roles-access.component'
 // import { PageResolve } from '@sunbird-cb/utils'
 import { ApprovalsComponent } from './routes/approvals/approvals.component'
+import { WorkallocationComponent } from './routes/workallocation/workallocation.component'
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
       {
         path: 'approvals',
         component: ApprovalsComponent,
+      },
+      {
+        path: 'workallocation',
+        component: WorkallocationComponent,
       },
     ],
   },

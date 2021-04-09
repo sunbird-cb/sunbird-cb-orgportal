@@ -333,6 +333,18 @@ const routes: Routes = [
     component: PublicFaqComponent,
   },
   {
+    path: 'app/workallocation',
+    loadChildren: () => import('./routes/route-workallocation.module').then(u => u.RouteWorkAllocationModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'workallocation',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: '**',
     component: ErrorResolverComponent,
     data: {

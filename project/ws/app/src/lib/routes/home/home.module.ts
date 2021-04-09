@@ -19,6 +19,8 @@ import {
   MatProgressBarModule,
   MatRadioModule,
 } from '@angular/material'
+import { MatMenuModule } from '@angular/material/menu'
+import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { InitResolver } from './resolvers/init-resolve.service'
@@ -30,6 +32,11 @@ import { AvatarPhotoModule, BreadcrumbsOrgModule, LeftMenuModule, UIORGTableModu
 import { AboutComponent } from './routes/about/about.component'
 import { RolesAccessComponent } from './routes/roles-access/roles-access.component'
 import { ApprovalsComponent } from './routes/approvals/approvals.component'
+import { WorkallocationComponent } from './routes/workallocation/workallocation.component'
+import { Ng2SearchPipeModule } from 'ng2-search-filter'
+import { ExportAsModule } from 'ngx-export-as'
+import { WorkallocationModule } from '../workallocation/workallocation.module'
+import { NgxPaginationModule } from 'ngx-pagination'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -37,9 +44,11 @@ import { ApprovalsComponent } from './routes/approvals/approvals.component'
     AboutComponent,
     RolesAccessComponent,
     ApprovalsComponent,
+    WorkallocationComponent,
   ],
   imports: [
     CommonModule,
+    Ng2SearchPipeModule,
     UIORGTableModule,
     WidgetResolverModule,
     ReactiveFormsModule,
@@ -62,6 +71,8 @@ import { ApprovalsComponent } from './routes/approvals/approvals.component'
     MatDialogModule,
     MatButtonModule,
     MatSidenavModule,
+    MatMenuModule,
+    MatPaginatorModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
     PipeFilterModule,
@@ -75,6 +86,9 @@ import { ApprovalsComponent } from './routes/approvals/approvals.component'
     WidgetResolverModule,
     ScrollspyLeftMenuModule,
     MatRadioModule,
+    ExportAsModule,
+    WorkallocationModule,
+    NgxPaginationModule,
   ],
   entryComponents: [
   ],
