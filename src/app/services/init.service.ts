@@ -270,7 +270,7 @@ export class InitService {
           profileImage: userPidProfile.result.response.thumbnail,
           dealerCode: null,
           isManager: false,
-          // departmentName: userPidProfile.user.department_name || '',
+          departmentName: userPidProfile.result.response.channel,
           // unit: userPidProfile.user.unit_name,
           // tslint:disable-next-line:max-line-length
           // source_profile_picture: userPidProfile.result.response.source_profile_picture || '',
@@ -332,10 +332,10 @@ export class InitService {
           dealerCode: null,
           isManager: false,
         }
-        if (this.configSvc.userProfile) {
+        // if (this.configSvc.userProfile) {
           // tslint:disable-next-line: max-line-length
-          this.configSvc.userProfile.departmentName = (_.get(userData, 'employmentDetails.departmentName')) ? _.get(userData, 'employmentDetails.departmentName') : null
-        }
+          // this.configSvc.userProfile.departmentName = (_.get(userData, 'employmentDetails.departmentName')) ? _.get(userData, 'employmentDetails.departmentName') : null
+        // }
 
       }
     }

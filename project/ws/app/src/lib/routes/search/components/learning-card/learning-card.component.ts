@@ -24,8 +24,8 @@ export class LearningCardComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     const instanceConfig = this.configSvc.instanceConfig
-    if (instanceConfig) {
-      this.defaultThumbnail = instanceConfig.logos.defaultContent
+    if (instanceConfig && instanceConfig.logos.defaultContent) {
+      this.defaultThumbnail = instanceConfig.logos.defaultContent || ''
     }
 
   }
