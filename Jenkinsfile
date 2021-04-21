@@ -25,7 +25,7 @@ node() {
                    '''
         }
 
-              stage('SonarQube analysis') {
+       /*       stage('SonarQube analysis') {
                
              
    			 // requires SonarQube Scanner 2.8+
@@ -46,7 +46,7 @@ stage("Quality Gate") {
    					}
   
   }
-}
+}  */
  
         stage('docker-push') {
 

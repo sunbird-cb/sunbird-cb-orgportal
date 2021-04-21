@@ -1,0 +1,440 @@
+.blue-color-text {
+  color: #0074B6 !important;
+}
+.font-bold {
+  font-weight: 700;
+}
+.font-xs {
+  font-size: 13px;
+}
+.card-heading {
+  padding: 0 !important;
+}
+::ng-deep.container-balanced{
+  max-width: 99% !important;
+}
+.top-bar {
+  position: relative;
+  min-width: 25% !important;
+  
+  .btn-div {
+    position: absolute;
+    right: 0.5em;
+    top: 0.6em;
+  }
+
+  button {
+    min-width: 100px;
+    width: auto;
+    border: 1px solid #DEDEDE;
+    border-radius: 4px;
+    margin: 0 12px 0 5px;
+    color: #848484 !important;
+    font-family: "Lato";
+    font-weight: 700;
+    font-size: 14px;
+
+    .mat-icon {
+      padding-right: 4px;
+      margin-top: -4px;
+    }
+  }
+
+  #savebtn {
+    background: #0075B7 !important;
+    color: white !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    vertical-align: bottom;
+  }
+  #savebtn[disabled] {
+    opacity: 0.4;
+  }
+}
+.flex-3 {
+  flex: 3;
+}
+.flex-4 {
+  flex: 4;
+}
+
+#downloadtemp {
+  display: none !important;
+}
+
+.addbtn {
+  position: absolute;
+  right: 0em;
+  background: #fff;
+  padding: 0.4em 1em;
+  top: -0.4em;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+// form css
+.create-user-form {
+  .form-label {
+    color: #222222;
+    font-size: 14px;
+    margin-bottom: .5rem;
+    font-weight: 700;
+    font-family: 'Lato';
+    display: block;
+  }
+  
+  .form-input {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Lato';
+    width: 86%;
+  }
+
+  .mat-form-field {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  ::ng-deep .mat-form-field-outline {
+    min-height: 40px;
+    background: #fff;
+    border-radius: 4px;
+
+    .mat-form-field-outline-start {
+      border: 1px solid #70707069;
+      border-radius: 4px 0 0 4px;
+      border-right-style: none;
+      min-width: 8px;
+      border-right-style: none;
+    }
+
+    .mat-form-field-outline-gap {
+      border: 1px solid currentColor;
+      border-radius: 82px;
+      border-left-style: none;
+      border-right-style: none;
+    }
+
+    .mat-form-field-outline-end {
+      border: 1px solid #70707069;
+      border-left-style: none;
+      border-radius: 0 4px 4px 0;
+    }
+  }
+
+  ::ng-deep .mat-form-field-outline.mat-form-field-outline-thick {
+    min-height: 40px;
+    background: #fff;
+    border-radius: 4px;
+
+    .mat-form-field-outline-start {
+      border-radius: 4px 0 0 4px;
+      min-width: 8px;
+      border: 1px solid currentColor;
+      border-right-style: none;
+    }
+
+    .mat-form-field-outline-gap {
+      border-width: 1px;
+      border: 1px solid currentColor;
+      border-radius: 4px;
+      border-left-style: none;
+      border-right-style: none;
+    }
+
+    .mat-form-field-outline-end {
+      border-width: 1px;
+      border-radius: 0 4px 4px 0;
+      border: 1px solid currentColor;
+      border-left-style: none;
+    }
+  }
+
+  ::ng-deep .mat-form-field-flex {
+    min-height: 40px;
+    align-items: center;
+  }
+
+  ::ng-deep .mat-form-field-infix {
+    padding: 0;
+    margin: 8px 0 0 0;
+    border: none;
+  }
+}
+
+// rolesactivities-ul
+.rolesactivities-ul {
+  list-style-type: none;
+  padding-left: 0 !important;
+
+  .roles-div {
+    display: inline-block;
+    margin-right: 3em;
+  }
+
+  .activites-div {
+    display: inline-block;
+
+    .mat-form-field {
+      width: 30em;
+      max-width: 100% !important;
+      position: relative;
+    }
+
+    .add-activity {
+      position: absolute;
+      right: -0.5em;
+      top: -0.5em;
+      cursor: pointer;
+      background: #fff;
+      color: #0074B6;
+      padding: 0.4em 1em;
+    }
+  }
+
+  #addtolist-btn {
+    width: auto;
+    background: #0075B7 !important;
+    color: white !important;
+    font-family: "Lato";
+    font-weight: 700;
+    font-size: 14px;
+  }
+}
+  
+// right sidebar
+.similar-sidebar {
+  border-left: 1px solid #0000000f;
+
+  .change-log-text {
+    display: block;
+    font: 700 14px Lato;
+  }
+
+  .no-request-text {
+    max-width: 300px;
+    color: rgba(0, 0, 0, 0.60);
+    font-size: 13px;
+  }
+
+  .suser-card {
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    margin: 2px 16px 8px;
+    border-radius: 5px;
+    max-width: 300px;
+
+    .letter-color{
+      background: #306933;
+      padding: 8px;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 12px;
+      vertical-align: super;
+      margin-right: 10px;
+    }
+
+    .groupicon {
+      background: white;
+      padding: 4px 6px;
+      color: #0075B7 !important;
+      border-radius: 3px;
+    }
+
+    p.username {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 0;
+      color: rgba(0, 0, 0, 0.87);
+    }
+
+    p.useremail {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0;
+      color: rgba(0, 0, 0, 0.87);
+    }
+    p.userpos {
+      font-size: 14px;
+      margin: 0;
+      color: rgba(0, 0, 0, 0.60);
+    }
+
+    .btn-div {
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      text-align: center;
+
+      button {
+        border: 0;
+        color: #0074B6 !important;
+        font-weight: 600;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+// officer user card
+.officer-card {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  margin-right: 3em;
+  min-width: 20em;
+
+  .bg-grey {
+    background: #F8F4F9;
+    display: block;
+    min-height: 4.5em;
+
+    .mat-icon{
+      float: right;
+      background: #D8D8D8;
+      border-radius: 50%;
+      margin: 0.7em 1em;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 1.4em;
+      text-align: center;
+      cursor: pointer;
+      padding: 3px;
+    }
+  }
+  .userdata {
+    margin-top: -3em;
+
+    .letter-color{
+      background: #306933;
+      padding: 0.8em;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 24px;
+      display: inline-block;
+    }
+  
+    p.username {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 0.3em;
+    }
+    p.userpos {
+      font-size: 14px;
+      margin: 0;
+      color: rgba(0, 0, 0, 0.60);
+    }
+  }
+
+  .userinfo {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.6);
+    p {
+      margin-bottom: 0.5em !important;
+    }
+
+    p .mat-icon{
+      margin-right: 0.1em;
+      vertical-align: text-top;
+      font-size: 1.4em;
+    }
+  }
+}
+
+.roleactivity-table {
+  width: 100%;
+  border-spacing: unset;
+
+  th {
+    background: rgba(0, 0, 0, 0.04);
+    color: rgba(0, 0, 0, 0.6) !important;
+    text-align: left;
+    font-weight: 400;
+    font-size: 15px;
+  }
+  td {
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 14px;
+    vertical-align: top;
+
+    p {
+      margin-bottom: 4px;
+    }
+
+    .archvtime {
+      font-size: 13px;
+      color: rgba(0, 0, 0, 0.60);
+    }
+
+    span {
+      background: rgba(0,0,0,0.08);
+      padding: 3px 10px;
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,0.08);
+      margin: 0 8px 8px 0;
+      display: inline-block
+    }
+  }
+
+  td:first-child { 
+    width: 30%;
+  }
+  .nodata {
+    color: rgba(0, 0, 0, 0.4) !important;
+  }
+}
+
+#archivedtable {
+  span {
+    background: #ffffff !important;
+  }
+}
+
+.activitieslist {
+  span {
+    background: rgba(0,0,0,0.08);
+    padding: 3px 10px;
+    border-radius: 18px;
+    border: 1px solid rgba(0,0,0,0.08);
+    margin: 0 8px 8px 0;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    .mat-icon {
+      position: absolute;
+      background: rgba(0,0,0,0.4);
+      color: #eee;
+      font-size: 16px;
+      border-radius: 50%;
+      text-align: center;
+      top: -6px;
+      right: -6px;
+      line-height: 1.5em;
+      display: none;
+      cursor: pointer;
+    }
+  }
+}
+
+#loader {
+  border: 4px solid #d9e4fa;
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 20px;
+  height: 20px;
+  margin: 0 1em;
+  display: none;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
