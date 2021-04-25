@@ -3,8 +3,13 @@ import { FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { Router, ActivatedRoute } from '@angular/router'
 import { startWith, debounceTime, distinctUntilChanged } from 'rxjs/operators'
-import { NsAppsConfig, ConfigurationsService, NsPage, LogoutComponent, SubapplicationRespondService, ValueService }
-  from '@sunbird-cb/utils'
+import {
+  NsAppsConfig,
+  ConfigurationsService,
+  NsPage, LogoutComponent,
+  SubapplicationRespondService,
+  ValueService,
+} from '@sunbird-cb/utils'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ROOT_WIDGET_CONFIG, CustomTourService } from '@sunbird-cb/collection'
 import { MatDialog } from '@angular/material'

@@ -101,7 +101,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           userId: user.userId,
           active: user.active,
           blocked: user.blocked,
-          roles: _.join(_.map(user.roleInfo, i => `<li>${i.roleName}</li>`), '')
+          roles: _.join(_.map(user.roleInfo, i => `<li>${i.roleName}</li>`), ''),
         })
       })
     }
@@ -116,7 +116,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           userId: user.userId,
           active: user.active,
           blocked: user.blocked,
-          roles: _.map(user.roleInfo, 'roleName')
+          roles: _.join(_.map(user.roleInfo, i => `<li>${i.roleName}</li>`), ''),
         })
       })
     }
@@ -129,7 +129,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           userId: user.userId,
           active: user.active,
           blocked: user.blocked,
-          roles: _.map(user.roleInfo, 'roleName')
+          roles: _.join(_.map(user.roleInfo, i => `<li>${i.roleName}</li>`), ''),
         })
       })
     }
