@@ -72,7 +72,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       columns: [
         { displayName: 'Full Name', key: 'fullname' },
         { displayName: 'Email', key: 'email' },
-        { displayName: 'Position', key: 'position' },
+        { displayName: 'Roles', key: 'roles', isList: true },
       ],
       needCheckBox: false,
       needHash: false,
@@ -101,6 +101,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           userId: user.userId,
           active: user.active,
           blocked: user.blocked,
+          roles: _.join(_.map(user.roleInfo, i => `<li>${i.roleName}</li>`), '')
         })
       })
     }
@@ -115,6 +116,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           userId: user.userId,
           active: user.active,
           blocked: user.blocked,
+          roles: _.map(user.roleInfo, 'roleName')
         })
       })
     }
@@ -127,6 +129,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           userId: user.userId,
           active: user.active,
           blocked: user.blocked,
+          roles: _.map(user.roleInfo, 'roleName')
         })
       })
     }
@@ -206,7 +209,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         })
         break
       case 'active':
-      const state = _.get(user, 'isBlocked')
+        const state = _.get(user, 'isBlocked')
         if (state === true) {
           _.set(user, 'isActive', true)
           _.set(user, 'isBlocked', false)

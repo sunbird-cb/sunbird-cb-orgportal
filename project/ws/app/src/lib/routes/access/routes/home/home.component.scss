@@ -6,7 +6,7 @@
   @extend %page-center;
   height: auto;
   min-height: 75vh;
-  padding:12px;
+  padding: 12px;
 }
 
 .container2 {
@@ -20,9 +20,9 @@
 
 .left-nav {
   min-width: 240px;
-  max-width: 240px;
-  background:none !important;
-  border-right:0 !important;
+  // max-width: 240px;
+  // background:none !important;
+  // border-right:0 !important;
 
 
   // ::ng-deep.mat-drawer-inner-container {
