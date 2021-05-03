@@ -196,14 +196,14 @@ export class AllocationActionsComponent implements OnInit {
   selectCompetency(comp: any) {
     this.selectedCompetency = comp
 
-    // this.activitieslist = this.selectedRole.childNodes
-    this.selectedCompetency.childNodes.forEach((node: any) => {
-      // if (node.name) {
-      //   this.activitieslist.push(node)
-      // }
-    })
-    this.similarCompetencies = []
-    this.selectedActivity = ''
+    // // this.activitieslist = this.selectedRole.childNodes
+    // this.selectedCompetency.childNodes.forEach((node: any) => {
+    //   if (node.name) {
+    //     this.activitieslist.push(node)
+    //   }
+    // })
+    // this.similarCompetencies = []
+    // this.selectedActivity = ''
 
     // const formatselectedRole = role
     // const actnodes: any[] = []
