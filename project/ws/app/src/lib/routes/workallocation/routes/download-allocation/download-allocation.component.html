@@ -9,17 +9,27 @@
                 <th>Full name</th>
                 <th>Roles</th>
                 <th>Activities</th>
+                <th>Competencies</th>
             </tr>
             <tr *ngFor="let d of data; let i=index">
                 <td>{{d.fullname}}</td>
                 <td colspan="2">
                     <ul>
-                        <li *ngFor="let r of d.roles">
-                            <div class="dwnld-role">
-                                {{r.name}}
+                        <li>
+                            <div class="table-role">
+                                {{d.roles.name}}
                             </div>
                             <div class="dwnld-activity">
-                                <span *ngFor="let a of r.childNodes">{{a.name}}</span>
+                                <span *ngFor="let a of d.roles.childNodes">{{a.name}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li *ngFor="let r of d.competencies">
+                            <div class="table-role">
+                                {{r.name}}
                             </div>
                         </li>
                     </ul>

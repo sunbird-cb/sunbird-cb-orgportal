@@ -12,8 +12,8 @@ import { WorkallocationService } from '../../services/workallocation.service'
   templateUrl: './workallocation.component.html',
   styleUrls: ['./workallocation.component.scss'],
 })
-export class WorkallocationComponent implements OnInit, OnDestroy  {
-  currentFilter = 'active'
+export class WorkallocationComponent implements OnInit, OnDestroy {
+  currentFilter = 'Draft'
   tabs: any
   currentUser!: string | null
   tabledata!: ITableData
@@ -42,7 +42,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
   }
 
   constructor(private exportAsService: ExportAsService, private router: Router,
-              private workallocationSrvc: WorkallocationService) { }
+    private workallocationSrvc: WorkallocationService) { }
 
   ngOnInit() {
     this.tabledata = {
@@ -73,7 +73,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
     // })
   }
 
-  pdfCallbackFn (pdf: any) {
+  pdfCallbackFn(pdf: any) {
     // example to add page number as footer to every page of pdf
     const noOfPages = pdf.internal.getNumberOfPages()
     // tslint:disable-next-line:no-increment-decrement
@@ -88,48 +88,71 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
     this.workallocationSrvc.getAllUsers().subscribe(res => {
       this.departmentName = res.deptName
       this.departmentID = res.id
-      this.getAllUsers()
+      this.getAllUsers('Draft')
     })
   }
 
-  getAllUsers() {
+  getAllUsers(statusKey: string) {
     const req = {
-      pageNo : 0,
-      pageSize : 1000,
-      departmentName : this.departmentName,
+      pageNo: 0,
+      pageSize: 1000,
+      departmentName: this.departmentName,
+      status: (statusKey !== '') ? statusKey : "Draft",
     }
+    //if (this.currentFilter !== statusKey) {
     this.workallocationSrvc.getUsers(req).subscribe(res => {
       this.userslist = res.result.data
       this.totalusersCount = res.result.totalhit
-      this.filter(this.currentFilter)
+      this.filter(statusKey)
     })
+    //}
   }
 
   filter(key: string) {
     const activeUsersData: any[] = []
     const archiveUsersData: any[] = []
-
+    const draftUsersData: any[] = []
     if (this.userslist && this.userslist.length > 0) {
       this.userslist.forEach((user: any) => {
-        if (user.allocationDetails.activeList.length > 0) {
-          activeUsersData.push({
-            fullname: user.allocationDetails.userName,
-            email: user.allocationDetails.userEmail,
-            roles: user.allocationDetails.activeList,
-            userId: user.allocationDetails.userId || user.allocationDetails.id,
-            position: user.allocationDetails.userPosition,
-            phone: user.userDetails ? user.userDetails.phone : '',
-          })
-        }
-        if (user.allocationDetails.archivedList.length > 0) {
-          archiveUsersData.push({
-            fullname: user.allocationDetails.userName,
-            email: user.allocationDetails.userEmail,
-            roles: user.allocationDetails.archivedList,
-            userId: user.allocationDetails.userId || user.allocationDetails.id,
-            position: user.allocationDetails.userPosition,
-            phone: user.userDetails ? user.userDetails.phone : '',
-          })
+        if (key === 'Published') {
+          if (user.allocationDetails.activeWAObject.id !== undefined) {
+            activeUsersData.push({
+              fullname: user.allocationDetails.userName,
+              email: user.allocationDetails.userEmail,
+              roles: user.allocationDetails.activeWAObject.roleCompetencyList[0].roleDetails,
+              userId: user.allocationDetails.userId || user.allocationDetails.id,
+              position: user.allocationDetails.activeWAObject.userPosition,
+              phone: user.userDetails ? user.userDetails.phone : '',
+              competencies: user.allocationDetails.activeWAObject.roleCompetencyList[0].competencyDetails
+            })
+          }
+        } else if (key === 'Draft') {
+          if (user.allocationDetails.draftWAObject.id !== undefined) {
+            draftUsersData.push({
+              fullname: user.allocationDetails.userName,
+              email: user.allocationDetails.userEmail,
+              roles: user.allocationDetails.draftWAObject.roleCompetencyList[0].roleDetails,
+              userId: user.allocationDetails.userId || user.allocationDetails.id,
+              position: user.allocationDetails.draftWAObject.userPosition,
+              phone: user.userDetails ? user.userDetails.phone : '',
+              competencies: user.allocationDetails.draftWAObject.roleCompetencyList[0].competencyDetails
+            })
+          }
+        } else {
+          if (user.allocationDetails.archivedWAList.length > 0) {
+            const archiveList = user.allocationDetails.archivedWAList
+            archiveList.forEach((archObj: any) => {
+              archiveUsersData.push({
+                fullname: user.allocationDetails.userName,
+                email: user.allocationDetails.userEmail,
+                roles: archObj.roleCompetencyList[0].roleDetails,
+                userId: user.allocationDetails.userId || user.allocationDetails.id,
+                position: archObj.userPosition,
+                phone: user.userDetails ? user.userDetails.phone : '',
+                competencies: archObj.roleCompetencyList[0].competencyDetails
+              })
+            })
+          }
         }
       })
     }
@@ -137,18 +160,20 @@ export class WorkallocationComponent implements OnInit, OnDestroy  {
     if (key) {
       this.currentFilter = key
       switch (key) {
-        case 'active':
+        case 'Draft':
+          this.data = draftUsersData
+          break
+        case 'Published':
           this.data = activeUsersData
           break
-        case 'archived':
+        case 'Archived':
           this.data = archiveUsersData
           break
         default:
-          this.data = activeUsersData
+          this.data = draftUsersData
           break
       }
     }
-
   }
 
   // tslint:disable-next-line:use-lifecycle-interface

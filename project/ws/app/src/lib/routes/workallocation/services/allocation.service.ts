@@ -10,6 +10,7 @@ const API_END_POINTS = {
   UPDATE_ALLOCATION: 'apis/protected/v8/workallocation/update',
   GET_ALL_USERS: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
   USERS: '/apis/protected/v8/workallocation/userSearch',
+  SEARCH_COMPETENCY: '/apis/protected/v8/frac/COMPETENCY',
 }
 
 @Injectable({
@@ -33,6 +34,10 @@ export class AllocationService {
 
   onSearchActivity(req: any): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.SEARCH_NODES}`, req)
+  }
+
+  onSearchCompetency(val: any): Observable<any> {
+    return this.http.get<any>(`${API_END_POINTS.SEARCH_COMPETENCY}/${val}`)
   }
 
   createAllocation(req: any): Observable<any> {

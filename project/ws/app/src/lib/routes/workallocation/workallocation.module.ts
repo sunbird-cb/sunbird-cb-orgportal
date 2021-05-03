@@ -17,16 +17,21 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { ExportAsModule } from 'ngx-export-as'
 import { UpdateWorkallocationComponent } from './routes/update-workallocation/update-workallocation.component'
 import { MatMenuModule } from '@angular/material/menu'
+import { AllocationActionsComponent } from './components/allocation-actions/allocation-actions.component'
+import { MatTabsModule } from '@angular/material/tabs'
 
 @NgModule({
-  declarations: [CreateWorkallocationComponent, DownloadAllocationComponent, UpdateWorkallocationComponent],
+  declarations: [CreateWorkallocationComponent, DownloadAllocationComponent, UpdateWorkallocationComponent, AllocationActionsComponent],
   imports: [
     CommonModule, RouterModule, WorkallocationRoutingModule, BreadcrumbsOrgModule,
     MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule,
-    UIORGTableModule, ExportAsModule, MatMenuModule,
+    UIORGTableModule, ExportAsModule, MatMenuModule, MatTabsModule,
+  ],
+  entryComponents: [
+    AllocationActionsComponent,
   ],
   exports: [DownloadAllocationComponent],
 })

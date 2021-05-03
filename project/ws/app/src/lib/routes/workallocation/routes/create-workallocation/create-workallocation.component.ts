@@ -5,6 +5,7 @@ import { Router } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 import { MatSnackBar, MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
+import { AllocationActionsComponent } from '../../components/allocation-actions/allocation-actions.component'
 
 @Component({
   selector: 'ws-app-create-workallocation',
@@ -30,22 +31,25 @@ export class CreateWorkallocationComponent implements OnInit {
       },
     ],
   }
-  similarUsers!: any []
+  similarUsers!: any[]
   nosimilarUsers = false
-  similarRoles!: any []
+  similarRoles!: any[]
   nosimilarRoles = false
-  similarPositions!: any []
+  similarPositions!: any[]
   nosimilarPositions = false
-  similarActivities!: any []
+  similarActivities!: any[]
   nosimilarActivities = false
   selectedUser: any
   selectedRole: any
   selectedActivity: any
   selectedPosition: any
-  ralist: any [] = []
+  ralist: any[] = []
   departmentName: any
   departmentID: any
   showRAerror = false
+  width = '35vw'
+  dialogRef: any
+  selectedIndex: number | null  // for tabs
 
   config: ExportAsConfig = {
     type: 'pdf',
@@ -62,6 +66,7 @@ export class CreateWorkallocationComponent implements OnInit {
   constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
               private fb: FormBuilder, private allocateSrvc: AllocationService,
               private router: Router, public dialog: MatDialog) {
+    this.selectedIndex = 0
     this.newAllocationForm = this.fb.group({
       fname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -107,7 +112,7 @@ export class CreateWorkallocationComponent implements OnInit {
     // })
   }
 
-  pdfCallbackFn (pdf: any) {
+  pdfCallbackFn(pdf: any) {
     // example to add page number as footer to every page of pdf
     const noOfPages = pdf.internal.getNumberOfPages()
     // tslint:disable-next-line:no-increment-decrement
@@ -150,7 +155,7 @@ export class CreateWorkallocationComponent implements OnInit {
   }
 
   // to get suggested similar users in right sidebar
-  onSearchUser (event: any) {
+  onSearchUser(event: any) {
     const val = event.target.value
     if (val.length > 2) {
       this.displayLoader('true')
@@ -194,44 +199,6 @@ export class CreateWorkallocationComponent implements OnInit {
           this.nosimilarRoles = true
           this.nosimilarPositions = false
           this.nosimilarActivities = false
-        } else {
-          this.setAllMsgFalse()
-        }
-      })
-    }
-  }
-
-  onSearchActivity (event: any) {
-    const val = event.target.value
-    if (val.length > 2) {
-      this.displayLoader('true')
-      this.nosimilarActivities = false
-      this.similarUsers = []
-      this.similarRoles = []
-      this.similarActivities = []
-      this.similarPositions = []
-      const req = {
-        searches: [
-          {
-            type: 'ACTIVITY',
-            field: 'name',
-            keyword: val,
-          },
-          {
-            type: 'ACTIVITY',
-            field: 'status',
-            keyword: 'VERIFIED',
-          },
-        ],
-      }
-      this.allocateSrvc.onSearchActivity(req).subscribe(res => {
-        this.similarActivities = res.responseData
-        this.displayLoader('false')
-        if (this.similarActivities && this.similarActivities.length === 0) {
-          this.nosimilarUsers = false
-          this.nosimilarRoles = false
-          this.nosimilarPositions = false
-          this.nosimilarActivities = true
         } else {
           this.setAllMsgFalse()
         }
@@ -290,7 +257,7 @@ export class CreateWorkallocationComponent implements OnInit {
     const vart = document.getElementById('loader')!
     if (value === 'true') {
       vart.style.display = 'block'
-    }  else {
+    } else {
       vart.style.display = 'none'
     }
   }
@@ -301,7 +268,7 @@ export class CreateWorkallocationComponent implements OnInit {
     this.similarUsers = []
     // tslint:disable-next-line:prefer-template
     const fullname = user.userDetails.last_name ? user.userDetails.first_name + ' ' +
-    user.userDetails.last_name : user.userDetails.first_name
+      user.userDetails.last_name : user.userDetails.first_name
 
     this.newAllocationForm.patchValue({
       fname: fullname,
@@ -315,11 +282,11 @@ export class CreateWorkallocationComponent implements OnInit {
   }
   removeSelectedUSer() {
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
-          data: {
-            title: 'Remove User',
-            body: 'Removing the selected user will clear all the form values',
-          },
-        })
+      data: {
+        title: 'Remove User',
+        body: 'Removing the selected user will clear all the form values',
+      },
+    })
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -363,7 +330,7 @@ export class CreateWorkallocationComponent implements OnInit {
     this.selectedActivity = ''
   }
 
-  selectPosition (pos: any) {
+  selectPosition(pos: any) {
     this.selectedPosition = pos
     this.similarPositions = []
     this.newAllocationForm.patchValue({
@@ -375,7 +342,7 @@ export class CreateWorkallocationComponent implements OnInit {
   addRolesActivity(index: number) {
     if (index === 0 && this.selectedRole) {
       if (this.activitieslist.length > 0) {
-        this.showRAerror =  false
+        this.showRAerror = false
         this.selectedRole.childNodes = this.activitieslist
         this.ralist.push(this.selectedRole)
         this.selectedRole = ''
@@ -384,7 +351,7 @@ export class CreateWorkallocationComponent implements OnInit {
         const control = this.newAllocationForm.get('rolelist') as FormArray
         // tslint:disable-next-line:no-increment-decrement
         for (let i = control.length - 1; i >= 0; i--) {
-            control.removeAt(i)
+          control.removeAt(i)
         }
 
         const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
@@ -392,7 +359,7 @@ export class CreateWorkallocationComponent implements OnInit {
 
         this.newAllocationForm.value.rolelist = this.ralist
       } else {
-        this.showRAerror =  true
+        this.showRAerror = true
       }
     } else {
       if (this.newAllocationForm.value.rolelist[0].name && this.activitieslist.length > 0) {
@@ -412,15 +379,15 @@ export class CreateWorkallocationComponent implements OnInit {
         const control = this.newAllocationForm.get('rolelist') as FormArray
         // tslint:disable-next-line:no-increment-decrement
         for (let i = control.length - 1; i >= 0; i--) {
-            control.removeAt(i)
+          control.removeAt(i)
         }
         const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
         newrolefield.push(this.newRole())
         // const newrole = this.newAllocationForm.get('rolelist') as FormArray
         // newrole.at(0).patchValue(newroleformat)
         this.newAllocationForm.value.rolelist = this.ralist
-      } else  {
-        this.showRAerror =  true
+      } else {
+        this.showRAerror = true
       }
     }
   }
@@ -493,11 +460,11 @@ export class CreateWorkallocationComponent implements OnInit {
     this.allocateSrvc.createAllocation(reqdata).subscribe(res => {
       if (res) {
         this.openSnackbar('Work Allocated Successfully')
-      this.newAllocationForm.reset()
-      this.selectedUser = ''
-      this.selectedRole = ''
-      this.ralist = []
-      this.router.navigate(['/app/home/workallocation'])
+        this.newAllocationForm.reset()
+        this.selectedUser = ''
+        this.selectedRole = ''
+        this.ralist = []
+        this.router.navigate(['/app/home/workallocation'])
       }
     })
   }
@@ -505,6 +472,24 @@ export class CreateWorkallocationComponent implements OnInit {
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
     this.snackBar.open(primaryMsg, 'X', {
       duration,
+    })
+  }
+
+  // openDialog() {
+  //   this.dialog.open(AllocationActionsComponent, {
+  //     width: '500px',
+  //     minHeight: '350px',
+  //     data: {},
+  //   })
+  // }
+
+  openDialog() {
+    this.dialogRef = this.dialog.open(AllocationActionsComponent, {
+      width: '1000px',
+      height: '80%',
+      data: {},
+    })
+    this.dialogRef.afterClosed().subscribe(() => {
     })
   }
 }
