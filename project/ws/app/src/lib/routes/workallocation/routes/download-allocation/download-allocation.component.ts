@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core'
 export class DownloadAllocationComponent implements OnInit {
   @Input() data: any[] | undefined
   @Input() deptname: any
+  @Input() currentFilter: any
   term!: string | null
 
   today: number = Date.now()

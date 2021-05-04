@@ -216,7 +216,6 @@
           </div>
           <div class="w-full similarUsersList" *ngIf="similarRoles && similarRoles.length > 0">
             <div class="suser-card" *ngFor="let role of similarRoles;let i = index;">
-              {{ role | json }}
               <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
                 <p class="username">{{role.name}}</p>
                 <p class="userpos" *ngIf="role.childNodes && role.childNodes.length > 0">{{role.childNodes.length}}
