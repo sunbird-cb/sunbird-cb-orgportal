@@ -1,13 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms'
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { AllocationService } from '../../services/allocation.service'
-
-// const TAB_INDEX_ACTIVITY_TYPE_MAPPING: { [key: number]: string } = {
-//   0: 'role',
-//   1: 'activity',
-//   2: 'competency',
-// }
 
 @Component({
   selector: 'ws-app-allocation-actions',
@@ -62,7 +56,7 @@ export class AllocationActionsComponent implements OnInit {
     private dialogRef: MatDialogRef<AllocationActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public selectedUser: any
   ) {
-    console.log(this.selectedUser)
+
     this.allocationFieldForm = this.fb.group({
       role: ['', Validators.required],
       roleDesc: [''],
@@ -86,10 +80,6 @@ export class AllocationActionsComponent implements OnInit {
     })
   }
 
-  // clear() {
-  //   this.searchControl.setValue('')
-  // }
-
   close(): void {
     this.dialogRef.close()
   }
@@ -104,8 +94,21 @@ export class AllocationActionsComponent implements OnInit {
       this.similarRoles = []
       this.similarActivities = []
       this.similarPositions = []
-      this.allocateSrvc.onSearchRole(val).subscribe(res => {
-        this.similarRoles = res
+      this.allocateSrvc.onSearchRole(val).subscribe((res: any) => {
+        if (res !== undefined) {
+          this.similarRoles = []
+          res.forEach((obj: any) => {
+            const roleObj = {
+              type: obj.type,
+              name: obj.name,
+              description: obj.description,
+              status: obj.status,
+              source: obj.source,
+              childNodes: (obj.childNodes && obj.childNodes.length > 0) ? obj.childNodes : []
+            }
+            this.similarRoles.push(roleObj)
+          })
+        }
         this.displayLoader('false')
         if (this.similarRoles && this.similarRoles.length === 0) {
           this.nosimilarUsers = false
@@ -163,41 +166,45 @@ export class AllocationActionsComponent implements OnInit {
   }
 
   selectRole(role: any) {
-    this.selectedRole = role
-    // this.activitieslist = this.selectedRole.childNodes
-    this.selectedRole.childNodes.forEach((node: any) => {
-      if (node.name) {
-        this.activitieslist.push(node)
-      }
-    })
+    const selectedRole = this.similarRoles.filter(roleObj => roleObj.name === role.name)
+    const selectedRoleObj = {
+      type: selectedRole[0].type,
+      name: selectedRole[0].name,
+      description: selectedRole[0].description,
+      status: selectedRole[0].status,
+      childNodes: selectedRole[0].childNodes
+    }
+    this.selectedRole = selectedRoleObj
+    this.activitieslist = this.selectedRole.childNodes
     this.similarRoles = []
     this.selectedActivity = ''
-
-    const formatselectedRole = role
-    const actnodes: any[] = []
-    formatselectedRole.childNodes.forEach((x: any) => {
-      actnodes.push(x.name)
-    })
-    formatselectedRole.childNodes = actnodes
-    const newrole = this.allocationFieldForm.get('rolelist') as FormArray
-
-    // newrole.push(this.newRole())
-    newrole.at(0).patchValue(formatselectedRole)
-    if (formatselectedRole) {
-      this.allocationFieldForm.controls['role'].setValue(formatselectedRole.name)
-      this.allocationFieldForm.controls['roleDesc'].setValue(formatselectedRole.description)
+    if (selectedRole) {
+      this.allocationFieldForm.controls['role'].setValue(this.selectedRole.name)
+      this.allocationFieldForm.controls['roleDesc'].setValue(this.selectedRole.description)
     }
-    // this.inputvar.nativeElement.value = ''
-    // this.allocationFieldForm.value.rolelist[0].childNodes = ''
   }
 
   selectCompetency(comp: any) {
-    console.log(comp)
+
     if (comp !== undefined) {
-      this.selectedCompetency = comp
-      this.allocationFieldForm.controls['competency'].setValue(this.selectedCompetency.name)
-      this.allocationFieldForm.controls['compDesc'].setValue(this.selectedCompetency.description)
-      this.allocationFieldForm.controls['compArea'].setValue(this.selectedCompetency.additionalProperties.competencyArea)
+      this.selectedCompetency = []
+      const selectedCompetencyObj = {
+        type: comp.type,
+        id: comp.id,
+        name: comp.name,
+        description: comp.description,
+        status: comp.status,
+        childNodes: comp.childNodes,
+        source: comp.source,
+        reviewComments: comp.reviewComments,
+        createdDate: comp.createdDate,
+        additionalProperties: comp.additionalProperties,
+        children: comp.children
+      }
+      this.selectedCompetency.push(selectedCompetencyObj)
+      this.allocationFieldForm.controls['competency'].setValue(this.selectedCompetency[0].name)
+      this.allocationFieldForm.controls['compDesc'].setValue(this.selectedCompetency[0].description)
+      this.allocationFieldForm.controls['compArea'].setValue(this.selectedCompetency[0].additionalProperties.competencyArea)
     }
   }
 
@@ -207,7 +214,7 @@ export class AllocationActionsComponent implements OnInit {
   }
 
   tabChange() {
-    console.log(this.selectedTabIndex)
+
     if (this.selectedTabIndex === 0) {
       if (this.allocationFieldForm.controls['role'].value !== '') {
         this.selectedTabIndex = 1
@@ -300,10 +307,7 @@ export class AllocationActionsComponent implements OnInit {
   }
 
   saveWorkOrder() {
-    console.log(this.selectedRole)
-    console.log(this.selectedCompetency)
-
-    // this.allocationFieldForm.value.rolelist = this.ralist
+    delete this.selectedCompetency['childCount']
     const roleCompetencyArr = []
     const roleCompetencyObj = {
       roleDetails: this.selectedRole,
@@ -318,16 +322,12 @@ export class AllocationActionsComponent implements OnInit {
       userEmail: this.selectedUser.userData.userDetails.email,
       deptId: this.selectedUser.department_id,
       deptName: this.selectedUser.department_name,
-      roleCometencyList: roleCompetencyArr,
+      roleCompetencyList: roleCompetencyArr,
       userPosition: this.allocationFieldForm.value.position,
       positionId: this.selectedPosition ? this.selectedPosition.id : '',
-      createdAt: '',
-      createdBy: '',
       status: 'Draft',
-      waId: this.selectedUser.userData.userDetails.wid
+      waId: ''
     }
-
-    console.log(JSON.stringify(reqdata))
 
     this.allocateSrvc.createAllocation(reqdata).subscribe(res => {
       if (res) {
@@ -339,6 +339,5 @@ export class AllocationActionsComponent implements OnInit {
       }
     })
   }
-
 
 }

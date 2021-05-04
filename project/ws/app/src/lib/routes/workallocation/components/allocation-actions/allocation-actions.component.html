@@ -215,13 +215,15 @@
             </div>
           </div>
           <div class="w-full similarUsersList" *ngIf="similarRoles && similarRoles.length > 0">
-            <div class="suser-card" *ngFor="let role of similarRoles">
+            <div class="suser-card" *ngFor="let role of similarRoles;let i = index;">
+              {{ role | json }}
               <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
                 <p class="username">{{role.name}}</p>
-                <p class="userpos">{{role.childNodes.length}} activities</p>
+                <p class="userpos" *ngIf="role.childNodes && role.childNodes.length > 0">{{role.childNodes.length}}
+                  activities</p>
               </div>
               <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
-                <button id="addrole" (click)="selectRole(role)">Add</button>
+                <button (click)="selectRole(role)">Add</button>
               </div>
             </div>
           </div>
