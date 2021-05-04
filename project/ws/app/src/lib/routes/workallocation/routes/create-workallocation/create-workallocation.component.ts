@@ -64,8 +64,8 @@ export class CreateWorkallocationComponent implements OnInit {
   activitieslist: any[] = []
 
   constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
-              private fb: FormBuilder, private allocateSrvc: AllocationService,
-              private router: Router, public dialog: MatDialog) {
+    private fb: FormBuilder, private allocateSrvc: AllocationService,
+    private router: Router, public dialog: MatDialog) {
     this.selectedIndex = 0
     this.newAllocationForm = this.fb.group({
       fname: ['', Validators.required],
@@ -484,12 +484,19 @@ export class CreateWorkallocationComponent implements OnInit {
   // }
 
   openDialog() {
+    const userObj = {
+      userData: this.selectedUser,
+      department_name: this.departmentName,
+      department_id: this.departmentID
+    }
     this.dialogRef = this.dialog.open(AllocationActionsComponent, {
       width: '1000px',
       height: '80%',
-      data: {},
+      data: userObj
     })
     this.dialogRef.afterClosed().subscribe(() => {
+      this.openSnackbar('Work Allocated Successfully')
+      this.router.navigate(['/app/home/workallocation'])
     })
   }
 }

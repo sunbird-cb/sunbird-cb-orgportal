@@ -577,50 +577,20 @@ button {
   border-bottom: 1px solid #ededed;
 }
 
-// input[type="text"]#mapActivities{
-//     -webkit-appearance:none!important;
-//     border:1px solid gray;
-//     border-right:0px;
-//     outline:none;
-// }
-
-// input[type="text"]#subdomaintwo{
-//     -webkit-appearance:none!important;
-//     color:#0074B6;
-//     text-align:right;
-//     width:75px;
-//     border:1px solid gray;
-//     border-left:0px;
-//     margin:0 0 0 -7px;
-//     background:white;
-// }
-
-input[type="text"]#subdomaintwo{
-    -webkit-appearance:none!important;
-    color:#0074B6;
-    text-align:right;
-    width:75px;
-    border:1px solid gray;
-    border-left:0px;
-    margin:0 0 0 -7px;
-    background:white;
-}
-input[type="text"]#mapActivities{
-    -webkit-appearance:none!important;
-    border:1px solid gray;
-    border-right:0px;
-    outline:none;
-}
-
 mat-icon {
   float: right;
   line-height: 35px;
 }
-
 .mat-tab-group-dynamic-height .mat-tab-body-content {
   overflow-y: auto;
 }
 
-// .mat-dialog-actions {
-//   margin-top: 20px;
-// }
+#addworkorder-btn {
+  width: auto;
+  background: #0075B7 !important;
+  color: white !important;
+  font-family: "Lato";
+  font-weight: 700;
+  font-size: 14px;
+  display: block;
+}

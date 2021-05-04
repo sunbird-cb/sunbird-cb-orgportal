@@ -119,26 +119,27 @@
                         i18n-aria-label aria-label="Role input" class="form-input" autocomplete="off" />
                     </mat-form-field>
 
-                    <label for="mapActivities" class="margin-remove-bottom margin-top-xs form-label"
-                      i18n="Map Activities label|Label which explains the user to enter email" i18n-aria-label
-                      aria-label="Map Activities label">
-                      Map activities
+                    <label for="competency" class="margin-remove-bottom margin-top-xs form-label"
+                      i18n="Competency label|Label which explains the user to enter email" i18n-aria-label
+                      aria-label="Competency label">
+                      Competency
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <input id="mapActivities" matInput #mapActivities formControlName="mapActivities" i18n-placeholder
-                        placeholder="Type here" i18n-aria-label aria-label="Map Activities input" class="form-input"
-                        autocomplete="off" />
+                      <input id="competency" matInput #competency formControlName="competency" i18n-placeholder
+                        placeholder="Type here" i18n-aria-label aria-label="Competency input" class="form-input"
+                        autocomplete="off" (keypress)="onSearchCompetency($event)"
+                        (keyup)="onSearchCompetency($event)" />
                     </mat-form-field>
 
-                    <label for="roleDesc" class="margin-remove-bottom margin-top-xs form-label"
-                      i18n="Description label|Label which explains the user to enter email" i18n-aria-label
-                      aria-label="Description label">
+                    <label for="compDesc" class="margin-remove-bottom margin-top-xs form-label"
+                      i18n="Competency Description label|Label which explains the user to enter email" i18n-aria-label
+                      aria-label="Competency Description label">
                       Description
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <textarea id="roleDesc" matInput #roleDesc formControlName="roleDesc" i18n-placeholder
-                        placeholder="Description here" i18n-aria-label aria-label="Description input" class="form-input"
-                        autocomplete="off" rows="8"></textarea>
+                      <textarea id="compDesc" matInput #compDesc formControlName="compDesc" i18n-placeholder
+                        placeholder="Description here" i18n-aria-label aria-label="Competency Description input"
+                        class="form-input" autocomplete="off" rows="8"></textarea>
                     </mat-form-field>
 
                     <label for="compArea" class="margin-remove-bottom form-label"
@@ -149,8 +150,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="compArea" matInput #compArea formControlName="compArea" i18n-placeholder
                         placeholder="Type here" i18n-aria-label aria-label="Competency area input" class="form-input"
-                        autocomplete="off" (keypress)="onSearchCompetency($event)"
-                        (keyup)="onSearchCompetency($event)" />
+                        autocomplete="off" />
                     </mat-form-field>
 
                     <label for="compLevel" class="margin-remove-bottom form-label"
@@ -274,12 +274,12 @@
   <button mat-raised-button class="btn-success btn-responsive" id="savebtn" [mat-dialog-close]="true">
     <span i18n>Cancel</span>
   </button>
-  <button *ngIf="selectedTabIndex !== 3" mat-raised-button class="text-white btn-success btn-responsive"
+  <button *ngIf="selectedTabIndex !== 2" mat-raised-button class="text-white btn-success btn-responsive"
     id="addtolist-btn" (click)="tabChange()">
     <span class="text-white" i18n>Next</span>
   </button>
-  <button *ngIf="selectedTabIndex === 3" mat-raised-button class="text-white btn-success btn-responsive"
-    (click)="saveWorkOrder()">
+  <button *ngIf="selectedTabIndex === 2" mat-raised-button class="text-white btn-success btn-responsive"
+    id="addworkorder-btn" (click)="saveWorkOrder()">
     <span class="text-white" i18n>Add to work order</span>
   </button>
 </mat-dialog-actions>

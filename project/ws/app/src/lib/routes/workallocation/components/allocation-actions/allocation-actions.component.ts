@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { MatDialogRef } from '@angular/material'
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms'
 import { AllocationService } from '../../services/allocation.service'
 
@@ -43,7 +43,6 @@ export class AllocationActionsComponent implements OnInit {
   nosimilarActivities = false
   similarCompetencies!: any[]
   nosimilarCompetencies = false
-  selectedUser: any
   selectedRole: any
   selectedActivity: any
   selectedPosition: any
@@ -60,21 +59,20 @@ export class AllocationActionsComponent implements OnInit {
   constructor(
     private allocateSrvc: AllocationService,
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<AllocationActionsComponent>
-    // @Inject(MAT_DIALOG_DATA) data: {
-    //   userArray: any[],
-    //   noOfUser: string
-    // },
+    private dialogRef: MatDialogRef<AllocationActionsComponent>,
+    @Inject(MAT_DIALOG_DATA) public selectedUser: any
   ) {
+    console.log(this.selectedUser)
     this.allocationFieldForm = this.fb.group({
       role: ['', Validators.required],
       roleDesc: [''],
       mapActivities: ['', Validators.required],
       mapCompetencies: ['', Validators.required],
-      compDesc: ['', Validators.required],
-      compArea: ['', Validators.required],
+      compDesc: [''],
+      compArea: [''],
       compLevel: ['', Validators.required],
       rolelist: this.fb.array([this.newRole()]),
+      competency: ['', Validators.required],
     })
   }
 
@@ -194,33 +192,13 @@ export class AllocationActionsComponent implements OnInit {
   }
 
   selectCompetency(comp: any) {
-    this.selectedCompetency = comp
-
-    // // this.activitieslist = this.selectedRole.childNodes
-    // this.selectedCompetency.childNodes.forEach((node: any) => {
-    //   if (node.name) {
-    //     this.activitieslist.push(node)
-    //   }
-    // })
-    // this.similarCompetencies = []
-    // this.selectedActivity = ''
-
-    // const formatselectedRole = role
-    // const actnodes: any[] = []
-    // formatselectedRole.childNodes.forEach((x: any) => {
-    //   actnodes.push(x.name)
-    // })
-    // formatselectedRole.childNodes = actnodes
-    // const newrole = this.allocationFieldForm.get('rolelist') as FormArray
-    // console.log(formatselectedRole)
-    // // newrole.push(this.newRole())
-    // newrole.at(0).patchValue(formatselectedRole)
-    // if (formatselectedRole) {
-    //   this.allocationFieldForm.controls['role'].setValue(formatselectedRole.name)
-    //   this.allocationFieldForm.controls['roleDesc'].setValue(formatselectedRole.description)
-    // }
-    // this.inputvar.nativeElement.value = ''
-    // this.allocationFieldForm.value.rolelist[0].childNodes = ''
+    console.log(comp)
+    if (comp !== undefined) {
+      this.selectedCompetency = comp
+      this.allocationFieldForm.controls['competency'].setValue(this.selectedCompetency.name)
+      this.allocationFieldForm.controls['compDesc'].setValue(this.selectedCompetency.description)
+      this.allocationFieldForm.controls['compArea'].setValue(this.selectedCompetency.additionalProperties.competencyArea)
+    }
   }
 
   get newroleControls() {
@@ -229,6 +207,7 @@ export class AllocationActionsComponent implements OnInit {
   }
 
   tabChange() {
+    console.log(this.selectedTabIndex)
     if (this.selectedTabIndex === 0) {
       if (this.allocationFieldForm.controls['role'].value !== '') {
         this.selectedTabIndex = 1
@@ -236,9 +215,6 @@ export class AllocationActionsComponent implements OnInit {
     } else if (this.selectedTabIndex === 1) {
       this.selectedTabIndex = 2
     }
-    // if (!this.activityUsersResult[TAB_INDEX_ACTIVITY_TYPE_MAPPING[event.index]].data) {
-    //   this.fetchActivityUsers(TAB_INDEX_ACTIVITY_TYPE_MAPPING[event.index] as NsDiscussionForum.EActivityType)
-    // }
   }
 
   onSearchActivity(event: any) {
@@ -322,5 +298,47 @@ export class AllocationActionsComponent implements OnInit {
       }
     }
   }
+
+  saveWorkOrder() {
+    console.log(this.selectedRole)
+    console.log(this.selectedCompetency)
+
+    // this.allocationFieldForm.value.rolelist = this.ralist
+    const roleCompetencyArr = []
+    const roleCompetencyObj = {
+      roleDetails: this.selectedRole,
+      competencyDetails: this.selectedCompetency
+    }
+    roleCompetencyArr.push(roleCompetencyObj)
+
+    const reqdata = {
+      id: this.selectedUser ? this.selectedUser.userData.userDetails.wid : '',
+      userId: this.selectedUser ? this.selectedUser.userData.userDetails.wid : '',
+      userName: `${this.selectedUser.userData.userDetails.first_name} ${this.selectedUser.userData.userDetails.last_name}`,
+      userEmail: this.selectedUser.userData.userDetails.email,
+      deptId: this.selectedUser.department_id,
+      deptName: this.selectedUser.department_name,
+      roleCometencyList: roleCompetencyArr,
+      userPosition: this.allocationFieldForm.value.position,
+      positionId: this.selectedPosition ? this.selectedPosition.id : '',
+      createdAt: '',
+      createdBy: '',
+      status: 'Draft',
+      waId: this.selectedUser.userData.userDetails.wid
+    }
+
+    console.log(JSON.stringify(reqdata))
+
+    this.allocateSrvc.createAllocation(reqdata).subscribe(res => {
+      if (res) {
+        this.allocationFieldForm.reset()
+        this.selectedUser = ''
+        this.selectedRole = ''
+        this.ralist = []
+        this.dialogRef.close()
+      }
+    })
+  }
+
 
 }
