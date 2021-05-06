@@ -49,6 +49,8 @@ export class AllocationActionsComponent implements OnInit {
 
   activitieslist: any[] = []
   selectedTabIndex = 0
+  competencieslist: any[] = []
+  compatecnyLevel: any
 
   constructor(
     private allocateSrvc: AllocationService,
@@ -57,6 +59,7 @@ export class AllocationActionsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public selectedUser: any
   ) {
 
+    this.compatecnyLevel = ''
     this.allocationFieldForm = this.fb.group({
       role: ['', Validators.required],
       roleDesc: [''],
@@ -306,6 +309,23 @@ export class AllocationActionsComponent implements OnInit {
     }
   }
 
+  selectLevel(selectedLevel: string) {
+    this.compatecnyLevel = selectedLevel
+    this.allocationFieldForm.controls['compLevel'].setValue(selectedLevel)
+  }
+
+  mapSelectedCompetency() {
+    if (this.compatecnyLevel === '') {
+      // document.getElementById('level-msg').style.display = 'block'
+    } else {
+      const competencyObj = {
+        name: this.allocationFieldForm.controls['competency'].value,
+      }
+      this.competencieslist.push(competencyObj)
+    }
+
+  }
+
   saveWorkOrder() {
     delete this.selectedCompetency['childCount']
     const roleCompetencyArr = []
@@ -333,9 +353,7 @@ export class AllocationActionsComponent implements OnInit {
       if (res) {
         this.allocationFieldForm.reset()
         this.selectedUser = ''
-        this.selectedRole = ''
-        this.ralist = []
-        this.dialogRef.close()
+        this.dialogRef.close({ event: 'close', data: reqdata })
       }
     })
   }

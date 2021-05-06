@@ -62,6 +62,9 @@ export class CreateWorkallocationComponent implements OnInit {
     },
   }
   activitieslist: any[] = []
+  showPublishButton = false
+  publishWorkAllocationData: any
+  waId: any
 
   constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
     private fb: FormBuilder, private allocateSrvc: AllocationService,
@@ -276,9 +279,9 @@ export class CreateWorkallocationComponent implements OnInit {
       position: this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '',
     })
 
-    if (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.activeList.length > 0) {
-      this.ralist = this.selectedUser.allocationDetails.activeList
-    }
+    // if (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.activeList.length > 0) {
+    //   this.ralist = this.selectedUser.allocationDetails.activeList
+    // }
   }
   removeSelectedUSer() {
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
@@ -494,9 +497,41 @@ export class CreateWorkallocationComponent implements OnInit {
       height: '80%',
       data: userObj
     })
-    this.dialogRef.afterClosed().subscribe(() => {
-      this.openSnackbar('Work Allocated Successfully')
-      this.router.navigate(['/app/home/workallocation'])
+    this.dialogRef.afterClosed().subscribe((result: any) => {
+
+      if (result.data != undefined) {
+        this.showPublishButton = true
+        this.publishWorkAllocationData = result.data
+        this.getWorkAllocationDetails(result.data.userId)
+      }
     })
   }
+
+  getWorkAllocationDetails(reqUserId: any) {
+    const reqUserObj = {
+      pageNo: 0,
+      pageSize: 100,
+      departmentName: "JPAL",
+      status: "Draft",
+      userId: reqUserId
+
+    }
+    this.allocateSrvc.getAllocationDetails(reqUserObj).subscribe((res: any) => {
+      if (res) {
+        this.waId = res.result.data[0].allocationDetails.draftWAObject.id
+      }
+    })
+  }
+
+  publishWorkOrder() {
+    this.publishWorkAllocationData.waId = this.waId
+    this.publishWorkAllocationData.status = "Published"
+    this.allocateSrvc.updateAllocation(this.publishWorkAllocationData).subscribe((res: any) => {
+      if (res) {
+        this.openSnackbar('Work Allocated Successfully')
+        this.router.navigate(['/app/home/workallocation'])
+      }
+    })
+  }
+
 }

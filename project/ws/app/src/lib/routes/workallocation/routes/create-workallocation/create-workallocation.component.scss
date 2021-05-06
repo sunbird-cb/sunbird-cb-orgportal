@@ -32,6 +32,21 @@
   #savebtn[disabled] {
     opacity: 0.4;
   }
+
+  #publishbtn {
+    position: absolute;
+    right: 8em;
+    top: 0.8em;
+    width: auto;
+    background: #0075B7 !important;
+    color: white !important;
+    font-family: 'Lato';
+    font-weight: 700;
+    font-size: 14px;
+  }
+  #publishbtn[disabled] {
+    opacity: 0.4;
+  }
 }
 .flex-3 {
   flex: 3;
@@ -393,6 +408,11 @@
   display: none;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
+}
+
+.page_title_flex {
+  display:flex;
+  justify-content: right;
 }
 
 /* Safari */

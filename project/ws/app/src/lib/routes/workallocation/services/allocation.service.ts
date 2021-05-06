@@ -56,4 +56,8 @@ export class AllocationService {
     return this.http.post<any>(`${API_END_POINTS.USERS}`, req)
   }
 
+  getAllocationDetails(req: any): Observable<any> {
+    return this.http.post<any>(`${API_END_POINTS.USERS}`, req)
+  }
+
 }

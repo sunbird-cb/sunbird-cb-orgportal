@@ -104,7 +104,7 @@
             <span i18n>3. Competencies</span>
             <ng-container></ng-container>
           </ng-template>
-          <ng-template matTabContent>
+          <ng-template matTabContent style="padding-bottom: 20px;">
             <div class="margin-top-xl new-mobile">
               <div class="mobile-break">
                 <form class="create-user-form" [formGroup]="allocationFieldForm">
@@ -161,24 +161,48 @@
 
                     <ul class="competency-level" style="list-style-type: none; width:300px;padding-inline-start:0px;">
                       <li
-                        style="border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px; margin-bottom:10px; border-radius: 2px;">
-                        <input type="radio" name="competencylevel" value="level1"> Level 1
+                        style="border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px; margin-bottom:10px; border-radius: 2px; width:325px;">
+                        <input type="radio" name="competencylevel" value="level1" (change)="selectLevel('level1')">
+                        Level 1
                       </li>
                       <li
-                        style="border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius: 2px;">
-                        <input type="radio" name="competencylevel" value="level2"> Level 2
+                        style="border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius: 2px; width:325px;">
+                        <input type="radio" name="competencylevel" value="level2" (change)="selectLevel('level2')">
+                        Level 2
                       </li>
-                      <li
-                        style="border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius: 2px;">
-                        <input type="radio" name="competencylevel" value="level3"> Level 3
+                      <li style=" border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius:
+                          2px; width:325px;">
+                        <input type="radio" name="competencylevel" value="level3" (change)="selectLevel('level3')">
+                        Level 3
                       </li>
-                      <li
-                        style="border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius: 2px;">
-                        <input type="radio" name="competencylevel" value="level4"> Level 4
+                      <li style=" border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius:
+                          2px; width:325px;">
+                        <input type="radio" name="competencylevel" value="level4" (change)="selectLevel('level4')">
+                        Level 4
                       </li>
-                      <li
-                        style="border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius: 2px;">
-                        <input type="radio" name="competencylevel" value="level5"> Level 5
+                      <li style=" border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius:
+                          2px; width:325px;">
+                        <input type="radio" name="competencylevel" value="level5" (change)="selectLevel('level5')">
+                        Level 5
+                      </li>
+                    </ul>
+
+                    <button [disabled]="!selectedCompetency" mat-raised-button class="text-white  btn-responsive"
+                      id="mapcompetency-btn" (click)="mapSelectedCompetency()">
+                      <span class="text-white" i18n>Map competency to this role</span>
+                    </button>
+
+                    <label for="mapCompetency" class="margin-remove-bottom margin-top-xs form-label"
+                      i18n="Already Map Competencies label|Label which explains the user to enter email" i18n-aria-label
+                      aria-label="Map Competencies label" *ngIf="competencieslist && competencieslist.length > 0">
+                      Already mapped competencies
+                    </label>
+
+                    <ul *ngIf="competencieslist && competencieslist.length > 0"
+                      style="list-style-type: none; border: 1px solid #ededed; width:250px; padding-left: 0px; margin-top: 10px; height: 35px;">
+                      <li *ngFor="let a of competencieslist; let i = index" (click)="showRemoveCompetency(i)"
+                        style="height:35px;margin-bottom:5px; background-color:#ffe7d0; color:black; width:250px; line-height: 35px; padding-left:11px;">
+                        {{a.name}}
                       </li>
                     </ul>
 

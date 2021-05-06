@@ -1,21 +1,22 @@
 <div class="container-balanced">
     <div class="flex flex-1 custom">
         <div class="flex-3" class="dynamic-overflow">
-            <!-- breadcrumbs -->
-            <div class="top-bar">
-                <ws-widget-breadcrumbs-org
-                    [widgetData]="{titles:[{title:'Work allocation', url:'/app/home/workallocation'},{title:'New', url:'none'}] }">
-                </ws-widget-breadcrumbs-org>
-                <!-- <button mat-raised-button type="submit" (click)="onSubmit()"
-                    class="text-white btn-success btn-responsive"
-                    [disabled]="newAllocationForm?.invalid || ralist.length === 0" id="savebtn">
-                    <span class="text-white" i18n>Publish</span>
-                </button> -->
-                <button mat-raised-button type="submit" (click)="onSubmit()"
-                    class="text-white btn-success btn-responsive"
-                    [disabled]="newAllocationForm?.invalid || ralist.length === 0" id="savebtn">
-                    <span class="text-white" i18n>Save</span>
-                </button>
+            <div class="page_title_flex top-bar">
+                <div class="flex">
+                    <ws-widget-breadcrumbs-org
+                        [widgetData]="{titles:[{title:'Work allocation', url:'/app/home/workallocation'},{title:'New', url:'none'}] }">
+                    </ws-widget-breadcrumbs-org>
+                </div>
+                <span class="spacer"></span>
+                <div class="flex flex-3 custom button-row-inline">
+                    <button mat-stroked-button color="accent" type="button" class="mat-accent-border flex-auto-display"
+                        (click)="publishWorkOrder()" id="publishbtn" *ngIf="showPublishButton">
+                        <span i18n>Publish</span>
+                    </button>
+                    <button mat-button class="create-btn" type="button" (click)="onSubmit()" id="savebtn">
+                        <span i18n>Save</span>
+                    </button>
+                </div>
             </div>
             <!-- main content -->
             <div class="flex flex-4 flex-column">
