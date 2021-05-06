@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import { MatTabGroup, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { AllocationService } from '../../services/allocation.service'
 
@@ -10,7 +10,10 @@ import { AllocationService } from '../../services/allocation.service'
 })
 export class AllocationActionsComponent implements OnInit {
 
+  @ViewChild('tabGroup', { static: false }) tabGroup!: MatTabGroup
+
   @ViewChild('childNodes', { static: false })
+
   inputvar!: ElementRef
   tabsData!: any[]
   userslist!: any[]
@@ -73,7 +76,22 @@ export class AllocationActionsComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  changeProjectTab() {
+    if (this.selectedTabIndex === 1) {
+      if (this.allocationFieldForm.value.role === '') {
+        this.selectedTabIndex = 0
+      } else {
+        this.selectedTabIndex = 1
+      }
+    } else if (this.selectedTabIndex === 2) {
+      if (this.allocationFieldForm.value.mapActivities === '') {
+        this.selectedTabIndex = 1
+      } else {
+        this.selectedTabIndex = 2
+      }
+    }
   }
 
   newRole(): FormGroup {
@@ -204,6 +222,7 @@ export class AllocationActionsComponent implements OnInit {
         additionalProperties: comp.additionalProperties,
         children: comp.children
       }
+      this.similarCompetencies = []
       this.selectedCompetency.push(selectedCompetencyObj)
       this.allocationFieldForm.controls['competency'].setValue(this.selectedCompetency[0].name)
       this.allocationFieldForm.controls['compDesc'].setValue(this.selectedCompetency[0].description)
@@ -274,22 +293,42 @@ export class AllocationActionsComponent implements OnInit {
   }
 
   mapSelectedActivity() {
-    const activitiyObj = {
-      name: this.allocationFieldForm.controls['mapActivities'].value,
-      desc: (this.selectedActivity.description !== '') ? this.selectedActivity.description : '',
-      id: (this.selectedActivity.id !== '') ? this.selectedActivity.id : '',
-      status: '',
-      parentRole: '',
-      type: '',
+    if (this.allocationFieldForm.controls['mapActivities'].value !== '') {
+      const activitiyObj = {
+        name: this.allocationFieldForm.controls['mapActivities'].value,
+        desc: (this.selectedActivity.description !== '') ? this.selectedActivity.description : '',
+        id: (this.selectedActivity.id !== '') ? this.selectedActivity.id : '',
+        status: '',
+        parentRole: '',
+        type: '',
+      }
+      this.activitieslist.push(activitiyObj)
     }
-    this.activitieslist.push(activitiyObj)
   }
 
   showRemoveActivity(index: any) {
-    const id = `showremove${index}`
-    // tslint:disable-next-line:no-non-null-assertion
-    const vart = document.getElementById(id)!
+    console.log(document.getElementById(`showremove${index}`))
+    const vart = document.getElementById(`showremove${index}`)!
     vart.style.display = 'block'
+    vart.style.backgroundColor = '#232323'
+    vart.style.color = '#fff'
+    const vartEle = document.getElementById(`elementActivity${index}`)!
+    vartEle.style.backgroundColor = '#716B66'
+    vartEle.style.color = '#fff'
+    vartEle.style.paddingRight = '0px'
+  }
+
+
+  showRemoveCompetency(index: any) {
+    console.log(document.getElementById(`showremoveComp${index}`))
+    const vart = document.getElementById(`showremoveComp${index}`)!
+    vart.style.display = 'block'
+    vart.style.backgroundColor = '#232323'
+    vart.style.color = '#fff'
+    const vartEle = document.getElementById(`elemenComp${index}`)!
+    vartEle.style.backgroundColor = '#716B66'
+    vartEle.style.color = '#fff'
+    vartEle.style.paddingRight = '0px'
   }
 
   removeActivity(index: any) {

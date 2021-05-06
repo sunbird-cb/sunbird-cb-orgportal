@@ -2,7 +2,9 @@
 <mat-dialog-content class="mat-typography">
   <div style="display:inline-flex;">
     <div style="width: 635px; overflow-y:auto;">
-      <mat-tab-group #tabGroup mat-stretch-tabs dynamicHeight [(selectedIndex)]="selectedTabIndex">
+      <mat-tab-group #tabGroup mat-stretch-tabs [(selectedIndex)]="selectedTabIndex"
+        (selectedTabChange)="changeProjectTab()"
+        style="height: calc(100% - 64px); min-height: calc(100% - 64px); min-width: 100%; width: 100%; margin: 0px;">
         <mat-tab>
           <ng-template mat-tab-label>
             <span i18n>1. Role</span>
@@ -51,7 +53,7 @@
           <ng-template mat-tab-label>
             <span i18n>2.Activities</span>
           </ng-template>
-          <ng-template matTabContent>
+          <ng-template matTabContent style="height: 650px;">
             <div class="margin-top-xl new-mobile">
               <div class="mobile-break">
                 <form class="create-user-form" [formGroup]="allocationFieldForm">
@@ -62,8 +64,9 @@
                       Role
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <input id="role" matInput #role formControlName="role" i18n-placeholder placeholder="Type here"
-                        i18n-aria-label aria-label="Role input" class="form-input" autocomplete="off" />
+                      <input id="role_act" matInput #role formControlName="role" i18n-placeholder
+                        placeholder="Type here" i18n-aria-label aria-label="Role input" class="form-input"
+                        autocomplete="off" disabled="disabled" readonly />
                     </mat-form-field>
 
                     <label for="mapActivities" class="margin-remove-bottom margin-top-xs form-label"
@@ -74,8 +77,10 @@
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="mapActivities" matInput #mapActivities formControlName="mapActivities" i18n-placeholder
                         placeholder="Type here" i18n-aria-label aria-label="Map Activities input" class="form-input"
-                        autocomplete="off" (keypress)="onSearchActivity($event)" (keyup)="onSearchActivity($event)" />
-                      <span class="form-control" style="color:#0074B6;" (click)="mapSelectedActivity()">Map</span>
+                        autocomplete="off" (keypress)="onSearchActivity($event)" (keyup)="onSearchActivity($event)"
+                        maxlength="40" />
+                      <span class="form-control" style="color:#0074B6; cursor:pointer; margin-left:10px;"
+                        (click)="mapSelectedActivity()" *ngIf="selectedActivity !== ''">Map</span>
                     </mat-form-field>
 
                     <label for="mapActivities" class="margin-remove-bottom margin-top-xs form-label"
@@ -85,11 +90,13 @@
                     </label>
 
                     <ul *ngIf="activitieslist && activitieslist.length > 0"
-                      style="list-style-type: none; border: 1px solid #ededed; width:250px; padding-left: 0px; margin-top: 10px; height: 35px;">
-                      <li *ngFor="let a of activitieslist; let i = index" (click)="showRemoveActivity(i)"
-                        style="height:35px;margin-bottom:5px; background-color:#ffe7d0; color:black; width:250px; line-height: 35px; padding-left:11px;">
+                      style="list-style-type: none; padding-left: 0px; margin-top: 10px; height: 35px;">
+                      <li *ngFor="let a of activitieslist; let i = index" id="elementActivity{{i}}"
+                        (click)="showRemoveActivity(i)" style="height:35px;margin-bottom:10px; background-color:#FFF4ED; color:black; line-height: 35px; padding-left:15px; float:left;
+                        clear:left; word-wrap:break-word; border-radius: 4px; color:#716B66;padding-right: 15px;">
                         {{a.name}}
-                        <mat-icon id="showremove{{i}}" (click)="removeActivity(i)" style="cursor:pointer;">close
+                        <mat-icon id="showremove{{i}}" (click)="removeActivity(i)"
+                          style="cursor:pointer; margin-left:10px; display:none; padding:5px;line-height: 35px;">close
                         </mat-icon>
                       </li>
                     </ul>
@@ -115,14 +122,15 @@
                       Role
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
-                      <input id="role" matInput #role formControlName="role" i18n-placeholder placeholder="Type here"
-                        i18n-aria-label aria-label="Role input" class="form-input" autocomplete="off" />
+                      <input id="role_comp" matInput #role formControlName="role" i18n-placeholder
+                        placeholder="Type here" i18n-aria-label aria-label="Role input" class="form-input"
+                        autocomplete="off" disabled="disabled" readonly />
                     </mat-form-field>
 
                     <label for="competency" class="margin-remove-bottom margin-top-xs form-label"
                       i18n="Competency label|Label which explains the user to enter email" i18n-aria-label
                       aria-label="Competency label">
-                      Competency
+                      Map competencies
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="competency" matInput #competency formControlName="competency" i18n-placeholder
@@ -149,8 +157,8 @@
                     </label>
                     <mat-form-field appearance="outline" class="margin-top-xs">
                       <input id="compArea" matInput #compArea formControlName="compArea" i18n-placeholder
-                        placeholder="Type here" i18n-aria-label aria-label="Competency area input" class="form-input"
-                        autocomplete="off" />
+                        placeholder="Competency area here" i18n-aria-label aria-label="Competency area input"
+                        class="form-input" autocomplete="off" />
                     </mat-form-field>
 
                     <label for="compLevel" class="margin-remove-bottom form-label"
@@ -198,11 +206,23 @@
                       Already mapped competencies
                     </label>
 
-                    <ul *ngIf="competencieslist && competencieslist.length > 0"
+                    <!-- <ul *ngIf="competencieslist && competencieslist.length > 0"
                       style="list-style-type: none; border: 1px solid #ededed; width:250px; padding-left: 0px; margin-top: 10px; height: 35px;">
                       <li *ngFor="let a of competencieslist; let i = index" (click)="showRemoveCompetency(i)"
                         style="height:35px;margin-bottom:5px; background-color:#ffe7d0; color:black; width:250px; line-height: 35px; padding-left:11px;">
                         {{a.name}}
+                      </li>
+                    </ul> -->
+
+                    <ul *ngIf="competencieslist && competencieslist.length > 0"
+                      style="list-style-type: none; padding-left: 0px; margin-top: 10px; height: 35px;">
+                      <li *ngFor="let a of activitieslist; let i = index" id="elemenComp{{i}}"
+                        (click)="showRemoveCompetency(i)" style="height:35px;margin-bottom:10px; background-color:#FFF4ED; color:black; line-height: 35px; padding-left:15px; float:left;
+                      clear:left; word-wrap:break-word; border-radius: 4px; color:#716B66;padding-right: 15px;">
+                        {{a.name}}
+                        <mat-icon id="showremoveComp{{i}}" (click)="removeCompetency(i)"
+                          style="cursor:pointer; margin-left:10px; display:none; padding:5px;line-height: 35px;">close
+                        </mat-icon>
                       </li>
                     </ul>
 
@@ -245,6 +265,9 @@
                 <p class="userpos" *ngIf="role.childNodes && role.childNodes.length > 0">{{role.childNodes.length}}
                   activities</p>
               </div>
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="desc">{{role.description}}</p>
+              </div>
               <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
                 <button (click)="selectRole(role)">Add</button>
               </div>
@@ -254,6 +277,9 @@
             <div class="suser-card" *ngFor="let act of similarActivities">
               <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
                 <p class="username">{{act.name}}</p>
+              </div>
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="desc">{{act.description}}</p>
               </div>
               <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
                 <button id="addactivity" (click)="selectActivity(act)">Add</button>
@@ -265,6 +291,9 @@
               <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
                 <p class="username">{{pos.name}}</p>
               </div>
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="desc">{{pos.description}}</p>
+              </div>
               <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
                 <button id="addpos" (click)="selectPosition(pos)">Add</button>
               </div>
@@ -274,6 +303,9 @@
             <div class="suser-card" *ngFor="let comp of similarCompetencies">
               <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
                 <p class="username">{{comp.name}}</p>
+              </div>
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="desc">{{comp.description}}</p>
               </div>
               <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
                 <button id="addcomp" (click)="selectCompetency(comp)">Add</button>

@@ -2,7 +2,7 @@
 @import 'ws-mixins';
 
 .mat-sidenav-container {
-  min-height: 650px;
+  min-height: 700px;
   overflow: unset;
 }
 
@@ -418,7 +418,7 @@
     min-height: 4.5em;
 
     .mat-icon{
-      float: right;
+      // float: right;
       background: #D8D8D8;
       border-radius: 50%;
       margin: 0.7em 1em;
@@ -581,9 +581,6 @@ mat-icon {
   float: right;
   line-height: 35px;
 }
-.mat-tab-group-dynamic-height .mat-tab-body-content {
-  overflow-y: auto;
-}
 
 #addworkorder-btn {
   width: auto;
@@ -604,3 +601,18 @@ mat-icon {
   font-size: 14px;
   display: block;
 }
+
+.mat-tab-body-content::-webkit-scrollbar {
+  display: none;
+}
+
+.wa-dialog .mat-dialog-container{
+    overflow-y: hidden !important;
+}
+
+// .mat-tab-body-content {
+//   overflow: auto !important;
+// }
+// .mat-tab-group-dynamic-height .mat-tab-body-content {
+//   overflow:auto !important;
+// }

@@ -65,6 +65,7 @@ export class CreateWorkallocationComponent implements OnInit {
   showPublishButton = false
   publishWorkAllocationData: any
   waId: any
+  roleCompetencyList!: any[]
 
   constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
     private fb: FormBuilder, private allocateSrvc: AllocationService,
@@ -276,7 +277,7 @@ export class CreateWorkallocationComponent implements OnInit {
     this.newAllocationForm.patchValue({
       fname: fullname,
       email: this.selectedUser.userDetails.email,
-      position: this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '',
+      position: (this.newAllocationForm.value.position === '') ? (this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '') : this.newAllocationForm.value.position,
     })
 
     // if (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.activeList.length > 0) {
@@ -495,6 +496,7 @@ export class CreateWorkallocationComponent implements OnInit {
     this.dialogRef = this.dialog.open(AllocationActionsComponent, {
       width: '1000px',
       height: '80%',
+      panelClass: 'wa-dialog',
       data: userObj
     })
     this.dialogRef.afterClosed().subscribe((result: any) => {
@@ -502,6 +504,9 @@ export class CreateWorkallocationComponent implements OnInit {
       if (result.data != undefined) {
         this.showPublishButton = true
         this.publishWorkAllocationData = result.data
+        if (this.publishWorkAllocationData !== undefined) {
+          this.roleCompetencyList = this.publishWorkAllocationData.roleCompetencyList
+        }
         this.getWorkAllocationDetails(result.data.userId)
       }
     })
@@ -511,7 +516,7 @@ export class CreateWorkallocationComponent implements OnInit {
     const reqUserObj = {
       pageNo: 0,
       pageSize: 100,
-      departmentName: "JPAL",
+      departmentName: this.departmentName,
       status: "Draft",
       userId: reqUserId
 
