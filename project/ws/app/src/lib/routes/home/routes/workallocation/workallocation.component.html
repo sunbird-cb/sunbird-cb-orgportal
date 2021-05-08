@@ -4,7 +4,7 @@
       <div class="flex-1" role="link" tabindex="0">
         <div class="flex flex-1">
           <mat-card-title class="flex-4 mobile-margin text-capitalize">
-            <span class="h-600-s-20-m color-87">Work allocation</span>
+            <span class="h-600-s-20-m color-87">Work allocation tool</span>
           </mat-card-title>
         </div>
       </div>
@@ -50,7 +50,7 @@
         </div>
         <table class="allocation-table" id="allocation-table" cell-spacing='0' cell-padding='0'>
           <tr>
-            <th>Full name</th>
+            <th><input type="checkbox" class="form-input"> <label style="padding-left:5px;">Full name</label></th>
             <th>Roles</th>
             <th>Activities</th>
             <th>Competencies</th>
@@ -59,31 +59,39 @@
             *ngFor="let d of data | filter: term | paginate: { itemsPerPage: 5, currentPage: p, totalItems: data.length }"
             class="data-row">
             <td aria-rowspan="d.roles.length+1" (click)="viewAllocation(d)">
-              <b>{{d.fullname}}</b>
-              <div style="padding-top:5px;">
-                {{ d.position }}
+              <div style="display: inline-flex;">
+                <div>
+                  <input type="checkbox" class="form-input">
+                </div>
+                <div style="padding-left:5px;">
+                  <b>{{d.fullname}}</b>
+                  <div style="padding-top:5px;">
+                    {{ d.position }}
+                  </div>
+                </div>
               </div>
             </td>
-            <td colspan="2" (click)="viewAllocation(d)">
+            <td colspan="3" (click)="viewAllocation(d)">
               <ul>
                 <li>
                   <div class="table-role">
                     {{d.roles.name}}
                   </div>
-                  <div class="table-activity">
+                  <div class="table-activity" style="padding-left:110px;">
                     <span *ngFor="let a of d.roles.childNodes">{{a.name}}</span>
                   </div>
-                </li>
-              </ul>
-            </td>
-            <td>
-              <ul>
-                <li *ngFor="let r of d.competencies">
-                  <div class="table-role">
-                    {{r.name}}
+                  <div class="table-activity">
+                    <span *ngFor="let c of d.competencies">{{c.name}}</span>
                   </div>
                 </li>
               </ul>
+              <!-- <ul>
+                <li *ngFor="let r of d.competencies">
+                  <div class="table-activity">
+                    <span>{{r.name}}</span>
+                  </div>
+                </li>
+              </ul> -->
             </td>
           </tr>
         </table>
@@ -121,6 +129,7 @@
         <ws-app-download-allocation id="downloadtemp" [data]="downloaddata" [deptname]="departmentName"></ws-app-download-allocation>
     </div>
     <div *ngIf="!downloaddata && data && data.length > 0"> -->
-  <ws-app-download-allocation id="downloadtemp" [data]="data" [deptname]="departmentName"></ws-app-download-allocation>
+  <ws-app-download-allocation id="downloadtemp" [data]="data" [deptname]="departmentName"
+    [currentFilter]="currentFilter"></ws-app-download-allocation>
   <!-- </div> -->
 </div>

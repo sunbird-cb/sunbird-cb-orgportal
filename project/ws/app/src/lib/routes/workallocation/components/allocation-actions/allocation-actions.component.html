@@ -314,12 +314,14 @@
           </div>
           <div id="loader"></div>
           <div class="no-request-text margin-m">
-            <label *ngIf="!similarUsers && !similarRoles && !similarActivities && !similarPositions">System
+            <label
+              *ngIf="!similarUsers && !similarRoles && !similarActivities && !similarPositions && !similarCompetencies">System
               will recommend similar items to avoid duplication</label>
             <label *ngIf="nosimilarUsers && similarUsers.length === 0">No users found</label>
             <label *ngIf="nosimilarRoles && similarRoles.length === 0">No roles found</label>
             <label *ngIf="nosimilarPositions && similarPositions.length === 0">No position found</label>
             <label *ngIf="nosimilarActivities && similarActivities.length === 0">No activity found</label>
+            <label *ngIf="nosimilarCompetencies && similarCompetencies.length === 0">No competency found</label>
           </div>
         </div>
       </ng-container>

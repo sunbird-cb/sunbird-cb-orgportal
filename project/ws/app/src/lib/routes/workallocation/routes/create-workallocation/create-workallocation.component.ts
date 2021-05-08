@@ -340,6 +340,7 @@ export class CreateWorkallocationComponent implements OnInit {
     this.newAllocationForm.patchValue({
       position: this.selectedPosition.name,
     })
+    this.selectedUser.userDetails.position = this.selectedPosition.name
   }
 
   // to push new obj to rolelist

@@ -58,6 +58,10 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       sortState: 'asc',
       needUserMenus: true,
     }
+    if (this.currentFilter === 'Draft') {
+      this.tabledata['columns'].push({ displayName: 'Competencies', key: 'competencies' })
+    }
+    console.log(this.tabledata)
     this.getdeptUsers()
   }
 

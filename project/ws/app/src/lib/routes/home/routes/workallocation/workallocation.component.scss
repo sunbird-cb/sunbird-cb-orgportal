@@ -180,9 +180,9 @@ a:not([href]):not([tabindex]) {
             }
             .table-activity {
                 display: inline-block;
-                width: 60%;
+                width: 30%;
 
-                span { 
+                span {
                   background: #ededed;
                   margin: 2px 2px 5px;
                   border: 1px solid #ddd;
@@ -201,18 +201,18 @@ a:not([href]):not([tabindex]) {
   }
 
   th:nth-child(4), td:nth-child(4) {
-    width: 5%
+    width: 22%
   }
   th:nth-child(1), td:nth-child(1) {
-    width: 20%
+    width: 15%
   }
   th:nth-child(2), td:nth-child(2) {
-    width: 24%
+    width: 30%
   }
   th:nth-child(3), td:nth-child(3) {
-    width: 50%
+    width: 20%
   }
- 
+
   tr.data-row {
     border-bottom: 1px solid #cccccc;
     cursor: pointer;
@@ -223,12 +223,12 @@ a:not([href]):not([tabindex]) {
   .search {
     display: flex;
     flex: 1;
-  
+
     .rsearch  {
       display: flex;
       position: relative;
       flex: 1 1 auto;
-  
+
       .search-icon {
         position: absolute;
         top: 9px;
@@ -236,7 +236,7 @@ a:not([href]):not([tabindex]) {
         left: 10px;
         margin-top: 0 !important;
       }
-  
+
       .sinput {
         width: 40%;
         border-radius: 4px;
@@ -262,7 +262,7 @@ a:not([href]):not([tabindex]) {
     font-weight: 700;
     font-size: 14px;
   }
-  
+
   .downlaod-btn, .print-btn {
     min-width: 130px;
     width: auto;
@@ -283,14 +283,14 @@ a:not([href]):not([tabindex]) {
 // custompagination
 ::ng-deep.ngx-pagination {
   display: inline-block !important;
-  color: rgba(0, 0, 0, 0.60) !important; 
+  color: rgba(0, 0, 0, 0.60) !important;
   .current {
     border-bottom: 1px solid rgba(0, 0, 0, 0.40) !important;
     color: rgba(0, 0, 0, 0.87) !important;
     background: none !important
   }
   a {
-    color: rgba(0, 0, 0, 0.60) !important; 
+    color: rgba(0, 0, 0, 0.60) !important;
   }
 }
 .custompagination {

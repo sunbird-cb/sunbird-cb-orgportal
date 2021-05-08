@@ -4,7 +4,7 @@
             <div class="page_title_flex top-bar">
                 <div class="flex">
                     <ws-widget-breadcrumbs-org
-                        [widgetData]="{titles:[{title:'Work allocation', url:'/app/home/workallocation'},{title:'New', url:'none'}] }">
+                        [widgetData]="{titles:[{title:'Work allocation tool', url:'/app/home/workallocation'},{title:'New', url:'none'}] }">
                     </ws-widget-breadcrumbs-org>
                 </div>
                 <span class="spacer"></span>
@@ -309,7 +309,8 @@
                                 <p class="username">{{user.userDetails.first_name}} {{user.userDetails.last_name ?
                                     user.userDetails.last_name : ''}}</p>
                                 <p class="useremail">{{user.userDetails.email}}</p>
-                                <p class="userpos">{{user.userDetails.position ? user.userDetails.position : ''}}</p>
+                                <p class="userpos">{{user.userDetails.position ? user.userDetails.position : ''}}
+                                    at {{user.userDetails.department_name}}</p>
                             </div>
                             <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
                                 <button id="adduser" (click)="selectUser(user)">Add</button>
