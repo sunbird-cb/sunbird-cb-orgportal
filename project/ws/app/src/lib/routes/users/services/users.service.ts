@@ -45,6 +45,10 @@ export class UsersService {
     return this.http.post<any>(`${API_END_POINTS.ADD_USER_TO_DEPARTMENT}/userrole`, req)
   }
 
+  addUserRoleToDepartment(req: any): Observable<any> {
+    return this.http.patch<any>(`${API_END_POINTS.ADD_USER_TO_DEPARTMENT}/userrole`, req)
+  }
+
   getWfHistoryByAppId(appid: string): Observable<any> {
     return this.http.get<any>(API_END_POINTS.WF_HISTORY_BY_APPID + appid)
   }

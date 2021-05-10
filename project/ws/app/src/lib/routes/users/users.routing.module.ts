@@ -13,6 +13,7 @@ const routes: Routes = [
     resolve: {
       profileData: UserResolve,
       workflowHistoryData: WorkflowHistoryResolve,
+      department: DepartmentResolve,
     },
   },
   {
