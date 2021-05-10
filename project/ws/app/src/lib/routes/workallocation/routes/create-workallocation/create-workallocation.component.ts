@@ -66,6 +66,7 @@ export class CreateWorkallocationComponent implements OnInit {
   publishWorkAllocationData: any
   waId: any
   roleCompetencyList!: any[]
+  showAddNewRole = false
 
   constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
     private fb: FormBuilder, private allocateSrvc: AllocationService,
@@ -160,6 +161,7 @@ export class CreateWorkallocationComponent implements OnInit {
 
   // to get suggested similar users in right sidebar
   onSearchUser(event: any) {
+    this.showAddNewRole = false
     const val = event.target.value
     if (val.length > 2) {
       this.displayLoader('true')
@@ -212,6 +214,7 @@ export class CreateWorkallocationComponent implements OnInit {
 
   // to get suggested position in right sidebar
   onSearchPosition(event: any) {
+    this.showAddNewRole = false
     const val = event.target.value
     if (val.length > 2) {
       this.displayLoader('true')
@@ -279,7 +282,9 @@ export class CreateWorkallocationComponent implements OnInit {
       email: this.selectedUser.userDetails.email,
       position: (this.newAllocationForm.value.position === '') ? (this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '') : this.newAllocationForm.value.position,
     })
-
+    if (this.newAllocationForm.value.position !== undefined) {
+      this.showAddNewRole = true
+    }
     // if (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.activeList.length > 0) {
     //   this.ralist = this.selectedUser.allocationDetails.activeList
     // }
@@ -341,6 +346,9 @@ export class CreateWorkallocationComponent implements OnInit {
       position: this.selectedPosition.name,
     })
     this.selectedUser.userDetails.position = this.selectedPosition.name
+    if (this.newAllocationForm.value.fname !== '' && this.newAllocationForm.value.email !== '') {
+      this.showAddNewRole = true
+    }
   }
 
   // to push new obj to rolelist

@@ -66,7 +66,7 @@ export class AllocationActionsComponent implements OnInit {
     this.allocationFieldForm = this.fb.group({
       role: ['', Validators.required],
       roleDesc: [''],
-      mapActivities: ['', Validators.required],
+      mapActivities: [''],
       mapCompetencies: ['', Validators.required],
       compDesc: [''],
       compArea: [''],
@@ -78,21 +78,21 @@ export class AllocationActionsComponent implements OnInit {
 
   ngOnInit() { }
 
-  changeProjectTab() {
-    if (this.selectedTabIndex === 1) {
-      if (this.allocationFieldForm.value.role === '') {
-        this.selectedTabIndex = 0
-      } else {
-        this.selectedTabIndex = 1
-      }
-    } else if (this.selectedTabIndex === 2) {
-      if (this.allocationFieldForm.value.mapActivities === '') {
-        this.selectedTabIndex = 1
-      } else {
-        this.selectedTabIndex = 2
-      }
-    }
-  }
+  // changeProjectTab() {
+  //   if (this.selectedTabIndex === 1) {
+  //     if (this.allocationFieldForm.value.role === '') {
+  //       this.selectedTabIndex = 0
+  //     } else {
+  //       this.selectedTabIndex = 1
+  //     }
+  //   } else if (this.selectedTabIndex === 2) {
+  //     if (this.allocationFieldForm.value.mapActivities === '') {
+  //       this.selectedTabIndex = 1
+  //     } else {
+  //       this.selectedTabIndex = 2
+  //     }
+  //   }
+  // }
 
   newRole(): FormGroup {
     return this.fb.group({
@@ -197,6 +197,10 @@ export class AllocationActionsComponent implements OnInit {
     }
     this.selectedRole = selectedRoleObj
     this.activitieslist = this.selectedRole.childNodes
+    if (this.activitieslist !== undefined && this.activitieslist.length === 0) {
+      this.allocationFieldForm.controls['mapActivities'].setValidators([Validators.required])
+      this.allocationFieldForm.controls['mapActivities'].updateValueAndValidity()
+    }
     this.similarRoles = []
     this.selectedActivity = ''
     if (selectedRole) {
@@ -235,15 +239,19 @@ export class AllocationActionsComponent implements OnInit {
     return (<any>rl)['controls']
   }
 
-  tabChange() {
-
-    if (this.selectedTabIndex === 0) {
-      if (this.allocationFieldForm.controls['role'].value !== '') {
-        this.selectedTabIndex = 1
-      }
-    } else if (this.selectedTabIndex === 1) {
-      this.selectedTabIndex = 2
-    }
+  tabChange(el: any) {
+    console.log(el.selectedIndex)
+    el.selectedIndex += 1
+    // if (this.selectedTabIndex === 0) {
+    //   if (this.allocationFieldForm.controls['role'].value !== '') {
+    //     this.selectedTabIndex = 1
+    //   }
+    // } else if (this.selectedTabIndex === 1) {
+    //   if (this.activitieslist == undefined || this.activitieslist.length === 0) {
+    //   } else {
+    //     this.selectedTabIndex = 2
+    //   }
+    // }
   }
 
   onSearchActivity(event: any) {

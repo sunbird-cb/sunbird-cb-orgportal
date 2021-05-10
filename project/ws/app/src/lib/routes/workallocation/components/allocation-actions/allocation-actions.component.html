@@ -3,7 +3,7 @@
   <div style="display:inline-flex;">
     <div style="width: 635px; overflow-y:auto;">
       <mat-tab-group #tabGroup mat-stretch-tabs [(selectedIndex)]="selectedTabIndex"
-        (selectedTabChange)="changeProjectTab()"
+        (selectedTabChange)="tabChange(tabGroup)"
         style="height: calc(100% - 64px); min-height: calc(100% - 64px); min-width: 100%; width: 100%; margin: 0px;">
         <mat-tab>
           <ng-template mat-tab-label>
@@ -240,7 +240,7 @@
         <div>
           <label class="change-log-text margin-top-l margin-bottom-l margin-left-m margin-right-m">Similar
             items</label>
-          <div class="w-full similarUsersList" *ngIf="similarUsers && similarUsers.length > 0">
+          <!-- <div class="w-full similarUsersList" *ngIf="similarUsers && similarUsers.length > 0">
             <div class="suser-card" *ngFor="let user of similarUsers">
               <div class="padding-top-m padding-left-s padding-right-s">
                 <span
@@ -257,7 +257,7 @@
                 <button id="adduser" (click)="selectUser(user)">Add</button>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="w-full similarUsersList" *ngIf="similarRoles && similarRoles.length > 0">
             <div class="suser-card" *ngFor="let role of similarRoles;let i = index;">
               <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
@@ -334,7 +334,7 @@
     <span i18n>Cancel</span>
   </button>
   <button *ngIf="selectedTabIndex !== 2" mat-raised-button class="text-white btn-success btn-responsive"
-    id="addtolist-btn" (click)="tabChange()">
+    id="addtolist-btn" (click)="tabChange(tabGroup)">
     <span class="text-white" i18n>Next</span>
   </button>
   <button *ngIf="selectedTabIndex === 2" mat-raised-button class="text-white btn-success btn-responsive"
