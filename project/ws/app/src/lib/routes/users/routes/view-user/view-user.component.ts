@@ -1,6 +1,9 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import moment from 'moment'
+import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { UsersService } from '../../services/users.service'
+import { MatSnackBar } from '@angular/material'
 
 @Component({
   selector: 'ws-app-view-user',
@@ -22,6 +25,12 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   profileData: any[] = []
   profileDataKeys: any[] = []
   wfHistory: any[] = []
+  updateUserRoleForm: FormGroup
+  department: any = {}
+  departmentName = ''
+  rolesList: any = []
+  userID: any
+  public userRoles: Set<string> = new Set()
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
 
   @HostListener('window:scroll', ['$event'])
@@ -34,10 +43,13 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     }
   }
 
-  constructor(private activeRoute: ActivatedRoute, private router: Router) {
+  constructor(private activeRoute: ActivatedRoute, private router: Router, 
+              private usersSvc: UsersService,
+              private snackBar: MatSnackBar ) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         const profileData = this.activeRoute.snapshot.data.profileData.data.result.UserProfile[0] || {}
+        this.userID =  profileData.id
         this.basicInfo = profileData.personalDetails
         this.academicDetails = profileData.academics
         this.professionalDetails = profileData.professionalDetails ? profileData.professionalDetails[0] : []
@@ -45,6 +57,19 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         this.skillDetails = profileData.skills
         this.interests = profileData.interests
         this.fullname = `${this.basicInfo.firstname} ${this.basicInfo.surname}`
+
+        this.department = this.activeRoute.snapshot.data.department.data
+        this.departmentName = this.department ? this.department.deptName : ''
+        this.rolesList = this.department.rolesInfo
+
+        this.department.active_users.forEach((user: any) => {
+          if (this.userID === user.userId) {
+            const usrRoles = user.roleInfo
+            usrRoles.forEach((role: any) => {
+              this.modifyUserRoles(role.roleName)
+            })
+          }
+        })
 
         let wfHistoryDatas = this.activeRoute.snapshot.data.workflowHistoryData.data.result.data || {}
         const datas: any[] = Object.values(wfHistoryDatas)
@@ -90,8 +115,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
             }
           }
         })
-
       }
+    })
+
+    this.updateUserRoleForm = new FormGroup({
+      roles: new FormControl('', [Validators.required]),
     })
   }
 
@@ -120,11 +148,25 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         key: 'skills',
         render: true,
         enabled: true,
+      },
+      {
+        name: 'Update roles',
+        key: 'roles',
+        render: true,
+        enabled: true,
       }]
   }
 
   ngAfterViewInit() {
     this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+  }
+
+  modifyUserRoles(role: string) {
+    if (this.userRoles.has(role)) {
+      this.userRoles.delete(role)
+    } else {
+      this.userRoles.add(role)
+    }
   }
 
   onSideNavTabClick(id: string) {
@@ -136,5 +178,29 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   }
   changeToDefaultImg($event: any) {
     $event.target.src = '/assets/instances/eagle/app_logos/default.png'
+  }
+
+  onSubmit(form: any) {
+    const dreq = {
+      userId: this.userID,
+      deptId: this.department ? this.department.id : null,
+      roles: form.value.roles,
+      isActive: true,
+      isBlocked: false,
+    }
+
+    this.usersSvc.addUserRoleToDepartment(dreq).subscribe(dres => {
+      if (dres) {
+        this.updateUserRoleForm.reset({ roles: '' })
+        this.openSnackbar('User role updated Successfully')
+        this.router.navigate(['/app/home/users'])
+      }
+    })
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 }

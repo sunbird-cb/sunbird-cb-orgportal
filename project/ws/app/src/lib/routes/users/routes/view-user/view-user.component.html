@@ -449,6 +449,46 @@
                   </mat-card-content>
                 </div>
               </mat-card>
+
+               <!-- Roles Update card -->
+              <mat-card id="roles"
+               class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
+               <div class="flex-custom">
+                 <mat-card-content class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
+                   <span class="mat-subheading-1 flex-4 mobile-margin appr-section-heading" role="link" tabindex="0">
+                     Update roles
+                   </span>
+                   <div class="margin-top-xl new-mobile">
+                     <div class="flex flex-wrap mobile-break">
+                       <div class="w-full profile-cols-full bg-grey">
+                         <ng-container>
+                          <form [formGroup]="updateUserRoleForm">
+                            <div class="input-wrapper margin-top-s">
+                              <label for="roles" class="margin-remove-bottom form-label required" i18n-aria-label
+                                aria-label="Roles label" i18n="Role label|Label which explains the user to select the roles">
+                                Role
+                              </label>
+                              <mat-selection-list id="roles" formControlName="roles" #roles>
+                                <mat-list-option *ngFor="let role of rolesList" (click)="modifyUserRoles(role)"
+                                  [selected]="userRoles.has(role.roleName)" [value]="role.roleName">
+                                  {{role.roleName}}
+                                </mat-list-option>
+                              </mat-selection-list>
+                            </div>
+                            <button mat-raised-button type="submit" (click)="onSubmit(updateUserRoleForm)"
+                              class="margin-top-m text-white btn-success btn-responsive" [disabled]="updateUserRoleForm?.invalid">
+                              <span class="text-white" i18n>
+                                Update
+                              </span>
+                            </button>
+                          </form>
+                         </ng-container>
+                       </div>
+                     </div>
+                   </div>
+                 </mat-card-content>
+               </div>
+             </mat-card>
             </div>
           </div>
         </div>
