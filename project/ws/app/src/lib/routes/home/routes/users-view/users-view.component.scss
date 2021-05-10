@@ -285,3 +285,7 @@ a:not([href]):not([tabindex]) {
 .mat-card-title{
   margin-left: -31px !important;
 }
+
+::ng-deep.mat-header-cell .mat-icon {
+  padding-left: 0.3em !important;
+}

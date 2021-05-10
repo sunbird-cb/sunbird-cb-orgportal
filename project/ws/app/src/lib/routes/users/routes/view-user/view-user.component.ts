@@ -32,6 +32,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   userID: any
   public userRoles: Set<string> = new Set()
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
+  userStatus: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -43,9 +44,9 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     }
   }
 
-  constructor(private activeRoute: ActivatedRoute, private router: Router, 
+  constructor(private activeRoute: ActivatedRoute, private router: Router,
               private usersSvc: UsersService,
-              private snackBar: MatSnackBar ) {
+              private snackBar: MatSnackBar) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         const profileData = this.activeRoute.snapshot.data.profileData.data.result.UserProfile[0] || {}
@@ -62,14 +63,31 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         this.departmentName = this.department ? this.department.deptName : ''
         this.rolesList = this.department.rolesInfo
 
-        this.department.active_users.forEach((user: any) => {
-          if (this.userID === user.userId) {
-            const usrRoles = user.roleInfo
-            usrRoles.forEach((role: any) => {
-              this.modifyUserRoles(role.roleName)
-            })
-          }
-        })
+        if (this.department.active_users && this.department.active_users.length > 0) {
+          this.department.active_users.forEach((user: any) => {
+            if (this.userID === user.userId) {
+              this.userStatus = 'Active'
+              const usrRoles = user.roleInfo
+              usrRoles.forEach((role: any) => {
+                this.modifyUserRoles(role.roleName)
+              })
+            }
+          })
+        }
+        if (this.department.blocked_users && this.department.blocked_users.length > 0) {
+          this.department.blocked_users.forEach((user: any) => {
+            if (this.userID === user.userId) {
+              this.userStatus = 'Blocked'
+            }
+          })
+        }
+        if (this.department.inActive_users && this.department.inActive_users.length > 0) {
+          this.department.inActive_users.forEach((user: any) => {
+            if (this.userID === user.userId) {
+              this.userStatus = 'Inactive'
+            }
+          })
+        }
 
         let wfHistoryDatas = this.activeRoute.snapshot.data.workflowHistoryData.data.result.data || {}
         const datas: any[] = Object.values(wfHistoryDatas)
