@@ -69,8 +69,8 @@ export class CreateWorkallocationComponent implements OnInit {
   showAddNewRole = false
 
   constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
-    private fb: FormBuilder, private allocateSrvc: AllocationService,
-    private router: Router, public dialog: MatDialog) {
+              private fb: FormBuilder, private allocateSrvc: AllocationService,
+              private router: Router, public dialog: MatDialog) {
     this.selectedIndex = 0
     this.newAllocationForm = this.fb.group({
       fname: ['', Validators.required],
@@ -280,6 +280,7 @@ export class CreateWorkallocationComponent implements OnInit {
     this.newAllocationForm.patchValue({
       fname: fullname,
       email: this.selectedUser.userDetails.email,
+      // tslint:disable-next-line:max-line-length
       position: (this.newAllocationForm.value.position === '') ? (this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '') : this.newAllocationForm.value.position,
     })
     if (this.newAllocationForm.value.position !== undefined) {
@@ -500,17 +501,17 @@ export class CreateWorkallocationComponent implements OnInit {
     const userObj = {
       userData: this.selectedUser,
       department_name: this.departmentName,
-      department_id: this.departmentID
+      department_id: this.departmentID,
     }
     this.dialogRef = this.dialog.open(AllocationActionsComponent, {
       width: '1000px',
       height: '80%',
       panelClass: 'wa-dialog',
-      data: userObj
+      data: userObj,
     })
     this.dialogRef.afterClosed().subscribe((result: any) => {
 
-      if (result.data != undefined) {
+      if (result.data !== undefined) {
         this.showPublishButton = true
         this.publishWorkAllocationData = result.data
         if (this.publishWorkAllocationData !== undefined) {
@@ -526,8 +527,8 @@ export class CreateWorkallocationComponent implements OnInit {
       pageNo: 0,
       pageSize: 100,
       departmentName: this.departmentName,
-      status: "Draft",
-      userId: reqUserId
+      status: 'Draft',
+      userId: reqUserId,
 
     }
     this.allocateSrvc.getAllocationDetails(reqUserObj).subscribe((res: any) => {
@@ -539,7 +540,7 @@ export class CreateWorkallocationComponent implements OnInit {
 
   publishWorkOrder() {
     this.publishWorkAllocationData.waId = this.waId
-    this.publishWorkAllocationData.status = "Published"
+    this.publishWorkAllocationData.status = 'Published'
     this.allocateSrvc.updateAllocation(this.publishWorkAllocationData).subscribe((res: any) => {
       if (res) {
         this.openSnackbar('Work Allocated Successfully')

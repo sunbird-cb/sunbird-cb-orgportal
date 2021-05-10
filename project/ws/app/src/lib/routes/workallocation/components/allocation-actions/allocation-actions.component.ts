@@ -125,7 +125,7 @@ export class AllocationActionsComponent implements OnInit {
               description: obj.description,
               status: obj.status,
               source: obj.source,
-              childNodes: (obj.childNodes && obj.childNodes.length > 0) ? obj.childNodes : []
+              childNodes: (obj.childNodes && obj.childNodes.length > 0) ? obj.childNodes : [],
             }
             this.similarRoles.push(roleObj)
           })
@@ -153,7 +153,7 @@ export class AllocationActionsComponent implements OnInit {
       this.similarActivities = []
       this.similarPositions = []
       this.similarCompetencies = []
-      this.allocateSrvc.onSearchCompetency(val).subscribe(res => {
+      this.allocateSrvc.onSearchCompetency(val).subscribe((res: any) => {
         this.similarCompetencies = res.responseData
         this.displayLoader('false')
         if (this.similarCompetencies && this.similarCompetencies.length === 0) {
@@ -193,7 +193,7 @@ export class AllocationActionsComponent implements OnInit {
       name: selectedRole[0].name,
       description: selectedRole[0].description,
       status: selectedRole[0].status,
-      childNodes: selectedRole[0].childNodes
+      childNodes: selectedRole[0].childNodes,
     }
     this.selectedRole = selectedRoleObj
     this.activitieslist = this.selectedRole.childNodes
@@ -224,7 +224,7 @@ export class AllocationActionsComponent implements OnInit {
         reviewComments: comp.reviewComments,
         createdDate: comp.createdDate,
         additionalProperties: comp.additionalProperties,
-        children: comp.children
+        children: comp.children,
       }
       this.similarCompetencies = []
       this.selectedCompetency.push(selectedCompetencyObj)
@@ -240,7 +240,6 @@ export class AllocationActionsComponent implements OnInit {
   }
 
   tabChange(el: any) {
-    console.log(el.selectedIndex)
     el.selectedIndex += 1
     // if (this.selectedTabIndex === 0) {
     //   if (this.allocationFieldForm.controls['role'].value !== '') {
@@ -315,24 +314,27 @@ export class AllocationActionsComponent implements OnInit {
   }
 
   showRemoveActivity(index: any) {
-    console.log(document.getElementById(`showremove${index}`))
+    // console.log(document.getElementById(`showremove${index}`))
+    // tslint:disable-next-line:no-non-null-assertion
     const vart = document.getElementById(`showremove${index}`)!
     vart.style.display = 'block'
     vart.style.backgroundColor = '#232323'
     vart.style.color = '#fff'
+    // tslint:disable-next-line:no-non-null-assertion
     const vartEle = document.getElementById(`elementActivity${index}`)!
     vartEle.style.backgroundColor = '#716B66'
     vartEle.style.color = '#fff'
     vartEle.style.paddingRight = '0px'
   }
 
-
   showRemoveCompetency(index: any) {
-    console.log(document.getElementById(`showremoveComp${index}`))
+    // console.log(document.getElementById(`showremoveComp${index}`))
+    // tslint:disable-next-line:no-non-null-assertion
     const vart = document.getElementById(`showremoveComp${index}`)!
     vart.style.display = 'block'
     vart.style.backgroundColor = '#232323'
     vart.style.color = '#fff'
+    // tslint:disable-next-line:no-non-null-assertion
     const vartEle = document.getElementById(`elemenComp${index}`)!
     vartEle.style.backgroundColor = '#716B66'
     vartEle.style.color = '#fff'
@@ -378,7 +380,7 @@ export class AllocationActionsComponent implements OnInit {
     const roleCompetencyArr = []
     const roleCompetencyObj = {
       roleDetails: this.selectedRole,
-      competencyDetails: this.selectedCompetency
+      competencyDetails: this.selectedCompetency,
     }
     roleCompetencyArr.push(roleCompetencyObj)
 
@@ -393,7 +395,7 @@ export class AllocationActionsComponent implements OnInit {
       userPosition: this.allocationFieldForm.value.position,
       positionId: this.selectedPosition ? this.selectedPosition.id : '',
       status: 'Draft',
-      waId: ''
+      waId: '',
     }
 
     this.allocateSrvc.createAllocation(reqdata).subscribe(res => {
