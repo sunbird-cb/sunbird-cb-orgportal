@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core'
-import { ITableData } from '@sunbird-cb/collection'
+import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
 import { MatPaginator } from '@angular/material'
 import { Router } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'

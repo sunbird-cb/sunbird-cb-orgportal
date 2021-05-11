@@ -339,3 +339,6 @@ a:not([href]):not([tabindex]) {
   font: 700 14px Lato;
 }
 
+::ng-deep.container-balanced .text-capitalize {
+  text-transform: none !important
+}

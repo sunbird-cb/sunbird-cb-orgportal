@@ -7,7 +7,7 @@ import { UsersService } from '../../../users/services/users.service'
 /* tslint:disable */
 import _ from 'lodash'
 import { environment } from 'src/environments/environment'
-import { ITableData } from '@sunbird-cb/collection'
+import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
 import { MatSnackBar } from '@angular/material'
 
 @Component({

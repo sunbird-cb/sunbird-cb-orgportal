@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ApprovalsService } from '../../services/approvals.service'
 import moment from 'moment'
-import { ITableData } from '@sunbird-cb/collection'
+import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
 import { MatSnackBar } from '@angular/material'
 /* tslint:disable */
 import _ from 'lodash'
