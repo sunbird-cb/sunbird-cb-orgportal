@@ -1,0 +1,91 @@
+<div class="container-balanced">
+    <div class="flex flex-1 fix-top">
+        <div class="block flex-3">
+            <div class="flex">
+                <div class="flex flex-1 margin-auto">
+                    <a href="javascript:void(0)" class="flex flex margin-left-xl">
+                        <mat-icon class="ws-mat-black60-text flex margin-left-l margin-right-s">arrow_back</mat-icon>
+                        <span class="mat-body-1">{{'Devaprathap Nagendra'}}</span>
+                    </a>
+                </div>
+                <div class="flex flex-1">
+                    <div class="flex flex-1 filter max-height-60">
+                        <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'officer',
+                                      'ws-mat-accent-border font-medium':selectedTab !== 'officer'}"
+                            (click)="filterComp('officer')" role="button">
+                            <span class="mat-body-2 in-margin" [ngClass]="{'font-bold-i' : selectedTab === 'officer'}">
+                                Officer</span>
+                        </a>
+                        <a href="javascript:void(0)" class="filter-option"
+                            [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'activities',
+                                                              'ws-mat-accent-border font-medium':selectedTab !== 'activities'}" (click)="filterComp('activities')"
+                            role="button">
+                            <span class="mat-body-2 in-margin"
+                                [ngClass]="{'font-bold-i' : selectedTab === 'activities'}">Activities</span>
+                        </a>
+                        <a href="javascript:void(0)" class="filter-option"
+                            [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'roles',
+                                                                  'ws-mat-accent-border font-medium':selectedTab !== 'roles'}" (click)="filterComp('roles')"
+                            role="button">
+                            <span class="mat-body-2 in-margin"
+                                [ngClass]="{'font-bold-i' : selectedTab === 'roles'}">Roles</span>
+                        </a>
+                        <a href="javascript:void(0)" class="filter-option"
+                            [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'competencies',
+                                                                      'ws-mat-accent-border font-medium':selectedTab !== 'competencies'}"
+                            (click)="filterComp('competencies')" role="button">
+                            <span class="mat-body-2 in-margin"
+                                [ngClass]="{'font-bold-i' : selectedTab === 'competencies'}">Competencies</span>
+                        </a>
+                        <a href="javascript:void(0)" class="filter-option"
+                            [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'levels',
+                                                                          'ws-mat-accent-border font-medium':selectedTab !== 'levels'}" (click)="filterComp('levels')"
+                            role="button">
+                            <span class="mat-body-2 in-margin"
+                                [ngClass]="{'font-bold-i' : selectedTab === 'levels'}">Levels</span>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="flex flex-1 flex-row-reverse margin-right-l">
+                    <button mat-button class="ws-mat-accent-background text-white margin-left-xs" type="button"
+                        id="savebtn">
+                        <span i18n>Save as draft</span>
+                    </button>
+                    <button mat-stroked-button type="button"
+                        class="btn margin-right-xs mat-accent-border flex-auto-display" id="publishbtn"
+                        [disabled]="!canPublish">
+                        <span i18n>Publish</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        <div class="block flex-1 padding-left-xs padding-right-xs">
+            <mat-card class="wi ws-mat-accent-border">
+                <div class="flex flex-1 flex-column padding-xs">
+                    <div class="flex flex-1 filter max-height-60">
+                        <a href="javascript:void(0)" class="filter-option ws-mat-accent-border-active" role="button">
+                            <span class="mat-body-2 in-margin font-bold-i"> Assistant</span>
+                        </a>
+                    </div>
+                    <div class="flex flex-1 padding-xs margin-top-l">
+                        <span class="mat-body-2 ws-mat-black60-text">
+                            We will continously scan the workspace and show you reports and recommendations to help you
+                            refine the content
+                        </span>
+                    </div>
+                    <div class="flex flex-1 progress ws-mat-accent-border padding-xs margin-top-l">
+                        <span class="flex flex-1">
+                            <mat-progress-spinner [diameter]="20" class="example-margin" [color]="color"
+                                mode="determinate" [value]="80">
+                            </mat-progress-spinner>
+                            <span class="margin-left-m mat-body-1">{{'Overall score'}}</span>
+                        </span>
+                        <span class="flex mat-body-1 font-semibold margin-left-m">{{'100'}}</span>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
