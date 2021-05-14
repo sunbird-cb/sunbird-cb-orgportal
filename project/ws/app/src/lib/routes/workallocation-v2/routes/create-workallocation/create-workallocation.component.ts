@@ -19,4 +19,7 @@ export class CreateWorkallocationComponent implements OnInit {
   filterComp(filterType: string) {
     this.selectedTab = filterType
   }
+  get currentProgress(): number {
+    return 70
+  }
 }

@@ -1,7 +1,7 @@
 <div class="container-balanced">
-    <div class="flex flex-1 fix-top">
-        <div class="block flex-3">
-            <div class="flex">
+    <div class="resporow flex flex-1 fix-top">
+        <div class="block flex-4">
+            <div class="respon flex margin-top-s">
                 <div class="flex flex-1 margin-auto">
                     <a href="javascript:void(0)" class="flex flex margin-left-xl">
                         <mat-icon class="ws-mat-black60-text flex margin-left-l margin-right-s">arrow_back</mat-icon>
@@ -9,7 +9,7 @@
                     </a>
                 </div>
                 <div class="flex flex-1">
-                    <div class="flex flex-1 filter max-height-60">
+                    <div class="flex flex-1 filter max-height-60 flex-wrap">
                         <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'officer',
                                       'ws-mat-accent-border font-medium':selectedTab !== 'officer'}"
                             (click)="filterComp('officer')" role="button">
@@ -64,7 +64,7 @@
         <div class="block flex-1 padding-left-xs padding-right-xs">
             <mat-card class="wi ws-mat-accent-border">
                 <div class="flex flex-1 flex-column padding-xs">
-                    <div class="flex flex-1 filter max-height-60">
+                    <div class="flex flex-1 filter max-height-60 padding-top-xs min-height35">
                         <a href="javascript:void(0)" class="filter-option ws-mat-accent-border-active" role="button">
                             <span class="mat-body-2 in-margin font-bold-i"> Assistant</span>
                         </a>
@@ -75,14 +75,14 @@
                             refine the content
                         </span>
                     </div>
-                    <div class="flex flex-1 progress ws-mat-accent-border padding-xs margin-top-l">
+                    <div class="flex flex-1 progress ws-mat-accent-border border-r padding-s margin-top-l">
                         <span class="flex flex-1">
                             <mat-progress-spinner [diameter]="20" class="example-margin" [color]="color"
-                                mode="determinate" [value]="80">
+                                mode="determinate" [value]="currentProgress">
                             </mat-progress-spinner>
                             <span class="margin-left-m mat-body-1">{{'Overall score'}}</span>
                         </span>
-                        <span class="flex mat-body-1 font-semibold margin-left-m">{{'100'}}</span>
+                        <span class="flex mat-body-1 font-semibold margin-left-m">{{currentProgress}}</span>
                     </div>
                 </div>
             </mat-card>

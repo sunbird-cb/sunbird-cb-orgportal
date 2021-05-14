@@ -5,8 +5,13 @@
 .container-balanced {
   @extend %page-center;
   height: auto;
-  min-height: 75vh;
+  min-height: calc(100vh - 2 * #{$mat-toolbar-gt-xs} - 2 * 52px)vh;
   padding: 12px;
+
+}
+
+.min-height35 {
+  min-height: 35px;
 }
 
 .width-fill {
@@ -53,7 +58,11 @@
 }
 
 .flex-3 {
-  flex: 3.5;
+  flex: 3;
+}
+
+.flex-4 {
+  flex: 4;
 }
 
 .wi {
@@ -63,6 +72,10 @@
   padding: 0;
 }
 
+.border-r {
+  border-radius: calc(#{$size-xs} / 2);
+}
+
 .font-semibold {
   font-weight: 600 !important;
 }
@@ -70,4 +83,19 @@
 .example-margin {
   margin-top: auto;
   margin-bottom: auto;
+}
+
+@include breakpoint-lt-m {
+  .respon {
+    flex-direction: column;
+  }
+
+  .resporow {
+    flex-direction: column;
+
+  }
+
+  .fix-top {
+    position: relative;
+  }
 }
