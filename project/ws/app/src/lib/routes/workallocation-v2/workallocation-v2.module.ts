@@ -7,7 +7,7 @@ import { BreadcrumbsOrgModule, ScrollspyLeftMenuModule, UIORGTableModule } from 
 import {
   MatSidenavModule, MatGridListModule, MatListModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatIconModule, MatButtonModule, MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,
-  MatPaginatorModule, MatTableModule,
+  MatPaginatorModule, MatTableModule, MatAutocompleteModule,
 } from '@angular/material'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
@@ -17,16 +17,23 @@ import { ExportAsModule } from 'ngx-export-as'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatTabsModule } from '@angular/material/tabs'
 import { WorkallocationV2HomeComponent } from './routes/workallocation-v2-home/workallocation-v2-home.component'
+import { OfficerComponent } from './components/officer/officer.component'
+import { AutocompleteModule } from './components/autocomplete/autocomplete.module'
 
 @NgModule({
-  declarations: [CreateWorkallocationComponent, WorkallocationV2HomeComponent],
+  declarations: [
+    CreateWorkallocationComponent,
+    WorkallocationV2HomeComponent,
+    OfficerComponent,
+  ],
   imports: [
-    CommonModule, RouterModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,
+    CommonModule, ReactiveFormsModule, RouterModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,
     MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule,
-    UIORGTableModule, ExportAsModule, MatMenuModule, MatTabsModule, MatProgressSpinnerModule,
+    UIORGTableModule, ExportAsModule, MatMenuModule, MatTabsModule, MatProgressSpinnerModule, MatAutocompleteModule,
+    AutocompleteModule,
   ],
   entryComponents: [
     // AllocationActionsComponent,
