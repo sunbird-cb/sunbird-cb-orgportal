@@ -18,6 +18,14 @@ if (/trident/i.test(MATCHING_IE[1])) {
   }
 
   platformBrowserDynamic()
-    .bootstrapModule(AppModule)
+    .bootstrapModule(AppModule).then(() => {
+      // Ensure Angular destroys itself on hot reloads.
+      // if (window['ngRef']) {
+      //   window['ngRef'].destroy()
+      // }
+      // window['ngRef'] = ref
+
+      // Otherwise, log the boot error
+    })
     .catch(err => console.error(err)) // tslint:disable-line:no-console
 }

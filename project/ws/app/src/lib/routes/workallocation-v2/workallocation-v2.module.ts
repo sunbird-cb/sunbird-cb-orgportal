@@ -17,10 +17,13 @@ import { ExportAsModule } from 'ngx-export-as'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatTabsModule } from '@angular/material/tabs'
 import { WorkallocationV2HomeComponent } from './routes/workallocation-v2-home/workallocation-v2-home.component'
+import { ActivityLabelsModule } from './components/activity-labels/activity-labels.module'
+import { WINDOW_PROVIDERS } from './services/window.service'
 
 @NgModule({
   declarations: [CreateWorkallocationComponent, WorkallocationV2HomeComponent],
   imports: [
+    ActivityLabelsModule,
     CommonModule, RouterModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,
     MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
@@ -31,6 +34,7 @@ import { WorkallocationV2HomeComponent } from './routes/workallocation-v2-home/w
   entryComponents: [
     // AllocationActionsComponent,
   ],
+  providers: [WINDOW_PROVIDERS]
   // exports: [DownloadAllocationComponent],
 })
 export class WorkallocationV2Module { }
