@@ -19,6 +19,8 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { WorkallocationV2HomeComponent } from './routes/workallocation-v2-home/workallocation-v2-home.component'
 import { OfficerComponent } from './components/officer/officer.component'
 import { AutocompleteModule } from './components/autocomplete/autocomplete.module'
+import { ActivityLabelsModule } from './components/activity-labels/activity-labels.module'
+import { WINDOW_PROVIDERS } from './services/window.service'
 
 @NgModule({
   declarations: [
@@ -27,10 +29,10 @@ import { AutocompleteModule } from './components/autocomplete/autocomplete.modul
     OfficerComponent,
   ],
   imports: [
-    CommonModule, ReactiveFormsModule, RouterModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,
-    MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
+    CommonModule, ReactiveFormsModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,
+    ActivityLabelsModule, RouterModule, MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
-    MatRadioModule, MatDialogModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule,
+    MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule,
     UIORGTableModule, ExportAsModule, MatMenuModule, MatTabsModule, MatProgressSpinnerModule, MatAutocompleteModule,
     AutocompleteModule,
@@ -38,6 +40,7 @@ import { AutocompleteModule } from './components/autocomplete/autocomplete.modul
   entryComponents: [
     // AllocationActionsComponent,
   ],
+  providers: [WINDOW_PROVIDERS]
   // exports: [DownloadAllocationComponent],
 })
 export class WorkallocationV2Module { }

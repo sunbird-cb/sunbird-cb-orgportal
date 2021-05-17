@@ -4,7 +4,7 @@
             <div class="respon flex margin-top-s">
                 <div class="flex flex-1 margin-auto">
                     <a href="javascript:void(0)" class="flex flex margin-left-xl">
-                        <mat-icon class="ws-mat-black60-text flex margin-left-l margin-right-s">arrow_back</mat-icon>
+                        <mat-icon class="ws-mat-black60-text flex margin-left-xs margin-right-s">arrow_back</mat-icon>
                         <span class="mat-body-1">{{'Devaprathap Nagendra'}}</span>
                     </a>
                 </div>
@@ -59,7 +59,7 @@
 
                 </div>
             </div>
-            <div class="wi">
+            <div (scroll)="onScroll($event)" class="wi">
                 <div class="flex flex-column">
                     <div class="box-1" #officer>
                         <div class="flex left-indicator" [ngClass]="{'not-selected': selectedTab !== 'officer',
@@ -96,18 +96,7 @@
                                 <span class="mat-subheading-1 margin-left-xs">{{'Activities'}}</span>
                             </div>
                             <div class="flex flex-1">
-                                fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dlfkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dlfkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl
+                                <ws-app-activity-labels class="flex flex-1"></ws-app-activity-labels>
                             </div>
                         </div>
                     </div>
