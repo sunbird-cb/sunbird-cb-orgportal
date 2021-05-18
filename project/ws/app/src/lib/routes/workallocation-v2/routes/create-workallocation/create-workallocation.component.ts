@@ -1,5 +1,4 @@
-import { DOCUMENT } from "@angular/common"
-import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from "@angular/core"
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core"
 
 
 @Component({
@@ -28,7 +27,8 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit {
   /**
    * this is for selecting tabs dynamically
    */
-  constructor(@Inject(DOCUMENT) private document: Document) {
+  // tslinr=t
+  constructor() {
   }
   ngOnInit(): void {
   }
@@ -37,8 +37,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit {
   /**
     * this is for selecting tabs dynamically
     */
-  onScroll($event: any) {
-    console.log($event)
+  onScroll(_$event: any) {
     // const offset = $event.srcElement.scrollTop || this.document.body.scrollTop || 0
     const offset = window.pageYOffset || 0
     if (this.officerOffset != null && this.activitiesOffset && this.rolesOffset && this.competenciesOffset && this.levelsOffset) {
