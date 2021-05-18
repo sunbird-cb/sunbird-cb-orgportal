@@ -1,0 +1,185 @@
+<form class="officer-form">
+  <div class="grid grid-cols-4 gap-4">
+    <div class="flex flex-column">
+      <div class="ws-mat-black040-bg padding-left-m padding-xs mat-body-2 font-bold-i">
+        Officer name
+      </div>
+      <!-- <mat-form-field class="example-full-width">
+        <mat-label>Officer</mat-label>
+        <input matInput aria-label="Officer" [matAutocomplete]="auto" [formControl]="userCtrl"
+          (input)="filterUsers(userCtrl.value)">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let user of userslist"
+            [value]="user.userDetails.first_name + ' ' +user.userDetails.last_name ">
+            <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s"
+              style="display: inline-block; line-height: normal;">
+              <span class="letter-color">
+                {{user.userDetails.first_name.charAt(0)}}{{user.userDetails.last_name.charAt(0)}}
+              </span>
+              <p class="username">{{user.userDetails.first_name}} {{user.userDetails.last_name ?
+                user.userDetails.last_name : ''}}</p>
+              <p class="useremail">{{user.userDetails.email}}</p>
+              <p class="userpos">{{user.userDetails.position ? user.userDetails.position : ''}}
+                at {{user.userDetails.department_name}}</p>
+            </div>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field> -->
+      <div class="flex flex-1 control">
+        <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
+          <!-- <span class="letter-color1" *ngIf="OfficerName.value.length">{{OfficerName.value.charAt(0)}}</span> -->
+          <input id="firstName" class="form-input flex-1" matInput #OfficerName [formControl]="OfficerNameControl"
+            i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Type here"
+            [wsAppAutocomplete]="autocomplete" (input)="filterUsers(OfficerNameControl.value)" autocomplete="off">
+        </mat-form-field>
+      </div>
+
+      <ws-app-autocomplete #autocomplete="wsAppAutocomplete">
+        <ng-template wsAppAutocompleteContent>
+          <ng-container *ngIf="(userslist | filter: OfficerNameControl.value) as result">
+            <div class="mat-body-4 ws-mat-accent-text margin-bottom-xs">From Karmayogi officer portal</div>
+            <ws-app-option *ngFor="let user of userslist"
+              [value]="user.userDetails.first_name +' '+ user.userDetails.last_name">
+              <div class=" mat-accent-border" (click)="OfficerClicked(user)">
+                <div class="padding-top-m ">
+                  <span
+                    class="letter-color">{{user.userDetails.first_name.charAt(0)}}{{user.userDetails.last_name.charAt(0)}}</span>
+                  <mat-icon class="groupicon ws-mat-accent-text ws-mat-accent-border">group</mat-icon>
+                </div>
+                <div class="padding-top-xs padding-bottom-xs ">
+                  <p class="username mat-body-2 font-bold-i margin-bottom-xxs">{{user.userDetails.first_name}}
+                    {{user.userDetails.last_name
+                    ?
+                    user.userDetails.last_name : ''}}</p>
+                  <p class="useremail mat-body-2 margin-bottom-xxs">{{user.userDetails.email}}</p>
+                  <p class="userpos mat-body-2 ws-mat-black60-text margin-bottom-xs margin-bottom-xxs">
+                    Software Engineer at Tarento
+                    {{user.userDetails.position ?
+                    user.userDetails.position : ''}}
+                    <span *ngIf="user.userDetails.department_name">at</span> {{user.userDetails.department_name}}
+                  </p>
+                </div>
+              </div>
+            </ws-app-option>
+            <ws-app-option class="no-result" *ngIf="!result.length">No result...</ws-app-option>
+          </ng-container>
+        </ng-template>
+      </ws-app-autocomplete>
+
+    </div>
+    <div class="flex flex-column">
+      <div class="ws-mat-black040-bg padding-left-m padding-xs mat-body-2 font-bold-i">
+        Position
+      </div>
+      <div class="flex flex-1 control ws-mat-accent-b">
+        <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
+          <input id="position" class="form-input flex-1" matInput #position [formControl]="positionControl"
+            i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Type here"
+            (input)="filterUsers(positionControl.value)" autocomplete="off">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-span-2 flex flex-column">
+      <div class="ws-mat-black040-bg padding-left-m padding-xs mat-body-2 font-bold-i">
+        Position description
+      </div>
+      <div class="flex flex-1 control">
+        <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
+          <textarea id="description" class="form-input flex-1" matInput #description
+            [formControl]="positionDescriptionControl" i18n-placeholder placeholder="Type here" i18n-aria-label
+            aria-label="Type here" (input)="filterUsers(positionDescriptionControl.value)" autocomplete="off"
+            matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>
+          </textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="flex flex-column">
+      <div class="ws-mat-black040-bg padding-left-m padding-xs mat-body-2 font-bold-i">
+        Reporting to
+      </div>
+      <div class="flex flex-1 control">
+        <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
+          <input id="reportingTo" class="form-input flex-1" matInput #reportingTo [formControl]="reportingToControl"
+            i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Type here"
+            [wsAppAutocomplete]="reportingToAutocomplete" (input)="filterUsers(reportingToControl.value)"
+            autocomplete="off">
+        </mat-form-field>
+      </div>
+      <ws-app-autocomplete #reportingToAutocomplete="wsAppAutocomplete">
+        <ng-template wsAppAutocompleteContent>
+          <ng-container *ngIf="(userslist | filter: reportingToControl.value) as result">
+            <div class="mat-body-4 ws-mat-accent-text margin-bottom-xs">From Karmayogi officer portal</div>
+            <ws-app-option *ngFor="let user of userslist"
+              [value]="user.userDetails.first_name +' '+ user.userDetails.last_name">
+              <div class=" mat-accent-border" (click)="OfficerClicked(user)">
+                <div class="padding-top-m ">
+                  <span
+                    class="letter-color">{{user.userDetails.first_name.charAt(0)}}{{user.userDetails.last_name.charAt(0)}}</span>
+                  <mat-icon class="groupicon ws-mat-accent-text ws-mat-accent-border">group</mat-icon>
+                </div>
+                <div class="padding-top-xs padding-bottom-xs ">
+                  <p class="username mat-body-2 font-bold-i margin-bottom-xxs">{{user.userDetails.first_name}}
+                    {{user.userDetails.last_name
+                    ?
+                    user.userDetails.last_name : ''}}</p>
+                  <p class="useremail mat-body-2 margin-bottom-xxs">{{user.userDetails.email}}</p>
+                  <p class="userpos mat-body-2 ws-mat-black60-text margin-bottom-xs margin-bottom-xxs">
+                    Software Engineer at Tarento
+                    {{user.userDetails.position ?
+                    user.userDetails.position : ''}}
+                    <span *ngIf="user.userDetails.department_name">at</span> {{user.userDetails.department_name}}
+                  </p>
+                </div>
+              </div>
+            </ws-app-option>
+            <ws-app-option class="no-result" *ngIf="!result.length">No result...</ws-app-option>
+          </ng-container>
+        </ng-template>
+      </ws-app-autocomplete>
+    </div>
+    <div class="flex flex-column">
+      <div class="ws-mat-black040-bg padding-left-m padding-xs mat-body-2 font-bold-i">
+        Reporting officer
+      </div>
+      <div class="flex flex-1 control">
+        <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
+          <input id="reportingOfficer" class="form-input flex-1" matInput #reportingOfficer
+            [formControl]="reportingOfficerControl" i18n-placeholder placeholder="Type here" i18n-aria-label
+            aria-label="Type here" [wsAppAutocomplete]="reportingOfficerAutocomplete"
+            (input)="filterUsers(reportingOfficerControl.value)" autocomplete="off">
+        </mat-form-field>
+      </div>
+      <ws-app-autocomplete #reportingOfficerAutocomplete="wsAppAutocomplete">
+        <ng-template wsAppAutocompleteContent>
+          <ng-container *ngIf="(userslist | filter: reportingOfficerControl.value) as result">
+            <div class="mat-body-4 ws-mat-accent-text margin-bottom-xs">From Karmayogi officer portal</div>
+            <ws-app-option *ngFor="let user of userslist"
+              [value]="user.userDetails.first_name +' '+ user.userDetails.last_name">
+              <div class=" mat-accent-border" (click)="OfficerClicked(user)">
+                <div class="padding-top-m ">
+                  <span
+                    class="letter-color">{{user.userDetails.first_name.charAt(0)}}{{user.userDetails.last_name.charAt(0)}}</span>
+                  <mat-icon class="groupicon ws-mat-accent-text ws-mat-accent-border">group</mat-icon>
+                </div>
+                <div class="padding-top-xs padding-bottom-xs ">
+                  <p class="username mat-body-2 font-bold-i margin-bottom-xxs">{{user.userDetails.first_name}}
+                    {{user.userDetails.last_name
+                    ?
+                    user.userDetails.last_name : ''}}</p>
+                  <p class="useremail mat-body-2 margin-bottom-xxs">{{user.userDetails.email}}</p>
+                  <p class="userpos mat-body-2 ws-mat-black60-text margin-bottom-xs margin-bottom-xxs">
+                    Software Engineer at Tarento
+                    {{user.userDetails.position ?
+                    user.userDetails.position : ''}}
+                    <span *ngIf="user.userDetails.department_name">at</span> {{user.userDetails.department_name}}
+                  </p>
+                </div>
+              </div>
+            </ws-app-option>
+            <ws-app-option class="no-result" *ngIf="!result.length">No result...</ws-app-option>
+          </ng-container>
+        </ng-template>
+      </ws-app-autocomplete>
+    </div>
+  </div>
+</form>

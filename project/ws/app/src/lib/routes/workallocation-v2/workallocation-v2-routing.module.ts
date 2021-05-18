@@ -22,8 +22,8 @@ const routes: Routes = [
       {
         path: ':userId',
         // component: UpdateWorkallocationComponent,
-      }]
-  }
+      }],
+  },
 ]
 @NgModule({
   declarations: [],
