@@ -34,7 +34,6 @@ export class CreateWorkallocationComponent implements AfterViewInit {
     * this is for selecting tabs dynamically
     */
   onScroll($event: any) {
-    console.log($event)
     const offset = $event.srcElement.scrollTop || this.document.body.scrollTop || 0
     if (this.officerOffset != null && this.activitiesOffset && this.rolesOffset && this.competenciesOffset && this.levelsOffset) {
       if (offset >= this.officerOffset && offset < this.activitiesOffset) {
