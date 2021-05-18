@@ -1,5 +1,5 @@
 import { DOCUMENT } from "@angular/common"
-import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from "@angular/core"
+import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from "@angular/core"
 
 
 @Component({
@@ -7,7 +7,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, Vie
   templateUrl: './create-workallocation.component.html',
   styleUrls: ['./create-workallocation.component.scss'],
 })
-export class CreateWorkallocationComponent implements OnInit, AfterViewInit {
+export class CreateWorkallocationComponent implements AfterViewInit {
   canPublish = false
   /**
    * this is for selecting tabs dynamically
@@ -30,17 +30,12 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit {
    */
   constructor(@Inject(DOCUMENT) private document: Document) {
   }
-  ngOnInit(): void {
-  }
-
-  @HostListener('window:scroll', ['$event'])
   /**
     * this is for selecting tabs dynamically
     */
   onScroll($event: any) {
     console.log($event)
-    // const offset = $event.srcElement.scrollTop || this.document.body.scrollTop || 0
-    const offset = window.pageYOffset || 0
+    const offset = $event.srcElement.scrollTop || this.document.body.scrollTop || 0
     if (this.officerOffset != null && this.activitiesOffset && this.rolesOffset && this.competenciesOffset && this.levelsOffset) {
       if (offset >= this.officerOffset && offset < this.activitiesOffset) {
         this.selectedTab = 'officer'
@@ -64,12 +59,11 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit {
     /**
   * this is for selecting tabs dynamically
   */
-    const defaultOffsetToMinus = 146
-    this.officerOffset = this.officerElement.nativeElement.offsetTop - defaultOffsetToMinus
-    this.activitiesOffset = this.activitiesElement.nativeElement.offsetTop - defaultOffsetToMinus
-    this.rolesOffset = this.rolesElement.nativeElement.offsetTop - defaultOffsetToMinus
-    this.competenciesOffset = this.competenciesElement.nativeElement.offsetTop - defaultOffsetToMinus
-    this.levelsOffset = this.levelsElement.nativeElement.offsetTop - defaultOffsetToMinus
+    this.officerOffset = this.officerElement.nativeElement.offsetTop - 117
+    this.activitiesOffset = this.activitiesElement.nativeElement.offsetTop - 117
+    this.rolesOffset = this.rolesElement.nativeElement.offsetTop - 117
+    this.competenciesOffset = this.competenciesElement.nativeElement.offsetTop - 117
+    this.levelsOffset = this.levelsElement.nativeElement.offsetTop - 117
     /**
   * this is for selecting tabs dynamically
   */
@@ -77,6 +71,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit {
   filterComp($element: any, filterType: string) {
     this.selectedTab = filterType
     $element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+
   }
   get currentProgress(): number {
     return 70

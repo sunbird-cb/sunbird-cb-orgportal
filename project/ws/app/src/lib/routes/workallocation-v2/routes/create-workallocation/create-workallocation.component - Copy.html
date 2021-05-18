@@ -1,70 +1,65 @@
 <div class="container-balanced">
     <div class="resporow flex flex-1 fix-top">
         <div class="block flex-4">
-            <div class="respon flex margin-top-s sticky-nav">
-                <div class="sticky-nav-content">
-                    <div class="flex flex-1 margin-auto">
-                        <a href="javascript:void(0)" class="flex flex margin-left-xl">
-                            <mat-icon class="ws-mat-black60-text flex margin-left-xs margin-right-s">arrow_back
-                            </mat-icon>
-                            <span class="mat-body-1">{{'Devaprathap Nagendra'}}</span>
+            <div class="respon flex margin-top-s">
+                <div class="flex flex-1 margin-auto">
+                    <a href="javascript:void(0)" class="flex flex margin-left-xl">
+                        <mat-icon class="ws-mat-black60-text flex margin-left-xs margin-right-s">arrow_back</mat-icon>
+                        <span class="mat-body-1">{{'Devaprathap Nagendra'}}</span>
+                    </a>
+                </div>
+                <div class="flex flex-2">
+                    <div class="flex flex-1 flex-center filter max-height-60 flex-wrap margin-left-xs margin-right-xs">
+                        <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'officer',
+                                      'ws-mat-accent-border font-medium':selectedTab !== 'officer'}"
+                            (click)="filterComp(officer,'officer')" role="button">
+                            <span class="mat-body-2 in-margin" [ngClass]="{'font-bold-i' : selectedTab === 'officer'}">
+                                Officer</span>
                         </a>
-                    </div>
-                    <div class="flex flex-2">
-                        <div
-                            class="flex flex-1 flex-center filter max-height-60 flex-wrap margin-left-xs margin-right-xs">
-                            <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'officer',
-                                        'ws-mat-accent-border font-medium':selectedTab !== 'officer'}"
-                                (click)="filterComp(officer,'officer')" role="button">
-                                <span class="mat-body-2 in-margin"
-                                    [ngClass]="{'font-bold-i' : selectedTab === 'officer'}">
-                                    Officer</span>
-                            </a>
-                            <a href="javascript:void(0)" class="filter-option"
-                                [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'activities',
-                                                                'ws-mat-accent-border font-medium':selectedTab !== 'activities'}"
-                                (click)="filterComp(activities,'activities')" role="button">
-                                <span class="mat-body-2 in-margin"
-                                    [ngClass]="{'font-bold-i' : selectedTab === 'activities'}">Activities</span>
-                            </a>
-                            <a href="javascript:void(0)" class="filter-option"
-                                [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'roles',
-                                                                    'ws-mat-accent-border font-medium':selectedTab !== 'roles'}" (click)="filterComp(roles,'roles')"
-                                role="button">
-                                <span class="mat-body-2 in-margin"
-                                    [ngClass]="{'font-bold-i' : selectedTab === 'roles'}">Roles</span>
-                            </a>
-                            <a href="javascript:void(0)" class="filter-option"
-                                [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'competencies',
-                                                                        'ws-mat-accent-border font-medium':selectedTab !== 'competencies'}"
-                                (click)="filterComp(competencies,'competencies')" role="button">
-                                <span class="mat-body-2 in-margin"
-                                    [ngClass]="{'font-bold-i' : selectedTab === 'competencies'}">Competencies</span>
-                            </a>
-                            <a href="javascript:void(0)" class="filter-option"
-                                [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'levels','ws-mat-accent-border font-medium':selectedTab !== 'levels'}"
-                                (click)="filterComp(levels,'levels')" role="button">
-                                <span class="mat-body-2 in-margin"
-                                    [ngClass]="{'font-bold-i' : selectedTab === 'levels'}">Levels</span>
-                            </a>
-
-                        </div>
-                    </div>
-                    <div class="flex flex-1 flex-row-reverse margin-right-l fix-h">
-                        <button mat-button class="ws-mat-accent-background text-white margin-left-xs" type="button"
-                            id="savebtn">
-                            <span i18n>Save as draft</span>
-                        </button>
-                        <button mat-stroked-button type="button"
-                            class="btn margin-right-xs mat-accent-border flex-auto-display" id="publishbtn"
-                            [disabled]="!canPublish">
-                            <span i18n>Publish</span>
-                        </button>
+                        <a href="javascript:void(0)" class="filter-option"
+                            [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'activities',
+                                                              'ws-mat-accent-border font-medium':selectedTab !== 'activities'}"
+                            (click)="filterComp(activities,'activities')" role="button">
+                            <span class="mat-body-2 in-margin"
+                                [ngClass]="{'font-bold-i' : selectedTab === 'activities'}">Activities</span>
+                        </a>
+                        <a href="javascript:void(0)" class="filter-option"
+                            [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'roles',
+                                                                  'ws-mat-accent-border font-medium':selectedTab !== 'roles'}" (click)="filterComp(roles,'roles')"
+                            role="button">
+                            <span class="mat-body-2 in-margin"
+                                [ngClass]="{'font-bold-i' : selectedTab === 'roles'}">Roles</span>
+                        </a>
+                        <a href="javascript:void(0)" class="filter-option"
+                            [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'competencies',
+                                                                      'ws-mat-accent-border font-medium':selectedTab !== 'competencies'}"
+                            (click)="filterComp(competencies,'competencies')" role="button">
+                            <span class="mat-body-2 in-margin"
+                                [ngClass]="{'font-bold-i' : selectedTab === 'competencies'}">Competencies</span>
+                        </a>
+                        <a href="javascript:void(0)" class="filter-option"
+                            [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'levels','ws-mat-accent-border font-medium':selectedTab !== 'levels'}"
+                            (click)="filterComp(levels,'levels')" role="button">
+                            <span class="mat-body-2 in-margin"
+                                [ngClass]="{'font-bold-i' : selectedTab === 'levels'}">Levels</span>
+                        </a>
 
                     </div>
                 </div>
+                <div class="flex flex-1 flex-row-reverse margin-right-l fix-h">
+                    <button mat-button class="ws-mat-accent-background text-white margin-left-xs" type="button"
+                        id="savebtn">
+                        <span i18n>Save as draft</span>
+                    </button>
+                    <button mat-stroked-button type="button"
+                        class="btn margin-right-xs mat-accent-border flex-auto-display" id="publishbtn"
+                        [disabled]="!canPublish">
+                        <span i18n>Publish</span>
+                    </button>
+
+                </div>
             </div>
-            <div (scroll)="onScroll($event)" class="wi" id="officer-section">
+            <div (scroll)="onScroll($event)" class="wi">
                 <div class="flex flex-column">
                     <div class="box-1" #officer>
                         <div class="flex left-indicator" [ngClass]="{'not-selected': selectedTab !== 'officer',
@@ -172,8 +167,8 @@
                 </div>
             </div>
         </div>
-        <div class="block flex-1 padding-left-xs padding-right-xs sticky-right-section margin-top-s">
-            <mat-card class="wi ws-mat-accent-border sticky-right-section-content margin-top-s">
+        <div class="block flex-1 padding-left-xs padding-right-xs">
+            <mat-card class="wi ws-mat-accent-border">
                 <div class="flex flex-1 flex-column padding-xs">
                     <div class="flex flex-1 filter max-height-60 padding-top-xs min-height35">
                         <a href="javascript:void(0)" class="filter-option ws-mat-accent-border-active" role="button">

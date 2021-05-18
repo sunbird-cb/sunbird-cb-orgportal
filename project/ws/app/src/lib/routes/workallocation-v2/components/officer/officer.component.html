@@ -74,8 +74,7 @@
       <div class="flex flex-1 control ws-mat-accent-b">
         <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
           <input id="position" class="form-input flex-1" matInput #position [formControl]="positionControl"
-            i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Type here"
-            (input)="filterUsers(positionControl.value)" autocomplete="off">
+            i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Type here" autocomplete="off">
         </mat-form-field>
       </div>
     </div>
@@ -87,8 +86,7 @@
         <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
           <textarea id="description" class="form-input flex-1" matInput #description
             [formControl]="positionDescriptionControl" i18n-placeholder placeholder="Type here" i18n-aria-label
-            aria-label="Type here" (input)="filterUsers(positionDescriptionControl.value)" autocomplete="off"
-            matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>
+            aria-label="Type here" autocomplete="off" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>
           </textarea>
         </mat-form-field>
       </div>

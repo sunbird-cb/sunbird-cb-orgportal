@@ -53,7 +53,7 @@ export class AutocompleteDirective implements OnInit, OnDestroy {
       width: this.origin.offsetWidth,
       maxHeight: 40 * 3,
       backdropClass: '',
-      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+      scrollStrategy: this.overlay.scrollStrategies.reposition({ scrollThrottle: 10 }),
       positionStrategy: this.getOverlayPosition(),
     })
 
