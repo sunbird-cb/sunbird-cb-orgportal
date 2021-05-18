@@ -31,7 +31,7 @@ export class ActivityLabelsComponent {
 
   /** Predicate function that doesn't allow items to be dropped into a list. */
   noReturnPredicate() {
-    return false
+    return true
   }
   addNewLabel() {
     this.labels.push(this.labels[this.labels.length - 1] + 1)

@@ -1,93 +1,119 @@
 <div class="example-container flex-1 flex-column">
-  <div class="example-list flex flex-1 flex-column">
-    <div class="flex flex-1">
-      <div class="flex flex-1 min-w-200">
-        <span class="mat-subheading-2 margin-top-xs margin-left-l">Activity label</span>
-      </div>
-      <div class="custom-w">&nbsp;</div>
-      <div class="flex flex-4">
-        <span class="mat-body-2 ws-mat-black40-text margin-top-xs margin-left-l">Activity description</span>
-      </div>
-    </div>
-    <div class="flex flex-1">
-      <div class="custom-w1">&nbsp;</div>
+  <div class=" flex flex-1 flex-row">
+    <div class="flex flex-1 flex-column example-list margin-r-2px">
+      <span class="flex margin-left-m mat-subheading-2 margin-top-s">
+        {{'Role and description'}}
+      </span>
       <span class="flex margin-left-m mat-subheading-2 ws-mat-black60-text">
         {{'Unmapped activities'}}
       </span>
     </div>
-    <div id="labels" cdkDropList [cdkDropListData]="labels" cdkDropListConnectedTo="groups"
-      (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="noReturnPredicate">
-      <ng-container *ngFor="let number of labels">
-        <!-- <span class="mat-subheading-2">{{'Unmapped activities'}}</span> -->
-        <div class="example-box" [cdkDragData]="number" cdkDrag>
-          <div class="margin-right-xs">
-            <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
-          </div>
-          <div class="flex flex-1">
-            <div class="flex flex-1 margin-2px">
-              <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
-                <input id="act" matInput #act i18n-placeholder placeholder="Type here" i18n-aria-label
-                  aria-label="Activity name input" class="form-input flex-1" autocomplete="off" />
-              </mat-form-field>
-            </div>
-            <div class="flex flex-4 margin-2px">
-              <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
-                <input id="actdesc" matInput #actdesc i18n-placeholder placeholder="Type here" i18n-aria-label
-                  aria-label="Activity description input" class="form-input flex-1" autocomplete="off" />
-              </mat-form-field>
-            </div>
-
-          </div>
+    <div class="flex flex-4 flex-column example-list">
+      <div class="flex flex-1">
+        <div class="flex flex-2 min-w-200">
+          <span class="flex mat-subheading-2 margin-top-xs margin-left-s">
+            <mat-icon class="ws-mat-black40-text margin-right-s">directions_walk</mat-icon>
+            Activities
+          </span>
         </div>
-      </ng-container>
-    </div>
-    <div class="flex flex-1">
-      <div class="custom-w">&nbsp;</div>
-      <a href="javascript:void(0)" class="flex padding-s" (click)="addNewLabel()">
-        <mat-icon class="ws-mat-black60-text">add</mat-icon>
-        <span class="mat-subheading-2 ws-mat-black60-text">Activity</span>
-      </a>
+        <div class="custom-w">&nbsp;</div>
+        <div class="flex flex-1">
+          <span class="flex mat-subheading-2 margin-top-xs">Submit to
+            <mat-icon class="ws-mat-black40-text margin-left-s">info</mat-icon>
+          </span>
+
+        </div>
+      </div>
+      <div id="labels" cdkDropList [cdkDropListData]="labels" cdkDropListConnectedTo="groups"
+        (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="noReturnPredicate">
+        <ng-container *ngFor="let number of labels">
+          <!-- <span class="mat-subheading-2">{{'Unmapped activities'}}</span> -->
+          <div class="example-box" [cdkDragData]="number" cdkDrag>
+            <div class="margin-right-xs">
+              <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
+            </div>
+            <div class="flex flex-1">
+              <div class="flex flex-2 margin-2px">
+                <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                  <input id="act" matInput #act i18n-placeholder placeholder="Type here" i18n-aria-label
+                    aria-label="Activity name input" class="form-input flex-1" autocomplete="off" />
+                </mat-form-field>
+              </div>
+              <div class="flex flex-1 margin-2px">
+                <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                  <input id="actdesc" matInput #actdesc i18n-placeholder placeholder="Type here" i18n-aria-label
+                    aria-label="Activity description input" class="form-input flex-1" autocomplete="off" />
+                </mat-form-field>
+              </div>
+
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="flex flex-1">
+        <div class="custom-w">&nbsp;</div>
+        <a href="javascript:void(0)" class="flex padding-s" (click)="addNewLabel()">
+          <mat-icon class="ws-mat-black60-text">add</mat-icon>
+          <span class="mat-subheading-2 ws-mat-black60-text">Activity</span>
+        </a>
+      </div>
     </div>
   </div>
-  <div *ngIf="groups.length > 0" class="example-list group-background flex flex-1 flex-column margin-top-xs">
-    <div class="flex flex-1">
-      <div class="custom-w1">&nbsp;</div>
-      <span class="flex margin-left-m margin-top-m mat-subheading-2">
-        {{'Untited'}}
-      </span>
-    </div>
-    <div id="groups" cdkDropList [cdkDropListData]="groups" cdkDropListConnectedTo="labels"
-      (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="evenPredicate">
-      <ng-container *ngFor="let number of groups">
-        <!-- <span class="mat-subheading-2">{{'Unmapped activities'}}</span> -->
-        <div class="example-box" [cdkDragData]="number" cdkDrag>
-          <div class="margin-right-xs">
-            <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
-          </div>
-          <div class="flex flex-1">
-            <div class="flex flex-1 margin-2px">
-              <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
-                <input id="act" matInput #act i18n-placeholder placeholder="Type here" i18n-aria-label
-                  aria-label="Activity name input" class="form-input flex-1" autocomplete="off" />
-              </mat-form-field>
-            </div>
-            <div class="flex flex-4 margin-2px">
-              <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
-                <input id="actdesc" matInput #actdesc i18n-placeholder placeholder="Type here" i18n-aria-label
-                  aria-label="Activity description input" class="form-input flex-1" autocomplete="off" />
-              </mat-form-field>
-            </div>
-
-          </div>
+  <div *ngIf="groups.length > 0" class="flex flex-1 flex-column margin-top-xs">
+    <div class=" flex flex-1 flex-row">
+      <div class="flex flex-1 flex-column group-background margin-r-2px">
+        <div class="flex flex-1">
+          <span class="flex margin-left-m margin-top-m mat-subheading-2">
+            {{'Untited role'}}
+          </span>
+          <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+            <input id="roleName" matInput #roleName i18n-placeholder placeholder="Type here" i18n-aria-label
+              aria-label="Activity name input" class="form-input flex-1" autocomplete="off" />
+          </mat-form-field>
         </div>
-      </ng-container>
-    </div>
-    <div class="flex flex-1">
-      <div class="custom-w">&nbsp;</div>
-      <a href="javascript:void(0)" class="flex padding-s" (click)="addNewGroup()">
-        <mat-icon class="ws-mat-black60-text">add</mat-icon>
-        <span class="mat-subheading-2 ws-mat-black60-text">Activity</span>
-      </a>
+        <span class="flex margin-left-m mat-subheading-2 ws-mat-black60-text">
+          {{'Role description'}}
+        </span>
+        <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+          <input id="roleDesc" matInput #roleDesc i18n-placeholder placeholder="Type here" i18n-aria-label
+            aria-label="Activity name input" class="form-input flex-1" autocomplete="off" />
+        </mat-form-field>
+      </div>
+      <div class="flex-4 group-background">
+        <div id="groups" cdkDropList [cdkDropListData]="groups" cdkDropListConnectedTo="labels"
+          (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="evenPredicate" class="flex-1">
+          <ng-container *ngFor="let number of groups">
+            <!-- <span class="mat-subheading-2">{{'Unmapped activities'}}</span> -->
+            <div class="example-box" [cdkDragData]="number" cdkDrag>
+              <div class="margin-right-xs">
+                <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
+              </div>
+              <div class="flex flex-1">
+                <div class="flex flex-2 margin-2px">
+                  <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                    <input id="act" matInput #act i18n-placeholder placeholder="Type here" i18n-aria-label
+                      aria-label="Activity name input" class="form-input flex-1" autocomplete="off" />
+                  </mat-form-field>
+                </div>
+                <div class="flex flex-1 margin-2px">
+                  <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                    <input id="actdesc" matInput #actdesc i18n-placeholder placeholder="Type here" i18n-aria-label
+                      aria-label="Activity description input" class="form-input flex-1" autocomplete="off" />
+                  </mat-form-field>
+                </div>
+
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="flex flex-1">
+          <div class="custom-w">&nbsp;</div>
+          <a href="javascript:void(0)" class="flex padding-s" (click)="addNewGroup()">
+            <mat-icon class="ws-mat-black60-text">add</mat-icon>
+            <span class="mat-subheading-2 ws-mat-black60-text">Activity</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
   <div class="flex flex-1">

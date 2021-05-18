@@ -80,6 +80,10 @@
   flex: 4
 }
 
+.flex-2 {
+  flex: 2
+}
+
 .input-wrapper {
   flex: 1;
   display: flex;
@@ -97,7 +101,8 @@
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-  padding: 0.6em 0 0.6em 0 !important;
+  // padding: 0.6em 0 0.6em 0 !important;
+  border-top: none !important;
 }
 
 ::ng-deep .mat-form-field {
@@ -121,8 +126,13 @@
   &.outline-color mat-form-field-outline {
     color: rgba(0, 0, 0, 0.16);
   }
+
 }
 
 .margin-2px {
   margin: 2px !important;
+}
+
+.margin-r-2px {
+  margin-right: 2px;
 }
