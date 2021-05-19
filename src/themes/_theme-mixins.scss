@@ -27,6 +27,7 @@
   $iconColor: mat-color($foreground, icon);
   $colorGreen: #5fa800;
   $colorRed: #ff0000;
+  $colorDarkRed: rgb(209, 57, 36);
   $footerColor: #373434;
   $footerTextColor: #dedfe0;
   $colorWhite: #ffffff;
@@ -531,6 +532,11 @@
       color: $colorRed !important;
     }
 
+    .ws-mat-red-dark-text {
+      color: $colorDarkRed !important;
+    }
+
+
     .ws-mat-primary-border {
       border: 1px solid $colorPrimary;
     }
@@ -558,6 +564,11 @@
     .ws-mat-accent-border {
       border: 1px solid rgba($colorBlack, 0.08);
     }
+
+    .ws-mat-accent-border-right {
+      border-right: 1px solid rgba($colorBlack, 0.08);
+    }
+
     .ws-mat-accent-border-bottom {
       border-bottom: 1px solid rgba($colorBlack, 0.08);
     }

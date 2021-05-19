@@ -1,6 +1,6 @@
 <div class="container-balanced">
     <div class="resporow flex flex-1 fix-top">
-        <div class="block flex-4">
+        <div class="block flex-4 ws-mat-accent-border-right">
             <div class="respon flex margin-top-s sticky-nav">
                 <div class="sticky-nav-content">
                     <div class="flex flex-1 margin-auto">
@@ -172,28 +172,58 @@
                 </div>
             </div>
         </div>
-        <div class="block flex-1 padding-left-xs padding-right-xs sticky-right-section margin-top-s">
-            <mat-card class="wi ws-mat-accent-border sticky-right-section-content margin-top-s">
-                <div class="flex flex-1 flex-column padding-xs">
-                    <div class="flex flex-1 filter max-height-60 padding-top-xs min-height35">
+        <div class="block flex-1 padding-left-m padding-right-m sticky-right-section margin-top-s">
+            <mat-card class="wi sticky-right-section-content margin-top-s">
+                <div class="flex flex-1 flex-column ">
+                    <div class="flex flex-1 filter max-height-60 min-height35">
                         <a href="javascript:void(0)" class="filter-option ws-mat-accent-border-active" role="button">
                             <span class="mat-body-2 in-margin font-bold-i"> Assistant</span>
                         </a>
                     </div>
-                    <div class="flex flex-1 padding-xs margin-top-l">
+                    <div class="flex flex-1 margin-top-l">
                         <span class="mat-body-2 ws-mat-black60-text">
                             We will continously scan the workspace and show you reports and recommendations to help you
                             refine the content
                         </span>
                     </div>
-                    <div class="flex flex-1 progress ws-mat-accent-border border-r padding-s margin-top-l">
-                        <span class="flex flex-1">
+                    <div class="flex flex-1 progress ws-mat-accent-border border-r margin-top-l padding-s">
+                        <span class=" flex flex-1">
                             <mat-progress-spinner [diameter]="20" class="example-margin" [color]="color"
                                 mode="determinate" [value]="currentProgress">
                             </mat-progress-spinner>
                             <span class="margin-left-m mat-body-1">{{'Progress of completion'}}</span>
                         </span>
                         <span class="flex mat-body-1 font-semibold margin-left-m">{{currentProgress}}</span>
+                    </div>
+                    <div class="flex flex-1 flex-column margin-top-l">
+                        <p class=" mat-body-2 font-bold-i margin-bottom-xs">
+                            Errors
+                            <span class=" margin-left-xxs ws-mat-red-dark-text"> 3 </span>
+                        </p>
+                        <ws-app-assistant-message-card [type]="'activity'" [count]="5"
+                            [message]="'Unmapped activities'">
+                        </ws-app-assistant-message-card>
+                        <ws-app-assistant-message-card [type]="'role'" [message]="'Role has no activities'">
+                        </ws-app-assistant-message-card>
+                        <ws-app-assistant-message-card [type]="'competency'" [count]="2"
+                            [message]="'Competency has no roles'">
+                        </ws-app-assistant-message-card>
+                    </div>
+                    <div class="flex flex-1 flex-column margin-top-l">
+                        <p class="mat-body-2 font-bold-i">
+                            Warnings
+                            <span class="margin-left-xxs ws-mat-red-dark-text"> 2 </span>
+                        </p>
+                        <ws-app-assistant-message-card [type]="'role'" [message]="'Role description missing'">
+                        </ws-app-assistant-message-card>
+                        <ws-app-assistant-message-card [type]="'role'" [count]="2"
+                            [message]="'Role has no competencies'">
+                        </ws-app-assistant-message-card>
+                    </div>
+                    <div class="flex flex-1 flex-column margin-top-l">
+                        <p class=" mat-body-1 font-bold-i">Help</p>
+                        <ws-app-assistant-content-card></ws-app-assistant-content-card>
+                        <ws-app-assistant-content-card></ws-app-assistant-content-card>
                     </div>
                 </div>
             </mat-card>

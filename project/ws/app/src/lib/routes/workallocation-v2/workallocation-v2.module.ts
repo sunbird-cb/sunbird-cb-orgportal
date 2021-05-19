@@ -21,12 +21,16 @@ import { OfficerComponent } from './components/officer/officer.component'
 import { AutocompleteModule } from './components/autocomplete/autocomplete.module'
 import { ActivityLabelsModule } from './components/activity-labels/activity-labels.module'
 import { WINDOW_PROVIDERS } from './services/window.service'
+import { AssistantMessageCardComponent } from './components/assistant-message-card/assistant-message-card.component'
+import { AssistantContentCardComponent } from './components/assistant-content-card/assistant-content-card.component'
 
 @NgModule({
   declarations: [
     CreateWorkallocationComponent,
     WorkallocationV2HomeComponent,
     OfficerComponent,
+    AssistantMessageCardComponent,
+    AssistantContentCardComponent,
   ],
   imports: [
     CommonModule, ReactiveFormsModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,
@@ -40,7 +44,7 @@ import { WINDOW_PROVIDERS } from './services/window.service'
   entryComponents: [
     // AllocationActionsComponent,
   ],
-  providers: [WINDOW_PROVIDERS]
+  providers: [WINDOW_PROVIDERS],
   // exports: [DownloadAllocationComponent],
 })
 export class WorkallocationV2Module { }
