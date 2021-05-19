@@ -27,7 +27,7 @@
       </mat-form-field> -->
       <div class="flex flex-1 control">
         <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
-          <!-- <span class="letter-color1" *ngIf="OfficerName.value.length">{{OfficerName.value.charAt(0)}}</span> -->
+          <span class="letter-color1" *ngIf="OfficerName.value.length">{{getInitials(OfficerNameControl.value)}}</span>
           <input id="firstName" class="form-input flex-1" matInput #OfficerName [formControl]="OfficerNameControl"
             i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Type here"
             [wsAppAutocomplete]="autocomplete" (input)="filterUsers(OfficerNameControl.value)" autocomplete="off">
@@ -37,22 +37,23 @@
       <ws-app-autocomplete #autocomplete="wsAppAutocomplete">
         <ng-template wsAppAutocompleteContent>
           <ng-container *ngIf="(userslist | filter: OfficerNameControl.value) as result">
-            <div class="mat-body-4 ws-mat-accent-text margin-bottom-xs">From Karmayogi officer portal</div>
+            <div class="mat-body-4 ws-mat-accent-text padding-s">From Karmayogi officer portal</div>
             <ws-app-option *ngFor="let user of userslist"
               [value]="user.userDetails.first_name +' '+ user.userDetails.last_name">
-              <div class=" mat-accent-border" (click)="OfficerClicked(user)">
-                <div class="padding-top-m ">
+              <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs"
+                (click)="OfficerClicked(user)">
+                <div class="flex flex-start ">
                   <span
-                    class="letter-color">{{user.userDetails.first_name.charAt(0)}}{{user.userDetails.last_name.charAt(0)}}</span>
+                    class="letter-color1">{{user.userDetails.first_name.charAt(0)}}{{user.userDetails.last_name.charAt(0)}}</span>
                   <mat-icon class="groupicon ws-mat-accent-text ws-mat-accent-border">group</mat-icon>
                 </div>
-                <div class="padding-top-xs padding-bottom-xs ">
+                <div class="margin-top-s">
                   <p class="username mat-body-2 font-bold-i margin-bottom-xxs">{{user.userDetails.first_name}}
                     {{user.userDetails.last_name
                     ?
                     user.userDetails.last_name : ''}}</p>
                   <p class="useremail mat-body-2 margin-bottom-xxs">{{user.userDetails.email}}</p>
-                  <p class="userpos mat-body-2 ws-mat-black60-text margin-bottom-xs margin-bottom-xxs">
+                  <p class="userpos mat-body-2 ws-mat-black60-text margin-bottom-xxs">
                     Software Engineer at Tarento
                     {{user.userDetails.position ?
                     user.userDetails.position : ''}}
@@ -91,7 +92,7 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="flex flex-column">
+    <!-- <div class="flex flex-column">
       <div class="ws-mat-black040-bg padding-left-m padding-xs mat-body-2 font-bold-i">
         Reporting to
       </div>
@@ -178,6 +179,6 @@
           </ng-container>
         </ng-template>
       </ws-app-autocomplete>
-    </div>
+    </div> -->
   </div>
 </form>

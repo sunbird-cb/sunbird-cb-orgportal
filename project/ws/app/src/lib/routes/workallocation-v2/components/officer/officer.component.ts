@@ -50,4 +50,19 @@ export class OfficerComponent implements OnInit {
     }
   }
 
+  getInitials(name: string) {
+    if (!name) {
+      return ''
+    }
+    // This will fetch only all initials ex: Christy B Fernandes => CBF
+    // return name.match(/(\b\S)?/g).join("").toUpperCase()
+
+    // This will fetch only all initials ex: Christy B Fernandes => CBF OR Christy => CH
+    // return name.match(/(^\S\S?|\b\S)?/g).join("").match(/(^\S|\S$)?/g).join("").toUpperCase()
+
+    // This will fetch only first and last initials ex: Christy B Fernandes => CF
+    const firstLast = name.match(/(\b\S)?/g)!.join("").match(/(^\S|\S$)?/g)
+    return firstLast!.join("").toUpperCase()
+  }
+
 }

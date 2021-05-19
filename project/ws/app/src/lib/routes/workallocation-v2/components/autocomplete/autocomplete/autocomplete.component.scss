@@ -1,3 +1,5 @@
+@import '~@sunbird-cb/design-system/src/styles/ws-common';
+
 .autocomplete {
   background-color: #fff;
   box-shadow: 0 6px 9px 2px rgb(0 0 0 / 20%);
@@ -7,5 +9,5 @@
   min-height: 334px;
   min-width: 319px;
   margin-top: 0;
-  padding: 16px;
+  // padding: 16px;
 }
