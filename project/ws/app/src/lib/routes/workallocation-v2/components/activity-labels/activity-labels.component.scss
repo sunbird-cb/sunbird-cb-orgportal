@@ -8,6 +8,62 @@
   margin: 0 25px 0 0;
   display: inline-block;
   vertical-align: top;
+
+  ::selection {
+    background-color: #0074B6;
+    color: RGBA(255, 255, 255, 0.95);
+  }
+
+  ::ng-deep mat-form-field .mat-form-field-infix .mat-form-field-label,
+  ::ng-deep mat-form-field .mat-form-field-infix .mat-select-value {
+    line-height: normal !important;
+  }
+
+  ::ng-deep .theme-igot.day-mode .mat-form-field.mat-focused .mat-form-field-label {
+    color: #333232 !important;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    // padding: 0.6em 0 0.6em 0 !important;
+    border-top: none !important;
+  }
+
+  ::ng-deep .mat-form-field {
+    width: 100%;
+    max-width: 340px;
+
+    &.full-width {
+      max-width: 100%;
+    }
+
+    &.no-pb .mat-form-field-wrapper {
+      padding-bottom: 0;
+      margin: 0;
+    }
+
+    &.square .mat-form-field-outline-start,
+    .mat-form-field-outline-end {
+      border-radius: 0 !important;
+    }
+
+    &.outline-color mat-form-field-outline {
+      color: rgba(0, 0, 0, 0.16);
+    }
+  }
+
+  .txt-b {
+    ::ng-deep .mat-form-field-outline {
+      background: #F2ECF4;
+    }
+  }
+
+  .txt-b-b {
+    ::ng-deep .mat-form-field {
+      font-weight: 700;
+    }
+
+    color: rgba(0, 0, 0, 0.87);
+  }
 }
 
 .example-list {
@@ -18,6 +74,12 @@
   overflow: hidden;
   display: block;
 }
+
+.min-w {
+  min-height: 40px;
+}
+
+
 
 .group-background {
   background: #F2ECF4;
@@ -95,43 +157,6 @@
   flex-direction: column;
 }
 
-::ng-deep mat-form-field .mat-form-field-infix .mat-form-field-label,
-::ng-deep mat-form-field .mat-form-field-infix .mat-select-value {
-  line-height: normal !important;
-}
-
-::ng-deep .theme-igot.day-mode .mat-form-field.mat-focused .mat-form-field-label {
-  color: #333232 !important;
-}
-
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-  // padding: 0.6em 0 0.6em 0 !important;
-  border-top: none !important;
-}
-
-::ng-deep .mat-form-field {
-  width: 100%;
-  max-width: 340px;
-
-  &.full-width {
-    max-width: 100%;
-  }
-
-  &.no-pb .mat-form-field-wrapper {
-    padding-bottom: 0;
-    margin: 0;
-  }
-
-  &.square .mat-form-field-outline-start,
-  .mat-form-field-outline-end {
-    border-radius: 0 !important;
-  }
-
-  &.outline-color mat-form-field-outline {
-    color: rgba(0, 0, 0, 0.16);
-  }
-
-}
 
 .margin-2px {
   margin: 2px !important;
@@ -141,6 +166,13 @@
   margin-right: 2px;
 }
 
+.margin-b-2px {
+  margin-bottom: 2px;
+}
+
+.break-a {
+  overflow-wrap: anywhere;
+}
 
 @include breakpoint-lt-m {
   .resporow {

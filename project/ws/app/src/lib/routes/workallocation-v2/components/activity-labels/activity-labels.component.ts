@@ -2,8 +2,10 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '
 import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop'
 import { NSWat } from './activity-wot.model'
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
-import { debounceTime } from 'rxjs/operators'
-
+// import { debounceTime } from 'rxjs/operators'
+import { inspect } from 'util'
+import lodash from 'lodash'
+import { AllocationService } from '../../../workallocation/services/allocation.service'
 
 @Component({
   selector: 'ws-app-activity-labels',
@@ -11,17 +13,37 @@ import { debounceTime } from 'rxjs/operators'
   styleUrls: ['./activity-labels.component.scss'],
 })
 export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit {
-  labels: NSWat.IActivity[] = [];
-  groups: NSWat.IActivityGroup[] = [];
-  activeGroupIdx = 0
-  untitedRole = 'Untited role'
-  activityForm!: FormGroup
   constructor(
     private changeDetector: ChangeDetectorRef,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private allocateSrvc: AllocationService
   ) {
 
   }
+  get labelsList(): FormArray {
+    return this.activityForm.get('labelsArray') as FormArray
+  }
+
+  get groupList(): FormArray {
+    return this.activityForm.get('groupsArray') as FormArray
+  }
+
+  get groupActivityList(): FormArray {
+    const lst = this.groupList.at(this.activeGroupIdx) as FormGroup
+    const frmctrl = lst.get('activities') as FormArray
+    return frmctrl
+  }
+  get getActivityForm() {
+    return JSON.stringify(inspect(this.activityForm.controls.groupsArray.value))
+  }
+  labels: NSWat.IActivity[] = []
+  groups: NSWat.IActivityGroup[] = []
+  activeGroupIdx = 0
+  untitedRole = 'Untited role'
+  activityForm!: FormGroup
+  userslist!: any[]
+  canshowName = 1
+  canshow = -1
   ngOnInit(): void {
     this.activityForm = new FormGroup({})
     this.createForm()
@@ -32,21 +54,13 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
   drop(event: CdkDragDrop<NSWat.IActivity[]>) {
     if (event.previousContainer === event.container) {
-      // moveItemInArray(this.activityForm.controls.labelsArray.controls, event.previousIndex, event.currentIndex)
-      // moveItemInArray(this.activityForm.controls.labelsArray.value, event.previousIndex, event.currentIndex)
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
-    } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex)
-    }
-  }
-  dropgroup(event: CdkDragDrop<NSWat.IActivity[]>) {
-    if (event.previousContainer === event.container) {
-      // moveItemInArray(this.activityForm.controls.labelsArray.controls, event.previousIndex, event.currentIndex)
-      // moveItemInArray(this.activityForm.controls.labelsArray.value, event.previousIndex, event.currentIndex)
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
+      // tslint:disable
+      moveItemInArray((this.activityForm.get('labelsArray') as FormArray)!.controls, event.previousIndex, event.currentIndex)
+      moveItemInArray(this.activityForm.get('labelsArray')!.value, event.previousIndex, event.currentIndex)
+      moveItemInArray(this.labelsList.controls, event.previousIndex, event.currentIndex)
+      moveItemInArray(this.labelsList.value, event.previousIndex, event.currentIndex)
+      // tslint:enable
+      // this.changeDetector.detectChanges()
     } else {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
@@ -55,10 +69,33 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
+  dropgroup(event: CdkDragDrop<NSWat.IActivity[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(this.groupActivityList.controls, event.previousIndex, event.currentIndex)
+      moveItemInArray(this.groupActivityList.value, event.previousIndex, event.currentIndex)
+    } else {
+      const previousContainerIndex = parseInt(event.previousContainer.id.replace('cdk-drop-list-', ''), 10)
+      const targetContainerIndex = parseInt(event.container.id.replace('cdk-drop-list-', ''), 10)
+      // tslint:disable
+      const oldArray = (this.activityForm.get('groupsArray') as any)!.at(previousContainerIndex).get('activities')
+      const newArray = (this.activityForm.get('groupsArray') as any)!.at(targetContainerIndex).get('activities')
+      // tslint:enable
+      transferArrayItem(oldArray.controls, newArray.controls, event.previousIndex, event.currentIndex)
+      /**Please do not delete these methods : for testing Purpose */
+      // this.addNewGroupActivityCustom(targetContainerIndex, newArray.value)
+      // this.addNewGroupActivityCustom(previousContainerIndex, oldArray.value)
+      // this.activityForm.reset()
+      this.changeDetector.detectChanges()
+      // console.log(oldArray, newArray)
+    }
+  }
+  // sortPredicate(index: number, item: CdkDrag<NSWat.IActivity>) {
+  //   return (index + 1) % 2 === item.data % 2
+  // }
   /** Predicate function that only allows even numbers to be dropped into a list. */
   evenPredicate(item: CdkDrag<NSWat.IActivity>) {
     // return item.data % 2 === 0
-    if (item) {
+    if (item.data) {
       return true
     }
     return false
@@ -69,21 +106,26 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     return true
   }
   log(value: any) {
-    console.log(value)
-  }
-  get labelsList(): FormArray {
-    return this.activityForm.get('labelsArray') as FormArray
+    if (value) {
+      // console.log(value)
+    }
   }
   setlabelsValues(val: any) {
     this.labelsList.patchValue(val)
   }
+  setGroupValues(val: any) {
+    this.groupList.patchValue(val)
+  }
+  setGroupActivityValues(val: any) {
+    this.groupActivityList.patchValue(val)
+  }
+
   addNewLabel() {
-    // if (this.activityForm.get('labelsArray') != null) {
     const oldValue = this.labelsList
-    let fg = this.formBuilder.group({
-      activityName: 'unmed',
-      activityDescription: 'desc',
-      assignedTo: ''
+    const fg = this.formBuilder.group({
+      activityName: '',
+      activityDescription: '',
+      assignedTo: '',
     })
 
     oldValue.push(fg)
@@ -92,22 +134,51 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
 
   }
   addNewGroup() {
-    this.groups.push({
-      activities: [],
-      groupDescription: '',
-      groupName: this.untitedRole
+    const oldValue = this.groupList
+    const fg = this.formBuilder.group({
+      activities: this.formBuilder.array([]),
+      groupName: this.untitedRole,
+      groupDescription: 'Role description',
     })
+    const activits = fg.get('activities') as FormArray
+    const fga = this.formBuilder.group({
+      activityName: '',
+      activityDescription: '',
+      assignedTo: '',
+    })
+    activits.push(fga)
+    fg.controls.activities.patchValue([...activits.value])
+    oldValue.push(fg)
+    this.setGroupValues([...oldValue.value])
+    // to show hide Role name
+    this.canshowName = this.groupList.length - 1
   }
-  addNewGroupActivity(index: number) {
-    if (!this.groups[index]) {
-      return
-      // need to display tost
+  addNewGroupActivityCustom(idx: number, activities: NSWat.IActivity[]) {
+    if (idx >= 0) {
+      // const oldValue = this.groupActivityList as FormArray
+      const newForlAryList = this.formBuilder.array([])
+      activities.forEach((ac: NSWat.IActivity) => {
+        const fga = this.formBuilder.group({
+          activityName: ac.activityName,
+          activityDescription: ac.activityDescription,
+          assignedTo: ac.assignedTo,
+        })
+        newForlAryList.push(fga)
+      })
+      this.setGroupActivityValues([...newForlAryList!.value])
     }
-    this.groups[index].activities.push({
-      activityName: 'unmed',
-      activityDescription: 'desc',
-      assignedTo: ''
-    })
+  }
+  addNewGroupActivity(idx: number) {
+    if (idx >= 0) {
+      const oldValue = this.groupActivityList as FormArray
+      const fga = this.formBuilder.group({
+        activityName: '',
+        activityDescription: '',
+        assignedTo: '',
+      })
+      oldValue.push(fga)
+      this.setGroupActivityValues([...oldValue.value])
+    }
   }
   enter(i: number) {
     this.activeGroupIdx = i
@@ -121,10 +192,21 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     //   this.labels.forEach((v: NSWat.IActivity) => {
     //     if (v) {
     this.createActivityControl({
-      activityName: 'unmed',
-      activityDescription: 'desc',
-      assignedTo: ''
+      activityName: '',
+      activityDescription: '',
+      assignedTo: '',
     })
+    this.addNewGroup()
+    // this.addNewGroupActivity(0)
+    // this.createGroupControl({
+    //   groupName: 'Untited role',
+    //   groupDescription: 'Role description',
+    //   activities: [{
+    //     activityName: 'unmed',
+    //     activityDescription: 'desc',
+    //     assignedTo: ''
+    //   }]
+    // })
     //     }
     //   })
     // }
@@ -152,14 +234,39 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
   createActivtyControl(activityObj: NSWat.IActivity[]) {
     return activityObj.map((v: NSWat.IActivity) => {
-      return this.formBuilder.group({
+      return this.formBuilder.array([{
         activityName: new FormControl(v.activityName),
         activityDescription: new FormControl(v.activityDescription),
         assignedTo: new FormControl(v.assignedTo),
-      })
+      }])
     })
   }
   submitResult(qualityForm: any) {
     console.log(qualityForm)
+  }
+  public async filterUsers(value: string) {
+    // if (value && value.length > 3) {
+    const filterValue = value.toLowerCase()
+    // tslint:disable-next-line: deprecation
+    this.allocateSrvc.onSearchUser(filterValue).subscribe(res => {
+      this.userslist = res.result.data
+    })
+    // } else {
+    // this.userslist = []
+    // }
+  }
+  show(idx: number) {
+    this.canshow = idx
+  }
+
+  hide() {
+    this.canshow = -1
+  }
+  showName(idx: number) {
+    this.canshowName = idx
+  }
+
+  hideName() {
+    this.canshowName = -1
   }
 }
