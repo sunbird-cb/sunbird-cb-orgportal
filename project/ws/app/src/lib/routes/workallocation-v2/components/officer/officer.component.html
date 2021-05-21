@@ -9,10 +9,10 @@
           <ws-app-initial-avatar *ngIf="officerName.value.length" [name]="officerName.value"></ws-app-initial-avatar>
           <input matInput aria-label="Officer" [matAutocomplete]="auto" #officerName name="officerName"
             formControlName="officerName" i18n-placeholder placeholder="Type here" i18n-aria-label
-            aria-label="Type here" (input)="filterUsers(officerName.value)">
+            aria-label="Type here">
           <mat-autocomplete #auto="matAutocomplete">
             <div class="mat-body-4 ws-mat-accent-text padding-s">From Karmayogi officer portal</div>
-            <mat-option *ngFor="let user of userslist"
+            <mat-option *ngFor="let user of filteredUserslist | async"
               [value]="user.userDetails.first_name + ' ' +user.userDetails.last_name ">
               <ws-app-user-autocomplete-card [user]="user" (userClick)="officerClicked($event)">
               </ws-app-user-autocomplete-card>

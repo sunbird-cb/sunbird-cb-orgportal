@@ -31,12 +31,13 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
    */
   private activitySubscription: any
   private groupSubscription: any
+  private officerFormSubscription: any
   dataStructure: any = {}
   // tslinr=t
   constructor(private watStore: WatStoreService) {
   }
   ngOnInit(): void {
-    this.fetchData()
+    this.fetchFormsData()
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -90,7 +91,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   get getsubPath(): string {
     return `./#${this.selectedTab}`
   }
-  fetchData() {
+
+  // This method is used to fetch the form data from all children components
+  fetchFormsData() {
     this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(activities => {
       if (activities.length > 0) {
         this.dataStructure.activityGroups = activities
@@ -101,6 +104,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
         this.dataStructure.compGroups = comp
       }
     })
+
+    this.officerFormSubscription = this.watStore.getOfficerGroup.subscribe(officerFormData => {
+      this.dataStructure.officerFormData = officerFormData
+    })
   }
   get allWarning() {
     let warnings: IWarnError[] = []
@@ -110,7 +117,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     // })
     // return warnings
     if (this.dataStructure.activityGroups) {
-      warnings = this.calculateWarn(this.dataStructure.activityGroups)
+      warnings = (this.calculateWarn(this.dataStructure.activityGroups))
+    }
+    if (this.dataStructure.officerFormData) {
+      warnings = (this.calculateOfficerWarning(this.dataStructure.officerFormData))
     }
     return warnings
   }
@@ -127,10 +137,34 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
 
     return result
   }
-  get allErrors() {
-    const warnings: IWarnError | [] = []
 
-    return warnings
+  calculateOfficerWarning(data: any): IWarnError[] {
+    const result: IWarnError[] = []
+    console.log('data------', data)
+    if (data && data.positionDescription === '') {
+      result.push({ type: 'officer', counts: 0, label: 'Position description missing' })
+    }
+    return result
+  }
+
+  get allErrors() {
+    let errors: IWarnError[] = []
+    if (this.dataStructure.officerFormData) {
+      errors = (this.calculateOfficerErrors(this.dataStructure.officerFormData))
+    }
+    return errors
+  }
+
+  calculateOfficerErrors(data: any): IWarnError[] {
+    const result: IWarnError[] = []
+    console.log('data------', data)
+    if (data && data.officerName === '' && (data.position !== '' || data.positionDescription !== '')) {
+      result.push({ type: 'officer', counts: 0, label: 'Officer name is empty' })
+    }
+    if (data && data.position === '' && (data.officerName !== '' || data.positionDescription !== '')) {
+      result.push({ type: 'officer', counts: 0, label: 'Postion missing' })
+    }
+    return result
   }
   ngOnDestroy() {
     this.activitySubscription.unsubscribe()

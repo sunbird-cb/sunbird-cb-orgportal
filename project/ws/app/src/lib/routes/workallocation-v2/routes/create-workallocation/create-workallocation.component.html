@@ -157,16 +157,21 @@
                     <div class="flex flex-1 flex-column margin-top-l">
                         <p class=" mat-body-2 font-bold-i margin-bottom-xs">
                             Errors
-                            <span class=" margin-left-xxs ws-mat-red-dark-text"> 3 </span>
+                            <span class=" margin-left-xxs ws-mat-red-dark-text"> {{allErrors.length}} </span>
                         </p>
-                        <ws-app-assistant-message-card [type]="'activity'" [count]="5"
+                        <ng-container *ngFor="let error of allErrors">
+                            <ws-app-assistant-message-card [type]="error.type" [count]="error.counts"
+                                [message]="error.label">
+                            </ws-app-assistant-message-card>
+                        </ng-container>
+                        <!-- <ws-app-assistant-message-card [type]="'activity'" [count]="5"
                             [message]="'Unmapped activities'">
                         </ws-app-assistant-message-card>
                         <ws-app-assistant-message-card [type]="'role'" [message]="'Role has no activities'">
                         </ws-app-assistant-message-card>
                         <ws-app-assistant-message-card [type]="'competency'" [count]="2"
                             [message]="'Competency has no roles'">
-                        </ws-app-assistant-message-card>
+                        </ws-app-assistant-message-card> -->
                     </div>
                     <div class="flex flex-1 flex-column margin-top-l">
                         <p class="mat-body-2 font-bold-i">
