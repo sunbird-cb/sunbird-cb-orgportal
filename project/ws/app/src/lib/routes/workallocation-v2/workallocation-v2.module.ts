@@ -23,6 +23,8 @@ import { ActivityLabelsModule } from './components/activity-labels/activity-labe
 import { WINDOW_PROVIDERS } from './services/window.service'
 import { AssistantMessageCardComponent } from './components/assistant-message-card/assistant-message-card.component'
 import { AssistantContentCardComponent } from './components/assistant-content-card/assistant-content-card.component'
+import { WatStoreService } from './services/wat.store.service'
+import { CompetencyLabelsModule } from './components/competency-labels/competency-labels.module'
 
 @NgModule({
   declarations: [
@@ -34,7 +36,7 @@ import { AssistantContentCardComponent } from './components/assistant-content-ca
   ],
   imports: [
     CommonModule, ReactiveFormsModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,
-    ActivityLabelsModule, RouterModule, MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
+    ActivityLabelsModule, CompetencyLabelsModule, RouterModule, MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule,
@@ -44,7 +46,7 @@ import { AssistantContentCardComponent } from './components/assistant-content-ca
   entryComponents: [
     // AllocationActionsComponent,
   ],
-  providers: [WINDOW_PROVIDERS],
+  providers: [WINDOW_PROVIDERS, WatStoreService],
   // exports: [DownloadAllocationComponent],
 })
 export class WorkallocationV2Module { }

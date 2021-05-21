@@ -1,14 +1,13 @@
-export namespace NSWatActivity {
-
-  export interface IActivity {
+export namespace NSWatCompetency {
+  export interface ICompActivity {
     activityName: string
     activityDescription: string
     assignedTo: string
   }
   // In UI it's Role
-  export interface IActivityGroup {
+  export interface ICompActivityGroup {
     groupName: string
     groupDescription: string
-    activities: IActivity[]
+    activities: ICompActivity[]
   }
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ActivityLabelsComponent } from './activity-labels.component'
+import { CompetencyLabelsComponent } from './competency-labels.component'
 import {
   MatAutocompleteModule, MatCardModule,
   MatFormFieldModule, MatIconModule, MatInputModule, MatSnackBarModule,
@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { AutocompleteModule } from '../autocomplete/autocomplete.module'
 
 @NgModule({
-  declarations: [ActivityLabelsComponent],
+  declarations: [CompetencyLabelsComponent],
   imports: [
     CommonModule,
     AutocompleteModule,
@@ -30,7 +30,7 @@ import { AutocompleteModule } from '../autocomplete/autocomplete.module'
     MatSnackBarModule,
     ReactiveFormsModule,
   ],
-  entryComponents: [ActivityLabelsComponent],
-  exports: [ActivityLabelsComponent],
+  entryComponents: [CompetencyLabelsComponent],
+  exports: [CompetencyLabelsComponent],
 })
-export class ActivityLabelsModule { }
+export class CompetencyLabelsModule { }
