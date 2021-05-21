@@ -22,10 +22,10 @@ import { AutocompleteModule } from './components/autocomplete/autocomplete.modul
 import { ActivityLabelsModule } from './components/activity-labels/activity-labels.module'
 import { WINDOW_PROVIDERS } from './services/window.service'
 import { AssistantMessageCardComponent } from './components/assistant-message-card/assistant-message-card.component'
-import { UserAutocompleteCardComponent } from './components/user-autocomplete-card/user-autocomplete-card.component'
 import { AssistantContentCardComponent } from './components/assistant-content-card/assistant-content-card.component'
 import { WatStoreService } from './services/wat.store.service'
 import { CompetencyLabelsModule } from './components/competency-labels/competency-labels.module'
+import { ComponentSharedModule } from './components/component-shared.module'
 
 @NgModule({
   declarations: [
@@ -34,7 +34,6 @@ import { CompetencyLabelsModule } from './components/competency-labels/competenc
     OfficerComponent,
     AssistantMessageCardComponent,
     AssistantContentCardComponent,
-    UserAutocompleteCardComponent,
   ],
   imports: [
     CommonModule, ReactiveFormsModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,
@@ -44,7 +43,7 @@ import { CompetencyLabelsModule } from './components/competency-labels/competenc
     MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule,
     UIORGTableModule, ExportAsModule, MatMenuModule, MatTabsModule, MatProgressSpinnerModule, MatAutocompleteModule,
-    AutocompleteModule,
+    AutocompleteModule, ComponentSharedModule,
   ],
   entryComponents: [
     // AllocationActionsComponent,
