@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Observable } from 'rxjs'
 import { map, startWith } from 'rxjs/operators'
 import { AllocationService } from '../../services/allocation.service'
@@ -13,13 +13,13 @@ export class OfficerComponent implements OnInit {
   userslist!: any[]
   userCtrl = new FormControl()
   filteredUserslist!: Observable<any[]>
-  OfficerNameControl = new FormControl()
-  positionControl = new FormControl()
-  positionDescriptionControl = new FormControl()
-  reportingToControl = new FormControl()
-  reportingOfficerControl = new FormControl()
 
-  constructor(private allocateSrvc: AllocationService) {
+  officerForm!: FormGroup
+
+  constructor(
+    private allocateSrvc: AllocationService,
+    private formBuilder: FormBuilder
+  ) {
     this.userCtrl.valueChanges
       .pipe(
         startWith(''),
@@ -28,6 +28,16 @@ export class OfficerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.officerForm = new FormGroup({})
+    this.createForm()
+  }
+
+  createForm() {
+    this.officerForm = this.formBuilder.group({
+      officerName: this.formBuilder.control('', []),
+      position: this.formBuilder.control('', []),
+      positionDescription: this.formBuilder.control('', []),
+    })
   }
 
   public async filterUsers(value: string) {
@@ -42,10 +52,13 @@ export class OfficerComponent implements OnInit {
     // }
   }
 
-  OfficerClicked(user: any) {
+  officerClicked(user: any) {
     if (user) {
       if (user.userDetails && user.userDetails.position) {
-        this.positionControl.setValue(user.userDetails.position)
+        if (this.officerForm && this.officerForm.get('position')) {
+          // tslint:disable-next-line: no-non-null-assertion
+          this.officerForm.get('position')!.setValue(user.userDetails.position)
+        }
       }
     }
   }
@@ -61,8 +74,10 @@ export class OfficerComponent implements OnInit {
     // return name.match(/(^\S\S?|\b\S)?/g).join("").match(/(^\S|\S$)?/g).join("").toUpperCase()
 
     // This will fetch only first and last initials ex: Christy B Fernandes => CF
-    const firstLast = name.match(/(\b\S)?/g)!.join("").match(/(^\S|\S$)?/g)
-    return firstLast!.join("").toUpperCase()
+    // tslint:disable-next-line: no-non-null-assertion
+    const firstLast = name.match(/(\b\S)?/g)!.join('').match(/(^\S|\S$)?/g)
+    // tslint:disable-next-line: no-non-null-assertion
+    return firstLast!.join('').toUpperCase()
   }
 
 }
