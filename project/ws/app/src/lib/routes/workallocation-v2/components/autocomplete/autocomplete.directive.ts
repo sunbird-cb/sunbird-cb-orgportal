@@ -3,7 +3,7 @@ import { fromEvent } from 'rxjs'
 import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { AutocompleteComponent } from './autocomplete/autocomplete.component'
 import { TemplatePortal } from '@angular/cdk/portal'
-import { filter, takeUntil } from 'rxjs/operators'
+import { debounceTime, filter, takeUntil } from 'rxjs/operators'
 import { NgControl } from '@angular/forms'
 import { untilDestroyed } from 'ngx-take-until-destroy'
 
@@ -28,6 +28,7 @@ export class AutocompleteDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
     fromEvent(this.origin, 'focus').pipe(
+      debounceTime(1000),
       untilDestroyed(this)
       // tslint:disable-next-line: deprecation
     ).subscribe(() => {
@@ -49,6 +50,9 @@ export class AutocompleteDirective implements OnInit, OnDestroy {
   }
 
   openDropdown() {
+    if (this.overlayRef) {
+      this.close()
+    }
     this.overlayRef = this.overlay.create({
       width: this.origin.offsetWidth,
       maxHeight: 40 * 3,

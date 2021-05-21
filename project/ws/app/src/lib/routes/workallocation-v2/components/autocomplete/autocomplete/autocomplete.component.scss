@@ -2,12 +2,13 @@
 
 .autocomplete {
   background-color: #fff;
-  box-shadow: 0 6px 9px 2px rgb(0 0 0 / 20%);
+  box-shadow: 0 4px 12px 0px rgb(0 0 0 / 16%);
   width: 100%;
   display: block;
   overflow-y: scroll;
   min-height: 334px;
   min-width: 319px;
-  margin-top: 0;
+  margin-left: -16px;
+  margin-top: 13px;
   // padding: 16px;
 }

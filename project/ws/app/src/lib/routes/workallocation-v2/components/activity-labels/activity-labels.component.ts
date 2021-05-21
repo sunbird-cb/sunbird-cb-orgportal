@@ -61,7 +61,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     this.activityForm.controls['groupsArray'].valueChanges
       .pipe(
         debounceTime(500),
-        switchMap(async (formValue) => {
+        switchMap(async formValue => {
           this.watStore.setgetactivitiesGroup(formValue)
         }),
         takeUntil(this.unsubscribe)

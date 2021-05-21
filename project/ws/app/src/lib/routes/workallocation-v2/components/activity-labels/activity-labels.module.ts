@@ -11,9 +11,11 @@ import { CdkTableModule } from '@angular/cdk/table'
 import { CdkTreeModule } from '@angular/cdk/tree'
 import { ReactiveFormsModule } from '@angular/forms'
 import { AutocompleteModule } from '../autocomplete/autocomplete.module'
-
+import { ComponentSharedModule } from '../component-shared.module'
 @NgModule({
-  declarations: [ActivityLabelsComponent],
+  declarations: [
+    ActivityLabelsComponent,
+  ],
   imports: [
     CommonModule,
     AutocompleteModule,
@@ -29,6 +31,7 @@ import { AutocompleteModule } from '../autocomplete/autocomplete.module'
     MatFormFieldModule,
     MatSnackBarModule,
     ReactiveFormsModule,
+    ComponentSharedModule,
   ],
   entryComponents: [ActivityLabelsComponent],
   exports: [ActivityLabelsComponent],
