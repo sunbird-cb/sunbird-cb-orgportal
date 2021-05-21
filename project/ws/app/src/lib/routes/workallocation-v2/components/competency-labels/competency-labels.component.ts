@@ -1,6 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
 import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop'
-import { NSWatActivity } from './activity-wot.model'
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 // import { debounceTime } from 'rxjs/operators'
 import { inspect } from 'util'
@@ -9,16 +8,17 @@ import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
 import { MatSnackBar } from '@angular/material'
+import { NSWatCompetency } from './competency-wat.model'
 
 @Component({
-  selector: 'ws-app-activity-labels',
-  templateUrl: './activity-labels.component.html',
-  styleUrls: ['./activity-labels.component.scss'],
+  selector: 'ws-app-competency-labels',
+  templateUrl: './competency-labels.component.html',
+  styleUrls: ['./competency-labels.component.scss'],
 })
-export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewInit {
   private unsubscribe = new Subject<void>()
-  labels: NSWatActivity.IActivity[] = []
-  groups: NSWatActivity.IActivityGroup[] = []
+  labels: NSWatCompetency.ICompActivity[] = []
+  groups: NSWatCompetency.ICompActivityGroup[] = []
   activeGroupIdx = 0
   untitedRole = 'Untited role'
   activityForm!: FormGroup
@@ -72,7 +72,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   ngOnDestroy() {
     this.unsubscribe.next()
   }
-  drop(event: CdkDragDrop<NSWatActivity.IActivity[]>) {
+  drop(event: CdkDragDrop<NSWatCompetency.ICompActivity[]>) {
     if (event.previousContainer === event.container) {
       // tslint:disable
       moveItemInArray((this.activityForm.get('labelsArray') as FormArray)!.controls, event.previousIndex, event.currentIndex)
@@ -89,7 +89,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  dropgroup(event: CdkDragDrop<NSWatActivity.IActivity[]>, actualIdx: number) {
+  dropgroup(event: CdkDragDrop<NSWatCompetency.ICompActivity[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(this.groupActivityList.controls, event.previousIndex, event.currentIndex)
       moveItemInArray(this.groupActivityList.value, event.previousIndex, event.currentIndex)
@@ -98,8 +98,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         this.snackBar.open('Activity is required to drag', undefined, { duration: 2000 })
         return
       }
-      const previousContainerIndex = parseInt(event.previousContainer.id.replace('groups_', ''), 10)
-      const targetContainerIndex = parseInt(event.container.id.replace('groups_', ''), 10)
+      const previousContainerIndex = parseInt(event.previousContainer.id.replace('compe_', ''), 10)
+      const targetContainerIndex = parseInt(event.container.id.replace('compe_', ''), 10)
       // tslint:disable
       // console.log(actualIdx)
       const oldArray = (this.activityForm.get('groupsArray') as any)!.at(previousContainerIndex).get('activities')
@@ -111,7 +111,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       // this.addNewGroupActivityCustom(previousContainerIndex, oldArray.value)
       // this.activityForm.reset()
       this.changeDetector.detectChanges()
-      // console.log(this.watStore.getactivitiesGroup)
+      // console.log(this.watStore.activitiesGroup)
 
       // console.log(oldArray, newArray)
     }
@@ -119,11 +119,11 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
 
     this.watStore.setgetactivitiesGroup(this.groupList.value)
   }
-  // sortPredicate(index: number, item: CdkDrag<NSWatActivity.IActivity>) {
+  // sortPredicate(index: number, item: CdkDrag<NSWatCompetency.ICompActivity>) {
   //   return (index + 1) % 2 === item.data % 2
   // }
   /** Predicate function that only allows non empty to be dropped into a list. */
-  evenPredicate(item: CdkDrag<NSWatActivity.IActivity>) {
+  evenPredicate(item: CdkDrag<NSWatCompetency.ICompActivity>) {
     // return item.data % 2 === 0
     if (item.data) {
       return true
@@ -184,11 +184,11 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     // to show hide Role name
     this.canshowName = this.groupList.length - 1
   }
-  addNewGroupActivityCustom(idx: number, activities: NSWatActivity.IActivity[]) {
+  addNewGroupActivityCustom(idx: number, activities: NSWatCompetency.ICompActivity[]) {
     if (idx >= 0) {
       // const oldValue = this.groupActivityList as FormArray
       const newForlAryList = this.formBuilder.array([])
-      activities.forEach((ac: NSWatActivity.IActivity) => {
+      activities.forEach((ac: NSWatCompetency.ICompActivity) => {
         const fga = this.formBuilder.group({
           activityName: ac.activityName,
           activityDescription: ac.activityDescription,
@@ -220,7 +220,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       groupsArray: this.formBuilder.array([]),
     })
     // if (this.labels && this.labels.length) {
-    //   this.labels.forEach((v: NSWatActivity.IActivity) => {
+    //   this.labels.forEach((v: NSWatCompetency.ICompActivity) => {
     //     if (v) {
     // this.createActivityControl({
     //   activityName: '',
@@ -245,7 +245,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     //   // this.value.emit(JSON.parse(JSON.stringify(this.qualityForm.value)))
     // })
   }
-  createActivityControl(activityObj: NSWatActivity.IActivity) {
+  createActivityControl(activityObj: NSWatCompetency.ICompActivity) {
     const newControl = this.formBuilder.group({
       activityName: new FormControl(activityObj.activityName),
       activityDescription: new FormControl(activityObj.activityDescription),
@@ -254,7 +254,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     const optionsArr = this.activityForm.controls['labelsArray'] as FormArray
     optionsArr.push(newControl)
   }
-  createGroupControl(activityObj: NSWatActivity.IActivityGroup) {
+  createGroupControl(activityObj: NSWatCompetency.ICompActivityGroup) {
     const newControl = this.formBuilder.group({
       groupName: new FormControl(activityObj.groupName),
       groupDescription: new FormControl(activityObj.groupDescription),
@@ -263,8 +263,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     const optionsArr = this.activityForm.controls['groupsArray'] as FormArray
     optionsArr.push(newControl)
   }
-  createActivtyControl(activityObj: NSWatActivity.IActivity[]) {
-    return activityObj.map((v: NSWatActivity.IActivity) => {
+  createActivtyControl(activityObj: NSWatCompetency.ICompActivity[]) {
+    return activityObj.map((v: NSWatCompetency.ICompActivity) => {
       return this.formBuilder.array([{
         activityName: new FormControl(v.activityName),
         activityDescription: new FormControl(v.activityDescription),

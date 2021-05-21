@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core"
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from "@angular/core"
+import { WatStoreService } from "../../services/wat.store.service"
 
 
 @Component({
@@ -6,7 +7,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild }
   templateUrl: './create-workallocation.component.html',
   styleUrls: ['./create-workallocation.component.scss'],
 })
-export class CreateWorkallocationComponent implements OnInit, AfterViewInit {
+export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnDestroy {
   canPublish = false
   /**
    * this is for selecting tabs dynamically
@@ -27,10 +28,14 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit {
   /**
    * this is for selecting tabs dynamically
    */
+  private activitySubscription: any
+  private groupSubscription: any
+  dataStructure: any = {}
   // tslinr=t
-  constructor() {
+  constructor(private watStore: WatStoreService) {
   }
   ngOnInit(): void {
+    this.canculateWrrorAndWarning()
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -83,5 +88,20 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit {
   get getsubPath(): string {
     return `./#${this.selectedTab}`
   }
-
+  canculateWrrorAndWarning() {
+    this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(activities => {
+      if (activities.length > 0) {
+        this.dataStructure.activityGroups = activities
+      }
+    })
+    this.groupSubscription = this.watStore.getactivitiesGroup.subscribe(comp => {
+      if (comp.length > 0) {
+        this.dataStructure.compGroups = comp
+      }
+    })
+  }
+  ngOnDestroy() {
+    this.activitySubscription.unsubscribe()
+    this.groupSubscription.unsubscribe()
+  }
 }
