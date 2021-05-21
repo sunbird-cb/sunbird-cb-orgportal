@@ -116,6 +116,7 @@
                                 klsdj fkljs kfjksd jfkljs dl fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
                                 sdklfjlksdj fklsjd fkljsdkljf
                                 klsdj fkljs kfjksd jfkljs dl
+                                {{allWarning | json}}
                             </div>
                         </div>
                     </div>
@@ -202,13 +203,18 @@
                     <div class="flex flex-1 flex-column margin-top-l">
                         <p class="mat-body-2 font-bold-i">
                             Warnings
-                            <span class="margin-left-xxs ws-mat-red-dark-text"> 2 </span>
+                            <span class="margin-left-xxs ws-mat-red-dark-text"> {{allWarning?.length}} </span>
                         </p>
-                        <ws-app-assistant-message-card [type]="'role'" [message]="'Role description missing'">
-                        </ws-app-assistant-message-card>
-                        <ws-app-assistant-message-card [type]="'role'" [count]="2"
+                        <ng-container *ngFor="let warn of allWarning">
+                            <ws-app-assistant-message-card [type]="warn.type" [count]="warn.counts"
+                                [message]="warn.label">
+                            </ws-app-assistant-message-card>
+                        </ng-container>
+                        <!-- <ws-app-assistant-message-card [type]="'role'" [message]="'Role description missing'">
+                        </ws-app-assistant-message-card> -->
+                        <!-- <ws-app-assistant-message-card [type]="'role'" [count]="2"
                             [message]="'Role has no competencies'">
-                        </ws-app-assistant-message-card>
+                        </ws-app-assistant-message-card> -->
                     </div>
                     <div class="flex flex-1 flex-column margin-top-l">
                         <p class=" mat-body-1 font-bold-i">Help</p>

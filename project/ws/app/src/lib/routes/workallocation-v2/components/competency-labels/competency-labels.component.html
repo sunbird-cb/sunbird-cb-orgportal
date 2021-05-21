@@ -71,44 +71,39 @@
             {{'Role and description'}}
           </span>
           <span class="flex margin-left-m mat-subheading-2 ws-mat-black60-text">
-            {{'Unmapped activities'}}
+            {{'Unmapped competencies'}}
           </span>
         </div>
         <div *ngIf="i !==0 " class="flex flex-1 flex-column margin-r-2px">
-          <div class="flex flex-1 group-background margin-b-2px" (focusout)="hideName()">
-            <span
-              *ngIf="(canshowName === -1 && !grp.get('groupName').value) || !(canshowName === i && activeGroupIdx === i) "
-              (click)="showName(i)" class="flex margin-left-m  margin-top-m mat-subheading-2 break-a">
+          <div class="flex flex-1 group-background margin-b-2px">
+            <span class="flex margin-left-m  margin-top-m mat-subheading-2 break-a">
               {{grp.get('groupName').value || 'Untited role'}}
             </span>
-            <mat-form-field *ngIf="canshowName === i && activeGroupIdx === i" appearance="outline"
+            <!-- <mat-form-field *ngIf="canshowName === i" appearance="outline"
               class="full-width no-pb square outline-color">
               <input [attr.id]="'roleName_' + i" formControlName="groupName" matInput #roleName i18n-placeholder
                 placeholder="Type here" onfocus="this.select()" i18n-aria-label aria-label="Activity name input"
                 class="form-input flex-1" autocomplete="off" />
-            </mat-form-field>
+            </mat-form-field> -->
           </div>
           <!-- {{grp.get('groupName').value}} -->
-          <div class="flex flex-1 group-background " (focusout)="hide()">
-            <span
-              *ngIf="(canshow === -1 && !grp.get('groupDescription').value) || !(canshow === i && activeGroupIdx === i)"
-              (click)="show(i)" class="flex margin-left-m  margin-top-m mat-body-2 ws-mat-black40-text break-a">
+          <div class="flex flex-1 group-background">
+            <span class="flex margin-left-m  margin-top-m mat-body-2 ws-mat-black40-text break-a">
               {{grp.get('groupDescription').value || 'Role description'}}
             </span>
-            <mat-form-field *ngIf="canshow === i && activeGroupIdx === i" appearance="outline"
-              class="full-width no-pb square outline-color ">
+            <!-- <mat-form-field *ngIf="canshow === i" appearance="outline" class="full-width no-pb square outline-color ">
               <textarea [attr.id]="'roleDesc_' + i" matInput #roleDesc name="questionText" cols="35" rows="8"
                 placeholder="Type here" formControlName="groupDescription" i18n-aria-label
                 aria-label="role description input" onfocus="this.select()"></textarea>
-            </mat-form-field>
+            </mat-form-field> -->
           </div>
         </div>
         <div class="flex-4" [ngClass]="{ 'group-background' : i !== 0, 'example-list': i === 0}">
           <div *ngIf="i === 0" class="flex flex-1">
             <div class="flex flex-2 min-w-200">
               <span class="flex mat-subheading-2 margin-top-xs margin-left-s">
-                <mat-icon class="ws-mat-black40-text margin-right-s">directions_walk</mat-icon>
-                Activities
+                <mat-icon class="ws-mat-black40-text margin-right-s">extension</mat-icon>
+                Competencies
               </span>
             </div>
             <div class="custom-w">&nbsp;</div>
@@ -156,7 +151,7 @@
             <div class="custom-w1">&nbsp;</div>
             <a href="javascript:void(0)" class="flex padding-s padding-left-0" (click)="addNewGroupActivity(i)">
               <mat-icon class="ws-mat-black60-text">add</mat-icon>
-              <span class="mat-subheading-2 ws-mat-black60-text margin-0">Activity</span>
+              <span class="mat-subheading-2 ws-mat-black60-text margin-0">Competency</span>
             </a>
           </div>
         </div>
@@ -164,10 +159,9 @@
     </ng-container>
     <!-- </div> -->
     <div class="flex flex-1">
-      <!-- <div class="custom-w">&nbsp;</div> -->
       <a href="javascript:void(0)" class="flex padding-s" (click)="addNewGroup()">
         <mat-icon class="ws-mat-black60-text">add</mat-icon>
-        <span class="mat-subheading-2 ws-mat-black60-text">Role</span>
+        <span class="mat-subheading-2 ws-mat-black60-text">Competency</span>
       </a>
     </div>
 

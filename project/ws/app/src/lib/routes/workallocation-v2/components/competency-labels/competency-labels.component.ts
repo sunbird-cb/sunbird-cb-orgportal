@@ -8,7 +8,7 @@ import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
 import { MatSnackBar } from '@angular/material'
-import { NSWatCompetency } from './competency-wat.model'
+import { NSWatCompetency } from '../../models/competency-wat.model'
 
 @Component({
   selector: 'ws-app-competency-labels',
@@ -16,6 +16,7 @@ import { NSWatCompetency } from './competency-wat.model'
   styleUrls: ['./competency-labels.component.scss'],
 })
 export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewInit {
+  private activitySubscription: any
   private unsubscribe = new Subject<void>()
   labels: NSWatCompetency.ICompActivity[] = []
   groups: NSWatCompetency.ICompActivityGroup[] = []
@@ -32,7 +33,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     private watStore: WatStoreService,
     private snackBar: MatSnackBar,
   ) {
-    this.evenPredicate = this.evenPredicate.bind(this)
+
   }
 
   get labelsList(): FormArray {
@@ -56,13 +57,19 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     this.activityForm = new FormGroup({})
     this.createForm()
     this.initListen()
+    this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(groups => {
+      if (groups) {
+        this.groups = groups
+        console.log(groups)
+      }
+    })
   }
   initListen() {
     this.activityForm.controls['groupsArray'].valueChanges
       .pipe(
         debounceTime(500),
         switchMap(async (formValue) => {
-          this.watStore.setgetactivitiesGroup(formValue)
+          this.watStore.setgetcompetencyGroup(formValue)
         }),
         takeUntil(this.unsubscribe)
       ).subscribe()
@@ -71,6 +78,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   }
   ngOnDestroy() {
     this.unsubscribe.next()
+    this.activitySubscription.unsubscribe()
   }
   drop(event: CdkDragDrop<NSWatCompetency.ICompActivity[]>) {
     if (event.previousContainer === event.container) {
@@ -117,7 +125,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     }
     console.log(this.groupList.value)
 
-    this.watStore.setgetactivitiesGroup(this.groupList.value)
+    this.watStore.setgetcompetencyGroup(this.groupList.value)
   }
   // sortPredicate(index: number, item: CdkDrag<NSWatCompetency.ICompActivity>) {
   //   return (index + 1) % 2 === item.data % 2
@@ -227,6 +235,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     //   activityDescription: '',
     //   assignedTo: '',
     // })
+
     this.addNewGroup()
     // this.addNewGroupActivity(0)
     // this.createGroupControl({
@@ -287,14 +296,14 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     // }
   }
   show(idx: number) {
-    this.canshow = idx
+    this.canshow = -1
   }
 
   hide() {
     this.canshow = -1
   }
   showName(idx: number) {
-    this.canshowName = idx
+    this.canshowName = -1
   }
 
   hideName() {
