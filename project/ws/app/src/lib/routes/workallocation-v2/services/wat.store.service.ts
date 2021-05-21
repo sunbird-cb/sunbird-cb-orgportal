@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core"
 import { BehaviorSubject, Observable } from "rxjs"
-import { NSWatActivity } from "../components/activity-labels/activity-wot.model"
-import { NSWatCompetency } from "../components/competency-labels/competency-wat.model"
+import { NSWatActivity } from "../models/activity-wot.model"
+import { NSWatCompetency } from "../models/competency-wat.model"
 
 @Injectable()
 export class WatStoreService {

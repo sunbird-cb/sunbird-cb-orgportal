@@ -1,4 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from "@angular/core"
+import _ from "lodash"
+import { NSWatActivity } from "../../models/activity-wot.model"
+import { IWarnError } from "../../models/warn-error.model"
 import { WatStoreService } from "../../services/wat.store.service"
 
 
@@ -35,7 +38,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   constructor(private watStore: WatStoreService) {
   }
   ngOnInit(): void {
-    this.canculateWrrorAndWarning()
+    this.fetchData()
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -88,7 +91,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   get getsubPath(): string {
     return `./#${this.selectedTab}`
   }
-  canculateWrrorAndWarning() {
+  fetchData() {
     this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(activities => {
       if (activities.length > 0) {
         this.dataStructure.activityGroups = activities
@@ -99,6 +102,36 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
         this.dataStructure.compGroups = comp
       }
     })
+  }
+  get allWarning() {
+    let warnings: IWarnError[] = []
+    // let warnings: IWarnError | [] = []
+    // _.each(this.dataStructure, (ds: any) => {
+
+    // })
+    // return warnings
+    if (this.dataStructure.activityGroups) {
+      warnings = this.calculateWarn(this.dataStructure.activityGroups)
+    }
+    return warnings
+  }
+  calculateWarn(data: any[]): IWarnError[] {
+    let result: IWarnError[] = []
+    let grpDescEmpty = Math.max(_.filter(data, () => ['groupDescription', 'Untited role']).length - 1, 0)
+    if (grpDescEmpty) {
+      result.push({ type: 'role', counts: grpDescEmpty, label: 'Role description missing' })
+    }
+    let unmapedActivities = _.size(_.get(_.first(data), 'activities'))
+    if (unmapedActivities) {
+      result.push({ type: 'activity', counts: unmapedActivities, label: 'Unmapped activities' })
+    }
+
+    return result
+  }
+  get allErrors() {
+    let warnings: IWarnError | [] = []
+
+    return warnings
   }
   ngOnDestroy() {
     this.activitySubscription.unsubscribe()
