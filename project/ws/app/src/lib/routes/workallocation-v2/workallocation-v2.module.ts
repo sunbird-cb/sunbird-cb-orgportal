@@ -22,7 +22,8 @@ import { AutocompleteModule } from './components/autocomplete/autocomplete.modul
 import { ActivityLabelsModule } from './components/activity-labels/activity-labels.module'
 import { WINDOW_PROVIDERS } from './services/window.service'
 import { AssistantMessageCardComponent } from './components/assistant-message-card/assistant-message-card.component'
-import { AssistantContentCardComponent } from './components/assistant-content-card/assistant-content-card.component'
+import { AssistantContentCardComponent } from './components/assistant-content-card/assistant-content-card.component';
+import { UserAutocompleteCardComponent } from './components/user-autocomplete-card/user-autocomplete-card.component'
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { AssistantContentCardComponent } from './components/assistant-content-ca
     OfficerComponent,
     AssistantMessageCardComponent,
     AssistantContentCardComponent,
+    UserAutocompleteCardComponent,
   ],
   imports: [
     CommonModule, ReactiveFormsModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,
