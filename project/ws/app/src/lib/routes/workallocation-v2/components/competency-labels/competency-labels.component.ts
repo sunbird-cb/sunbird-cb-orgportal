@@ -49,7 +49,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     return this.activityForm.get('groupsArray') as FormArray
   }
   groupListByIndex(index: number): FormArray {
-    return ((this.activityForm.get('groupsArray') as FormArray).at(index) as any).get("compDescription")
+    return ((this.activityForm.get('groupsArray') as FormArray).at(index) as any).get('compDescription')
   }
 
   get groupActivityList(): FormArray {
@@ -230,7 +230,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   updateForm() {
     if (this.groups.length > this.groupList.length) {
       if (this.groups.length >= 2) {
-        let lastGroup = _.last(this.groups)
+        const lastGroup = _.last(this.groups)
         this.addNewGroup(lastGroup!.groupName, lastGroup!.groupDescription)
       }
     } else {
@@ -241,7 +241,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
           const oldRDescValue = this.groupList.at(index).get('roleDescription') as FormControl
           oldRNameValue.patchValue(this.groups[index].groupName)
           oldRDescValue.patchValue(this.groups[index].groupDescription)
-          //this.setGroupValues([...oldValue.value])
+          // this.setGroupValues([...oldValue.value])
         }
       }
     }
@@ -305,6 +305,23 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       )
     }
   }
+
+  public competencySelected(event: any) {
+    const lst = this.groupList.at(this.activeGroupIdx) as any
+    // tslint:disable-next-line: no-non-null-assertion
+    // const lstComp = lst.get('competincies')!.at(cindex) as FormArray
+    // const frmctrl = lstComp.get('compDescription') as FormControl
+    // frmctrl.patchValue(event.option.value.description)
+
+    const frmctrl = lst.get('compDescription') as FormControl
+    frmctrl.patchValue(event.option.value.description)
+    this.watStore.setgetcompetencyGroup(this.groupList.value)
+
+    const frmctrl1 = lst.get('compName') as FormControl
+    frmctrl1.patchValue(event.option.value.name)
+    this.watStore.setgetcompetencyGroup(this.groupList.value)
+  }
+
   show(idx: number) {
     this.canshow = -1
   }
