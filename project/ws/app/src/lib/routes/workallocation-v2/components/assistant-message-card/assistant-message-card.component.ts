@@ -11,7 +11,8 @@ export class AssistantMessageCardComponent implements OnInit {
   @Input() count = 0
   @Input() message = ''
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

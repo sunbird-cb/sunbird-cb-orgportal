@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
-import lodash from 'lodash'
-import { NSWatActivity } from '../../models/activity-wot.model'
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
+// import { NSWatActivity } from '../../models/activity-wot.model'
 import { IWarnError } from '../../models/warn-error.model'
 import { WatStoreService } from '../../services/wat.store.service'
 
@@ -111,28 +113,26 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   }
   get allWarning() {
     let warnings: IWarnError[] = []
-    // let warnings: IWarnError | [] = []
-    // _.each(this.dataStructure, (ds: any) => {
-
-    // })
-    // return warnings
+    let calculatedWarn: IWarnError[] = []
+    let calculatedWarn2: IWarnError[] = []
     if (this.dataStructure.activityGroups) {
-      warnings = (this.calculateWarn(this.dataStructure.activityGroups))
+      calculatedWarn = this.calculateWarn(this.dataStructure.activityGroups)
     }
     if (this.dataStructure.officerFormData) {
-      warnings = (this.calculateOfficerWarning(this.dataStructure.officerFormData))
+      calculatedWarn2 = this.calculateOfficerWarning(this.dataStructure.officerFormData)
     }
+    warnings = _.union(calculatedWarn, calculatedWarn2)
     return warnings
   }
   calculateWarn(data: any[]): IWarnError[] {
     const result: IWarnError[] = []
     const grpDescEmpty = Math.max(_.filter(data, () => ['groupDescription', 'Untited role']).length - 1, 0)
     if (grpDescEmpty) {
-      result.push({ type: 'role', counts: grpDescEmpty, label: 'Role description missing' })
+      result.push({ _type: 'warning', type: 'role', counts: grpDescEmpty, label: 'Role description missing' })
     }
     const unmapedActivities = _.size(_.get(_.first(data), 'activities'))
     if (unmapedActivities) {
-      result.push({ type: 'activity', counts: unmapedActivities, label: 'Unmapped activities' })
+      result.push({ _type: 'warning', type: 'activity', counts: unmapedActivities, label: 'Unmapped activities' })
     }
 
     return result
@@ -142,7 +142,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     const result: IWarnError[] = []
     console.log('data------', data)
     if (data && data.positionDescription === '') {
-      result.push({ type: 'officer', counts: 0, label: 'Position description missing' })
+      result.push({ _type: "warning", type: 'officer', counts: 0, label: 'Position description missing' })
     }
     return result
   }
@@ -159,10 +159,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     const result: IWarnError[] = []
     console.log('data------', data)
     if (data && data.officerName === '' && (data.position !== '' || data.positionDescription !== '')) {
-      result.push({ type: 'officer', counts: 0, label: 'Officer name is empty' })
+      result.push({ _type: 'error', type: 'officer', counts: 0, label: 'Officer name is empty' })
     }
     if (data && data.position === '' && (data.officerName !== '' || data.positionDescription !== '')) {
-      result.push({ type: 'officer', counts: 0, label: 'Postion missing' })
+      result.push({ _type: 'error', type: 'officer', counts: 0, label: 'Postion missing' })
     }
     return result
   }
