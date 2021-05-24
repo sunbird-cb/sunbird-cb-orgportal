@@ -140,7 +140,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
 
   calculateOfficerWarning(data: any): IWarnError[] {
     const result: IWarnError[] = []
-    console.log('data------', data)
+    // console.log('data------', data)
     if (data && data.positionDescription === '') {
       result.push({ _type: "warning", type: 'officer', counts: 0, label: 'Position description missing' })
     }
@@ -157,7 +157,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
 
   calculateOfficerErrors(data: any): IWarnError[] {
     const result: IWarnError[] = []
-    console.log('data------', data)
+    // console.log('data------', data)
     if (data && data.officerName === '' && (data.position !== '' || data.positionDescription !== '')) {
       result.push({ _type: 'error', type: 'officer', counts: 0, label: 'Officer name is empty' })
     }

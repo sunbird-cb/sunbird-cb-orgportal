@@ -9,6 +9,10 @@ import { Observable, Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
 import { MatSnackBar } from '@angular/material'
 import { NSWatCompetency } from '../../models/competency-wat.model'
+import { NSWatActivity } from '../../models/activity-wot.model'
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
 
 @Component({
   selector: 'ws-app-competency-labels',
@@ -19,7 +23,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   private activitySubscription: any
   private unsubscribe = new Subject<void>()
   labels: NSWatCompetency.ICompActivity[] = []
-  groups: NSWatCompetency.ICompActivityGroup[] = []
+  groups: NSWatActivity.IActivityGroup[] = []
   activeGroupIdx = 0
   untitedRole = 'Untited role'
   activityForm!: FormGroup
@@ -44,10 +48,13 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   get groupList(): FormArray {
     return this.activityForm.get('groupsArray') as FormArray
   }
+  groupListByIndex(index: number): FormArray {
+    return ((this.activityForm.get('groupsArray') as FormArray).at(index) as any).get("compDescription")
+  }
 
   get groupActivityList(): FormArray {
     const lst = this.groupList.at(this.activeGroupIdx) as FormGroup
-    const frmctrl = lst.get('activities') as FormArray
+    const frmctrl = lst.get('competincies') as FormArray
     return frmctrl
   }
   get getActivityForm() {
@@ -62,6 +69,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       if (groups) {
         this.groups = groups
         console.log(groups)
+        this.updateForm()
       }
     })
   }
@@ -103,16 +111,16 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       moveItemInArray(this.groupActivityList.controls, event.previousIndex, event.currentIndex)
       moveItemInArray(this.groupActivityList.value, event.previousIndex, event.currentIndex)
     } else {
-      if (!event.item.data.activityDescription) {
-        this.snackBar.open('Activity is required to drag', undefined, { duration: 2000 })
+      if (!event.item.data.compName) {
+        this.snackBar.open('Competency Name is required to drag', undefined, { duration: 2000 })
         return
       }
       const previousContainerIndex = parseInt(event.previousContainer.id.replace('compe_', ''), 10)
       const targetContainerIndex = parseInt(event.container.id.replace('compe_', ''), 10)
       // tslint:disable
       // console.log(actualIdx)
-      const oldArray = (this.activityForm.get('groupsArray') as any)!.at(previousContainerIndex).get('activities')
-      const newArray = (this.activityForm.get('groupsArray') as any)!.at(targetContainerIndex).get('activities')
+      const oldArray = (this.activityForm.get('groupsArray') as any)!.at(previousContainerIndex).get('competincies')
+      const newArray = (this.activityForm.get('groupsArray') as any)!.at(targetContainerIndex).get('competincies')
       // tslint:enable
       transferArrayItem(oldArray.controls, newArray.controls, event.previousIndex, event.currentIndex)
       /**Please do not delete these methods : for testing Purpose */
@@ -121,7 +129,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       // this.activityForm.reset()
       this.changeDetector.detectChanges()
     }
-    console.log(this.groupList.value)
+    // console.log(this.groupList.value)
 
     this.watStore.setgetcompetencyGroup(this.groupList.value)
   }
@@ -160,7 +168,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     const oldValue = this.labelsList
     const fg = this.formBuilder.group({
       activityName: '',
-      activityDescription: '',
+      compDescription: '',
       assignedTo: '',
     })
 
@@ -169,35 +177,35 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     // this.changeDetector.detectChanges()
 
   }
-  addNewGroup() {
+  addNewGroup(name?: string, desc?: string) {
     const oldValue = this.groupList
     const fg = this.formBuilder.group({
-      activities: this.formBuilder.array([]),
-      groupName: this.untitedRole,
-      groupDescription: 'Role description',
+      competincies: this.formBuilder.array([]),
+      roleName: name || this.untitedRole,
+      roleDescription: desc || 'Role description',
     })
-    const activits = fg.get('activities') as FormArray
+    const activits = fg.get('competincies') as FormArray
     const fga = this.formBuilder.group({
-      activityName: '',
-      activityDescription: '',
-      assignedTo: '',
+      compName: '',
+      compDescription: '',
+      // assignedTo: '',
     })
     activits.push(fga)
-    fg.controls.activities.patchValue([...activits.value])
+    fg.controls.competincies.patchValue([...activits.value])
     oldValue.push(fg)
     this.setGroupValues([...oldValue.value])
     // to show hide Role name
     this.canshowName = this.groupList.length - 1
   }
-  addNewGroupActivityCustom(idx: number, activities: NSWatCompetency.ICompActivity[]) {
+  addNewGroupActivityCustom(idx: number, competincies: NSWatCompetency.ICompActivity[]) {
     if (idx >= 0) {
       // const oldValue = this.groupActivityList as FormArray
       const newForlAryList = this.formBuilder.array([])
-      activities.forEach((ac: NSWatCompetency.ICompActivity) => {
+      competincies.forEach((ac: NSWatCompetency.ICompActivity) => {
         const fga = this.formBuilder.group({
-          activityName: ac.activityName,
-          activityDescription: ac.activityDescription,
-          assignedTo: ac.assignedTo,
+          compName: ac.compName,
+          compDescription: ac.compDescription,
+          // assignedTo: ac.assignedTo,
         })
         newForlAryList.push(fga)
       })
@@ -208,9 +216,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     if (idx >= 0) {
       const oldValue = this.groupActivityList as FormArray
       const fga = this.formBuilder.group({
-        activityName: '',
-        activityDescription: '',
-        assignedTo: '',
+        compName: '',
+        compDescription: '',
+        // assignedTo: '',
       })
       oldValue.push(fga)
       this.setGroupActivityValues([...oldValue.value])
@@ -219,52 +227,47 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   enter(i: number) {
     this.activeGroupIdx = i
   }
+  updateForm() {
+    if (this.groups.length > this.groupList.length) {
+      if (this.groups.length >= 2) {
+        let lastGroup = _.last(this.groups)
+        this.addNewGroup(lastGroup!.groupName, lastGroup!.groupDescription)
+      }
+    } else {
+      for (let index = 0; index < this.groups.length; index += 1) {
+        // this.groupListByIndex(index).
+        if (index > 0) {
+          const oldRNameValue = this.groupList.at(index).get('roleName') as FormControl
+          const oldRDescValue = this.groupList.at(index).get('roleDescription') as FormControl
+          oldRNameValue.patchValue(this.groups[index].groupName)
+          oldRDescValue.patchValue(this.groups[index].groupDescription)
+          //this.setGroupValues([...oldValue.value])
+        }
+      }
+    }
+    this.watStore.setgetcompetencyGroup(this.groupList.value)
+  }
   createForm() {
     this.activityForm = this.formBuilder.group({
       labelsArray: this.formBuilder.array([]),
       groupsArray: this.formBuilder.array([]),
     })
-    // if (this.labels && this.labels.length) {
-    //   this.labels.forEach((v: NSWatCompetency.ICompActivity) => {
-    //     if (v) {
-    // this.createActivityControl({
-    //   activityName: '',
-    //   activityDescription: '',
-    //   assignedTo: '',
-    // })
-
     this.addNewGroup()
-    // this.addNewGroupActivity(0)
-    // this.createGroupControl({
-    //   groupName: 'Untited role',
-    //   groupDescription: 'Role description',
-    //   activities: [{
-    //     activityName: 'unmed',
-    //     activityDescription: 'desc',
-    //     assignedTo: ''
-    //   }]
-    // })
-    //     }
-    //   })
-    // }
-    // this.activityForm.valueChanges.pipe(debounceTime(100)).subscribe(() => {
-    //   // this.value.emit(JSON.parse(JSON.stringify(this.qualityForm.value)))
-    // })
   }
   createActivityControl(activityObj: NSWatCompetency.ICompActivity) {
     const newControl = this.formBuilder.group({
-      activityName: new FormControl(activityObj.activityName),
-      activityDescription: new FormControl(activityObj.activityDescription),
-      assignedTo: new FormControl(activityObj.assignedTo),
+      compName: new FormControl(activityObj.compName),
+      compDescription: new FormControl(activityObj.compDescription),
+      // assignedTo: new FormControl(activityObj.assignedTo),
     })
     const optionsArr = this.activityForm.controls['labelsArray'] as FormArray
     optionsArr.push(newControl)
   }
   createGroupControl(activityObj: NSWatCompetency.ICompActivityGroup) {
     const newControl = this.formBuilder.group({
-      groupName: new FormControl(activityObj.groupName),
-      groupDescription: new FormControl(activityObj.groupDescription),
-      activities: this.createActivtyControl(activityObj.activities),
+      roleName: new FormControl(activityObj.roleName),
+      roleDescription: new FormControl(activityObj.roleDescription),
+      competincies: this.createActivtyControl(activityObj.competincies),
     })
     const optionsArr = this.activityForm.controls['groupsArray'] as FormArray
     optionsArr.push(newControl)
@@ -272,9 +275,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   createActivtyControl(activityObj: NSWatCompetency.ICompActivity[]) {
     return activityObj.map((v: NSWatCompetency.ICompActivity) => {
       return this.formBuilder.array([{
-        activityName: new FormControl(v.activityName),
-        activityDescription: new FormControl(v.activityDescription),
-        assignedTo: new FormControl(v.assignedTo),
+        activityName: new FormControl(v.compName),
+        compDescription: new FormControl(v.compDescription),
+        // assignedTo: new FormControl(v.assignedTo),
       }])
     })
   }

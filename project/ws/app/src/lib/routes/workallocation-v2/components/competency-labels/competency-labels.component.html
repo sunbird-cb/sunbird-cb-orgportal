@@ -6,7 +6,7 @@
           {{'Role and description'}}
         </span>
         <span class="flex margin-left-m mat-subheading-2 ws-mat-black60-text">
-          {{'Unmapped activities'}}
+          {{'Unmapped competincies'}}
         </span>
       </div>
       <div class="flex flex-4 flex-column example-list">
@@ -14,7 +14,7 @@
           <div class="flex flex-2 min-w-200">
             <span class="flex mat-subheading-2 margin-top-xs margin-left-s">
               <mat-icon class="ws-mat-black40-text margin-right-s">directions_walk</mat-icon>
-              Activities
+              competincies
             </span>
           </div>
           <div class="custom-w">&nbsp;</div>
@@ -36,9 +36,9 @@
               <div class="flex flex-1" [formGroup]="_activity">
                 <div class="flex flex-2 margin-2px">
                   <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
-                    <input [attr.id]="'actDesc_' + i" matInput #actDesc formControlName="activityDescription"
+                    <input [attr.id]="'compName_' + i" matInput #compName formControlName="compDescription"
                       i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
-                      class="form-input flex-1" autocomplete="off" (input)="filterCompetencies(actDesc.value)"
+                      class="form-input flex-1" autocomplete="off" (input)="filterCompetencies(compName.value)"
                       [matAutocomplete]="competencyAuto" autocomplete="off" />
                     <mat-autocomplete #competencyAuto="matAutocomplete">
                       <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
@@ -53,8 +53,8 @@
                 </div>
                 <div class="flex flex-1 margin-2px">
                   <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
-                    <input [attr.id]="'assignto_' + i" matInput #assignto formControlName="assignedTo" i18n-placeholder
-                      placeholder="Type here" i18n-aria-label aria-label="Activity description input"
+                    <input [attr.id]="'compt_' + i" matInput #compt formControlName="compDescription" i18n-placeholder
+                      placeholder="Type here" i18n-aria-label aria-label="Competency description input"
                       class="form-input flex-1" autocomplete="off" />
                   </mat-form-field>
                 </div>
@@ -87,23 +87,23 @@
         <div *ngIf="i !==0 " class="flex flex-1 flex-column margin-r-2px">
           <div class="flex flex-1 group-background margin-b-2px">
             <span class="flex margin-left-m  margin-top-m mat-subheading-2 break-a">
-              {{grp.get('groupName').value || 'Untited role'}}
+              {{grp.get('roleName').value || 'Untited role'}}
             </span>
             <!-- <mat-form-field *ngIf="canshowName === i" appearance="outline"
               class="full-width no-pb square outline-color">
-              <input [attr.id]="'roleName_' + i" formControlName="groupName" matInput #roleName i18n-placeholder
+              <input [attr.id]="'roleName_' + i" formControlName="roleName" matInput #roleName i18n-placeholder
                 placeholder="Type here" onfocus="this.select()" i18n-aria-label aria-label="Activity name input"
                 class="form-input flex-1" autocomplete="off" />
             </mat-form-field> -->
           </div>
-          <!-- {{grp.get('groupName').value}} -->
+          <!-- {{grp.get('roleName').value}} -->
           <div class="flex flex-1 group-background">
-            <span class="flex margin-left-m  margin-top-m mat-body-2 ws-mat-black40-text break-a">
-              {{grp.get('groupDescription').value || 'Role description'}}
+            <span class="flex margin-left-m margin-bottom-xs  margin-top-m mat-body-2 ws-mat-black40-text break-a">
+              {{grp.get('roleDescription').value || 'Role description'}}
             </span>
             <!-- <mat-form-field *ngIf="canshow === i" appearance="outline" class="full-width no-pb square outline-color ">
               <textarea [attr.id]="'roleDesc_' + i" matInput #roleDesc name="questionText" cols="35" rows="8"
-                placeholder="Type here" formControlName="groupDescription" i18n-aria-label
+                placeholder="Type here" formControlName="roleDescription" i18n-aria-label
                 aria-label="role description input" onfocus="this.select()"></textarea>
             </mat-form-field> -->
           </div>
@@ -127,9 +127,9 @@
           <div [id]="'compe_' + i" cdkDropList [cdkDropListData]="groupActivityList"
             (cdkDropListDropped)="dropgroup($event)" [cdkDropListEnterPredicate]="evenPredicate"
             class="flex-1 margin-top-s min-w">
-            <ng-container *ngFor="let ga of grp.get('activities').controls; let gaIdx = index">
+            <ng-container *ngFor="let ga of grp.get('competincies').controls; let gaIdx = index">
               <!-- {{log(ga)}} -->
-              <!-- <span class="mat-subheading-2">{{'Unmapped activities'}}</span> -->
+              <!-- <span class="mat-subheading-2">{{'Unmapped competincies'}}</span> -->
               <div [attr.id]="'cdkDragData_' + gaIdx" class="example-box" [cdkDragData]="ga.value" cdkDrag>
                 <div class="margin-right-xs">
                   <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
@@ -137,9 +137,9 @@
                 <div class="flex flex-1" [formGroup]="ga">
                   <div class="flex flex-1 margin-2px">
                     <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
-                      <input [attr.id]="'actDesc_' + gaIdx" formControlName="activityDescription" matInput #actDesc
+                      <input [attr.id]="'compName_' + gaIdx" formControlName="compName" matInput #compName
                         i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
-                        class="form-input flex-1" autocomplete="off" (input)="filterCompetencies(actDesc.value)"
+                        class="form-input flex-1" autocomplete="off" (input)="filterCompetencies(compName.value)"
                         [matAutocomplete]="competencyAuto1" />
                       <mat-autocomplete #competencyAuto1="matAutocomplete">
                         <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
@@ -154,13 +154,13 @@
                   </div>
                   <div class="flex flex-2 margin-2px">
                     <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
-                      <!-- <input [attr.id]="'assignto_' + gaIdx" matInput #assignto i18n-placeholder placeholder="Type here"
+                      <!-- <input [attr.id]="'compt_' + gaIdx" matInput #compt i18n-placeholder placeholder="Type here"
                         i18n-aria-label aria-label="Activity description input" class="form-input flex-1"
                         autocomplete="off" /> -->
-                      <input [attr.id]="'assignto_' + gaIdx" class="form-input flex-1" matInput #OfficerName
-                        formControlName="assignedTo" i18n-placeholder placeholder="Type here" i18n-aria-label
+                      <input [attr.id]="'compt_' + gaIdx" class="form-input flex-1" matInput #OfficerName
+                        formControlName="compDescription" i18n-placeholder placeholder="Type here" i18n-aria-label
                         aria-label="Type here" [wsAppAutocomplete]="autocomplete"
-                        (input)="filterUsers(assignedTo.value)" autocomplete="off">
+                        (input)="filterUsers(compDescription.value)" autocomplete="off">
                     </mat-form-field>
                   </div>
                 </div>
@@ -193,7 +193,7 @@
 
 <ws-app-autocomplete #autocomplete="wsAppAutocomplete">
   <ng-template wsAppAutocompleteContent>
-    <ng-container *ngIf="(userslist | filter: groupDescription.value) as result">
+    <ng-container *ngIf="(userslist | filter: roleDescription.value) as result">
       <div class="mat-body-4 ws-mat-accent-text margin-bottom-xs">From Karmayogi officer portal</div>
       <ws-app-option *ngFor="let user of userslist"
         [value]="user.userDetails.first_name +' '+ user.userDetails.last_name">

@@ -20,7 +20,7 @@ export class WatStoreService {
   setgetactivitiesGroup(data: NSWatActivity.IActivityGroup[]) {
     this.activitiesGroup.next(data)
   }
-  public get getcompetencyGroup(): Observable<NSWatActivity.IActivityGroup[]> {
+  public get getcompetencyGroup(): Observable<NSWatCompetency.ICompActivityGroup[]> {
     return this.competencyGroup.asObservable()
   }
   setgetcompetencyGroup(data: NSWatCompetency.ICompActivityGroup[]) {

@@ -118,7 +118,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
 
       // console.log(oldArray, newArray)
     }
-    console.log(this.groupList.value)
+    // console.log(this.groupList.value)
 
     this.watStore.setgetactivitiesGroup(this.groupList.value)
   }
@@ -339,6 +339,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
 
     const frmctrl1 = lst.get('groupName') as FormControl
     frmctrl1.patchValue(event.option.value.name)
+    this.watStore.setgetactivitiesGroup(this.groupList.value)
   }
 
   displayFn(data: any): string {
