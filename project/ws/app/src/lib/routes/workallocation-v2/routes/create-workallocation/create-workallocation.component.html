@@ -28,13 +28,6 @@
                                     [ngClass]="{'font-bold-i' : selectedTab === 'activities'}">Activities</span>
                             </a>
                             <a href="javascript:void(0)" class="filter-option"
-                                [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'roles',
-                                                                    'ws-mat-accent-border font-medium':selectedTab !== 'roles'}" (click)="filterComp(roles,'roles')"
-                                role="button">
-                                <span class="mat-body-2 in-margin"
-                                    [ngClass]="{'font-bold-i' : selectedTab === 'roles'}">Roles</span>
-                            </a>
-                            <a href="javascript:void(0)" class="filter-option"
                                 [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'competencies',
                                                                         'ws-mat-accent-border font-medium':selectedTab !== 'competencies'}"
                                 (click)="filterComp(competencies,'competencies')" role="button">
@@ -42,10 +35,11 @@
                                     [ngClass]="{'font-bold-i' : selectedTab === 'competencies'}">Competencies</span>
                             </a>
                             <a href="javascript:void(0)" class="filter-option"
-                                [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'levels','ws-mat-accent-border font-medium':selectedTab !== 'levels'}"
-                                (click)="filterComp(levels,'levels')" role="button">
+                                [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'competencyDetails','ws-mat-accent-border font-medium':selectedTab !== 'competencyDetails'}"
+                                (click)="filterComp(competencyDetails,'competencyDetails')" role="button">
                                 <span class="mat-body-2 in-margin"
-                                    [ngClass]="{'font-bold-i' : selectedTab === 'levels'}">Levels</span>
+                                    [ngClass]="{'font-bold-i' : selectedTab === 'competencyDetails'}">Competency
+                                    details</span>
                             </a>
 
                         </div>
@@ -94,32 +88,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="box-1" #roles>
-                        <div class="flex left-indicator" [ngClass]="{'not-selected': selectedTab !== 'roles',
-                        'ws-mat-accent-background': selectedTab === 'roles'  }"></div>
-                        <div class="flex flex-1 flex-column margin-left-xl custom-pad">
-                            <div class="flex">
-                                <mat-icon [ngClass]="{'ws-mat-black60-text': selectedTab !== 'roles',
-                        'ws-mat-default-text': selectedTab === 'roles'  }">settings</mat-icon>
-                                <span class="mat-subheading-1 margin-left-xs">{{'Roles'}}</span>
-                            </div>
-                            <div class="flex flex-1">
-                                fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dlfkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dlfkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl
-                                {{allWarning | json}}
-                            </div>
-                        </div>
-                    </div>
                     <div class="box-1" #competencies>
                         <div class="flex left-indicator" [ngClass]="{'not-selected': selectedTab !== 'competencies',
                         'ws-mat-accent-background': selectedTab === 'competencies'  }"></div>
@@ -134,14 +102,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="box-1" #levels>
-                        <div class="flex left-indicator" [ngClass]="{'not-selected': selectedTab !== 'levels',
-                        'ws-mat-accent-background': selectedTab === 'levels'  }"></div>
+                    <div class="box-1" #competencyDetails>
+                        <div class="flex left-indicator" [ngClass]="{'not-selected': selectedTab !== 'competencyDetails',
+                        'ws-mat-accent-background': selectedTab === 'competencyDetails'  }"></div>
                         <div class="flex flex-1 flex-column margin-left-xl custom-pad">
                             <div class="flex">
-                                <mat-icon [ngClass]="{'ws-mat-black60-text': selectedTab !== 'levels',
-                        'ws-mat-default-text': selectedTab === 'levels'  }">list</mat-icon>
-                                <span class="mat-subheading-1 margin-left-xs">{{'Competency levels'}}</span>
+                                <mat-icon [ngClass]="{'ws-mat-black60-text': selectedTab !== 'competencyDetails',
+                        'ws-mat-default-text': selectedTab === 'competencyDetails'  }">list</mat-icon>
+                                <span class="mat-subheading-1 margin-left-xs">{{'Competency Details'}}</span>
                             </div>
                             <div class="flex flex-1">
                                 =={{dataStructure | json}}===<br />
@@ -189,16 +157,21 @@
                     <div class="flex flex-1 flex-column margin-top-l">
                         <p class=" mat-body-2 font-bold-i margin-bottom-xs">
                             Errors
-                            <span class=" margin-left-xxs ws-mat-red-dark-text"> 3 </span>
+                            <span class=" margin-left-xxs ws-mat-red-dark-text"> {{allErrors.length}} </span>
                         </p>
-                        <ws-app-assistant-message-card [type]="'activity'" [count]="5"
+                        <ng-container *ngFor="let error of allErrors">
+                            <ws-app-assistant-message-card [type]="error.type" [count]="error.counts"
+                                [message]="error.label">
+                            </ws-app-assistant-message-card>
+                        </ng-container>
+                        <!-- <ws-app-assistant-message-card [type]="'activity'" [count]="5"
                             [message]="'Unmapped activities'">
                         </ws-app-assistant-message-card>
                         <ws-app-assistant-message-card [type]="'role'" [message]="'Role has no activities'">
                         </ws-app-assistant-message-card>
                         <ws-app-assistant-message-card [type]="'competency'" [count]="2"
                             [message]="'Competency has no roles'">
-                        </ws-app-assistant-message-card>
+                        </ws-app-assistant-message-card> -->
                     </div>
                     <div class="flex flex-1 flex-column margin-top-l">
                         <p class="mat-body-2 font-bold-i">

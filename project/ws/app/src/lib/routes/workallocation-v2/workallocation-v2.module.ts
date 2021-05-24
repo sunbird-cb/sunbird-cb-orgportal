@@ -25,6 +25,7 @@ import { AssistantMessageCardComponent } from './components/assistant-message-ca
 import { AssistantContentCardComponent } from './components/assistant-content-card/assistant-content-card.component'
 import { WatStoreService } from './services/wat.store.service'
 import { CompetencyLabelsModule } from './components/competency-labels/competency-labels.module'
+import { ComponentSharedModule } from './components/component-shared.module'
 
 @NgModule({
   declarations: [
@@ -36,12 +37,13 @@ import { CompetencyLabelsModule } from './components/competency-labels/competenc
   ],
   imports: [
     CommonModule, ReactiveFormsModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,
-    ActivityLabelsModule, CompetencyLabelsModule, RouterModule, MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
+    ActivityLabelsModule, CompetencyLabelsModule, RouterModule, MatSidenavModule, MatListModule,
+    ScrollspyLeftMenuModule, MatCardModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule,
     UIORGTableModule, ExportAsModule, MatMenuModule, MatTabsModule, MatProgressSpinnerModule, MatAutocompleteModule,
-    AutocompleteModule,
+    AutocompleteModule, ComponentSharedModule,
   ],
   entryComponents: [
     // AllocationActionsComponent,

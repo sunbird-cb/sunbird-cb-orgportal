@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from "@angular/core"
-import _ from "lodash"
-import { NSWatActivity } from "../../models/activity-wot.model"
-import { IWarnError } from "../../models/warn-error.model"
-import { WatStoreService } from "../../services/wat.store.service"
-
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import lodash from 'lodash'
+import { NSWatActivity } from '../../models/activity-wot.model'
+import { IWarnError } from '../../models/warn-error.model'
+import { WatStoreService } from '../../services/wat.store.service'
 
 @Component({
   selector: 'ws-app-create-workallocation',
@@ -18,27 +17,27 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   selectedTab = 'officer'
   public officerOffset!: number | null
   public activitiesOffset!: number | null
-  public rolesOffset!: number | null
   public competenciesOffset!: number | null
-  public levelsOffset!: number | null
+  public competencyDetailsOffset!: number | null
 
   @ViewChild('mainWindow', { static: true }) mainWindowElement!: ElementRef
   @ViewChild('officer', { static: true }) officerElement!: ElementRef
   @ViewChild('activities', { static: true }) activitiesElement!: ElementRef
-  @ViewChild('roles', { static: true }) rolesElement!: ElementRef
+  // @ViewChild('roles', { static: true }) rolesElement!: ElementRef
   @ViewChild('competencies', { static: true }) competenciesElement!: ElementRef
-  @ViewChild('levels', { static: true }) levelsElement!: ElementRef
+  @ViewChild('competencyDetails', { static: true }) competencyDetailsElement!: ElementRef
   /**
    * this is for selecting tabs dynamically
    */
   private activitySubscription: any
   private groupSubscription: any
+  private officerFormSubscription: any
   dataStructure: any = {}
   // tslinr=t
   constructor(private watStore: WatStoreService) {
   }
   ngOnInit(): void {
-    this.fetchData()
+    this.fetchFormsData()
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -48,17 +47,19 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   onScroll(_$event: any) {
     // const offset = $event.srcElement.scrollTop || this.document.body.scrollTop || 0
     const offset = window.pageYOffset || 0
-    if (this.officerOffset != null && this.activitiesOffset && this.rolesOffset && this.competenciesOffset && this.levelsOffset) {
+    if (this.officerOffset != null &&
+      this.activitiesOffset &&
+      this.competenciesOffset &&
+      this.competencyDetailsOffset
+    ) {
       if (offset >= this.officerOffset && offset < this.activitiesOffset) {
         this.selectedTab = 'officer'
-      } else if (offset >= this.activitiesOffset && offset < this.rolesOffset) {
+      } else if (offset >= this.activitiesOffset && offset < this.competenciesOffset) {
         this.selectedTab = 'activities'
-      } else if (offset >= this.rolesOffset && offset < this.competenciesOffset) {
-        this.selectedTab = 'roles'
-      } else if (offset >= this.competenciesOffset && offset < this.levelsOffset) {
+      } else if (offset >= this.competenciesOffset && offset < this.competencyDetailsOffset) {
         this.selectedTab = 'competencies'
-      } else if (offset >= this.levelsOffset) {
-        this.selectedTab = 'levels'
+      } else if (offset >= this.competencyDetailsOffset) {
+        this.selectedTab = 'competencyDetails'
       } else {
         this.selectedTab = 'officer'
       }
@@ -74,16 +75,15 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     const defaultOffsetToMinus = 146
     this.officerOffset = this.officerElement.nativeElement.offsetTop - defaultOffsetToMinus
     this.activitiesOffset = this.activitiesElement.nativeElement.offsetTop - defaultOffsetToMinus
-    this.rolesOffset = this.rolesElement.nativeElement.offsetTop - defaultOffsetToMinus
     this.competenciesOffset = this.competenciesElement.nativeElement.offsetTop - defaultOffsetToMinus
-    this.levelsOffset = this.levelsElement.nativeElement.offsetTop - defaultOffsetToMinus
+    this.competencyDetailsOffset = this.competencyDetailsElement.nativeElement.offsetTop - defaultOffsetToMinus
     /**
   * this is for selecting tabs dynamically
   */
   }
   filterComp($element: any, filterType: string) {
     this.selectedTab = filterType
-    $element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+    $element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
   }
   get currentProgress(): number {
     return 70
@@ -91,7 +91,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   get getsubPath(): string {
     return `./#${this.selectedTab}`
   }
-  fetchData() {
+
+  // This method is used to fetch the form data from all children components
+  fetchFormsData() {
     this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(activities => {
       if (activities.length > 0) {
         this.dataStructure.activityGroups = activities
@@ -102,6 +104,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
         this.dataStructure.compGroups = comp
       }
     })
+
+    this.officerFormSubscription = this.watStore.getOfficerGroup.subscribe(officerFormData => {
+      this.dataStructure.officerFormData = officerFormData
+    })
   }
   get allWarning() {
     let warnings: IWarnError[] = []
@@ -111,27 +117,54 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     // })
     // return warnings
     if (this.dataStructure.activityGroups) {
-      warnings = this.calculateWarn(this.dataStructure.activityGroups)
+      warnings = (this.calculateWarn(this.dataStructure.activityGroups))
+    }
+    if (this.dataStructure.officerFormData) {
+      warnings = (this.calculateOfficerWarning(this.dataStructure.officerFormData))
     }
     return warnings
   }
   calculateWarn(data: any[]): IWarnError[] {
-    let result: IWarnError[] = []
-    let grpDescEmpty = Math.max(_.filter(data, () => ['groupDescription', 'Untited role']).length - 1, 0)
+    const result: IWarnError[] = []
+    const grpDescEmpty = Math.max(_.filter(data, () => ['groupDescription', 'Untited role']).length - 1, 0)
     if (grpDescEmpty) {
       result.push({ type: 'role', counts: grpDescEmpty, label: 'Role description missing' })
     }
-    let unmapedActivities = _.size(_.get(_.first(data), 'activities'))
+    const unmapedActivities = _.size(_.get(_.first(data), 'activities'))
     if (unmapedActivities) {
       result.push({ type: 'activity', counts: unmapedActivities, label: 'Unmapped activities' })
     }
 
     return result
   }
-  get allErrors() {
-    let warnings: IWarnError | [] = []
 
-    return warnings
+  calculateOfficerWarning(data: any): IWarnError[] {
+    const result: IWarnError[] = []
+    console.log('data------', data)
+    if (data && data.positionDescription === '') {
+      result.push({ type: 'officer', counts: 0, label: 'Position description missing' })
+    }
+    return result
+  }
+
+  get allErrors() {
+    let errors: IWarnError[] = []
+    if (this.dataStructure.officerFormData) {
+      errors = (this.calculateOfficerErrors(this.dataStructure.officerFormData))
+    }
+    return errors
+  }
+
+  calculateOfficerErrors(data: any): IWarnError[] {
+    const result: IWarnError[] = []
+    console.log('data------', data)
+    if (data && data.officerName === '' && (data.position !== '' || data.positionDescription !== '')) {
+      result.push({ type: 'officer', counts: 0, label: 'Officer name is empty' })
+    }
+    if (data && data.position === '' && (data.officerName !== '' || data.positionDescription !== '')) {
+      result.push({ type: 'officer', counts: 0, label: 'Postion missing' })
+    }
+    return result
   }
   ngOnDestroy() {
     this.activitySubscription.unsubscribe()

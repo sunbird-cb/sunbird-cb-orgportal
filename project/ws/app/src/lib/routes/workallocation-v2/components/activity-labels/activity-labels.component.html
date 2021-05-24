@@ -142,10 +142,20 @@
                       <!-- <input [attr.id]="'assignto_' + gaIdx" matInput #assignto i18n-placeholder placeholder="Type here"
                         i18n-aria-label aria-label="Activity description input" class="form-input flex-1"
                         autocomplete="off" /> -->
-                      <input [attr.id]="'assignto_' + gaIdx" class="form-input flex-1" matInput #OfficerName
+                      <ws-app-initial-avatar *ngIf="assignedTo.value.length" [name]="assignedTo.value">
+                      </ws-app-initial-avatar>
+                      <input [attr.id]="'assignto_' + gaIdx" class="form-input flex-1" matInput #assignedTo
                         formControlName="assignedTo" i18n-placeholder placeholder="Type here" i18n-aria-label
-                        aria-label="Type here" [wsAppAutocomplete]="autocomplete"
-                        (input)="filterUsers(assignedTo.value)" autocomplete="off">
+                        aria-label="Type here" [matAutocomplete]="auto" (input)="filterUsers(assignedTo.value)"
+                        autocomplete="off">
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <div class="mat-body-4 ws-mat-accent-text padding-s">From Karmayogi officer portal</div>
+                        <mat-option *ngFor="let user of userslist"
+                          [value]="user.userDetails.first_name + ' ' +user.userDetails.last_name ">
+                          <ws-app-user-autocomplete-card [user]="user">
+                          </ws-app-user-autocomplete-card>
+                        </mat-option>
+                      </mat-autocomplete>
                     </mat-form-field>
                   </div>
                 </div>
@@ -176,35 +186,3 @@
     <!-- </pre> -->
   </form>
 </div>
-
-<ws-app-autocomplete #autocomplete="wsAppAutocomplete">
-  <ng-template wsAppAutocompleteContent>
-    <ng-container *ngIf="(userslist | filter: groupDescription.value) as result">
-      <div class="mat-body-4 ws-mat-accent-text margin-bottom-xs">From Karmayogi officer portal</div>
-      <ws-app-option *ngFor="let user of userslist"
-        [value]="user.userDetails.first_name +' '+ user.userDetails.last_name">
-        <div class=" mat-accent-border" (click)="OfficerClicked(user)">
-          <div class="padding-top-m ">
-            <span
-              class="letter-color">{{user.userDetails.first_name.charAt(0)}}{{user.userDetails.last_name.charAt(0)}}</span>
-            <mat-icon class="groupicon ws-mat-accent-text ws-mat-accent-border">group</mat-icon>
-          </div>
-          <div class="padding-top-xs padding-bottom-xs ">
-            <p class="username mat-body-2 font-bold-i margin-bottom-xxs">{{user.userDetails.first_name}}
-              {{user.userDetails.last_name
-              ?
-              user.userDetails.last_name : ''}}</p>
-            <p class="useremail mat-body-2 margin-bottom-xxs">{{user.userDetails.email}}</p>
-            <p class="userpos mat-body-2 ws-mat-black60-text margin-bottom-xs margin-bottom-xxs">
-              Software Engineer at Tarento
-              {{user.userDetails.position ?
-              user.userDetails.position : ''}}
-              <span *ngIf="user.userDetails.department_name">at</span> {{user.userDetails.department_name}}
-            </p>
-          </div>
-        </div>
-      </ws-app-option>
-      <ws-app-option class="no-result" *ngIf="!result.length">No result...</ws-app-option>
-    </ng-container>
-  </ng-template>
-</ws-app-autocomplete>
