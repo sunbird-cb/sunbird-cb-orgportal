@@ -140,8 +140,8 @@
                     <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
                       <input [attr.id]="'compName_' + gaIdx" formControlName="compName" matInput #compName
                         i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
-                        class="form-input flex-1" autocomplete="off" (input)="filterCompetencies(compName.value)"
-                        [matAutocomplete]="competencyAuto1" />
+                        class="form-input flex-1" autocomplete="off" (click)="setSelectedFilter(gaIdx)"
+                        (input)="filterCompetencies(compName.value, gaIdx)" [matAutocomplete]="competencyAuto1" />
                       <mat-autocomplete [attr.id]="'compAuto_' + gaIdx" #competencyAuto1="matAutocomplete"
                         (optionSelected)="competencySelected($event)">
                         <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
@@ -159,9 +159,10 @@
                       <!-- <input [attr.id]="'compt_' + gaIdx" matInput #compt i18n-placeholder placeholder="Type here"
                         i18n-aria-label aria-label="Activity description input" class="form-input flex-1"
                         autocomplete="off" /> -->
-                      <input [attr.id]="'compt_' + gaIdx" class="form-input flex-1" matInput #OfficerName
+                      <textarea [attr.id]="'compt_' + gaIdx" class="form-input flex-1" matInput #OfficerName
                         formControlName="compDescription" i18n-placeholder placeholder="Type here" i18n-aria-label
-                        aria-label="Type here" autocomplete="off">
+                        aria-label="Type here" autocomplete="off" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
                     </mat-form-field>
                   </div>
                 </div>

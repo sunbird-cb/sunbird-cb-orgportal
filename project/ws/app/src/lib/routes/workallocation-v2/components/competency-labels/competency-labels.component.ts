@@ -25,6 +25,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   labels: NSWatCompetency.ICompActivity[] = []
   groups: NSWatActivity.IActivityGroup[] = []
   activeGroupIdx = 0
+  selectedCompIdx = 0
   untitedRole = 'Untited role'
   activityForm!: FormGroup
   userslist!: any[]
@@ -68,7 +69,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(groups => {
       if (groups) {
         this.groups = groups
-        console.log(groups)
+        // console.log(groups)
         this.updateForm()
       }
     })
@@ -123,15 +124,19 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       const newArray = (this.activityForm.get('groupsArray') as any)!.at(targetContainerIndex).get('competincies')
       // tslint:enable
       transferArrayItem(oldArray.controls, newArray.controls, event.previousIndex, event.currentIndex)
+      transferArrayItem(oldArray.value, newArray.value, event.previousIndex, event.currentIndex)
+
       /**Please do not delete these methods : for testing Purpose */
       // this.addNewGroupActivityCustom(targetContainerIndex, newArray.value)
       // this.addNewGroupActivityCustom(previousContainerIndex, oldArray.value)
       // this.activityForm.reset()
+      this.updateCompData()
       this.changeDetector.detectChanges()
     }
     // console.log(this.groupList.value)
 
     this.watStore.setgetcompetencyGroup(this.groupList.value)
+
   }
   // sortPredicate(index: number, item: CdkDrag<NSWatCompetency.ICompActivity>) {
   //   return (index + 1) % 2 === item.data % 2
@@ -188,7 +193,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     const fga = this.formBuilder.group({
       compName: '',
       compDescription: '',
-      // assignedTo: '',
+      compLevel: '',
+      compType: '',
+      compArea: '',
     })
     activits.push(fga)
     fg.controls.competincies.patchValue([...activits.value])
@@ -205,7 +212,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         const fga = this.formBuilder.group({
           compName: ac.compName,
           compDescription: ac.compDescription,
-          // assignedTo: ac.assignedTo,
+          compLevel: ac.compLevel,
+          compType: ac.compType,
+          compArea: ac.compArea,
         })
         newForlAryList.push(fga)
       })
@@ -218,7 +227,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       const fga = this.formBuilder.group({
         compName: '',
         compDescription: '',
-        // assignedTo: '',
+        compLevel: '',
+        compType: '',
+        compArea: '',
       })
       oldValue.push(fga)
       this.setGroupActivityValues([...oldValue.value])
@@ -258,7 +269,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     const newControl = this.formBuilder.group({
       compName: new FormControl(activityObj.compName),
       compDescription: new FormControl(activityObj.compDescription),
-      // assignedTo: new FormControl(activityObj.assignedTo),
+      compLevel: new FormControl(activityObj.compLevel),
+      compType: new FormControl(activityObj.compType),
+      compArea: new FormControl(activityObj.compArea),
     })
     const optionsArr = this.activityForm.controls['labelsArray'] as FormArray
     optionsArr.push(newControl)
@@ -296,7 +309,8 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     // }
   }
 
-  public async filterCompetencies(val: string) {
+  public async filterCompetencies(val: string, index: number) {
+    this.selectedCompIdx = index
     if (val.length > 2) {
       this.filteredCompetencies = this.allocateSrvc.onSearchCompetency(val).pipe(
         map(res => {
@@ -305,23 +319,39 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       )
     }
   }
-
-  public competencySelected(event: any) {
-    const lst = this.groupList.at(this.activeGroupIdx) as any
-    // tslint:disable-next-line: no-non-null-assertion
-    // const lstComp = lst.get('competincies')!.at(cindex) as FormArray
-    // const frmctrl = lstComp.get('compDescription') as FormControl
-    // frmctrl.patchValue(event.option.value.description)
-
-    const frmctrl = lst.get('compDescription') as FormControl
-    frmctrl.patchValue(event.option.value.description)
-    this.watStore.setgetcompetencyGroup(this.groupList.value)
-
-    const frmctrl1 = lst.get('compName') as FormControl
-    frmctrl1.patchValue(event.option.value.name)
-    this.watStore.setgetcompetencyGroup(this.groupList.value)
+  setSelectedFilter(index: number) {
+    this.selectedCompIdx = index
   }
+  public competencySelected(event: any) {
+    const lst = this.groupList.at(this.activeGroupIdx).get('competincies') as FormArray
 
+    const frmctrl = lst.at(this.selectedCompIdx).get('compDescription') as FormControl
+    frmctrl.patchValue(_.get(event, 'option.value.description') || '')
+
+    const frmctrl1 = lst.at(this.selectedCompIdx).get('compName') as FormControl
+    frmctrl1.patchValue(_.get(event, 'option.value.name') || '')
+
+    // const frmctrl2 = lst.at(this.selectedCompIdx).get('compLevel') as FormControl
+    // frmctrl2.patchValue(event.option.value.additionalProperties.)
+
+    const frmctrl3 = lst.at(this.selectedCompIdx).get('compType') as FormControl
+    frmctrl3.patchValue(_.get(event, 'option.value.additionalProperties.competencyType') || '')
+
+    const frmctrl4 = lst.at(this.selectedCompIdx).get('compArea') as FormControl
+    frmctrl4.patchValue(_.get(event, 'option.value.additionalProperties.competencyArea') || '')
+
+    this.watStore.setgetcompetencyGroup(this.groupList.value)
+    this.updateCompData()
+
+  }
+  updateCompData() {
+    const list = _.compact(_.map(_.flatten(_.map(this.groupList.value, 'competincies')), c => {
+      if (c && c.compName) {
+        return c
+      }
+    }))
+    this.watStore.setCompGroup(list)
+  }
   show(idx: number) {
     this.canshow = -1
   }

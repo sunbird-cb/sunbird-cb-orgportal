@@ -165,10 +165,11 @@
                 <div class="flex flex-1" [formGroup]="ga">
                   <div class="flex flex-2 margin-2px">
                     <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
-                      <input [attr.id]="'actDesc_' + gaIdx" formControlName="activityDescription" matInput #actDesc
+                      <textarea [attr.id]="'actDesc_' + gaIdx" formControlName="activityDescription" matInput #actDesc
                         i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
                         class="form-input flex-1" [matAutocomplete]="roleDescriptionAuto"
-                        (input)="filterActivities(actDesc.value)" autocomplete="off" />
+                        (input)="filterActivities(actDesc.value)" autocomplete="off" cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
                       <mat-autocomplete #roleDescriptionAuto="matAutocomplete">
                         <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
                         <mat-option *ngFor="let activity of filteredActivityDesc | async"

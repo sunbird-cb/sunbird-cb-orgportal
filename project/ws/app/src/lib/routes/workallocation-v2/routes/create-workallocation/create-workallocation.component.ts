@@ -111,7 +111,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   get getsubPath(): string {
     return `./#${this.selectedTab}`
   }
-
+  get getOfficerName(): string {
+    return _.get(this.dataStructure, 'officerFormData.officerName')
+  }
   // This method is used to fetch the form data from all children components
   fetchFormsData() {
     this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(activities => {
@@ -119,7 +121,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
         this.dataStructure.activityGroups = activities
       }
     })
-    this.groupSubscription = this.watStore.getactivitiesGroup.subscribe(comp => {
+    this.groupSubscription = this.watStore.getcompetencyGroup.subscribe(comp => {
       if (comp.length > 0) {
         this.dataStructure.compGroups = comp
       }
@@ -231,5 +233,6 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   ngOnDestroy() {
     this.activitySubscription.unsubscribe()
     this.groupSubscription.unsubscribe()
+    this.officerFormSubscription.unsubscribe()
   }
 }
