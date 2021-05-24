@@ -110,16 +110,16 @@
         </div>
         <div class="flex-4" [ngClass]="{ 'group-background' : i !== 0, 'example-list': i === 0}">
           <div *ngIf="i === 0" class="flex flex-1">
-            <div class="flex flex-2 min-w-200">
+            <div class="flex flex-1 min-w-200">
               <span class="flex mat-subheading-2 margin-top-xs margin-left-s">
-                <mat-icon class="ws-mat-black40-text margin-right-s">extension</mat-icon>
+                <mat-icon class="margin-right-s">extension</mat-icon>
                 Competencies
               </span>
             </div>
             <div class="custom-w">&nbsp;</div>
-            <div class="flex flex-1">
-              <span class="flex mat-subheading-2 margin-top-xs">Submit to
-                <mat-icon class="ws-mat-black40-text margin-left-s">info</mat-icon>
+            <div class="flex flex-2">
+              <span class="flex mat-body-2 margin-left-xs margin-top-xs ws-mat-black60-text">Competency description
+                <!-- <mat-icon class="ws-mat-black40-text margin-left-s">info</mat-icon> -->
               </span>
 
             </div>
@@ -135,7 +135,7 @@
                   <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
                 </div>
                 <div class="flex flex-1" [formGroup]="ga">
-                  <div class="flex flex-2 margin-2px">
+                  <div class="flex flex-1 margin-2px">
                     <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
                       <input [attr.id]="'actDesc_' + gaIdx" formControlName="activityDescription" matInput #actDesc
                         i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
@@ -152,7 +152,7 @@
                       </mat-autocomplete>
                     </mat-form-field>
                   </div>
-                  <div class="flex flex-1 margin-2px">
+                  <div class="flex flex-2 margin-2px">
                     <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
                       <!-- <input [attr.id]="'assignto_' + gaIdx" matInput #assignto i18n-placeholder placeholder="Type here"
                         i18n-aria-label aria-label="Activity description input" class="form-input flex-1"
@@ -178,12 +178,12 @@
       </div>
     </ng-container>
     <!-- </div> -->
-    <div class="flex flex-1">
+    <!-- <div class="flex flex-1">
       <a href="javascript:void(0)" class="flex padding-s" (click)="addNewGroup()">
         <mat-icon class="ws-mat-black60-text">add</mat-icon>
         <span class="mat-subheading-2 ws-mat-black60-text">Competency</span>
       </a>
-    </div>
+    </div> -->
 
     <!-- <pre> -->
     <!-- {{getActivityForm}} -->
