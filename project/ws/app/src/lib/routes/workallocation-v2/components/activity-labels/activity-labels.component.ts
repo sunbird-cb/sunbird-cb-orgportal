@@ -92,7 +92,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  dropgroup(event: CdkDragDrop<NSWatActivity.IActivity[]>, actualIdx: number) {
+  dropgroup(event: CdkDragDrop<NSWatActivity.IActivity[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(this.groupActivityList.controls, event.previousIndex, event.currentIndex)
       moveItemInArray(this.groupActivityList.value, event.previousIndex, event.currentIndex)

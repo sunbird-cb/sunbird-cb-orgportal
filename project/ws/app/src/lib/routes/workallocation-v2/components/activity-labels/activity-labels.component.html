@@ -153,7 +153,7 @@
             </div>
           </div>
           <div [id]="'groups_' + i" cdkDropList [cdkDropListData]="groupActivityList"
-            (cdkDropListDropped)="dropgroup($event,i)" [cdkDropListEnterPredicate]="evenPredicate"
+            (cdkDropListDropped)="dropgroup($event)" [cdkDropListEnterPredicate]="evenPredicate"
             class="flex-1 margin-top-s min-w">
             <ng-container *ngFor="let ga of grp.get('activities').controls; let gaIdx = index">
               <!-- {{log(ga)}} -->
