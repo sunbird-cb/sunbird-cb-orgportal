@@ -1,9 +1,12 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import { MatSnackBar } from '@angular/material'
+import { Router } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
 // tslint:enable
 // import { NSWatActivity } from '../../models/activity-wot.model'
 import { IWarnError } from '../../models/warn-error.model'
+import { AllocationService } from '../../services/allocation.service'
 import { WatStoreService } from '../../services/wat.store.service'
 
 @Component({
@@ -35,11 +38,26 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   private groupSubscription: any
   private officerFormSubscription: any
   dataStructure: any = {}
+  departmentName: any
+  departmentID: any
   // tslinr=t
-  constructor(private watStore: WatStoreService) {
+  constructor(
+    private watStore: WatStoreService,
+    private allocateSrvc: AllocationService,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {
   }
   ngOnInit(): void {
     this.fetchFormsData()
+    this.getdeptUsers()
+  }
+
+  getdeptUsers() {
+    this.allocateSrvc.getAllUsers().subscribe(res => {
+      this.departmentName = res.deptName
+      this.departmentID = res.id
+    })
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -111,6 +129,50 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       this.dataStructure.officerFormData = officerFormData
     })
   }
+
+  saveWAT() {
+    const req = this.getStrcuturedReq()
+    this.allocateSrvc.createAllocation(req).subscribe(res => {
+      if (res) {
+        this.openSnackbar('Work Allocated Successfully')
+        this.router.navigate(['/app/home/workallocation'])
+      }
+    })
+  }
+  getStrcuturedReq(): any {
+    let req = {}
+    const offficer = this.getUserDetails()
+    req = {
+      userId: offficer.user ? offficer.user.userDetails.wid : '',
+      deptId: this.departmentID,
+      deptName: this.departmentName,
+      // activeList: this.ralist,
+      userName: offficer.officerName,
+      userEmail: offficer.user ? offficer.user.userDetails.email : '',
+      userPosition: offficer.position,
+      positionDescription: offficer.positionDescription,
+      // positionId: this.selectedPosition ? this.selectedPosition.id : '',
+    }
+    return req
+  }
+
+  getUserDetails() {
+    if (this.dataStructure && this.dataStructure.officerFormData && this.dataStructure.officerFormData.user) {
+      return {
+        user: this.dataStructure.officerFormData.user,
+        officerName: this.dataStructure.officerFormData.officerName || '',
+        position: this.dataStructure.officerFormData.position || '',
+        positionDescription: this.dataStructure.officerFormData.positionDescription || '',
+      }
+    }
+    return {}
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
+  }
   get allWarning() {
     let warnings: IWarnError[] = []
     let calculatedWarn: IWarnError[] = []
@@ -142,7 +204,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     const result: IWarnError[] = []
     // console.log('data------', data)
     if (data && data.positionDescription === '') {
-      result.push({ _type: "warning", type: 'officer', counts: 0, label: 'Position description missing' })
+      result.push({ _type: 'warning', type: 'officer', counts: 0, label: 'Position description missing' })
     }
     return result
   }

@@ -52,6 +52,7 @@ export class OfficerComponent implements OnInit, OnDestroy {
       officerName: this.formBuilder.control('', []),
       position: this.formBuilder.control('', []),
       positionDescription: this.formBuilder.control('', []),
+      user: this.formBuilder.control('', []),
     })
   }
 
@@ -75,30 +76,10 @@ export class OfficerComponent implements OnInit, OnDestroy {
 
   officerClicked(user: any) {
     if (user) {
-      if (user.userDetails && user.userDetails.position) {
-        if (this.officerForm && this.officerForm.get('position')) {
-          // tslint:disable-next-line: no-non-null-assertion
-          this.officerForm.get('position')!.setValue(user.userDetails.position)
-        }
-      }
+      // tslint:disable-next-line: no-non-null-assertion
+      this.officerForm.get('user')!.setValue(user)
+      this.watStore.setOfficerGroup(this.officerForm.value)
     }
-  }
-
-  getInitials(name: string) {
-    if (!name) {
-      return ''
-    }
-    // This will fetch only all initials ex: Christy B Fernandes => CBF
-    // return name.match(/(\b\S)?/g).join("").toUpperCase()
-
-    // This will fetch only all initials ex: Christy B Fernandes => CBF OR Christy => CH
-    // return name.match(/(^\S\S?|\b\S)?/g).join("").match(/(^\S|\S$)?/g).join("").toUpperCase()
-
-    // This will fetch only first and last initials ex: Christy B Fernandes => CF
-    // tslint:disable-next-line: no-non-null-assertion
-    const firstLast = name.match(/(\b\S)?/g)!.join('').match(/(^\S|\S$)?/g)
-    // tslint:disable-next-line: no-non-null-assertion
-    return firstLast!.join('').toUpperCase()
   }
 
   ngOnDestroy() {
