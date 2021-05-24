@@ -4,8 +4,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 // import { debounceTime } from 'rxjs/operators'
 import { inspect } from 'util'
 import { AllocationService } from '../../../workallocation/services/allocation.service'
-import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
-import { Subject } from 'rxjs'
+import { debounceTime, map, switchMap, takeUntil } from 'rxjs/operators'
+import { Observable, Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
 import { MatSnackBar } from '@angular/material'
 import { NSWatCompetency } from '../../models/competency-wat.model'
@@ -26,6 +26,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   userslist!: any[]
   canshowName = 1
   canshow = -1
+  filteredCompetencies!: Observable<any[]>
   constructor(
     private changeDetector: ChangeDetectorRef,
     private formBuilder: FormBuilder,
@@ -68,7 +69,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     this.activityForm.controls['groupsArray'].valueChanges
       .pipe(
         debounceTime(500),
-        switchMap(async (formValue) => {
+        switchMap(async formValue => {
           this.watStore.setgetcompetencyGroup(formValue)
         }),
         takeUntil(this.unsubscribe)
@@ -290,6 +291,16 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     // } else {
     // this.userslist = []
     // }
+  }
+
+  public async filterCompetencies(val: string) {
+    if (val.length > 2) {
+      this.filteredCompetencies = this.allocateSrvc.onSearchCompetency(val).pipe(
+        map(res => {
+          return res.responseData
+        })
+      )
+    }
   }
   show(idx: number) {
     this.canshow = -1

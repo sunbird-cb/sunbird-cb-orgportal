@@ -38,14 +38,34 @@
                   <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
                     <input [attr.id]="'actDesc_' + i" matInput #actDesc formControlName="activityDescription"
                       i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
-                      class="form-input flex-1" autocomplete="off" />
+                      class="form-input flex-1" (input)="filterActivities(actDesc.value)"
+                      [matAutocomplete]="activityAuto" autocomplete="off" />
+                    <mat-autocomplete #activityAuto="matAutocomplete">
+                      <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
+                      <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity.description">
+                        <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                          <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div>
+                          <div class="mat-body-2  margin-bottom-xxs">{{activity.description}}</div>
+                        </div>
+                      </mat-option>
+                    </mat-autocomplete>
                   </mat-form-field>
                 </div>
                 <div class="flex flex-1 margin-2px">
                   <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                    <ws-app-initial-avatar *ngIf="assignedTo.value.length" [name]="assignedTo.value">
+                    </ws-app-initial-avatar>
                     <input [attr.id]="'assignto_' + i" matInput #assignto formControlName="assignedTo" i18n-placeholder
-                      placeholder="Type here" i18n-aria-label aria-label="Activity description input"
-                      class="form-input flex-1" autocomplete="off" />
+                      placeholder="Type here" i18n-aria-label #assignedTo class="form-input flex-1"
+                      [matAutocomplete]="assignToAuto" (input)="filterUsers(assignedTo.value)" autocomplete="off" />
+                    <mat-autocomplete #assignToAuto="matAutocomplete">
+                      <div class="mat-body-4 ws-mat-accent-text padding-s">aas From Karmayogi officer portal</div>
+                      <mat-option *ngFor="let user of userslist"
+                        [value]="user.userDetails.first_name + ' ' +user.userDetails.last_name ">
+                        <ws-app-user-autocomplete-card [user]="user">
+                        </ws-app-user-autocomplete-card>
+                      </mat-option>
+                    </mat-autocomplete>
                   </mat-form-field>
                 </div>
 
@@ -77,22 +97,35 @@
         <div *ngIf="i !==0 " class="flex flex-1 flex-column margin-r-2px">
           <div class="flex flex-1 group-background margin-b-2px" (focusout)="hideName()">
             <span
-              *ngIf="(canshowName === -1 && !grp.get('groupName').value) || !(canshowName === i && activeGroupIdx === i) "
+              [hidden]="!((canshowName === -1 && !grp.get('groupName').value) || !(canshowName === i && activeGroupIdx === i)) "
               (click)="showName(i)" class="flex margin-left-m  margin-top-m mat-subheading-2 break-a">
               {{grp.get('groupName').value || 'Untited role'}}
             </span>
-            <mat-form-field *ngIf="canshowName === i && activeGroupIdx === i" appearance="outline"
+            <!-- *ngIf="canshowName === i && activeGroupIdx === i" -->
+            <mat-form-field [hidden]="!(canshowName === i && activeGroupIdx === i)" appearance="outline"
               class="full-width no-pb square outline-color">
               <input [attr.id]="'roleName_' + i" formControlName="groupName" matInput #roleName i18n-placeholder
                 placeholder="Type here" onfocus="this.select()" i18n-aria-label aria-label="Activity name input"
-                class="form-input flex-1" autocomplete="off" />
+                class="form-input flex-1" autocomplete="off" (input)="filterRoles(roleName.value)"
+                [matAutocomplete]="roleAuto" />
+              <mat-autocomplete [attr.id]="'roleAuto_' + i" #roleAuto="matAutocomplete"
+                (optionSelected)="roleSelected($event)">
+                <div class="mat-body-4 ws-mat-accent-text padding-s"> From FRAC dictionary</div>
+                <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
+                  <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                    <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{role.name}}</div>
+                    <div class="mat-body-2  margin-bottom-xxs">{{role.description}}</div>
+                  </div>
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field>
           </div>
           <!-- {{grp.get('groupName').value}} -->
           <div class="flex flex-1 group-background " (focusout)="hide()">
             <span
               *ngIf="(canshow === -1 && !grp.get('groupDescription').value) || !(canshow === i && activeGroupIdx === i)"
-              (click)="show(i)" class="flex margin-left-m  margin-top-m mat-body-2 ws-mat-black40-text break-a">
+              (click)="show(i)"
+              class="flex margin-left-m margin-bottom-xs  margin-top-m mat-body-2 ws-mat-black40-text break-a">
               {{grp.get('groupDescription').value || 'Role description'}}
             </span>
             <mat-form-field *ngIf="canshow === i && activeGroupIdx === i" appearance="outline"
@@ -134,7 +167,18 @@
                     <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
                       <input [attr.id]="'actDesc_' + gaIdx" formControlName="activityDescription" matInput #actDesc
                         i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
-                        class="form-input flex-1" autocomplete="off" />
+                        class="form-input flex-1" [matAutocomplete]="roleDescriptionAuto"
+                        (input)="filterActivities(actDesc.value)" autocomplete="off" />
+                      <mat-autocomplete #roleDescriptionAuto="matAutocomplete">
+                        <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
+                        <mat-option *ngFor="let activity of filteredActivityDesc | async"
+                          [value]="activity.description">
+                          <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                            <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div>
+                            <div class="mat-body-2  margin-bottom-xxs">{{activity.description}}</div>
+                          </div>
+                        </mat-option>
+                      </mat-autocomplete>
                     </mat-form-field>
                   </div>
                   <div class="flex flex-1 margin-2px">

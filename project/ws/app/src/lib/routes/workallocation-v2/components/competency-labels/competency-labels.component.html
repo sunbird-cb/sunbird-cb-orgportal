@@ -38,7 +38,17 @@
                   <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
                     <input [attr.id]="'actDesc_' + i" matInput #actDesc formControlName="activityDescription"
                       i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
-                      class="form-input flex-1" autocomplete="off" />
+                      class="form-input flex-1" autocomplete="off" (input)="filterCompetencies(actDesc.value)"
+                      [matAutocomplete]="competencyAuto" autocomplete="off" />
+                    <mat-autocomplete #competencyAuto="matAutocomplete">
+                      <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
+                      <mat-option *ngFor="let competency of filteredCompetencies | async" [value]="">
+                        <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                          <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{competency.name}}</div>
+                          <div class="mat-body-2  margin-bottom-xxs">{{competency.description}}</div>
+                        </div>
+                      </mat-option>
+                    </mat-autocomplete>
                   </mat-form-field>
                 </div>
                 <div class="flex flex-1 margin-2px">
@@ -129,7 +139,17 @@
                     <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
                       <input [attr.id]="'actDesc_' + gaIdx" formControlName="activityDescription" matInput #actDesc
                         i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
-                        class="form-input flex-1" autocomplete="off" />
+                        class="form-input flex-1" autocomplete="off" (input)="filterCompetencies(actDesc.value)"
+                        [matAutocomplete]="competencyAuto1" />
+                      <mat-autocomplete #competencyAuto1="matAutocomplete">
+                        <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
+                        <mat-option *ngFor="let competency of filteredCompetencies | async" [value]="">
+                          <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                            <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{competency.name}}</div>
+                            <div class="mat-body-2  margin-bottom-xxs">{{competency.description}}</div>
+                          </div>
+                        </mat-option>
+                      </mat-autocomplete>
                     </mat-form-field>
                   </div>
                   <div class="flex flex-1 margin-2px">

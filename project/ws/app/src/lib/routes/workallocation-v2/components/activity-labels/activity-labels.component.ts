@@ -5,10 +5,11 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 // import { debounceTime } from 'rxjs/operators'
 import { inspect } from 'util'
 import { AllocationService } from '../../../workallocation/services/allocation.service'
-import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
-import { Subject } from 'rxjs'
+import { debounceTime, map, switchMap, takeUntil } from 'rxjs/operators'
+import { Observable, Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
 import { MatSnackBar } from '@angular/material'
+import { Console } from 'console'
 
 @Component({
   selector: 'ws-app-activity-labels',
@@ -23,6 +24,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   untitedRole = 'Untited role'
   activityForm!: FormGroup
   userslist!: any[]
+  filteredActivityDesc!: Observable<any[]>
+  filteredRoles!: Observable<any[]>
   canshowName = 1
   canshow = -1
   constructor(
@@ -286,6 +289,62 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     // this.userslist = []
     // }
   }
+
+  public async filterActivities(val: string) {
+
+    // this.filteredActivityDesc = this.allocateSrvc.onSearchRole(val).pipe(
+    //   map(res => res.filter((role: any) => {
+    //     role.childNodes.map((node: any) => {
+    //       if (node.description.indexOf(val) >= 0) {
+    //         return node
+    //       }
+    //     })
+    //   }))
+    // )
+    if (val.length > 2) {
+      const req = {
+        searches: [
+          {
+            type: 'ACTIVITY',
+            field: 'name',
+            keyword: val,
+          },
+          {
+            type: 'ACTIVITY',
+            field: 'status',
+            keyword: 'VERIFIED',
+          },
+        ],
+      }
+      this.filteredActivityDesc = this.allocateSrvc.onSearchActivity(req).pipe(
+        map(res => {
+          return res.responseData
+        })
+      )
+    }
+  }
+
+  public async filterRoles(val: string) {
+    this.filteredRoles = this.allocateSrvc.onSearchRole(val).pipe(
+      map(res => res.filter((role: any) => {
+        return role.name.toLowerCase().indexOf(val.toLowerCase()) >= 0
+      }))
+    )
+  }
+
+  public roleSelected(event: any) {
+    const lst = this.groupList.at(this.activeGroupIdx) as FormGroup
+    const frmctrl = lst.get('groupDescription') as FormControl
+    frmctrl.patchValue(event.option.value.description)
+
+    const frmctrl1 = lst.get('groupName') as FormControl
+    frmctrl1.patchValue(event.option.value.name)
+  }
+
+  displayFn(data: any): string {
+    return data ? data.name : ''
+  }
+
   show(idx: number) {
     this.canshow = idx
   }

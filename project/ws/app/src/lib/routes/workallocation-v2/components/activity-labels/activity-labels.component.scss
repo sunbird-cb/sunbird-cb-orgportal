@@ -16,6 +16,17 @@
 
 }
 
+::ng-deep mat-option.mat-option{
+  height: auto;
+  line-height: normal;
+  padding: 0;
+  white-space: normal;
+}
+::ng-deep mat-option .mat-option-text{
+  height: auto;
+    display: block;
+}
+
 ::ng-deep mat-form-field .mat-form-field-infix .mat-form-field-label,
 ::ng-deep mat-form-field .mat-form-field-infix .mat-select-value {
   line-height: normal !important;
@@ -78,6 +89,17 @@
 
 .min-w {
   min-height: 40px;
+}
+
+.margin-bottom-xxs {
+  margin-bottom: 4px !important;
+}
+
+.font-bold-i {
+  font-weight: 700 !important;
+}
+.font-semibold {
+  font-weight: 600 !important;
 }
 
 
