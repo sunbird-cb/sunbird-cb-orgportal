@@ -119,9 +119,6 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       // this.addNewGroupActivityCustom(previousContainerIndex, oldArray.value)
       // this.activityForm.reset()
       this.changeDetector.detectChanges()
-      // console.log(this.watStore.activitiesGroup)
-
-      // console.log(oldArray, newArray)
     }
     console.log(this.groupList.value)
 
@@ -136,7 +133,6 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     if (item.data) {
       return true
     }
-    // this.snackBar.open('Activity is required to drag', undefined, { duration: 200 })
     return false
   }
 
