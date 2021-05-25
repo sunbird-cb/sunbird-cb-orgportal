@@ -1,0 +1,26 @@
+.pdf-upload {
+  text-align: center;
+  min-height: 30vh;
+  img {
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    display: block;
+  }
+}
+
+.footer {
+  padding: 1em;
+  border-top: 1px solid #eee;
+  text-align: revert;
+
+  button {
+    float: right;
+  }
+}
+
+.loadingbar {
+  height: 5px;
+  background: #1D8923;
+  width: 120px;
+}
