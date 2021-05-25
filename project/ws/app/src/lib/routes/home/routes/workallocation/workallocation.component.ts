@@ -7,6 +7,7 @@ import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 import _ from 'lodash'
 import { WorkallocationService } from '../../services/workallocation.service'
 import { WorkAllocationPopUpComponent } from '../../../../head/work-allocation-table/work-order-popup/pop-up.component'
+import FileSaver from 'file-saver'
 
 @Component({
   selector: 'ws-app-workallocation',
@@ -73,7 +74,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
           publishedon: "03:30 PM 18 May  2021",
           publishedby: "Manjunatha HS",
           errors: "11",
-          approval: "Download"
+          approval: "Download",
+          fromdata: 'draft',
         }
       },
       {
@@ -86,7 +88,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
           publishedon: "03:30 PM 18 May  2021",
           publishedby: "Manjunatha HS",
           errors: "11",
-          approval: "Download"
+          approval: "Download",
+          fromdata: 'draft',
         }
       },
 
@@ -99,9 +102,21 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   // Download format
   export() {
     // download the file using old school javascript method
-    this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
-      // save started
-    })
+    // this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
+    //   // save started
+    // })
+    console.log(this.currentFilter)
+    if (this.currentFilter === 'Draft') {
+      const pdfName = 'draft'
+      const pdfUrl = 'http://127.0.0.1:8080/client-assets/assets/configurations/localhost_3000/files/draft.pdf'
+      FileSaver.saveAs(pdfUrl, pdfName)
+    } else if (this.currentFilter === 'Published') {
+      const pdfName = 'publish'
+      const pdfUrl = 'http://127.0.0.1:8080 /client-assets/assets/configurations/localhost_3000/files/published.pdf'
+      FileSaver.saveAs(pdfUrl, pdfName)
+    }
+
+
     // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
     // this.exportAsService.get(this.config).subscribe(content => {
     //   console.log(content)
@@ -180,6 +195,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
               publishedon: user.allocationDetails.publishedon,
               publishedby: user.allocationDetails.publishedby,
               approval: user.allocationDetails.approval,
+              fromdata: 'published',
 
             })
           }
@@ -195,6 +211,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
               publishedon: user.allocationDetails.publishedon,
               publishedby: user.allocationDetails.publishedby,
               approval: user.allocationDetails.approval,
+              fromdata: 'draft',
             })
           }
         } else {
@@ -209,6 +226,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
               publishedon: user.allocationDetails.publishedon,
               publishedby: user.allocationDetails.publishedby,
               approval: user.allocationDetails.approval,
+              fromdata: 'archive',
             })
           }
         }

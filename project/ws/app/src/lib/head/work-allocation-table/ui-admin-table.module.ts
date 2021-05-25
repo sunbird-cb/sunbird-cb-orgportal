@@ -19,6 +19,7 @@ import { MatDialogModule, MatButtonModule, MatCheckboxModule } from '@angular/ma
 import { FormsModule } from '@angular/forms'
 import { MatRadioModule } from '@angular/material/radio'
 import { WorkAllocationPopUpComponent } from './work-order-popup/pop-up.component'
+import { RouterModule } from '@angular/router'
 // import { BtnPageBackModule } from '../btn-page-back/btn-page-back.module'
 @NgModule({
   declarations: [WorkAllocationTableComponent, UIDirectoryTableComponent, UserPopupComponent, WorkAllocationPopUpComponent],
@@ -40,6 +41,7 @@ import { WorkAllocationPopUpComponent } from './work-order-popup/pop-up.componen
     MatCheckboxModule,
     FormsModule,
     MatRadioModule,
+    RouterModule,
   ],
   entryComponents: [WorkAllocationPopUpComponent],
   exports: [WorkAllocationTableComponent, UIDirectoryTableComponent, WorkAllocationPopUpComponent],
