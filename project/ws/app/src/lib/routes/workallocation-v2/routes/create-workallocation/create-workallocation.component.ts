@@ -137,7 +137,6 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
 
   saveWAT() {
     const req = this.getStrcuturedReq()
-    console.log(req)
     this.allocateSrvc.createAllocation(req).subscribe(res => {
       if (res) {
         this.openSnackbar('Work Allocated Successfully')
@@ -223,8 +222,8 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       }
       return undefined
     }))
-    // _.chain(this.dataStructure.compGroups).filter(i => i.roleName === ag.groupName).flatten().map('competincies').map((c: NSWatCompetency.ICompActivity) => {
-
+    // _.chain(this.dataStructure.compGroups).filter(i => i.roleName === ag.groupName)
+    // .flatten().map('competincies').map((c: NSWatCompetency.ICompActivity) => {
     // }).flatten().compact().value()
   }
 

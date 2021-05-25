@@ -48,7 +48,7 @@
               <mat-select [attr.id]="'compType_' + _comp" class="form-input flex-1" matInput #compType i18n-placeholder
                 formControlName="compType" placeholder="Type here" i18n-aria-label aria-label="Type here"
                 autocomplete="off">
-                <mat-option *ngFor="let _typ of COmpTylList" [value]="_typ">
+                <mat-option *ngFor="let _typ of compTypList" [value]="_typ">
                   <span class="flex flex-1 margin-left-s">{{_typ}}</span>
                 </mat-option>
               </mat-select>

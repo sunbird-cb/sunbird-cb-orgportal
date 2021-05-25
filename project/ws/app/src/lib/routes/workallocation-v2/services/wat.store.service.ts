@@ -9,10 +9,7 @@ export class WatStoreService {
   private activitiesGroup = new BehaviorSubject<NSWatActivity.IActivityGroup[]>([])
   private competencyGroup = new BehaviorSubject<NSWatCompetency.ICompActivityGroup[]>([])
   private officerGroup = new BehaviorSubject<NSWatOfficer.IOfficerGroup[]>([])
-
   private _competencyGroup = new BehaviorSubject<NSWatCompetency.ICompActivity[]>([])
-
-
   constructor() {
 
   }

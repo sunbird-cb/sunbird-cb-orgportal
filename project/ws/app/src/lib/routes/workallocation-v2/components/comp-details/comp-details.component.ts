@@ -17,12 +17,10 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
   compDetailForm!: FormGroup
   subscribeForm: any
   levelLest = ['Basic', 'Proficient', 'Advanced', 'Expert', 'Ustad']
-  COmpTylList = ['Behavioural', 'Domain', 'Functional']
+  compTypList = ['Behavioural', 'Domain', 'Functional']
   constructor(private watStore: WatStoreService, private formBuilder: FormBuilder) {
     this.generateForm()
   }
-
-
   ngOnInit() {
     this.fetchData()
     this.subscribeForm = this.compDetailForm.valueChanges.subscribe(val => {
@@ -51,7 +49,7 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
   }
   generateForm() {
     this.compDetailForm = this.formBuilder.group({
-      competencyList: this.formBuilder.array([])
+      competencyList: this.formBuilder.array([]),
     })
   }
   updateForm() {

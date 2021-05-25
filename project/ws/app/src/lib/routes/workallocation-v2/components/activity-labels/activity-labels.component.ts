@@ -86,10 +86,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       // tslint:enable
       // this.changeDetector.detectChanges()
     } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex)
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex)
     }
   }
 
@@ -204,6 +201,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         })
         newForlAryList.push(fga)
       })
+      // tslint:disable-next-line: no-non-null-assertion
       this.setGroupActivityValues([...newForlAryList!.value])
     }
   }
@@ -285,7 +283,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     })
   }
   submitResult(qualityForm: any) {
-    console.log(qualityForm)
+    if (qualityForm) { }
+    // console.log(qualityForm)
   }
   public async filterUsers(value: string) {
     // if (value && value.length > 3) {
@@ -348,7 +347,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
 
     const frmctrl1 = lst.get('groupName') as FormControl
     frmctrl1.patchValue(event.option.value.name)
-    debugger
+
     const frmctrl2 = lst.get('groupId') as FormControl
     frmctrl2.patchValue(event.option.value.id)
 
