@@ -13,14 +13,14 @@
       <div class="flex flex-1 flex-column margin-fix">
         <div class="flex flex-1 filter max-height-60">
           <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Draft',
-          'ws-mat-accent-border font-medium':currentFilter !== 'Draft'}" mat-button (click)="getAllUsers('Draft')"
+          'ws-mat-accent-border font-medium':currentFilter !== 'Draft'}" mat-button (click)="filter('Draft')"
             role="button">Drafts</a>
           <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Published',
-          'ws-mat-accent-border font-medium':currentFilter !== 'Published'}" mat-button
-            (click)="getAllUsers('Published')" role="button">Published</a>
+          'ws-mat-accent-border font-medium':currentFilter !== 'Published'}" mat-button (click)="filter('Published')"
+            role="button">Published</a>
           <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Archived',
-          'ws-mat-accent-border font-medium':currentFilter !== 'Archived'}" mat-button
-            (click)="getAllUsers('Archived')" role="button">Archived</a>
+          'ws-mat-accent-border font-medium':currentFilter !== 'Archived'}" mat-button (click)="filter('Archived')"
+            role="button">Archived</a>
         </div>
       </div>
       <ng-container>
@@ -48,7 +48,7 @@
             </div>
           </div>
         </div>
-        <table class="allocation-table" id="allocation-table" cell-spacing='0' cell-padding='0'>
+        <!-- <table class="allocation-table" id="allocation-table" cell-spacing='0' cell-padding='0'>
           <tr>
             <th><input type="checkbox" class="form-input"> <label style="padding-left:5px;">Full name</label></th>
             <th>Roles</th>
@@ -85,16 +85,19 @@
                   </div>
                 </li>
               </ul>
-              <!-- <ul>
+             <ul>
                 <li *ngFor="let r of d.competencies">
                   <div class="table-activity">
                     <span>{{r.name}}</span>
                   </div>
                 </li>
-              </ul> -->
+              </ul>
             </td>
           </tr>
-        </table>
+        </table> -->
+        <ws-work-allocation-table [tableData]='tabledata' [data]='data' (eOnRowClick)="onRoleClick()"
+          [needAddAdmin]='false' [needCreateUser]='false'>
+        </ws-work-allocation-table>
         <div class="custompagination">
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
           <div class="totalcount">of {{data.length}}</div>
@@ -129,7 +132,7 @@
         <ws-app-download-allocation id="downloadtemp" [data]="downloaddata" [deptname]="departmentName"></ws-app-download-allocation>
     </div>
     <div *ngIf="!downloaddata && data && data.length > 0"> -->
-  <ws-app-download-allocation id="downloadtemp" [data]="data" [deptname]="departmentName"
-    [currentFilter]="currentFilter"></ws-app-download-allocation>
+  <!-- <ws-app-download-allocation id="downloadtemp" [data]="data" [deptname]="departmentName"
+    [currentFilter]="currentFilter"></ws-app-download-allocation> -->
   <!-- </div> -->
 </div>

@@ -1,3 +1,4 @@
+// import { untilDestroyed } from 'ngx-take-until-destroy'
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
 import { Router } from '@angular/router'
@@ -231,5 +232,6 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   ngOnDestroy() {
     this.activitySubscription.unsubscribe()
     this.groupSubscription.unsubscribe()
+    this.officerFormSubscription.unsubscribe()
   }
 }

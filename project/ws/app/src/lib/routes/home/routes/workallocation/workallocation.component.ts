@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
-import { MatPaginator } from '@angular/material'
+import { MatDialog, MatPaginator } from '@angular/material'
 import { Router } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 /* tslint:disable */
 import _ from 'lodash'
 import { WorkallocationService } from '../../services/workallocation.service'
+import { WorkAllocationPopUpComponent } from '../../../../head/work-allocation-table/work-order-popup/pop-up.component'
 
 @Component({
   selector: 'ws-app-workallocation',
@@ -42,27 +43,57 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   }
 
   constructor(private exportAsService: ExportAsService, private router: Router,
-    private workallocationSrvc: WorkallocationService) { }
+    private workallocationSrvc: WorkallocationService,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.tabledata = {
       actions: [],
       columns: [
-        { displayName: 'Full Name', key: 'fullname' },
-        { displayName: 'Roles', key: 'roles' },
-        { displayName: 'Activities', key: 'activities' },
+        { displayName: 'Work orders', key: 'workorders' },
+        { displayName: 'Officers', key: 'officers' },
+        { displayName: 'Last upladed on', key: 'lastupdatedon' },
+        { displayName: 'Last upladed by', key: 'lastupdatedby' },
+
       ],
       needCheckBox: false,
       needHash: false,
-      sortColumn: 'fullName',
+      sortColumn: 'workorders',
       sortState: 'asc',
       needUserMenus: true,
     }
-    if (this.currentFilter === 'Draft') {
-      this.tabledata['columns'].push({ displayName: 'Competencies', key: 'competencies' })
-    }
+    this.userslist = [
+      {
+        allocationDetails: {
+          id: 2,
+          workorders: "Work order division 1",
+          officers: "12",
+          lastupdatedon: "03:30 PM 18 May  2021",
+          lastupdatedby: "Garima Joshi",
+          publishedon: "03:30 PM 18 May  2021",
+          publishedby: "Manjunatha HS",
+          errors: "11",
+          approval: "Download"
+        }
+      },
+      {
+        allocationDetails: {
+          id: 2,
+          workorders: "Work order division 1",
+          officers: "12",
+          lastupdatedon: "03:30 PM 18 May  2021",
+          lastupdatedby: "Manjunatha HS",
+          publishedon: "03:30 PM 18 May  2021",
+          publishedby: "Manjunatha HS",
+          errors: "11",
+          approval: "Download"
+        }
+      },
+
+    ]
+
     console.log(this.tabledata)
-    this.getdeptUsers()
+    this.filter("Draft")
   }
 
   // Download format
@@ -111,50 +142,73 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     })
     //}
   }
+  onRoleClick() {
+
+  }
 
   filter(key: string) {
+    if (key === 'Published') {
+      this.tabledata['columns'][2] = { displayName: 'Published on', key: 'publishedon' }
+      this.tabledata['columns'][3] = { displayName: 'Published by', key: 'publishedby' }
+      this.tabledata['columns'][4] = { displayName: 'Approval', key: 'approval' }
+    } else {
+      this.tabledata['columns'][2] = {
+        displayName: "Last upladed on",
+        key: "lastupdatedon"
+      }
+      this.tabledata['columns'][3] = {
+        displayName: "Last upladed by",
+        key: "lastupdatedby"
+      }
+      this.tabledata['columns'][4] = { displayName: 'Errors', key: 'errors' }
+
+    }
     const activeUsersData: any[] = []
     const archiveUsersData: any[] = []
     const draftUsersData: any[] = []
     if (this.userslist && this.userslist.length > 0) {
       this.userslist.forEach((user: any) => {
+        console.log(user.allocationDetails)
         if (key === 'Published') {
-          if (user.allocationDetails.activeWAObject.id !== undefined) {
+          if (user.allocationDetails.id !== undefined) {
             activeUsersData.push({
-              fullname: user.allocationDetails.userName,
-              email: user.allocationDetails.userEmail,
-              roles: user.allocationDetails.activeWAObject.roleCompetencyList[0].roleDetails,
-              userId: user.allocationDetails.userId || user.allocationDetails.id,
-              position: user.allocationDetails.activeWAObject.userPosition,
-              phone: user.userDetails ? user.userDetails.phone : '',
-              competencies: user.allocationDetails.activeWAObject.roleCompetencyList[0].competencyDetails
+              workorders: user.allocationDetails.workorders,
+              officers: user.allocationDetails.officers,
+              lastupdatedon: user.allocationDetails.lastupdatedon,
+              lastupdatedby: user.allocationDetails.lastupdatedby,
+              errors: user.allocationDetails.errors,
+              publishedon: user.allocationDetails.publishedon,
+              publishedby: user.allocationDetails.publishedby,
+              approval: user.allocationDetails.approval,
+
             })
           }
         } else if (key === 'Draft') {
-          if (user.allocationDetails.draftWAObject.id !== undefined) {
+          if (user.allocationDetails.id !== undefined) {
             draftUsersData.push({
-              fullname: user.allocationDetails.userName,
-              email: user.allocationDetails.userEmail,
-              roles: user.allocationDetails.draftWAObject.roleCompetencyList[0].roleDetails,
-              userId: user.allocationDetails.userId || user.allocationDetails.id,
-              position: user.allocationDetails.draftWAObject.userPosition,
-              phone: user.userDetails ? user.userDetails.phone : '',
-              competencies: user.allocationDetails.draftWAObject.roleCompetencyList[0].competencyDetails
+              workorders: user.allocationDetails.workorders,
+              officers: user.allocationDetails.officers,
+              lastupdatedon: user.allocationDetails.lastupdatedon,
+              lastupdatedby: user.allocationDetails.lastupdatedby,
+              errors: user.allocationDetails.errors,
+              competencies: user.allocationDetails.competencies,
+              publishedon: user.allocationDetails.publishedon,
+              publishedby: user.allocationDetails.publishedby,
+              approval: user.allocationDetails.approval,
             })
           }
         } else {
-          if (user.allocationDetails.archivedWAList.length > 0) {
-            const archiveList = user.allocationDetails.archivedWAList
-            archiveList.forEach((archObj: any) => {
-              archiveUsersData.push({
-                fullname: user.allocationDetails.userName,
-                email: user.allocationDetails.userEmail,
-                roles: archObj.roleCompetencyList[0].roleDetails,
-                userId: user.allocationDetails.userId || user.allocationDetails.id,
-                position: archObj.userPosition,
-                phone: user.userDetails ? user.userDetails.phone : '',
-                competencies: archObj.roleCompetencyList[0].competencyDetails
-              })
+          if (user.allocationDetails.id !== undefined) {
+            archiveUsersData.push({
+              workorders: user.allocationDetails.workorders,
+              officers: user.allocationDetails.officers,
+              lastupdatedon: user.allocationDetails.lastupdatedon,
+              lastupdatedby: user.allocationDetails.lastupdatedby,
+              errors: user.allocationDetails.errors,
+              competencies: user.allocationDetails.competencies,
+              publishedon: user.allocationDetails.publishedon,
+              publishedby: user.allocationDetails.publishedby,
+              approval: user.allocationDetails.approval,
             })
           }
         }
@@ -198,7 +252,18 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   }
 
   onNewAllocationClick() {
-    this.router.navigate([`/app/workallocation/create`])
+    // this.router.navigate([`/app/workallocation/create`])
+    const dialogRef = this.dialog.open(WorkAllocationPopUpComponent, {
+      maxHeight: 'auto',
+      height: '65%',
+      width: '80%',
+      panelClass: 'remove-pad',
+    })
+    dialogRef.afterClosed().subscribe((response: any) => {
+      console.log(response)
+
+
+    })
   }
 
   viewAllocation(data: any) {

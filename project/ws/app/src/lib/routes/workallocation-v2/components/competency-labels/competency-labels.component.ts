@@ -322,16 +322,16 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     this.watStore.setgetcompetencyGroup(this.groupList.value)
   }
 
-  show(idx: number) {
-    this.canshow = -1
-  }
+  // show(idx: number) {
+  //   this.canshow = -1
+  // }
 
   hide() {
     this.canshow = -1
   }
-  showName(idx: number) {
-    this.canshowName = -1
-  }
+  // showName(idx: number) {
+  //   this.canshowName = -1
+  // }
 
   hideName() {
     this.canshowName = -1
