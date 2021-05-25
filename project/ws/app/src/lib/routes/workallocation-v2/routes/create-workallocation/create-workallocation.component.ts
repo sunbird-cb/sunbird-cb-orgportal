@@ -144,6 +144,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   getStrcuturedReq(): any {
     let req = {}
     const offficer = this.getUserDetails()
+    const roles = this.getRoles
     req = {
       userId: offficer.user ? offficer.user.userDetails.wid : '',
       deptId: this.departmentID,
@@ -153,6 +154,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       userEmail: offficer.user ? offficer.user.userDetails.email : '',
       userPosition: offficer.position,
       positionDescription: offficer.positionDescription,
+      roleCompetencyList: roles,
       // positionId: this.selectedPosition ? this.selectedPosition.id : '',
     }
     return req
@@ -168,6 +170,53 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       }
     }
     return {}
+  }
+
+  get getRoles() {
+    return _.compact(_.map(this.dataStructure.activityGroups, (ag: any, index: number) => {
+      if (index !== 0) {
+        return {
+          roleDetails: {
+            type: 'ROLE',
+            name: ag.groupName,
+            description: ag.groupDescription,
+            status: 'VERIFIED',
+            source: 'ISTM',
+            childNodes: _.map(ag.activities, (a: any) => {
+              return {
+                type: 'ACTIVITY',
+                id: 'AID044',
+                name: a.activityName,
+                description: a.activityDescription,
+                assignedTo: a.assignedTo,
+                status: 'UNVERIFIED',
+                source: 'WAT',
+                parentRole: null,
+              }
+            }),
+          },
+          competencyDetails: _.compact(_.map(
+            // tslint:disable-next-line: max-line-length
+            _.get(_.first(_.flatten(_.filter(this.dataStructure.compGroups, i => i.roleName === ag.groupName))), 'competincies'), (c: any) => {
+              return {
+                type: 'COMPETENCY',
+                name: c.compName,
+                description: c.compDescription,
+                // id='123',
+                // compLevel
+                // source: 'ISTM',
+                // status: 'UNVERIFIED',
+                additionalProperties: {
+                  competencyArea: c.compArea,
+                  competencyType: c.compType,
+                },
+                // children: [],
+              }
+            })),
+        }
+      }
+      return undefined
+    }))
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
