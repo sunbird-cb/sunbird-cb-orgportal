@@ -4,10 +4,10 @@
             <div class="respon flex margin-top-s sticky-nav">
                 <div class="sticky-nav-content">
                     <div class="flex flex-1 margin-auto">
-                        <a href="javascript:void(0)" class="flex flex margin-left-xl">
+                        <a routerLink="/app/home/workallocation" class="flex flex margin-left-xl cursor-pointer">
                             <mat-icon class="ws-mat-black60-text flex margin-left-xs margin-right-s">arrow_back
                             </mat-icon>
-                            <span class="mat-body-1">{{'Devaprathap Nagendra'}}</span>
+                            <span class="mat-body-1">{{ getOfficerName || 'Guest'}}</span>
                         </a>
                     </div>
                     <div class="flex flex-2">
@@ -112,20 +112,13 @@
                                 <span class="mat-subheading-1 margin-left-xs">{{'Competency Details'}}</span>
                             </div>
                             <div class="flex flex-1">
-                                =={{dataStructure | json}}===<br />
-                                fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dlfkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dlfkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl fkj fksdjf kljs dklfj kds jfkljs dfklj sklfj klsdj fklj
-                                sdklfjlksdj fklsjd fkljsdkljf
-                                klsdj fkljs kfjksd jfkljs dl
+                                <ws-app-comp-details class="flex flex-1"></ws-app-comp-details>
                             </div>
+                        </div>
+                        <div class="flex">
+                            <pre>
+<!-- =={{dataStructure?.compGroups | json}}=== -->
+                        </pre>
                         </div>
                     </div>
                 </div>

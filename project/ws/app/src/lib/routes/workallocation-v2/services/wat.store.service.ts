@@ -10,6 +10,9 @@ export class WatStoreService {
   private competencyGroup = new BehaviorSubject<NSWatCompetency.ICompActivityGroup[]>([])
   private officerGroup = new BehaviorSubject<NSWatOfficer.IOfficerGroup[]>([])
 
+  private _competencyGroup = new BehaviorSubject<NSWatCompetency.ICompActivity[]>([])
+
+
   constructor() {
 
   }
@@ -25,6 +28,13 @@ export class WatStoreService {
   }
   setgetcompetencyGroup(data: NSWatCompetency.ICompActivityGroup[]) {
     this.competencyGroup.next(data)
+  }
+
+  setCompGroup(data: NSWatCompetency.ICompActivity[]) {
+    this._competencyGroup.next(data)
+  }
+  public get get_compGrp() {
+    return this._competencyGroup.asObservable()
   }
   public get getOfficerGroup(): Observable<NSWatOfficer.IOfficerGroup[]> {
     return this.officerGroup.asObservable()

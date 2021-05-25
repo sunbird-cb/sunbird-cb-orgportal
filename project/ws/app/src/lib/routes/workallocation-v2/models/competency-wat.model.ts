@@ -1,5 +1,6 @@
 export namespace NSWatCompetency {
   export interface ICompActivity {
+    compId: string
     compName: string
     compDescription: string
     compLevel?: string
@@ -9,6 +10,7 @@ export namespace NSWatCompetency {
   }
   // In UI it's Role
   export interface ICompActivityGroup {
+    roleId: string
     roleName: string
     roleDescription: string
     competincies: ICompActivity[]

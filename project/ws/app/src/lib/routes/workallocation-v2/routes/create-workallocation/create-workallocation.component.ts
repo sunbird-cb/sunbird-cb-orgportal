@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material'
 import { Router } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
+import { NSWatActivity } from '../../models/activity-wot.model'
+import { NSWatCompetency } from '../../models/competency-wat.model'
 // tslint:enable
 // import { NSWatActivity } from '../../models/activity-wot.model'
 import { IWarnError } from '../../models/warn-error.model'
@@ -37,7 +39,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
    */
   private activitySubscription: any
   private groupSubscription: any
-  private officerFormSubscription: any
+  officerFormSubscription: any
   dataStructure: any = {}
   departmentName: any
   departmentID: any
@@ -112,7 +114,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   get getsubPath(): string {
     return `./#${this.selectedTab}`
   }
-
+  get getOfficerName(): string {
+    return _.get(this.dataStructure, 'officerFormData.officerName')
+  }
   // This method is used to fetch the form data from all children components
   fetchFormsData() {
     this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(activities => {
@@ -120,7 +124,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
         this.dataStructure.activityGroups = activities
       }
     })
-    this.groupSubscription = this.watStore.getactivitiesGroup.subscribe(comp => {
+    this.groupSubscription = this.watStore.getcompetencyGroup.subscribe(comp => {
       if (comp.length > 0) {
         this.dataStructure.compGroups = comp
       }
@@ -133,6 +137,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
 
   saveWAT() {
     const req = this.getStrcuturedReq()
+    console.log(req)
     this.allocateSrvc.createAllocation(req).subscribe(res => {
       if (res) {
         this.openSnackbar('Work Allocated Successfully')
@@ -143,15 +148,18 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   getStrcuturedReq(): any {
     let req = {}
     const offficer = this.getUserDetails()
+    const roles = this.getRoles
     req = {
       userId: offficer.user ? offficer.user.userDetails.wid : '',
       deptId: this.departmentID,
       deptName: this.departmentName,
+      status: 'DRAFT',
       // activeList: this.ralist,
       userName: offficer.officerName,
       userEmail: offficer.user ? offficer.user.userDetails.email : '',
       userPosition: offficer.position,
       positionDescription: offficer.positionDescription,
+      roleCompetencyList: roles,
       // positionId: this.selectedPosition ? this.selectedPosition.id : '',
     }
     return req
@@ -167,6 +175,57 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       }
     }
     return {}
+  }
+
+  get getRoles() {
+    return _.compact(_.map(this.dataStructure.activityGroups, (ag: NSWatActivity.IActivityGroup, index: number) => {
+      if (index !== 0) {
+        return {
+          roleDetails: {
+            type: 'ROLE',
+            name: ag.groupName,
+            description: ag.groupDescription,
+            // status: 'VERIFIED',
+            // source: 'ISTM',
+            childNodes: _.map(ag.activities, (a: NSWatActivity.IActivity) => {
+              return {
+                type: 'ACTIVITY',
+                id: a.activityId,
+                name: a.activityName,
+                description: a.activityDescription,
+                assignedTo: a.assignedTo,
+                // status: 'UNVERIFIED',
+                // source: 'WAT',
+                // parentRole: null,
+              }
+            }),
+          },
+          competencyDetails: _.compact(_.map(
+            // tslint:disable-next-line: max-line-length
+            _.get(_.first(_.flatten(_.filter(this.dataStructure.compGroups, i => i.roleName === ag.groupName))), 'competincies'), (c: NSWatCompetency.ICompActivity) => {
+              return {
+                type: 'COMPETENCY',
+                id: c.compId,
+                name: c.compName,
+                description: c.compDescription,
+                // id='123',
+                // compLevel
+                // source: 'ISTM',
+                // status: 'UNVERIFIED',
+                additionalProperties: {
+                  competencyArea: c.compArea,
+                  competencyType: c.compType,
+                },
+                // children: [],
+              }
+            })),
+        }
+      }
+      return undefined
+    }))
+    // _.chain(this.dataStructure.compGroups).filter(i => i.roleName === ag.groupName).flatten().map('competincies').map((c: NSWatCompetency.ICompActivity) => {
+
+    // }).flatten().compact().value()
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

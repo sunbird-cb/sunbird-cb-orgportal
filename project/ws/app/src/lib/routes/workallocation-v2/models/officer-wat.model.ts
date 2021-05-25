@@ -1,6 +1,6 @@
 export namespace NSWatOfficer {
   export interface IOfficerGroup {
-    name: string
+    officerName: string
     position: string
     positionDescription: string
   }
