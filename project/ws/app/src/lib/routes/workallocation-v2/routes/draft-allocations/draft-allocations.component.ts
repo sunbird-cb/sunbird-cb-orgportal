@@ -358,7 +358,7 @@ export class DraftAllocationsComponent implements OnInit {
   publishWorkOrder() {
     const dialogRef = this.dialog.open(PublishPopupComponent, {
       maxHeight: 'auto',
-      height: '55%',
+      height: '58%',
       width: '50%',
       panelClass: 'remove-pad',
     })

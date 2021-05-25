@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { MatDialogRef } from '@angular/material'
 
 @Component({
   selector: 'ws-app-publish-popup',
@@ -7,22 +8,20 @@ import { Router } from '@angular/router'
   styleUrls: ['./publish-popup.component.scss'],
 })
 export class PublishPopupComponent implements OnInit {
-  uploadimg = true
-  loading = false
+  config = 1
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, public dialogRef: MatDialogRef<PublishPopupComponent>) { }
 
   ngOnInit() {
   }
 
-  uploadimgbtn() {
-    this.uploadimg = false
-    this.loading = true
-
-  }
-
   next() {
-    this.router.navigate([`/app/workallocation/published`])
+    this.config = this.config + 1
+    if (this.config === 6) {
+      this.config = 1
+      this.dialogRef.close()
+      this.router.navigate([`/app/workallocation/published`])
+    }
   }
 
 }
