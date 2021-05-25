@@ -95,12 +95,14 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
   }
 
   buttonClick(action: string, row: any) {
-    if (this.tableData) {
-      const isDisabled = _.get(_.find(this.tableData.actions, ac => ac.name === action), 'disabled') || false
-      if (!isDisabled && this.actionsClick) {
-        this.actionsClick.emit({ action, row })
-      }
-    }
+    console.log(action)
+    console.log(row)
+    // if (this.tableData) {
+    //   const isDisabled = _.get(_.find(this.tableData.actions, ac => ac.name === action), 'disabled') || false
+    //   if (!isDisabled && this.actionsClick) {
+    //     this.actionsClick.emit({ action, row })
+    //   }
+    // }
 
   }
 
@@ -181,7 +183,14 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
   }
 
   onRowClick(e: any) {
-    this.eOnRowClick.emit(e)
+    // this.eOnRowClick.emit(e)
+    console.log(e)
+    if (e.fromdata === 'draft') {
+      this.router.navigate([`/app/workallocation/draft`])
+    } else if (e.fromdata === 'published') {
+      this.router.navigate([`/app/workallocation/published`])
+    }
+
 
   }
   gotoCreateUser() {

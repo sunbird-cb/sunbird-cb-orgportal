@@ -40,18 +40,24 @@
 
             <ng-container matColumnDef="{{col.key}}" *ngFor="let col of tableData!.columns">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> {{col.displayName}} </mat-header-cell>
-                <mat-cell *matCellDef="let element" (click)="selection.toggle(element); onRowClick(element)">
+                <mat-cell *matCellDef="let element" (click)="selection.toggle(element)">
                     <!-- <span *ngIf="col.isList" class="textclass"
                         [matTooltip]="(element[col.key]).split('<br />').join(', ')">
                         <div *ngIf="element[col.key]!='Download'" innerHTML="{{element[col.key]}}"></div>
                     </span> -->
-                    <span *ngIf="!col.isList && element[col.key]!='Download'" class="textclass mat-body-2">
+                    <!-- <span *ngIf="!col.isList && col.displayName !='Work orders'" class="textclass mat-body-2">
                         {{element[col.key]}} {{col.isList}}
+                    </span> -->
+                    <span *ngIf="!col.isList" class="textclass mat-body-2">
+                        <mat-radio-button (click)="buttonClick(element.name,element)"
+                            *ngIf="col.displayName==='Work orders'">
+                        </mat-radio-button> <span (click)="onRowClick(element)">{{element[col.key]}}
+                            {{col.isList}}</span>
                     </span>
-                    <a *ngIf="!col.isList && element[col.key]==='Download'" class="textclass mat-body-2"
-                        routerLinkActive="router-link-active">
+                    <!-- <a *ngIf="!col.isList && element[col.key]==='Download'" class="textclass mat-body-2"
+                        routerLinkActive="router-link-active" [routerLink]="'transaction'" class="row-hover">
                         {{element[col.key]}} {{col.isList}}
-                    </a>
+                    </a> -->
                 </mat-cell>
             </ng-container>
 
@@ -101,23 +107,23 @@
         <!-- <div > -->
         <button (click)="buttonClick('showOnKarma',rowData)" mat-menu-item name="channel-analytics-button"
             class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
-            <mat-icon>input</mat-icon> <span>Show on karmayogi</span>
+            <mat-icon>cloud_download</mat-icon> Download
         </button>
         <!-- </div> -->
         <!-- <div mat-menu-item> -->
         <button (click)="rowData && rowData.blocked ? buttonClick('unblock',rowData): buttonClick('block',rowData)"
             mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
             aria-label="Analytics">
-            <mat-icon>block</mat-icon><span>{{rowData && rowData.blocked ? 'Unblock user':'Block user' }}</span>
+            <mat-icon>print</mat-icon> Print
         </button>
         <!-- </div> -->
         <!-- <div mat-menu-item> -->
-        <button (click)="rowData && rowData.active ? buttonClick('deactive',rowData): buttonClick('active',rowData)"
+        <!-- <button (click)="rowData && rowData.active ? buttonClick('deactive',rowData): buttonClick('active',rowData)"
             mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
             aria-label="Analytics">
             <mat-icon>edit_attributes</mat-icon>
             <span>{{rowData && rowData.active? 'Deactivate user':'Activate user'}}</span>
-        </button>
+        </button> -->
         <!-- </div> -->
         <!-- <div mat-menu-item> -->
         <!-- <button (click)="buttonClick('delete',rowData)" mat-menu-item name="channel-analytics-button"
