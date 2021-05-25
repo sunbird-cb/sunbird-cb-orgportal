@@ -1,10 +1,10 @@
 import {
   Component, OnInit, Output, EventEmitter, ViewChild,
-  AfterViewInit, OnChanges, SimpleChanges,
+  AfterViewInit, OnChanges, SimpleChanges, Inject,
 } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
-import { MatPaginator } from '@angular/material'
+import { MatDialogRef, MatPaginator, MAT_DIALOG_DATA } from '@angular/material'
 import { MatSort } from '@angular/material/sort'
 import * as _ from 'lodash'
 import { Router } from '@angular/router'
@@ -39,11 +39,14 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
   @ViewChild(MatSort, { static: true }) sort?: MatSort
   selection = new SelectionModel<any>(true, [])
 
-  constructor(private userViewPopUpService: UserViewPopUpService, private router: Router) {
+  constructor(private userViewPopUpService: UserViewPopUpService, private router: Router,
+    public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any) {
     this.dataSource = new MatTableDataSource<any>()
     this.actionsClick = new EventEmitter()
     this.clicked = new EventEmitter()
     this.dataSource.paginator = this.paginator
+
 
 
   }
@@ -106,6 +109,7 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
 
   }
   goToWorkAllocation() {
+    this.dialogRef.close()
     this.router.navigate([`/app/workallocation/create`])
   }
   applyFilter(filterValue: any) {
