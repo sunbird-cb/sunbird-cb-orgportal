@@ -36,7 +36,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
    */
   private activitySubscription: any
   private groupSubscription: any
-  private officerFormSubscription: any
+  officerFormSubscription: any
   dataStructure: any = {}
   departmentName: any
   departmentID: any
