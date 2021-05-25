@@ -168,12 +168,13 @@
                       <textarea [attr.id]="'actDesc_' + gaIdx" formControlName="activityDescription" matInput #actDesc
                         i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
                         class="form-input flex-1" [matAutocomplete]="roleDescriptionAuto"
-                        (input)="filterActivities(actDesc.value)" autocomplete="off" cdkTextareaAutosize
-                        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
-                      <mat-autocomplete #roleDescriptionAuto="matAutocomplete">
+                        (click)="setSelectedFilter(gaIdx)" (input)="filterActivities(actDesc.value, gaIdx)"
+                        autocomplete="off" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"></textarea>
+                      <mat-autocomplete #roleDescriptionAuto="matAutocomplete"
+                        (optionSelected)="activitySelected($event)">
                         <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
-                        <mat-option *ngFor="let activity of filteredActivityDesc | async"
-                          [value]="activity.description">
+                        <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity">
                           <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
                             <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div>
                             <div class="mat-body-2  margin-bottom-xxs">{{activity.description}}</div>

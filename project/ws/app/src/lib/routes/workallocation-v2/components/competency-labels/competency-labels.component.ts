@@ -182,15 +182,17 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     // this.changeDetector.detectChanges()
 
   }
-  addNewGroup(name?: string, desc?: string) {
+  addNewGroup(name?: string, desc?: string, id?: string) {
     const oldValue = this.groupList
     const fg = this.formBuilder.group({
       competincies: this.formBuilder.array([]),
+      roleId: id || '',
       roleName: name || this.untitedRole,
       roleDescription: desc || 'Role description',
     })
     const activits = fg.get('competincies') as FormArray
     const fga = this.formBuilder.group({
+      compId: '',
       compName: '',
       compDescription: '',
       compLevel: '',
@@ -210,6 +212,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       const newForlAryList = this.formBuilder.array([])
       competincies.forEach((ac: NSWatCompetency.ICompActivity) => {
         const fga = this.formBuilder.group({
+          compId: ac.compId,
           compName: ac.compName,
           compDescription: ac.compDescription,
           compLevel: ac.compLevel,
@@ -225,6 +228,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     if (idx >= 0) {
       const oldValue = this.groupActivityList as FormArray
       const fga = this.formBuilder.group({
+        compId: '',
         compName: '',
         compDescription: '',
         compLevel: '',
@@ -242,14 +246,16 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     if (this.groups.length > this.groupList.length) {
       if (this.groups.length >= 2) {
         const lastGroup = _.last(this.groups)
-        this.addNewGroup(lastGroup!.groupName, lastGroup!.groupDescription)
+        this.addNewGroup(lastGroup!.groupName, lastGroup!.groupDescription, lastGroup!.groupId)
       }
     } else {
       for (let index = 0; index < this.groups.length; index += 1) {
         // this.groupListByIndex(index).
         if (index > 0) {
+          const oldRIdValue = this.groupList.at(index).get('roleId') as FormControl
           const oldRNameValue = this.groupList.at(index).get('roleName') as FormControl
           const oldRDescValue = this.groupList.at(index).get('roleDescription') as FormControl
+          oldRIdValue.patchValue(this.groups[index].groupId)
           oldRNameValue.patchValue(this.groups[index].groupName)
           oldRDescValue.patchValue(this.groups[index].groupDescription)
           // this.setGroupValues([...oldValue.value])
@@ -267,6 +273,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   }
   createActivityControl(activityObj: NSWatCompetency.ICompActivity) {
     const newControl = this.formBuilder.group({
+      compId: new FormControl(activityObj.compId),
       compName: new FormControl(activityObj.compName),
       compDescription: new FormControl(activityObj.compDescription),
       compLevel: new FormControl(activityObj.compLevel),
@@ -278,6 +285,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   }
   createGroupControl(activityObj: NSWatCompetency.ICompActivityGroup) {
     const newControl = this.formBuilder.group({
+      roleId: new FormControl(activityObj.roleId),
       roleName: new FormControl(activityObj.roleName),
       roleDescription: new FormControl(activityObj.roleDescription),
       competincies: this.createActivtyControl(activityObj.competincies),
@@ -288,6 +296,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   createActivtyControl(activityObj: NSWatCompetency.ICompActivity[]) {
     return activityObj.map((v: NSWatCompetency.ICompActivity) => {
       return this.formBuilder.array([{
+        activityId: new FormControl(v.compId),
         activityName: new FormControl(v.compName),
         compDescription: new FormControl(v.compDescription),
         // assignedTo: new FormControl(v.assignedTo),
@@ -324,6 +333,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   }
   public competencySelected(event: any) {
     const lst = this.groupList.at(this.activeGroupIdx).get('competincies') as FormArray
+
+    const frmctrl0 = lst.at(this.selectedCompIdx).get('compId') as FormControl
+    frmctrl0.patchValue(_.get(event, 'option.value.id') || '')
 
     const frmctrl = lst.at(this.selectedCompIdx).get('compDescription') as FormControl
     frmctrl.patchValue(_.get(event, 'option.value.description') || '')

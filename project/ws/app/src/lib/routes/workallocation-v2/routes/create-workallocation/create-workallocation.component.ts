@@ -3,6 +3,8 @@ import { MatSnackBar } from '@angular/material'
 import { Router } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
+import { NSWatActivity } from '../../models/activity-wot.model'
+import { NSWatCompetency } from '../../models/competency-wat.model'
 // tslint:enable
 // import { NSWatActivity } from '../../models/activity-wot.model'
 import { IWarnError } from '../../models/warn-error.model'
@@ -134,6 +136,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
 
   saveWAT() {
     const req = this.getStrcuturedReq()
+    console.log(req)
     this.allocateSrvc.createAllocation(req).subscribe(res => {
       if (res) {
         this.openSnackbar('Work Allocated Successfully')
@@ -149,6 +152,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       userId: offficer.user ? offficer.user.userDetails.wid : '',
       deptId: this.departmentID,
       deptName: this.departmentName,
+      status: 'DRAFT',
       // activeList: this.ralist,
       userName: offficer.officerName,
       userEmail: offficer.user ? offficer.user.userDetails.email : '',
@@ -173,33 +177,34 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   }
 
   get getRoles() {
-    return _.compact(_.map(this.dataStructure.activityGroups, (ag: any, index: number) => {
+    return _.compact(_.map(this.dataStructure.activityGroups, (ag: NSWatActivity.IActivityGroup, index: number) => {
       if (index !== 0) {
         return {
           roleDetails: {
             type: 'ROLE',
             name: ag.groupName,
             description: ag.groupDescription,
-            status: 'VERIFIED',
-            source: 'ISTM',
-            childNodes: _.map(ag.activities, (a: any) => {
+            // status: 'VERIFIED',
+            // source: 'ISTM',
+            childNodes: _.map(ag.activities, (a: NSWatActivity.IActivity) => {
               return {
                 type: 'ACTIVITY',
-                id: 'AID044',
+                id: a.activityId,
                 name: a.activityName,
                 description: a.activityDescription,
                 assignedTo: a.assignedTo,
-                status: 'UNVERIFIED',
-                source: 'WAT',
-                parentRole: null,
+                // status: 'UNVERIFIED',
+                // source: 'WAT',
+                // parentRole: null,
               }
             }),
           },
           competencyDetails: _.compact(_.map(
             // tslint:disable-next-line: max-line-length
-            _.get(_.first(_.flatten(_.filter(this.dataStructure.compGroups, i => i.roleName === ag.groupName))), 'competincies'), (c: any) => {
+            _.get(_.first(_.flatten(_.filter(this.dataStructure.compGroups, i => i.roleName === ag.groupName))), 'competincies'), (c: NSWatCompetency.ICompActivity) => {
               return {
                 type: 'COMPETENCY',
+                id: c.compId,
                 name: c.compName,
                 description: c.compDescription,
                 // id='123',
@@ -217,6 +222,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       }
       return undefined
     }))
+    // _.chain(this.dataStructure.compGroups).filter(i => i.roleName === ag.groupName).flatten().map('competincies').map((c: NSWatCompetency.ICompActivity) => {
+
+    // }).flatten().compact().value()
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

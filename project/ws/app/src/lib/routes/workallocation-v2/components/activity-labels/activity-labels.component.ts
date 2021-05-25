@@ -19,6 +19,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   private unsubscribe = new Subject<void>()
   labels: NSWatActivity.IActivity[] = []
   groups: NSWatActivity.IActivityGroup[] = []
+  selectedActivityIdx = 0
   activeGroupIdx = 0
   untitedRole = 'Untited role'
   activityForm!: FormGroup
@@ -156,6 +157,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   addNewLabel() {
     const oldValue = this.labelsList
     const fg = this.formBuilder.group({
+      activityId: '',
       activityName: '',
       activityDescription: '',
       assignedTo: '',
@@ -170,11 +172,13 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     const oldValue = this.groupList
     const fg = this.formBuilder.group({
       activities: this.formBuilder.array([]),
+      groupId: '',
       groupName: this.untitedRole,
       groupDescription: 'Role description',
     })
     const activits = fg.get('activities') as FormArray
     const fga = this.formBuilder.group({
+      activityId: '',
       activityName: '',
       activityDescription: '',
       assignedTo: '',
@@ -192,6 +196,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       const newForlAryList = this.formBuilder.array([])
       activities.forEach((ac: NSWatActivity.IActivity) => {
         const fga = this.formBuilder.group({
+          activityId: ac.activityId,
           activityName: ac.activityName,
           activityDescription: ac.activityDescription,
           assignedTo: ac.assignedTo,
@@ -205,6 +210,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     if (idx >= 0) {
       const oldValue = this.groupActivityList as FormArray
       const fga = this.formBuilder.group({
+        activityId: '',
         activityName: '',
         activityDescription: '',
         assignedTo: '',
@@ -249,6 +255,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
   createActivityControl(activityObj: NSWatActivity.IActivity) {
     const newControl = this.formBuilder.group({
+      activityId: new FormControl(activityObj.activityId),
       activityName: new FormControl(activityObj.activityName),
       activityDescription: new FormControl(activityObj.activityDescription),
       assignedTo: new FormControl(activityObj.assignedTo),
@@ -258,6 +265,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
   createGroupControl(activityObj: NSWatActivity.IActivityGroup) {
     const newControl = this.formBuilder.group({
+      groupId: new FormControl(activityObj.groupId),
       groupName: new FormControl(activityObj.groupName),
       groupDescription: new FormControl(activityObj.groupDescription),
       activities: this.createActivtyControl(activityObj.activities),
@@ -268,6 +276,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   createActivtyControl(activityObj: NSWatActivity.IActivity[]) {
     return activityObj.map((v: NSWatActivity.IActivity) => {
       return this.formBuilder.array([{
+        activityId: new FormControl(v.activityId),
         activityName: new FormControl(v.activityName),
         activityDescription: new FormControl(v.activityDescription),
         assignedTo: new FormControl(v.assignedTo),
@@ -289,8 +298,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     // }
   }
 
-  public async filterActivities(val: string) {
-
+  public async filterActivities(val: string, index: number) {
+    this.selectedActivityIdx = index
     // this.filteredActivityDesc = this.allocateSrvc.onSearchRole(val).pipe(
     //   map(res => res.filter((role: any) => {
     //     role.childNodes.map((node: any) => {
@@ -338,8 +347,26 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
 
     const frmctrl1 = lst.get('groupName') as FormControl
     frmctrl1.patchValue(event.option.value.name)
+    debugger
+    const frmctrl2 = lst.get('groupId') as FormControl
+    frmctrl2.patchValue(event.option.value.id)
+
     this.watStore.setgetactivitiesGroup(this.groupList.value)
 
+  }
+  activitySelected(event: any) {
+    const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
+    const frmctrl = lst.at(this.selectedActivityIdx).get('activityDescription') as FormControl
+    frmctrl.patchValue(event.option.value.description)
+
+    const frmctrl1 = lst.at(this.selectedActivityIdx).get('activityId') as FormControl
+    frmctrl1.patchValue(event.option.value.id)
+
+    this.watStore.setgetactivitiesGroup(this.groupList.value)
+
+  }
+  setSelectedFilter(index: number) {
+    this.selectedActivityIdx = index
   }
 
   displayFn(data: any): string {
