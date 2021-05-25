@@ -1,7 +1,5 @@
-import { DOCUMENT } from "@angular/common"
-import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from "@angular/core"
-
-
+import { DOCUMENT } from '@angular/common'
+import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core'
 @Component({
   selector: 'ws-app-create-workallocation',
   templateUrl: './create-workallocation.component.html',
@@ -34,7 +32,7 @@ export class CreateWorkallocationComponent implements AfterViewInit {
     * this is for selecting tabs dynamically
     */
   onScroll($event: any) {
-    console.log($event)
+    // console.log($event)
     const offset = $event.srcElement.scrollTop || this.document.body.scrollTop || 0
     if (this.officerOffset != null && this.activitiesOffset && this.rolesOffset && this.competenciesOffset && this.levelsOffset) {
       if (offset >= this.officerOffset && offset < this.activitiesOffset) {
@@ -70,7 +68,7 @@ export class CreateWorkallocationComponent implements AfterViewInit {
   }
   filterComp($element: any, filterType: string) {
     this.selectedTab = filterType
-    $element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
+    $element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
 
   }
   get currentProgress(): number {

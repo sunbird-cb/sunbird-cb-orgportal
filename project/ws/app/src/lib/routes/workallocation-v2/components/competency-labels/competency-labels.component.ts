@@ -100,10 +100,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       // tslint:enable
       // this.changeDetector.detectChanges()
     } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex)
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex)
     }
   }
 
@@ -221,6 +218,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         })
         newForlAryList.push(fga)
       })
+      // tslint:disable-next-line: no-non-null-assertion
       this.setGroupActivityValues([...newForlAryList!.value])
     }
   }
@@ -246,6 +244,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     if (this.groups.length > this.groupList.length) {
       if (this.groups.length >= 2) {
         const lastGroup = _.last(this.groups)
+        // tslint:disable-next-line: no-non-null-assertion
         this.addNewGroup(lastGroup!.groupName, lastGroup!.groupDescription, lastGroup!.groupId)
       }
     } else {
@@ -304,7 +303,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     })
   }
   submitResult(qualityForm: any) {
-    console.log(qualityForm)
+    if (qualityForm) {
+
+    }
   }
   public async filterUsers(value: string) {
     // if (value && value.length > 3) {

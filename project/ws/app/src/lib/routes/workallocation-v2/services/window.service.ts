@@ -1,3 +1,4 @@
+// tslint:disable
 import { isPlatformBrowser } from '@angular/common'
 import { ClassProvider, FactoryProvider, InjectionToken, PLATFORM_ID } from '@angular/core'
 
@@ -52,3 +53,4 @@ export const WINDOW_PROVIDERS = [
   browserWindowProvider,
   windowProvider,
 ]
+// tslint:enable
