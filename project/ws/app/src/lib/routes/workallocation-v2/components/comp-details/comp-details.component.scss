@@ -36,6 +36,14 @@
       color: rgba(0, 0, 0, 0.16);
     }
   }
+
+  ::ng-deep .mat-form-field-infix {
+    padding-top: 0.7em;
+  }
+
+  ::ng-deep .mat-select-arrow-wrapper {
+    padding-top: 1rem;
+  }
 }
 
 .margin-0 {

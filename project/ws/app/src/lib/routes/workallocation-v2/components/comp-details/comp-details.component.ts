@@ -15,6 +15,9 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
   dataStructure: NSWatCompetency.ICompActivity[] = []
   groupSubscription: any
   compDetailForm!: FormGroup
+  subscribeForm: any
+  levelLest = ['Basic', 'Proficient', 'Advanced', 'Expert', 'Ustad']
+  COmpTylList = ['Behavioural', 'Domain', 'Functional']
   constructor(private watStore: WatStoreService, private formBuilder: FormBuilder) {
     this.generateForm()
   }
@@ -22,10 +25,15 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.fetchData()
-
+    this.subscribeForm = this.compDetailForm.valueChanges.subscribe(val => {
+      if (val) {
+        this.watStore.setCompGroup(val)
+      }
+    })
   }
   ngOnDestroy(): void {
     this.groupSubscription.unsubscribe()
+    this.subscribeForm.unsubscribe()
   }
   fetchData() {
     this.groupSubscription = this.watStore.get_compGrp.subscribe(comp => {

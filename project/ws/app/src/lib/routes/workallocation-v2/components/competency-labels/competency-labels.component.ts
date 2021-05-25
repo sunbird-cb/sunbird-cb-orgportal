@@ -353,6 +353,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     this.watStore.setCompGroup(list)
   }
   show(idx: number) {
+    if (idx) { }
     this.canshow = -1
   }
 
@@ -360,6 +361,8 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     this.canshow = -1
   }
   showName(idx: number) {
+    if (idx) { }
+
     this.canshowName = -1
   }
 
