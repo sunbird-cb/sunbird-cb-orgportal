@@ -10,11 +10,13 @@ import { UserAutocompleteCardComponent } from './user-autocomplete-card/user-aut
 import { ExportAsModule } from 'ngx-export-as'
 import { AutocompleteModule } from './autocomplete/autocomplete.module'
 import { InitialAvatarComponent } from './initial-avatar/initial-avatar.component'
+import { PublishPopupComponent } from './publish-popup/publish-popup.component'
 
 @NgModule({
   declarations: [
     UserAutocompleteCardComponent,
     InitialAvatarComponent,
+    PublishPopupComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,8 @@ import { InitialAvatarComponent } from './initial-avatar/initial-avatar.componen
   exports: [
     UserAutocompleteCardComponent,
     InitialAvatarComponent,
+    PublishPopupComponent,
   ],
+  entryComponents: [PublishPopupComponent],
 })
 export class ComponentSharedModule { }

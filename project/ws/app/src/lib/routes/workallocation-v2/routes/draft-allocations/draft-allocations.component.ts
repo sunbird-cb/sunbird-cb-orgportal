@@ -1,11 +1,12 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
-import { MatPaginator } from '@angular/material'
+import { MatPaginator, MatDialog } from '@angular/material'
 import { Router } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 /* tslint:disable */
 import _ from 'lodash'
 import { WorkallocationService } from '../../../home/services/workallocation.service'
+import { PublishPopupComponent } from '../../components/publish-popup/publish-popup.component'
 
 @Component({
   selector: 'ws-app-draft-allocations',
@@ -34,7 +35,7 @@ export class DraftAllocationsComponent implements OnInit {
   totalusersCount: any
   // p: number = 1;
   constructor(private exportAsService: ExportAsService, private router: Router,
-    private workallocationSrvc: WorkallocationService) { }
+    private workallocationSrvc: WorkallocationService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.tabledata = {
@@ -352,6 +353,18 @@ export class DraftAllocationsComponent implements OnInit {
 
   onNewAllocationClick() {
     this.router.navigate([`/app/workallocation/create`])
+  }
+
+  publishWorkOrder() {
+    const dialogRef = this.dialog.open(PublishPopupComponent, {
+      maxHeight: 'auto',
+      height: '55%',
+      width: '50%',
+      panelClass: 'remove-pad',
+    })
+    dialogRef.afterClosed().subscribe((response: any) => {
+      console.log(response)
+    })
   }
 
 }

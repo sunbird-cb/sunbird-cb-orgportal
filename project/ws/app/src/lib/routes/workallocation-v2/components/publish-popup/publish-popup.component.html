@@ -1,0 +1,28 @@
+<div class="custom-popup">
+  <div class="mat-subheading-1 margin-top-l margin-bottom-m">
+    Publish new work allocation order
+  </div>
+  <div class="mat-body-2 margin-bottom-m">
+    Upload a scanned copy of the signed wor allocation order
+  </div>
+  <div class="pdf-upload" *ngIf="uploadimg">
+    <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-xs">
+    <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display">
+      <span class="ws-mat-default-text" i18n>Browse for files</span>
+    </button>
+    <p>Or drag and drop a pdf file here</p>
+  </div>
+  <div class="pdf-upload" *ngIf="loading">
+    <img src="/assets/icons/pdf.svg" alt="PDF upload" (click)="loading()">
+    <p class="loadingbar"></p>
+  </div>
+  <div class="footer">
+    <button mat-raised-button type="button" [mat-dialog-close]="true" class="ws-mat-primary-background flex-auto-display"
+      (click)="next()">
+      <span class="text-white" i18n>Next</span>
+    </button>
+    <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display margin-right-s">
+      <span class="ws-mat-default-text" i18n>Cancel</span>
+    </button>
+  </div>
+</div>
