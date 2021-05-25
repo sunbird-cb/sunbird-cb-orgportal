@@ -95,8 +95,10 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
   }
 
   buttonClick(action: string, row: any) {
-    // console.log(action)
-    // console.log(row)
+    // tslint:disable-next-line: no-console
+    console.log(action)
+    // tslint:disable-next-line: no-console
+    console.log(row)
     // if (this.tableData) {
     //   const isDisabled = _.get(_.find(this.tableData.actions, ac => ac.name === action), 'disabled') || false
     //   if (!isDisabled && this.actionsClick) {
