@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 
 @Component({
   selector: 'ws-app-assistant-content-card',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./assistant-content-card.component.scss'],
 })
 export class AssistantContentCardComponent implements OnInit {
-
+  @Input() content!: any
   constructor() { }
 
   ngOnInit() {
