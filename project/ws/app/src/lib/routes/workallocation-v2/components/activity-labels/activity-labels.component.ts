@@ -10,7 +10,6 @@ import { Observable, Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
 import { MatSnackBar } from '@angular/material'
 
-
 @Component({
   selector: 'ws-app-activity-labels',
   templateUrl: './activity-labels.component.html',

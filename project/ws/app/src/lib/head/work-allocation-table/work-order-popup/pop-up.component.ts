@@ -40,14 +40,12 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
   selection = new SelectionModel<any>(true, [])
 
   constructor(private userViewPopUpService: UserViewPopUpService, private router: Router,
-    public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: any) {
+              public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>,
+              @Inject(MAT_DIALOG_DATA) public dialogData: any) {
     this.dataSource = new MatTableDataSource<any>()
     this.actionsClick = new EventEmitter()
     this.clicked = new EventEmitter()
     this.dataSource.paginator = this.paginator
-
-
 
   }
 
@@ -75,25 +73,25 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
     this.userData = [
       {
         id: 2,
-        workorders: "Work order division 1",
-        officers: "12",
-        lastupdatedon: "03:30 PM 18 May  2021",
-        lastupdatedby: "Garima Joshi",
-        publishedon: "03:30 PM 18 May  2021",
-        publishedby: "Manjunatha HS",
-        errors: "11",
-        approval: "Download"
+        workorders: 'Work order division 1',
+        officers: '12',
+        lastupdatedon: '03:30 PM 18 May  2021',
+        lastupdatedby: 'Garima Joshi',
+        publishedon: '03:30 PM 18 May  2021',
+        publishedby: 'Manjunatha HS',
+        errors: '11',
+        approval: 'Download',
       },
       {
         id: 2,
-        workorders: "Work order division 1",
-        officers: "12",
-        lastupdatedon: "03:30 PM 18 May  2021",
-        lastupdatedby: "Manjunatha HS",
-        publishedon: "03:30 PM 18 May  2021",
-        publishedby: "Manjunatha HS",
-        errors: "11",
-        approval: "Download"
+        workorders: 'Work order division 1',
+        officers: '12',
+        lastupdatedon: '03:30 PM 18 May  2021',
+        lastupdatedby: 'Manjunatha HS',
+        publishedon: '03:30 PM 18 May  2021',
+        publishedby: 'Manjunatha HS',
+        errors: '11',
+        approval: 'Download',
 
       },
 
@@ -130,8 +128,6 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
       const isDisabled = _.get(_.find(this.tableData.actions, ac => ac.name === action), 'disabled') || false
       if (!isDisabled && this.actionsClick) {
         this.actionsClick.emit({ action, row })
-        console.log(action)
-        console.log(row)
       }
     }
 
