@@ -9,11 +9,37 @@ import { debounceTime, map, switchMap, takeUntil } from 'rxjs/operators'
 import { Observable, Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
 import { MatSnackBar } from '@angular/material'
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations'
 
 @Component({
   selector: 'ws-app-activity-labels',
   templateUrl: './activity-labels.component.html',
   styleUrls: ['./activity-labels.component.scss'],
+  animations: [
+    trigger('fadeInGrow', [
+      state("in", style({ transform: "translateY(0)" })),
+      transition('void => *', [
+        animate(
+          500,
+          keyframes([
+            style({ opacity: 0, transform: "translateY(-100%)", offset: 0 }),
+            style({ opacity: 1, transform: "translateY(15px)", offset: 0.3 }),
+            style({ opacity: 1, transform: "translateY(0)", offset: 1.0 })
+          ])
+        )
+      ]),
+      transition("* => void", [
+        animate(
+          500000,
+          keyframes([
+            style({ opacity: 1, transform: "translateY(0)", offset: 0 }),
+            style({ opacity: 1, transform: "translateY(-15px)", offset: 0.7 }),
+            style({ opacity: 0, transform: "translateY(100%)", offset: 1.0 })
+          ])
+        )
+      ])
+    ])
+  ]
 })
 export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit {
   private unsubscribe = new Subject<void>()

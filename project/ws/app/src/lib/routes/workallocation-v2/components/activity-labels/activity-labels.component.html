@@ -90,7 +90,7 @@
     </div>
     <!-- <div *ngIf="groups.length > 0" class="flex flex-1 flex-column margin-top-xs"> -->
     <ng-container *ngFor="let grp of activityForm?.get('groupsArray')?.controls; let i=index">
-      <div (mouseenter)="enter(i)" class=" flex flex-1 flex-row resporow margin-top-xs" [formGroup]="grp">
+      <div @fadeInGrow (mouseenter)="enter(i)" class=" flex flex-1 flex-row resporow margin-top-xs" [formGroup]="grp">
         <div *ngIf="i === 0" class="flex flex-1 flex-column example-list margin-r-2px">
           <span class="flex margin-left-m mat-subheading-2 margin-top-s">
             {{'Role and description'}}
@@ -126,7 +126,7 @@
             </mat-form-field>
           </div>
           <!-- {{grp.get('groupName').value}} -->
-          <div class="flex flex-1 group-background " (focusout)="hide()">
+          <div class="flex flex-1  group-background" (focusout)="hide()">
             <span
               *ngIf="(canshow === -1 && !grp.get('groupDescription').value) || !(canshow === i && activeGroupIdx === i)"
               (click)="show(i)"
@@ -163,8 +163,9 @@
             <ng-container *ngFor="let ga of grp.get('activities').controls; let gaIdx = index">
               <!-- {{log(ga)}} -->
               <!-- <span class="mat-subheading-2">{{'Unmapped activities'}}</span> -->
-              <div [attr.id]="'cdkDragData_' + gaIdx" class="example-box" [cdkDragData]="ga.value" cdkDrag>
-                <div class="margin-right-xs">
+              <div [attr.id]="'cdkDragData_' + gaIdx" class="example-box cursor-default" [cdkDragData]="ga.value"
+                cdkDrag>
+                <div class="margin-right-xs cursor-move" cdkDragHandle>
                   <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
                 </div>
                 <div class="flex flex-1" [formGroup]="ga">
