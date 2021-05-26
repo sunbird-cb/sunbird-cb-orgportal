@@ -42,7 +42,7 @@
                       [matAutocomplete]="competencyAuto" autocomplete="off" />
                     <mat-autocomplete [attr.id]="'compAuto1_' + i" #competencyAuto="matAutocomplete"
                       (optionSelected)="competencySelected($event)">
-                      <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
+                      <div class="mat-body-4 ws-mat-accent-text padding-s">From competency dictionary</div>
                       <mat-option *ngFor="let competency of filteredCompetencies | async" [value]="competency">
                         <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
                           <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{competency.name}}</div>
@@ -144,7 +144,7 @@
                         (input)="filterCompetencies(compName.value, gaIdx)" [matAutocomplete]="competencyAuto1" />
                       <mat-autocomplete [attr.id]="'compAuto_' + gaIdx" #competencyAuto1="matAutocomplete"
                         (optionSelected)="competencySelected($event)">
-                        <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
+                        <div class="mat-body-4 ws-mat-accent-text padding-s">From competency dictionary</div>
                         <mat-option *ngFor="let competency of filteredCompetencies | async" [value]="competency">
                           <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
                             <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{competency.name}}</div>

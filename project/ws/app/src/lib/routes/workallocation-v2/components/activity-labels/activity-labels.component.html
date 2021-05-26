@@ -41,7 +41,7 @@
                       class="form-input flex-1" (input)="filterActivities(actDesc.value)"
                       [matAutocomplete]="activityAuto" autocomplete="off" />
                     <mat-autocomplete #activityAuto="matAutocomplete">
-                      <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
+                      <div class="mat-body-4 ws-mat-accent-text padding-s">From activity dictionary</div>
                       <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity.description">
                         <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
                           <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div>
@@ -59,7 +59,12 @@
                       placeholder="Type here" i18n-aria-label #assignedTo class="form-input flex-1"
                       [matAutocomplete]="assignToAuto" (input)="filterUsers(assignedTo.value)" autocomplete="off" />
                     <mat-autocomplete #assignToAuto="matAutocomplete">
-                      <div class="mat-body-4 ws-mat-accent-text padding-s">aas From Karmayogi officer portal</div>
+                      <mat-option [value]="''">
+                        <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                          <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{'Final authority'}}</div>
+                        </div>
+                      </mat-option>
+                      <div class="mat-body-4 ws-mat-accent-text padding-s">From Karmayogi officer portal</div>
                       <mat-option *ngFor="let user of userslist"
                         [value]="user.userDetails.first_name + ' ' +user.userDetails.last_name ">
                         <ws-app-user-autocomplete-card [user]="user">
@@ -110,7 +115,7 @@
                 [matAutocomplete]="roleAuto" />
               <mat-autocomplete [attr.id]="'roleAuto_' + i" #roleAuto="matAutocomplete"
                 (optionSelected)="roleSelected($event)">
-                <div class="mat-body-4 ws-mat-accent-text padding-s"> From FRAC dictionary</div>
+                <div class="mat-body-4 ws-mat-accent-text padding-s"> From role dictionary</div>
                 <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
                   <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
                     <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{role.name}}</div>
@@ -173,10 +178,10 @@
                         cdkAutosizeMaxRows="5"></textarea>
                       <mat-autocomplete #roleDescriptionAuto="matAutocomplete"
                         (optionSelected)="activitySelected($event)">
-                        <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
+                        <div class="mat-body-4 ws-mat-accent-text padding-s">From activity dictionary</div>
                         <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity">
                           <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
-                            <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div>
+                            <!-- <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div> -->
                             <div class="mat-body-2  margin-bottom-xxs">{{activity.description}}</div>
                           </div>
                         </mat-option>
@@ -188,19 +193,32 @@
                       <!-- <input [attr.id]="'assignto_' + gaIdx" matInput #assignto i18n-placeholder placeholder="Type here"
                         i18n-aria-label aria-label="Activity description input" class="form-input flex-1"
                         autocomplete="off" /> -->
-                      <ws-app-initial-avatar *ngIf="assignedTo.value.length" [name]="assignedTo.value">
+                      <ws-app-initial-avatar *ngIf="assignedTo.value.length && assignedTo.value !== 'Final authority'"
+                        [name]="assignedTo.value">
                       </ws-app-initial-avatar>
                       <input [attr.id]="'assignto_' + gaIdx" class="form-input flex-1" matInput #assignedTo
                         formControlName="assignedTo" i18n-placeholder placeholder="Type here" i18n-aria-label
                         aria-label="Type here" [matAutocomplete]="auto" (input)="filterUsers(assignedTo.value)"
                         autocomplete="off">
                       <mat-autocomplete #auto="matAutocomplete">
-                        <div class="mat-body-4 ws-mat-accent-text padding-s">From Karmayogi officer portal</div>
+                        <mat-option [value]="'Final authority'">
+                          <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                            <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{'Final authority'}}</div>
+                          </div>
+                        </mat-option>
+                        <div class="mat-body-4 ws-mat-accent-text padding-s" *ngIf="userslist?.length">
+                          From Karmayogi officer portal
+                        </div>
                         <mat-option *ngFor="let user of userslist"
                           [value]="user.userDetails.first_name + ' ' +user.userDetails.last_name ">
                           <ws-app-user-autocomplete-card [user]="user">
                           </ws-app-user-autocomplete-card>
                         </mat-option>
+                        <!-- <mat-option *ngIf="!userslist?.length">
+                          <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                            <div class="mat-body-2  margin-bottom-xxs">{{'No users...'}}</div>
+                          </div>
+                        </mat-option> -->
                       </mat-autocomplete>
                     </mat-form-field>
                   </div>
