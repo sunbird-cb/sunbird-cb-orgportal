@@ -22,7 +22,7 @@
             <mat-icon>print</mat-icon> Print
           </button>
           <button type="button" mat-button class="allocation-btn mat-accent-border" (click)="onNewAllocationClick()">
-            New Officer
+            New officer
           </button>
           <button mat-stroked-button color="accent" type="button" class="publish-btn mat-accent-border flex-auto-display"
             (click)="publishWorkOrder()" id="publishbtn" *ngIf="data && data.length > 0">
@@ -40,37 +40,37 @@
                 <li class="margin-right-xs">
                   <div class="peach-bg">
                     <p class="mat-body-3">Officers</p>
-                    <p class="font-bold">{{statscount.Officers}}</p>
+                    <p class="mat-subheading-2">{{statscount.Officers}}</p>
                   </div>
                 </li>
                 <li class="margin-right-xs">
                   <div class="peach-bg">
                     <p class="mat-body-3">Progress</p>
-                    <p class="font-bold">{{statscount.Progress}}</p>
+                    <p class="mat-subheading-2">{{statscount.Progress}}</p>
                   </div>
                 </li>
                 <li class="margin-right-xs">
                   <div class="peach-bg">
                     <p class="mat-body-3">Errors</p>
-                    <p class="font-bold">{{statscount.Errors}}</p>
+                    <p class="mat-subheading-2">{{statscount.Errors}}</p>
                   </div>
                 </li>
                 <li class="margin-right-xs">
                   <div>
                     <p class="mat-body-3">Roles</p>
-                    <p class="font-bold">{{statscount.Roles}}</p>
+                    <p class="mat-subheading-2">{{statscount.Roles}}</p>
                   </div>
                 </li>
                 <li class="margin-right-xs">
                   <div>
                     <p class="mat-body-3">Competencies</p>
-                    <p class="font-bold">{{statscount.Competencies}}</p>
+                    <p class="mat-subheading-2">{{statscount.Competencies}}</p>
                   </div>
                 </li>
                 <li class="margin-right-xs">
                   <div>
                     <p class="mat-body-3">Activities</p>
-                    <p class="font-bold">{{statscount.Activities}}</p>
+                    <p class="mat-subheading-2">{{statscount.Activities}}</p>
                   </div>
                 </li>
               </ul>
@@ -86,7 +86,7 @@
             </div>
           </div>
         </div>
-        <table class="allocation-table margin-bottom-l" id="allocation-table" cell-spacing='0' cell-padding='0'>
+        <table class="allocation-table margin-bottom-l mat-body-2" id="allocation-table" cell-spacing='0' cell-padding='0'>
           <tr>
             <th>Name and designation</th>
             <th>Roles and competencies</th>
@@ -148,9 +148,9 @@
         <div *ngIf="data && data.length === 0" class="nodata margin-left-xs margin-l text-center font-medium ">
           <img src="/assets/icons/Officers_empty.svg" alt="No Officers" class="margin-top-xl margin-bottom-m">
           <p class="mat-subheading-1">No officers added</p>
-          <p>Add Officers to the work order</p>
+          <p>Add officers to the work order</p>
           <button type="button" mat-button class="allocation-btn mat-accent-border" (click)="onNewAllocationClick()">
-            New Officer
+            New officer
           </button>
         </div>
 

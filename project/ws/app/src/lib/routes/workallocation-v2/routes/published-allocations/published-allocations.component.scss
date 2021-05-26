@@ -10,6 +10,9 @@
   align-content: center;
   text-align: center;
 }
+::ng-deep.container-balanced .text-capitalize {
+  text-transform: none !important
+}
 ::ng-deep.flex-custom.mat-card {
     padding: 1em 4em !important
 }
@@ -361,7 +364,7 @@ a:not([href]):not([tabindex]) {
       }
 
       .mat-body-3 {
-        font-size: 13px;
+        font-size: 12px;
       }
     }
   }
