@@ -10,6 +10,9 @@
   align-content: center;
   text-align: center;
 }
+::ng-deep.flex-custom.mat-card {
+    padding: 1em 4em !important
+}
 ::ng-deep.mat-card-header-text {
   display: none !important;
 }
@@ -268,7 +271,7 @@ a:not([href]):not([tabindex]) {
   }
 
   .allocation-btn {
-    min-width: 130px;
+    min-width: 112px;
     width: auto;
     border:1px solid #0075B7;
     border-radius: 4px;
