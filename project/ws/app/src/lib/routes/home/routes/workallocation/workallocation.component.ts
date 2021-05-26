@@ -51,10 +51,10 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     this.tabledata = {
       actions: [],
       columns: [
-        { displayName: 'Work orders', key: 'workorders' },
+        { displayName: 'Work order', key: 'workorders' },
         { displayName: 'Officers', key: 'officers' },
-        { displayName: 'Last upladed on', key: 'lastupdatedon' },
-        { displayName: 'Last upladed by', key: 'lastupdatedby' },
+        { displayName: 'Last updated on', key: 'lastupdatedon' },
+        { displayName: 'Last updated by', key: 'lastupdatedby' },
 
       ],
       needCheckBox: false,
@@ -168,11 +168,11 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       this.tabledata['columns'][4] = { displayName: 'Approval', key: 'approval' }
     } else {
       this.tabledata['columns'][2] = {
-        displayName: "Last upladed on",
+        displayName: "Last updated on",
         key: "lastupdatedon"
       }
       this.tabledata['columns'][3] = {
-        displayName: "Last upladed by",
+        displayName: "Last updated by",
         key: "lastupdatedby"
       }
       this.tabledata['columns'][4] = { displayName: 'Errors', key: 'errors' }

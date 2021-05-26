@@ -20,8 +20,9 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header> {{col.displayName}} </mat-header-cell>
                 <mat-cell *matCellDef="let element" (click)="selection.toggle(element)">
                     <span *ngIf="!col.isList && element[col.key]!='Download'" class="textclass mat-body-2">
-                        <mat-radio-button *ngIf="col.displayName==='Work orders'">
-                        </mat-radio-button> <span [ngStyle]="{'color':col.displayName != 'Errors' ? 'black' : 'red'}"
+                        <mat-radio-button *ngIf="col.displayName==='Work order'">
+                        </mat-radio-button> <span
+                            [ngStyle]="{'color':col.displayName != 'Errors' ? 'black' : 'red', 'font-weight':col.displayName != 'Work order' ? 'normal' : 'bold'}"
                             (click)="onRowClick(element)">{{element[col.key]}}
                             {{col.isList}}</span>
                     </span>
@@ -72,8 +73,8 @@
         </div>
     </div>
 
-    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
-    </mat-paginator>
+    <!-- <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
+    </mat-paginator> -->
 </div>
 
 <mat-menu #cardMenu="matMenu">
