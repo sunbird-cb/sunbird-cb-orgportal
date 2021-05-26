@@ -108,11 +108,11 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     console.log(this.currentFilter)
     if (this.currentFilter === 'Draft') {
       const pdfName = 'draft'
-      const pdfUrl = '/assets/configurations/localhost_3000/files/draft.pdf'
+      const pdfUrl = '/assets/files/draft.pdf'
       FileSaver.saveAs(pdfUrl, pdfName)
     } else if (this.currentFilter === 'Published') {
       const pdfName = 'publish'
-      const pdfUrl = '/assets/configurations/localhost_3000/files/published.pdf'
+      const pdfUrl = '/assets/files/published.pdf'
       FileSaver.saveAs(pdfUrl, pdfName)
     }
 

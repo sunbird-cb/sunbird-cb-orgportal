@@ -103,16 +103,16 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
   buttonClick(action: string, row: any) {
     if (action && row.fromdata === 'draft') {
       const pdfName = 'draft'
-      const pdfUrl = '/assets/configurations/localhost_3000/files/draft.pdf'
+      const pdfUrl = '/assetsfiles/draft.pdf'
       fileSavers.saveAs(pdfUrl, pdfName)
     } else if (action && row.fromdata === 'published') {
 
       const pdfName = 'published'
-      const pdfUrl = '/assets/configurations/localhost_3000/files/published.pdf'
+      const pdfUrl = '/assets/files/published.pdf'
       fileSavers.saveAs(pdfUrl, pdfName)
     } else {
       const pdfName = 'scaned'
-      const pdfUrl = '/assets/configurations/localhost_3000/files/scaned.pdf'
+      const pdfUrl = '/assets/files/scaned.pdf'
       fileSavers.saveAs(pdfUrl, pdfName)
     }
 
