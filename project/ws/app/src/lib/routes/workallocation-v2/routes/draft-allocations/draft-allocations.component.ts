@@ -72,7 +72,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Implementation of e-Office and training the employees on the implemeted solution',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               },
               {
                 type: 'ACTIVITY',
@@ -81,7 +83,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Work related to committee of financial sector statistics',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               }
             ],
           },
@@ -99,7 +103,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Implementation of e-Office ',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               },
               {
                 type: 'ACTIVITY',
@@ -108,7 +114,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Implementation of e-Office ',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               },
               {
                 type: 'ACTIVITY',
@@ -117,7 +125,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Implementation of e-Office ',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               }
             ],
           },
@@ -126,8 +136,6 @@ export class DraftAllocationsComponent implements OnInit {
         position: 'Deputy director',
         phone: '3214567890',
         competencies: '',
-        submitTo: 'Rakesh Agarwal',
-        submitFrom: 'Rakesh Agarwal',
         error: 'true'
       },
       {
@@ -150,7 +158,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Implementation of e-Office and training the employees on the implemeted solution',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               },
               {
                 type: 'ACTIVITY',
@@ -159,7 +169,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Work related to committee of financial sector statistics',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               }
             ],
           },
@@ -177,7 +189,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Implementation of e-Office ',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               },
               {
                 type: 'ACTIVITY',
@@ -186,7 +200,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Implementation of e-Office ',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               },
               {
                 type: 'ACTIVITY',
@@ -195,7 +211,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Implementation of e-Office ',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               }
             ],
           },
@@ -204,8 +222,6 @@ export class DraftAllocationsComponent implements OnInit {
         position: 'Deputy director',
         phone: '3214567890',
         competencies: '',
-        submitTo: 'Rakesh Agarwal',
-        submitFrom: 'Rakesh Agarwal'
       },
       {
         fullname: 'Rajesh Agarwal',
@@ -227,7 +243,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Implementation of e-Office and training the employees on the implemeted solution',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               },
               {
                 type: 'ACTIVITY',
@@ -236,7 +254,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Work related to committee of financial sector statistics',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               }
             ],
           },
@@ -254,7 +274,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Implementation of e-Office ',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               },
               {
                 type: 'ACTIVITY',
@@ -263,7 +285,9 @@ export class DraftAllocationsComponent implements OnInit {
                 description: 'Implementation of e-Office ',
                 status: 'UNVERIFIED',
                 source: 'ISTM',
-                parentRole: 'RID001'
+                parentRole: 'RID001',
+                submitTo: 'Rakesh Agarwal',
+                submitFrom: 'Rakesh Agarwal'
               },
             ],
           },
@@ -272,8 +296,6 @@ export class DraftAllocationsComponent implements OnInit {
         position: 'Joint secretary',
         phone: '3214567890',
         competencies: '',
-        submitTo: 'Rakesh Agarwal',
-        submitFrom: 'Rakesh Agarwal'
       }
     ]
 
