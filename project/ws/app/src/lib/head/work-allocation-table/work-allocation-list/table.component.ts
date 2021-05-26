@@ -12,6 +12,8 @@ import { ITableData, IColums } from '../interface/interfaces'
 import { Router, ActivatedRoute } from '@angular/router'
 import { UserPopupComponent } from '../user-popup/user-popup'
 import { CreateMDOService } from '../create-mdo.services'
+import { ExportAsConfig } from 'ngx-export-as'
+import * as fileSavers from 'file-saver'
 
 @Component({
   selector: 'ws-work-allocation-table',
@@ -39,6 +41,11 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
   departmentId!: string | undefined
   pageSize = 5
   pageSizeOptions = [5, 10, 20]
+  config: ExportAsConfig = {
+    type: 'pdf',
+    elementIdOrContent: 'downloadtemplate',
+  }
+  downloaddata: any = []
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   @ViewChild(MatSort, { static: true }) sort?: MatSort
   selection = new SelectionModel<any>(true, [])
@@ -93,16 +100,21 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
       this.dataSource.filter = ''
     }
   }
-
   buttonClick(action: string, row: any) {
-    console.log(action)
-    console.log(row)
-    // if (this.tableData) {
-    //   const isDisabled = _.get(_.find(this.tableData.actions, ac => ac.name === action), 'disabled') || false
-    //   if (!isDisabled && this.actionsClick) {
-    //     this.actionsClick.emit({ action, row })
-    //   }
-    // }
+    if (action && row.fromdata === 'draft') {
+      const pdfName = 'draft'
+      const pdfUrl = '/assets/configurations/localhost_3000/files/draft.pdf'
+      fileSavers.saveAs(pdfUrl, pdfName)
+    } else if (action && row.fromdata === 'published') {
+
+      const pdfName = 'published'
+      const pdfUrl = '/assets/configurations/localhost_3000/files/published.pdf'
+      fileSavers.saveAs(pdfUrl, pdfName)
+    } else {
+      const pdfName = 'scaned'
+      const pdfUrl = '/assets/configurations/localhost_3000/files/scaned.pdf'
+      fileSavers.saveAs(pdfUrl, pdfName)
+    }
 
   }
 
@@ -183,14 +195,11 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
   }
 
   onRowClick(e: any) {
-    // this.eOnRowClick.emit(e)
-    console.log(e)
     if (e.fromdata === 'draft') {
       this.router.navigate([`/app/workallocation/drafts`])
     } else if (e.fromdata === 'published') {
       this.router.navigate([`/app/workallocation/published`])
     }
-
 
   }
   gotoCreateUser() {

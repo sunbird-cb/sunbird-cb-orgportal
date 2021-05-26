@@ -66,13 +66,13 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     this.userslist = [
       {
         allocationDetails: {
-          id: 2,
+          id: 1,
           workorders: "Work order division 1",
           officers: "12",
-          lastupdatedon: "03:30 PM 18 May  2021",
+          lastupdatedon: "03:30 PM 18 May 2021",
           lastupdatedby: "Garima Joshi",
-          publishedon: "03:30 PM 18 May  2021",
-          publishedby: "Manjunatha HS",
+          publishedon: "03:30 PM 18 May 2021",
+          publishedby: "Rajesh Agarwal",
           errors: "11",
           approval: "Download",
           fromdata: 'draft',
@@ -81,13 +81,13 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       {
         allocationDetails: {
           id: 2,
-          workorders: "Work order division 1",
-          officers: "12",
-          lastupdatedon: "03:30 PM 18 May  2021",
+          workorders: "Work order division 2",
+          officers: "32",
+          lastupdatedon: "01:25 PM 18 May 2021",
           lastupdatedby: "Manjunatha HS",
-          publishedon: "03:30 PM 18 May  2021",
+          publishedon: "01:25 PM 18 May 2021",
           publishedby: "Manjunatha HS",
-          errors: "11",
+          errors: "5",
           approval: "Download",
           fromdata: 'draft',
         }
@@ -108,11 +108,11 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     console.log(this.currentFilter)
     if (this.currentFilter === 'Draft') {
       const pdfName = 'draft'
-      const pdfUrl = 'http://127.0.0.1:8080/client-assets/assets/configurations/localhost_3000/files/draft.pdf'
+      const pdfUrl = '/assets/configurations/localhost_3000/files/draft.pdf'
       FileSaver.saveAs(pdfUrl, pdfName)
     } else if (this.currentFilter === 'Published') {
       const pdfName = 'publish'
-      const pdfUrl = 'http://127.0.0.1:8080 /client-assets/assets/configurations/localhost_3000/files/published.pdf'
+      const pdfUrl = '/assets/configurations/localhost_3000/files/published.pdf'
       FileSaver.saveAs(pdfUrl, pdfName)
     }
 
@@ -198,6 +198,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
               fromdata: 'published',
 
             })
+
           }
         } else if (key === 'Draft') {
           if (user.allocationDetails.id !== undefined) {
@@ -240,6 +241,18 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
           this.data = draftUsersData
           break
         case 'Published':
+          activeUsersData.push({
+            id: 3,
+            workorders: "Work order division 3",
+            officers: "15",
+            lastupdatedon: "01:25 PM 18 May 2021",
+            lastupdatedby: "Manjunatha HS",
+            publishedon: "01:00 PM 18 May 2021",
+            publishedby: "Joy Mathew",
+            errors: "5",
+            approval: "Download",
+            fromdata: 'draft',
+          })
           this.data = activeUsersData
           break
         case 'Archived':

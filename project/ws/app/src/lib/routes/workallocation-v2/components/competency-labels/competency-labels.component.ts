@@ -356,7 +356,6 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     this.watStore.setgetcompetencyGroup(this.groupList.value)
     this.updateCompData()
 
-
   }
   updateCompData() {
     const list = _.compact(_.map(_.flatten(_.map(this.groupList.value, 'competincies')), c => {

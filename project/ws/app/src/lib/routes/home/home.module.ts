@@ -90,7 +90,7 @@ import { UIAdminTableModule } from '../../head/work-allocation-table/ui-admin-ta
     ExportAsModule,
     WorkallocationModule,
     NgxPaginationModule,
-    UIAdminTableModule
+    UIAdminTableModule,
   ],
   entryComponents: [
   ],

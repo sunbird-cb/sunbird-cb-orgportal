@@ -27,8 +27,8 @@ import { WatStoreService } from './services/wat.store.service'
 import { CompetencyLabelsModule } from './components/competency-labels/competency-labels.module'
 import { ComponentSharedModule } from './components/component-shared.module'
 import { CompDetailsComponent } from './components/comp-details/comp-details.component'
-import { DraftAllocationsComponent } from './routes/draft-allocations/draft-allocations.component';
-import { PublishedAllocationsComponent } from './routes/published-allocations/published-allocations.component';
+import { DraftAllocationsComponent } from './routes/draft-allocations/draft-allocations.component'
+import { PublishedAllocationsComponent } from './routes/published-allocations/published-allocations.component'
 
 @NgModule({
   declarations: [
