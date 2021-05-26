@@ -7,7 +7,7 @@ import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 import _ from 'lodash'
 import { WorkallocationService } from '../../../home/services/workallocation.service'
 import { PublishPopupComponent } from '../../components/publish-popup/publish-popup.component'
-
+import FileSaver from 'file-saver'
 @Component({
   selector: 'ws-app-draft-allocations',
   templateUrl: './draft-allocations.component.html',
@@ -332,9 +332,12 @@ export class DraftAllocationsComponent implements OnInit {
 
   // Download format
   export() {
-    this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
-      // save started
-    })
+    // this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
+    // save started
+    // })
+    const pdfName = 'Draft'
+    const pdfUrl = '/assets/configurations/localhost_3000/files/draft.pdf'
+    FileSaver.saveAs(pdfUrl, pdfName)
   }
 
   pdfCallbackFn(pdf: any) {

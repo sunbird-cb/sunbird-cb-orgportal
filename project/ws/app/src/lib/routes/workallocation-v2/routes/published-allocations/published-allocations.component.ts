@@ -5,7 +5,7 @@ import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 /* tslint:disable */
 import _ from 'lodash'
 import { WorkallocationService } from '../../../home/services/workallocation.service'
-
+import FileSaver from 'file-saver'
 @Component({
   selector: 'ws-app-published-allocations',
   templateUrl: './published-allocations.component.html',
@@ -298,6 +298,18 @@ export class PublishedAllocationsComponent implements OnInit {
     ]
 
     this.getdeptUsers()
+  }
+
+  viewscanned() {
+    const pdfName = 'Scanned'
+    const pdfUrl = '/assets/configurations/localhost_3000/files/scaned.pdf'
+    FileSaver.saveAs(pdfUrl, pdfName)
+  }
+
+  print() {
+    const pdfName = 'Published'
+    const pdfUrl = '/assets/configurations/localhost_3000/files/published.pdf'
+    FileSaver.saveAs(pdfUrl, pdfName)
   }
 
   // Download format

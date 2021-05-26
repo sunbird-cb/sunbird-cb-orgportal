@@ -18,7 +18,7 @@
           <button type="button" mat-button class="print-btn" *ngIf="data && data.length > 0">
             <mat-icon>more_horiz_outlined</mat-icon> More
           </button>
-          <button type="button" mat-button class="print-btn" *ngIf="data && data.length > 0">
+          <button type="button" mat-button class="print-btn" *ngIf="data && data.length > 0" (click)="viewscanned()">
             <mat-icon>picture_as_pdf_outlined</mat-icon> View signed approval
           </button>
           <button type="button" mat-button class="print-btn" (click)="print()" *ngIf="data && data.length > 0">
@@ -72,7 +72,7 @@
                 </li>
               </ul>
             </div>
-            <div class="flex-2">
+            <div class="flex-3">
               <div class="search margin-top-l">
                 <div class=rsearch>
                   <mat-icon class="color-60 search-icon">search</mat-icon>
