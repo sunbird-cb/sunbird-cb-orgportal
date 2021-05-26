@@ -62,14 +62,14 @@
   max-height: 40px;
 }
 
-.group-background {
+.auto-background {
   // background: rgba(0, 0, 0, 0.04);
-  animation: background-fade 2s forwards;
-  -webkit-animation: background-fade 3s forwards;
-  -moz-animation: background-fade 3s forwards;
+  animation: background-fade1 2s forwards;
+  -webkit-animation: background-fade1 3s forwards;
+  -moz-animation: background-fade1 3s forwards;
 }
 
-@-webkit-keyframes background-fade {
+@-webkit-keyframes background-fade1 {
   0% {
     background: #CDE4F0;
   }
@@ -83,7 +83,7 @@
   }
 }
 
-@-moz-keyframes background-fade {
+@-moz-keyframes background-fade1 {
   0% {
     background: #CDE4F0;
   }
@@ -97,7 +97,7 @@
   }
 }
 
-@keyframes background-fade {
+@keyframes background-fade1 {
   0% {
     background: #CDE4F0;
   }
