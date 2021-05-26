@@ -313,7 +313,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         searches: [
           {
             type: 'ACTIVITY',
-            field: 'name',
+            field: 'description',
             keyword: val,
           },
           {
