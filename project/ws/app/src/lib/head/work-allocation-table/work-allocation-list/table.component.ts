@@ -196,7 +196,7 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
 
   onRowClick(e: any) {
     if (e.fromdata === 'draft') {
-      this.router.navigate([`/app/workallocation/drafts`])
+      this.router.navigate([`/app/workallocation/drafts`], { queryParams: { status: 'New' } })
     } else if (e.fromdata === 'published') {
       this.router.navigate([`/app/workallocation/published`])
     }

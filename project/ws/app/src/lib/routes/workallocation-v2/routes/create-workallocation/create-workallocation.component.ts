@@ -160,20 +160,20 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   }
   getStrcuturedReq(): any {
     let req = {}
-    const offficer = this.getUserDetails()
+    const officer = this.getUserDetails()
     const roles = this.getRoles
     req = {
-      userId: offficer.user ? offficer.user.userDetails.wid : '',
+      userId: officer.user ? officer.user.userDetails.wid : '',
       deptId: this.departmentID,
       deptName: this.departmentName,
       status: 'DRAFT',
       // activeList: this.ralist,
-      userName: offficer.officerName,
-      userEmail: offficer.user ? offficer.user.userDetails.email : '',
-      userPosition: offficer.position,
-      positionDescription: offficer.positionDescription,
+      userName: officer.officerName,
+      userEmail: officer.user ? officer.user.userDetails.email : '',
+      userPosition: officer.position,
+      positionDescription: officer.positionDescription,
       roleCompetencyList: roles,
-      // positionId: this.selectedPosition ? this.selectedPosition.id : '',
+      positionId: officer.positionObj.id ? officer.positionObj.id : '',
     }
     return req
   }
@@ -182,6 +182,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     if (this.dataStructure && this.dataStructure.officerFormData && this.dataStructure.officerFormData.user) {
       return {
         user: this.dataStructure.officerFormData.user,
+        positionObj: this.dataStructure.officerFormData.positionObj,
         officerName: this.dataStructure.officerFormData.officerName || '',
         position: this.dataStructure.officerFormData.position || '',
         positionDescription: this.dataStructure.officerFormData.positionDescription || '',
