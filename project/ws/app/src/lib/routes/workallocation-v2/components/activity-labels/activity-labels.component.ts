@@ -9,7 +9,7 @@ import { debounceTime, map, switchMap, takeUntil } from 'rxjs/operators'
 import { Observable, Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
 import { MatSnackBar } from '@angular/material'
-import { animate, group, keyframes, query, state, style, transition, trigger } from '@angular/animations'
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations'
 
 @Component({
   selector: 'ws-app-activity-labels',
