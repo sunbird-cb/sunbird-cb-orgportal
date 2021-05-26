@@ -40,8 +40,8 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
   selection = new SelectionModel<any>(true, [])
 
   constructor(private userViewPopUpService: UserViewPopUpService, private router: Router,
-    public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: any) {
+              public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>,
+              @Inject(MAT_DIALOG_DATA) public dialogData: any) {
     this.dataSource = new MatTableDataSource<any>()
     this.actionsClick = new EventEmitter()
     this.clicked = new EventEmitter()
@@ -75,28 +75,28 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
       {
 
         id: 1,
-        workorders: "Work order division 1",
-        officers: "12",
-        lastupdatedon: "03:30 PM 18 May 2021",
-        lastupdatedby: "Garima Joshi",
-        publishedon: "03:30 PM 18 May 2021",
-        publishedby: "Rajesh Agarwal",
-        errors: "11",
-        approval: "Download",
+        workorders: 'Work order division 1',
+        officers: '12',
+        lastupdatedon: '03:30 PM 18 May 2021',
+        lastupdatedby: 'Garima Joshi',
+        publishedon: '03:30 PM 18 May 2021',
+        publishedby: 'Rajesh Agarwal',
+        errors: '11',
+        approval: 'Download',
         fromdata: 'draft',
 
       },
       {
 
         id: 2,
-        workorders: "Work order division 2",
-        officers: "32",
-        lastupdatedon: "01:25 PM 18 May 2021",
-        lastupdatedby: "Manjunatha HS",
-        publishedon: "01:25 PM 18 May 2021",
-        publishedby: "Manjunatha HS",
-        errors: "5",
-        approval: "Download",
+        workorders: 'Work order division 2',
+        officers: '32',
+        lastupdatedon: '01:25 PM 18 May 2021',
+        lastupdatedby: 'Manjunatha HS',
+        publishedon: '01:25 PM 18 May 2021',
+        publishedby: 'Manjunatha HS',
+        errors: '5',
+        approval: 'Download',
         fromdata: 'draft',
       }
       ,
@@ -114,7 +114,8 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
   }
   goToWorkAllocation() {
     this.dialogRef.close()
-    this.router.navigate([`/app/workallocation/create`])
+    // this.router.navigate([`/app/workallocation/create`])
+    this.router.navigate([`/app/workallocation/drafts`], { queryParams: { status: 'New' } })
   }
   applyFilter(filterValue: any) {
     this.isSearched = true

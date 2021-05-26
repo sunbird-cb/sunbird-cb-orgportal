@@ -103,7 +103,7 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
   buttonClick(action: string, row: any) {
     if (action && row.fromdata === 'draft') {
       const pdfName = 'draft'
-      const pdfUrl = '/assetsfiles/draft.pdf'
+      const pdfUrl = '/assets/files/draft.pdf'
       fileSavers.saveAs(pdfUrl, pdfName)
     } else if (action && row.fromdata === 'published') {
 
@@ -196,7 +196,7 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
 
   onRowClick(e: any) {
     if (e.fromdata === 'draft') {
-      this.router.navigate([`/app/workallocation/drafts`], { queryParams: { status: 'New' } })
+      this.router.navigate([`/app/workallocation/drafts`])
     } else if (e.fromdata === 'published') {
       this.router.navigate([`/app/workallocation/published`])
     }

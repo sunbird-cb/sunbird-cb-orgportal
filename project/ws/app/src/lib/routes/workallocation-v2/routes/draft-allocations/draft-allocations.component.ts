@@ -336,7 +336,7 @@ export class DraftAllocationsComponent implements OnInit {
     // save started
     // })
     const pdfName = 'Draft'
-    const pdfUrl = '/assets/configurations/localhost_3000/files/draft.pdf'
+    const pdfUrl = '/assets/files/draft.pdf'
     FileSaver.saveAs(pdfUrl, pdfName)
   }
 

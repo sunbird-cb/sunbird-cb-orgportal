@@ -302,13 +302,13 @@ export class PublishedAllocationsComponent implements OnInit {
 
   viewscanned() {
     const pdfName = 'Scanned'
-    const pdfUrl = '/assets/configurations/localhost_3000/files/scaned.pdf'
+    const pdfUrl = '/assets/files/scaned.pdf'
     FileSaver.saveAs(pdfUrl, pdfName)
   }
 
   print() {
     const pdfName = 'Published'
-    const pdfUrl = '/assets/configurations/localhost_3000/files/published.pdf'
+    const pdfUrl = '/assets/files/published.pdf'
     FileSaver.saveAs(pdfUrl, pdfName)
   }
 
