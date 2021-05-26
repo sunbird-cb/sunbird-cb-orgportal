@@ -106,7 +106,7 @@ export class DraftAllocationsComponent implements OnInit {
                     parentRole: 'RID001',
                     submitToInt: '',
                     submitTo: '',
-                    submitToOther: 'Final Author',
+                    submitToOther: 'Final authority',
                     submitFromInt: 'SK',
                     submitFrom: 'Sneha Kakkar',
                     submitFromOther: '',

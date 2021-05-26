@@ -180,6 +180,9 @@ a:not([href]):not([tabindex]) {
             border-bottom: 1px solid rgba(0, 0, 0, 0.16);
             margin-bottom: 10px;
             padding-bottom: 10px;
+            table {
+              width: 100%;
+            }
             td {
               border-bottom: 0 !important
             }
@@ -238,7 +241,9 @@ a:not([href]):not([tabindex]) {
         }
 
         li:last-child {
-            border-bottom: none !important;
+          border-bottom: none !important;
+          margin-bottom: 0 !important;
+          padding-bottom: 0 !important;
         }
     }
   }

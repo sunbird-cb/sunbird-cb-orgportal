@@ -180,6 +180,9 @@ a:not([href]):not([tabindex]) {
             border-bottom: 1px solid rgba(0, 0, 0, 0.16);
             margin-bottom: 10px;
             padding-bottom: 10px;
+            table {
+              width: 100%;
+            }
             td {
               border-bottom: 0 !important
             }
@@ -238,13 +241,16 @@ a:not([href]):not([tabindex]) {
         }
 
         li:last-child {
-            border-bottom: none !important;
+          border-bottom: none !important;
+          margin-bottom: 0 !important;
+          padding-bottom: 0 !important;
         }
     }
   }
 
-   th:nth-child(1), td:nth-child(1) {
-    width: 18%
+  th:nth-child(1), td:nth-child(1) {
+    width: 18%;
+    position: relative;
   }
   th:nth-child(2), td:nth-child(2) {
     width: 20%
@@ -334,7 +340,8 @@ a:not([href]):not([tabindex]) {
   }
 }
 .error {
-  margin-top: 26em;
+  position: absolute;
+  bottom: 5%;
   .mat-icon {
     color: #D13924;
     vertical-align: bottom;

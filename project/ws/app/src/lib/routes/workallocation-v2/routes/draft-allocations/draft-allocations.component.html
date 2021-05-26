@@ -117,7 +117,7 @@
                     <tr>
                       <td class="table-role">
                         <b>{{rc.roleDetails.name}}</b>
-                        <div>
+                        <div class="margin-top-xs">
                           <span *ngFor="let c of rc.competencyDetails">{{c.name}}</span>
                         </div>
                       </td>
@@ -142,30 +142,6 @@
                       </td>
                     </tr>
                   </table>
-                  <!-- <div class="table-role">
-                    <b>{{rc.roleDetails.name}}</b>
-                    <div>
-                      <span *ngFor="let c of rc.competencyDetails">{{c.name}}</span>
-                    </div>
-                  </div>
-                  <div class="table-activity">
-                    <div class="activityname" *ngFor="let a of rc.roleDetails.childNodes">
-                      <p>{{a.name}}</p>
-
-                      <div class="table-activity1">
-                        <div class="submittd"><span class="initials" *ngIf="a.submitToInt">{{a.submitToInt}}</span>
-                          {{a.submitTo ||
-                          a.submitToOther}}</div>
-                        <div class="submittd"><span class="initials" *ngIf="a.submitFromoInt">{{a.submitFromInt}}</span>
-                          {{a.submitFrom ||
-                          a.submitFromOther}}</div>
-                      </div>
-                    </div>
-                  </div> -->
-
-                  <!-- <div class="table-activity">
-                        <span *ngFor="let c of d.competencies">{{c.name}}</span>
-                      </div> -->
                 </li>
               </ul>
               <!-- <ul>
