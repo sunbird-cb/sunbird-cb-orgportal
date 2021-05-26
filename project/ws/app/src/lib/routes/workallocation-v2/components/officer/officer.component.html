@@ -9,12 +9,11 @@
           <ws-app-initial-avatar *ngIf="officerName.value.length" [name]="officerName.value"></ws-app-initial-avatar>
           <input matInput aria-label="Officer" [matAutocomplete]="auto" #officerName name="officerName"
             formControlName="officerName" i18n-placeholder placeholder="Type here" i18n-aria-label
-            aria-label="Type here">
-          <mat-autocomplete #auto="matAutocomplete">
+            aria-label="Type here" (input)="filterUsers(officerName.value)">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="officerClicked($event)">
             <div class="mat-body-4 ws-mat-accent-text padding-s">From Karmayogi officer portal</div>
-            <mat-option *ngFor="let user of filteredUserslist | async"
-              [value]="user.userDetails.first_name + ' ' +user.userDetails.last_name ">
-              <ws-app-user-autocomplete-card [user]="user" (userClick)="officerClicked($event)">
+            <mat-option *ngFor="let user of filteredUserslist | async" [value]="user">
+              <ws-app-user-autocomplete-card [user]="user">
               </ws-app-user-autocomplete-card>
             </mat-option>
           </mat-autocomplete>
@@ -70,7 +69,17 @@
       <div class="flex flex-1 control ws-mat-accent-b">
         <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
           <input id="position" class="form-input flex-1" matInput #position name="position" formControlName="position"
-            i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Type here" autocomplete="off">
+            i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Type here" autocomplete="off"
+            [matAutocomplete]="positionAuto" (input)="filterPositions(position.value)">
+          <mat-autocomplete #positionAuto="matAutocomplete" (optionSelected)="postionClicked($event)">
+            <div class="mat-body-4 ws-mat-accent-text padding-s">From FRAC dictionary</div>
+            <mat-option *ngFor="let pos of filteredPositionlist | async" [value]="pos">
+              <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{pos.name}}</div>
+                <div class="mat-body-2  margin-bottom-xxs">{{pos.description}}</div>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
     </div>
