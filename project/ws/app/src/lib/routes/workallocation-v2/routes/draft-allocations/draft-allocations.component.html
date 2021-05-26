@@ -100,31 +100,69 @@
                 {{d.firstname.charAt(0).toUpperCase()}} {{d.surname.charAt(0).toUpperCase()}}
               </div>
               <div>
-                <b>{{d.fullname}}</b>
+                <b class="username">{{d.fullname}}</b>
                 <div>
                   {{ d.position }}
                   <!-- <mat-icon>more_horiz_outlined</mat-icon> -->
                 </div>
                 <div class="error mat-body-2" *ngIf="d.error">
-                  <mat-icon>info</mat-icon> 3 errors
+                  <mat-icon>info</mat-icon> <b>3 errors</b>
                 </div>
               </div>
             </td>
             <td colspan="4" (click)="viewAllocation(d)">
               <ul>
-                <li *ngFor="let r of d.roles">
-                  <div class="table-role">
-                    {{r.name}}
+                <li *ngFor="let rc of d.roleCompetencyList">
+                  <table>
+                    <tr>
+                      <td class="table-role">
+                        <b>{{rc.roleDetails.name}}</b>
+                        <div>
+                          <span *ngFor="let c of rc.competencyDetails">{{c.name}}</span>
+                        </div>
+                      </td>
+                      <td class="table-activity">
+                        <table>
+                          <tr *ngFor="let a of rc.roleDetails.childNodes">
+                            <td class="activityname">
+                              <span>{{a.name}}</span>
+                            </td>
+                            <td class="submittd">
+                              <span class="initials" *ngIf="a.submitToInt">{{a.submitToInt}}</span>
+                              {{a.submitTo ||
+                              a.submitToOther}}
+                            </td>
+                            <td class="submittd">
+                              <span class="initials" *ngIf="a.submitFromInt">{{a.submitFromInt}}</span>
+                              {{a.submitFrom ||
+                              a.submitFromOther}}
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <!-- <div class="table-role">
+                    <b>{{rc.roleDetails.name}}</b>
+                    <div>
+                      <span *ngFor="let c of rc.competencyDetails">{{c.name}}</span>
+                    </div>
                   </div>
                   <div class="table-activity">
-                    <span *ngFor="let a of r.childNodes">{{a.name}}</span>
-                  </div>
-                  <div class="table-activity1">
-                    <div *ngFor="let a of r.childNodes"><span class="initials">RA</span> {{a.submitTo}}</div>
-                  </div>
-                  <div class="table-activity1">
-                    <div *ngFor="let a of r.childNodes"><span class="initials">RA</span> {{a.submitFrom}}</div>
-                  </div>
+                    <div class="activityname" *ngFor="let a of rc.roleDetails.childNodes">
+                      <p>{{a.name}}</p>
+
+                      <div class="table-activity1">
+                        <div class="submittd"><span class="initials" *ngIf="a.submitToInt">{{a.submitToInt}}</span>
+                          {{a.submitTo ||
+                          a.submitToOther}}</div>
+                        <div class="submittd"><span class="initials" *ngIf="a.submitFromoInt">{{a.submitFromInt}}</span>
+                          {{a.submitFrom ||
+                          a.submitFromOther}}</div>
+                      </div>
+                    </div>
+                  </div> -->
+
                   <!-- <div class="table-activity">
                         <span *ngFor="let c of d.competencies">{{c.name}}</span>
                       </div> -->

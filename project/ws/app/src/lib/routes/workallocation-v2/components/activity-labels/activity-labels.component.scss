@@ -16,15 +16,16 @@
 
 }
 
-::ng-deep mat-option.mat-option{
+::ng-deep mat-option.mat-option {
   height: auto;
   line-height: normal;
   padding: 0;
   white-space: normal;
 }
-::ng-deep mat-option .mat-option-text{
+
+::ng-deep mat-option .mat-option-text {
   height: auto;
-    display: block;
+  display: block;
 }
 
 ::ng-deep mat-form-field .mat-form-field-infix .mat-form-field-label,
@@ -87,6 +88,10 @@
   display: block;
 }
 
+.cursor-default {
+  cursor: default !important;
+}
+
 .min-w {
   min-height: 40px;
 }
@@ -98,14 +103,67 @@
 .font-bold-i {
   font-weight: 700 !important;
 }
+
 .font-semibold {
   font-weight: 600 !important;
 }
 
 
+.example-list-background {
+  background: rgba(0, 0, 0, 0.04);
+}
 
 .group-background {
-  background: #F2ECF4;
+  // background: rgba(0, 0, 0, 0.04);
+  animation: background-fade 3s forwards;
+  -webkit-animation: background-fade 3s forwards;
+  -moz-animation: background-fade 3s forwards;
+}
+
+@-webkit-keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: #F2ECF4;
+  }
+}
+
+@-moz-keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: #F2ECF4;
+  }
+}
+
+@keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: #F2ECF4;
+  }
+}
+
+.border-b-w {
+  border-bottom: 3px solid white;
 }
 
 .example-box {

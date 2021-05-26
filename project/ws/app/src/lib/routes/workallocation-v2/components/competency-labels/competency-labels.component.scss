@@ -87,13 +87,60 @@
 .font-bold-i {
   font-weight: 700 !important;
 }
+
 .font-semibold {
   font-weight: 600 !important;
 }
 
 .group-background {
-  background: #CDE4F0;
+  // background: rgba(0, 0, 0, 0.04);
+  animation: background-fade 3s forwards;
+  -webkit-animation: background-fade 3s forwards;
+  -moz-animation: background-fade 3s forwards;
 }
+
+@-webkit-keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: #F2ECF4;
+  }
+}
+
+@-moz-keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: #F2ECF4;
+  }
+}
+
+@keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: #F2ECF4;
+  }
+}
+
 
 .example-box {
   padding: 0 10px;
