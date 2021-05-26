@@ -39,4 +39,10 @@ export class WatStoreService {
   setOfficerGroup(data: NSWatOfficer.IOfficerGroup[]) {
     this.officerGroup.next(data)
   }
+  clear() {
+    this.activitiesGroup = new BehaviorSubject<NSWatActivity.IActivityGroup[]>([])
+    this.competencyGroup = new BehaviorSubject<NSWatCompetency.ICompActivityGroup[]>([])
+    this.officerGroup = new BehaviorSubject<NSWatOfficer.IOfficerGroup[]>([])
+    this._competencyGroup = new BehaviorSubject<NSWatCompetency.ICompActivity[]>([])
+  }
 }

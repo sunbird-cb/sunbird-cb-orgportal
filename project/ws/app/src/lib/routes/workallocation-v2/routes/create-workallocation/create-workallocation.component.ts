@@ -156,6 +156,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
         this.openSnackbar('Work allocated successfully')
         this.router.navigate(['/app/workallocation/drafts'])
       }
+      this.watStore.clear()
     })
   }
   getStrcuturedReq(): any {
