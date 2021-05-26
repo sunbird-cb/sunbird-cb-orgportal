@@ -197,7 +197,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       activities: this.formBuilder.array([]),
       groupId: '',
       groupName: this.untitedRole,
-      groupDescription: 'Role description',
+      groupDescription: '',
     })
     const activits = fg.get('activities') as FormArray
     const fga = this.formBuilder.group({

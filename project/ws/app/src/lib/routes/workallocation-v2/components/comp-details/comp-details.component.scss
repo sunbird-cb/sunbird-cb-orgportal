@@ -61,3 +61,52 @@
 .mh-40 {
   max-height: 40px;
 }
+
+.group-background {
+  // background: rgba(0, 0, 0, 0.04);
+  animation: background-fade 2s forwards;
+  -webkit-animation: background-fade 3s forwards;
+  -moz-animation: background-fade 3s forwards;
+}
+
+@-webkit-keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: inherit;
+  }
+}
+
+@-moz-keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: inherit;
+  }
+}
+
+@keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: inherit;
+  }
+}
