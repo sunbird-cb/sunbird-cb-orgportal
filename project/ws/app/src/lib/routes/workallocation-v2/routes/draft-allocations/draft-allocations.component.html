@@ -67,6 +67,12 @@
                     <p class="font-bold">15</p>
                   </div>
                 </li>
+                <li class="margin-right-xs">
+                  <div>
+                    <p class="mat-body-3">Roles</p>
+                    <p class="font-bold">8</p>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="flex-2">
@@ -86,7 +92,7 @@
             <th>Roles and competencies</th>
             <th>Activities</th>
             <th>Submit to</th>
-            <th>Submit from</th>
+            <th>Submission from</th>
           </tr>
           <tr *ngFor="let d of data" class="data-row">
             <td aria-rowspan="d.roles.length+1">
@@ -117,7 +123,7 @@
                     <div *ngFor="let a of r.childNodes"><span class="initials">RA</span> {{a.submitTo}}</div>
                   </div>
                   <div class="table-activity1">
-                    <div *ngFor="let a of r.childNodes"><span class="initials">RA</span> {{a.submitTo}}</div>
+                    <div *ngFor="let a of r.childNodes"><span class="initials">RA</span> {{a.submitFrom}}</div>
                   </div>
                   <!-- <div class="table-activity">
                         <span *ngFor="let c of d.competencies">{{c.name}}</span>
