@@ -264,7 +264,10 @@ a:not([href]):not([tabindex]) {
     cursor: pointer;
   }
 }
-
+b.username {
+  display: block;
+  margin: 4px 0 8px 0;
+}
 .custom-table-nav {
   .search {
     display: flex;
