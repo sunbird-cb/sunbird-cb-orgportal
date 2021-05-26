@@ -84,7 +84,7 @@
       </div>
     </div>
     <!-- <div *ngIf="groups.length > 0" class="flex flex-1 flex-column margin-top-xs"> -->
-    <ng-container *ngFor="let grp of activityForm.get('groupsArray').controls; let i=index">
+    <ng-container *ngFor="let grp of activityForm?.get('groupsArray')?.controls; let i=index">
       <div (mouseenter)="enter(i)" class=" flex flex-1 flex-row resporow margin-top-xs" [formGroup]="grp">
         <div *ngIf="i === 0" class="flex flex-1 flex-column example-list margin-r-2px">
           <span class="flex margin-left-m mat-subheading-2 margin-top-s">
