@@ -12,6 +12,11 @@ $card-standard-width: 268px;
     @content;
   }
 }
+.url_value{
+  color: #0375B7;
+  text-decoration-color: #0375B7;
+  text-decoration: underline;
+}
 .card-minimal-container {
   position: relative;
 

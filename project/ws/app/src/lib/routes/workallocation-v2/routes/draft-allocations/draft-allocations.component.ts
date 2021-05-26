@@ -1,7 +1,7 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
 import { MatPaginator, MatDialog } from '@angular/material'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 /* tslint:disable */
 import _ from 'lodash'
@@ -33,9 +33,17 @@ export class DraftAllocationsComponent implements OnInit {
   userslist: any[] = []
   downloaddata: any = []
   totalusersCount: any
+  statscount: any = {}
+  queryParams: any
   // p: number = 1;
-  constructor(private exportAsService: ExportAsService, private router: Router,
-    private workallocationSrvc: WorkallocationService, public dialog: MatDialog) { }
+  constructor(private activated: ActivatedRoute, private exportAsService: ExportAsService, private router: Router,
+    private workallocationSrvc: WorkallocationService, public dialog: MatDialog) {
+    this.activated.queryParamMap.subscribe((queryParams: any) => {
+      if (queryParams.has('status')) {
+        this.queryParams = queryParams.get('status') || ''
+      }
+    })
+  }
 
   ngOnInit() {
     this.tabledata = {
@@ -51,231 +59,273 @@ export class DraftAllocationsComponent implements OnInit {
       sortState: 'asc',
       needUserMenus: true,
     }
-    this.data = [
-      {
-        fullname: 'Latika Paharia',
-        firstname: 'Latika',
-        surname: 'Paharia',
-        email: 'latika@test.com',
-        roles: [
-          {
-            type: 'ROLE',
-            id: 'RID001',
-            name: 'Information Technology',
-            description: 'Development and deployment of e-Office and training the employees',
-            status: 'UNVERIFIED',
-            childNodes: [
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Implementation of e-Office',
-                description: 'Implementation of e-Office and training the employees on the implemeted solution',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              },
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Work related to committee of financial sector statistics',
-                description: 'Work related to committee of financial sector statistics',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              }
-            ],
-          },
-          {
-            type: 'ROLE',
-            id: 'RID001',
-            name: 'Vigilance',
-            description: 'Vigilance',
-            status: 'UNVERIFIED',
-            childNodes: [
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Regional rural bank',
-                description: 'Implementation of e-Office ',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              },
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Agriculture credit',
-                description: 'Implementation of e-Office ',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              },
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Cyber security related work',
-                description: 'Implementation of e-Office ',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              }
-            ],
-          },
-        ],
-        userId: '2542352352523FF',
-        position: 'Deputy director',
-        phone: '3214567890',
-        competencies: '',
-        submitTo: 'Rakesh Agarwal',
-        submitFrom: 'Rakesh Agarwal',
-        error: 'true'
-      },
-      {
-        fullname: 'Joy Mathew',
-        firstname: 'Joy',
-        surname: 'Mathew',
-        email: 'latika@test.com',
-        roles: [
-          {
-            type: 'ROLE',
-            id: 'RID001',
-            name: 'Information Technology',
-            description: 'Development and deployment of e-Office and training the employees',
-            status: 'UNVERIFIED',
-            childNodes: [
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Implementation of e-Office',
-                description: 'Implementation of e-Office and training the employees on the implemeted solution',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              },
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Work related to committee of financial sector statistics',
-                description: 'Work related to committee of financial sector statistics',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              }
-            ],
-          },
-          {
-            type: 'ROLE',
-            id: 'RID001',
-            name: 'Vigilance',
-            description: 'Vigilance',
-            status: 'UNVERIFIED',
-            childNodes: [
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Regional rural bank',
-                description: 'Implementation of e-Office ',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              },
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Agriculture credit',
-                description: 'Implementation of e-Office ',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              },
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Cyber security related work',
-                description: 'Implementation of e-Office ',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              }
-            ],
-          },
-        ],
-        userId: '2542352352523FF',
-        position: 'Deputy director',
-        phone: '3214567890',
-        competencies: '',
-        submitTo: 'Rakesh Agarwal',
-        submitFrom: 'Rakesh Agarwal'
-      },
-      {
-        fullname: 'Rajesh Agarwal',
-        firstname: 'Rajesh',
-        surname: 'Agarwal',
-        email: 'latika@test.com',
-        roles: [
-          {
-            type: 'ROLE',
-            id: 'RID001',
-            name: 'Coordination',
-            description: 'Development and deployment of e-Office and training the employees',
-            status: 'UNVERIFIED',
-            childNodes: [
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Work relating to financial inclusion',
-                description: 'Implementation of e-Office and training the employees on the implemeted solution',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              },
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'e-Governance in all FIs and e-Payments in banking system',
-                description: 'Work related to committee of financial sector statistics',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              }
-            ],
-          },
-          {
-            type: 'ROLE',
-            id: 'RID001',
-            name: 'Financial inclusion advisory',
-            description: 'Vigilance',
-            status: 'UNVERIFIED',
-            childNodes: [
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Matters realted to payment regularly board',
-                description: 'Implementation of e-Office ',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              },
-              {
-                type: 'ACTIVITY',
-                id: 'AID001',
-                name: 'Agriculture credit',
-                description: 'Implementation of e-Office ',
-                status: 'UNVERIFIED',
-                source: 'ISTM',
-                parentRole: 'RID001'
-              },
-            ],
-          },
-        ],
-        userId: '2542352352523FF',
-        position: 'Joint secretary',
-        phone: '3214567890',
-        competencies: '',
-        submitTo: 'Rakesh Agarwal',
-        submitFrom: 'Rakesh Agarwal'
+    if (this.queryParams === 'New') {
+      this.statscount = {
+        Officers: '0',
+        Progress: '0%',
+        Errors: '0',
+        Roles: '0',
+        Competencies: '0',
+        Activities: '0',
       }
-    ]
+      this.data = []
+    } else {
+      this.statscount = {
+        Officers: '3',
+        Progress: '67%',
+        Errors: '3',
+        Roles: '8',
+        Competencies: '1',
+        Activities: '15',
+      }
+      this.data = [
+        {
+          fullname: 'Latika Paharia',
+          firstname: 'Latika',
+          surname: 'Paharia',
+          email: 'latika@test.com',
+          roles: [
+            {
+              type: 'ROLE',
+              id: 'RID001',
+              name: 'Information Technology',
+              description: 'Development and deployment of e-Office and training the employees',
+              status: 'UNVERIFIED',
+              childNodes: [
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Implementation of e-Office',
+                  description: 'Implementation of e-Office and training the employees on the implemeted solution',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                },
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Work related to committee of financial sector statistics',
+                  description: 'Work related to committee of financial sector statistics',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                }
+              ],
+            },
+            {
+              type: 'ROLE',
+              id: 'RID001',
+              name: 'Vigilance',
+              description: 'Vigilance',
+              status: 'UNVERIFIED',
+              childNodes: [
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Regional rural bank',
+                  description: 'Implementation of e-Office ',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                },
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Agriculture credit',
+                  description: 'Implementation of e-Office ',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                },
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Cyber security related work',
+                  description: 'Implementation of e-Office ',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                }
+              ],
+            },
+          ],
+          userId: '2542352352523FF',
+          position: 'Deputy director',
+          phone: '3214567890',
+          competencies: '',
+          error: 'true'
+        },
+        {
+          fullname: 'Joy Mathew',
+          firstname: 'Joy',
+          surname: 'Mathew',
+          email: 'latika@test.com',
+          roles: [
+            {
+              type: 'ROLE',
+              id: 'RID001',
+              name: 'Information Technology',
+              description: 'Development and deployment of e-Office and training the employees',
+              status: 'UNVERIFIED',
+              childNodes: [
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Implementation of e-Office',
+                  description: 'Implementation of e-Office and training the employees on the implemeted solution',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                },
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Work related to committee of financial sector statistics',
+                  description: 'Work related to committee of financial sector statistics',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                }
+              ],
+            },
+            {
+              type: 'ROLE',
+              id: 'RID001',
+              name: 'Vigilance',
+              description: 'Vigilance',
+              status: 'UNVERIFIED',
+              childNodes: [
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Regional rural bank',
+                  description: 'Implementation of e-Office ',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                },
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Agriculture credit',
+                  description: 'Implementation of e-Office ',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                },
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Cyber security related work',
+                  description: 'Implementation of e-Office ',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                }
+              ],
+            },
+          ],
+          userId: '2542352352523FF',
+          position: 'Deputy director',
+          phone: '3214567890',
+          competencies: '',
+        },
+        {
+          fullname: 'Rajesh Agarwal',
+          firstname: 'Rajesh',
+          surname: 'Agarwal',
+          email: 'latika@test.com',
+          roles: [
+            {
+              type: 'ROLE',
+              id: 'RID001',
+              name: 'Coordination',
+              description: 'Development and deployment of e-Office and training the employees',
+              status: 'UNVERIFIED',
+              childNodes: [
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Work relating to financial inclusion',
+                  description: 'Implementation of e-Office and training the employees on the implemeted solution',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                },
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'e-Governance in all FIs and e-Payments in banking system',
+                  description: 'Work related to committee of financial sector statistics',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                }
+              ],
+            },
+            {
+              type: 'ROLE',
+              id: 'RID001',
+              name: 'Financial inclusion advisory',
+              description: 'Vigilance',
+              status: 'UNVERIFIED',
+              childNodes: [
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Matters realted to payment regularly board',
+                  description: 'Implementation of e-Office ',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                },
+                {
+                  type: 'ACTIVITY',
+                  id: 'AID001',
+                  name: 'Agriculture credit',
+                  description: 'Implementation of e-Office ',
+                  status: 'UNVERIFIED',
+                  source: 'ISTM',
+                  parentRole: 'RID001',
+                  submitTo: 'Rakesh Agarwal',
+                  submitFrom: 'Rakesh Agarwal'
+                },
+              ],
+            },
+          ],
+          userId: '2542352352523FF',
+          position: 'Joint secretary',
+          phone: '3214567890',
+          competencies: '',
+        }
+      ]
+    }
 
     this.getdeptUsers()
   }
@@ -358,7 +408,7 @@ export class DraftAllocationsComponent implements OnInit {
   publishWorkOrder() {
     const dialogRef = this.dialog.open(PublishPopupComponent, {
       maxHeight: 'auto',
-      height: '55%',
+      height: '58%',
       width: '50%',
       panelClass: 'remove-pad',
     })

@@ -1,12 +1,17 @@
 .pdf-upload {
   text-align: center;
-  min-height: 30vh;
+  height: 31vh;
   img {
     margin: 0 auto;
     width: 100px;
     height: 100px;
     display: block;
   }
+}
+
+button.flex-auto-display {
+  box-shadow: none !important;
+  border: 2px solid #0074b6;
 }
 
 .footer {
@@ -23,4 +28,10 @@
   height: 5px;
   background: #1D8923;
   width: 120px;
+  margin: 0 auto;
+}
+
+.greybar {
+  background: #F5F5F5;
+  padding: 4px;
 }

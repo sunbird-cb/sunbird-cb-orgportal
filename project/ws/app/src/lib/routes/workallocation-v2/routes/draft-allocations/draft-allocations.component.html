@@ -25,7 +25,7 @@
             New Officer
           </button>
           <button mat-stroked-button color="accent" type="button" class="publish-btn mat-accent-border flex-auto-display"
-            (click)="publishWorkOrder()" id="publishbtn">
+            (click)="publishWorkOrder()" id="publishbtn" *ngIf="data && data.length > 0">
             <span i18n>Publish</span>
           </button>
         </div>
@@ -40,31 +40,37 @@
                 <li class="margin-right-xs">
                   <div class="peach-bg">
                     <p class="mat-body-3">Officers</p>
-                    <p class="font-bold">3</p>
+                    <p class="font-bold">{{statscount.Officers}}</p>
                   </div>
                 </li>
                 <li class="margin-right-xs">
                   <div class="peach-bg">
                     <p class="mat-body-3">Progress</p>
-                    <p class="font-bold">67%</p>
+                    <p class="font-bold">{{statscount.Progress}}</p>
                   </div>
                 </li>
                 <li class="margin-right-xs">
                   <div class="peach-bg">
                     <p class="mat-body-3">Errors</p>
-                    <p class="font-bold">3</p>
+                    <p class="font-bold">{{statscount.Errors}}</p>
+                  </div>
+                </li>
+                <li class="margin-right-xs">
+                  <div>
+                    <p class="mat-body-3">Roles</p>
+                    <p class="font-bold">{{statscount.Roles}}</p>
                   </div>
                 </li>
                 <li class="margin-right-xs">
                   <div>
                     <p class="mat-body-3">Competencies</p>
-                    <p class="font-bold">1</p>
+                    <p class="font-bold">{{statscount.Competencies}}</p>
                   </div>
                 </li>
                 <li class="margin-right-xs">
                   <div>
                     <p class="mat-body-3">Activities</p>
-                    <p class="font-bold">15</p>
+                    <p class="font-bold">{{statscount.Activities}}</p>
                   </div>
                 </li>
               </ul>
@@ -80,13 +86,13 @@
             </div>
           </div>
         </div>
-        <table class="allocation-table" id="allocation-table" cell-spacing='0' cell-padding='0'>
+        <table class="allocation-table margin-bottom-l" id="allocation-table" cell-spacing='0' cell-padding='0'>
           <tr>
             <th>Name and designation</th>
             <th>Roles and competencies</th>
             <th>Activities</th>
             <th>Submit to</th>
-            <th>Submit from</th>
+            <th>Submission from</th>
           </tr>
           <tr *ngFor="let d of data" class="data-row">
             <td aria-rowspan="d.roles.length+1">
@@ -104,7 +110,7 @@
                 </div>
               </div>
             </td>
-            <td colspan="2" (click)="viewAllocation(d)">
+            <td colspan="4" (click)="viewAllocation(d)">
               <ul>
                 <li *ngFor="let r of d.roles">
                   <div class="table-role">
@@ -112,6 +118,12 @@
                   </div>
                   <div class="table-activity">
                     <span *ngFor="let a of r.childNodes">{{a.name}}</span>
+                  </div>
+                  <div class="table-activity1">
+                    <div *ngFor="let a of r.childNodes"><span class="initials">RA</span> {{a.submitTo}}</div>
+                  </div>
+                  <div class="table-activity1">
+                    <div *ngFor="let a of r.childNodes"><span class="initials">RA</span> {{a.submitFrom}}</div>
                   </div>
                   <!-- <div class="table-activity">
                         <span *ngFor="let c of d.competencies">{{c.name}}</span>
@@ -126,22 +138,6 @@
                     </li>
                   </ul> -->
             </td>
-            <td>
-              <div class="initials">
-                RA
-              </div>
-              <div>
-                {{d.submitTo}}
-              </div>
-            </td>
-            <td>
-              <div class="initials">
-                RA
-              </div>
-              <div>
-                {{d.submitFrom}}
-              </div>
-            </td>
           </tr>
         </table>
         <!-- <div class="custompagination">
@@ -149,8 +145,13 @@
               <div class="totalcount">of {{data.length}}</div>
             </div> -->
 
-        <div *ngIf="data && data.length === 0" class="margin-left-xs margin-l font-medium ">
-          No data found
+        <div *ngIf="data && data.length === 0" class="nodata margin-left-xs margin-l text-center font-medium ">
+          <img src="/assets/icons/Officers_empty.svg" alt="No Officers" class="margin-top-xl margin-bottom-m">
+          <p class="mat-subheading-1">No officers added</p>
+          <p>Add Officers to the work order</p>
+          <button type="button" mat-button class="allocation-btn mat-accent-border" (click)="onNewAllocationClick()">
+            New Officer
+          </button>
         </div>
 
         <mat-menu #cardMenu="matMenu">
