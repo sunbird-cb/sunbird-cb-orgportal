@@ -313,18 +313,12 @@ a:not([href]):not([tabindex]) {
     border-radius: 4px;
     margin: 0 12px 0 5px;
     color: #0075B7 !important;
-    font-family: 'Lato';
-    font-weight: 700;
-    font-size: 14px;
   }
 
   .publish-btn {
     width: auto;
     background: #0075B7 !important;
     color: white !important;
-    font-family: 'Lato';
-    font-weight: 700;
-    font-size: 14px;
   }
 
   .downlaod-btn, .print-btn {
@@ -334,9 +328,6 @@ a:not([href]):not([tabindex]) {
     border-radius: 4px;
     margin: 0 12px 0 5px;
     color: #848484 !important;
-    font-family: 'Lato';
-    font-weight: 700;
-    font-size: 14px;
   }
 }
 .error {
@@ -352,6 +343,12 @@ b.username {
   margin: 4px 0 8px 0;
 }
 
+.sort-icon {
+  font-size: 15px;
+  vertical-align: initial;
+  font-weight: 600;
+  margin-left: 4px;
+}
 .initials {
   border-radius: 4px;
   width: 24px;
@@ -399,7 +396,7 @@ b.username {
 
     div	{
       background: #F5F5F5;
-      width: 82px;
+      width: 75px;
       height: 56px;
       padding: 0.8em;
 

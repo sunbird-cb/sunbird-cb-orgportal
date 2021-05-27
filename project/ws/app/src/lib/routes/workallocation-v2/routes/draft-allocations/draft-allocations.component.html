@@ -37,37 +37,37 @@
           <div class="flex flex-1 custom">
             <div class="flex-3">
               <ul class="statistics">
-                <li class="margin-right-xs">
+                <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Officers</p>
                     <p class="mat-subheading-2">{{statscount.Officers}}</p>
                   </div>
                 </li>
-                <li class="margin-right-xs">
+                <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Progress</p>
                     <p class="mat-subheading-2">{{statscount.Progress}}</p>
                   </div>
                 </li>
-                <li class="margin-right-xs">
+                <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Errors</p>
                     <p class="mat-subheading-2">{{statscount.Errors}}</p>
                   </div>
                 </li>
-                <li class="margin-right-xs">
+                <li class="margin-right-s">
                   <div>
                     <p class="mat-body-3">Roles</p>
                     <p class="mat-subheading-2">{{statscount.Roles}}</p>
                   </div>
                 </li>
-                <li class="margin-right-xs">
+                <li class="margin-right-s">
                   <div>
                     <p class="mat-body-3">Competencies</p>
                     <p class="mat-subheading-2">{{statscount.Competencies}}</p>
                   </div>
                 </li>
-                <li class="margin-right-xs">
+                <li class="margin-right-s">
                   <div>
                     <p class="mat-body-3">Activities</p>
                     <p class="mat-subheading-2">{{statscount.Activities}}</p>
@@ -88,7 +88,8 @@
         </div>
         <table class="allocation-table margin-bottom-l mat-body-2" id="allocation-table" cell-spacing='0' cell-padding='0'>
           <tr>
-            <th>Name and designation</th>
+            <th>Name and designation <mat-icon class="sort-icon">arrow_upward</mat-icon>
+            </th>
             <th>Roles and competencies</th>
             <th>Activities</th>
             <th>Submit to</th>
@@ -103,7 +104,9 @@
                 <b class="username">{{d.fullname}}</b>
                 <div>
                   {{ d.position }}
-                  <!-- <mat-icon>more_horiz_outlined</mat-icon> -->
+                </div>
+                <div class="margin-top-s margin-bottom-s">
+                  <mat-icon>more_horiz_outlined</mat-icon>
                 </div>
                 <div class="error mat-body-2" *ngIf="d.error">
                   <mat-icon>info</mat-icon> <b>3 errors</b>
