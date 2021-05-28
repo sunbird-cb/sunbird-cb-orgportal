@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core'
 })
 
 export class AssistantMessageCardComponent implements OnInit {
-  @Input() type: 'activity' | 'role' | 'competency' = 'activity'
+  @Input() type: 'activity' | 'role' | 'competency' | 'officer' = 'activity'
   @Input() count = 0
   @Input() message = ''
 
