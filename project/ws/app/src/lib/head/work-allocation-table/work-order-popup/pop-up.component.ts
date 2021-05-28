@@ -61,8 +61,8 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
       columns: [
         { displayName: 'Work orders', key: 'workorders' },
         { displayName: 'Officers', key: 'officers' },
-        { displayName: 'Published By', key: 'publishedby' },
-        { displayName: 'Published On', key: 'publishedon' },
+        { displayName: 'Published by', key: 'publishedby' },
+        { displayName: 'Published on', key: 'publishedon' },
       ],
       actions: [],
       needCheckBox: false,
@@ -75,7 +75,7 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
       {
 
         id: 1,
-        workorders: "Work order division 1",
+        workorders: "Work order - Administration wing",
         officers: "12",
         lastupdatedon: "03:30 PM 18 May 2021",
         lastupdatedby: "Garima Joshi",
@@ -89,7 +89,7 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
       {
 
         id: 2,
-        workorders: "Work order division 2",
+        workorders: "Work order - Finance wing",
         officers: "32",
         lastupdatedon: "01:25 PM 18 May 2021",
         lastupdatedby: "Manjunatha HS",

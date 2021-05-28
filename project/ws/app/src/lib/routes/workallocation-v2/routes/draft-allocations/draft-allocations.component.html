@@ -10,8 +10,9 @@
           </div> -->
       <div class="flex flex-1 custom">
         <div class="flex-4">
-          <ws-widget-breadcrumbs-org [widgetData]="{titles:[{title:'Work allocation tool', url:'/app/home/workallocation'},
-                              {title:'Drafts', url:'/app/home/workallocation'},{title:'Work order - Division1', url:'none'}] }">
+          <ws-widget-breadcrumbs-org
+            [widgetData]="{titles:[{title:'Work allocation tool', url:'/app/home/workallocation'},
+                              {title:'Drafts', url:'/app/home/workallocation'},{title:'Work order - Administration wing', url:'none'}] }">
           </ws-widget-breadcrumbs-org>
         </div>
         <div class="flex-2">
@@ -24,8 +25,9 @@
           <button type="button" mat-button class="allocation-btn mat-accent-border" (click)="onNewAllocationClick()">
             New Officer
           </button>
-          <button mat-stroked-button color="accent" type="button" class="publish-btn mat-accent-border flex-auto-display"
-            (click)="publishWorkOrder()" id="publishbtn" *ngIf="data && data.length > 0">
+          <button mat-stroked-button color="accent" type="button"
+            class="publish-btn mat-accent-border flex-auto-display" (click)="publishWorkOrder()" id="publishbtn"
+            *ngIf="data && data.length > 0">
             <span i18n>Publish</span>
           </button>
         </div>
@@ -79,8 +81,8 @@
               <div class="search margin-top-l">
                 <div class=rsearch>
                   <mat-icon class="color-60 search-icon">search</mat-icon>
-                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal" [(ngModel)]="term"
-                    placeholder="Search">
+                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal"
+                    [(ngModel)]="term" placeholder="Search">
                 </div>
               </div>
             </div>
@@ -156,12 +158,13 @@
 
         <mat-menu #cardMenu="matMenu">
           <ng-template matMenuContent let-rowData="data">
-            <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item name="channel-analytics-button"
-              class="ws-mat-primary-text downlaod-btn" i18n-aria-label aria-label="Analytics">
+            <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item
+              name="channel-analytics-button" class="ws-mat-primary-text downlaod-btn" i18n-aria-label
+              aria-label="Analytics">
               <mat-icon>cloud_download</mat-icon> <span>Download</span>
             </button>
-            <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text"
-              i18n-aria-label aria-label="Analytics">
+            <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button"
+              class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
               <mat-icon>archive</mat-icon> <span>Archive allocation</span>
             </button>
           </ng-template>

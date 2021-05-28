@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms'
 import { MatRadioModule } from '@angular/material/radio'
 import { WorkAllocationPopUpComponent } from './work-order-popup/pop-up.component'
 import { RouterModule } from '@angular/router'
+import { ComponentSharedModule } from '../../routes/workallocation-v2/components/component-shared.module'
 // import { BtnPageBackModule } from '../btn-page-back/btn-page-back.module'
 @NgModule({
   declarations: [WorkAllocationTableComponent, UIDirectoryTableComponent, UserPopupComponent, WorkAllocationPopUpComponent],
@@ -42,6 +43,7 @@ import { RouterModule } from '@angular/router'
     FormsModule,
     MatRadioModule,
     RouterModule,
+    ComponentSharedModule,
   ],
   entryComponents: [WorkAllocationPopUpComponent],
   exports: [WorkAllocationTableComponent, UIDirectoryTableComponent, WorkAllocationPopUpComponent],
