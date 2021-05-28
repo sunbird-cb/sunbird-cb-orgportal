@@ -80,249 +80,383 @@ export class DraftAllocationsComponent implements OnInit {
       }
       this.data = [
         {
+          fullname: 'Devaprathap Nagendra',
+          firstname: 'Devaprathap',
+          surname: 'Nagendra',
+          email: 'Devaprathap@test.com',
+          userId: '2542352352523FF',
+          position: 'Director (Coordination)',
+          phone: '3214567890',
+          competencies: '',
+          error: 'true',
+          roleCompetencyList: [
+            {
+              roleDetails: {
+                type: 'ROLE',
+                id: 'RID001',
+                name: 'Coordination matters',
+                description: '',
+                status: 'UNVERIFIED',
+                childNodes: [
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Coordination of matters relating to RTI Act, 2005 with concerned CPIOs of this Department and its organizations',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: '',
+                    submitTo: '',
+                    submitToOther: 'Final authority',
+                    submitFromInt: 'SK',
+                    submitFrom: 'Sneha Kakkar',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Preparation and monitoring of periodic reports on disposal of RTI requests/appeals and compliance of CIC instructions issued from time to time',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'SD',
+                    submitTo: 'Sambit Dattachaudhari',
+                    submitToOther: '',
+                    submitFromInt: 'AR',
+                    submitFrom: 'Anwar Rashad',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Monitoring of public/ staff grievances and follow up actions thereon and submission of periodic returns to the concerned Ministry(s)/Department(s)',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'DK',
+                    submitTo: 'Dhawal Kulkarni',
+                    submitToOther: '',
+                    submitFromInt: 'AL',
+                    submitFrom: 'Ankit Lokhande',
+                    submitFromOther: '',
+                  }
+                ],
+              },
+              competencyDetails: [{
+                type: 'COMPETENCY',
+                name: 'Planning and coordination',
+                description: '',
+              },
+              {
+                type: 'COMPETENCY',
+                name: 'Lean project management',
+                description: '',
+              }
+              ],
+            },
+            {
+              roleDetails: {
+                type: 'ROLE',
+                id: 'RID002',
+                name: 'Organisation and methods (O&M)',
+                description: '',
+                status: 'UNVERIFIED',
+                childNodes: [
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Recording, Reviewing and Destruction of old records in the Department',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'MP',
+                    submitTo: 'Midhun Pottayil',
+                    submitToOther: '',
+                    submitFromInt: 'DK',
+                    submitFrom: 'Dileep Kumar',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Compilation of Organizational History of the Department',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: '',
+                    submitTo: '',
+                    submitToOther: 'Final authority',
+                    submitFromInt: 'MM',
+                    submitFrom: 'Mridula Mehta',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Compilation of information on Review of Records Retention Schedule for substantive functions of the Department and getting vetted by NAI',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'RR',
+                    submitTo: 'Rajeev Ravi',
+                    submitToOther: '',
+                    submitFromInt: 'DM',
+                    submitFrom: 'Diksha Mishra',
+                    submitFromOther: '',
+                  }
+                ],
+              },
+              competencyDetails: [{
+                type: 'COMPETENCY',
+                name: 'Record management',
+                description: '',
+              }],
+            }
+          ]
+        },
+        {
           fullname: 'Latika Paharia',
           firstname: 'Latika',
           surname: 'Paharia',
           email: 'latika@test.com',
-          roles: [
-            {
-              type: 'ROLE',
-              id: 'RID001',
-              name: 'Information Technology',
-              description: 'Development and deployment of e-Office and training the employees',
-              status: 'UNVERIFIED',
-              childNodes: [
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Implementation of e-Office',
-                  description: 'Implementation of e-Office and training the employees on the implemeted solution',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Work related to committee of financial sector statistics',
-                  description: 'Work related to committee of financial sector statistics',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                }
-              ],
-            },
-            {
-              type: 'ROLE',
-              id: 'RID001',
-              name: 'Vigilance',
-              description: 'Vigilance',
-              status: 'UNVERIFIED',
-              childNodes: [
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Regional rural bank',
-                  description: 'Implementation of e-Office ',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Agriculture credit',
-                  description: 'Implementation of e-Office ',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Cyber security related work',
-                  description: 'Implementation of e-Office ',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                }
-              ],
-            },
-          ],
           userId: '2542352352523FF',
-          position: 'Deputy director',
+          position: 'Director (Admin & GA)',
           phone: '3214567890',
           competencies: '',
-          error: 'true'
+          error: '',
+          roleCompetencyList: [
+            {
+              roleDetails: {
+                type: 'ROLE',
+                id: 'RID001',
+                name: 'Training cell',
+                description: '',
+                status: 'UNVERIFIED',
+                childNodes: [
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Mandatory Training Programme of officers belonging to various services viz. CSS, CSSS, CSCS conducted by ISTM',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'RA',
+                    submitTo: 'Rajesh Agarwal',
+                    submitToOther: '',
+                    submitFromInt: 'PD',
+                    submitFrom: 'Prerna Dadasheb',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Mandatory and Mid-Career training programmes of officers appointed through Central Staffing Scheme and officers belonging to various others services viz. IES, ISS, SSS, etc.',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'RA',
+                    submitTo: 'Rajesh Agarwal',
+                    submitToOther: '',
+                    submitFromInt: 'PD',
+                    submitFrom: 'Prerna Dadasheb',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Familiarization Training of Non-Technical Officers of Department on Water',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: '',
+                    submitTo: '',
+                    submitToOther: 'Final authority',
+                    submitFromInt: 'SK',
+                    submitFrom: 'Swanand Kirkire',
+                    submitFromOther: '',
+                  }
+                ],
+              },
+              competencyDetails: [{
+                type: 'COMPETENCY',
+                name: 'Leading others',
+                description: '',
+              }
+              ],
+            },
+            {
+              roleDetails: {
+                type: 'ROLE',
+                id: 'RID001',
+                name: 'Budget related matters',
+                description: '',
+                status: 'UNVERIFIED',
+                childNodes: [
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Planning BE, RE etc.',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'MP',
+                    submitTo: 'Midhun Pottayil',
+                    submitToOther: '',
+                    submitFromInt: 'DK',
+                    submitFrom: 'Dileep Kumar',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Compiling details related to budgetary provisions as required by Budget Section and furnishing information as and when required by them.',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'MP',
+                    submitTo: 'Midhun Pottayil',
+                    submitToOther: '',
+                    submitFromInt: 'SK',
+                    submitFrom: 'Sneha Kakkar',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Maintaining and furnishing information to Budget Section on allocation/expenditure of funds under KRD CB Scheme',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'DK',
+                    submitTo: 'Dhawal Kulkarni',
+                    submitToOther: '',
+                    submitFromInt: 'RM',
+                    submitFrom: 'Rajeev Masand',
+                    submitFromOther: '',
+                  }
+                ],
+              },
+              competencyDetails: [{
+                type: 'COMPETENCY',
+                name: 'Budgeting',
+                description: '',
+              }
+              ],
+            },
+          ]
         },
         {
           fullname: 'Joy Mathew',
           firstname: 'Joy',
           surname: 'Mathew',
           email: 'latika@test.com',
-          roles: [
-            {
-              type: 'ROLE',
-              id: 'RID001',
-              name: 'Information Technology',
-              description: 'Development and deployment of e-Office and training the employees',
-              status: 'UNVERIFIED',
-              childNodes: [
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Implementation of e-Office',
-                  description: 'Implementation of e-Office and training the employees on the implemeted solution',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Work related to committee of financial sector statistics',
-                  description: 'Work related to committee of financial sector statistics',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                }
-              ],
-            },
-            {
-              type: 'ROLE',
-              id: 'RID001',
-              name: 'Vigilance',
-              description: 'Vigilance',
-              status: 'UNVERIFIED',
-              childNodes: [
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Regional rural bank',
-                  description: 'Implementation of e-Office ',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Agriculture credit',
-                  description: 'Implementation of e-Office ',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Cyber security related work',
-                  description: 'Implementation of e-Office ',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                }
-              ],
-            },
-          ],
           userId: '2542352352523FF',
-          position: 'Deputy director',
+          position: 'Director (External & international cooperation)',
           phone: '3214567890',
           competencies: '',
-        },
-        {
-          fullname: 'Rajesh Agarwal',
-          firstname: 'Rajesh',
-          surname: 'Agarwal',
-          email: 'latika@test.com',
-          roles: [
+          error: '',
+          roleCompetencyList: [
             {
-              type: 'ROLE',
-              id: 'RID001',
-              name: 'Coordination',
-              description: 'Development and deployment of e-Office and training the employees',
-              status: 'UNVERIFIED',
-              childNodes: [
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Work relating to financial inclusion',
-                  description: 'Implementation of e-Office and training the employees on the implemeted solution',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'e-Governance in all FIs and e-Payments in banking system',
-                  description: 'Work related to committee of financial sector statistics',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                }
+              roleDetails: {
+                type: 'ROLE',
+                id: 'RID001',
+                name: 'Externally aided projects',
+                description: '',
+                status: 'UNVERIFIED',
+                childNodes: [
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Obtaining in-principal approval of the Department of Water Resources, RD & GR for the State Government projects seeking external assistance from Multilateral Banks/ Foreign Funding agencies after getting them examined by Central Water Commission and other concerned Organizations at the PPR and DPR stage.',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'DK',
+                    submitTo: 'Dhawal Kulkarni',
+                    submitToOther: '',
+                    submitFromInt: 'RK',
+                    submitFrom: 'Ramachandran KR',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Liasoning with State Government and Department of Economics Affairs in this matter',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'DK',
+                    submitTo: 'Dhawal Kulkarni',
+                    submitToOther: '',
+                    submitFromInt: 'RM',
+                    submitFrom: 'Rajeev Masand',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Proposals for studies/ technical assistance from the States for taking up the proposals with the external Funding agencies.',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'DK',
+                    submitTo: 'Dhawal Kulkarni',
+                    submitToOther: '',
+                    submitFromInt: 'SK',
+                    submitFrom: 'Sneha Kakkar',
+                    submitFromOther: '',
+                  }
+                ],
+              },
+              competencyDetails: [{
+                type: 'COMPETENCY',
+                name: 'Stakeholder management',
+                description: '',
+              }
               ],
             },
             {
-              type: 'ROLE',
-              id: 'RID001',
-              name: 'Financial inclusion advisory',
-              description: 'Vigilance',
-              status: 'UNVERIFIED',
-              childNodes: [
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Matters realted to payment regularly board',
-                  description: 'Implementation of e-Office ',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Agriculture credit',
-                  description: 'Implementation of e-Office ',
-                  status: 'UNVERIFIED',
-                  source: 'ISTM',
-                  parentRole: 'RID001',
-                  submitTo: 'Rakesh Agarwal',
-                  submitFrom: 'Rakesh Agarwal'
-                },
+              roleDetails: {
+                type: 'ROLE',
+                id: 'RID001',
+                name: 'International cooperation',
+                description: '',
+                status: 'UNVERIFIED',
+                childNodes: [
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Collaboration / Bilateral agreements / Cooperation in the filed of Water Resources with Foreign countries including signing of memoranda of understanding',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'SS',
+                    submitTo: 'Shreya Singhal',
+                    submitToOther: '',
+                    submitFromInt: 'DK',
+                    submitFrom: 'Dileep Kumar',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Drafting of cabinet note and its subsequent approval from the Cabinet and PMO; coordination and liasing with foreign countries/ Ministry of External Affairs for mutually deciding the areas of cooperation and terms of such international agreements; Constitution of Joint Working Group for the implementation of the activites envisaged in the MoUs;',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'DK',
+                    submitTo: 'Dhawal Kulkarni',
+                    submitToOther: '',
+                    submitFromInt: 'RM',
+                    submitFrom: 'Rajeev Masand',
+                    submitFromOther: '',
+                  },
+                  {
+                    type: 'ACTIVITY',
+                    id: 'AID001',
+                    name: 'Mattersrelating to water issues in various UN organizations such as UNESCO, UN Environment, FAO, etc.',
+                    description: '',
+                    parentRole: 'RID001',
+                    submitToInt: 'SS',
+                    submitTo: 'Shreya Singhal',
+                    submitToOther: '',
+                    submitFromInt: 'SK',
+                    submitFrom: 'Sneha Kakkar',
+                    submitFromOther: '',
+                  }
+                ],
+              },
+              competencyDetails: [{
+                type: 'COMPETENCY',
+                name: 'Planning and coordination',
+                description: '',
+              }
               ],
-            },
-          ],
-          userId: '2542352352523FF',
-          position: 'Joint secretary',
-          phone: '3214567890',
-          competencies: '',
+            }
+          ]
         }
       ]
     }
@@ -336,7 +470,7 @@ export class DraftAllocationsComponent implements OnInit {
     // save started
     // })
     const pdfName = 'Draft'
-    const pdfUrl = '/assets/configurations/localhost_3000/files/draft.pdf'
+    const pdfUrl = '/assets/files/draft.pdf'
     FileSaver.saveAs(pdfUrl, pdfName)
   }
 
@@ -411,8 +545,8 @@ export class DraftAllocationsComponent implements OnInit {
   publishWorkOrder() {
     const dialogRef = this.dialog.open(PublishPopupComponent, {
       maxHeight: 'auto',
-      height: '58%',
-      width: '50%',
+      height: '62%',
+      width: '54%',
       panelClass: 'remove-pad',
     })
     dialogRef.afterClosed().subscribe((response: any) => {

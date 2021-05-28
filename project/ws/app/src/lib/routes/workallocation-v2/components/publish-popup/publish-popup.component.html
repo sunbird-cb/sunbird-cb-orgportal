@@ -1,11 +1,11 @@
 <div class="custom-popup">
-  <div class="mat-subheading-1 margin-top-l margin-bottom-m">
+  <div class="mat-title margin-top-l margin-bottom-m">
     Publish new work allocation order
   </div>
-  <div class="mat-body-2 margin-bottom-l" *ngIf="config !== 4 && config !== 5">
+  <div class="mat-body-1 margin-bottom-l" *ngIf="config !== 4 && config !== 5">
     Upload a scanned copy of the signed wor allocation order
   </div>
-  <div class="mat-body-2 margin-bottom-m" *ngIf="config === 4">
+  <div class="mat-body-1 margin-bottom-m" *ngIf="config === 4">
     Please compare the signed copy and the draft version being published. Click publish only if both versions are
     matching.
   </div>
@@ -16,32 +16,32 @@
     </button>
     <p>Or drag and drop a pdf file here</p>
   </div>
-  <div class="pdf-upload" *ngIf="config === 2">
-    <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
-    <p class="loadingbar"></p>
+  <div class="pdf-upload margin-top-xl" *ngIf="config === 2">
+    <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-top-m margin-bottom-s">
+    <p class="loadingbar"><span class="w70"></span></p>
   </div>
-  <div class="pdf-upload" *ngIf="config === 3">
+  <div class="pdf-upload margin-top-xl" *ngIf="config === 3">
     <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
     <p class="ws-mat-default-text">Work_order_22022021.pdf</p>
-    <p class="loadingbar"></p>
+    <p class="loadingbar"><span class="w100"></span></p>
   </div>
   <div class="pdf-upload" *ngIf="config === 4">
-    <div class="inline-block margin-right-s">
+    <div class="inline-block margin-right-s margin-top-m">
       <p class="greybar">Signed copy</p>
       <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
       <p class="mat-body-2 ws-mat-default-text">Work_order_22022021.pdf</p>
     </div>
-    <div class="inline-block margin-left-s">
+    <div class="inline-block margin-left-s margin-top-m">
       <p class="greybar">Draft to be published</p>
       <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
       <p class="mat-body-2 ws-mat-default-text">Work_order_Division1.pdf</p>
     </div>
   </div>
-  <div class="pdf-upload margin-bottom-xl" *ngIf="config === 5">
-    <img src="/assets/icons/Publish_Success.svg" alt="PDF upload" class="margin-top-xl margin-bottom-m">
-    <p class="mat-subheading-1 margin-bottom-xs">Published successfully</p>
-    <p class="margin-bottom-xs mat-bosy-2">Work allocation order published successfully.</p>
-    <p class="mat-body-2">It will be available under 'Published' tab and the url <a href="" class="ws-mat-default-text">wao.dohfw.in/published</a></p>
+  <div class="pdf-upload margin-bottom-xl margin-top-xl" *ngIf="config === 5">
+    <img src="/assets/icons/Publish_Success.svg" alt="PDF upload" class="margin-top-xl margin-bottom-m publish-success">
+    <p class="mat-title margin-bottom-m margin-top-xl">Published successfully</p>
+    <p class="margin-bottom-0 mat-body-1">Work allocation order published successfully.</p>
+    <p class="mat-body-1 margin-bottom-xl">It will be available under 'Published' tab and the url <a href="" class="ws-mat-default-text">wao.dohfw.in/published</a></p>
   </div>
   <div class="footer">
     <button mat-raised-button type="button" [mat-dialog-close]="true" class="ws-mat-primary-background flex-auto-display"

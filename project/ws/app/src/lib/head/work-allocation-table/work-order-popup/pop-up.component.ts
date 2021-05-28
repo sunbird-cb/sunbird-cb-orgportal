@@ -114,7 +114,8 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
   }
   goToWorkAllocation() {
     this.dialogRef.close()
-    this.router.navigate([`/app/workallocation/create`])
+    // this.router.navigate([`/app/workallocation/create`])
+    this.router.navigate([`/app/workallocation/drafts`], { queryParams: { status: 'New' } })
   }
   applyFilter(filterValue: any) {
     this.isSearched = true

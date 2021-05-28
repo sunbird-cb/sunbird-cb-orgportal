@@ -153,9 +153,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     const req = this.getStrcuturedReq()
     this.allocateSrvc.createAllocation(req).subscribe(res => {
       if (res) {
-        this.openSnackbar('Work Allocated Successfully')
+        this.openSnackbar('Work order saved!')
         this.router.navigate(['/app/workallocation/drafts'])
       }
+      this.watStore.clear()
     })
   }
   getStrcuturedReq(): any {
@@ -266,10 +267,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     if (grpDescEmpty) {
       result.push({ _type: 'warning', type: 'role', counts: grpDescEmpty, label: 'Role description missing' })
     }
-    const unmapedActivities = _.size(_.get(_.first(data), 'activities'))
-    if (unmapedActivities) {
-      result.push({ _type: 'warning', type: 'activity', counts: unmapedActivities, label: 'Unmapped activities' })
-    }
+    // const unmapedActivities = _.size(_.get(_.first(data), 'activities'))
+    // if (unmapedActivities) {
+    //   result.push({ _type: 'warning', type: 'activity', counts: unmapedActivities, label: 'Unmapped activities' })
+    // }
 
     return result
   }
@@ -285,9 +286,16 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
 
   get allErrors() {
     let errors: IWarnError[] = []
+    let calculatedErr: IWarnError[] = []
+    let calculatedErr2: IWarnError[] = []
     if (this.dataStructure.officerFormData) {
-      errors = (this.calculateOfficerErrors(this.dataStructure.officerFormData))
+      calculatedErr = (this.calculateOfficerErrors(this.dataStructure.officerFormData))
     }
+    if (this.dataStructure.activityGroups) {
+      calculatedErr2 = this.calculateActivityError(this.dataStructure.activityGroups)
+    }
+
+    errors = _.union(calculatedErr, calculatedErr2)
     return errors
   }
 
@@ -299,6 +307,15 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     }
     if (data && data.position === '' && (data.officerName !== '' || data.positionDescription !== '')) {
       result.push({ _type: 'error', type: 'officer', counts: 0, label: 'Postion missing' })
+    }
+    return result
+  }
+
+  calculateActivityError(data: any): IWarnError[] {
+    const result: IWarnError[] = []
+    const unmapedActivities = _.size(_.get(_.first(data), 'activities'))
+    if (unmapedActivities) {
+      result.push({ _type: 'warning', type: 'activity', counts: unmapedActivities, label: 'Unmapped activities' })
     }
     return result
   }

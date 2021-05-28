@@ -1,10 +1,10 @@
 <div class="container-balanced">
     <div class="resporow flex flex-1 fix-top">
         <div class="block flex-4 ws-mat-accent-border-right">
-            <div class="respon flex margin-top-s sticky-nav">
+            <div class="respon flex  sticky-nav">
                 <div class="sticky-nav-content">
                     <div class="flex flex-1 margin-auto">
-                        <a routerLink="/app/home/workallocation" class="flex flex margin-left-xl cursor-pointer">
+                        <a routerLink="/app/workallocation/drafts" class="flex flex margin-left-xl cursor-pointer">
                             <mat-icon class="ws-mat-black60-text flex margin-left-xs margin-right-s">arrow_back
                             </mat-icon>
                             <span class="mat-body-1">{{ getOfficerName || 'Guest'}}</span>
@@ -118,7 +118,7 @@
                             <div class="flex">
                                 <mat-icon [ngClass]="{'ws-mat-black60-text': selectedTab !== 'competencyDetails',
                         'ws-mat-default-text': selectedTab === 'competencyDetails'  }">list</mat-icon>
-                                <span class="mat-subheading-1 margin-left-xs">{{'Competency Details'}}</span>
+                                <span class="mat-subheading-1 margin-left-xs">{{'Competency details'}}</span>
                             </div>
                             <div class="flex flex-1">
                                 <ws-app-comp-details class="flex flex-1"></ws-app-comp-details>
@@ -128,7 +128,7 @@
                 </div>
             </div>
         </div>
-        <div class="block flex-1 padding-left-m padding-right-m sticky-right-section margin-top-s">
+        <div class="block flex-1 padding-left-m padding-right-m sticky-right-section ">
             <mat-card class="wi sticky-right-section-content margin-top-s">
                 <div class="flex flex-1 flex-column ">
                     <div class="flex flex-1 filter max-height-60 min-height35">
@@ -149,7 +149,7 @@
                             </mat-progress-spinner>
                             <span class="margin-left-m mat-body-1">{{'Progress of completion'}}</span>
                         </span>
-                        <span class="flex mat-body-1 font-semibold margin-left-m">{{currentProgress}}</span>
+                        <span class="flex mat-body-1 font-semibold margin-left-m">{{currentProgress}}%</span>
                     </div>
                     <div class="flex flex-1 flex-column margin-top-l">
                         <p class=" mat-body-2 font-bold-i margin-bottom-xs">
@@ -187,7 +187,7 @@
                         </ws-app-assistant-message-card> -->
                     </div>
                     <div class="flex flex-1 flex-column margin-top-l">
-                        <p class=" mat-body-1 font-bold-i">Help</p>
+                        <p class="mat-subheading-1">Help</p>
                         <ws-app-assistant-content-card [content]="content1"></ws-app-assistant-content-card>
                         <ws-app-assistant-content-card [content]="content2"></ws-app-assistant-content-card>
                     </div>
