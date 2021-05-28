@@ -21,7 +21,11 @@
                 <mat-cell *matCellDef="let element" (click)="selection.toggle(element)">
                     <span *ngIf="!col.isList && element[col.key]!='Download'" class="textclass mat-body-2">
                         <mat-radio-button *ngIf="col.displayName==='Work order'">
-                        </mat-radio-button> <span
+                        </mat-radio-button>
+                        <ws-app-initial-avatar
+                            *ngIf="col.displayName ==='Published by' ||  col.displayName ==='Last updated by'"
+                            [name]="element[col.key]">
+                        </ws-app-initial-avatar> <span
                             [ngStyle]="{'color':col.displayName != 'Errors' ? 'black' : 'red', 'font-weight':col.displayName != 'Work order' ? 'normal' : 'bold'}"
                             (click)="onRowClick(element)">{{element[col.key]}}
                             {{col.isList}}</span>

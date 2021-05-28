@@ -67,7 +67,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       {
         allocationDetails: {
           id: 1,
-          workorders: "Work order division 1",
+          workorders: "Work order - Administration wing",
           officers: "12",
           lastupdatedon: "03:30 PM 18 May 2021",
           lastupdatedby: "Garima Joshi",
@@ -81,7 +81,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       {
         allocationDetails: {
           id: 2,
-          workorders: "Work order division 2",
+          workorders: "Work order - Finance wing",
           officers: "32",
           lastupdatedon: "01:25 PM 18 May 2021",
           lastupdatedby: "Manjunatha HS",
