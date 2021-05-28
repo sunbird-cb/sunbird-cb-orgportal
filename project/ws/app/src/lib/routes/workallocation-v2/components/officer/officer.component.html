@@ -1,5 +1,5 @@
 <form [formGroup]="officerForm" class="officer-form">
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid grid-cols-4 gap-1">
     <div class="flex flex-column">
       <div class="ws-mat-black040-bg padding-left-m padding-xs mat-body-2 font-bold-i">
         Officer name
@@ -84,10 +84,10 @@
       </div>
     </div>
     <div class="col-span-2 flex flex-column">
-      <div class="ws-mat-black040-bg padding-left-m padding-xs mat-body-2 font-bold-i">
+      <div class="ws-mat-black040-bg padding-left-m padding-xs mat-body-2 ws-mat-black40-text">
         Position description
       </div>
-      <div class="flex flex-1 control">
+      <div class=" flex flex-1 control">
         <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
           <textarea id="description" class="form-input flex-1" matInput #description name="description"
             formControlName="positionDescription" i18n-placeholder placeholder="Type here" i18n-aria-label

@@ -1,11 +1,13 @@
 <div class="flex flex-1 ws-mat-accent-border border-r padding-s message-card">
   <div class="flex flex-1">
-    <mat-icon class="margin-right-xs" *ngIf="type === 'activity'">directions_walk</mat-icon>
-    <mat-icon class="margin-right-xs" *ngIf="type === 'role'">settings</mat-icon>
-    <mat-icon class="margin-right-xs" *ngIf="type === 'competency'">extension</mat-icon>
-    <mat-icon class="margin-right-xs" *ngIf="!(type === 'activity') && !(type === 'role') && !(type === 'competency')">
+    <mat-icon class="margin-right-xs ws-mat-black60-text" *ngIf="type === 'activity'">directions_walk</mat-icon>
+    <mat-icon class="margin-right-xs ws-mat-black60-text" *ngIf="type === 'role'">settings</mat-icon>
+    <mat-icon class="margin-right-xs ws-mat-black60-text" *ngIf="type === 'competency'">extension</mat-icon>
+    <mat-icon class="margin-right-xs ws-mat-black60-text" *ngIf="type === 'officer'">person</mat-icon>
+    <mat-icon class="margin-right-xs ws-mat-black60-text"
+      *ngIf="!(type === 'activity') && !(type === 'role') && !(type === 'competency') && !(type === 'officer')">
       settings</mat-icon>
     <span class="margin-right-xs" *ngIf="count > 0">({{count}})</span>
-    <span class="mat-body-1">{{message}}</span>
+    <span class="mat-body-2 custom-line-height">{{message}}</span>
   </div>
 </div>
