@@ -151,41 +151,9 @@
                         </span>
                         <span class="flex mat-body-1 font-semibold margin-left-m">{{currentProgress}}%</span>
                     </div>
-                    <div class="flex flex-1 flex-column margin-top-l">
-                        <p class=" mat-body-2 font-bold-i margin-bottom-xs">
-                            Errors
-                            <span class=" margin-left-xxs ws-mat-red-dark-text"> {{allErrors.length}} </span>
-                        </p>
-                        <ng-container *ngFor="let error of allErrors">
-                            <ws-app-assistant-message-card [type]="error.type" [count]="error.counts"
-                                [message]="error.label">
-                            </ws-app-assistant-message-card>
-                        </ng-container>
-                        <!-- <ws-app-assistant-message-card [type]="'activity'" [count]="5"
-                            [message]="'Unmapped activities'">
-                        </ws-app-assistant-message-card>
-                        <ws-app-assistant-message-card [type]="'role'" [message]="'Role has no activities'">
-                        </ws-app-assistant-message-card>
-                        <ws-app-assistant-message-card [type]="'competency'" [count]="2"
-                            [message]="'Competency has no roles'">
-                        </ws-app-assistant-message-card> -->
-                    </div>
-                    <div class="flex flex-1 flex-column margin-top-l">
-                        <p class="mat-body-2 font-bold-i">
-                            Warnings
-                            <span class="margin-left-xxs ws-mat-red-dark-text"> {{allWarning?.length}} </span>
-                        </p>
-                        <ng-container *ngFor="let warn of allWarning">
-                            <ws-app-assistant-message-card [type]="warn.type" [count]="warn.counts"
-                                [message]="warn.label">
-                            </ws-app-assistant-message-card>
-                        </ng-container>
-                        <!-- <ws-app-assistant-message-card [type]="'role'" [message]="'Role description missing'">
-                        </ws-app-assistant-message-card> -->
-                        <!-- <ws-app-assistant-message-card [type]="'role'" [count]="2"
-                            [message]="'Role has no competencies'">
-                        </ws-app-assistant-message-card> -->
-                    </div>
+                    <ng-container>
+                        <ws-app-assistant-message-card [dataStructure]="dataStructure"></ws-app-assistant-message-card>
+                    </ng-container>
                     <div class="flex flex-1 flex-column margin-top-l">
                         <p class="mat-subheading-1">Help</p>
                         <ws-app-assistant-content-card [content]="content1"></ws-app-assistant-content-card>
