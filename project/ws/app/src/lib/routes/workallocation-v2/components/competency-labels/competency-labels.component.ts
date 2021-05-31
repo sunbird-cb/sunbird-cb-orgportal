@@ -332,8 +332,8 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   setSelectedFilter(index: number) {
     this.selectedCompIdx = index
   }
-  public competencySelected(event: any) {
-    const lst = this.groupList.at(this.activeGroupIdx).get('competincies') as FormArray
+  public competencySelected(event: any, gIdx: number) {
+    const lst = this.groupList.at(gIdx).get('competincies') as FormArray
 
     const frmctrl0 = lst.at(this.selectedCompIdx).get('compId') as FormControl
     frmctrl0.patchValue(_.get(event, 'option.value.id') || '')
