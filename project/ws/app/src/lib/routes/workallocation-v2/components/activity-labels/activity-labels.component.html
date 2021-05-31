@@ -114,7 +114,7 @@
                 class="form-input flex-1" autocomplete="off" (input)="filterRoles(roleName.value)"
                 [matAutocomplete]="roleAuto" />
               <mat-autocomplete [attr.id]="'roleAuto_' + i" #roleAuto="matAutocomplete"
-                (optionSelected)="roleSelected($event)">
+                (optionSelected)="roleSelected($event,i)">
                 <div class="mat-body-4 ws-mat-accent-text padding-s"> From role dictionary</div>
                 <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
                   <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
@@ -182,7 +182,7 @@
                         autocomplete="off" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
                         cdkAutosizeMaxRows="5"></textarea>
                       <mat-autocomplete #roleDescriptionAuto="matAutocomplete"
-                        (optionSelected)="activitySelected($event)">
+                        (optionSelected)="activitySelected($event,i)">
                         <div class="mat-body-4 ws-mat-accent-text padding-s">From activity dictionary</div>
                         <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity">
                           <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">

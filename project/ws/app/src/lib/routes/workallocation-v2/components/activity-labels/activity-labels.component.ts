@@ -365,7 +365,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     )
   }
 
-  public roleSelected(event: any) {
+  public roleSelected(event: any, gIdx: number) {
+    this.activeGroupIdx = gIdx
     const lst = this.groupList.at(this.activeGroupIdx) as FormGroup
     const frmctrl = lst.get('groupDescription') as FormControl
     frmctrl.patchValue(event.option.value.description)
@@ -379,7 +380,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     this.watStore.setgetactivitiesGroup(this.groupList.value)
 
   }
-  activitySelected(event: any) {
+  activitySelected(event: any, gIdx: number) {
+    this.activeGroupIdx = gIdx
     const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
     const frmctrl = lst.at(this.selectedActivityIdx).get('activityDescription') as FormControl
     frmctrl.patchValue(event.option.value.description)
@@ -397,6 +399,12 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   displayFn(data: any): string {
     return data ? data.name : ''
   }
+  displayActivityFn(data: any/*, aIdx: number, gIdx: number*/): string {
+    // this.selectedActivityIdx = aIdx
+    // this.activeGroupIdx = gIdx
+    return data ? data.activityDescription : ''
+  }
+
 
   show(idx: number) {
     this.canshow = idx
