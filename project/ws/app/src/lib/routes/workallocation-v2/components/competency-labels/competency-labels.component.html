@@ -41,7 +41,7 @@
                       class="form-input flex-1" autocomplete="off" (input)="filterCompetencies(compName.value)"
                       [matAutocomplete]="competencyAuto" autocomplete="off" />
                     <mat-autocomplete [attr.id]="'compAuto1_' + i" #competencyAuto="matAutocomplete"
-                      (optionSelected)="competencySelected($event)">
+                      (optionSelected)="competencySelected($event,i)">
                       <div class="mat-body-4 ws-mat-accent-text padding-s">From competency dictionary</div>
                       <mat-option *ngFor="let competency of filteredCompetencies | async" [value]="competency">
                         <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
@@ -131,8 +131,9 @@
             <ng-container *ngFor="let ga of grp.get('competincies').controls; let gaIdx = index">
               <!-- {{log(ga)}} -->
               <!-- <span class="mat-subheading-2">{{'Unmapped competincies'}}</span> -->
-              <div [attr.id]="'cdkDragData_' + gaIdx" class="example-box" [cdkDragData]="ga.value" cdkDrag>
-                <div class="margin-right-xs">
+              <div [attr.id]="'cdkDragData_' + gaIdx" class="example-box cursor-default" [cdkDragData]="ga.value"
+                cdkDrag>
+                <div class="margin-right-xs cursor-move" cdkDragHandle>
                   <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
                 </div>
                 <div class="flex flex-1" [formGroup]="ga">
@@ -143,7 +144,7 @@
                         class="form-input flex-1" autocomplete="off" (click)="setSelectedFilter(gaIdx)"
                         (input)="filterCompetencies(compName.value, gaIdx)" [matAutocomplete]="competencyAuto1" />
                       <mat-autocomplete [attr.id]="'compAuto_' + gaIdx" #competencyAuto1="matAutocomplete"
-                        (optionSelected)="competencySelected($event)">
+                        (optionSelected)="competencySelected($event,i)">
                         <div class="mat-body-4 ws-mat-accent-text padding-s">From competency dictionary</div>
                         <mat-option *ngFor="let competency of filteredCompetencies | async" [value]="competency">
                           <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
