@@ -31,6 +31,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   rolesList: any = []
   userID: any
   public userRoles: Set<string> = new Set()
+  orguserRoles: any = []
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
   userStatus: any
 
@@ -45,12 +46,14 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private activeRoute: ActivatedRoute, private router: Router,
-              private usersSvc: UsersService,
-              private snackBar: MatSnackBar) {
+    // tslint:disable-next-line:align
+    private usersSvc: UsersService,
+    // tslint:disable-next-line:align
+    private snackBar: MatSnackBar) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         const profileData = this.activeRoute.snapshot.data.profileData.data.result.UserProfile[0] || {}
-        this.userID =  profileData.id
+        this.userID = profileData.id
         this.basicInfo = profileData.personalDetails
         this.academicDetails = profileData.academics
         this.professionalDetails = profileData.professionalDetails ? profileData.professionalDetails[0] : []
@@ -69,6 +72,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
               this.userStatus = 'Active'
               const usrRoles = user.roleInfo
               usrRoles.forEach((role: any) => {
+                this.orguserRoles.push(role.roleName)
                 this.modifyUserRoles(role.roleName)
               })
             }
@@ -96,8 +100,8 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         let currentdate: Date
 
         this.activeRoute.data.subscribe(data => {
-          this.profileData = data.pageData.data.profileData
-          this.profileDataKeys = data.pageData.data.profileDataKey
+          this.profileData = data.pageData.data.profileData ? data.pageData.data.profileData : []
+          this.profileDataKeys = data.pageData.data.profileDataKey ? data.pageData.data.profileDataKey : []
         })
 
         wfHistoryData.forEach((wfh: any) => {
@@ -198,22 +202,30 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     $event.target.src = '/assets/instances/eagle/app_logos/default.png'
   }
 
-  onSubmit(form: any) {
-    const dreq = {
-      userId: this.userID,
-      deptId: this.department ? this.department.id : null,
-      roles: form.value.roles,
-      isActive: true,
-      isBlocked: false,
-    }
+  resetRoles() {
+    this.updateUserRoleForm.controls['roles'].setValue(this.orguserRoles)
+  }
 
-    this.usersSvc.addUserRoleToDepartment(dreq).subscribe(dres => {
-      if (dres) {
-        this.updateUserRoleForm.reset({ roles: '' })
-        this.openSnackbar('User role updated Successfully')
-        this.router.navigate(['/app/home/users'])
+  onSubmit(form: any) {
+    if (form.value.roles !== this.orguserRoles) {
+      const dreq = {
+        userId: this.userID,
+        deptId: this.department ? this.department.id : null,
+        roles: form.value.roles,
+        isActive: true,
+        isBlocked: false,
       }
-    })
+
+      this.usersSvc.addUserRoleToDepartment(dreq).subscribe(dres => {
+        if (dres) {
+          this.updateUserRoleForm.reset({ roles: '' })
+          this.openSnackbar('User role updated Successfully')
+          this.router.navigate(['/app/home/users'])
+        }
+      })
+    } else {
+      this.openSnackbar('Select new roles')
+    }
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

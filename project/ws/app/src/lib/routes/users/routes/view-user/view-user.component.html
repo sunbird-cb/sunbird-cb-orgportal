@@ -2,8 +2,7 @@
   <div class="flex flex-1 custom">
     <div class="flex-3">
       <div class="flex flex-1 margin-left-xl">
-        <ws-widget-breadcrumbs-org
-          [widgetData]="{titles:[{title:'Users', url:'/app/home/users'},{title: userStatus, url:'none'},{title:fullname,url:'none'}] }">
+        <ws-widget-breadcrumbs-org [widgetData]="{titles:[{title:'Users', url:'/app/home/users'},{title: userStatus, url:'none'},{title:fullname,url:'none'}] }">
         </ws-widget-breadcrumbs-org>
       </div>
       <div class="flex flex-4 flex-column">
@@ -18,8 +17,7 @@
           <div class="flex-3">
             <div class="flex flex-1 flex-column">
               <!-- Basic Info card -->
-              <mat-card id="personalInfo"
-                class="flex flex-1 flex-column margin-left-m margin-bottom-m margin-right-m ws-mat-accent-border">
+              <mat-card id="personalInfo" class="flex flex-1 flex-column margin-left-m margin-bottom-m margin-right-m ws-mat-accent-border">
                 <div class="flex-custom">
                   <mat-card-content class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
                     <span class="mat-subheading-1 flex-4 mobile-margin appr-section-heading" role="link" tabindex="0">
@@ -36,8 +34,7 @@
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">First name</label>
-                                <input type="text" [disabled]="true" [value]="basicInfo.firstname"
-                                  class="appr-text-field">
+                                <input type="text" [disabled]="true" [value]="basicInfo.firstname" class="appr-text-field">
                               </mat-grid-tile>
 
                               <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
@@ -47,26 +44,23 @@
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Last name</label>
-                                <input type="text" [disabled]="true" [value]="basicInfo.surname"
-                                  class="appr-text-field">
+                                <input type="text" [disabled]="true" [value]="basicInfo.surname" class="appr-text-field">
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Date of birth (dd-mm-yy)</label>
-                                <input type="text" [disabled]="true" [value]="basicInfo.dob ? basicInfo.dob : ''"
-                                  class="appr-text-field">
+                                <input type="text" [disabled]="true" [value]="basicInfo.dob ? basicInfo.dob : ''" class="appr-text-field">
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Nationality</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="basicInfo.nationality ? basicInfo.nationality : ''" class="appr-text-field">
+                                <input type="text" [disabled]="true" [value]="basicInfo.nationality ? basicInfo.nationality : ''"
+                                  class="appr-text-field">
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Gender</label>
-                                <mat-radio-group [value]="basicInfo.gender" [disabled]="true"
-                                  aria-label="Select an option">
+                                <mat-radio-group [value]="basicInfo.gender" [disabled]="true" aria-label="Select an option">
                                   <mat-radio-button value="Male" class="radio-btn">Male</mat-radio-button>
                                   <mat-radio-button value="Female" class="radio-btn">Female</mat-radio-button>
                                   <mat-radio-button value="Others" class="radio-btn">Others</mat-radio-button>
@@ -75,8 +69,7 @@
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Marital status</label>
-                                <mat-radio-group [value]="basicInfo.maritalStatus" [disabled]="true"
-                                  aria-label="Select an option">
+                                <mat-radio-group [value]="basicInfo.maritalStatus" [disabled]="true" aria-label="Select an option">
                                   <mat-radio-button value="Single" class="radio-btn">Single</mat-radio-button>
                                   <mat-radio-button value="Married" class="radio-btn">Married</mat-radio-button>
                                 </mat-radio-group>
@@ -84,8 +77,7 @@
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Category</label>
-                                <mat-radio-group [value]="basicInfo.category" [disabled]="true"
-                                  aria-label="Select an option">
+                                <mat-radio-group [value]="basicInfo.category" [disabled]="true" aria-label="Select an option">
                                   <mat-radio-button value="General" class="radio-btn">General</mat-radio-button>
                                   <mat-radio-button value="OBC" class="radio-btn">OBC</mat-radio-button>
                                   <mat-radio-button value="SC" class="radio-btn">SC</mat-radio-button>
@@ -95,15 +87,13 @@
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Domicile medium (Mother tongue)</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="basicInfo.domicileMedium ? basicInfo.domicileMedium : ''"
+                                <input type="text" [disabled]="true" [value]="basicInfo.domicileMedium ? basicInfo.domicileMedium : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Other languages known</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="basicInfo.knownLanguages ? basicInfo.knownLanguages : ''"
+                                <input type="text" [disabled]="true" [value]="basicInfo.knownLanguages ? basicInfo.knownLanguages : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
 
@@ -115,35 +105,32 @@
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Telephone number</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="basicInfo.telephone ? basicInfo.telephone : ''" class="appr-text-field">
+                                <input type="text" [disabled]="true" [value]="basicInfo.telephone ? basicInfo.telephone : ''"
+                                  class="appr-text-field">
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Primary email</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="basicInfo.primaryEmail ? basicInfo.primaryEmail : ''"
+                                <input type="text" [disabled]="true" [value]="basicInfo.primaryEmail ? basicInfo.primaryEmail : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Secondary email</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="basicInfo.personalEmail ? basicInfo.personalEmail : ''"
+                                <input type="text" [disabled]="true" [value]="basicInfo.personalEmail ? basicInfo.personalEmail : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Postal address</label>
-                                <textarea [disabled]="true" rows="3"
-                                  [value]="basicInfo.postalAddress ? basicInfo.postalAddress : ''"
+                                <textarea [disabled]="true" rows="3" [value]="basicInfo.postalAddress ? basicInfo.postalAddress : ''"
                                   class="appr-text-field"></textarea>
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Pin code</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="basicInfo.pincode ? basicInfo.pincode : ''" class="appr-text-field">
+                                <input type="text" [disabled]="true" [value]="basicInfo.pincode ? basicInfo.pincode : ''"
+                                  class="appr-text-field">
                               </mat-grid-tile>
 
                             </mat-grid-list>
@@ -156,8 +143,7 @@
               </mat-card>
 
               <!-- Academic card -->
-              <mat-card id="academics"
-                class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
+              <mat-card id="academics" class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
                 <div class="flex-custom">
                   <mat-card-content class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
                     <span class="mat-subheading-1 flex-4 mobile-margin appr-section-heading" role="link" tabindex="0">
@@ -176,13 +162,11 @@
                             <mat-grid-list cols="1" rowHeight="100px">
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">School name</label>
-                                <input type="text" class="appr-text-field" [disabled]="true"
-                                  [value]="academic.nameOfInstitute">
+                                <input type="text" class="appr-text-field" [disabled]="true" [value]="academic.nameOfInstitute">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Year of passing</label>
-                                <input type="text" class="appr-text-field" [disabled]="true"
-                                  [value]="academic.yearOfPassing">
+                                <input type="text" class="appr-text-field" [disabled]="true" [value]="academic.yearOfPassing">
                               </mat-grid-tile>
                             </mat-grid-list>
                           </ng-container>
@@ -196,13 +180,11 @@
                             <mat-grid-list cols="1" rowHeight="100px">
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">School name</label>
-                                <input type="text" class="appr-text-field" [disabled]="true"
-                                  [value]="academic.nameOfInstitute">
+                                <input type="text" class="appr-text-field" [disabled]="true" [value]="academic.nameOfInstitute">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Year of passing</label>
-                                <input type="text" class="appr-text-field" [disabled]="true"
-                                  [value]="academic.yearOfPassing">
+                                <input type="text" class="appr-text-field" [disabled]="true" [value]="academic.yearOfPassing">
                               </mat-grid-tile>
                             </mat-grid-list>
                           </ng-container>
@@ -216,18 +198,15 @@
                             <mat-grid-list cols="1" rowHeight="100px">
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Degree</label>
-                                <input type="text" class="appr-text-field" [disabled]="true"
-                                  [value]="academic.nameOfQualification">
+                                <input type="text" class="appr-text-field" [disabled]="true" [value]="academic.nameOfQualification">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Institute name</label>
-                                <input type="text" class="appr-text-field" [disabled]="true"
-                                  [value]="academic.nameOfInstitute">
+                                <input type="text" class="appr-text-field" [disabled]="true" [value]="academic.nameOfInstitute">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Year of passing</label>
-                                <input type="text" class="appr-text-field" [disabled]="true"
-                                  [value]="academic.yearOfPassing">
+                                <input type="text" class="appr-text-field" [disabled]="true" [value]="academic.yearOfPassing">
                               </mat-grid-tile>
                             </mat-grid-list>
                           </ng-container>
@@ -241,18 +220,15 @@
                             <mat-grid-list cols="1" rowHeight="100px">
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Degree</label>
-                                <input type="text" class="appr-text-field" [disabled]="true"
-                                  [value]="academic.nameOfQualification">
+                                <input type="text" class="appr-text-field" [disabled]="true" [value]="academic.nameOfQualification">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Institute name</label>
-                                <input type="text" class="appr-text-field" [disabled]="true"
-                                  [value]="academic.nameOfInstitute">
+                                <input type="text" class="appr-text-field" [disabled]="true" [value]="academic.nameOfInstitute">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Year of passing</label>
-                                <input type="text" class="appr-text-field" [disabled]="true"
-                                  [value]="academic.yearOfPassing">
+                                <input type="text" class="appr-text-field" [disabled]="true" [value]="academic.yearOfPassing">
                               </mat-grid-tile>
                             </mat-grid-list>
                           </ng-container>
@@ -265,8 +241,7 @@
               </mat-card>
 
               <!-- Professional details card -->
-              <mat-card id="profdetails"
-                class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
+              <mat-card id="profdetails" class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
                 <div class="flex-custom">
                   <mat-card-content class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
                     <span class="mat-subheading-1 flex-4 mobile-margin appr-section-heading" role="link" tabindex="0">
@@ -291,31 +266,26 @@
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">MDO</label>
-                                <input type="text" [disabled]="true" class="appr-text-field"
-                                  [value]="professionalDetails.name || professionalDetails.nameOther || ''">
+                                <input type="text" [disabled]="true" class="appr-text-field" [value]="professionalDetails.name || professionalDetails.nameOther || ''">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Industry</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="professionalDetails.industry || professionalDetails.industryOther || ''"
+                                <input type="text" [disabled]="true" [value]="professionalDetails.industry || professionalDetails.industryOther || ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Designation</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="professionalDetails.designation || professionalDetails.designationOther || ''"
+                                <input type="text" [disabled]="true" [value]="professionalDetails.designation || professionalDetails.designationOther || ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Location</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="professionalDetails.location ? professionalDetails.location : ''"
+                                <input type="text" [disabled]="true" [value]="professionalDetails.location ? professionalDetails.location : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Description</label>
-                                <textarea [disabled]="true" rows="3"
-                                  [value]="professionalDetails.description ? professionalDetails.description : ''"
+                                <textarea [disabled]="true" rows="3" [value]="professionalDetails.description ? professionalDetails.description : ''"
                                   class="appr-text-field"></textarea>
                               </mat-grid-tile>
                             </mat-grid-list>
@@ -330,41 +300,37 @@
                             <mat-grid-list cols="2" rowHeight="100px">
                               <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Pay band (grade pay)</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails ? employmentDetails.payType : ''" class="appr-text-field">
+                                <input type="text" [disabled]="true" [value]="employmentDetails ? employmentDetails.payType : ''"
+                                  class="appr-text-field">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Service</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails ? employmentDetails.service : ''" class="appr-text-field">
+                                <input type="text" [disabled]="true" [value]="employmentDetails ? employmentDetails.service : ''"
+                                  class="appr-text-field">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Cadre</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails ? employmentDetails.cadre : ''" class="appr-text-field">
+                                <input type="text" [disabled]="true" [value]="employmentDetails ? employmentDetails.cadre : ''"
+                                  class="appr-text-field">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Allotment year of service</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails ? employmentDetails.allotmentYearOfService : ''"
+                                <input type="text" [disabled]="true" [value]="employmentDetails ? employmentDetails.allotmentYearOfService : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Date of joining</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails ? employmentDetails.dojOfService : ''"
+                                <input type="text" [disabled]="true" [value]="employmentDetails ? employmentDetails.dojOfService : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Civil list number</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails ? employmentDetails.civilListNo : ''"
+                                <input type="text" [disabled]="true" [value]="employmentDetails ? employmentDetails.civilListNo : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Emplyee code</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails ? employmentDetails.employeeCode : ''"
+                                <input type="text" [disabled]="true" [value]="employmentDetails ? employmentDetails.employeeCode : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
                               <!-- <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
@@ -374,14 +340,13 @@
                               </mat-grid-tile> -->
                               <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Official postal address</label>
-                                <textarea [disabled]="true" rows="3"
-                                  [value]="employmentDetails ? employmentDetails.officialPostalAddress : ''"
+                                <textarea [disabled]="true" rows="3" [value]="employmentDetails ? employmentDetails.officialPostalAddress : ''"
                                   class="appr-text-field"></textarea>
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Pin code</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails ? employmentDetails.pinCode : ''" class="appr-text-field">
+                                <input type="text" [disabled]="true" [value]="employmentDetails ? employmentDetails.pinCode : ''"
+                                  class="appr-text-field">
                               </mat-grid-tile>
                             </mat-grid-list>
                           </ng-container>
@@ -393,8 +358,7 @@
               </mat-card>
 
               <!-- Skills card -->
-              <mat-card id="skills"
-                class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
+              <mat-card id="skills" class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
                 <div class="flex-custom">
                   <mat-card-content class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
                     <span class="mat-subheading-1 flex-4 mobile-margin appr-section-heading" role="link" tabindex="0">
@@ -412,14 +376,12 @@
                             <mat-grid-list cols="1" rowHeight="150px">
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Additional skill acquired/course completed</label>
-                                <textarea [disabled]="true" rows="4"
-                                  [value]="skillDetails.additionalSkills ? skillDetails.additionalSkills : ''"
+                                <textarea [disabled]="true" rows="4" [value]="skillDetails.additionalSkills ? skillDetails.additionalSkills : ''"
                                   class="appr-text-field"></textarea>
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Provide certification details</label>
-                                <textarea [disabled]="true" rows="4"
-                                  [value]="skillDetails.certificateDetails ? skillDetails.certificateDetails : ''"
+                                <textarea [disabled]="true" rows="4" [value]="skillDetails.certificateDetails ? skillDetails.certificateDetails : ''"
                                   class="appr-text-field"></textarea>
                               </mat-grid-tile>
                             </mat-grid-list>
@@ -431,14 +393,12 @@
                             <mat-grid-list cols="1" rowHeight="150px">
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Professional interests</label>
-                                <textarea [disabled]="true" rows="4"
-                                  [value]="skillDetails.additionalSkills ? skillDetails.additionalSkills : ''"
+                                <textarea [disabled]="true" rows="4" [value]="skillDetails.additionalSkills ? skillDetails.additionalSkills : ''"
                                   class="appr-text-field"></textarea>
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Hobbies</label>
-                                <textarea [disabled]="true" rows="4"
-                                  [value]="skillDetails.certificateDetails ? skillDetails.certificateDetails : ''"
+                                <textarea [disabled]="true" rows="4" [value]="skillDetails.certificateDetails ? skillDetails.certificateDetails : ''"
                                   class="appr-text-field"></textarea>
                               </mat-grid-tile>
                             </mat-grid-list>
@@ -450,45 +410,50 @@
                 </div>
               </mat-card>
 
-               <!-- Roles Update card -->
-              <mat-card id="roles"
-               class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
-               <div class="flex-custom">
-                 <mat-card-content class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
-                   <span class="mat-subheading-1 flex-4 mobile-margin appr-section-heading" role="link" tabindex="0">
-                     Update roles
-                   </span>
-                   <div class="margin-top-xl new-mobile">
-                     <div class="flex flex-wrap mobile-break">
-                       <div class="w-full profile-cols-full bg-grey">
-                         <ng-container>
-                          <form [formGroup]="updateUserRoleForm">
-                            <div class="input-wrapper margin-top-s">
-                              <label for="roles" class="margin-remove-bottom form-label required" i18n-aria-label
-                                aria-label="Roles label" i18n="Role label|Label which explains the user to select the roles">
-                                Role
-                              </label>
-                              <mat-selection-list id="roles" formControlName="roles" #roles>
-                                <mat-list-option *ngFor="let role of rolesList" (click)="modifyUserRoles(role)"
-                                  [selected]="userRoles.has(role.roleName)" [value]="role.roleName">
-                                  {{role.roleName}}
-                                </mat-list-option>
-                              </mat-selection-list>
-                            </div>
-                            <button mat-raised-button type="submit" (click)="onSubmit(updateUserRoleForm)"
-                              class="margin-top-m text-white btn-success btn-responsive" [disabled]="updateUserRoleForm?.invalid">
-                              <span class="text-white" i18n>
-                                Update
-                              </span>
-                            </button>
-                          </form>
-                         </ng-container>
-                       </div>
-                     </div>
-                   </div>
-                 </mat-card-content>
-               </div>
-             </mat-card>
+              <!-- Roles Update card -->
+              <mat-card id="roles" class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
+                <div class="flex-custom">
+                  <mat-card-content class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
+                    <span class="mat-subheading-1 flex-4 mobile-margin appr-section-heading" role="link" tabindex="0">
+                      Update roles
+                    </span>
+                    <div class="margin-top-xl new-mobile">
+                      <div class="flex flex-wrap mobile-break">
+                        <div class="w-full profile-cols-full bg-grey">
+                          <ng-container>
+                            <form [formGroup]="updateUserRoleForm">
+                              <div class="input-wrapper margin-top-s">
+                                <label for="roles" class="margin-remove-bottom form-label required" i18n-aria-label
+                                  aria-label="Roles label" i18n="Role label|Label which explains the user to select the roles">
+                                  Role
+                                </label>
+                                <mat-selection-list id="roles" formControlName="roles" #roles>
+                                  <mat-list-option *ngFor="let role of rolesList" (click)="modifyUserRoles(role)"
+                                    [selected]="userRoles.has(role.roleName)" [value]="role.roleName">
+                                    {{role.roleName}}
+                                  </mat-list-option>
+                                </mat-selection-list>
+                              </div>
+                              <button mat-raised-button type="submit" (click)="onSubmit(updateUserRoleForm)" class="margin-top-m text-white btn-success btn-responsive"
+                                [disabled]="updateUserRoleForm?.invalid">
+                                <span class="text-white" i18n>
+                                  Update
+                                </span>
+                              </button>
+                              <button mat-raised-button type="submit" (click)="resetRoles()" class="margin-top-m text-white btn-success btn-responsive"
+                                [disabled]="updateUserRoleForm?.invalid">
+                                <span class="text-white" i18n>
+                                  Cancel
+                                </span>
+                              </button>
+                            </form>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                </div>
+              </mat-card>
             </div>
           </div>
         </div>
@@ -503,7 +468,8 @@
               <div class="margin-top-l margin-bottom-l margin-left-m margin-right-m">
                 <label class=" field-key">{{wfh.fieldKey}}</label>
                 <label class="field-name">{{wfh.fieldName}}</label>
-                <label *ngIf="wfh.action === 'APPROVE'" class="field-change">Changed from {{'"'+ wfh.fromValue +'"'}} to
+                <label *ngIf="wfh.action === 'APPROVE'" class="field-change">Changed from {{'"'+ wfh.fromValue +'"'}}
+                  to
                   {{'"'+ wfh.toValue +'"'}}</label>
                 <label *ngIf="wfh.action === 'REJECT'" class="field-change">{{wfh.fieldName}} was rejected with
                   {{wfh.comment}}</label>
