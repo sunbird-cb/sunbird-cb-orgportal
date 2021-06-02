@@ -26,7 +26,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   groups: NSWatActivity.IActivityGroup[] = []
   activeGroupIdx = 0
   selectedCompIdx = 0
-  untitedRole = 'Untited role'
+  untitedRole = 'Untitled role'
   activityForm!: FormGroup
   userslist!: any[]
   canshowName = 1

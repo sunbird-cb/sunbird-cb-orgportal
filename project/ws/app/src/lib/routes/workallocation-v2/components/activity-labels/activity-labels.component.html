@@ -104,7 +104,7 @@
             <span
               [hidden]="!((canshowName === -1 && !grp.get('groupName').value) || !(canshowName === i && activeGroupIdx === i)) "
               (click)="showName(i)" class="flex margin-left-m  margin-top-m mat-subheading-2 break-a">
-              {{grp.get('groupName').value || 'Untited role'}}
+              {{grp.get('groupName').value || 'Untitled role'}}
             </span>
             <!-- *ngIf="canshowName === i && activeGroupIdx === i" -->
             <mat-form-field [hidden]="!(canshowName === i && activeGroupIdx === i)" appearance="outline"

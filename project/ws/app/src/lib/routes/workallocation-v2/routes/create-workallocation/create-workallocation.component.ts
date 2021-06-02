@@ -38,6 +38,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
    */
   private activitySubscription: any
   private groupSubscription: any
+  private compDetailsSubscription: any
   officerFormSubscription: any
   dataStructure: any = {}
   departmentName: any
@@ -140,6 +141,12 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     this.groupSubscription = this.watStore.getcompetencyGroup.subscribe(comp => {
       if (comp.length > 0) {
         this.dataStructure.compGroups = comp
+      }
+    })
+
+    this.compDetailsSubscription = this.watStore.get_compGrp.subscribe(comp => {
+      if (comp.length > 0) {
+        this.dataStructure.compDetails = comp
       }
     })
 
@@ -251,5 +258,6 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     this.activitySubscription.unsubscribe()
     this.groupSubscription.unsubscribe()
     this.officerFormSubscription.unsubscribe()
+    this.compDetailsSubscription.unsubscribe()
   }
 }

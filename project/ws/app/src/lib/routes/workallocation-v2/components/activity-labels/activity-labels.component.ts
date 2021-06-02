@@ -47,7 +47,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   groups: NSWatActivity.IActivityGroup[] = []
   selectedActivityIdx = 0
   activeGroupIdx = 0
-  untitedRole = 'Untited role'
+  untitedRole = 'Untitled role'
   activityForm!: FormGroup
   userslist!: any[]
   filteredActivityDesc!: Observable<any[]>
@@ -262,7 +262,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     this.addNewGroup()
     // this.addNewGroupActivity(0)
     // this.createGroupControl({
-    //   groupName: 'Untited role',
+    //   groupName: 'Untitled role',
     //   groupDescription: 'Role description',
     //   activities: [{
     //     activityName: 'unmed',
