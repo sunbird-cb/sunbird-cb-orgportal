@@ -1,0 +1,63 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.example-container {
+  display: flex;
+  @extend %page-center;
+
+  ::ng-deep.mat-card-header-text {
+    margin: 0 !important;
+  }
+
+  .flex-3 {
+    flex: 3 !important;
+  }
+
+  .table {
+    display: flex;
+    flex: 1;
+
+    .head-cell {
+      background: RGBA(0, 0, 0, 0.04);
+      padding: $size-m;
+    }
+  }
+
+  .row {
+    display: flex;
+    flex: 1;
+
+    .row-cell {
+      background: transparent;
+      padding: $size-m;
+    }
+  }
+
+  .margin-r-2px {
+    margin-right: 2px;
+  }
+
+  .accent-border-local {
+    border: 1px solid rgb(0, 116, 182);
+  }
+
+  .btn {
+    height: 48px;
+    border-radius: 4px;
+  }
+
+  .scroll {
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: calc(100vh - 10 * #{$mat-toolbar-gt-xs});
+  }
+
+  .noborder {
+    border: none !important;
+  }
+
+  .text-white {
+    color: white;
+  }
+}

@@ -8,8 +8,10 @@ import { AllocationService } from '../../../workallocation/services/allocation.s
 import { debounceTime, map, switchMap, takeUntil } from 'rxjs/operators'
 import { Observable, Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
-import { MatSnackBar } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations'
+import { WatRolePopup } from './wat-role-popup/wat-role-popup.component'
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-activity-labels',
@@ -60,6 +62,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     private allocateSrvc: AllocationService,
     private watStore: WatStoreService,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) {
     this.evenPredicate = this.evenPredicate.bind(this)
   }
@@ -132,6 +135,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       const newArray = (this.activityForm.get('groupsArray') as any)!.at(targetContainerIndex).get('activities')
       // tslint:enable
       transferArrayItem(oldArray.controls, newArray.controls, event.previousIndex, event.currentIndex)
+      transferArrayItem(oldArray.value, newArray.value, event.previousIndex, event.currentIndex)
       /**Please do not delete these methods : for testing Purpose */
       // this.addNewGroupActivityCustom(targetContainerIndex, newArray.value)
       // this.addNewGroupActivityCustom(previousContainerIndex, oldArray.value)
@@ -172,6 +176,11 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
   setGroupValues(val: any) {
     this.groupList.patchValue(val)
+  }
+  deleteActivityGromGrp(index: number) {
+    if (index >= 0) {
+      this.groupActivityList.removeAt(index)
+    }
   }
   setGroupActivityValues(val: any) {
     this.groupActivityList.patchValue(val)
@@ -215,8 +224,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
   addNewGroupActivityCustom(idx: number, activities: NSWatActivity.IActivity[]) {
     if (idx >= 0) {
-      // const oldValue = this.groupActivityList as FormArray
-      const newForlAryList = this.formBuilder.array([])
+      const oldValue = this.groupActivityList as FormArray
+      // const newForlAryList = this.formBuilder.array([])
       activities.forEach((ac: NSWatActivity.IActivity) => {
         const fga = this.formBuilder.group({
           activityId: ac.activityId,
@@ -224,10 +233,11 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
           activityDescription: ac.activityDescription,
           assignedTo: ac.assignedTo,
         })
-        newForlAryList.push(fga)
+        oldValue.push(fga)
       })
+      // const newValues = _.filter(oldValue.controls, vall => !!vall.value.activityDescription) as FormArray
       // tslint:disable-next-line: no-non-null-assertion
-      this.setGroupActivityValues([...newForlAryList!.value])
+      this.setGroupActivityValues([...oldValue!.value])
     }
   }
   addNewGroupActivity(idx: number) {
@@ -368,18 +378,79 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   public roleSelected(event: any, gIdx: number) {
     this.activeGroupIdx = gIdx
     const lst = this.groupList.at(this.activeGroupIdx) as FormGroup
-    const frmctrl = lst.get('groupDescription') as FormControl
-    frmctrl.patchValue(event.option.value.description)
 
-    const frmctrl1 = lst.get('groupName') as FormControl
-    frmctrl1.patchValue(event.option.value.name)
+    const dialogRef = this.dialog.open(WatRolePopup, {
+      restoreFocus: false,
+      disableClose: true,
+      data: event.option.value
+    })
 
-    const frmctrl2 = lst.get('groupId') as FormControl
-    frmctrl2.patchValue(event.option.value.id)
+    // Manually restore focus to the menu trigger since the element that
+    // opens the dialog won't be in the DOM any more when the dialog closes.
+    dialogRef.afterClosed().subscribe((val: any) => {
+      if (val.ok) {
+        const frmctrl = lst.get('groupDescription') as FormControl
+        frmctrl.patchValue(event.option.value.description)
 
-    this.watStore.setgetactivitiesGroup(this.groupList.value)
+        const frmctrl1 = lst.get('groupName') as FormControl
+        frmctrl1.patchValue(event.option.value.name)
+
+        const frmctrl2 = lst.get('groupId') as FormControl
+        frmctrl2.patchValue(event.option.value.id)
+
+        // wait 200ms
+        // setTimeout(() => {
+        if (val.data && val.data.length > 0) {
+          /**Reject Already Exist values */
+          let newValues = _.reject(val.data, (item) => _.find(_.get(lst.get('activities'), 'value'), { activityDescription: item.activityDescription }))
+          // console.log(newValues)
+          let unselectVals = _.reject(_.get(lst.get('activities'), 'value'), (item) => _.find(val.data, { activityDescription: item.activityDescription }))
+          if (newValues && newValues.length > 0) {
+            this.addNewGroupActivityCustom(this.activeGroupIdx, [...newValues])
+          }
+          this.deleteUnselectedActivities(unselectVals, this.activeGroupIdx)
+          // this.deleteActivityGromGrp(_.findIndex(_.get(lst.get('activities'), 'value'), (itm: any) => !itm.activityDescription))
+
+        } else {
+          this.deleteUnselectedActivities([], this.activeGroupIdx)
+        }
+        // }, 200)
+        // add a blank Activity
+        this.addNewGroupActivity(this.activeGroupIdx)
+        // to get focus back
+        // this.menuTrigger.focus()
+      } else {
+        const frmctrl = lst.get('groupDescription') as FormControl
+        frmctrl.patchValue(event.option.value.description || '')
+
+        const frmctrl1 = lst.get('groupName') as FormControl
+        frmctrl1.patchValue(event.option.value.name || '')
+
+        const frmctrl2 = lst.get('groupId') as FormControl
+        frmctrl2.patchValue(event.option.value.id || '')
+
+        this.watStore.setgetactivitiesGroup(this.groupList.value)
+      }
+      this.watStore.setgetactivitiesGroup(this.groupList.value)
+    })
+
 
   }
+  deleteUnselectedActivities(unselectVals: any, gIdx: number) {
+    const lst = this.groupList.at(gIdx) as FormGroup
+    if (unselectVals && unselectVals.length > 0) {
+      /**Delete unselected Values */
+      for (let i = unselectVals.length - 1; i >= 0; i -= 1) {
+        this.deleteActivityGromGrp(_.findIndex(_.get(lst.get('activities'), 'value'), (itm: any) => unselectVals[i].activityDescription === itm.activityDescription))
+      }
+    } else {
+      let existingLst = _.get(lst.get('activities'), 'value')
+      for (let i = existingLst.length - 1; i >= 0; i -= 1) {
+        this.deleteActivityGromGrp(i)
+      }
+    }
+  }
+
   activitySelected(event: any, gIdx: number) {
     this.activeGroupIdx = gIdx
     const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray

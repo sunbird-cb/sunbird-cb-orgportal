@@ -7,11 +7,12 @@ import { AllocationService } from '../../../workallocation/services/allocation.s
 import { debounceTime, map, switchMap, takeUntil } from 'rxjs/operators'
 import { Observable, Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
-import { MatSnackBar } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { NSWatCompetency } from '../../models/competency-wat.model'
 import { NSWatActivity } from '../../models/activity-wot.model'
 // tslint:disable
 import _ from 'lodash'
+import { WatCompPopup } from './wat-comp-popup/wat-comp-popup.component'
 // tslint:enable
 
 @Component({
@@ -38,6 +39,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     private allocateSrvc: AllocationService,
     private watStore: WatStoreService,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) {
 
   }
@@ -335,26 +337,40 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   public competencySelected(event: any, gIdx: number) {
     const lst = this.groupList.at(gIdx).get('competincies') as FormArray
 
-    const frmctrl0 = lst.at(this.selectedCompIdx).get('compId') as FormControl
-    frmctrl0.patchValue(_.get(event, 'option.value.id') || '')
+    const dialogRef = this.dialog.open(WatCompPopup, {
+      restoreFocus: false,
+      disableClose: true,
+      data: event.option.value
+    })
 
-    const frmctrl = lst.at(this.selectedCompIdx).get('compDescription') as FormControl
-    frmctrl.patchValue(_.get(event, 'option.value.description') || '')
+    // Manually restore focus to the menu trigger since the element that
+    // opens the dialog won't be in the DOM any more when the dialog closes.
+    dialogRef.afterClosed().subscribe((val: any) => {
+      if (val.ok) {
+        const frmctrl0 = lst.at(this.selectedCompIdx).get('compId') as FormControl
+        frmctrl0.patchValue(_.get(event, 'option.value.id') || '')
 
-    const frmctrl1 = lst.at(this.selectedCompIdx).get('compName') as FormControl
-    frmctrl1.patchValue(_.get(event, 'option.value.name') || '')
+        const frmctrl = lst.at(this.selectedCompIdx).get('compDescription') as FormControl
+        frmctrl.patchValue(_.get(event, 'option.value.description') || '')
 
-    // const frmctrl2 = lst.at(this.selectedCompIdx).get('compLevel') as FormControl
-    // frmctrl2.patchValue(event.option.value.additionalProperties.)
+        const frmctrl1 = lst.at(this.selectedCompIdx).get('compName') as FormControl
+        frmctrl1.patchValue(_.get(event, 'option.value.name') || '')
 
-    const frmctrl3 = lst.at(this.selectedCompIdx).get('compType') as FormControl
-    frmctrl3.patchValue(_.get(event, 'option.value.additionalProperties.competencyType') || '')
+        // const frmctrl2 = lst.at(this.selectedCompIdx).get('compLevel') as FormControl
+        // frmctrl2.patchValue(event.option.value.additionalProperties.)
 
-    const frmctrl4 = lst.at(this.selectedCompIdx).get('compArea') as FormControl
-    frmctrl4.patchValue(_.get(event, 'option.value.additionalProperties.competencyArea') || '')
+        const frmctrl3 = lst.at(this.selectedCompIdx).get('compType') as FormControl
+        frmctrl3.patchValue(_.get(event, 'option.value.additionalProperties.competencyType') || '')
 
-    this.watStore.setgetcompetencyGroup(this.groupList.value)
-    this.updateCompData()
+        const frmctrl4 = lst.at(this.selectedCompIdx).get('compArea') as FormControl
+        frmctrl4.patchValue(_.get(event, 'option.value.additionalProperties.competencyArea') || '')
+
+        this.watStore.setgetcompetencyGroup(this.groupList.value)
+        this.updateCompData()
+      } else {
+
+      }
+    })
 
   }
   updateCompData() {
