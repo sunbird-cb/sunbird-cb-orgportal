@@ -37,6 +37,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { ExportAsModule } from 'ngx-export-as'
 import { WorkallocationModule } from '../workallocation/workallocation.module'
 import { NgxPaginationModule } from 'ngx-pagination'
+import { WelcomeComponent } from './routes/welcome/welcome.component'
+import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -45,6 +47,7 @@ import { NgxPaginationModule } from 'ngx-pagination'
     RolesAccessComponent,
     ApprovalsComponent,
     WorkallocationComponent,
+    WelcomeComponent,
   ],
   imports: [
     CommonModule,
@@ -89,6 +92,7 @@ import { NgxPaginationModule } from 'ngx-pagination'
     ExportAsModule,
     WorkallocationModule,
     NgxPaginationModule,
+    RainDashboardsModule,
   ],
   entryComponents: [
   ],
