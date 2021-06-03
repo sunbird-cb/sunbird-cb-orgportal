@@ -26,9 +26,9 @@ import { AssistantContentCardComponent } from './components/assistant-content-ca
 import { WatStoreService } from './services/wat.store.service'
 import { CompetencyLabelsModule } from './components/competency-labels/competency-labels.module'
 import { ComponentSharedModule } from './components/component-shared.module'
-import { CompDetailsComponent } from './components/comp-details/comp-details.component'
 import { DraftAllocationsComponent } from './routes/draft-allocations/draft-allocations.component'
 import { PublishedAllocationsComponent } from './routes/published-allocations/published-allocations.component'
+import { CompDetailModule } from './components/comp-details/comp-details.module'
 
 @NgModule({
   declarations: [
@@ -37,13 +37,12 @@ import { PublishedAllocationsComponent } from './routes/published-allocations/pu
     OfficerComponent,
     AssistantMessageCardComponent,
     AssistantContentCardComponent,
-    CompDetailsComponent,
     DraftAllocationsComponent,
     PublishedAllocationsComponent,
   ],
   imports: [
     CommonModule, ReactiveFormsModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,
-    ActivityLabelsModule, CompetencyLabelsModule, RouterModule, MatSidenavModule, MatListModule,
+    ActivityLabelsModule, CompDetailModule, CompetencyLabelsModule, RouterModule, MatSidenavModule, MatListModule,
     ScrollspyLeftMenuModule, MatCardModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,

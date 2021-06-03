@@ -68,9 +68,11 @@
       </div>
       <div class="flex flex-1 control ws-mat-accent-b">
         <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
-          <input id="position" class="form-input flex-1" matInput #position name="position" formControlName="position"
-            i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Type here" autocomplete="off"
-            [matAutocomplete]="positionAuto" (input)="filterPositions(position.value)">
+          <textarea id="position" class="form-input flex-1" matInput #position name="position"
+            formControlName="position" i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Type here"
+            autocomplete="off" [matAutocomplete]="positionAuto" (input)="filterPositions(position.value)"
+            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5">
+            </textarea>
           <mat-autocomplete #positionAuto="matAutocomplete" (optionSelected)="postionClicked($event)">
             <div class="mat-body-4 ws-mat-accent-text padding-s">From position dictionary</div>
             <mat-option *ngFor="let pos of filteredPositionlist | async" [value]="pos">

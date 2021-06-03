@@ -1,7 +1,7 @@
 // import { untilDestroyed } from 'ngx-take-until-destroy'
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
-import { Router } from '@angular/router'
+// import { Router } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
 import { NSWatActivity } from '../../models/activity-wot.model'
@@ -61,7 +61,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     private watStore: WatStoreService,
     private allocateSrvc: AllocationService,
     private snackBar: MatSnackBar,
-    private router: Router
+    // private router: Router
   ) {
   }
   ngOnInit(): void {
