@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import _ from 'lodash'
 
 export interface IWatCompPopupData {
-  childNodes: IChield[],
+  children: IChield[],
   description: string,
   id: string,
   name: string,
@@ -18,7 +18,8 @@ export interface IChield {
   description: string
   id: string
   name: string
-  parentRole?: any
+  level: string
+  // parentRole?: any
   source: string
   status: string
   type: string
@@ -54,9 +55,9 @@ export class WatCompPopup implements OnInit {
     this.watForm.patchValue(val)
   }
   ngOnInit(): void {
-    if (this.data.childNodes) {
+    if (this.data.children) {
       let oldValue = this.getList
-      _.each(this.data.childNodes, itm => {
+      _.each(this.data.children, itm => {
         oldValue.push(this.createItem(itm))
       })
       this.setWatValues([...oldValue.value])
@@ -69,7 +70,8 @@ export class WatCompPopup implements OnInit {
       description: itm.description,
       id: itm.id,
       name: itm.name,
-      parentRole: itm.parentRole,
+      level: itm.level,
+      // parentRole: itm.parentRole,
       source: itm.source,
       status: itm.status,
       type: itm.type,
@@ -84,6 +86,10 @@ export class WatCompPopup implements OnInit {
   }
   onOkClick(): void {
 
+  }
+  getLocalPrint(data: string) {
+    return `<ul>${(_.compact(data.split('• '))
+      .map(i => { if (i) { return `<li>${i}</li>` } else return null })).join('')}</ul>`
   }
   onChange($event: any) {
     if ($event) {

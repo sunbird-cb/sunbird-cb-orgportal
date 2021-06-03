@@ -39,74 +39,48 @@
           <span class="mat-subheading-1">Choose competency levels</span>
           <div class="flex flex-1 scroll flex-column">
             <!-- *ngFor="let _activity of watForm?.get('acDetail')?.controls; let i=index" -->
-            <ng-container>
-              <!-- [formGroup]="_activity" -->
-              <div class=" flex flex-1 flex-column">
-                <div class="table ws-mat-accent-border-bottom">
-                  <div class="flex-1 head-cell margin-r-2px">
-                    <span class="padding-bottom-s padding-top-s mat-subheading-2">Level</span>
-                  </div>
-                  <div class="flex-1 head-cell">
-                    <span class="padding-bottom-s padding-top-s mat-subheading-2">Level description</span>
-                  </div>
-                </div>
-                <!-- -----loop wil come -->
-                <div class="row">
-                  <div class="flex-1 row-cell margin-r-2px ws-mat-accent-border">
-                    <mat-radio-button class="padding-bottom-s padding-top-s" color="accent">
-                      <span class="mat-subheading-2">Basic</span>
-                    </mat-radio-button>
-                    <!-- <span class="mat-body-2">{{_activity.get("description")?.value}}</span> -->
-                  </div>
-                  <div class="flex-1 row-cell ws-mat-accent-border">
-                    <span class="mat-body-2">
-                      <ol start="1">
-                        <li>
-                          Demonstrates good time management skills to meet short- and medium-term objectives
-                        </li>
-                        <li>
-                          Plans own work schedule and monitors progress against it optimally
-                        </li>
-                        <li>
-                          Uses available resources optimally to meet work objective
-                        </li>
-                        <li>
-                          Identifies and tries to solve bottlenecks in own area of work
-                        </li>
-                      </ol>
 
-                    </span>
-                  </div>
+            <!-- [formGroup]="_activity" -->
+            <div class=" flex flex-1 flex-column">
+              <div class="table ws-mat-accent-border-bottom">
+                <div class="flex-1 head-cell margin-r-2px">
+                  <span class="padding-bottom-s padding-top-s mat-subheading-2">Level</span>
                 </div>
-                <div class="row">
-                  <div class="flex-1 row-cell margin-r-2px ws-mat-accent-border">
-                    <mat-radio-button class="padding-bottom-s padding-top-s" color="accent">
-                      <span class="mat-subheading-2">Proficient</span>
-                    </mat-radio-button>
-                    <!-- <span class="mat-body-2">{{_activity.get("description")?.value}}</span> -->
-                  </div>
-                  <div class="flex-1 row-cell ws-mat-accent-border">
-                    <span class="mat-body-2">
-                      <ol start="1">
-                        <li>
-                          Demonstrates good time management skills to meet short- and medium-term objectives
-                        </li>
-                        <li>
-                          Plans own work schedule and monitors progress against it optimally
-                        </li>
-                        <li>
-                          Uses available resources optimally to meet work objective
-                        </li>
-                        <li>
-                          Identifies and tries to solve bottlenecks in own area of work
-                        </li>
-                      </ol>
-
-                    </span>
-                  </div>
+                <div class="flex-1 head-cell">
+                  <span class="padding-bottom-s padding-top-s mat-subheading-2">Level description</span>
                 </div>
               </div>
-            </ng-container>
+              <!-- -----loop wil come -->
+              <ng-container *ngFor="let _comp of watForm?.get('acDetail')?.controls; let i=index">
+                <div class="row" [formGroup]="_comp">
+                  <div class="flex-1 row-cell margin-r-2px ws-mat-accent-border flex-column">
+                    <mat-radio-button class="padding-bottom-s padding-top-s" color="accent">
+                      <span class="mat-subheading-2">{{_comp.get('level')?.value}}</span>
+                    </mat-radio-button>
+                    <!-- <span class="mat-body-2">{{_comp.get("name")?.value}}</span> -->
+                  </div>
+                  <div class="flex-1 row-cell ws-mat-accent-border">
+                    <span class="mat-body-2 new-line" [innerHtml]="getLocalPrint(_comp.get('description')?.value)">
+                      <!-- <ol start="1">
+                        <li>
+                          Demonstrates good time management skills to meet short- and medium-term objectives
+                        </li>
+                        <li>
+                          Plans own work schedule and monitors progress against it optimally
+                        </li>
+                        <li>
+                          Uses available resources optimally to meet work objective
+                        </li>
+                        <li>
+                          Identifies and tries to solve bottlenecks in own area of work
+                        </li>
+                      </ol> -->
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
           </div>
         </div>
 
