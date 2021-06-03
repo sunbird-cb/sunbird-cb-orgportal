@@ -19,7 +19,7 @@ import { ProfileV2Service } from '../../services/home.servive'
 })
 
 export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
-  sliderData1!: any
+  // sliderData1!: any
 
   resolutionFilter = 'week'
   compFilter = 'table'
@@ -1223,27 +1223,27 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.homeResolver.getMyDepartment().subscribe((roles: any) => {
       this.deptName = roles.deptName
       if (this.deptName) {
-        this.sliderData1 = {
-          widgetType: 'slider',
-          widgetSubType: 'sliderOrgBanners',
-          style: {
-            'border-radius': '8px',
-          },
-          widgetData: [
-            {
-              banners: {
-                l: 'assets/images/banners/home/home_banner_l.jpg',
-                m: 'assets/images/banners/home/home_banner_m.jpg',
-                s: 'assets/images/banners/home/home_banner_m.jpg',
-                xl: 'assets/images/banners/home/home_banner_xl.jpg',
-                xs: 'assets/images/banners/home/home_banner_xl.jpg',
-                xxl: 'assets/images/banners/home/home_banner_xl.jpg',
-              },
-              title: this.deptName,
-              logo: 'assets/icons/govtlogo.jpg',
-            },
-          ],
-        }
+        // this.sliderData1 = {
+        //   widgetType: 'slider',
+        //   widgetSubType: 'sliderOrgBanners',
+        //   style: {
+        //     'border-radius': '8px',
+        //   },
+        //   widgetData: [
+        //     {
+        //       banners: {
+        //         l: 'assets/images/banners/home/home_banner_l.jpg',
+        //         m: 'assets/images/banners/home/home_banner_m.jpg',
+        //         s: 'assets/images/banners/home/home_banner_m.jpg',
+        //         xl: 'assets/images/banners/home/home_banner_xl.jpg',
+        //         xs: 'assets/images/banners/home/home_banner_xl.jpg',
+        //         xxl: 'assets/images/banners/home/home_banner_xl.jpg',
+        //       },
+        //       title: this.deptName,
+        //       logo: 'assets/icons/govtlogo.jpg',
+        //     },
+        //   ],
+        // }
       }
       roles.rolesInfo.forEach((role: { roleName: string }) => {
         rolesAndAccessData.push({
