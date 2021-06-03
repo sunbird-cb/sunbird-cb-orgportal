@@ -150,13 +150,14 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
 
   saveWAT() {
     const req = this.getStrcuturedReq()
-    this.allocateSrvc.createAllocation(req).subscribe(res => {
-      if (res) {
-        this.openSnackbar('Work order saved!')
-        this.router.navigate(['/app/workallocation/drafts'])
-      }
-      this.watStore.clear()
-    })
+    console.log(req)
+    // this.allocateSrvc.createAllocation(req).subscribe(res => {
+    //   if (res) {
+    //     this.openSnackbar('Work order saved!')
+    //     this.router.navigate(['/app/workallocation/drafts'])
+    //   }
+    //   this.watStore.clear()
+    // })
   }
   getStrcuturedReq(): any {
     let req = {}

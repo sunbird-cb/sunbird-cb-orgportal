@@ -53,8 +53,9 @@ import { PublishedAllocationsComponent } from './routes/published-allocations/pu
   ],
   entryComponents: [
     // AllocationActionsComponent,
+    // WatRolePopup,
   ],
-  providers: [WINDOW_PROVIDERS, WatStoreService],
+  providers: [WINDOW_PROVIDERS, WatStoreService,],
   // exports: [DownloadAllocationComponent],
 })
 export class WorkallocationV2Module { }
