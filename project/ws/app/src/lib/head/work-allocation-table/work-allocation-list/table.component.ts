@@ -96,7 +96,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
           this.showNoData = true
           this.showLoading = false
         }
-      },         1000)
+      }, 1000)
     } else {
       this.showNoData = false
       this.showLoading = false
@@ -207,10 +207,10 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
   }
 
   onRowClick(e: any) {
-    if (e.fromdata === 'draft') {
-      this.router.navigate([`/app/workallocation/drafts`, { workorders: e.workorders }])
-    } else if (e.fromdata === 'published') {
-      this.router.navigate([`/app/workallocation/published`, { workorders: e.workorders }])
+    if (e.fromdata === 'Draft') {
+      this.router.navigate([`/app/workallocation/drafts`, { workorders: e.id }])
+    } else if (e.fromdata === 'Published') {
+      this.router.navigate([`/app/workallocation/published`, { workorders: e.id }])
     }
 
   }

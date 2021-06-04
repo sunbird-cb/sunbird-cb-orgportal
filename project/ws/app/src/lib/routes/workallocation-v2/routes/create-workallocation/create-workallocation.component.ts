@@ -1,6 +1,5 @@
 // import { untilDestroyed } from 'ngx-take-until-destroy'
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
 // import { Router } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
@@ -60,7 +59,6 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   constructor(
     private watStore: WatStoreService,
     private allocateSrvc: AllocationService,
-    private snackBar: MatSnackBar,
     // private router: Router
   ) {
   }
@@ -243,11 +241,11 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     // }).flatten().compact().value()
   }
 
-  private openSnackbar(primaryMsg: string, duration: number = 5000) {
-    this.snackBar.open(primaryMsg, 'X', {
-      duration,
-    })
-  }
+  // private openSnackbar(primaryMsg: string, duration: number = 5000) {
+  //   this.snackBar.open(primaryMsg, 'X', {
+  //     duration,
+  //   })
+  // }
   ngOnDestroy() {
     this.activitySubscription.unsubscribe()
     this.groupSubscription.unsubscribe()

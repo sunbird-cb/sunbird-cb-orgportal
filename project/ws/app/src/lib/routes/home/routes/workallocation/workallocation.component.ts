@@ -257,6 +257,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       if (res.result.data) {
         res.result.data.forEach((element: any) => {
           const watData = {
+            id: element.id,
             workorders: element.name,
             officers: "officers",
             lastupdatedon: element.updatedAt,
@@ -265,7 +266,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
             publishedon: element.createdAt,
             publishedby: element.createdByName,
             approval: "Approval",
-            fromdata: 'published',
+            fromdata: currentStatus,
 
           }
           finalData.push(watData)
