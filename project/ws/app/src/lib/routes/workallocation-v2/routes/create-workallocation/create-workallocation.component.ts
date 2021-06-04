@@ -1,7 +1,7 @@
 // import { untilDestroyed } from 'ngx-take-until-destroy'
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
-// import { Router } from '@angular/router'
+import { Router } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
 import { NSWatActivity } from '../../models/activity-wot.model'
@@ -38,6 +38,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
    */
   private activitySubscription: any
   private groupSubscription: any
+  private compDetailsSubscription: any
   officerFormSubscription: any
   dataStructure: any = {}
   departmentName: any
@@ -61,7 +62,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     private watStore: WatStoreService,
     private allocateSrvc: AllocationService,
     private snackBar: MatSnackBar,
-    // private router: Router
+    private router: Router
   ) {
   }
   ngOnInit(): void {
@@ -117,13 +118,12 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   * this is for selecting tabs dynamically
   */
   }
+
   filterComp($element: any, filterType: string) {
     this.selectedTab = filterType
     $element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
   }
-  get currentProgress(): number {
-    return 70
-  }
+
   get getsubPath(): string {
     return `./#${this.selectedTab}`
   }
@@ -143,6 +143,12 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       }
     })
 
+    this.compDetailsSubscription = this.watStore.get_compGrp.subscribe(comp => {
+      if (comp.length > 0) {
+        this.dataStructure.compDetails = comp
+      }
+    })
+
     this.officerFormSubscription = this.watStore.getOfficerGroup.subscribe(officerFormData => {
       this.dataStructure.officerFormData = officerFormData
     })
@@ -150,15 +156,16 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
 
   saveWAT() {
     const req = this.getStrcuturedReq()
-    console.log(req)
-    // this.allocateSrvc.createAllocation(req).subscribe(res => {
-    //   if (res) {
-    //     this.openSnackbar('Work order saved!')
-    //     this.router.navigate(['/app/workallocation/drafts'])
-    //   }
-    //   this.watStore.clear()
-    // })
+    // console.log(req)
+    this.allocateSrvc.createAllocation(req).subscribe(res => {
+      if (res) {
+        this.openSnackbar('Work order saved!')
+        this.router.navigate(['/app/workallocation/drafts'])
+      }
+      this.watStore.clear()
+    })
   }
+
   getStrcuturedReq(): any {
     let req = {}
     const officer = this.getUserDetails()
@@ -252,5 +259,6 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     this.activitySubscription.unsubscribe()
     this.groupSubscription.unsubscribe()
     this.officerFormSubscription.unsubscribe()
+    this.compDetailsSubscription.unsubscribe()
   }
 }

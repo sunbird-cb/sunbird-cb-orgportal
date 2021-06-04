@@ -11,7 +11,6 @@
       user?.userDetails.last_name : ''}}</p>
     <p class="useremail mat-body-2 margin-bottom-xxs">{{user?.userDetails.email}}</p>
     <p class="userpos mat-body-2 ws-mat-black60-text margin-bottom-xxs">
-      Software Engineer at Tarento
       {{user?.userDetails.position ?
       user?.userDetails.position : ''}}
       <span *ngIf="user.userDetails.department_name">at</span> {{user?.userDetails.department_name}}

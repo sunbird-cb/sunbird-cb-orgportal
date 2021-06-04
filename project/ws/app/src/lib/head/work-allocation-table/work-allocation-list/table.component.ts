@@ -1,6 +1,5 @@
 import {
-  Component, OnInit, Input, Output, EventEmitter, ViewChild,
-  AfterViewInit, OnChanges, SimpleChanges,
+  Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges,
 } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
@@ -20,7 +19,7 @@ import * as fileSavers from 'file-saver'
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnChanges {
+export class WorkAllocationTableComponent implements OnInit, OnChanges {
   @Input() tableData!: ITableData | undefined
   @Input() data?: []
   @Input() needCreateUser?: boolean = undefined
@@ -34,6 +33,8 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
   bodyHeight = document.body.clientHeight - 125
   displayedColumns: IColums[] | undefined
   viewPaginator = false
+  showLoading = true
+  showNoData = false
   dataSource!: any
   widgetData: any
   length!: number
@@ -62,6 +63,7 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
   }
 
   ngOnInit() {
+
     if (this.tableData) {
       this.displayedColumns = this.tableData.columns
     }
@@ -86,10 +88,20 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
   ngOnChanges(data: SimpleChanges) {
     this.dataSource.data = _.get(data, 'data.currentValue')
     this.length = this.dataSource.data.length
+    if (this.length === 0) {
+      this.showNoData = false
+      this.showLoading = true
+      setTimeout(() => {
+        if (this.showLoading) {
+          this.showNoData = true
+          this.showLoading = false
+        }
+      }, 1000)
+    } else {
+      this.showNoData = false
+      this.showLoading = false
+    }
   }
-
-  ngAfterViewInit() { }
-
   applyFilter(filterValue: any) {
 
     if (filterValue) {
@@ -195,10 +207,10 @@ export class WorkAllocationTableComponent implements OnInit, AfterViewInit, OnCh
   }
 
   onRowClick(e: any) {
-    if (e.fromdata === 'draft') {
-      this.router.navigate([`/app/workallocation/drafts`])
-    } else if (e.fromdata === 'published') {
-      this.router.navigate([`/app/workallocation/published`])
+    if (e.fromdata === 'Draft') {
+      this.router.navigate([`/app/workallocation/drafts`, { workorders: e.id }])
+    } else if (e.fromdata === 'Published') {
+      this.router.navigate([`/app/workallocation/published`, { workorders: e.id }])
     }
 
   }
