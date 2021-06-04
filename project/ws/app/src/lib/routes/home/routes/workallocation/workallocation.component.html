@@ -30,8 +30,8 @@
               <div class="search">
                 <div class=rsearch>
                   <mat-icon class="color-60 search-icon">search</mat-icon>
-                  <input class="sinput color-60" type="Standard" label="searchVal" [(ngModel)]="term"
-                    placeholder="Search">
+                  <input class="sinput color-60" type="Standard" label="searchVal"
+                    (ngModelChange)="searchBasedOnQurey($event)" [(ngModel)]="searchQuery" placeholder="Search">
                 </div>
               </div>
             </div>
@@ -48,53 +48,6 @@
             </div>
           </div>
         </div>
-        <!-- <table class="allocation-table" id="allocation-table" cell-spacing='0' cell-padding='0'>
-          <tr>
-            <th><input type="checkbox" class="form-input"> <label style="padding-left:5px;">Full name</label></th>
-            <th>Roles</th>
-            <th>Activities</th>
-            <th>Competencies</th>
-          </tr>
-          <tr
-            *ngFor="let d of data | filter: term | paginate: { itemsPerPage: 5, currentPage: p, totalItems: data.length }"
-            class="data-row">
-            <td aria-rowspan="d.roles.length+1" (click)="viewAllocation(d)">
-              <div style="display: inline-flex;">
-                <div>
-                  <input type="checkbox" class="form-input">
-                </div>
-                <div style="padding-left:5px;">
-                  <b>{{d.fullname}}</b>
-                  <div style="padding-top:5px;">
-                    {{ d.position }}
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td colspan="3" (click)="viewAllocation(d)">
-              <ul>
-                <li>
-                  <div class="table-role">
-                    {{d.roles.name}}
-                  </div>
-                  <div class="table-activity" style="padding-left:110px;">
-                    <span *ngFor="let a of d.roles.childNodes">{{a.name}}</span>
-                  </div>
-                  <div class="table-activity">
-                    <span *ngFor="let c of d.competencies">{{c.name}}</span>
-                  </div>
-                </li>
-              </ul>
-             <ul>
-                <li *ngFor="let r of d.competencies">
-                  <div class="table-activity">
-                    <span>{{r.name}}</span>
-                  </div>
-                </li>
-              </ul>
-            </td>
-          </tr>
-        </table> -->
         <ws-work-allocation-table [tableData]='tabledata' [data]='data' (eOnRowClick)="onRoleClick()"
           [needAddAdmin]='false' [needCreateUser]='false'>
         </ws-work-allocation-table>
@@ -102,11 +55,6 @@
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
           <div class="totalcount">of {{data.length}}</div>
         </div>
-
-        <div *ngIf="data && data.length === 0" class="margin-left-xs margin-l font-medium ">
-          No data found
-        </div>
-
         <mat-menu #cardMenu="matMenu">
           <ng-template matMenuContent let-rowData="data">
             <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item
