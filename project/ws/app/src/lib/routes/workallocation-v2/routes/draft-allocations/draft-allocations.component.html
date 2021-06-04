@@ -10,8 +10,7 @@
           </div> -->
       <div class="flex flex-1 custom">
         <div class="flex-4">
-          <ws-widget-breadcrumbs-org
-            [widgetData]="{titles:[{title:'Work allocation tool', url:'/app/home/workallocation'},
+          <ws-widget-breadcrumbs-org [widgetData]="{titles:[{title:'Work allocation tool', url:'/app/home/workallocation'},
                               {title:'Drafts', url:'/app/home/workallocation'},{title:'Work order - Administration wing', url:'none'}] }">
           </ws-widget-breadcrumbs-org>
         </div>
@@ -25,9 +24,8 @@
           <button type="button" mat-button class="allocation-btn mat-accent-border" (click)="onNewAllocationClick()">
             New officer
           </button>
-          <button mat-stroked-button color="accent" type="button"
-            class="publish-btn mat-accent-border flex-auto-display" (click)="publishWorkOrder()" id="publishbtn"
-            *ngIf="data && data.length > 0">
+          <button mat-stroked-button color="accent" type="button" class="publish-btn mat-accent-border flex-auto-display"
+            (click)="publishWorkOrder()" id="publishbtn" *ngIf="data && data.length > 0">
             <span i18n>Publish</span>
           </button>
         </div>
@@ -37,24 +35,24 @@
       <ng-container>
         <div class="margin-top-xsl margin-bottom-xs">
           <div class="flex flex-1 custom">
-            <div class="flex-3">
+            <div class="flex-3" *ngIf="workorderData">
               <ul class="statistics">
                 <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Officers</p>
-                    <p class="mat-subheading-2">{{statscount.Officers}}</p>
+                    <p class="mat-subheading-2">{{workorderData.users.length}}</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Progress</p>
-                    <p class="mat-subheading-2">{{statscount.Progress}}</p>
+                    <p class="mat-subheading-2">{{workorderData.progress}}</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Errors</p>
-                    <p class="mat-subheading-2">{{statscount.Errors}}</p>
+                    <p class="mat-subheading-2">{{workorderData.errorCount}}</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
@@ -81,8 +79,8 @@
               <div class="search margin-top-l">
                 <div class=rsearch>
                   <mat-icon class="color-60 search-icon">search</mat-icon>
-                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal"
-                    [(ngModel)]="term" placeholder="Search">
+                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal" [(ngModel)]="term"
+                    placeholder="Search">
                 </div>
               </div>
             </div>
@@ -100,12 +98,13 @@
           <tr *ngFor="let d of data" class="data-row">
             <td aria-rowspan="d.roles.length+1">
               <div class="initials">
-                {{d.firstname.charAt(0).toUpperCase()}} {{d.surname.charAt(0).toUpperCase()}}
+                <!-- {{d.firstname.charAt(0).toUpperCase()}} {{d.surname.charAt(0).toUpperCase()}} -->
+                {{d.userName.charAt(0).toUpperCase()}}
               </div>
               <div>
-                <b class="username">{{d.fullname}}</b>
+                <b class="username">{{d.userName}}</b>
                 <div>
-                  {{ d.position }}
+                  {{ d.userPosition }}
                 </div>
                 <div class="margin-top-s margin-bottom-s">
                   <mat-icon>more_horiz_outlined</mat-icon>
@@ -138,8 +137,9 @@
                               a.submitToOther}}
                             </td>
                             <td class="submittd">
-                              <span class="initials" *ngIf="a.submitFromInt">{{a.submitFromInt}}</span>
-                              {{a.submitFrom ||
+                              <!-- <span class="initials" *ngIf="a.submitFromInt">{{a.submittedFromName}}</span> -->
+                              <span class="initials">{{a.submittedFromName.charAt(0).toUpperCase()}}</span>
+                              {{a.submittedFromName ||
                               a.submitFromOther}}
                             </td>
                           </tr>
@@ -175,13 +175,12 @@
 
         <mat-menu #cardMenu="matMenu">
           <ng-template matMenuContent let-rowData="data">
-            <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item
-              name="channel-analytics-button" class="ws-mat-primary-text downlaod-btn" i18n-aria-label
-              aria-label="Analytics">
+            <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item name="channel-analytics-button"
+              class="ws-mat-primary-text downlaod-btn" i18n-aria-label aria-label="Analytics">
               <mat-icon>cloud_download</mat-icon> <span>Download</span>
             </button>
-            <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button"
-              class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
+            <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text"
+              i18n-aria-label aria-label="Analytics">
               <mat-icon>archive</mat-icon> <span>Archive allocation</span>
             </button>
           </ng-template>

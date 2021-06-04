@@ -5,7 +5,9 @@ import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 /* tslint:disable */
 import _ from 'lodash'
 import { WorkallocationService } from '../../../home/services/workallocation.service'
+import { AllocationService } from '../../services/allocation.service'
 import FileSaver from 'file-saver'
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'ws-app-published-allocations',
   templateUrl: './published-allocations.component.html',
@@ -31,256 +33,262 @@ export class PublishedAllocationsComponent implements OnInit {
   userslist: any[] = []
   downloaddata: any = []
   totalusersCount: any
-  // p: number = 1;
-  constructor(private exportAsService: ExportAsService,
-    private workallocationSrvc: WorkallocationService) { }
+  workorderID: any
+  workorderData: any
+  constructor(private activated: ActivatedRoute, private exportAsService: ExportAsService,
+    private workallocationSrvc: WorkallocationService, private allocateSrvc: AllocationService) {
+    this.activated.params.subscribe((param: any) => {
+      this.workorderID = param['workorders'] || ''
+      this.getAllocatedUsers(this.workorderID)
+    })
+  }
 
   ngOnInit() {
-    this.tabledata = {
-      actions: [],
-      columns: [
-        { displayName: 'Full Name', key: 'fullname' },
-        { displayName: 'Roles', key: 'roles' },
-        { displayName: 'Activities', key: 'activities' },
-      ],
-      needCheckBox: false,
-      needHash: false,
-      sortColumn: 'fullName',
-      sortState: 'asc',
-      needUserMenus: true,
-    }
-    this.data = [
-      {
-        fullname: 'Latika Paharia',
-        firstname: 'Latika',
-        surname: 'Paharia',
-        email: 'latika@test.com',
-        userId: '2542352352523FF',
-        position: 'Director (Admin & GA)',
-        phone: '3214567890',
-        competencies: '',
-        error: 'true',
-        roleCompetencyList: [
-          {
-            roleDetails: {
-              type: 'ROLE',
-              id: 'RID001',
-              name: 'Training cell',
-              description: '',
-              status: 'UNVERIFIED',
-              childNodes: [
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Mandatory Training Programme of officers belonging to various services viz. CSS, CSSS, CSCS conducted by ISTM',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: 'RA',
-                  submitTo: 'Rajesh Agarwal',
-                  submitToOther: '',
-                  submitFromInt: 'PD',
-                  submitFrom: 'Prerna Dadasheb',
-                  submitFromOther: '',
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Mandatory and Mid-Career training programmes of officers appointed through Central Staffing Scheme and officers belonging to various others services viz. IES, ISS, SSS, etc.',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: 'RA',
-                  submitTo: 'Rajesh Agarwal',
-                  submitToOther: '',
-                  submitFromInt: 'PD',
-                  submitFrom: 'Prerna Dadasheb',
-                  submitFromOther: '',
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Familiarization Training of Non-Technical Officers of Department on Water',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: '',
-                  submitTo: '',
-                  submitToOther: 'Final authority',
-                  submitFromInt: 'SK',
-                  submitFrom: 'Swanand Kirkire',
-                  submitFromOther: '',
-                }
-              ],
-            },
-            competencyDetails: [],
-          },
-          {
-            roleDetails: {
-              type: 'ROLE',
-              id: 'RID001',
-              name: 'Budget related matters',
-              description: '',
-              status: 'UNVERIFIED',
-              childNodes: [
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Planning BE, RE etc.',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: 'MP',
-                  submitTo: 'Midhun Pottayil',
-                  submitToOther: '',
-                  submitFromInt: 'DK',
-                  submitFrom: 'Dileep Kumar',
-                  submitFromOther: '',
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Compiling details related to budgetary provisions as required by Budget Section and furnishing information as and when required by them.',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: 'MP',
-                  submitTo: 'Midhun Pottayil',
-                  submitToOther: '',
-                  submitFromInt: 'SK',
-                  submitFrom: 'Sneha Kakkar',
-                  submitFromOther: '',
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Maintaining and furnishing information to Budget Section on allocation/expenditure of funds under KRD CB Scheme',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: 'DK',
-                  submitTo: 'Dhawal Kulkarni',
-                  submitToOther: '',
-                  submitFromInt: 'RM',
-                  submitFrom: 'Rajeev Masand',
-                  submitFromOther: '',
-                }
-              ],
-            },
-            competencyDetails: [],
-          },
-        ]
-      },
-      {
-        fullname: 'Joy Mathew',
-        firstname: 'Joy',
-        surname: 'Mathew',
-        email: 'latika@test.com',
-        userId: '2542352352523FF',
-        position: 'Director (External & international cooperation)',
-        phone: '3214567890',
-        competencies: '',
-        error: 'true',
-        roleCompetencyList: [
-          {
-            roleDetails: {
-              type: 'ROLE',
-              id: 'RID001',
-              name: 'Externally aided projects',
-              description: '',
-              status: 'UNVERIFIED',
-              childNodes: [
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Obtaining in-principal approval of the Department of Water Resources, RD & GR for the State Government projects seeking external assistance from Multilateral Banks/ Foreign Funding agencies after getting them examined by Central Water Commission and other concerned Organizations at the PPR and DPR stage.',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: 'DK',
-                  submitTo: 'Dhawal Kulkarni',
-                  submitToOther: '',
-                  submitFromInt: 'RK',
-                  submitFrom: 'Ramachandran KR',
-                  submitFromOther: '',
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Liasoning with State Government and Department of Economics Affairs in this matter',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: 'DK',
-                  submitTo: 'Dhawal Kulkarni',
-                  submitToOther: '',
-                  submitFromInt: 'RM',
-                  submitFrom: 'Rajeev Masand',
-                  submitFromOther: '',
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Proposals for studies/ technical assistance from the States for taking up the proposals with the external Funding agencies.',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: 'DK',
-                  submitTo: 'Dhawal Kulkarni',
-                  submitToOther: '',
-                  submitFromInt: 'SK',
-                  submitFrom: 'Sneha Kakkar',
-                  submitFromOther: '',
-                }
-              ],
-            },
-            competencyDetails: [],
-          },
-          {
-            roleDetails: {
-              type: 'ROLE',
-              id: 'RID001',
-              name: 'International cooperation',
-              description: '',
-              status: 'UNVERIFIED',
-              childNodes: [
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Collaboration / Bilateral agreements / Cooperation in the filed of Water Resources with Foreign countries including signing of memoranda of understanding',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: 'SS',
-                  submitTo: 'Shreya Singhal',
-                  submitToOther: '',
-                  submitFromInt: 'DK',
-                  submitFrom: 'Dileep Kumar',
-                  submitFromOther: '',
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Drafting of cabinet note and its subsequent approval from the Cabinet and PMO; coordination and liasing with foreign countries/ Ministry of External Affairs for mutually deciding the areas of cooperation and terms of such international agreements; Constitution of Joint Working Group for the implementation of the activites envisaged in the MoUs;',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: 'DK',
-                  submitTo: 'Dhawal Kulkarni',
-                  submitToOther: '',
-                  submitFromInt: 'RM',
-                  submitFrom: 'Rajeev Masand',
-                  submitFromOther: '',
-                },
-                {
-                  type: 'ACTIVITY',
-                  id: 'AID001',
-                  name: 'Mattersrelating to water issues in various UN organizations such as UNESCO, UN Environment, FAO, etc.',
-                  description: '',
-                  parentRole: 'RID001',
-                  submitToInt: 'SS',
-                  submitTo: 'Shreya Singhal',
-                  submitToOther: '',
-                  submitFromInt: 'SK',
-                  submitFrom: 'Sneha Kakkar',
-                  submitFromOther: '',
-                }
-              ],
-            },
-            competencyDetails: [],
-          }
-        ]
-      }
-    ]
+    // this.tabledata = {
+    //   actions: [],
+    //   columns: [
+    //     { displayName: 'Full Name', key: 'fullname' },
+    //     { displayName: 'Roles', key: 'roles' },
+    //     { displayName: 'Activities', key: 'activities' },
+    //   ],
+    //   needCheckBox: false,
+    //   needHash: false,
+    //   sortColumn: 'fullName',
+    //   sortState: 'asc',
+    //   needUserMenus: true,
+    // }
+    // this.data = [
+    //   {
+    //     fullname: 'Latika Paharia',
+    //     firstname: 'Latika',
+    //     surname: 'Paharia',
+    //     email: 'latika@test.com',
+    //     userId: '2542352352523FF',
+    //     position: 'Director (Admin & GA)',
+    //     phone: '3214567890',
+    //     competencies: '',
+    //     error: 'true',
+    //     roleCompetencyList: [
+    //       {
+    //         roleDetails: {
+    //           type: 'ROLE',
+    //           id: 'RID001',
+    //           name: 'Training cell',
+    //           description: '',
+    //           status: 'UNVERIFIED',
+    //           childNodes: [
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Mandatory Training Programme of officers belonging to various services viz. CSS, CSSS, CSCS conducted by ISTM',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: 'RA',
+    //               submitTo: 'Rajesh Agarwal',
+    //               submitToOther: '',
+    //               submitFromInt: 'PD',
+    //               submitFrom: 'Prerna Dadasheb',
+    //               submitFromOther: '',
+    //             },
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Mandatory and Mid-Career training programmes of officers appointed through Central Staffing Scheme and officers belonging to various others services viz. IES, ISS, SSS, etc.',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: 'RA',
+    //               submitTo: 'Rajesh Agarwal',
+    //               submitToOther: '',
+    //               submitFromInt: 'PD',
+    //               submitFrom: 'Prerna Dadasheb',
+    //               submitFromOther: '',
+    //             },
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Familiarization Training of Non-Technical Officers of Department on Water',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: '',
+    //               submitTo: '',
+    //               submitToOther: 'Final authority',
+    //               submitFromInt: 'SK',
+    //               submitFrom: 'Swanand Kirkire',
+    //               submitFromOther: '',
+    //             }
+    //           ],
+    //         },
+    //         competencyDetails: [],
+    //       },
+    //       {
+    //         roleDetails: {
+    //           type: 'ROLE',
+    //           id: 'RID001',
+    //           name: 'Budget related matters',
+    //           description: '',
+    //           status: 'UNVERIFIED',
+    //           childNodes: [
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Planning BE, RE etc.',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: 'MP',
+    //               submitTo: 'Midhun Pottayil',
+    //               submitToOther: '',
+    //               submitFromInt: 'DK',
+    //               submitFrom: 'Dileep Kumar',
+    //               submitFromOther: '',
+    //             },
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Compiling details related to budgetary provisions as required by Budget Section and furnishing information as and when required by them.',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: 'MP',
+    //               submitTo: 'Midhun Pottayil',
+    //               submitToOther: '',
+    //               submitFromInt: 'SK',
+    //               submitFrom: 'Sneha Kakkar',
+    //               submitFromOther: '',
+    //             },
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Maintaining and furnishing information to Budget Section on allocation/expenditure of funds under KRD CB Scheme',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: 'DK',
+    //               submitTo: 'Dhawal Kulkarni',
+    //               submitToOther: '',
+    //               submitFromInt: 'RM',
+    //               submitFrom: 'Rajeev Masand',
+    //               submitFromOther: '',
+    //             }
+    //           ],
+    //         },
+    //         competencyDetails: [],
+    //       },
+    //     ]
+    //   },
+    //   {
+    //     fullname: 'Joy Mathew',
+    //     firstname: 'Joy',
+    //     surname: 'Mathew',
+    //     email: 'latika@test.com',
+    //     userId: '2542352352523FF',
+    //     position: 'Director (External & international cooperation)',
+    //     phone: '3214567890',
+    //     competencies: '',
+    //     error: 'true',
+    //     roleCompetencyList: [
+    //       {
+    //         roleDetails: {
+    //           type: 'ROLE',
+    //           id: 'RID001',
+    //           name: 'Externally aided projects',
+    //           description: '',
+    //           status: 'UNVERIFIED',
+    //           childNodes: [
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Obtaining in-principal approval of the Department of Water Resources, RD & GR for the State Government projects seeking external assistance from Multilateral Banks/ Foreign Funding agencies after getting them examined by Central Water Commission and other concerned Organizations at the PPR and DPR stage.',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: 'DK',
+    //               submitTo: 'Dhawal Kulkarni',
+    //               submitToOther: '',
+    //               submitFromInt: 'RK',
+    //               submitFrom: 'Ramachandran KR',
+    //               submitFromOther: '',
+    //             },
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Liasoning with State Government and Department of Economics Affairs in this matter',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: 'DK',
+    //               submitTo: 'Dhawal Kulkarni',
+    //               submitToOther: '',
+    //               submitFromInt: 'RM',
+    //               submitFrom: 'Rajeev Masand',
+    //               submitFromOther: '',
+    //             },
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Proposals for studies/ technical assistance from the States for taking up the proposals with the external Funding agencies.',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: 'DK',
+    //               submitTo: 'Dhawal Kulkarni',
+    //               submitToOther: '',
+    //               submitFromInt: 'SK',
+    //               submitFrom: 'Sneha Kakkar',
+    //               submitFromOther: '',
+    //             }
+    //           ],
+    //         },
+    //         competencyDetails: [],
+    //       },
+    //       {
+    //         roleDetails: {
+    //           type: 'ROLE',
+    //           id: 'RID001',
+    //           name: 'International cooperation',
+    //           description: '',
+    //           status: 'UNVERIFIED',
+    //           childNodes: [
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Collaboration / Bilateral agreements / Cooperation in the filed of Water Resources with Foreign countries including signing of memoranda of understanding',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: 'SS',
+    //               submitTo: 'Shreya Singhal',
+    //               submitToOther: '',
+    //               submitFromInt: 'DK',
+    //               submitFrom: 'Dileep Kumar',
+    //               submitFromOther: '',
+    //             },
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Drafting of cabinet note and its subsequent approval from the Cabinet and PMO; coordination and liasing with foreign countries/ Ministry of External Affairs for mutually deciding the areas of cooperation and terms of such international agreements; Constitution of Joint Working Group for the implementation of the activites envisaged in the MoUs;',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: 'DK',
+    //               submitTo: 'Dhawal Kulkarni',
+    //               submitToOther: '',
+    //               submitFromInt: 'RM',
+    //               submitFrom: 'Rajeev Masand',
+    //               submitFromOther: '',
+    //             },
+    //             {
+    //               type: 'ACTIVITY',
+    //               id: 'AID001',
+    //               name: 'Mattersrelating to water issues in various UN organizations such as UNESCO, UN Environment, FAO, etc.',
+    //               description: '',
+    //               parentRole: 'RID001',
+    //               submitToInt: 'SS',
+    //               submitTo: 'Shreya Singhal',
+    //               submitToOther: '',
+    //               submitFromInt: 'SK',
+    //               submitFrom: 'Sneha Kakkar',
+    //               submitFromOther: '',
+    //             }
+    //           ],
+    //         },
+    //         competencyDetails: [],
+    //       }
+    //     ]
+    //   }
+    // ]
 
     this.getdeptUsers()
   }
@@ -362,5 +370,12 @@ export class PublishedAllocationsComponent implements OnInit {
       // row.isArchived = true
       // this.archivedlist.push(row)
     }
+  }
+
+  getAllocatedUsers(woId: any) {
+    this.allocateSrvc.getAllocatedUsers(woId).subscribe((res: any) => {
+      this.workorderData = res.result.data
+      this.data = this.workorderData.users
+    })
   }
 }
