@@ -1,0 +1,166 @@
+<div class="container-balanced">
+    <div class="resporow flex flex-1 fix-top">
+        <div class="block flex-4 ws-mat-accent-border-right">
+            <div class="respon flex  sticky-nav">
+                <div class="sticky-nav-content">
+                    <div class="flex flex-1 margin-auto">
+                        <a routerLink="/app/workallocation/drafts" class="flex flex margin-left-xl cursor-pointer">
+                            <mat-icon class="ws-mat-black60-text flex margin-left-xs margin-right-s">arrow_back
+                            </mat-icon>
+                            <span class="mat-body-1">{{ getOfficerName || 'Guest'}}</span>
+                        </a>
+                    </div>
+                    <div class="flex flex-2">
+                        <div
+                            class="flex flex-1 flex-center filter max-height-60 flex-wrap margin-left-xs margin-right-xs">
+                            <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'officer',
+                                        'ws-mat-accent-border font-medium':selectedTab !== 'officer'}"
+                                (click)="filterComp(officer,'officer')" role="button">
+                                <span class="mat-body-2 in-margin"
+                                    [ngClass]="{'font-bold-i' : selectedTab === 'officer'}">
+                                    Officer</span>
+                            </a>
+                            <a href="javascript:void(0)" class="filter-option"
+                                [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'activities',
+                                                                'ws-mat-accent-border font-medium':selectedTab !== 'activities'}"
+                                (click)="filterComp(activities,'activities')" role="button">
+                                <span class="mat-body-2 in-margin"
+                                    [ngClass]="{'font-bold-i' : selectedTab === 'activities'}">Activities</span>
+                            </a>
+                            <a href="javascript:void(0)" class="filter-option"
+                                [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'competencies',
+                                                                        'ws-mat-accent-border font-medium':selectedTab !== 'competencies'}"
+                                (click)="filterComp(competencies,'competencies')" role="button">
+                                <span class="mat-body-2 in-margin"
+                                    [ngClass]="{'font-bold-i' : selectedTab === 'competencies'}">Competencies</span>
+                            </a>
+                            <a href="javascript:void(0)" class="filter-option"
+                                [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'competencyDetails','ws-mat-accent-border font-medium':selectedTab !== 'competencyDetails'}"
+                                (click)="filterComp(competencyDetails,'competencyDetails')" role="button">
+                                <span class="mat-body-2 in-margin"
+                                    [ngClass]="{'font-bold-i' : selectedTab === 'competencyDetails'}">Competency
+                                    details</span>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="flex flex-1 flex-row-reverse margin-right-l fix-h">
+                        <button mat-button class="ws-mat-accent-background text-white margin-left-xs" type="button"
+                            id="savebtn" (click)="saveWAT()">
+                            <span i18n>Save as draft</span>
+                        </button>
+                        <button mat-stroked-button type="button"
+                            class="btn margin-right-xs mat-accent-border flex-auto-display" id="publishbtn"
+                            [disabled]="!canPublish">
+                            <span i18n>Publish</span>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+            <div (scroll)="onScroll($event)" class="wi" id="officer-section">
+                <div class="flex flex-column">
+                    <div class="box-1" #officer>
+                        <div class="flex left-indicator" [ngClass]="{'not-selected': selectedTab !== 'officer',
+                        'ws-mat-accent-background': selectedTab === 'officer'  }"></div>
+                        <div class="flex flex-1 flex-column margin-left-xl custom-pad">
+                            <div class="flex">
+                                <mat-icon [ngClass]="{'ws-mat-black60-text': selectedTab !== 'officer',
+                        'ws-mat-default-text': selectedTab === 'officer'  }">person</mat-icon>
+                                <span class="mat-subheading-1 margin-left-xs">{{'Officer'}}</span>
+                            </div>
+                            <div class="flex flex-1">
+                                <ws-app-officer class="w-full"></ws-app-officer>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-1" #activities>
+                        <div class="flex left-indicator" [ngClass]="{'not-selected': selectedTab !== 'activities',
+                        'ws-mat-accent-background': selectedTab === 'activities'  }"></div>
+                        <div class="flex flex-1 flex-column margin-left-xl custom-pad">
+                            <div class="flex">
+                                <mat-icon [ngClass]="{'ws-mat-black60-text': selectedTab !== 'activities',
+                        'ws-mat-default-text': selectedTab === 'activities'  }">directions_walk</mat-icon>
+                                <span class="mat-subheading-1 margin-left-xs">{{'Roles and activities'}}</span>
+                            </div>
+                            <div class="flex flex-1">
+                                <ws-app-activity-labels class="flex flex-1"></ws-app-activity-labels>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-1" #competencies>
+                        <div class="flex left-indicator" [ngClass]="{'not-selected': selectedTab !== 'competencies',
+                        'ws-mat-accent-background': selectedTab === 'competencies'  }"></div>
+                        <div class="flex flex-1 flex-column margin-left-xl custom-pad">
+                            <div class="flex flex-wrap justify-between">
+                                <div class="flex">
+                                    <mat-icon [ngClass]="{'ws-mat-black60-text': selectedTab !== 'competencies',
+                        'ws-mat-default-text': selectedTab === 'competencies'  }">extension</mat-icon>
+                                    <span class="mat-subheading-1 margin-left-xs">{{'Competencies'}}</span>
+                                </div>
+                                <div class="flex">
+                                    <mat-icon class="ws-mat-black60-text ">launch</mat-icon>
+                                    <a target="_blank" href="https://frac-dictionary.tarento.com"
+                                        class="mat-subheading-1 margin-left-xs ws-mat-black60-text-imp">
+                                        Competency Dictionary
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="flex flex-1">
+                                <ws-app-competency-labels class="flex flex-1"></ws-app-competency-labels>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-1" #competencyDetails>
+                        <div class="flex left-indicator" [ngClass]="{'not-selected': selectedTab !== 'competencyDetails',
+                        'ws-mat-accent-background': selectedTab === 'competencyDetails'  }"></div>
+                        <div class="flex flex-1 flex-column margin-left-xl custom-pad">
+                            <div class="flex">
+                                <mat-icon [ngClass]="{'ws-mat-black60-text': selectedTab !== 'competencyDetails',
+                        'ws-mat-default-text': selectedTab === 'competencyDetails'  }">list</mat-icon>
+                                <span class="mat-subheading-1 margin-left-xs">{{'Competency details'}}</span>
+                            </div>
+                            <div class="flex flex-1">
+                                <ws-app-comp-details class="flex flex-1"></ws-app-comp-details>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block flex-1 padding-left-m padding-right-m sticky-right-section ">
+            <mat-card class="wi sticky-right-section-content margin-top-s">
+                <div class="flex flex-1 flex-column ">
+                    <div class="flex flex-1 filter max-height-60 min-height35">
+                        <a href="javascript:void(0)" class="filter-option ws-mat-accent-border-active" role="button">
+                            <span class="mat-body-2 in-margin font-bold-i"> Assistant</span>
+                        </a>
+                    </div>
+                    <div class="flex flex-1 margin-top-l">
+                        <span class="mat-body-2 ws-mat-black60-text">
+                            We will continously scan the workspace and show you reports and recommendations to help you
+                            refine the content
+                        </span>
+                    </div>
+                    <div class="flex flex-1 progress ws-mat-accent-border border-r margin-top-l padding-s">
+                        <span class=" flex flex-1">
+                            <mat-progress-spinner [diameter]="20" class="example-margin" mode="determinate"
+                                [value]="currentProgress">
+                            </mat-progress-spinner>
+                            <span class="margin-left-m mat-body-1">{{'Progress of completion'}}</span>
+                        </span>
+                        <span class="flex mat-body-1 font-semibold margin-left-m">{{currentProgress}}%</span>
+                    </div>
+                    <ng-container>
+                        <ws-app-assistant-message-card [dataStructure]="dataStructure"></ws-app-assistant-message-card>
+                    </ng-container>
+                    <div class="flex flex-1 flex-column margin-top-l">
+                        <p class="mat-subheading-1">Help</p>
+                        <ws-app-assistant-content-card [content]="content1"></ws-app-assistant-content-card>
+                        <ws-app-assistant-content-card [content]="content2"></ws-app-assistant-content-card>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,120 @@
+.letter-color1{
+  height: 24px;
+  width: 24px;
+  box-sizing: border-box;
+  background: #306933;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  margin-right: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.margin-bottom-xxs {
+  margin-bottom: 4px !important;
+}
+
+.font-bold-i {
+  font-weight: 700 !important;
+}
+.font-semibold {
+  font-weight: 600 !important;
+}
+
+
+.min-w-200 {
+  min-width: 200px;
+}
+
+.custom-w {
+  height: 48px;
+  width: 40px;
+}
+
+.custom-w1 {
+  width: 40px;
+}
+
+.flex-4 {
+  flex: 4
+}
+
+.input-wrapper {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+::ng-deep .mat-autocomplete-panel {
+    max-height: 340px !important;
+}
+
+.mat-autocomplete-panel {
+    max-height: 340px !important;
+}
+
+::ng-deep mat-option.mat-option{
+  height: auto;
+  line-height: normal;
+  padding: 0;
+  white-space: normal;
+}
+::ng-deep mat-option .mat-option-text{
+  height: auto;
+    display: block;
+}
+
+
+::ng-deep mat-form-field .mat-form-field-infix .mat-form-field-label,
+::ng-deep mat-form-field .mat-form-field-infix .mat-select-value {
+  line-height: normal !important;
+}
+
+::ng-deep .theme-igot.day-mode .mat-form-field.mat-focused .mat-form-field-label {
+  color: #333232 !important;
+}
+
+::ng-deep  .mat-form-field-appearance-outline .mat-form-field-infix {
+  // padding: 0.6em 0 0.6em 0 !important;
+  display: flex;
+  width: auto;
+  // height: inherit;
+}
+
+::ng-deep .mat-form-field {
+  width: 100%;
+  max-width: 340px;
+
+  &.full-width {
+    max-width: 100%;
+  }
+
+  &.no-pb .mat-form-field-wrapper {
+    padding-bottom: 0;
+    margin: 0;
+    height: 100%;
+    .mat-form-field-flex {
+      height: inherit;
+      padding: 0 1rem;
+      min-height: 40px;
+    }
+  }
+
+
+  &.square .mat-form-field-outline-start,
+  .mat-form-field-outline-end {
+    border-radius: 0 !important;
+  }
+
+  &.outline-color mat-form-field-outline {
+    color: rgba(0, 0, 0, 0.16);
+  }
+}
+
+.margin-2px {
+  margin: 2px !important;
+}

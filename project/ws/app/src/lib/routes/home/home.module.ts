@@ -37,6 +37,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { ExportAsModule } from 'ngx-export-as'
 import { WorkallocationModule } from '../workallocation/workallocation.module'
 import { NgxPaginationModule } from 'ngx-pagination'
+import { UIAdminTableModule } from '../../head/work-allocation-table/ui-admin-table.module'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -89,6 +90,7 @@ import { NgxPaginationModule } from 'ngx-pagination'
     ExportAsModule,
     WorkallocationModule,
     NgxPaginationModule,
+    UIAdminTableModule,
   ],
   entryComponents: [
   ],

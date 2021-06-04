@@ -1,0 +1,263 @@
+<div class="example-container flex-1 flex-column" cdkDropListGroup>
+  <form [formGroup]="activityForm" (ngSubmit)="submitResult(activityForm.value)" class="margin-top-xs">
+    <div *ngIf="false" class=" flex flex-1 flex-row resporow">
+      <div class="flex flex-1 flex-column example-list margin-r-2px">
+        <span class="flex margin-left-m mat-subheading-2 margin-top-s">
+          {{'Role and description'}}
+        </span>
+        <span class="flex margin-left-m mat-subheading-2 ws-mat-black60-text">
+          {{'Unmapped activities'}}
+        </span>
+      </div>
+      <div class="flex flex-4 flex-column example-list">
+        <div class="flex flex-1">
+          <div class="flex flex-2 min-w-200">
+            <span class="flex mat-subheading-2 margin-top-xs margin-left-s">
+              <mat-icon class="ws-mat-black40-text margin-right-s">directions_walk</mat-icon>
+              Activities
+            </span>
+          </div>
+          <div class="custom-w">&nbsp;</div>
+          <div class="flex flex-1">
+            <span class="flex mat-subheading-2 margin-top-xs">Submit to
+              <mat-icon class="ws-mat-black40-text margin-left-s">info</mat-icon>
+            </span>
+
+          </div>
+        </div>
+        <div id="labels" cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListData]="labelsList.value"
+          [cdkDropListEnterPredicate]="noReturnPredicate">
+          <!-- <ng-container *ngIf="activityForm.get('labelsArray').value"> -->
+          <ng-container *ngFor="let _activity of activityForm.get('labelsArray').controls; let i = index">
+            <div [attr.id]="'roww_'+i+ '_'" class="example-box" [cdkDragData]="_activity.value" cdkDrag>
+              <div class="margin-right-xs">
+                <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
+              </div>
+              <div class="flex flex-1" [formGroup]="_activity">
+                <div class="flex flex-2 margin-2px">
+                  <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                    <input [attr.id]="'actDesc_' + i" matInput #actDesc formControlName="activityDescription"
+                      i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
+                      class="form-input flex-1" (input)="filterActivities(actDesc.value)"
+                      [matAutocomplete]="activityAuto" autocomplete="off" />
+                    <mat-autocomplete #activityAuto="matAutocomplete">
+                      <div class="mat-body-4 ws-mat-accent-text padding-s">From activity dictionary</div>
+                      <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity.description">
+                        <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                          <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div>
+                          <div class="mat-body-2  margin-bottom-xxs">{{activity.description}}</div>
+                        </div>
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+                <div class="flex flex-1 margin-2px">
+                  <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                    <ws-app-initial-avatar *ngIf="assignedTo.value.length" [name]="assignedTo.value">
+                    </ws-app-initial-avatar>
+                    <input [attr.id]="'assignto_' + i" matInput #assignto formControlName="assignedTo" i18n-placeholder
+                      placeholder="Type here" i18n-aria-label #assignedTo class="form-input flex-1"
+                      [matAutocomplete]="assignToAuto" (input)="filterUsers(assignedTo.value)" autocomplete="off" />
+                    <mat-autocomplete #assignToAuto="matAutocomplete">
+                      <mat-option [value]="''">
+                        <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                          <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{'Final authority'}}</div>
+                        </div>
+                      </mat-option>
+                      <div class="mat-body-4 ws-mat-accent-text padding-s">From Karmayogi officer portal</div>
+                      <mat-option *ngFor="let user of userslist"
+                        [value]="user.userDetails.first_name + ' ' +user.userDetails.last_name ">
+                        <ws-app-user-autocomplete-card [user]="user">
+                        </ws-app-user-autocomplete-card>
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+
+              </div>
+            </div>
+          </ng-container>
+          <!-- </ng-container> -->
+        </div>
+        <div class="flex flex-1">
+          <div class="custom-w">&nbsp;</div>
+          <a href="javascript:void(0)" class="flex padding-s" (click)="addNewLabel()">
+            <mat-icon class="ws-mat-black60-text">add</mat-icon>
+            <span class="mat-subheading-2 ws-mat-black60-text">Activity</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- <div *ngIf="groups.length > 0" class="flex flex-1 flex-column margin-top-xs"> -->
+    <ng-container *ngFor="let grp of activityForm?.get('groupsArray')?.controls; let i=index">
+      <div @fadeInGrow (mouseenter)="enter(i)" class=" flex flex-1 flex-row resporow margin-top-xs" [formGroup]="grp">
+        <div *ngIf="i === 0" class="flex flex-1 flex-column example-list margin-r-2px">
+          <span class="flex margin-left-m mat-subheading-2 margin-top-s">
+            {{'Role and description'}}
+          </span>
+          <span class="flex margin-left-m mat-subheading-2 ws-mat-black60-text">
+            {{'Unmapped activities'}}
+          </span>
+        </div>
+        <div *ngIf="i !==0 " class="flex flex-1 flex-column margin-r-2px">
+          <div class="flex flex-1 group-background margin-b-2px" (focusout)="hideName()">
+            <span
+              [hidden]="!((canshowName === -1 && !grp.get('groupName').value) || !(canshowName === i && activeGroupIdx === i)) "
+              (click)="showName(i)" class="flex margin-left-m  margin-top-m mat-subheading-2 break-a">
+              {{grp.get('groupName').value || 'Untited role'}}
+            </span>
+            <!-- *ngIf="canshowName === i && activeGroupIdx === i" -->
+            <mat-form-field [hidden]="!(canshowName === i && activeGroupIdx === i)" appearance="outline"
+              class="full-width no-pb square outline-color">
+              <input [attr.id]="'roleName_' + i" formControlName="groupName" matInput #roleName i18n-placeholder
+                placeholder="Type here" onfocus="this.select()" i18n-aria-label aria-label="Activity name input"
+                class="form-input flex-1" autocomplete="off" (input)="filterRoles(roleName.value)"
+                [matAutocomplete]="roleAuto" />
+              <mat-autocomplete [attr.id]="'roleAuto_' + i" #roleAuto="matAutocomplete"
+                (optionSelected)="roleSelected($event,i)">
+                <div class="mat-body-4 ws-mat-accent-text padding-s"> From role dictionary</div>
+                <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
+                  <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                    <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{role.name}}</div>
+                    <div class="mat-body-2  margin-bottom-xxs">{{role.description}}</div>
+                  </div>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <!-- {{grp.get('groupName').value}} -->
+          <div class="flex flex-1  group-background" (focusout)="hide()">
+            <span
+              *ngIf="(canshow === -1 && !grp.get('groupDescription').value) || !(canshow === i && activeGroupIdx === i)"
+              (click)="show(i)" class="flex padding-xs margin-top-m break-a">
+              <span class="mat-body-2" *ngIf="grp.get('groupDescription').value">
+                {{grp.get('groupDescription').value}}
+              </span>
+              <span class="mat-body-2 ws-mat-black40-text" *ngIf="!grp.get('groupDescription').value">
+                {{'Role description'}}
+              </span>
+            </span>
+            <mat-form-field *ngIf="canshow === i && activeGroupIdx === i" appearance="outline"
+              class="full-width no-pb square outline-color ">
+              <textarea [attr.id]="'roleDesc_' + i" matInput #roleDesc name="questionText" cols="35" rows="8"
+                placeholder="Type here" formControlName="groupDescription" i18n-aria-label
+                aria-label="role description input" onfocus="this.select()"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="flex-4" [ngClass]="{ 'group-background' : i !== 0, 'example-list': i === 0}">
+          <div *ngIf="i === 0" class="flex flex-1">
+            <div class="flex flex-2 min-w-200">
+              <span class="flex mat-subheading-2 margin-top-xs margin-left-s">
+                <mat-icon class="ws-mat-black40-text margin-right-s">directions_walk</mat-icon>
+                Activities
+              </span>
+            </div>
+            <div class="custom-w">&nbsp;</div>
+            <div class="flex flex-1">
+              <span class="flex mat-subheading-2 margin-top-xs">Submit to
+                <mat-icon class="ws-mat-black40-text margin-left-s">info</mat-icon>
+              </span>
+
+            </div>
+          </div>
+          <div [id]="'groups_' + i" cdkDropList [cdkDropListData]="groupActivityList"
+            (cdkDropListDropped)="dropgroup($event)" [cdkDropListEnterPredicate]="evenPredicate"
+            class="flex-1 margin-top-s min-w">
+            <ng-container *ngFor="let ga of grp.get('activities').controls; let gaIdx = index">
+              <!-- {{log(ga)}} -->
+              <!-- <span class="mat-subheading-2">{{'Unmapped activities'}}</span> -->
+              <div [attr.id]="'cdkDragData_' + gaIdx" class="example-box cursor-default" [cdkDragData]="ga.value"
+                cdkDrag>
+                <div class="margin-right-xs cursor-move" cdkDragHandle>
+                  <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
+                </div>
+                <div class="flex flex-1" [formGroup]="ga">
+                  <div class="flex flex-2 margin-2px">
+                    <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                      <textarea [attr.id]="'actDesc_' + gaIdx" formControlName="activityDescription" matInput #actDesc
+                        i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
+                        class="form-input flex-1" [matAutocomplete]="roleDescriptionAuto"
+                        (click)="setSelectedFilter(gaIdx)" (input)="filterActivities(actDesc.value, gaIdx)"
+                        autocomplete="off" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"></textarea>
+                      <mat-autocomplete #roleDescriptionAuto="matAutocomplete"
+                        (optionSelected)="activitySelected($event,i)">
+                        <div class="mat-body-4 ws-mat-accent-text padding-s">From activity dictionary</div>
+                        <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity">
+                          <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                            <!-- <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div> -->
+                            <div class="mat-body-2  margin-bottom-xxs">{{activity.description}}</div>
+                          </div>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  <div class="flex flex-1 margin-2px">
+                    <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                      <!-- <input [attr.id]="'assignto_' + gaIdx" matInput #assignto i18n-placeholder placeholder="Type here"
+                        i18n-aria-label aria-label="Activity description input" class="form-input flex-1"
+                        autocomplete="off" /> -->
+                      <ws-app-initial-avatar *ngIf="assignedTo.value.length && assignedTo.value !== 'Final authority'"
+                        [name]="assignedTo.value">
+                      </ws-app-initial-avatar>
+                      <mat-icon class="margin-right-xs ws-mat-default-text"
+                        *ngIf="assignedTo.value.length && assignedTo.value === 'Final authority'">flag
+                      </mat-icon>
+                      <input [attr.id]="'assignto_' + gaIdx" class="form-input flex-1" matInput #assignedTo
+                        formControlName="assignedTo" i18n-placeholder placeholder="Type here" i18n-aria-label
+                        aria-label="Type here" [matAutocomplete]="auto" (input)="filterUsers(assignedTo.value)"
+                        autocomplete="off">
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option [value]="'Final authority'">
+                          <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                            <div class="mat-body-2 font-bold-i margin-bottom-xxs flex">
+                              <mat-icon class="margin-right-xs mat ws-mat-default-text">flag</mat-icon>
+                              {{'Final authority'}}
+                            </div>
+                          </div>
+                        </mat-option>
+                        <div class="mat-body-4 ws-mat-accent-text padding-s" *ngIf="userslist?.length">
+                          From Karmayogi officer portal
+                        </div>
+                        <mat-option *ngFor="let user of userslist"
+                          [value]="user.userDetails.first_name + ' ' +user.userDetails.last_name ">
+                          <ws-app-user-autocomplete-card [user]="user">
+                          </ws-app-user-autocomplete-card>
+                        </mat-option>
+                        <!-- <mat-option *ngIf="!userslist?.length">
+                          <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                            <div class="mat-body-2  margin-bottom-xxs">{{'No users...'}}</div>
+                          </div>
+                        </mat-option> -->
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <div class="flex flex-1 margin-xs">
+            <div class="custom-w1">&nbsp;</div>
+            <a href="javascript:void(0)" class="flex padding-s padding-left-0" (click)="addNewGroupActivity(i)">
+              <mat-icon class="ws-mat-black60-text">add</mat-icon>
+              <span class="mat-subheading-2 ws-mat-black60-text margin-0">Activity</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- </div> -->
+    <div class="flex flex-1 margin-top-xs margin-bottom-xs">
+      <!-- <div class="custom-w">&nbsp;</div> -->
+      <a href="javascript:void(0)" class="flex padding-s" (click)="addNewGroup()">
+        <mat-icon class="ws-mat-black60-text">add</mat-icon>
+        <span class="mat-subheading-2 ws-mat-black60-text">Role</span>
+      </a>
+    </div>
+
+    <!-- <pre> -->
+    <!-- {{getActivityForm}} -->
+    <!-- </pre> -->
+  </form>
+</div>

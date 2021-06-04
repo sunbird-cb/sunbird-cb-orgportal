@@ -1,0 +1,68 @@
+<div class="flex flex-1 flex-column">
+  <div class="flex flex-1 mh-40">
+    <div class="flex flex-1 margin-r-2px example-list">
+      <span class="flex mat-subheading-2 margin-top-xs margin-left-s">
+        <!-- <mat-icon class="margin-right-s">extension</mat-icon> -->
+        Competency label
+      </span>
+    </div>
+    <div class="flex flex-1 margin-r-2px example-list">
+      <span class="flex mat-subheading-2 margin-left-xs margin-top-xs">Choose level
+        <mat-icon class="ws-mat-black40-text margin-left-s">info</mat-icon>
+      </span>
+    </div>
+    <div class="flex flex-1 margin-r-2px example-list">
+      <span class="flex mat-body-2 margin-left-xs margin-top-xs ws-mat-black60-text">Competency type
+      </span>
+
+    </div>
+    <div class="flex flex-1 example-list">
+      <span class="flex mat-body-2 margin-left-xs margin-top-xs ws-mat-black60-text">Competency area
+      </span>
+    </div>
+  </div>
+  <form [formGroup]="compDetailForm" class="margin-top-xs">
+    <div class="flex flex-1 flex-column">
+      <ng-container *ngFor="let _comp of  compDetailForm?.get('competencyList')?.controls">
+        <div class="flex flex-1 auto-background" [formGroup]="_comp">
+          <div class="flex flex-1 margin-r-2px example-list">
+            <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+              <input [attr.id]="'compt_' + _comp" class="form-input flex-1" matInput #compName i18n-placeholder
+                formControlName="compName" placeholder="Type here" i18n-aria-label aria-label="Type here"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="flex flex-1 margin-r-2px example-list">
+            <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+              <mat-select [attr.id]="'compLevel_' + _comp" class="form-input flex-1" matInput #compLevel
+                i18n-placeholder formControlName="compLevel" placeholder="Type here" i18n-aria-label
+                aria-label="Type here" autocomplete="off">
+                <mat-option *ngFor="let _level of levelLest" [value]="_level">
+                  <span class="flex flex-1 margin-left-s">{{_level}}</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="flex flex-1 margin-r-2px example-list">
+            <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+              <mat-select [attr.id]="'compType_' + _comp" class="form-input flex-1" matInput #compType i18n-placeholder
+                formControlName="compType" placeholder="Type here" i18n-aria-label aria-label="Type here"
+                autocomplete="off">
+                <mat-option *ngFor="let _typ of compTypList" [value]="_typ">
+                  <span class="flex flex-1 margin-left-s">{{_typ}}</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="flex flex-1 example-list">
+            <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+              <input [attr.id]="'compArea_' + _comp" class="form-input flex-1" matInput #compArea i18n-placeholder
+                formControlName="compArea" placeholder="Type here" i18n-aria-label aria-label="Type here"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </form>
+</div>
