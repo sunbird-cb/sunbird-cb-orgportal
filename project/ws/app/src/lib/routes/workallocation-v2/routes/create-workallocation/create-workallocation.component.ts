@@ -165,6 +165,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       this.watStore.clear()
     })
   }
+
   getStrcuturedReq(): any {
     let req = {}
     const officer = this.getUserDetails()
