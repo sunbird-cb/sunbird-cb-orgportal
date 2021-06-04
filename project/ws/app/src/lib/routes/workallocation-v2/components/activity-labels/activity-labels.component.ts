@@ -399,12 +399,11 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   displayFn(data: any): string {
     return data ? data.name : ''
   }
-  displayActivityFn(data: any/*, aIdx: number, gIdx: number*/): string {
+  displayActivityFn(data: any): string {
     // this.selectedActivityIdx = aIdx
     // this.activeGroupIdx = gIdx
     return data ? data.activityDescription : ''
   }
-
 
   show(idx: number) {
     this.canshow = idx

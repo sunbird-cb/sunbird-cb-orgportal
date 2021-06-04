@@ -27,6 +27,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   paginator!: MatPaginator
   departmentName: any
   departmentID: any
+  searchQuery!: string
 
   config: ExportAsConfig = {
     type: 'pdf',
@@ -48,6 +49,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     public dialog: MatDialog) { }
 
   ngOnInit() {
+    // this.getdeptUsers()
     this.tabledata = {
       actions: [],
       columns: [
@@ -94,8 +96,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       },
 
     ]
-
-    console.log(this.tabledata)
     this.filter("Draft")
   }
 
@@ -105,7 +105,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     // this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
     //   // save started
     // })
-    console.log(this.currentFilter)
     if (this.currentFilter === 'Draft') {
       const pdfName = 'draft'
       const pdfUrl = '/assets/files/draft.pdf'
@@ -163,8 +162,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
 
   filter(key: string) {
     if (key === 'Published') {
-      this.tabledata['columns'][2] = { displayName: 'Published on', key: 'publishedon' }
-      this.tabledata['columns'][3] = { displayName: 'Published by', key: 'publishedby' }
+      this.tabledata['columns'][2] = { displayName: 'Published on', key: 'lastupdatedon' }
+      this.tabledata['columns'][3] = { displayName: 'Published by', key: 'lastupdatedby' }
       this.tabledata['columns'][4] = { displayName: 'Approval', key: 'approval' }
     } else {
       this.tabledata['columns'][2] = {
@@ -183,7 +182,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     const draftUsersData: any[] = []
     if (this.userslist && this.userslist.length > 0) {
       this.userslist.forEach((user: any) => {
-        console.log(user.allocationDetails)
         if (key === 'Published') {
           if (user.allocationDetails.id !== undefined) {
             activeUsersData.push({
@@ -238,33 +236,81 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       this.currentFilter = key
       switch (key) {
         case 'Draft':
-          this.data = draftUsersData
+          this.getWAT('Draft')
           break
         case 'Published':
-          activeUsersData.push({
-            id: 3,
-            workorders: "Work order division 3",
-            officers: "15",
-            lastupdatedon: "01:25 PM 18 May 2021",
-            lastupdatedby: "Manjunatha HS",
-            publishedon: "01:00 PM 18 May 2021",
-            publishedby: "Joy Mathew",
-            errors: "5",
-            approval: "Download",
-            fromdata: 'draft',
-          })
-          this.data = activeUsersData
+          this.getWAT('Published')
           break
         case 'Archived':
-          this.data = archiveUsersData
+          this.getWAT('Published')
           break
         default:
-          this.data = draftUsersData
+          this.getWAT('Draft')
           break
       }
     }
   }
+  getWAT(currentStatus: string) {
+    this.data = []
+    const finalData: any[] = []
+    this.workallocationSrvc.fetchWAT(currentStatus).subscribe(res => {
+      if (res.result.data) {
+        res.result.data.forEach((element: any) => {
+          const watData = {
+            workorders: element.name,
+            officers: "officers",
+            lastupdatedon: element.updatedAt,
+            lastupdatedby: element.updatedByName,
+            errors: element.errorCount,
+            publishedon: element.createdAt,
+            publishedby: element.createdByName,
+            approval: "Approval",
+            fromdata: 'published',
 
+          }
+          finalData.push(watData)
+        })
+      }
+      this.data = finalData
+    })
+
+  }
+  getWATBySearch(searchQuery: string, currentStatus: string) {
+    this.data = []
+    const finalData: any[] = []
+    this.workallocationSrvc.fetchAllWATRequestBySearch(searchQuery, currentStatus).subscribe(res => {
+      if (res.result.data) {
+        res.result.data.forEach((element: any) => {
+          const watData = {
+            workorders: element.name,
+            officers: "officers",
+            lastupdatedon: element.updatedAt,
+            lastupdatedby: this.getUserByWID(element.updatedBy),
+            errors: element.errorCount,
+            publishedon: element.createdAt,
+            publishedby: this.getUserByWID(element.createdBy),
+            approval: "Approval",
+            fromdata: 'published',
+
+          }
+          finalData.push(watData)
+        })
+      }
+      this.data = finalData
+    })
+
+  }
+  getUserByWID(wid: string) {
+    this.workallocationSrvc.fetchUserByWID(wid).subscribe(res => {
+      const fullName = res.result.data
+      if (fullName) {
+        return fullName.first_name + " " + fullName.last_name
+      } else {
+        return "Loading.."
+      }
+    })
+    return "Loading.."
+  }
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnChanges(data: SimpleChanges) {
     this.data = _.get(data, 'data.currentValue')
@@ -317,5 +363,10 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       // row.isArchived = true
       // this.archivedlist.push(row)
     }
+  }
+  searchBasedOnQurey(newValue: Event) {
+    console.log(newValue)
+    this.getWATBySearch(newValue.toString(), this.currentFilter)
+
   }
 }
