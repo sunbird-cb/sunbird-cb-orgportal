@@ -10,12 +10,13 @@ import { RolesAccessComponent } from './routes/roles-access/roles-access.compone
 // import { PageResolve } from '@sunbird-cb/utils'
 import { ApprovalsComponent } from './routes/approvals/approvals.component'
 import { WorkallocationComponent } from './routes/workallocation/workallocation.component'
+import { WelcomeComponent } from './routes/welcome/welcome.component'
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'users',
+    redirectTo: 'welcome',
   },
   {
     path: '',
@@ -25,6 +26,10 @@ const routes: Routes = [
       tabs: HomeResolve,
     },
     children: [
+      {
+        path: 'welcome',
+        component: WelcomeComponent,
+      },
       {
         path: 'users',
         component: UsersViewComponent,

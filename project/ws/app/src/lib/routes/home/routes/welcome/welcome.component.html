@@ -1,0 +1,43 @@
+<div class="flex flex-1 flex-column height-50">
+  <mat-card class="flex-1 height-100 no-shadow">
+
+    <div class="banner-main">
+      <div class="banner-data">
+        <img src="/assets/icons/govtlogo.jpg" alt="Dept Logo">
+        <div class="banner-title">{{deptName}}</div>
+      </div>
+    </div>
+
+    <!-- <ng-container [wsResolverWidget]="sliderData1"></ng-container> -->
+    <mat-card-content>
+      <div class="flex flex-1 flex-column margin-top-l">
+        <span *ngIf="showKarmayogiLink || showCBPLink" class="flex flex-1 mat-subheading-1">Other portals</span>
+        <div style="display: inline-flex;">
+          <mat-card class="flex flex-1 width-fill ws-mat-accent-border cursor-pointer margin-right-m" (click)=openky()
+            *ngIf="showKarmayogiLink">
+            <!-- <mat-icon class="margin-right-m new-color" svgIcon="karmayogi"></mat-icon> -->
+            <img src="/assets/icons/Karmayogi.svg" alt="Karmayogi officer portal" class="margin-right-xs">
+            <span class="mat-body-2 m-auto">Karmayogi officer portal</span>
+          </mat-card>
+          <mat-card class="flex flex-1 width-fill ws-mat-accent-border cursor-pointer" (click)=openCBP() *ngIf="showCBPLink">
+            <!-- <mat-icon class="margin-right-m new-color" svgIcon="CBP"></mat-icon> -->
+            <img src="/assets/icons/CBP_portal.svg" alt="CBP portal" class="margin-right-xs">
+            <span class="mat-body-2 m-auto">CBP portal</span>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <div class="bootstrap-rain" *ngIf="currentDashboard[0]">
+    <div class="col-11 relative">
+      <a [routerLink]="['/app/my-dashboard']" class="flex rel-custom" routerLinkActive="router-link-active">
+        <span class="mat-subheading-2 ws-mat-default-text">Go to dashboard</span>
+        <mat-icon class="ws-mat-default-text">arrow_forward</mat-icon>
+      </a>
+      <lib-rain-dashboards [layoutConfig]="currentDashboard[0].visualizationDetails" [chartConfig]="currentDashboard[0].chartDetails"
+        [dashboardConfig]="dashboardList" [showFilters]="false" [showWidgets]="true" [filtersConfig]="currentDashboard[0].filtersDetails"
+        [widgetConfig]="currentDashboard[0].widgetDetails" [widgetData]="currentDashboard[0].widgetData"
+        (libDashboardId)="getDashboardId($event)" [showWidgetTitle]="currentDashboard[0].showWidgetTitle" [widgetTitle]="currentDashboard[0].widgetTitle"></lib-rain-dashboards>
+    </div>
+  </div>
+</div>

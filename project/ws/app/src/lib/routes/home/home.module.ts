@@ -38,6 +38,8 @@ import { ExportAsModule } from 'ngx-export-as'
 import { WorkallocationModule } from '../workallocation/workallocation.module'
 import { NgxPaginationModule } from 'ngx-pagination'
 import { UIAdminTableModule } from '../../head/work-allocation-table/ui-admin-table.module'
+import { WelcomeComponent } from './routes/welcome/welcome.component'
+import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -46,6 +48,7 @@ import { UIAdminTableModule } from '../../head/work-allocation-table/ui-admin-ta
     RolesAccessComponent,
     ApprovalsComponent,
     WorkallocationComponent,
+    WelcomeComponent,
   ],
   imports: [
     CommonModule,
@@ -91,6 +94,7 @@ import { UIAdminTableModule } from '../../head/work-allocation-table/ui-admin-ta
     WorkallocationModule,
     NgxPaginationModule,
     UIAdminTableModule,
+    RainDashboardsModule,
   ],
   entryComponents: [
   ],

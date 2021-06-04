@@ -6,11 +6,13 @@ export const environment: IEnvironment = {
   production: false,
   sitePath: 'localhost_3000',
   karmYogiPath: 'https://igot-dev.in',
+  cbpPath: 'https://cbp.igot-dev.in',
 }
 interface IEnvironment {
   production: boolean
   sitePath: null | string
   karmYogiPath: string
+  cbpPath: string
 }
 
 /*

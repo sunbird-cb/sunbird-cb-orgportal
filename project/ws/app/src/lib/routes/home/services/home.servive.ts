@@ -13,6 +13,7 @@ const API_END_POINTS = {
   CHECK_ISADMIN: '/apis/protected/v8/portal/isAdmin/mdo',
   GET_MY_DEPARTMENT: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
   GET_MY_DEPARTMENT_ALL: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=true',
+  GET_USER_DETAILS: `/apis/protected/v8/user/details?ts='${Date.now()}`,
 }
 
 @Injectable({
@@ -39,5 +40,9 @@ export class ProfileV2Service {
   }
   getMyDepartment(): Observable<any> {
     return this.http.get<any>(`${API_END_POINTS.GET_MY_DEPARTMENT}`)
+  }
+
+  getUserDetails(): Observable<any> {
+    return this.http.get<any>(`${API_END_POINTS.GET_USER_DETAILS}`)
   }
 }
