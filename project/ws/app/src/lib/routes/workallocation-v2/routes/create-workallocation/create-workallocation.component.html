@@ -136,21 +136,6 @@
                             <span class="mat-body-2 in-margin font-bold-i"> Assistant</span>
                         </a>
                     </div>
-                    <div class="flex flex-1 margin-top-l">
-                        <span class="mat-body-2 ws-mat-black60-text">
-                            We will continously scan the workspace and show you reports and recommendations to help you
-                            refine the content
-                        </span>
-                    </div>
-                    <div class="flex flex-1 progress ws-mat-accent-border border-r margin-top-l padding-s">
-                        <span class=" flex flex-1">
-                            <mat-progress-spinner [diameter]="20" class="example-margin" mode="determinate"
-                                [value]="currentProgress">
-                            </mat-progress-spinner>
-                            <span class="margin-left-m mat-body-1">{{'Progress of completion'}}</span>
-                        </span>
-                        <span class="flex mat-body-1 font-semibold margin-left-m">{{currentProgress}}%</span>
-                    </div>
                     <ng-container>
                         <ws-app-assistant-message-card [dataStructure]="dataStructure"></ws-app-assistant-message-card>
                     </ng-container>
