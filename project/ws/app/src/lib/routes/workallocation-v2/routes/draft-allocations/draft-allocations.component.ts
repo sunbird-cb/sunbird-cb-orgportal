@@ -26,6 +26,8 @@ export class DraftAllocationsComponent implements OnInit {
   paginator!: MatPaginator
   departmentName: any
   departmentID: any
+  bdtitles = [{ title: 'Work allocation tool', url: '/app/home/workallocation' },
+  { title: 'Drafts', url: '/app/home/workallocation' }]
 
   config: ExportAsConfig = {
     type: 'pdf',
@@ -564,6 +566,8 @@ export class DraftAllocationsComponent implements OnInit {
   getAllocatedUsers(woId: any) {
     this.allocateSrvc.getAllocatedUsers(woId).subscribe((res: any) => {
       this.workorderData = res.result.data
+      const newbdtitle = { title: this.workorderData.name, url: 'none' }
+      this.bdtitles.push(newbdtitle)
       this.data = this.workorderData.users
     })
   }

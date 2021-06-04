@@ -10,8 +10,7 @@
           </div> -->
       <div class="flex flex-1 custom">
         <div class="flex-4">
-          <ws-widget-breadcrumbs-org [widgetData]="{titles:[{title:'Work allocation tool', url:'/app/home/workallocation'},
-                              {title:'Drafts', url:'/app/home/workallocation'},{title:'Work order - Administration wing', url:'none'}] }">
+          <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }">
           </ws-widget-breadcrumbs-org>
         </div>
         <div class="flex-2">
@@ -132,15 +131,12 @@
                               <span>{{a.name}}</span>
                             </td>
                             <td class="submittd">
-                              <span class="initials" *ngIf="a.submitToInt">{{a.submitToInt}}</span>
-                              {{a.submitTo ||
-                              a.submitToOther}}
+                              <span class="initials" *ngIf="a.submittedFromId">{{a.submittedFromName.charAt(0).toUpperCase()}}</span>
+                              {{a.submittedFromName}}
                             </td>
                             <td class="submittd">
-                              <!-- <span class="initials" *ngIf="a.submitFromInt">{{a.submittedFromName}}</span> -->
-                              <span class="initials">{{a.submittedFromName.charAt(0).toUpperCase()}}</span>
-                              {{a.submittedFromName ||
-                              a.submitFromOther}}
+                              <span class="initials" *ngIf="a.submittedFromId">{{a.submittedFromName.charAt(0).toUpperCase()}}</span>
+                              {{a.submittedFromName}}
                             </td>
                           </tr>
                         </table>
