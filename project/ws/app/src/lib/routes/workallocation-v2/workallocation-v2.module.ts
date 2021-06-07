@@ -31,6 +31,7 @@ import { PublishedAllocationsComponent } from './routes/published-allocations/pu
 import { CompDetailModule } from './components/comp-details/comp-details.module'
 import { NgxPaginationModule } from 'ngx-pagination'
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
+import { NgCircleProgressModule } from 'ng-circle-progress'
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter'
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule,
     UIORGTableModule, ExportAsModule, MatMenuModule, MatTabsModule, MatProgressSpinnerModule, MatAutocompleteModule,
     AutocompleteModule, ComponentSharedModule, NgxPaginationModule, Ng2SearchPipeModule,
+    NgCircleProgressModule.forRoot({}),
   ],
   entryComponents: [
     // AllocationActionsComponent,
