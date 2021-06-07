@@ -194,7 +194,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
 
       roleCompetencyList: roles,
 
-      workOrderId: this.getWorkOrderId
+      workOrderId: this.getWorkOrderId,
     }
     return req
   }

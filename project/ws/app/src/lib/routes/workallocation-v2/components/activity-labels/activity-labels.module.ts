@@ -13,11 +13,11 @@ import { CdkTreeModule } from '@angular/cdk/tree'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AutocompleteModule } from '../autocomplete/autocomplete.module'
 import { ComponentSharedModule } from '../component-shared.module'
-import { WatRolePopup } from './wat-role-popup/wat-role-popup.component'
+import { WatRolePopupComponent } from './wat-role-popup/wat-role-popup.component'
 @NgModule({
   declarations: [
     ActivityLabelsComponent,
-    WatRolePopup,
+    WatRolePopupComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +39,7 @@ import { WatRolePopup } from './wat-role-popup/wat-role-popup.component'
     MatCheckboxModule,
     FormsModule,
   ],
-  entryComponents: [WatRolePopup],
+  entryComponents: [WatRolePopupComponent],
   exports: [ActivityLabelsComponent],
   // providers: [{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
   // { provide: MatDialogRef, useValue: {} },]

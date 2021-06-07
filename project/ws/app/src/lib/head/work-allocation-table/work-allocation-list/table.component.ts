@@ -96,6 +96,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
           this.showNoData = true
           this.showLoading = false
         }
+        // tslint:disable-next-line: align
       }, 1000)
     } else {
       this.showNoData = false

@@ -11,10 +11,10 @@
       <div class="flex flex-1 flex-column">
         <div class="flex flex-1 flex-column">
           <div class="flex flex-1">
-            <mat-checkbox class="padding-bottom-s padding-top-s" (click)="onChange($event)" color="accent"
-              formControlName="IsRoleSelected">
-              <span class="mat-subheading-1">Competencies</span>
-            </mat-checkbox>
+            <!-- <mat-checkbox class="padding-bottom-s padding-top-s" (click)="onChange($event)" color="accent"
+              formControlName="IsRoleSelected"> -->
+            <span class="padding-bottom-s padding-top-s mat-subheading-1">Competencies</span>
+            <!-- </mat-checkbox> -->
           </div>
           <div class="table ws-mat-accent-border-bottom">
             <div class="flex-1 head-cell margin-r-2px">
@@ -35,7 +35,7 @@
           </div>
         </div>
         <!-- *ngIf="data.childNodes && data.childNodes.length>0" -->
-        <div class="flex flex-1 flex-column">
+        <div class="flex flex-1 flex-column margin-top-m">
           <span class="mat-subheading-1">Choose competency levels</span>
           <div class="flex flex-1 scroll flex-column">
             <!-- *ngFor="let _activity of watForm?.get('acDetail')?.controls; let i=index" -->
