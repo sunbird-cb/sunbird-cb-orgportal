@@ -79,7 +79,8 @@
             <th>Submit to</th>
             <th>Submission from</th>
           </tr>
-          <tr *ngFor="let d of data" class="data-row">
+          <tr *ngFor="let d of data | filter: term | paginate: { itemsPerPage: 5, currentPage: p, totalItems: data.length }"
+            class="data-row">
             <td aria-rowspan="d.roles.length+1">
               <div class="initials">
                 <!-- {{d.firstname.charAt(0).toUpperCase()}} {{d.surname.charAt(0).toUpperCase()}} -->
@@ -130,10 +131,10 @@
             </td>
           </tr>
         </table>
-        <!-- <div class="custompagination">
-              <pagination-controls (pageChange)="p = $event"></pagination-controls>
-              <div class="totalcount">of {{data.length}}</div>
-            </div> -->
+        <div class="custompagination">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          <div class="totalcount">of {{data.length}}</div>
+        </div>
 
         <div *ngIf="data && data.length === 0" class="margin-left-xs margin-l font-medium ">
           No data found

@@ -29,6 +29,8 @@ import { ComponentSharedModule } from './components/component-shared.module'
 import { DraftAllocationsComponent } from './routes/draft-allocations/draft-allocations.component'
 import { PublishedAllocationsComponent } from './routes/published-allocations/published-allocations.component'
 import { CompDetailModule } from './components/comp-details/comp-details.module'
+import { NgxPaginationModule } from 'ngx-pagination'
+import { Ng2SearchPipeModule } from 'ng2-search-filter'
 
 @NgModule({
   declarations: [
@@ -48,7 +50,7 @@ import { CompDetailModule } from './components/comp-details/comp-details.module'
     MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule,
     UIORGTableModule, ExportAsModule, MatMenuModule, MatTabsModule, MatProgressSpinnerModule, MatAutocompleteModule,
-    AutocompleteModule, ComponentSharedModule,
+    AutocompleteModule, ComponentSharedModule, NgxPaginationModule, Ng2SearchPipeModule,
   ],
   entryComponents: [
     // AllocationActionsComponent,
