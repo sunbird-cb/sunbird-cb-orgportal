@@ -231,7 +231,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     this.data = _.get(data, 'data.currentValue')
     this.length = this.data.length
     this.paginator.firstPage()
-    this.filter('Published')
   }
 
   applyFilter(filterValue: any) {
@@ -247,15 +246,12 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   onNewAllocationClick() {
     // this.router.navigate([`/app/workallocation/create`])
     const dialogRef = this.dialog.open(WorkAllocationPopUpComponent, {
-      maxHeight: 'auto',
-      height: '65%',
+      height: 'auto',
+      minHeight: '60%',
       width: '80%',
-      panelClass: 'remove-pad',
     })
-    dialogRef.afterClosed().subscribe((response: any) => {
-      console.log(response)
-
-
+    dialogRef.afterClosed().subscribe(() => {
+      this.getWAT(this.currentFilter)
     })
   }
 

@@ -15,7 +15,7 @@
             </div>
 
         </div>
-        <div style="margin-top: 30px; margin-left: 20px;">
+        <div style="margin-top: 30px; margin-left: 20px;" *ngIf="this.dataSource.data.length>0">
             <h4>Copy from a published work order (optional)</h4>
             <input class="sinput" type="Standard" label="" placeholder="Search"
                 (input)="applyFilter($event.target.value)">
@@ -76,7 +76,7 @@
 
     </mat-dialog-actions>
     <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-        *ngIf="this.dataSource.data.length===-32">
+        *ngIf="this.dataSource.data.length>0">
     </mat-paginator>
 
 </div>

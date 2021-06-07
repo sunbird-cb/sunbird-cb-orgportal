@@ -340,7 +340,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     const dialogRef = this.dialog.open(WatCompPopup, {
       restoreFocus: false,
       disableClose: true,
-      data: event.option.value
+      data: event.option.value,
     })
 
     // Manually restore focus to the menu trigger since the element that

@@ -2,7 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core'
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { MatCheckboxChange } from '@angular/material'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+/* tslint:disable */
 import _ from 'lodash'
+/* tslint:enable */
 
 export interface IWatCompPopupData {
   children: IChield[],
@@ -44,7 +46,7 @@ export class WatCompPopup implements OnInit {
     this.watForm = new FormGroup({})
     this.watForm = this.formBuilder.group({
       acDetail: this.formBuilder.array([]),
-      IsRoleSelected: new FormControl(true, [])
+      IsRoleSelected: new FormControl(true, []),
     })
 
   }
@@ -56,7 +58,7 @@ export class WatCompPopup implements OnInit {
   }
   ngOnInit(): void {
     if (this.data.children) {
-      let oldValue = this.getList
+      const oldValue = this.getList
       _.each(this.data.children, itm => {
         oldValue.push(this.createItem(itm))
       })
@@ -64,7 +66,7 @@ export class WatCompPopup implements OnInit {
 
     }
   }
-  createItem(itm: IChield): import("@angular/forms").AbstractControl {
+  createItem(itm: IChield): import('@angular/forms').AbstractControl {
     const ctrl = this.formBuilder.group({
       isSelected: itm.description ? true : false,
       description: itm.description,
@@ -81,7 +83,7 @@ export class WatCompPopup implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close({
-      ok: false
+      ok: false,
     })
   }
   onOkClick(): void {
@@ -89,7 +91,7 @@ export class WatCompPopup implements OnInit {
   }
   getLocalPrint(data: string) {
     return `<ul>${(_.compact(data.split('• '))
-      .map(i => { if (i) { return `<li>${i}</li>` } else return null })).join('')}</ul>`
+      .map(i => { if (i) { return `<li>${i}</li>` } return null })).join('')}</ul>`
   }
   onChange($event: any) {
     if ($event) {
@@ -107,12 +109,12 @@ export class WatCompPopup implements OnInit {
     }
   }
   checkAll() {
-    let onj = { isSelected: true }
+    const onj = { isSelected: true }
     this.getList.controls.map(value => value.setValue({ ...value.value, ...onj }))
   }
 
   deselectAll() {
-    let onj = { isSelected: false }
+    const onj = { isSelected: false }
     this.getList.controls.map(value => value.setValue({ ...value.value, ...onj }))
     // this.setWatValues([...this.getList.controls.map(value => value.setValue(false))])
   }
@@ -123,7 +125,7 @@ export class WatCompPopup implements OnInit {
     if (val) {
       this.dialogRef.close({
         ok: true,
-        data: this.generateData(val)
+        data: this.generateData(val),
       })
     }
   }

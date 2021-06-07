@@ -11,7 +11,7 @@ import { WatStoreService } from '../../services/wat.store.service'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations'
 import { WatRolePopup } from './wat-role-popup/wat-role-popup.component'
-import _ from 'lodash'
+import lodash from 'lodash'
 
 @Component({
   selector: 'ws-app-activity-labels',
@@ -382,7 +382,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     const dialogRef = this.dialog.open(WatRolePopup, {
       restoreFocus: false,
       disableClose: true,
-      data: event.option.value
+      data: event.option.value,
     })
 
     // Manually restore focus to the menu trigger since the element that
@@ -402,9 +402,13 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         // setTimeout(() => {
         if (val.data && val.data.length > 0) {
           /**Reject Already Exist values */
-          let newValues = _.reject(val.data, (item) => _.find(_.get(lst.get('activities'), 'value'), { activityDescription: item.activityDescription }))
+          const newValues = _.reject(val.data, item =>
+            _.find(_.get(lst.get('activities'), 'value'),
+                   { activityDescription: item.activityDescription }))
           // console.log(newValues)
-          let unselectVals = _.reject(_.get(lst.get('activities'), 'value'), (item) => _.find(val.data, { activityDescription: item.activityDescription }))
+          const unselectVals =
+            _.reject(_.get(lst.get('activities'), 'value'), item =>
+              _.find(val.data, { activityDescription: item.activityDescription }))
           if (newValues && newValues.length > 0) {
             this.addNewGroupActivityCustom(this.activeGroupIdx, [...newValues])
           }
@@ -434,17 +438,17 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       this.watStore.setgetactivitiesGroup(this.groupList.value)
     })
 
-
   }
   deleteUnselectedActivities(unselectVals: any, gIdx: number) {
     const lst = this.groupList.at(gIdx) as FormGroup
     if (unselectVals && unselectVals.length > 0) {
       /**Delete unselected Values */
       for (let i = unselectVals.length - 1; i >= 0; i -= 1) {
-        this.deleteActivityGromGrp(_.findIndex(_.get(lst.get('activities'), 'value'), (itm: any) => unselectVals[i].activityDescription === itm.activityDescription))
+        this.deleteActivityGromGrp(_.findIndex(_.get(lst.get('activities'), 'value'), (itm: any) =>
+          unselectVals[i].activityDescription === itm.activityDescription))
       }
     } else {
-      let existingLst = _.get(lst.get('activities'), 'value')
+      const existingLst = _.get(lst.get('activities'), 'value')
       for (let i = existingLst.length - 1; i >= 0; i -= 1) {
         this.deleteActivityGromGrp(i)
       }

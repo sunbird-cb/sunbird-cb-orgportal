@@ -96,7 +96,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
           this.showNoData = true
           this.showLoading = false
         }
-      }, 1000)
+      },         1000)
     } else {
       this.showNoData = false
       this.showLoading = false
