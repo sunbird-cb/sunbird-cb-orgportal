@@ -1,12 +1,19 @@
-<div class="flex flex-1 progress ws-mat-accent-border border-r margin-top-s padding-s">
-  <span class=" flex flex-1">
-    <mat-progress-spinner [diameter]="24" class="example-margin red" mode="determinate" [value]="currentProgress"
+<div class="flex flex-1 items-center progress ws-mat-accent-border border-r margin-top-s padding-s">
+  <span class=" flex flex-1 items-center">
+    <!-- <mat-progress-spinner [diameter]="24" class="example-margin red" mode="determinate" [value]="currentProgress"
       [color]="getColor(currentProgress)">
-    </mat-progress-spinner>
+    </mat-progress-spinner> -->
+    <circle-progress class="flex items-center progress" [percent]="currentProgress" [radius]="12" [outerStrokeWidth]="5"
+      [innerStrokeWidth]="5" [space]="-5" [outerStrokeColor]="progressColor()" [innerStrokeColor]="'rgba(0,0,0,.16)'"
+      [animation]="true" [animationDuration]="300" [showTitle]="false" [showUnits]="false" [showSubtitle]="false"
+      [showInnerStroke]="true" [clockwise]="true" [backgroundOpacity]="0" [backgroundGradient]="false"
+      [backgroundStrokeWidth]="3" [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
+      [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false">
+    </circle-progress>
     <span class="margin-left-m mat-body-1" *ngIf="currentProgress <= 0">{{'Not started yet'}}</span>
     <span class="margin-left-m mat-body-1" *ngIf="currentProgress > 0">{{'Progress of completion'}}</span>
   </span>
-  <span class="flex mat-body-1 font-semibold margin-left-m">{{currentProgress}}%</span>
+  <span class="flex items-center mat-body-1 font-semibold margin-left-m">{{currentProgress}}%</span>
 </div>
 <div class="flex flex-1 margin-top-s" *ngIf="currentProgress <= 0">
   <span class="mat-body-2 ws-mat-black60-text">

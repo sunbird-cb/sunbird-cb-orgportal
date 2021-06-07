@@ -93,13 +93,22 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
       this.validationsCombined()
     })
   }
-  getColor(currentProgress: any) {
-    return currentProgress > 40 ? currentProgress > 70 ? 'accent' : 'primary' : 'warn'
-  }
   get currentProgress(): number {
     let progress = 0
     progress = this.calculatePercentage()
     return progress
+  }
+
+  public progressColor(): string {
+    if (this.currentProgress <= 30) {
+      return '#D13924'
+    } if (this.currentProgress > 30 && this.currentProgress <= 70) {
+      return '#E99E38'
+    }
+    if (this.currentProgress > 70 && this.currentProgress <= 100) {
+      return '#1D8923'
+    }
+    return ''
   }
 
   public validationsCombined() {
