@@ -1,7 +1,7 @@
 // import { untilDestroyed } from 'ngx-take-until-destroy'
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
 import { NSWatActivity } from '../../models/activity-wot.model'
@@ -43,6 +43,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   dataStructure: any = {}
   departmentName: any
   departmentID: any
+  workOrderId: any
   content1 = {
     name: 'Drafting competencies',
     // tslint:disable-next-line: max-line-length
@@ -62,8 +63,12 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     private watStore: WatStoreService,
     private allocateSrvc: AllocationService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
+    this.route.queryParams.subscribe(params => {
+      this.workOrderId = params['workorder']
+    })
   }
   ngOnInit(): void {
     this.fetchFormsData()
@@ -155,15 +160,21 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   }
 
   saveWAT() {
-    const req = this.getStrcuturedReq()
-    // console.log(req)
-    this.allocateSrvc.createAllocation(req).subscribe(res => {
-      if (res) {
-        this.openSnackbar('Work order saved!')
-        this.router.navigate(['/app/workallocation/drafts'])
-      }
-      this.watStore.clear()
-    })
+    if (this.getWorkOrderId) {
+      const req = this.getStrcuturedReq()
+      console.log(req)
+      return
+      // console.log(req)
+      // this.allocateSrvc.createAllocation(req).subscribe(res => {
+      //   if (res) {
+      //     this.openSnackbar('Work order saved!')
+      //     this.router.navigate(['/app/workallocation/drafts'])
+      //   }
+      //   this.watStore.clear()
+      // })
+    } else {
+      // some msg
+    }
   }
 
   getStrcuturedReq(): any {
@@ -172,18 +183,28 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     const roles = this.getRoles
     req = {
       userId: officer.user ? officer.user.userDetails.wid : '',
-      deptId: this.departmentID,
-      deptName: this.departmentName,
-      status: 'DRAFT',
-      // activeList: this.ralist,
-      userName: officer.officerName,
-      userEmail: officer.user ? officer.user.userDetails.email : '',
-      userPosition: officer.position,
       positionDescription: officer.positionDescription,
-      roleCompetencyList: roles,
+      userPosition: officer.position,
       positionId: officer.positionObj.id ? officer.positionObj.id : '',
+      userName: officer.user,
+      userEmail: officer.user ? officer.user.userDetails.email : '',
+
+      // deptId: this.departmentID,
+      // deptName: this.departmentName,
+      // status: 'DRAFT',
+      // activeList: this.ralist,
+
+      roleCompetencyList: roles,
+
+      workOrderId: this.getWorkOrderId
     }
     return req
+  }
+
+  get getWorkOrderId() {
+    if (this.workOrderId) { return this.workOrderId }
+    return null
+
   }
 
   getUserDetails() {
