@@ -1,6 +1,6 @@
+import { WorkallocationService } from './../../../routes/home/services/workallocation.service'
 import {
-  Component, OnInit, Output, EventEmitter, ViewChild,
-  AfterViewInit, OnChanges, SimpleChanges, Inject,
+  Component, OnInit, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges, Inject, Renderer2,
 } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
@@ -9,7 +9,6 @@ import { MatSort } from '@angular/material/sort'
 import * as _ from 'lodash'
 import { Router } from '@angular/router'
 import { ITableData, IColums } from '../interface/interfaces'
-import { UserViewPopUpService } from './ui-user-table-pop-up.services'
 
 interface IUser { fullname: string; email: string, userId: string }
 
@@ -18,7 +17,7 @@ interface IUser { fullname: string; email: string, userId: string }
   templateUrl: './pop-up.component.html',
   styleUrls: ['./pop-up.component.scss'],
 })
-export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnChanges {
+export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
   tableData!: ITableData | undefined
   data!: IUser[] | undefined
   @Output() clicked?: EventEmitter<any>
@@ -34,14 +33,18 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
   isSearched = false
   pageSize = 5
   userData: any
+  departmentName!: string
+  departmentID!: number
+  currentCheckedValue = null;
+  favoriteSeason: string | undefined
   pageSizeOptions = [5, 10, 20]
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   @ViewChild(MatSort, { static: true }) sort?: MatSort
   selection = new SelectionModel<any>(true, [])
 
-  constructor(private userViewPopUpService: UserViewPopUpService, private router: Router,
-              public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>,
-              @Inject(MAT_DIALOG_DATA) public dialogData: any) {
+  constructor(private router: Router, private ren: Renderer2,
+    public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>, private workallocationSrvc: WorkallocationService,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any) {
     this.dataSource = new MatTableDataSource<any>()
     this.actionsClick = new EventEmitter()
     this.clicked = new EventEmitter()
@@ -71,51 +74,28 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
       sortState: 'asc',
       needUserMenus: false,
     }
-    this.userData = [
-      {
-
-        id: 1,
-        workorders: 'Work order - Administration wing',
-        officers: '12',
-        lastupdatedon: '03:30 PM 18 May 2021',
-        lastupdatedby: 'Garima Joshi',
-        publishedon: '03:30 PM 18 May 2021',
-        publishedby: 'Rajesh Agarwal',
-        errors: '11',
-        approval: 'Download',
-        fromdata: 'draft',
-
-      },
-      {
-
-        id: 2,
-        workorders: 'Work order - Finance wing',
-        officers: '32',
-        lastupdatedon: '01:25 PM 18 May 2021',
-        lastupdatedby: 'Manjunatha HS',
-        publishedon: '01:25 PM 18 May 2021',
-        publishedby: 'Manjunatha HS',
-        errors: '5',
-        approval: 'Download',
-        fromdata: 'draft',
-      }
-      ,
-
-    ]
-    this.getAllUserByKey(this.userData)
+    this.getdeptUsers()
+    this.getAllUserByKey()
   }
 
   ngOnChanges(data: SimpleChanges) {
     this.dataSource.data = _.get(data, 'data.currentValue')
     this.length = this.dataSource.data.length
   }
-  ngAfterViewInit() {
-
+  getdeptUsers() {
+    this.workallocationSrvc.getAllUsers().subscribe(res => {
+      this.departmentName = res.deptName
+      this.departmentID = res.id
+    })
   }
   goToWorkAllocation() {
-    this.dialogRef.close()
-    // this.router.navigate([`/app/workallocation/create`])
-    this.router.navigate([`/app/workallocation/drafts`], { queryParams: { status: 'New' } })
+    this.workallocationSrvc.addWAT(this.currentCheckedValue, this.departmentID).subscribe(res => {
+      if (res.result.data.id) {
+        this.dialogRef.close()
+        this.router.navigate([`app/home/workallocation`])
+      }
+    })
+
   }
   applyFilter(filterValue: any) {
     this.isSearched = true
@@ -123,10 +103,8 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
       let fValue = filterValue.trim()
       fValue = filterValue.toLowerCase()
       this.dataSource.filter = fValue
-      this.getAllActiveUsersAPI(fValue)
     } else {
       this.dataSource.filter = ''
-      this.dataSource.data = []
     }
   }
 
@@ -139,32 +117,44 @@ export class WorkAllocationPopUpComponent implements OnInit, AfterViewInit, OnCh
     }
 
   }
-  getAllActiveUsersAPI(searchString: string) {
-    this.userViewPopUpService.getAllUsersByDepartments(searchString).subscribe(res => {
-      this.getAllUserByKey(res)
+  checkState(el: any) {
+
+    setTimeout(() => {
+      if (this.currentCheckedValue && this.currentCheckedValue === el.value) {
+        el.checked = false
+        console.log(el.value)
+        this.ren.removeClass(el['_elementRef'].nativeElement, 'cdk-focused')
+        this.ren.removeClass(el['_elementRef'].nativeElement, 'cdk-program-focused')
+        this.currentCheckedValue = null
+      } else {
+        this.currentCheckedValue = el.value
+      }
     })
-
   }
-  getAllUserByKey(userObj: any) {
-    if (userObj && userObj !== null && userObj !== undefined) {
-      this.dataSource.data = []
-      userObj.forEach((user: any) => {
-        const obj = {
-          workorders: user.workorders,
-          officers: user.officers,
-          lastupdatedon: user.lastupdatedon,
-          lastupdatedby: user.lastupdatedby,
-          errors: user.errors,
-          publishedon: user.publishedon,
-          publishedby: user.publishedby,
-          approval: user.approval,
-        }
-        this.dataSource.data.push(obj)
-        this.dataSource.data = this.dataSource.data.slice()
-      })
-    }
-    return []
+  getAllUserByKey() {
+    const currentStatus = "published"
+    const finalData: any[] = []
+    this.workallocationSrvc.fetchWAT(currentStatus).subscribe(res => {
+      if (res.result.data) {
+        res.result.data.forEach((element: any) => {
+          const watData = {
+            id: element.id,
+            workorders: element.name,
+            officers: "officers",
+            lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
+            lastupdatedby: element.updatedByName,
+            errors: element.errorCount,
+            publishedon: this.workallocationSrvc.getTime(element.createdAt),
+            publishedby: element.createdByName,
+            approval: "Approval",
+            fromdata: currentStatus,
 
+          }
+          finalData.push(watData)
+        })
+      }
+      this.dataSource.data = finalData
+    })
   }
 
   getFinalColumns() {
