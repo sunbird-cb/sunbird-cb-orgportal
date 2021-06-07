@@ -54,7 +54,7 @@ import { CompDetailModule } from './components/comp-details/comp-details.module'
     // AllocationActionsComponent,
     // WatRolePopup,
   ],
-  providers: [WINDOW_PROVIDERS, WatStoreService,],
+  providers: [WINDOW_PROVIDERS, WatStoreService],
   // exports: [DownloadAllocationComponent],
 })
 export class WorkallocationV2Module { }
