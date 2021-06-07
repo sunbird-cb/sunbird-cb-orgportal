@@ -199,11 +199,11 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
           const watData = {
             workorders: element.name,
             officers: "officers",
-            lastupdatedon: element.updatedAt,
-            lastupdatedby: this.getUserByWID(element.updatedBy),
+            lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
+            lastupdatedby: element.updatedByName,
             errors: element.errorCount,
-            publishedon: element.createdAt,
-            publishedby: this.getUserByWID(element.createdBy),
+            publishedon: this.workallocationSrvc.getTime(element.createdAt),
+            publishedby: element.createdByName,
             approval: "Approval",
             fromdata: 'published',
 
