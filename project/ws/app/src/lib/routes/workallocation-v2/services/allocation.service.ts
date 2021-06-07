@@ -11,6 +11,7 @@ const API_END_POINTS = {
   GET_ALL_USERS: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
   USERS: '/apis/protected/v8/workallocation/userSearch',
   SEARCH_COMPETENCY: '/apis/protected/v8/frac/COMPETENCY',
+  GET_ALLOCATEDUSERS: '/apis/protected/v8/workallocation/getWorkOrderById',
 }
 
 @Injectable({
@@ -58,6 +59,10 @@ export class AllocationService {
 
   getAllocationDetails(req: any): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.USERS}`, req)
+  }
+
+  getAllocatedUsers(id: any): Observable<any> {
+    return this.http.get<any>(`${API_END_POINTS.GET_ALLOCATEDUSERS}/${id}`)
   }
 
 }

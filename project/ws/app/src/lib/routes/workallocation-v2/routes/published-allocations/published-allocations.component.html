@@ -10,9 +10,7 @@
           </div> -->
       <div class="flex flex-1 custom">
         <div class="flex-4">
-          <ws-widget-breadcrumbs-org
-            [widgetData]="{titles:[{title:'Work allocation tool', url:'/app/home/workallocation'},
-                              {title:'Published', url:'/app/home/workallocation'},{title:'Work order - Administration wing', url:'none'}] }">
+          <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }">
           </ws-widget-breadcrumbs-org>
         </div>
         <div class="flex-2">
@@ -39,24 +37,24 @@
       <ng-container>
         <div class="margin-top-xsl margin-bottom-xs">
           <div class="flex flex-1 custom">
-            <div class="flex-3">
+            <div class="flex-3" *ngIf="workorderData">
               <ul class="statistics">
                 <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Officers</p>
-                    <p class="mat-subheading-2">3</p>
+                    <p class="mat-subheading-2">{{workorderData.users.length}}</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div>
                     <p class="mat-body-3">Roles</p>
-                    <p class="mat-subheading-2">1</p>
+                    <p class="mat-subheading-2">0</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div>
                     <p class="mat-body-3">Activities</p>
-                    <p class="mat-subheading-2">15</p>
+                    <p class="mat-subheading-2">0</p>
                   </div>
                 </li>
               </ul>
@@ -65,8 +63,8 @@
               <div class="search margin-top-l">
                 <div class=rsearch>
                   <mat-icon class="color-60 search-icon">search</mat-icon>
-                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal"
-                    [(ngModel)]="term" placeholder="Search">
+                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal" [(ngModel)]="term"
+                    placeholder="Search">
                 </div>
               </div>
             </div>
@@ -81,15 +79,17 @@
             <th>Submit to</th>
             <th>Submission from</th>
           </tr>
-          <tr *ngFor="let d of data" class="data-row">
+          <tr *ngFor="let d of data | filter: term | paginate: { itemsPerPage: 5, currentPage: p, totalItems: data.length }"
+            class="data-row">
             <td aria-rowspan="d.roles.length+1">
               <div class="initials">
-                {{d.firstname.charAt(0).toUpperCase()}} {{d.surname.charAt(0).toUpperCase()}}
+                <!-- {{d.firstname.charAt(0).toUpperCase()}} {{d.surname.charAt(0).toUpperCase()}} -->
+                {{d.userName.charAt(0).toUpperCase()}}
               </div>
               <div>
-                <b class="username">{{d.fullname}}</b>
+                <b class="username">{{d.userName}}</b>
                 <div>
-                  {{ d.position }}
+                  {{ d.userPosition }}
                 </div>
                 <div class="margin-top-s margin-bottom-s">
                   <mat-icon>more_horiz_outlined</mat-icon>
@@ -114,14 +114,12 @@
                               <span>{{a.name}}</span>
                             </td>
                             <td class="submittd">
-                              <span class="initials" *ngIf="a.submitToInt">{{a.submitToInt}}</span>
-                              {{a.submitTo ||
-                              a.submitToOther}}
+                              <span class="initials" *ngIf="a.submittedFromId">{{a.submittedFromName.charAt(0).toUpperCase()}}</span>
+                              {{a.submittedFromName}}
                             </td>
                             <td class="submittd">
-                              <span class="initials" *ngIf="a.submitFromInt">{{a.submitFromInt}}</span>
-                              {{a.submitFrom ||
-                              a.submitFromOther}}
+                              <span class="initials" *ngIf="a.submittedFromId">{{a.submittedFromName.charAt(0).toUpperCase()}}</span>
+                              {{a.submittedFromName}}
                             </td>
                           </tr>
                         </table>
@@ -133,10 +131,10 @@
             </td>
           </tr>
         </table>
-        <!-- <div class="custompagination">
-              <pagination-controls (pageChange)="p = $event"></pagination-controls>
-              <div class="totalcount">of {{data.length}}</div>
-            </div> -->
+        <div class="custompagination">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          <div class="totalcount">of {{data.length}}</div>
+        </div>
 
         <div *ngIf="data && data.length === 0" class="margin-left-xs margin-l font-medium ">
           No data found
@@ -144,17 +142,16 @@
 
         <mat-menu #cardMenu="matMenu">
           <ng-template matMenuContent let-rowData="data">
-            <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item
-              name="channel-analytics-button" class="ws-mat-primary-text downlaod-btn" i18n-aria-label
-              aria-label="Analytics">
+            <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item name="channel-analytics-button"
+              class="ws-mat-primary-text downlaod-btn" i18n-aria-label aria-label="Analytics">
               <mat-icon>cloud_download</mat-icon> <span>Download</span>
             </button>
             <!-- <button (click)="buttonClick('Print',rowData)"mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
                         aria-label="Analytics">
                         <mat-icon>print</mat-icon> <span>Print</span>
                     </button> -->
-            <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button"
-              class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
+            <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text"
+              i18n-aria-label aria-label="Analytics">
               <mat-icon>archive</mat-icon> <span>Archive allocation</span>
             </button>
           </ng-template>

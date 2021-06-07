@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { IWarnError } from '../../models/warn-error.model'
 // tslint:disable
 import _ from 'lodash'
+import { WatStoreService } from '../../services/wat.store.service'
 // tslint:enable
 
 @Component({
@@ -10,64 +11,124 @@ import _ from 'lodash'
   styleUrls: ['./assistant-message-card.component.scss'],
 })
 
-export class AssistantMessageCardComponent implements OnInit {
-  @Input() dataStructure: any
+export class AssistantMessageCardComponent implements OnInit, OnDestroy {
+  dataStructure: any = {}
+  private activitySubscription: any
+  private groupSubscription: any
+  private compDetailsSubscription: any
+  private officerFormSubscription: any
+  validations!: any
 
-  constructor() {
+  defaultProgressValues = {
+    officer: {
+      weight: 30,
+      controls: {
+        officerName: 33.33,
+        position: 33.33,
+        positionDescription: 33.33,
+      },
+    },
+    roles: {
+      weight: 45,
+      minRole: 1,
+      minRolePercent: 30,
+      minActivity: 1,
+      minActivityPercent: 30,
+      controls: {
+        label: 10,
+        description: 10,
+        activityDescription: 10,
+        activitySubmitTo: 10,
+      },
+    },
+    competecy: {
+      weight: 15,
+      minCompetency: 1,
+      minCompetencyPercent: 50,
+      controls: {
+        label: 25,
+        description: 25,
+      },
+    },
+    competecyDetails: {
+      weight: 10,
+      controls: {
+        level: 33.33,
+        type: 33.33,
+        area: 33.33,
+      },
+    },
+  }
+
+  constructor(private watStore: WatStoreService) {
   }
 
   ngOnInit() {
+    this.fetchFormsData()
+  }
+  // This method is used to fetch the form data from all children components
+  fetchFormsData() {
+    this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(activities => {
+      if (activities.length > 0) {
+        this.dataStructure.activityGroups = activities
+        this.validationsCombined()
+      }
+    })
+    this.groupSubscription = this.watStore.getcompetencyGroup.subscribe(comp => {
+      if (comp.length > 0) {
+        this.dataStructure.compGroups = comp
+        this.validationsCombined()
+      }
+    })
+
+    this.compDetailsSubscription = this.watStore.get_compGrp.subscribe((comp: any) => {
+      if (comp.competencyList && comp.competencyList.length > 0) {
+        this.dataStructure.compDetails = comp.competencyList
+        this.validationsCombined()
+      }
+    })
+
+    this.officerFormSubscription = this.watStore.getOfficerGroup.subscribe(officerFormData => {
+      this.dataStructure.officerFormData = officerFormData
+      this.validationsCombined()
+    })
+  }
+  getColor(currentProgress: any) {
+    return currentProgress > 40 ? currentProgress > 70 ? 'accent' : 'primary' : 'warn'
+  }
+  get currentProgress(): number {
+    let progress = 0
+    progress = this.calculatePercentage()
+    return progress
   }
 
-  get allWarning() {
-    let warnings: IWarnError[] = []
-    let calculatedWarn: IWarnError[] = []
-    let calculatedWarn2: IWarnError[] = []
-    if (this.dataStructure.activityGroups) {
-      calculatedWarn = this.calculateWarn(this.dataStructure.activityGroups)
-    }
+  public validationsCombined() {
+    let allMessages: IWarnError[] = []
+
+    allMessages = [...this.individualValidations()]
+    this.validations = _.groupBy(allMessages, '_type')
+  }
+
+  public individualValidations() {
+    let validations: IWarnError[] = []
+    let officerValidations: IWarnError[] = []
+    let activityValidations: IWarnError[] = []
+    let competencyValidations: IWarnError[] = []
+    let compDetailsValidations: IWarnError[] = []
     if (this.dataStructure.officerFormData) {
-      calculatedWarn2 = this.calculateOfficerWarning(this.dataStructure.officerFormData)
-    }
-    warnings = _.union(calculatedWarn, calculatedWarn2)
-    return warnings
-  }
-  calculateWarn(data: any[]): IWarnError[] {
-    const result: IWarnError[] = []
-    const grpDescEmpty = Math.max(_.filter(data, () => ['groupDescription', 'Untited role']).length - 1, 0)
-    if (grpDescEmpty) {
-      result.push({ _type: 'warning', type: 'role', counts: grpDescEmpty, label: 'Role description missing' })
-    }
-    // const unmapedActivities = _.size(_.get(_.first(data), 'activities'))
-    // if (unmapedActivities) {
-    //   result.push({ _type: 'warning', type: 'activity', counts: unmapedActivities, label: 'Unmapped activities' })
-    // }
-
-    return result
-  }
-
-  calculateOfficerWarning(data: any): IWarnError[] {
-    const result: IWarnError[] = []
-    // console.log('data------', data)
-    if (data && data.positionDescription === '') {
-      result.push({ _type: 'warning', type: 'officer', counts: 0, label: 'Position description missing' })
-    }
-    return result
-  }
-
-  get allErrors() {
-    let errors: IWarnError[] = []
-    let calculatedErr: IWarnError[] = []
-    let calculatedErr2: IWarnError[] = []
-    if (this.dataStructure.officerFormData) {
-      calculatedErr = (this.calculateOfficerErrors(this.dataStructure.officerFormData))
+      officerValidations = this.calculateOfficerErrors(this.dataStructure.officerFormData)
     }
     if (this.dataStructure.activityGroups) {
-      calculatedErr2 = this.calculateActivityError(this.dataStructure.activityGroups)
+      activityValidations = this.calculateActivityError(this.dataStructure.activityGroups)
     }
-
-    errors = _.union(calculatedErr, calculatedErr2)
-    return errors
+    if (this.dataStructure.compGroups) {
+      competencyValidations = this.calculateCompError(this.dataStructure.compGroups)
+    }
+    if (this.dataStructure.compDetails) {
+      compDetailsValidations = this.calculateCompDetailsError(this.dataStructure.compDetails)
+    }
+    validations = _.union(officerValidations, activityValidations, competencyValidations, compDetailsValidations)
+    return validations
   }
 
   calculateOfficerErrors(data: any): IWarnError[] {
@@ -79,16 +140,298 @@ export class AssistantMessageCardComponent implements OnInit {
     if (data && data.position === '' && (data.officerName !== '' || data.positionDescription !== '')) {
       result.push({ _type: 'error', type: 'officer', counts: 0, label: 'Postion missing' })
     }
+    if (data && data.positionDescription === '') {
+      result.push({ _type: 'warning', type: 'officer', counts: 0, label: 'Position description missing' })
+    }
     return result
   }
 
   calculateActivityError(data: any): IWarnError[] {
     const result: IWarnError[] = []
-    const unmapedActivities = _.size(_.get(_.first(data), 'activities'))
-    if (unmapedActivities) {
-      result.push({ _type: 'warning', type: 'activity', counts: unmapedActivities, label: 'Unmapped activities' })
+    const unmapedActivitiesCount = _.size(_.get(_.first(data), 'activities'))
+    if (unmapedActivitiesCount) {
+      result.push({ _type: 'error', type: 'activity', counts: unmapedActivitiesCount, label: 'Unmapped activities' })
+    }
+    const unmapedActivities = _.get(_.first(data), 'activities')
+    let noActivityDescCount = 0
+    let noAssignedToCount = 0
+    unmapedActivities.map((ua: any) => {
+      if (ua.activityDescription === '') {
+        noActivityDescCount += 1
+      }
+      if (ua.assignedTo === '') {
+        noAssignedToCount += 1
+      }
+    })
+    // excluding unmapped section, considering all other roles(each row) and activities inside
+    const roles = _.without(data, _.first(data))
+    let noActivitiesCount = 0
+    // let noAssignedToCount = 0
+    // let noActivityDescCount = 0
+    let roleNameCount = 0
+    let roleDescriptionCount = 0
+    roles.map((role: any) => {
+      const roleActivities = _.get(role, 'activities')
+      if (!role.groupName) {
+        roleNameCount += 1
+      }
+      if (role.groupName && typeof (role.groupName) === 'string' && role.groupName.toLowerCase() === 'Untitled role'.toLowerCase()) {
+        roleNameCount += 1
+      }
+      if (!role.groupDescription) {
+        roleDescriptionCount += 1
+      }
+      if (roleActivities && !roleActivities.length) {
+        noActivitiesCount += 1
+      } else {
+        roleActivities.map((ra: any) => {
+          if (!ra.activityDescription) {
+            noActivityDescCount += 1
+          }
+          if (!ra.assignedTo) {
+            noAssignedToCount += 1
+          }
+        })
+      }
+    })
+    if (noAssignedToCount) {
+      result.push({ _type: 'error', type: 'activity', counts: noAssignedToCount, label: 'Submit to is missing' })
+    }
+    if (noActivityDescCount) {
+      result.push({ _type: 'error', type: 'activity', counts: noActivityDescCount, label: 'Activity description missing' })
+    }
+    if (noActivitiesCount) {
+      result.push({ _type: 'error', type: 'role', counts: noActivitiesCount, label: 'No activities mapped' })
+    }
+    if (roleNameCount) {
+      result.push({ _type: 'error', type: 'role', counts: roleNameCount, label: 'Role label missing' })
+    }
+    if (roleDescriptionCount) {
+      result.push({ _type: 'warning', type: 'role', counts: roleDescriptionCount, label: 'Role description missing' })
     }
     return result
+  }
+
+  calculateCompError(data: any): IWarnError[] {
+    const result: IWarnError[] = []
+    const unmapedCompsCount = _.size(_.get(_.first(data), 'competincies'))
+    if (unmapedCompsCount) {
+      result.push({ _type: 'error', type: 'competency', counts: unmapedCompsCount, label: 'Unmapped competencies' })
+    }
+    const unmapedComps = _.get(_.first(data), 'competincies')
+    let noCompDescCount = 0
+    let noCompLableCount = 0
+    unmapedComps.map((uc: any) => {
+      if (!uc.compDescription) {
+        noCompDescCount += 1
+      }
+      if (!uc.compName) {
+        noCompLableCount += 1
+      }
+    })
+    // excluding unmapped section, considering all other roles(each row) and competencies inside
+    const competencies = _.without(data, _.first(data))
+    let noCompCount = 0
+    // let compLableCount = 0
+    // let compDescriptionCount = 0
+    competencies.map((comp: any) => {
+      const roleComps = _.get(comp, 'competincies')
+      if (roleComps && !roleComps.length) {
+        noCompCount += 1
+      } else {
+        roleComps.map((rc: any) => {
+          if (!rc.compDescription) {
+            noCompDescCount += 1
+          }
+          if (!rc.compName) {
+            noCompLableCount += 1
+          }
+        })
+      }
+    })
+    if (noCompCount) {
+      result.push({ _type: 'warning', type: 'competency', counts: noCompCount, label: 'No competencies mapped' })
+    }
+    if (noCompLableCount) {
+      result.push({ _type: 'error', type: 'competency', counts: noCompLableCount, label: 'Competency label missing' })
+    }
+    if (noCompDescCount) {
+      result.push({ _type: 'warning', type: 'competency', counts: noCompDescCount, label: 'Competency description missing' })
+    }
+    return result
+  }
+
+  calculateCompDetailsError(data: any): IWarnError[] {
+    const result: IWarnError[] = []
+    if (data && data.length) {
+      let noLevelCount = 0
+      let noAreaCount = 0
+      let noTypeCount = 0
+      data.map((comp: any) => {
+        if (comp.compLevel === '') {
+          noLevelCount += 1
+        }
+        if (comp.compType === '') {
+          noTypeCount += 1
+        }
+        if (comp.compArea === '') {
+          noAreaCount += 1
+        }
+      })
+      if (noLevelCount) {
+        result.push({ _type: 'warning', type: 'competency', counts: noLevelCount, label: 'Competency level missing' })
+      }
+      if (noAreaCount) {
+        result.push({ _type: 'warning', type: 'competency', counts: noAreaCount, label: 'Competency area missing' })
+      }
+      if (noTypeCount) {
+        result.push({ _type: 'warning', type: 'competency', counts: noTypeCount, label: 'Competency type missing' })
+      }
+    }
+    return result
+  }
+
+  calculatePercentage() {
+    let progress = 0
+    let officerProgress = 0
+    let activityProgress = 0
+    let competencyProgress = 0
+    let compDetailsProgress = 0
+    if (this.dataStructure.officerFormData) {
+      officerProgress = this.calculateOfficerProgress(this.dataStructure.officerFormData)
+      officerProgress = Math.ceil(officerProgress * (this.defaultProgressValues.officer.weight / 100))
+    }
+    if (this.dataStructure.activityGroups) {
+      activityProgress = this.calculateActivityProgress(this.dataStructure.activityGroups)
+      activityProgress = Math.ceil(activityProgress * (this.defaultProgressValues.roles.weight / 100))
+    }
+    if (this.dataStructure.compGroups) {
+      competencyProgress = this.calculateCompProgress(this.dataStructure.compGroups)
+      competencyProgress = Math.ceil(competencyProgress * (this.defaultProgressValues.competecy.weight / 100))
+    }
+    if (this.dataStructure.compDetails) {
+      compDetailsProgress = this.calculateCompDetailsProgress(this.dataStructure.compDetails)
+      compDetailsProgress = Math.ceil(compDetailsProgress * (this.defaultProgressValues.competecyDetails.weight / 100))
+    }
+    try {
+      progress = Math.ceil(officerProgress +
+        activityProgress +
+        competencyProgress +
+        compDetailsProgress) || 0
+    } catch (e) {
+      // tslint:disable-next-line: no-console
+      console.log('ERROR in calculating progress')
+      return 0
+    }
+
+    return progress
+  }
+
+  // getRelativePercent(field: string, progress: number) {
+  //   return Math.ceil(
+  //     this.defaultProgressValues[field].
+  //   )
+  // }
+
+  calculateOfficerProgress(data: any): number {
+    let progress = 0
+    if (data && data.officerName) {
+      progress += this.defaultProgressValues.officer.controls.officerName
+    }
+    if (data && data.position) {
+      progress += this.defaultProgressValues.officer.controls.position
+    }
+    if (data && data.positionDescription) {
+      progress += this.defaultProgressValues.officer.controls.positionDescription
+    }
+    return Math.ceil(progress) >= 100 ? 100 : Math.ceil(progress)
+  }
+  calculateActivityProgress(data: any): number {
+    let progress = 0
+    // excluding unmapped section, considering all other roles(each row) and activities inside
+    const roles = _.without(data, _.first(data))
+    if (roles.length >= this.defaultProgressValues.roles.minRole) {
+      progress += this.defaultProgressValues.roles.minRolePercent
+    }
+    const rolePercentList = roles.map((role: any) => {
+      let rolePercent = 0
+      let roleActivityPercentList: any[] = []
+      if (
+        role.groupName &&
+        typeof (role.groupName) === 'string' &&
+        role.groupName.toLowerCase() !== 'Untitled role'.toLowerCase()
+      ) {
+        rolePercent += this.defaultProgressValues.roles.controls.label
+      }
+      if (role.groupDescription) {
+        rolePercent += this.defaultProgressValues.roles.controls.description
+      }
+      const roleActivities = _.get(role, 'activities')
+      if (roleActivities && roleActivities.length >= this.defaultProgressValues.roles.minActivity) {
+        rolePercent += this.defaultProgressValues.roles.minActivityPercent
+        roleActivityPercentList = roleActivities.map((ra: any) => {
+          let roleActivityPercent = 0
+          if (ra.activityDescription) {
+            roleActivityPercent += this.defaultProgressValues.roles.controls.activityDescription
+          }
+          if (ra.assignedTo) {
+            roleActivityPercent += this.defaultProgressValues.roles.controls.activitySubmitTo
+          }
+          return roleActivityPercent
+        })
+        return rolePercent + _.max(roleActivityPercentList)
+      }
+    })
+    return Math.ceil(progress + (_.max(rolePercentList) || 0)) >= 100 ? 100 : Math.ceil(progress + (_.max(rolePercentList) || 0))
+  }
+  calculateCompProgress(data: any): number {
+    const progress = 0
+    // excluding unmapped section, considering all other roles(each row) and competencies inside
+    const competencies = _.without(data, _.first(data))
+    const compPercentList = competencies.map((comp: any) => {
+      let compPercent = 0
+      let roleCompPercentList: any[] = []
+      const roleComps = _.get(comp, 'competincies')
+      if (roleComps && roleComps.length >= this.defaultProgressValues.competecy.minCompetency) {
+        compPercent += this.defaultProgressValues.competecy.minCompetencyPercent
+      }
+      roleCompPercentList = roleComps.map((rc: any) => {
+        let roleCompPercent = 0
+        if (rc.compDescription) {
+          roleCompPercent += this.defaultProgressValues.competecy.controls.description
+        }
+        if (rc.compName) {
+          roleCompPercent += this.defaultProgressValues.competecy.controls.label
+        }
+        return roleCompPercent
+      })
+      return compPercent + _.max(roleCompPercentList)
+    })
+    return Math.ceil(progress + (_.max(compPercentList) || 0)) >= 100 ? 100 : Math.ceil(progress + (_.max(compPercentList) || 0))
+  }
+  calculateCompDetailsProgress(data: any): number {
+    let progress = 0
+    if (data && data.length) {
+      data.map((comp: any) => {
+        if (comp.compLevel) {
+          progress += this.defaultProgressValues.competecyDetails.controls.level
+        }
+        if (comp.compType) {
+          progress += this.defaultProgressValues.competecyDetails.controls.type
+        }
+        if (comp.compArea) {
+          progress += this.defaultProgressValues.competecyDetails.controls.area
+        }
+      })
+    }
+    return Math.ceil(progress) >= 100 ? 100 : Math.ceil(progress)
+  }
+
+  ngOnDestroy() {
+    this.activitySubscription.unsubscribe()
+    this.groupSubscription.unsubscribe()
+    this.officerFormSubscription.unsubscribe()
+    this.compDetailsSubscription.unsubscribe()
   }
 
 }
