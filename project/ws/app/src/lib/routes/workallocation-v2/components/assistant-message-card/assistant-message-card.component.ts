@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { IWarnError } from '../../models/warn-error.model'
 // tslint:disable
 import _ from 'lodash'
+import { WatStoreService } from '../../services/wat.store.service'
 // tslint:enable
 
 @Component({
@@ -10,8 +11,14 @@ import _ from 'lodash'
   styleUrls: ['./assistant-message-card.component.scss'],
 })
 
-export class AssistantMessageCardComponent implements OnInit {
-  @Input() dataStructure: any
+export class AssistantMessageCardComponent implements OnInit, OnDestroy {
+  dataStructure: any = {}
+  private activitySubscription: any
+  private groupSubscription: any
+  private compDetailsSubscription: any
+  private officerFormSubscription: any
+  validations!: any
+
   defaultProgressValues = {
     officer: {
       weight: 30,
@@ -22,19 +29,69 @@ export class AssistantMessageCardComponent implements OnInit {
       },
     },
     roles: {
-      weight: 30,
+      weight: 45,
+      minRole: 1,
+      minRolePercent: 30,
+      minActivity: 1,
+      minActivityPercent: 30,
       controls: {
-        officer: 33.33,
-        offiver: 33.33,
-        positionDescription: 33.33,
+        label: 10,
+        description: 10,
+        activityDescription: 10,
+        activitySubmitTo: 10,
+      },
+    },
+    competecy: {
+      weight: 15,
+      minCompetency: 1,
+      minCompetencyPercent: 50,
+      controls: {
+        label: 25,
+        description: 25,
+      },
+    },
+    competecyDetails: {
+      weight: 10,
+      controls: {
+        level: 33.33,
+        type: 33.33,
+        area: 33.33,
       },
     },
   }
 
-  constructor() {
+  constructor(private watStore: WatStoreService) {
   }
 
   ngOnInit() {
+    this.fetchFormsData()
+  }
+  // This method is used to fetch the form data from all children components
+  fetchFormsData() {
+    this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(activities => {
+      if (activities.length > 0) {
+        this.dataStructure.activityGroups = activities
+        this.validationsCombined()
+      }
+    })
+    this.groupSubscription = this.watStore.getcompetencyGroup.subscribe(comp => {
+      if (comp.length > 0) {
+        this.dataStructure.compGroups = comp
+        this.validationsCombined()
+      }
+    })
+
+    this.compDetailsSubscription = this.watStore.get_compGrp.subscribe((comp: any) => {
+      if (comp.competencyList && comp.competencyList.length > 0) {
+        this.dataStructure.compDetails = comp.competencyList
+        this.validationsCombined()
+      }
+    })
+
+    this.officerFormSubscription = this.watStore.getOfficerGroup.subscribe(officerFormData => {
+      this.dataStructure.officerFormData = officerFormData
+      this.validationsCombined()
+    })
   }
   getColor(currentProgress: any) {
     return currentProgress > 40 ? currentProgress > 70 ? 'accent' : 'primary' : 'warn'
@@ -45,13 +102,14 @@ export class AssistantMessageCardComponent implements OnInit {
     return progress
   }
 
-  get validations() {
+  public validationsCombined() {
     let allMessages: IWarnError[] = []
-    allMessages = [...this.individualValidations]
-    return _.groupBy(allMessages, '_type')
+
+    allMessages = [...this.individualValidations()]
+    this.validations = _.groupBy(allMessages, '_type')
   }
 
-  get individualValidations() {
+  public individualValidations() {
     let validations: IWarnError[] = []
     let officerValidations: IWarnError[] = []
     let activityValidations: IWarnError[] = []
@@ -182,10 +240,10 @@ export class AssistantMessageCardComponent implements OnInit {
         noCompCount += 1
       } else {
         roleComps.map((rc: any) => {
-          if (rc.compDescription === '') {
+          if (!rc.compDescription) {
             noCompDescCount += 1
           }
-          if (rc.compName === '') {
+          if (!rc.compName) {
             noCompLableCount += 1
           }
         })
@@ -205,11 +263,11 @@ export class AssistantMessageCardComponent implements OnInit {
 
   calculateCompDetailsError(data: any): IWarnError[] {
     const result: IWarnError[] = []
-    if (data && data.compDetails && data.compDetails.length) {
+    if (data && data.length) {
       let noLevelCount = 0
       let noAreaCount = 0
       let noTypeCount = 0
-      data.compDetails.map((comp: any) => {
+      data.map((comp: any) => {
         if (comp.compLevel === '') {
           noLevelCount += 1
         }
@@ -219,22 +277,161 @@ export class AssistantMessageCardComponent implements OnInit {
         if (comp.compArea === '') {
           noAreaCount += 1
         }
-        if (noLevelCount) {
-          result.push({ _type: 'warning', type: 'competency', counts: noLevelCount, label: 'Competency level missing' })
-        }
-        if (noAreaCount) {
-          result.push({ _type: 'warning', type: 'competency', counts: noAreaCount, label: 'Competency area missing' })
-        }
-        if (noTypeCount) {
-          result.push({ _type: 'warning', type: 'competency', counts: noTypeCount, label: 'Competency type missing' })
-        }
       })
+      if (noLevelCount) {
+        result.push({ _type: 'warning', type: 'competency', counts: noLevelCount, label: 'Competency level missing' })
+      }
+      if (noAreaCount) {
+        result.push({ _type: 'warning', type: 'competency', counts: noAreaCount, label: 'Competency area missing' })
+      }
+      if (noTypeCount) {
+        result.push({ _type: 'warning', type: 'competency', counts: noTypeCount, label: 'Competency type missing' })
+      }
     }
     return result
   }
 
   calculatePercentage() {
-    return 30
+    let progress = 0
+    let officerProgress = 0
+    let activityProgress = 0
+    let competencyProgress = 0
+    let compDetailsProgress = 0
+    if (this.dataStructure.officerFormData) {
+      officerProgress = this.calculateOfficerProgress(this.dataStructure.officerFormData)
+      officerProgress = Math.ceil(officerProgress * (this.defaultProgressValues.officer.weight / 100))
+    }
+    if (this.dataStructure.activityGroups) {
+      activityProgress = this.calculateActivityProgress(this.dataStructure.activityGroups)
+      activityProgress = Math.ceil(activityProgress * (this.defaultProgressValues.roles.weight / 100))
+    }
+    if (this.dataStructure.compGroups) {
+      competencyProgress = this.calculateCompProgress(this.dataStructure.compGroups)
+      competencyProgress = Math.ceil(competencyProgress * (this.defaultProgressValues.competecy.weight / 100))
+    }
+    if (this.dataStructure.compDetails) {
+      compDetailsProgress = this.calculateCompDetailsProgress(this.dataStructure.compDetails)
+      compDetailsProgress = Math.ceil(compDetailsProgress * (this.defaultProgressValues.competecyDetails.weight / 100))
+    }
+    try {
+      progress = Math.ceil(officerProgress +
+        activityProgress +
+        competencyProgress +
+        compDetailsProgress) || 0
+    } catch (e) {
+      // tslint:disable-next-line: no-console
+      console.log('ERROR in calculating progress')
+      return 0
+    }
+
+    return progress
+  }
+
+  // getRelativePercent(field: string, progress: number) {
+  //   return Math.ceil(
+  //     this.defaultProgressValues[field].
+  //   )
+  // }
+
+  calculateOfficerProgress(data: any): number {
+    let progress = 0
+    if (data && data.officerName) {
+      progress += this.defaultProgressValues.officer.controls.officerName
+    }
+    if (data && data.position) {
+      progress += this.defaultProgressValues.officer.controls.position
+    }
+    if (data && data.positionDescription) {
+      progress += this.defaultProgressValues.officer.controls.positionDescription
+    }
+    return Math.ceil(progress) >= 100 ? 100 : Math.ceil(progress)
+  }
+  calculateActivityProgress(data: any): number {
+    let progress = 0
+    // excluding unmapped section, considering all other roles(each row) and activities inside
+    const roles = _.without(data, _.first(data))
+    if (roles.length >= this.defaultProgressValues.roles.minRole) {
+      progress += this.defaultProgressValues.roles.minRolePercent
+    }
+    const rolePercentList = roles.map((role: any) => {
+      let rolePercent = 0
+      let roleActivityPercentList: any[] = []
+      if (
+        role.groupName &&
+        typeof (role.groupName) === 'string' &&
+        role.groupName.toLowerCase() !== 'Untitled role'.toLowerCase()
+      ) {
+        rolePercent += this.defaultProgressValues.roles.controls.label
+      }
+      if (role.groupDescription) {
+        rolePercent += this.defaultProgressValues.roles.controls.description
+      }
+      const roleActivities = _.get(role, 'activities')
+      if (roleActivities && roleActivities.length >= this.defaultProgressValues.roles.minActivity) {
+        rolePercent += this.defaultProgressValues.roles.minActivityPercent
+        roleActivityPercentList = roleActivities.map((ra: any) => {
+          let roleActivityPercent = 0
+          if (ra.activityDescription) {
+            roleActivityPercent += this.defaultProgressValues.roles.controls.activityDescription
+          }
+          if (ra.assignedTo) {
+            roleActivityPercent += this.defaultProgressValues.roles.controls.activitySubmitTo
+          }
+          return roleActivityPercent
+        })
+        return rolePercent + _.max(roleActivityPercentList)
+      }
+    })
+    return Math.ceil(progress + (_.max(rolePercentList) || 0)) >= 100 ? 100 : Math.ceil(progress + (_.max(rolePercentList) || 0))
+  }
+  calculateCompProgress(data: any): number {
+    const progress = 0
+    // excluding unmapped section, considering all other roles(each row) and competencies inside
+    const competencies = _.without(data, _.first(data))
+    const compPercentList = competencies.map((comp: any) => {
+      let compPercent = 0
+      let roleCompPercentList: any[] = []
+      const roleComps = _.get(comp, 'competincies')
+      if (roleComps && roleComps.length >= this.defaultProgressValues.competecy.minCompetency) {
+        compPercent += this.defaultProgressValues.competecy.minCompetencyPercent
+      }
+      roleCompPercentList = roleComps.map((rc: any) => {
+        let roleCompPercent = 0
+        if (rc.compDescription) {
+          roleCompPercent += this.defaultProgressValues.competecy.controls.description
+        }
+        if (rc.compName) {
+          roleCompPercent += this.defaultProgressValues.competecy.controls.label
+        }
+        return roleCompPercent
+      })
+      return compPercent + _.max(roleCompPercentList)
+    })
+    return Math.ceil(progress + (_.max(compPercentList) || 0)) >= 100 ? 100 : Math.ceil(progress + (_.max(compPercentList) || 0))
+  }
+  calculateCompDetailsProgress(data: any): number {
+    let progress = 0
+    if (data && data.length) {
+      data.map((comp: any) => {
+        if (comp.compLevel) {
+          progress += this.defaultProgressValues.competecyDetails.controls.level
+        }
+        if (comp.compType) {
+          progress += this.defaultProgressValues.competecyDetails.controls.type
+        }
+        if (comp.compArea) {
+          progress += this.defaultProgressValues.competecyDetails.controls.area
+        }
+      })
+    }
+    return Math.ceil(progress) >= 100 ? 100 : Math.ceil(progress)
+  }
+
+  ngOnDestroy() {
+    this.activitySubscription.unsubscribe()
+    this.groupSubscription.unsubscribe()
+    this.officerFormSubscription.unsubscribe()
+    this.compDetailsSubscription.unsubscribe()
   }
 
 }

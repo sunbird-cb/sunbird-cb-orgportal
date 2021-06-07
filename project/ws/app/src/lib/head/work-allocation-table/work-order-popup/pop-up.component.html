@@ -10,14 +10,15 @@
                 </div>
 
                 <span style="margin: 35px 10px 0 35px;">-</span>
-                <input class="sinput-2" type="Standard" label="" (input)="'Work order'"
-                    placeholder="Type the name here">
+                <input class="sinput-2" type="Standard" [(ngModel)]="currentCheckedValue"
+                    placeholder="Type the name here" required>
             </div>
 
         </div>
         <div style="margin-top: 30px; margin-left: 20px;">
             <h4>Copy from a published work order (optional)</h4>
-            <input class="sinput" type="Standard" label="" placeholder="Search">
+            <input class="sinput" type="Standard" label="" placeholder="Search"
+                (input)="applyFilter($event.target.value)">
         </div>
 
 
@@ -33,7 +34,7 @@
                         <div innerHTML="{{element[col.key]}}"></div>
                     </span>
                     <span *ngIf="!col.isList" class="textclass mat-body-2">
-                        <mat-radio-button (click)="buttonClick(element.name,element)"
+                        <mat-radio-button #button (click)="checkState(button)" [value]="element[col.key]"
                             *ngIf="col.displayName==='Work orders'">
                         </mat-radio-button> {{element[col.key]}} {{col.isList}}
                     </span>
@@ -55,17 +56,22 @@
             <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection.toggle(row); onRowClick(row)">
             </mat-row>
         </mat-table>
-        <div class="no-information-found" *ngIf="dataSource.filteredData.length===0 && isSearched">No user information
-            found
+        <div class="no-information-found" *ngIf="dataSource.filteredData.length===0 && isSearched">No published work
+            order found
         </div>
     </div>
     <mat-dialog-actions align="end" class="mb-0-imp">
         <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display">
             <span class="ws-mat-default-text" i18n>Cancel</span>
         </button>
-        <button mat-raised-button type="button" class="ws-mat-primary-background flex-auto-display"
-            (click)="goToWorkAllocation()">
+        <button mat-raised-button type="button" *ngIf="!currentCheckedValue" [disabled]="!currentCheckedValue"
+            class="ws-mat-primary-background flex-auto-display" (click)="goToWorkAllocation()">
             <span class="text-white" i18n>Create blank work order</span>
+        </button>
+
+        <button mat-raised-button type="button" *ngIf="currentCheckedValue" [disabled]="!currentCheckedValue"
+            class="ws-mat-primary-background flex-auto-display" (click)="goToWorkAllocation()">
+            <span class="text-white" i18n>Create work order</span>
         </button>
 
     </mat-dialog-actions>

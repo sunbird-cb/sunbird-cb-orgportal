@@ -65,37 +65,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       sortState: 'asc',
       needUserMenus: true,
     }
-    this.userslist = [
-      {
-        allocationDetails: {
-          id: 1,
-          workorders: "Work order - Administration wing",
-          officers: "12",
-          lastupdatedon: "03:30 PM 18 May 2021",
-          lastupdatedby: "Garima Joshi",
-          publishedon: "03:30 PM 18 May 2021",
-          publishedby: "Rajesh Agarwal",
-          errors: "11",
-          approval: "Download",
-          fromdata: 'draft',
-        }
-      },
-      {
-        allocationDetails: {
-          id: 2,
-          workorders: "Work order - Finance wing",
-          officers: "32",
-          lastupdatedon: "01:25 PM 18 May 2021",
-          lastupdatedby: "Manjunatha HS",
-          publishedon: "01:25 PM 18 May 2021",
-          publishedby: "Manjunatha HS",
-          errors: "5",
-          approval: "Download",
-          fromdata: 'draft',
-        }
-      },
-
-    ]
     this.filter("Draft")
   }
 
@@ -175,63 +144,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
         key: "lastupdatedby"
       }
       this.tabledata['columns'][4] = { displayName: 'Errors', key: 'errors' }
-
     }
-    const activeUsersData: any[] = []
-    const archiveUsersData: any[] = []
-    const draftUsersData: any[] = []
-    if (this.userslist && this.userslist.length > 0) {
-      this.userslist.forEach((user: any) => {
-        if (key === 'Published') {
-          if (user.allocationDetails.id !== undefined) {
-            activeUsersData.push({
-              workorders: user.allocationDetails.workorders,
-              officers: user.allocationDetails.officers,
-              lastupdatedon: user.allocationDetails.lastupdatedon,
-              lastupdatedby: user.allocationDetails.lastupdatedby,
-              errors: user.allocationDetails.errors,
-              publishedon: user.allocationDetails.publishedon,
-              publishedby: user.allocationDetails.publishedby,
-              approval: user.allocationDetails.approval,
-              fromdata: 'published',
-
-            })
-
-          }
-        } else if (key === 'Draft') {
-          if (user.allocationDetails.id !== undefined) {
-            draftUsersData.push({
-              workorders: user.allocationDetails.workorders,
-              officers: user.allocationDetails.officers,
-              lastupdatedon: user.allocationDetails.lastupdatedon,
-              lastupdatedby: user.allocationDetails.lastupdatedby,
-              errors: user.allocationDetails.errors,
-              competencies: user.allocationDetails.competencies,
-              publishedon: user.allocationDetails.publishedon,
-              publishedby: user.allocationDetails.publishedby,
-              approval: user.allocationDetails.approval,
-              fromdata: 'draft',
-            })
-          }
-        } else {
-          if (user.allocationDetails.id !== undefined) {
-            archiveUsersData.push({
-              workorders: user.allocationDetails.workorders,
-              officers: user.allocationDetails.officers,
-              lastupdatedon: user.allocationDetails.lastupdatedon,
-              lastupdatedby: user.allocationDetails.lastupdatedby,
-              errors: user.allocationDetails.errors,
-              competencies: user.allocationDetails.competencies,
-              publishedon: user.allocationDetails.publishedon,
-              publishedby: user.allocationDetails.publishedby,
-              approval: user.allocationDetails.approval,
-              fromdata: 'archive',
-            })
-          }
-        }
-      })
-    }
-
     if (key) {
       this.currentFilter = key
       switch (key) {
@@ -260,10 +173,10 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
             id: element.id,
             workorders: element.name,
             officers: "officers",
-            lastupdatedon: element.updatedAt,
+            lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
             lastupdatedby: element.updatedByName,
             errors: element.errorCount,
-            publishedon: element.createdAt,
+            publishedon: this.workallocationSrvc.getTime(element.createdAt),
             publishedby: element.createdByName,
             approval: "Approval",
             fromdata: currentStatus,
@@ -276,6 +189,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     })
 
   }
+
   getWATBySearch(searchQuery: string, currentStatus: string) {
     this.data = []
     const finalData: any[] = []
@@ -285,11 +199,11 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
           const watData = {
             workorders: element.name,
             officers: "officers",
-            lastupdatedon: element.updatedAt,
-            lastupdatedby: this.getUserByWID(element.updatedBy),
+            lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
+            lastupdatedby: element.updatedByName,
             errors: element.errorCount,
-            publishedon: element.createdAt,
-            publishedby: this.getUserByWID(element.createdBy),
+            publishedon: this.workallocationSrvc.getTime(element.createdAt),
+            publishedby: element.createdByName,
             approval: "Approval",
             fromdata: 'published',
 
@@ -317,6 +231,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     this.data = _.get(data, 'data.currentValue')
     this.length = this.data.length
     this.paginator.firstPage()
+    this.filter('Published')
   }
 
   applyFilter(filterValue: any) {
