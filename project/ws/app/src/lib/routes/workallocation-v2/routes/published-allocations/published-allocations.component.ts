@@ -38,7 +38,7 @@ export class PublishedAllocationsComponent implements OnInit {
   constructor(private activated: ActivatedRoute, private exportAsService: ExportAsService,
     private allocateSrvc: AllocationService) {
     this.activated.params.subscribe((param: any) => {
-      this.workorderID = param['workorders'] || ''
+      this.workorderID = param['workorder'] || ''
       this.getAllocatedUsers(this.workorderID)
     })
   }

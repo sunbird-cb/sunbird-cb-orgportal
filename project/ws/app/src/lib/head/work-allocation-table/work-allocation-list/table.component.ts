@@ -208,9 +208,9 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
 
   onRowClick(e: any) {
     if (e.fromdata === 'Draft') {
-      this.router.navigate([`/app/workallocation/drafts`, { workorders: e.id }])
+      this.router.navigate([`/app/workallocation/drafts`, e.id])
     } else if (e.fromdata === 'Published') {
-      this.router.navigate([`/app/workallocation/published`, { workorders: e.id }])
+      this.router.navigate([`/app/workallocation/published`, e.id])
     }
 
   }

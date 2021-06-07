@@ -66,7 +66,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.route.queryParams.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.workOrderId = params['workorder']
     })
   }
@@ -162,16 +162,14 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   saveWAT() {
     if (this.getWorkOrderId) {
       const req = this.getStrcuturedReq()
-      console.log(req)
-      return
       // console.log(req)
-      // this.allocateSrvc.createAllocation(req).subscribe(res => {
-      //   if (res) {
-      //     this.openSnackbar('Work order saved!')
-      //     this.router.navigate(['/app/workallocation/drafts'])
-      //   }
-      //   this.watStore.clear()
-      // })
+      this.allocateSrvc.createAllocation(req).subscribe(res => {
+        if (res) {
+          this.openSnackbar('Work order saved!')
+          this.router.navigate(['/app/workallocation/drafts', this.getWorkOrderId])
+        }
+        this.watStore.clear()
+      })
     } else {
       // some msg
     }
