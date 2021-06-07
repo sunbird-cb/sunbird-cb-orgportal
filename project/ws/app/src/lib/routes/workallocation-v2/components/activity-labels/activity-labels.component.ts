@@ -11,7 +11,7 @@ import { WatStoreService } from '../../services/wat.store.service'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations'
 import { WatRolePopup } from './wat-role-popup/wat-role-popup.component'
-import lodash from 'lodash'
+import * as _ from 'lodash'
 
 @Component({
   selector: 'ws-app-activity-labels',
@@ -404,7 +404,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
           /**Reject Already Exist values */
           const newValues = _.reject(val.data, item =>
             _.find(_.get(lst.get('activities'), 'value'),
-                   { activityDescription: item.activityDescription }))
+              { activityDescription: item.activityDescription }))
           // console.log(newValues)
           const unselectVals =
             _.reject(_.get(lst.get('activities'), 'value'), item =>
