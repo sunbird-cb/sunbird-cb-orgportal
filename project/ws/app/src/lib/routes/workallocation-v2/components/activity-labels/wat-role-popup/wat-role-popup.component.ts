@@ -32,12 +32,12 @@ export interface IChield {
   templateUrl: './wat-role-popup.component.html',
   styleUrls: ['./wat-role-popup.component.scss'],
 })
-export class WatRolePopup implements OnInit {
+export class WatRolePopupComponent implements OnInit {
   isChecked = true
   isCheckedAllA = true
   watForm!: FormGroup
   constructor(
-    public dialogRef: MatDialogRef<WatRolePopup>,
+    public dialogRef: MatDialogRef<WatRolePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IWatRolePopupData,
     private formBuilder: FormBuilder) {
     this.watForm = new FormGroup({})
@@ -122,7 +122,7 @@ export class WatRolePopup implements OnInit {
     }
   }
   generateData(val: any) {
-    return _.map(_.filter(val.acDetail, (val: IChield) => val.isSelected), val1 => {
+    return _.map(_.filter(val.acDetail, (vall: IChield) => vall.isSelected), val1 => {
       return {
         // description: "Work relating to financial inclusion"
         activityId: _.get(val1, 'id'),
