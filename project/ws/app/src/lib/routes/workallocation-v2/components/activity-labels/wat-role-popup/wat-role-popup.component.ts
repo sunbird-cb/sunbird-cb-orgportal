@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core'
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { MatCheckboxChange } from '@angular/material'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 export interface IWatRolePopupData {
   childNodes: IChield[],
@@ -43,7 +43,7 @@ export class WatRolePopup implements OnInit {
     this.watForm = new FormGroup({})
     this.watForm = this.formBuilder.group({
       acDetail: this.formBuilder.array([]),
-      IsRoleSelected: new FormControl(true, [])
+      IsRoleSelected: new FormControl(true, []),
     })
 
   }
@@ -55,7 +55,7 @@ export class WatRolePopup implements OnInit {
   }
   ngOnInit(): void {
     if (this.data.childNodes) {
-      let oldValue = this.getList
+      const oldValue = this.getList
       _.each(this.data.childNodes, itm => {
         oldValue.push(this.createItem(itm))
       })
@@ -63,7 +63,7 @@ export class WatRolePopup implements OnInit {
 
     }
   }
-  createItem(itm: IChield): import("@angular/forms").AbstractControl {
+  createItem(itm: IChield): import('@angular/forms').AbstractControl {
     const ctrl = this.formBuilder.group({
       isSelected: itm.description ? true : false,
       description: itm.description,
@@ -79,7 +79,7 @@ export class WatRolePopup implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close({
-      ok: false
+      ok: false,
     })
   }
   onOkClick(): void {
@@ -101,12 +101,12 @@ export class WatRolePopup implements OnInit {
     }
   }
   checkAll() {
-    let onj = { isSelected: true }
+    const onj = { isSelected: true }
     this.getList.controls.map(value => value.setValue({ ...value.value, ...onj }))
   }
 
   deselectAll() {
-    let onj = { isSelected: false }
+    const onj = { isSelected: false }
     this.getList.controls.map(value => value.setValue({ ...value.value, ...onj }))
     // this.setWatValues([...this.getList.controls.map(value => value.setValue(false))])
   }
@@ -117,7 +117,7 @@ export class WatRolePopup implements OnInit {
     if (val) {
       this.dialogRef.close({
         ok: true,
-        data: this.generateData(val)
+        data: this.generateData(val),
       })
     }
   }

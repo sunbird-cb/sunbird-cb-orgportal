@@ -51,10 +51,6 @@
         <ws-work-allocation-table [tableData]='tabledata' [data]='data' (eOnRowClick)="onRoleClick()"
           [needAddAdmin]='false' [needCreateUser]='false'>
         </ws-work-allocation-table>
-        <div class="custompagination">
-          <pagination-controls (pageChange)="p = $event"></pagination-controls>
-          <div class="totalcount">of {{data.length}}</div>
-        </div>
         <mat-menu #cardMenu="matMenu">
           <ng-template matMenuContent let-rowData="data">
             <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item

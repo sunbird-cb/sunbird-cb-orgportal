@@ -37,24 +37,24 @@
       <ng-container>
         <div class="margin-top-xsl margin-bottom-xs">
           <div class="flex flex-1 custom">
-            <div class="flex-3" *ngIf="workorderData">
+            <div class="flex-3">
               <ul class="statistics">
                 <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Officers</p>
-                    <p class="mat-subheading-2">{{workorderData.users.length}}</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.users.length : 0}}</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div>
                     <p class="mat-body-3">Roles</p>
-                    <p class="mat-subheading-2">0</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.rolesCount : 0}}</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div>
                     <p class="mat-body-3">Activities</p>
-                    <p class="mat-subheading-2">0</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.activitiesCount : 0}}</p>
                   </div>
                 </li>
               </ul>

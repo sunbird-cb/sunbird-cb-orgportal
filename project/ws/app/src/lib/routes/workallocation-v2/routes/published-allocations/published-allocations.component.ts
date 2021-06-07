@@ -3,10 +3,9 @@ import { MatPaginator } from '@angular/material'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 /* tslint:disable */
 import _ from 'lodash'
-import { WorkallocationService } from '../../../home/services/workallocation.service'
 import { AllocationService } from '../../services/allocation.service'
 import FileSaver from 'file-saver'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router'
 @Component({
   selector: 'ws-app-published-allocations',
   templateUrl: './published-allocations.component.html',
@@ -37,9 +36,9 @@ export class PublishedAllocationsComponent implements OnInit {
   workorderData: any
   p: number = 1
   constructor(private activated: ActivatedRoute, private exportAsService: ExportAsService,
-    private workallocationSrvc: WorkallocationService, private allocateSrvc: AllocationService) {
+    private allocateSrvc: AllocationService) {
     this.activated.params.subscribe((param: any) => {
-      this.workorderID = param['workorders'] || ''
+      this.workorderID = param['workorder'] || ''
       this.getAllocatedUsers(this.workorderID)
     })
   }

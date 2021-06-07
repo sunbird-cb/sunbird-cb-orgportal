@@ -8,7 +8,7 @@ const API_END_POINTS = {
   GET_ALL_USERS: `${PROTECTED_SLAG_V8}/portal/mdo/mydepartment?allUsers=false`,
   GET_ALL_WAT_LIST: `${PROTECTED_SLAG_V8}/workallocation/getWorkOrders`,
   GET_USER_BY_WID: `${PROTECTED_SLAG_V8}/workallocation/getUserBasicInfo/`,
-  ADD_WORK_ORDERS: `${PROTECTED_SLAG_V8}/workallocation/add/workorder`
+  ADD_WORK_ORDERS: `${PROTECTED_SLAG_V8}/workallocation/add/workorder`,
 }
 
 @Injectable({
@@ -38,9 +38,9 @@ export class WorkallocationService {
   }
   addWAT(departmentName: any, deptId: number): Observable<any> {
     const request = {
+      deptId,
       name: departmentName || '',
-      deptId: deptId,
-      deptName: this.configService.userProfile && this.configService.userProfile.departmentName || ''
+      deptName: this.configService.userProfile && this.configService.userProfile.departmentName || '',
     }
     return this.http.post<any>(API_END_POINTS.ADD_WORK_ORDERS, request)
   }

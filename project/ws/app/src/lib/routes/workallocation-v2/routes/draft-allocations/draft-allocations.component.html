@@ -34,42 +34,42 @@
       <ng-container>
         <div class="margin-top-xsl margin-bottom-xs">
           <div class="flex flex-1 custom">
-            <div class="flex-3" *ngIf="workorderData">
+            <div class="flex-3">
               <ul class="statistics">
                 <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Officers</p>
-                    <p class="mat-subheading-2">{{workorderData.users.length}}</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.users.length : 0}}</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Progress</p>
-                    <p class="mat-subheading-2">{{workorderData.progress}}</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.progress : 0}}%</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Errors</p>
-                    <p class="mat-subheading-2">{{workorderData.errorCount}}</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.errorCount : 0}}</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div>
                     <p class="mat-body-3">Roles</p>
-                    <p class="mat-subheading-2">0</p>
+                    <p class="mat-subheading-2">{{workorderData ?workorderData.rolesCount : 0}}</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div>
                     <p class="mat-body-3">Competencies</p>
-                    <p class="mat-subheading-2">0</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.competenciesCount : 0}}</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div>
                     <p class="mat-body-3">Activities</p>
-                    <p class="mat-subheading-2">0</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.activitiesCount : 0}}</p>
                   </div>
                 </li>
               </ul>
@@ -149,7 +149,7 @@
             </td>
           </tr>
         </table>
-        <div class="custompagination">
+        <div class="custompagination" *ngIf="data && data.length > 0">
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
           <div class="totalcount">of {{data.length}}</div>
         </div>

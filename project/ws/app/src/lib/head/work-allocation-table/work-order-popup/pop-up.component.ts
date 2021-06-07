@@ -35,7 +35,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
   userData: any
   departmentName!: string
   departmentID!: number
-  currentCheckedValue = null;
+  currentCheckedValue = null
   favoriteSeason: string | undefined
   pageSizeOptions = [5, 10, 20]
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
@@ -43,8 +43,8 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
   selection = new SelectionModel<any>(true, [])
 
   constructor(private router: Router, private ren: Renderer2,
-    public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>, private workallocationSrvc: WorkallocationService,
-    @Inject(MAT_DIALOG_DATA) public dialogData: any) {
+              public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>, private workallocationSrvc: WorkallocationService,
+              @Inject(MAT_DIALOG_DATA) public dialogData: any) {
     this.dataSource = new MatTableDataSource<any>()
     this.actionsClick = new EventEmitter()
     this.clicked = new EventEmitter()
@@ -122,7 +122,6 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
     setTimeout(() => {
       if (this.currentCheckedValue && this.currentCheckedValue === el.value) {
         el.checked = false
-        console.log(el.value)
         this.ren.removeClass(el['_elementRef'].nativeElement, 'cdk-focused')
         this.ren.removeClass(el['_elementRef'].nativeElement, 'cdk-program-focused')
         this.currentCheckedValue = null
@@ -132,7 +131,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
     })
   }
   getAllUserByKey() {
-    const currentStatus = "published"
+    const currentStatus = 'published'
     const finalData: any[] = []
     this.workallocationSrvc.fetchWAT(currentStatus).subscribe(res => {
       if (res.result.data) {
@@ -140,13 +139,13 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
           const watData = {
             id: element.id,
             workorders: element.name,
-            officers: "officers",
+            officers: 'officers',
             lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
             lastupdatedby: element.updatedByName,
             errors: element.errorCount,
             publishedon: this.workallocationSrvc.getTime(element.createdAt),
             publishedby: element.createdByName,
-            approval: "Approval",
+            approval: 'Approval',
             fromdata: currentStatus,
 
           }
