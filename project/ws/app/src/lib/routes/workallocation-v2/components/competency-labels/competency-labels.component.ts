@@ -12,7 +12,7 @@ import { NSWatCompetency } from '../../models/competency-wat.model'
 import { NSWatActivity } from '../../models/activity-wot.model'
 // tslint:disable
 import _ from 'lodash'
-import { WatCompPopup } from './wat-comp-popup/wat-comp-popup.component'
+import { WatCompPopupComponent } from './wat-comp-popup/wat-comp-popup.component'
 // tslint:enable
 
 @Component({
@@ -337,7 +337,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   public competencySelected(event: any, gIdx: number) {
     const lst = this.groupList.at(gIdx).get('competincies') as FormArray
 
-    const dialogRef = this.dialog.open(WatCompPopup, {
+    const dialogRef = this.dialog.open(WatCompPopupComponent, {
       restoreFocus: false,
       disableClose: true,
       data: event.option.value,
@@ -368,14 +368,21 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         this.watStore.setgetcompetencyGroup(this.groupList.value)
         this.updateCompData()
       } else {
-
+        const frmctrl1 = lst.at(this.selectedCompIdx).get('compName') as FormControl
+        frmctrl1.patchValue(_.get(event, 'option.value.name') || '')
+        const frmctrl = lst.at(this.selectedCompIdx).get('compDescription') as FormControl
+        frmctrl.patchValue(_.get(event, 'option.value.description') || '')
+        this.watStore.setgetcompetencyGroup(this.groupList.value)
+        this.updateCompData()
       }
     })
 
   }
   updateCompData() {
+    // const existingCompList=this.watStore.
     const list = _.compact(_.map(_.flatten(_.map(this.groupList.value, 'competincies')), c => {
-      if (c && c.compName) {
+      if (c) {
+        // && c.compName
         return c
       }
     }))

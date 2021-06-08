@@ -10,9 +10,10 @@ import { Observable, Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations'
-import { WatRolePopup } from './wat-role-popup/wat-role-popup.component'
+import { WatRolePopupComponent } from './wat-role-popup/wat-role-popup.component'
+// tslint:disable
 import * as _ from 'lodash'
-
+// tslint:enable
 @Component({
   selector: 'ws-app-activity-labels',
   templateUrl: './activity-labels.component.html',
@@ -391,7 +392,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     this.activeGroupIdx = gIdx
     const lst = this.groupList.at(this.activeGroupIdx) as FormGroup
 
-    const dialogRef = this.dialog.open(WatRolePopup, {
+    const dialogRef = this.dialog.open(WatRolePopupComponent, {
       restoreFocus: false,
       disableClose: true,
       data: event.option.value,
