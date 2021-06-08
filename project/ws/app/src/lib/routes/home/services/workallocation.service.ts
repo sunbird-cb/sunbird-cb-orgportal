@@ -9,6 +9,7 @@ const API_END_POINTS = {
   GET_ALL_WAT_LIST: `${PROTECTED_SLAG_V8}/workallocation/getWorkOrders`,
   GET_USER_BY_WID: `${PROTECTED_SLAG_V8}/workallocation/getUserBasicInfo/`,
   ADD_WORK_ORDERS: `${PROTECTED_SLAG_V8}/workallocation/add/workorder`,
+  COPY_WORK_ORDERS: `${PROTECTED_SLAG_V8}/workallocation/copy/workOrder`,
 }
 
 @Injectable({
@@ -32,17 +33,24 @@ export class WorkallocationService {
       status: currentStatus,
       departmentName: this.configService.userProfile && this.configService.userProfile.departmentName || '',
       pageNo: 0,
-      pageSize: 10,
+      pageSize: 100,
     }
     return this.http.post<any>(API_END_POINTS.GET_ALL_WAT_LIST, request)
   }
   addWAT(departmentName: any, deptId: number): Observable<any> {
     const request = {
       deptId,
-      name: departmentName || '',
+      name: `Work order - ${departmentName}` || '',
       deptName: this.configService.userProfile && this.configService.userProfile.departmentName || '',
     }
     return this.http.post<any>(API_END_POINTS.ADD_WORK_ORDERS, request)
+  }
+  copyWAT(workOrderId: any, departmentName: any): Observable<any> {
+    const request = {
+      id: workOrderId,
+      name: `Work order - ${departmentName}` || '',
+    }
+    return this.http.post<any>(API_END_POINTS.COPY_WORK_ORDERS, request)
   }
   fetchAllWATRequestBySearch(queryString: string, currentStatus: any): Observable<any> {
     const request = {
@@ -50,7 +58,7 @@ export class WorkallocationService {
       departmentName: this.configService.userProfile && this.configService.userProfile.departmentName || '',
       query: queryString,
       pageNo: 0,
-      pageSize: 10,
+      pageSize: 100,
     }
     return this.http.post<any>(API_END_POINTS.GET_ALL_WAT_LIST, request)
   }

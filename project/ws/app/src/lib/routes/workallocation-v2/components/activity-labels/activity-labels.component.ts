@@ -404,7 +404,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
           /**Reject Already Exist values */
           const newValues = _.reject(val.data, item =>
             _.find(_.get(lst.get('activities'), 'value'),
-              { activityDescription: item.activityDescription }))
+                   { activityDescription: item.activityDescription }))
           // console.log(newValues)
           const unselectVals =
             _.reject(_.get(lst.get('activities'), 'value'), item =>

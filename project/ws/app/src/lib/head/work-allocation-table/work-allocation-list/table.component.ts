@@ -40,8 +40,8 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
   length!: number
   departmentRole!: string
   departmentId!: string | undefined
-  pageSize = 5
-  pageSizeOptions = [5, 10, 20]
+  pageSize = 10
+  pageSizeOptions = [10, 20]
   config: ExportAsConfig = {
     type: 'pdf',
     elementIdOrContent: 'downloadtemplate',
