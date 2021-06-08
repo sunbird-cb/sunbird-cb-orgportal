@@ -7,6 +7,7 @@ const API_END_POINTS = {
   SEARCH_ROLE: 'apis/protected/v8/roleactivity',
   SEARCH_NODES: 'apis/protected/v8/frac/searchNodes',
   CREATE_ALLOCATION: 'apis/protected/v8/workallocation/add',
+  CREATE_ALLOCATIONV2: '/apis/protected/v8/workallocation/v2/add',
   UPDATE_ALLOCATION: 'apis/protected/v8/workallocation/update',
   GET_ALL_USERS: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
   USERS: '/apis/protected/v8/workallocation/userSearch',
@@ -43,6 +44,10 @@ export class AllocationService {
 
   createAllocation(req: any): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.CREATE_ALLOCATION}`, req)
+  }
+
+  createAllocationV2(req: any): Observable<any> {
+    return this.http.post<any>(`${API_END_POINTS.CREATE_ALLOCATIONV2}`, req)
   }
 
   updateAllocation(req: any): Observable<any> {
