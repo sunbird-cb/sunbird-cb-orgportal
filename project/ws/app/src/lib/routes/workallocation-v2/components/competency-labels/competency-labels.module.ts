@@ -13,11 +13,11 @@ import { CdkTableModule } from '@angular/cdk/table'
 import { CdkTreeModule } from '@angular/cdk/tree'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AutocompleteModule } from '../autocomplete/autocomplete.module'
-import { WatCompPopup } from './wat-comp-popup/wat-comp-popup.component'
+import { WatCompPopupComponent } from './wat-comp-popup/wat-comp-popup.component'
 
 @NgModule({
   declarations: [
-    CompetencyLabelsComponent, WatCompPopup,
+    CompetencyLabelsComponent, WatCompPopupComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +40,7 @@ import { WatCompPopup } from './wat-comp-popup/wat-comp-popup.component'
     MatSelectModule,
     MatRadioModule,
   ],
-  entryComponents: [WatCompPopup],
+  entryComponents: [WatCompPopupComponent],
   exports: [CompetencyLabelsComponent],
 })
 export class CompetencyLabelsModule { }

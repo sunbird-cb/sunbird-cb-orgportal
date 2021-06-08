@@ -58,15 +58,14 @@
                     <input [attr.id]="'assignto_' + i" matInput #assignto formControlName="assignedTo" i18n-placeholder
                       placeholder="Type here" i18n-aria-label #assignedTo class="form-input flex-1"
                       [matAutocomplete]="assignToAuto" (input)="filterUsers(assignedTo.value)" autocomplete="off" />
-                    <mat-autocomplete #assignToAuto="matAutocomplete">
+                    <mat-autocomplete #assignToAuto="matAutocomplete" (optionSelected)="userClicked($event, i)">
                       <mat-option [value]="''">
                         <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
                           <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{'Final authority'}}</div>
                         </div>
                       </mat-option>
                       <div class="mat-body-4 ws-mat-accent-text padding-s">From Karmayogi officer portal</div>
-                      <mat-option *ngFor="let user of userslist"
-                        [value]="user.userDetails.first_name + ' ' +user.userDetails.last_name ">
+                      <mat-option *ngFor="let user of userslist" [value]="user">
                         <ws-app-user-autocomplete-card [user]="user">
                         </ws-app-user-autocomplete-card>
                       </mat-option>
@@ -208,7 +207,7 @@
                         formControlName="assignedTo" i18n-placeholder placeholder="Type here" i18n-aria-label
                         aria-label="Type here" [matAutocomplete]="auto" (input)="filterUsers(assignedTo.value)"
                         autocomplete="off">
-                      <mat-autocomplete #auto="matAutocomplete">
+                      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="userClicked($event, i)">
                         <mat-option [value]="'Final authority'">
                           <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
                             <div class="mat-body-2 font-bold-i margin-bottom-xxs flex">
@@ -220,8 +219,7 @@
                         <div class="mat-body-4 ws-mat-accent-text padding-s" *ngIf="userslist?.length">
                           From Karmayogi officer portal
                         </div>
-                        <mat-option *ngFor="let user of userslist"
-                          [value]="user.userDetails.first_name + ' ' +user.userDetails.last_name ">
+                        <mat-option *ngFor="let user of userslist" [value]="user">
                           <ws-app-user-autocomplete-card [user]="user">
                           </ws-app-user-autocomplete-card>
                         </mat-option>

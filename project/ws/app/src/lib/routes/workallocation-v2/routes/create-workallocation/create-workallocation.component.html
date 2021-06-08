@@ -4,7 +4,8 @@
             <div class="respon flex  sticky-nav">
                 <div class="sticky-nav-content">
                     <div class="flex flex-1 margin-auto">
-                        <a routerLink="/app/workallocation/drafts" class="flex flex margin-left-xl cursor-pointer">
+                        <a [routerLink]="['/app/workallocation/drafts',getWorkOrderId]"
+                            class="flex flex margin-left-xl cursor-pointer">
                             <mat-icon class="ws-mat-black60-text flex margin-left-xs margin-right-s">arrow_back
                             </mat-icon>
                             <span class="mat-body-1">{{ getOfficerName || 'Guest'}}</span>

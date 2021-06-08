@@ -10,9 +10,10 @@ import { Observable, Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations'
-import { WatRolePopup } from './wat-role-popup/wat-role-popup.component'
+import { WatRolePopupComponent } from './wat-role-popup/wat-role-popup.component'
+// tslint:disable
 import * as _ from 'lodash'
-
+// tslint:enable
 @Component({
   selector: 'ws-app-activity-labels',
   templateUrl: './activity-labels.component.html',
@@ -193,6 +194,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       activityName: '',
       activityDescription: '',
       assignedTo: '',
+      assignedToId: '',
+      assignedToEmail: '',
     })
 
     oldValue.push(fg)
@@ -214,6 +217,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       activityName: '',
       activityDescription: '',
       assignedTo: '',
+      assignedToId: '',
+      assignedToEmail: '',
     })
     activits.push(fga)
     fg.controls.activities.patchValue([...activits.value])
@@ -232,6 +237,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
           activityName: ac.activityName,
           activityDescription: ac.activityDescription,
           assignedTo: ac.assignedTo,
+          assignedToId: ac.assignedToId,
+          assignedToEmail: ac.assignedToEmail,
         })
         oldValue.push(fga)
       })
@@ -248,6 +255,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         activityName: '',
         activityDescription: '',
         assignedTo: '',
+        assignedToId: '',
+        assignedToEmail: '',
       })
       oldValue.push(fga)
       this.setGroupActivityValues([...oldValue.value])
@@ -293,6 +302,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       activityName: new FormControl(activityObj.activityName),
       activityDescription: new FormControl(activityObj.activityDescription),
       assignedTo: new FormControl(activityObj.assignedTo),
+      assignedToId: new FormControl(activityObj.assignedToId),
+      assignedToEmail: new FormControl(activityObj.assignedToEmail),
     })
     const optionsArr = this.activityForm.controls['labelsArray'] as FormArray
     optionsArr.push(newControl)
@@ -314,6 +325,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         activityName: new FormControl(v.activityName),
         activityDescription: new FormControl(v.activityDescription),
         assignedTo: new FormControl(v.assignedTo),
+        assignedToId: new FormControl(v.assignedToId),
+        assignedToEmail: new FormControl(v.assignedToEmail),
       }])
     })
   }
@@ -379,7 +392,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     this.activeGroupIdx = gIdx
     const lst = this.groupList.at(this.activeGroupIdx) as FormGroup
 
-    const dialogRef = this.dialog.open(WatRolePopup, {
+    const dialogRef = this.dialog.open(WatRolePopupComponent, {
       restoreFocus: false,
       disableClose: true,
       data: event.option.value,
@@ -403,8 +416,11 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         if (val.data && val.data.length > 0) {
           /**Reject Already Exist values */
           const newValues = _.reject(val.data, item =>
-            _.find(_.get(lst.get('activities'), 'value'),
-                   { activityDescription: item.activityDescription }))
+            _.find(
+              _.get(lst.get('activities'), 'value'),
+              { activityDescription: item.activityDescription }
+            )
+          )
           // console.log(newValues)
           const unselectVals =
             _.reject(_.get(lst.get('activities'), 'value'), item =>
@@ -465,8 +481,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     frmctrl1.patchValue(event.option.value.id)
 
     this.watStore.setgetactivitiesGroup(this.groupList.value)
-
   }
+
   setSelectedFilter(index: number) {
     this.selectedActivityIdx = index
   }
@@ -478,6 +494,36 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     // this.selectedActivityIdx = aIdx
     // this.activeGroupIdx = gIdx
     return data ? data.activityDescription : ''
+  }
+
+  userClicked(event: any, gIdx: number) {
+    if (event) {
+      this.activeGroupIdx = gIdx
+      let assignedTo = ''
+      let assignedToId = ''
+      let assignedToEmail = ''
+      if (_.get(event, 'option.value') === 'Final authority') {
+        assignedTo = 'Final authority'
+        assignedToId = '',
+          assignedToEmail = ''
+      } else {
+        // tslint:disable-next-line: prefer-template
+        assignedTo = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
+        assignedToId = _.get(event, 'option.value.userDetails.wid'),
+          assignedToEmail = _.get(event, 'option.value.userDetails.email')
+      }
+      const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
+      const frmctrl = lst.at(this.selectedActivityIdx).get('assignedTo') as FormControl
+      frmctrl.patchValue(assignedTo || '')
+
+      const frmctrl1 = lst.at(this.selectedActivityIdx).get('assignedToId') as FormControl
+      frmctrl1.patchValue(assignedToId)
+
+      const frmctrl2 = lst.at(this.selectedActivityIdx).get('assignedToEmail') as FormControl
+      frmctrl2.patchValue(assignedToEmail)
+
+      this.watStore.setgetactivitiesGroup(this.groupList.value)
+    }
   }
 
   show(idx: number) {

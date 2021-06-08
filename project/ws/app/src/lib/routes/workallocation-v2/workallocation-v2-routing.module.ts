@@ -18,15 +18,15 @@ const routes: Routes = [
     component: WorkallocationV2HomeComponent,
     children: [
       {
-        path: 'create',
+        path: 'create/:workorder',
         component: CreateWorkallocationComponent,
       },
       {
-        path: 'drafts',
+        path: 'drafts/:workorder',
         component: DraftAllocationsComponent,
       },
       {
-        path: 'published',
+        path: 'published/:workorder',
         component: PublishedAllocationsComponent,
       },
       {

@@ -46,7 +46,7 @@ export class DraftAllocationsComponent implements OnInit {
       }
     })
     this.activated.params.subscribe((param: any) => {
-      this.workorderID = param['workorders'] || ''
+      this.workorderID = param['workorder'] || ''
       this.getAllocatedUsers(this.workorderID)
     })
   }
@@ -130,7 +130,7 @@ export class DraftAllocationsComponent implements OnInit {
   // }
 
   onNewAllocationClick() {
-    this.router.navigate([`/app/workallocation/create`, { workorder: this.workorderID }])
+    this.router.navigate([`/app/workallocation/create`, this.workorderID])
   }
 
   publishWorkOrder() {

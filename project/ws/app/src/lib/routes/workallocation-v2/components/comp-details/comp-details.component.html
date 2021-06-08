@@ -27,9 +27,10 @@
         <div class="flex flex-1 auto-background" [formGroup]="_comp">
           <div class="flex flex-1 margin-r-2px example-list">
             <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
-              <input [attr.id]="'compt_' + _comp" class="form-input flex-1" matInput #compName i18n-placeholder
+              <textarea [attr.id]="'compt_' + _comp" class="form-input flex-1" matInput #compName i18n-placeholder
                 formControlName="compName" placeholder="Type here" i18n-aria-label aria-label="Type here"
-                autocomplete="off">
+                autocomplete="off" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"></textarea>
             </mat-form-field>
           </div>
           <div class="flex flex-1 margin-r-2px example-list">
