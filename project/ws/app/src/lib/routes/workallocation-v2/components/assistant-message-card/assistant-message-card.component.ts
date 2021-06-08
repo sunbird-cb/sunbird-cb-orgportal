@@ -21,7 +21,7 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
 
   defaultProgressValues = {
     officer: {
-      weight: 30,
+      weight: 10,
       controls: {
         officerName: 33.33,
         position: 33.33,
@@ -29,7 +29,7 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
       },
     },
     roles: {
-      weight: 45,
+      weight: 60,
       minRole: 1,
       minRolePercent: 30,
       minActivity: 1,
@@ -42,7 +42,7 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
       },
     },
     competecy: {
-      weight: 15,
+      weight: 20,
       minCompetency: 1,
       minCompetencyPercent: 50,
       controls: {
@@ -113,9 +113,12 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
 
   public validationsCombined() {
     let allMessages: IWarnError[] = []
+    let errorCount = 0
 
     allMessages = [...this.individualValidations()]
     this.validations = _.groupBy(allMessages, '_type')
+    errorCount = _.size(_.get(_.groupBy(allMessages, '_type'), 'error'))
+    this.watStore.setErrorCount(errorCount)
   }
 
   public individualValidations() {
@@ -332,7 +335,7 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
       console.log('ERROR in calculating progress')
       return 0
     }
-
+    this.watStore.setCurrentProgress(progress)
     return progress
   }
 

@@ -40,6 +40,8 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   private groupSubscription: any
   private compDetailsSubscription: any
   officerFormSubscription: any
+  private errorCountSubscription: any
+  private progressSubscription: any
   dataStructure: any = {}
   departmentName: any
   departmentID: any
@@ -157,13 +159,21 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     this.officerFormSubscription = this.watStore.getOfficerGroup.subscribe(officerFormData => {
       this.dataStructure.officerFormData = officerFormData
     })
+
+    this.errorCountSubscription = this.watStore.getErrorCount.subscribe(data => {
+      this.dataStructure.errorCount = data
+    })
+
+    this.progressSubscription = this.watStore.getCurrentProgress.subscribe(data => {
+      this.dataStructure.currentProgress = data
+    })
   }
 
   saveWAT() {
     if (this.getWorkOrderId) {
       const req = this.getStrcuturedReq()
       // console.log(req)
-      this.allocateSrvc.createAllocation(req).subscribe(res => {
+      this.allocateSrvc.createAllocationV2(req).subscribe(res => {
         if (res) {
           this.openSnackbar('Work order saved!')
           this.router.navigate(['/app/workallocation/drafts', this.getWorkOrderId])
@@ -171,7 +181,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
         this.watStore.clear()
       })
     } else {
-      // some msg
+      this.openSnackbar('Error in saving Work order, please try again!')
     }
   }
 
@@ -179,12 +189,14 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     let req = {}
     const officer = this.getUserDetails()
     const roles = this.getRoles
+    const unmappedActivity = this.getUnmappedActivity()
+    const unmappedCompetency = this.getUnmappedCompetency()
     req = {
       userId: officer.user ? officer.user.userDetails.wid : '',
       positionDescription: officer.positionDescription,
       userPosition: officer.position,
-      positionId: officer.positionObj.id ? officer.positionObj.id : '',
-      userName: officer.user,
+      positionId: officer.positionObj && officer.positionObj.id ? officer.positionObj.id : '',
+      userName: officer.officerName,
       userEmail: officer.user ? officer.user.userDetails.email : '',
 
       // deptId: this.departmentID,
@@ -193,7 +205,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       // activeList: this.ralist,
 
       roleCompetencyList: roles,
-
+      unmappedActivities: unmappedActivity,
+      unmappedCompetencies: unmappedCompetency,
+      progress: this.dataStructure.currentProgress,
+      errorCount: this.dataStructure.errorCount,
       workOrderId: this.getWorkOrderId,
     }
     return req
@@ -234,7 +249,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
                 id: a.activityId,
                 name: a.activityName,
                 description: a.activityDescription,
-                assignedTo: a.assignedTo,
+                submittedToName: a.assignedTo,
+                submittedToId: a.assignedToId,
+                submittedToEmail: a.assignedToEmail,
                 // status: 'UNVERIFIED',
                 // source: 'WAT',
                 // parentRole: null,
@@ -269,6 +286,46 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     // }).flatten().compact().value()
   }
 
+  getUnmappedActivity() {
+    const unmapedActivities = _.get(_.first(this.dataStructure.activityGroups), 'activities')
+    const unmapedActivitiesReq = unmapedActivities.map((ua: any) => {
+      return {
+        type: 'ACTIVITY',
+        id: ua.activityId,
+        name: ua.activityName,
+        description: ua.activityDescription,
+        submittedToName: ua.assignedTo,
+        submittedToId: ua.assignedToId,
+        submittedToEmail: ua.assignedToEmail,
+        // status: 'UNVERIFIED',
+        // source: 'WAT',
+        // parentRole: null,
+      }
+    })
+    return unmapedActivitiesReq
+  }
+
+  getUnmappedCompetency() {
+    const unmapedComps = _.get(_.first(this.dataStructure.compGroups), 'competincies')
+    const unmapedCompsReq = unmapedComps.map((uc: any) => {
+      return {
+        type: 'COMPETENCY',
+        id: uc.compId,
+        name: uc.compName,
+        description: uc.compDescription,
+        // id='123',
+        // compLevel
+        // source: 'ISTM',
+        // status: 'UNVERIFIED',
+        additionalProperties: {
+          competencyArea: uc.compArea,
+          competencyType: uc.compType,
+        },
+      }
+    })
+    return unmapedCompsReq
+  }
+
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
     this.snackBar.open(primaryMsg, 'X', {
       duration,
@@ -279,5 +336,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     this.groupSubscription.unsubscribe()
     this.officerFormSubscription.unsubscribe()
     this.compDetailsSubscription.unsubscribe()
+    this.errorCountSubscription.unsubscribe()
+    this.progressSubscription.unsubscribe()
   }
 }

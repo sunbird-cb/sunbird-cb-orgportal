@@ -23,7 +23,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   term!: string | null
   length!: number
   pageSize = 10
-  pageSizeOptions = [5, 10, 20]
+  pageSizeOptions = [10, 20]
   paginator!: MatPaginator
   departmentName: any
   departmentID: any

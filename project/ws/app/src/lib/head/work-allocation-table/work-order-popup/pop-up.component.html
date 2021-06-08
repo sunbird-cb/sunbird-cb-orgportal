@@ -10,8 +10,14 @@
                 </div>
 
                 <span style="margin: 35px 10px 0 35px;">-</span>
-                <input class="sinput-2" type="Standard" [(ngModel)]="currentCheckedValue"
-                    placeholder="Type the name here" required>
+                <div class="draft-div">
+                    <input class="sinput-2" type="Standard" [(ngModel)]="currentCheckedValue" #wordOrderName="ngModel"
+                        placeholder="Type the name here" required> <br />
+                    <span style="color: red;" *ngIf="(!wordOrderName.valid) && wordOrderName.touched && isBlank">
+                        Please enter the blank work order name</span>
+                    <span style="color: red;" *ngIf="(!wordOrderName.valid) && wordOrderName.touched && !isBlank">
+                        Please enter the copy work order name</span>
+                </div>
             </div>
 
         </div>
@@ -34,7 +40,7 @@
                         <div innerHTML="{{element[col.key]}}"></div>
                     </span>
                     <span *ngIf="!col.isList" class="textclass mat-body-2">
-                        <mat-radio-button #button (click)="checkState(button)" [value]="element[col.key]"
+                        <mat-radio-button #button (click)="checkState(button)" [value]="element"
                             *ngIf="col.displayName==='Work orders'">
                         </mat-radio-button> {{element[col.key]}} {{col.isList}}
                     </span>
@@ -66,14 +72,14 @@
         <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display">
             <span class="ws-mat-default-text" i18n>Cancel</span>
         </button>
-        <button mat-raised-button type="button" *ngIf="!currentCheckedValue" [disabled]="!currentCheckedValue"
-            class="ws-mat-primary-background flex-auto-display" (click)="goToWorkAllocation()">
+        <button mat-raised-button type="button" *ngIf="isBlank" class="ws-mat-primary-background flex-auto-display"
+            (click)="goToNewWat()" [disabled]="!currentCheckedValue">
             <span class="text-white" i18n>Create blank work order</span>
         </button>
 
-        <button mat-raised-button type="button" *ngIf="currentCheckedValue" [disabled]="!currentCheckedValue"
-            class="ws-mat-primary-background flex-auto-display" (click)="goToWorkAllocation()">
-            <span class="text-white" i18n>Create work order</span>
+        <button mat-raised-button type="button" *ngIf="!isBlank" class="ws-mat-primary-background flex-auto-display"
+            (click)="goToCopyWat()" [disabled]="!currentCheckedValue">
+            <span class="text-white" i18n>Create copy work order</span>
         </button>
 
     </mat-dialog-actions>

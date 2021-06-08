@@ -10,6 +10,8 @@ export class WatStoreService {
   private competencyGroup = new BehaviorSubject<NSWatCompetency.ICompActivityGroup[]>([])
   private officerGroup = new BehaviorSubject<NSWatOfficer.IOfficerGroup[]>([])
   private _competencyGroup = new BehaviorSubject<NSWatCompetency.ICompActivity[]>([])
+  private currentProgress = new BehaviorSubject<number>(0)
+  private errorCount = new BehaviorSubject<number>(0)
   constructor() {
 
   }
@@ -38,6 +40,18 @@ export class WatStoreService {
   }
   setOfficerGroup(data: NSWatOfficer.IOfficerGroup[]) {
     this.officerGroup.next(data)
+  }
+  public setCurrentProgress(progress: number) {
+    this.currentProgress.next(progress)
+  }
+  public get getCurrentProgress(): Observable<number> {
+    return this.currentProgress.asObservable()
+  }
+  public setErrorCount(count: number) {
+    this.errorCount.next(count)
+  }
+  public get getErrorCount(): Observable<number> {
+    return this.errorCount.asObservable()
   }
   clear() {
     this.activitiesGroup = new BehaviorSubject<NSWatActivity.IActivityGroup[]>([])

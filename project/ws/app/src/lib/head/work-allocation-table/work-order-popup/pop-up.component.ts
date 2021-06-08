@@ -33,9 +33,11 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
   isSearched = false
   pageSize = 5
   userData: any
+  isBlank = true
   departmentName!: string
   departmentID!: number
   currentCheckedValue = null
+  currentCheckedValue2 = null
   favoriteSeason: string | undefined
   pageSizeOptions = [5, 10, 20]
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
@@ -88,8 +90,17 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
       this.departmentID = res.id
     })
   }
-  goToWorkAllocation() {
+  goToNewWat() {
     this.workallocationSrvc.addWAT(this.currentCheckedValue, this.departmentID).subscribe(res => {
+      if (res.result.data.id) {
+        this.dialogRef.close()
+        this.router.navigate([`app/home/workallocation`])
+      }
+    })
+
+  }
+  goToCopyWat() {
+    this.workallocationSrvc.copyWAT(this.currentCheckedValue2, this.currentCheckedValue).subscribe(res => {
       if (res.result.data.id) {
         this.dialogRef.close()
         this.router.navigate([`app/home/workallocation`])
@@ -120,13 +131,15 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
   checkState(el: any) {
 
     setTimeout(() => {
-      if (this.currentCheckedValue && this.currentCheckedValue === el.value) {
+      if (this.currentCheckedValue2 && this.currentCheckedValue2 === el.value.id) {
         el.checked = false
         this.ren.removeClass(el['_elementRef'].nativeElement, 'cdk-focused')
         this.ren.removeClass(el['_elementRef'].nativeElement, 'cdk-program-focused')
-        this.currentCheckedValue = null
+        this.currentCheckedValue2 = null
+        this.isBlank = true
       } else {
-        this.currentCheckedValue = el.value
+        this.currentCheckedValue2 = el.value.id
+        this.isBlank = false
       }
     })
   }

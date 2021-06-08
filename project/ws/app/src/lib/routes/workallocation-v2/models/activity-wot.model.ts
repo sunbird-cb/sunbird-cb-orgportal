@@ -5,7 +5,8 @@ export namespace NSWatActivity {
     activityName: string
     activityDescription: string
     assignedTo: string
-
+    assignedToId: string
+    assignedToEmail: string
   }
   // In UI it's Role
   export interface IActivityGroup {
