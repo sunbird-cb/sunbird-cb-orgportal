@@ -1,5 +1,5 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core'
-import { MatPaginator, MatDialog } from '@angular/material'
+import { MatPaginator, MatDialog, MatDialogConfig } from '@angular/material'
 import { Router, ActivatedRoute } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 /* tslint:disable */
@@ -134,15 +134,17 @@ export class DraftAllocationsComponent implements OnInit {
   }
 
   publishWorkOrder() {
-    const dialogRef = this.dialog.open(PublishPopupComponent, {
-      maxHeight: 'auto',
-      height: '62%',
-      width: '54%',
-      panelClass: 'remove-pad',
-    })
-    dialogRef.afterClosed().subscribe((response: any) => {
-      console.log(response)
-    })
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = true
+    dialogConfig.width = '54%'
+    dialogConfig.height = '66%'
+    dialogConfig.maxHeight = 'auto'
+    dialogConfig.data = {
+      data: this.workorderData
+    }
+
+    this.dialog.open(PublishPopupComponent, dialogConfig)
   }
 
   getAllocatedUsers(woId: any) {
