@@ -83,8 +83,8 @@
             class="data-row">
             <td aria-rowspan="d.roles.length+1">
               <div class="initials">
-                <!-- {{d.firstname.charAt(0).toUpperCase()}} {{d.surname.charAt(0).toUpperCase()}} -->
-                {{d.userName.charAt(0).toUpperCase()}}
+                <ws-app-initial-avatar [name]="d.userName">
+                </ws-app-initial-avatar>
               </div>
               <div>
                 <b class="username">{{d.userName}}</b>
@@ -111,14 +111,20 @@
                         <table>
                           <tr *ngFor="let a of rc.roleDetails.childNodes">
                             <td class="activityname">
-                              <span>{{a.name}}</span>
+                              <span>{{a.description}}</span>
                             </td>
                             <td class="submittd">
-                              <span class="initials" *ngIf="a.submittedFromId">{{a.submittedFromName.charAt(0).toUpperCase()}}</span>
-                              {{a.submittedFromName}}
+                              <span class="initials" *ngIf="a.submittedToId">
+                                <ws-app-initial-avatar *ngIf="a.submittedToName !== null" [name]="a.submittedToName">
+                                </ws-app-initial-avatar>
+                              </span>
+                              {{a.submittedToName}}
                             </td>
                             <td class="submittd">
-                              <span class="initials" *ngIf="a.submittedFromId">{{a.submittedFromName.charAt(0).toUpperCase()}}</span>
+                              <span class="initials" *ngIf="a.submittedFromId">
+                                <ws-app-initial-avatar *ngIf="a.submittedFromName !== null" [name]="a.submittedFromName">
+                                </ws-app-initial-avatar>
+                              </span>
                               {{a.submittedFromName}}
                             </td>
                           </tr>
