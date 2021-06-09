@@ -349,18 +349,21 @@ b.username {
   font-weight: 600;
   margin-left: 4px;
 }
+::ng-deep.letter-color {
+    float: left !important;
+  }
 .initials {
-  border-radius: 4px;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  justify-content: center;
-  color: white;
-  font-size: 11px;
-  align-items: center;
-  background-color: #306933;
-  float: left;
-  margin-right: 8px;
+  // border-radius: 4px;
+  // width: 24px;
+  // height: 24px;
+  // display: flex;
+  // justify-content: center;
+  // color: white;
+  // font-size: 11px;
+  // align-items: center;
+  // background-color: #306933;
+  // float: left;
+  // margin-right: 8px;
 }
 #downloadtemp {
   display: none !important;
