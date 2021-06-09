@@ -8,7 +8,8 @@
       [animation]="true" [animationDuration]="300" [showTitle]="false" [showUnits]="false" [showSubtitle]="false"
       [showInnerStroke]="true" [clockwise]="true" [backgroundOpacity]="0" [backgroundGradient]="false"
       [backgroundStrokeWidth]="3" [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
-      [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false">
+      [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"
+      [outerStrokeLinecap]="'butt'">
     </circle-progress>
     <span class="margin-left-m mat-body-1" *ngIf="currentProgress <= 0">{{'Not started yet'}}</span>
     <span class="margin-left-m mat-body-1" *ngIf="currentProgress > 0">{{'Progress of completion'}}</span>
