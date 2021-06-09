@@ -206,7 +206,7 @@
                       <input [attr.id]="'assignto_' + gaIdx" class="form-input flex-1" matInput #assignedTo
                         formControlName="assignedTo" i18n-placeholder placeholder="Type here" i18n-aria-label
                         aria-label="Type here" [matAutocomplete]="auto" (input)="filterUsers(assignedTo.value)"
-                        autocomplete="off">
+                        autocomplete="off" (click)="setSelectedFilter(gaIdx)">
                       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="userClicked($event, i)">
                         <mat-option [value]="'Final authority'">
                           <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
