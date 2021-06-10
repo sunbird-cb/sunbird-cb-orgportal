@@ -11,6 +11,7 @@ import { ExportAsModule } from 'ngx-export-as'
 import { AutocompleteModule } from './autocomplete/autocomplete.module'
 import { InitialAvatarComponent } from './initial-avatar/initial-avatar.component'
 import { PublishPopupComponent } from './publish-popup/publish-popup.component'
+import { PdfViewerModule } from 'ng2-pdf-viewer'
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { PublishPopupComponent } from './publish-popup/publish-popup.component'
     PublishPopupComponent,
   ],
   imports: [
-    CommonModule,
+    CommonModule, PdfViewerModule,
     MatCardModule, FormsModule, ReactiveFormsModule, MatSidenavModule, MatListModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,

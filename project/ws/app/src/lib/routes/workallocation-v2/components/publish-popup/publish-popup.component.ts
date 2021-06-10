@@ -1,12 +1,8 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, Inject, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
-import { FormGroup, FormControl } from '@angular/forms'
+import { FormGroup } from '@angular/forms'
 import { UploadFileService } from '../../services/uploadfile.service'
-// import * as PDFJS from 'pdfjs-dist/webpack'
-import { NsContent } from '@sunbird-cb/utils'
-// import { Subject, Subscription } from 'rxjs'
-const pdfjsViewer = require('pdfjs-dist/web/pdf_viewer')
 @Component({
   selector: 'ws-app-publish-popup',
   templateUrl: './publish-popup.component.html',
@@ -18,41 +14,12 @@ export class PublishPopupComponent implements OnInit {
   progress: any
   uploading = false
   uploadSuccessful = false
-
-  config = 1
   workorderData: any
   fileInfo: any
   form!: FormGroup
   userData: any
   uploadedFile: any
   comparePDF = false
-  @ViewChild('fullScreenContainer', { static: true })
-  containerSection!: ElementRef<HTMLElement>
-
-  @ViewChild('pdfContainer', { static: true })
-  pdfContainer!: ElementRef<HTMLCanvasElement>
-  DEFAULT_SCALE = 1.0
-  MAX_SCALE = 3
-  MIN_SCALE = 0.2
-  CSS_UNITS = 96 / 72
-  totalPages = 0
-  currentPage = new FormControl(0)
-  zoom = new FormControl(this.DEFAULT_SCALE)
-  isSmallViewPort = false
-  realTimeProgressRequest = {
-    content_type: 'Resource',
-    current: ['0'],
-    max_size: 0,
-    mime_type: NsContent.EMimeTypes.PDF,
-    user_id_type: 'uuid',
-  }
-  current: string[] = []
-  identifier: string | null = null
-  enableTelemetry = false
-  // private pdfInstance: PDFJS.PDFDocumentProxy | null = null
-  // private lastRenderTask: any | null = null
-  // Subscriptions
-  public isInFullScreen = false
   signedPDF: any
   draftPDF: any
 
@@ -66,41 +33,9 @@ export class PublishPopupComponent implements OnInit {
     this.uploadService.getProfile().subscribe((userdata: any) => {
       this.userData = userdata.result.response
     })
-
   }
 
-  ngOnInit() {
-    // SimpleLinkService does not support handling of relative link switching PDFLinkService
-    pdfjsViewer.SimpleLinkService.prototype.getDestinationHash =
-      pdfjsViewer.PDFLinkService.prototype.getDestinationHash
-    pdfjsViewer.SimpleLinkService.prototype.getAnchorUrl =
-      pdfjsViewer.PDFLinkService.prototype.getAnchorUrl
-
-    // this.render()
-  }
-  // private async render(): Promise<boolean> {
-  // this.pdfContainer.nativeElement.innerHTML = ''
-  // let page: any
-  // if (this.pdfInstance) {
-  //   page = await this.pdfInstance.getPage(1)
-  // }
-  // const pageNumStr = '1'
-  // if (!this.current.includes(pageNumStr)) {
-  //   this.current.push(pageNumStr)
-  // }
-  // const viewport = page.getViewport({ scale: this.zoom.value })
-  // this.pdfContainer.nativeElement.width = viewport.width
-  // this.pdfContainer.nativeElement.height = viewport.height
-  // this.lastRenderTask = new pdfjsViewer.PDFPageView({
-  //   scale: viewport.scale,
-  //   container: this.pdfContainer.nativeElement,
-  //   id: '1',
-  //   defaultViewport: viewport,
-  //   textLayerFactory: new pdfjsViewer.DefaultTextLayerFactory(),
-  //   annotationLayerFactory: new pdfjsViewer.DefaultAnnotationLayerFactory(),
-  // })
-  // return true
-  // }
+  ngOnInit() { }
 
   addFiles() {
     this.file.nativeElement.click()
@@ -143,6 +78,7 @@ export class PublishPopupComponent implements OnInit {
       this.uploadService.uploadFile(contentID, formData).subscribe((fdata: any) => {
         const artifactUrl = fdata.result.artifactUrl
         this.workorderData.signedPdfLink = artifactUrl
+        this.workorderData.publishedPdfLink = artifactUrl
         const req = this.workorderData
 
         this.uploadService.updateWorkOrder(req).subscribe((fres: any) => {
@@ -160,26 +96,8 @@ export class PublishPopupComponent implements OnInit {
 
   compareFiles() {
     this.comparePDF = true
-    // this.signedPDF = this.workorderData.signedPdfLink
-    // this.draftPDF = 'C:/Downloads/Draft(1).pdf'
-
-    // const pdf = await PDFJS.getDocument(this.signedPDF).promise
-    // this.pdfInstance = pdf
-    // this.totalPages = this.pdfInstance.numPages
-    // this.zoom.enable()
-    // this.currentPage = 1
-    // this.currentPage.setValue(
-    //   typeof this.widgetData.resumePage === 'number' &&
-    //     this.widgetData.resumePage >= 1 &&
-    //     this.widgetData.resumePage <= this.totalPages
-    //     ? this.widgetData.resumePage
-    //     : 1,
-    // )
-    // this.renderSubject.next()
-    // this.activityStartedAt = new Date()
-    // if (!this.widgetData.disableTelemetry) {
-    //   this.eventDispatcher(WsEvents.EnumTelemetrySubType.Loaded)
-    // }
+    this.signedPDF = this.workorderData.signedPdfLink
+    this.draftPDF = this.workorderData.signedPdfLink
   }
 
   publishOrder() {
@@ -191,7 +109,6 @@ export class PublishPopupComponent implements OnInit {
       if (fres) {
         this.uploading = false
         this.uploadSuccessful = true
-        this.workorderData = fres.result.data
       }
     })
   }
