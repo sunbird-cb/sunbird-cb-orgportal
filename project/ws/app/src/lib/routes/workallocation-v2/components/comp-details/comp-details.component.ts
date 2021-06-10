@@ -23,7 +23,6 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
     this.generateForm()
     this.levelLest = activated.snapshot.data.pageData.data.levels
     this.compTypList = activated.snapshot.data.pageData.data.compTypes
-    debugger
   }
   ngOnInit() {
     this.fetchData()

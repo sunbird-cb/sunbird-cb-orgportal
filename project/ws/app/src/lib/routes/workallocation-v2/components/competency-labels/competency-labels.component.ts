@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop'
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 // import { debounceTime } from 'rxjs/operators'
@@ -26,6 +26,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   private unsubscribe = new Subject<void>()
   labels: NSWatCompetency.ICompActivity[] = []
   groups: NSWatActivity.IActivityGroup[] = []
+  @Input() editData!: any
   activeGroupIdx = 0
   selectedCompIdx = 0
   untitedRole = 'Untitled role'
@@ -276,7 +277,11 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       labelsArray: this.formBuilder.array([]),
       groupsArray: this.formBuilder.array([]),
     })
-    this.addNewGroup()
+    if (this.editData) {
+
+    } else {
+      this.addNewGroup()
+    }
   }
   //**not in USE */
   createActivityControl(activityObj: NSWatCompetency.ICompActivity) {

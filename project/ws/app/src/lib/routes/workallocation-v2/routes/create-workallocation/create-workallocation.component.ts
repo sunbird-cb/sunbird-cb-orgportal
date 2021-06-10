@@ -46,6 +46,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   departmentName: any
   departmentID: any
   workOrderId: any
+  officerId: any
   content1 = {
     name: 'Drafting competencies',
     // tslint:disable-next-line: max-line-length
@@ -70,13 +71,22 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   ) {
     this.route.params.subscribe(params => {
       this.workOrderId = params['workorder']
+      this.officerId = params['officerId']
     })
   }
   ngOnInit(): void {
+    if (this.officerId) {
+      this.getEditData()
+    }
     this.fetchFormsData()
     this.getdeptUsers()
   }
+  getEditData() {
+    let data = _.get(this.route.snapshot, 'data.watData.data')
+    if (data) {
 
+    }
+  }
   getdeptUsers() {
     this.allocateSrvc.getAllUsers().subscribe(res => {
       this.departmentName = res.deptName
