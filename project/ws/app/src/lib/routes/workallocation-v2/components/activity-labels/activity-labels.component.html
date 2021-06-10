@@ -201,7 +201,7 @@
                         [name]="assignedTo.value">
                       </ws-app-initial-avatar>
                       <mat-icon class="margin-right-xs ws-mat-default-text"
-                        *ngIf="assignedTo.value.length && assignedTo.value === 'Final authority'">flag
+                        *ngIf="assignedTo.value.length && assignedTo.value === 'Final authority'">sports_score
                       </mat-icon>
                       <input [attr.id]="'assignto_' + gaIdx" class="form-input flex-1" matInput #assignedTo
                         formControlName="assignedTo" i18n-placeholder placeholder="Type here" i18n-aria-label
@@ -211,7 +211,7 @@
                         <mat-option [value]="'Final authority'">
                           <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
                             <div class="mat-body-2 font-bold-i margin-bottom-xxs flex">
-                              <mat-icon class="margin-right-xs mat ws-mat-default-text">flag</mat-icon>
+                              <mat-icon class="margin-right-xs mat ws-mat-default-text">sports_score</mat-icon>
                               {{'Final authority'}}
                             </div>
                           </div>

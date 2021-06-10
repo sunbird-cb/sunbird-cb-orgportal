@@ -54,7 +54,7 @@
     "jquery": "^3.4.1",
     "jsplumb": "2.11.2",
     "keycloak-angular": "^6.1.0",
-    "material-icons": "^0.3.1",
+    "material-icons": "^0.7.1",
     "moment": "^2.29.1",
     "mustache": "^3.0.2",
     "mux.js": "^5.9.2",
