@@ -382,7 +382,8 @@ b.username {
   list-style-type: none;
 
   li {
-    display: inline-block;
+    display: inline-flex;
+    vertical-align: bottom;
 
     div	{
       background: #F5F5F5;
@@ -407,4 +408,17 @@ b.username {
 
 .veralign-btm {
   vertical-align: bottom;
+}
+
+.updated-date {
+  width: 17em !important;
+  border: 3px solid #1A8C21;
+  height: 50px !important;
+  background: RGBA(29, 137, 35, 0.1) !important;
+  display: flex;
+  align-items: center;
+
+  .material-icons {
+    color: #1A8C21;
+  }
 }

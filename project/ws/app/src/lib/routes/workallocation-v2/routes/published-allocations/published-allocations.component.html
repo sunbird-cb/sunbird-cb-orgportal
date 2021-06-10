@@ -18,7 +18,7 @@
             <mat-icon>more_horiz_outlined</mat-icon> More
           </button> -->
           <button type="button" mat-button class="print-btn" *ngIf="data && data.length > 0" (click)="viewscanned()">
-            <mat-icon>picture_as_pdf_outlined</mat-icon> View signed approval
+            <img src="/assets/icons/pdf.svg" alt="PDF"> View signed approval
           </button>
           <button type="button" mat-button class="print-btn" (click)="print()" *ngIf="data && data.length > 0">
             <mat-icon>print</mat-icon> Print
@@ -39,6 +39,15 @@
           <div class="flex flex-1 custom">
             <div class="flex-3">
               <ul class="statistics">
+                <li class="margin-right-s" *ngIf="workorderData && workorderData.updatedAt">
+                  <div class="updated-date">
+                    <!-- <p class="mat-body-3">Officers</p> -->
+                    <p class="mat-subheading-2">
+                      <mat-icon class="ws-mat-default-text veralign-btm">check_circle_rounded</mat-icon>
+                      Published at {{workorderData.updatedAt | date:'shortTime'}} {{workorderData.updatedAt | date}}
+                    </p>
+                  </div>
+                </li>
                 <li class="margin-right-s">
                   <div class="peach-bg">
                     <p class="mat-body-3">Officers</p>
@@ -115,7 +124,7 @@
                             </td>
                             <td class="submittd">
                               <span class="initials" *ngIf="a.submittedToName && !a.submittedToId">
-                                <mat-icon class="ws-mat-default-text veralign-btm">flag</mat-icon>
+                                <mat-icon class="ws-mat-default-text veralign-btm">sports_score</mat-icon>
                               </span>
                               <span class="initials" *ngIf="a.submittedToId">
                                 <ws-app-initial-avatar *ngIf="a.submittedToName !== null" [name]="a.submittedToName">
@@ -125,7 +134,7 @@
                             </td>
                             <td class="submittd">
                               <span class="initials" *ngIf="a.submittedFromName && !a.submittedFromId">
-                                <mat-icon class="ws-mat-default-text veralign-btm">flag</mat-icon>
+                                <mat-icon class="ws-mat-default-text veralign-btm">sports_score</mat-icon>
                               </span>
                               <span class="initials" *ngIf="a.submittedFromId">
                                 <ws-app-initial-avatar *ngIf="a.submittedFromName !== null" [name]="a.submittedFromName">
