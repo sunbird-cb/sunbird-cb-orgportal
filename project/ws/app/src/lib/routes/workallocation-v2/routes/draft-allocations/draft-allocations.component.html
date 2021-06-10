@@ -108,10 +108,11 @@
                 </div>
                 <div class="margin-top-s margin-bottom-s">
                   <mat-icon>more_horiz_outlined</mat-icon>
-                  <b>{{d.progress}}% progress</b>
                 </div>
-                <div class="error mat-body-2" *ngIf="d.errorCount > 0">
-                  <mat-icon>info</mat-icon> <b>{{d.errorCount}} errors</b>
+                <div class="error mat-body-2">
+                  <mat-icon *ngIf="d.errorCount > 0">info</mat-icon> <b *ngIf="d.errorCount > 0">{{d.errorCount}}
+                    errors</b>
+                  <mat-icon *ngIf="d.progress > 0"></mat-icon> <b *ngIf="d.progress > 0">{{d.progress}}% progress</b>
                 </div>
               </div>
             </td>
@@ -130,9 +131,12 @@
                         <table>
                           <tr *ngFor="let a of rc.roleDetails.childNodes">
                             <td class="activityname">
-                              <span>{{a.description}}</span>
+                              <span *ngIf="a.description">{{a.description}}</span>
                             </td>
                             <td class="submittd">
+                              <span class="initials" *ngIf="a.submittedToName && !a.submittedToId">
+                                <mat-icon class="ws-mat-default-text">flag</mat-icon>
+                              </span>
                               <span class="initials" *ngIf="a.submittedToId">
                                 <ws-app-initial-avatar *ngIf="a.submittedToName !== null" [name]="a.submittedToName">
                                 </ws-app-initial-avatar>
@@ -140,6 +144,9 @@
                               {{a.submittedToName}}
                             </td>
                             <td class="submittd">
+                              <span class="initials" *ngIf="a.submittedFromName && !a.submittedFromId">
+                                <mat-icon class="ws-mat-default-text">flag</mat-icon>
+                              </span>
                               <span class="initials" *ngIf="a.submittedFromId">
                                 <ws-app-initial-avatar *ngIf="a.submittedFromName !== null" [name]="a.submittedFromName">
                                 </ws-app-initial-avatar>
@@ -156,10 +163,10 @@
             </td>
           </tr>
         </table>
-        <div class="custompagination" *ngIf="data && data.length > 0">
+        <!-- <div class="custompagination" *ngIf="data && data.length > 0">
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
           <div class="totalcount">of {{data.length}}</div>
-        </div>
+        </div> -->
 
         <div *ngIf="data && data.length === 0" class="nodata margin-left-xs margin-l text-center font-medium ">
           <img src="/assets/icons/Officers_empty.svg" alt="No Officers" class="margin-top-xl margin-bottom-m">
