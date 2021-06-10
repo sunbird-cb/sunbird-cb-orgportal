@@ -128,9 +128,37 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
       const pdfUrl = '/assets/files/scaned.pdf'
       fileSavers.saveAs(pdfUrl, pdfName)
     }
+    // this.onClickDownloadPdf()
 
   }
-
+  // downloadPdf(base64String: string, fileName: string) {
+  //   if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+  //     // download PDF in IE
+  //     const byteChar = atob(base64String)
+  //     const byteArray = new Array(byteChar.length)
+  //     for (let i = 0; i < byteChar.length; i++) {
+  //       byteArray[i] = byteChar.charCodeAt(i)
+  //     }
+  //     const uIntArray = new Uint8Array(byteArray)
+  //     const blob = new Blob([uIntArray], { type: 'application/pdf' })
+  //     window.navigator.msSaveOrOpenBlob(blob, `${fileName}.pdf`)
+  //   } else {
+  //     // Download PDF in Chrome etc.
+  //     const source = `data:application/pdf;base64,${base64String}`
+  //     const link = document.createElement('a')
+  //     link.href = source
+  //     link.download = `${fileName}.pdf`
+  //     link.click()
+  //   }
+  // }
+  // onClickDownloadPdf() {
+  //   const base64String = 'TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWF' +
+  //     'zb24sIGJ1dCBieSB0aGlzIHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaC' +
+  //     'BpcyBhIGx1c3Qgb2YgdGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGl' +
+  //     'udWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRoZSBzaG9ydCB2ZWhlbWVu' +
+  //     'Y2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4='
+  //   this.downloadPdf(base64String, 'sample')
+  // }
   getFinalColumns() {
     if (this.tableData !== undefined) {
       const columns = _.map(this.tableData.columns, c => c.key)

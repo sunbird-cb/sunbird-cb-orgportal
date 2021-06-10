@@ -172,7 +172,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
           const watData = {
             id: element.id,
             workorders: element.name,
-            officers: "officers",
+            officers: 0,
             lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
             lastupdatedby: element.updatedByName,
             errors: element.errorCount,
@@ -180,6 +180,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
             publishedby: element.createdByName,
             approval: "Approval",
             fromdata: currentStatus,
+            publishedPdfLink: element.publishedPdfLink,
+            signedPdfLink: element.signedPdfLink
 
           }
           finalData.push(watData)
@@ -198,7 +200,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
         res.result.data.forEach((element: any) => {
           const watData = {
             workorders: element.name,
-            officers: "officers",
+            officers: 0,
             lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
             lastupdatedby: element.updatedByName,
             errors: element.errorCount,
@@ -206,6 +208,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
             publishedby: element.createdByName,
             approval: "Approval",
             fromdata: 'published',
+            publishedPdfLink: element.publishedPdfLink,
+            signedPdfLink: element.signedPdfLink
+
 
           }
           finalData.push(watData)
