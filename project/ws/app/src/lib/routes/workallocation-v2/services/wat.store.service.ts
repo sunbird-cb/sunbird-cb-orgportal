@@ -12,6 +12,7 @@ export class WatStoreService {
   private _competencyGroup = new BehaviorSubject<NSWatCompetency.ICompActivity[]>([])
   private currentProgress = new BehaviorSubject<number>(0)
   private errorCount = new BehaviorSubject<number>(0)
+  private initCount = 100
   constructor() {
 
   }
@@ -53,6 +54,11 @@ export class WatStoreService {
   public get getErrorCount(): Observable<number> {
     return this.errorCount.asObservable()
   }
+  public get getID() {
+    // tslint:disable-next-line
+    return ++this.initCount
+  }
+
   clear() {
     this.activitiesGroup = new BehaviorSubject<NSWatActivity.IActivityGroup[]>([])
     this.competencyGroup = new BehaviorSubject<NSWatCompetency.ICompActivityGroup[]>([])

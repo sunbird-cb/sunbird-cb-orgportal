@@ -182,14 +182,32 @@
                         cdkAutosizeMaxRows="5"></textarea>
                       <mat-autocomplete #roleDescriptionAuto="matAutocomplete"
                         (optionSelected)="activitySelected($event,i)">
-                        <div class="mat-body-4 ws-mat-accent-text padding-s">From activity dictionary</div>
-                        <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity">
-                          <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
-                            <!-- <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div> -->
-                            <div class="mat-body-2  margin-bottom-xxs">{{activity.description}}</div>
-                          </div>
-                        </mat-option>
+                        <ng-container
+                          *ngIf="(filteredActivityDesc | async)?.length <= 0 && (actDesc.value || '').length>3">
+                          <mat-option (optionSelected)="activitySelected($event,i)" [value]="{
+                            'description': actDesc.value,
+                            'type': 'ACTIVITY',
+                            'id':''
+                          }">
+                            <div class="mat-body-4 padding-s flex">
+                              <mat-icon>add</mat-icon>
+                              <span class="flex">
+                                {{actDesc.value}}
+                              </span>
+                            </div>
+                          </mat-option>
+                        </ng-container>
+                        <ng-container *ngIf="(filteredActivityDesc | async)?.length > 0">
+                          <div class="mat-body-4 ws-mat-accent-text padding-s">From activity dictionary</div>
+                          <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity">
+                            <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                              <!-- <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div> -->
+                              <div class="mat-body-2  margin-bottom-xxs">{{activity.description}}</div>
+                            </div>
+                          </mat-option>
+                        </ng-container>
                       </mat-autocomplete>
+
                     </mat-form-field>
                   </div>
                   <div class="flex flex-1 margin-2px">

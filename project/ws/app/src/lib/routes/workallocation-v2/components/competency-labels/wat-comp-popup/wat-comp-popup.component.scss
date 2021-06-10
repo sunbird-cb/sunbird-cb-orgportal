@@ -53,7 +53,7 @@
   .scroll {
     overflow: hidden;
     overflow-y: auto;
-    max-height: calc(100vh - 10 * #{$mat-toolbar-gt-xs});
+    max-height: calc(100vh - 4 * #{$mat-toolbar-gt-xs});
   }
 
   .noborder {
@@ -62,5 +62,9 @@
 
   .text-white {
     color: white;
+  }
+
+  .font-bold {
+    font-weight: 600 !important;
   }
 }

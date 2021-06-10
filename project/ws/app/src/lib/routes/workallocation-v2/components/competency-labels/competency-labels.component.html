@@ -42,13 +42,34 @@
                       [matAutocomplete]="competencyAuto" autocomplete="off" />
                     <mat-autocomplete [attr.id]="'compAuto1_' + i" #competencyAuto="matAutocomplete"
                       (optionSelected)="competencySelected($event,i)">
-                      <div class="mat-body-4 ws-mat-accent-text padding-s">From competency dictionary</div>
-                      <mat-option *ngFor="let competency of filteredCompetencies | async" [value]="competency">
-                        <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
-                          <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{competency.name}}</div>
-                          <div class="mat-body-2  margin-bottom-xxs">{{competency.description}}</div>
-                        </div>
-                      </mat-option>
+                      <ng-container
+                        *ngIf="(filteredCompetencies | async)?.length <= 0 && (compName.value || '').length>3">
+                        <mat-option (optionSelected)="activitySelected($event,i)" [value]="{
+                                                  'description': compName.value,
+                                                  'name': '',
+                                                  'id':'',
+                                                  'additionalProperties':{
+                                                    competencyType:''
+                                                  }
+                                                }">
+                          <div class="mat-body-4 ws-mat-accent-text padding-s flex">
+                            <mat-icon>add</mat-icon>
+                            <span class="flex">
+                              {{actDesc.value}}
+                            </span>
+                          </div>
+                        </mat-option>
+                      </ng-container>
+                      <ng-container *ngIf="(filteredCompetencies | async)?.length > 0">
+                        <div class="mat-body-4 ws-mat-accent-text padding-s">From competency dictionary</div>
+                        <mat-option *ngFor="let competency of filteredCompetencies | async" [value]="competency">
+                          <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                            <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{competency.name}}</div>
+                            <div class="mat-body-2  margin-bottom-xxs">{{competency.description}}</div>
+                          </div>
+                        </mat-option>
+                      </ng-container>
+
                     </mat-autocomplete>
                   </mat-form-field>
                 </div>
@@ -138,20 +159,42 @@
                 </div>
                 <div class="flex flex-1" [formGroup]="ga">
                   <div class="flex flex-1 margin-2px">
-                    <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                    <mat-form-field appearance="outline" (click)="setSelectedFilter(gaIdx)"
+                      class="full-width no-pb square outline-color">
                       <input [attr.id]="'compName_' + gaIdx" formControlName="compName" matInput #compName
                         i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
                         class="form-input flex-1" autocomplete="off" (click)="setSelectedFilter(gaIdx)"
                         (input)="filterCompetencies(compName.value, gaIdx)" [matAutocomplete]="competencyAuto1" />
                       <mat-autocomplete [attr.id]="'compAuto_' + gaIdx" #competencyAuto1="matAutocomplete"
                         (optionSelected)="competencySelected($event,i)">
-                        <div class="mat-body-4 ws-mat-accent-text padding-s">From competency dictionary</div>
-                        <mat-option *ngFor="let competency of filteredCompetencies | async" [value]="competency">
-                          <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
-                            <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{competency.name}}</div>
-                            <div class="mat-body-2  margin-bottom-xxs">{{competency.description}}</div>
-                          </div>
-                        </mat-option>
+                        <ng-container
+                          *ngIf="(filteredCompetencies | async)?.length <= 0 && (compName.value || '').length>3">
+                          <mat-option (optionSelected)="activitySelected($event,i)" [value]="{
+                                                                          'description': '',
+                                                                          'name': compName.value,
+                                                                          'id':'',
+                                                                           localId: ga?.get('localID')?.value,
+                                                                          'additionalProperties':{
+                                                                            competencyType:''
+                                                                          }
+                                                                        }">
+                            <div class="mat-body-4 padding-s flex">
+                              <mat-icon>add</mat-icon>
+                              <span class="flex">
+                                {{compName.value}}
+                              </span>
+                            </div>
+                          </mat-option>
+                        </ng-container>
+                        <ng-container *ngIf="(filteredCompetencies | async)?.length > 0">
+                          <div class="mat-body-4 ws-mat-accent-text padding-s">From competency dictionary</div>
+                          <mat-option *ngFor="let competency of filteredCompetencies | async" [value]="competency">
+                            <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                              <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{competency.name}}</div>
+                              <div class="mat-body-2  margin-bottom-xxs">{{competency.description}}</div>
+                            </div>
+                          </mat-option>
+                        </ng-container>
                       </mat-autocomplete>
                     </mat-form-field>
                   </div>

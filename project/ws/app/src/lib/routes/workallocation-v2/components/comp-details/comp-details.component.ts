@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms'
+import { ActivatedRoute } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
 // tslint:enable
@@ -18,8 +19,11 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
   subscribeForm: any
   levelLest = ['Basic', 'Proficient', 'Advanced', 'Expert', 'Ustad']
   compTypList = ['Behavioural', 'Domain', 'Functional']
-  constructor(private watStore: WatStoreService, private formBuilder: FormBuilder) {
+  constructor(private watStore: WatStoreService, private formBuilder: FormBuilder, activated: ActivatedRoute) {
     this.generateForm()
+    this.levelLest = activated.snapshot.data.pageData.data.levels
+    this.compTypList = activated.snapshot.data.pageData.data.compTypes
+    debugger
   }
   ngOnInit() {
     this.fetchData()
