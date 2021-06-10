@@ -114,6 +114,9 @@
                               <span>{{a.description}}</span>
                             </td>
                             <td class="submittd">
+                              <span class="initials" *ngIf="a.submittedToName && !a.submittedToId">
+                                <mat-icon class="ws-mat-default-text veralign-btm">flag</mat-icon>
+                              </span>
                               <span class="initials" *ngIf="a.submittedToId">
                                 <ws-app-initial-avatar *ngIf="a.submittedToName !== null" [name]="a.submittedToName">
                                 </ws-app-initial-avatar>
@@ -121,6 +124,9 @@
                               {{a.submittedToName}}
                             </td>
                             <td class="submittd">
+                              <span class="initials" *ngIf="a.submittedFromName && !a.submittedFromId">
+                                <mat-icon class="ws-mat-default-text veralign-btm">flag</mat-icon>
+                              </span>
                               <span class="initials" *ngIf="a.submittedFromId">
                                 <ws-app-initial-avatar *ngIf="a.submittedFromName !== null" [name]="a.submittedFromName">
                                 </ws-app-initial-avatar>
@@ -137,10 +143,10 @@
             </td>
           </tr>
         </table>
-        <div class="custompagination">
+        <!-- <div class="custompagination">
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
           <div class="totalcount">of {{data.length}}</div>
-        </div>
+        </div> -->
 
         <div *ngIf="data && data.length === 0" class="margin-left-xs margin-l font-medium ">
           No data found

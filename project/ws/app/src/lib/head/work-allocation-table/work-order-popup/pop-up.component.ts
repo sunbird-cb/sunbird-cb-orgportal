@@ -152,7 +152,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
           const watData = {
             id: element.id,
             workorders: element.name,
-            officers: 'officers',
+            officers: 0,
             lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
             lastupdatedby: element.updatedByName,
             errors: element.errorCount,
