@@ -47,20 +47,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   departmentID: any
   workOrderId: any
   officerId: any
-  content1 = {
-    name: 'Drafting competencies',
-    // tslint:disable-next-line: max-line-length
-    appIcon: 'https://igot.blob.core.windows.net/public/content/do_11327647969989427214307/artifact/do_11327647970098380814308_1620664026741_test448192519201591623096543.thumb.jpg',
-    duration: '12 minutes',
-    mimeType: 'video',
-  }
-  content2 = {
-    name: '12 step work allocation process',
-    // tslint:disable-next-line: max-line-length
-    appIcon: 'https://igot.blob.core.windows.net/public/content/do_11328133285267046414498/artifact/do_11327648079200256014382_1620664160384_gdp11597836661217.thumb.jpg',
-    duration: '8 minutes',
-    mimeType: 'pdf',
-  }
+  pageData: any
   // tslinr=t
   constructor(
     private watStore: WatStoreService,
@@ -73,6 +60,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       this.workOrderId = params['workorder']
       this.officerId = params['officerId']
     })
+    this.pageData = _.get(this.route.snapshot, 'data.pageData.data')
   }
   ngOnInit(): void {
     if (this.officerId) {
@@ -82,7 +70,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     this.getdeptUsers()
   }
   getEditData() {
-    let data = _.get(this.route.snapshot, 'data.watData.data')
+    const data = _.get(this.route.snapshot, 'data.watData.data')
     if (data) {
 
     }

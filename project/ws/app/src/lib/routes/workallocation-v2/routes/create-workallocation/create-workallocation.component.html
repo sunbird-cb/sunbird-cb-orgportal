@@ -143,8 +143,9 @@
                     </ng-container>
                     <div class="flex flex-1 flex-column margin-top-l">
                         <p class="mat-subheading-1">Help</p>
-                        <ws-app-assistant-content-card [content]="content1"></ws-app-assistant-content-card>
-                        <ws-app-assistant-content-card [content]="content2"></ws-app-assistant-content-card>
+                        <ng-container *ngFor="let content of pageData?.assistant?.help">
+                            <ws-app-assistant-content-card [content]="content"></ws-app-assistant-content-card>
+                        </ng-container>
                     </div>
                 </div>
             </mat-card>
