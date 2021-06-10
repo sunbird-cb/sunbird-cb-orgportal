@@ -417,3 +417,7 @@ b.username {
     background: #FDECDE !important
   }
 }
+
+::ng-deep.mat-dialog-container {
+  padding: 0 24px !important
+}

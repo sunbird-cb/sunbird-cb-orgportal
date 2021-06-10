@@ -137,8 +137,8 @@ export class DraftAllocationsComponent implements OnInit {
     const dialogConfig = new MatDialogConfig()
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
-    dialogConfig.width = '54%'
-    dialogConfig.height = '66%'
+    dialogConfig.width = '77%'
+    dialogConfig.height = '75%'
     dialogConfig.maxHeight = 'auto'
     dialogConfig.data = {
       data: this.workorderData
