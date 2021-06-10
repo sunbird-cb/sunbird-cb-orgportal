@@ -13,11 +13,10 @@
     <div class="pdf-upload" *ngIf="!uploading && !uploadedFile && !comparePDF && !uploadSuccessful">
       <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
       <input type="file" #file style="display: none" (change)="onFilesAdded($event)" multiple />
-      <button mat-raised-button class="flex-auto-display margin-bottom-s add-files-btn" (click)="addFiles()">
-        Browse for file
+      <button mat-raised-button type="button" class="flex-auto-display margin-bottom-s" (click)="addFiles()">
+        <span class="ws-mat-default-text" i18n>Browse for files</span>
       </button>
       <!--
-      <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
       <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display margin-bottom-s">
         <span class="ws-mat-default-text" i18n>Browse for files</span>
       </button>
@@ -34,25 +33,26 @@
       <p class="loadingbar"><span class="w100"></span></p>
     </div>
     <div class="pdf-upload" *ngIf="comparePDF">
-      <div class="inline-block margin-right-s margin-top-m">
-        <p class="greybar">Signed copy</p>
-        <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
-        <p class="mat-body-2 ws-mat-default-text">{{uploadedFile.name}}</p>
-        <!-- <section #fullScreenContainer class="pdf-container">
-          <div [ngClass]="{'custom-scroll-small': !isInFullScreen}" class="pdf-page-container">
-            <div [ngClass]="{'custom-scroll-small': !isInFullScreen}" class="container" #pdfContainer></div>
-          </div>
-        </section> -->
+      <div class="inline-block margin-right-s margin-top-m float-left width-48">
+        <p class="greybar">
+          <span>Signed copy</span>
+          <span class="mat-body-2 ws-mat-default-text float-right">{{uploadedFile.name}}</span>
+        </p>
+        <div class="pdfviewer">
+          <pdf-viewer [src]="signedPDF" [fit-to-page]="false" [zoom]="0.5" [zoom-scale]="page-fit" [render-text]="true"
+            style="display: block;">
+          </pdf-viewer>
+        </div>
       </div>
-      <div class="inline-block margin-left-s margin-top-m">
-        <p class="greybar">Draft to be published</p>
-        <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
-        <p class="mat-body-2 ws-mat-default-text">Work_order_DraftCopy.pdf</p>
-        <!-- <section #fullScreenContainer class="pdf-container">
-          <div [ngClass]="{'custom-scroll-small': !isInFullScreen}" class="pdf-page-container">
-            <div [ngClass]="{'custom-scroll-small': !isInFullScreen}" class="container" #pdfContainer></div>
-          </div>
-        </section> -->
+      <div class="inline-block margin-left-s margin-top-m width-48">
+        <p class="greybar"><span>Draft to be published</span></p>
+        <!-- <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s"> -->
+
+        <div class="pdfviewer">
+          <pdf-viewer [src]="signedPDF" [fit-to-page]="false" [zoom]="0.5" [zoom-scale]="page-fit" [render-text]="true"
+            style="display: block;">
+          </pdf-viewer>
+        </div>
       </div>
     </div>
     <div class="pdf-upload margin-bottom-xl margin-top-xl" *ngIf="uploadSuccessful">
