@@ -96,10 +96,15 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     }
   }
   get getOfficerDataEdit() {
-    return { usr: this.editDataStruct.user, position: this.editDataStruct.position }
+    if (this.editDataStruct) {
+      return { usr: this.editDataStruct.user, position: this.editDataStruct.position }
+    } return null
   }
   get getActivityDataEdit() {
-    return { unmdA: this.editDataStruct.unmappedActivities, list: this.editDataStruct.roleCompetencyList }
+    if (this.editDataStruct) {
+      return { unmdA: this.editDataStruct.unmappedActivities, list: this.editDataStruct.roleCompetencyList }
+    }
+    return null
   }
 
   getdeptUsers() {
