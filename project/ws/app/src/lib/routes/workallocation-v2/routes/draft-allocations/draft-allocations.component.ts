@@ -155,5 +155,7 @@ export class DraftAllocationsComponent implements OnInit {
       this.data = this.workorderData.users
     })
   }
-
+  edit(id: string) {
+    this.router.navigate(['/app/workallocation/update/', this.workorderID, id])
+  }
 }

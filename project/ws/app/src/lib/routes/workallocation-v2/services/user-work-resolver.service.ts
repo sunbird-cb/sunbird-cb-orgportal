@@ -11,10 +11,10 @@ export class UserWorkResolverService {
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     // const workorder = route.params['workorder']
-    // const officerId = route.params['officerId']
-    return this.userWorkService.fetchUserWorkAllocation('', '').pipe(
+    const officerId = route.params['officerId']
+    return this.userWorkService.fetchUserWorkAllocation(officerId).pipe(
       map((data: any) => {
-        return { data: data, error: null }
+        return { data: data.result && data.result.data, error: null }
       }),
       catchError((err: any) => {
         return of({ data: null, error: err })
