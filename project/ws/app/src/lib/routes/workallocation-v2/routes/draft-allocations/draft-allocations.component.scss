@@ -194,11 +194,11 @@ a:not([href]):not([tabindex]) {
                 b {
                   margin-left: 2px;
                 }
-                span {
+                .compname {
                   background: #FDECDE !important;
                   margin: 2px 2px 8px;
                   border: 1px solid rgba(0, 0, 0, 0.08);
-                  padding: 1px 8px;
+                  padding: 4px 8px;
                   border-radius: 4px;
                   word-break: break-word;
                   display: inline-block;
@@ -217,7 +217,7 @@ a:not([href]):not([tabindex]) {
                     background: #FDECDE !important;
                     margin: 2px 2px 8px;
                     border: 1px solid rgba(0, 0, 0, 0.08);
-                    padding: 1px 8px;
+                    padding: 4px 8px;
                     border-radius: 4px;
                     word-break: break-word;
                     display: block
