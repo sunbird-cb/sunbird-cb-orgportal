@@ -78,7 +78,7 @@ export class PublishPopupComponent implements OnInit {
       this.uploadService.uploadFile(contentID, formData).subscribe((fdata: any) => {
         const artifactUrl = fdata.result.artifactUrl
         this.workorderData.signedPdfLink = artifactUrl
-        this.workorderData.publishedPdfLink = artifactUrl
+        // this.workorderData.publishedPdfLink = artifactUrl
         const req = this.workorderData
 
         this.uploadService.updateWorkOrder(req).subscribe((fres: any) => {
@@ -102,6 +102,7 @@ export class PublishPopupComponent implements OnInit {
 
   publishOrder() {
     this.comparePDF = false
+    this.uploadedFile = ''
     this.workorderData.status = 'Published'
     const req = this.workorderData
 
@@ -115,7 +116,7 @@ export class PublishPopupComponent implements OnInit {
 
   dismiss() {
     this.dialogRef.close()
-    this.router.navigate([`/app/workallocation/published`, this.workorderData.id])
+    this.router.navigate([`/app/home/workallocation`])
   }
 
 }
