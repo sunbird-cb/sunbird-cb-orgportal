@@ -48,6 +48,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   workOrderId: any
   officerId: any
   pageData: any
+  editDataStruct: any
   // tslinr=t
   constructor(
     private watStore: WatStoreService,
@@ -85,8 +86,19 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
         positionId: _.get(data, 'positionId'),
         positionDescription: _.get(data, 'positionDescription')
       }
+      this.editDataStruct = {
+        roleCompetencyList,
+        unmappedActivities,
+        unmappedCompetencies,
+        user,
+        position
+      }
     }
   }
+  get getOfficerDataEdit() {
+    return { usr: this.editDataStruct.user, position: this.editDataStruct.position }
+  }
+
   getdeptUsers() {
     this.allocateSrvc.getAllUsers().subscribe(res => {
       this.departmentName = res.deptName
