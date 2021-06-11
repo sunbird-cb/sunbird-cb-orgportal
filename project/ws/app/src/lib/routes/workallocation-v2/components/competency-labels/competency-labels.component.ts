@@ -210,7 +210,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     // to show hide Role name
     this.canshowName = this.groupList.length - 1
   }
-  //** not in USE */
+  // ** not in USE */
   addNewGroupActivityCustom(idx: number, competincies: NSWatCompetency.ICompActivity[]) {
     if (idx >= 0) {
       // const oldValue = this.groupActivityList as FormArray
@@ -283,7 +283,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       this.addNewGroup()
     }
   }
-  //**not in USE */
+  // **not in USE */
   createActivityControl(activityObj: NSWatCompetency.ICompActivity) {
     const newControl = this.formBuilder.group({
       compId: new FormControl(activityObj.compId),
@@ -358,7 +358,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     if (localOd) {
       oldcompData = _.first(_.filter(lst.value, { localId: localOd }))
       if (typeof oldcompData.compName === 'object') {
-        //**override object */
+        // **override object */
         if (!_.get(oldcompData, 'compName.id') || _.get(oldcompData, 'name.id')) {
           oldcompData = {
             name: oldcompData.compName.name,
@@ -373,7 +373,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         }
       }
     } else {
-      //** if you are here meaning Something is wrong in code */
+      // ** if you are here meaning Something is wrong in code */
       // oldcompData = _.first(_.filter(lst.value, { compName: _.get(event, 'option.value.name') }))
     }
 

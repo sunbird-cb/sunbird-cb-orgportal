@@ -79,19 +79,19 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       const user = {
         officerName: _.get(data, 'userName'),
         userId: _.get(data, 'userId'),
-        userEmail: _.get(data, 'userEmail')
+        userEmail: _.get(data, 'userEmail'),
       }
       const position = {
         userPosition: _.get(data, 'userPosition'),
         positionId: _.get(data, 'positionId'),
-        positionDescription: _.get(data, 'positionDescription')
+        positionDescription: _.get(data, 'positionDescription'),
       }
       this.editDataStruct = {
         roleCompetencyList,
         unmappedActivities,
         unmappedCompetencies,
         user,
-        position
+        position,
       }
     }
   }

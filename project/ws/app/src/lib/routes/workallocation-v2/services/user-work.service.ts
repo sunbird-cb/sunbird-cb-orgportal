@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
 const API_END_POINTS = {
-  GET_USER_WORK: '/apis/protected/v8/workallocation/getWorkAllocationById'
+  GET_USER_WORK: '/apis/protected/v8/workallocation/getWorkAllocationById',
 }
 
 @Injectable({

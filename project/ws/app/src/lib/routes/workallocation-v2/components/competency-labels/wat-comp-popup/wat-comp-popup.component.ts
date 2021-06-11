@@ -94,7 +94,7 @@ export class WatCompPopupComponent implements OnInit {
             name: defObj.name,
             source: defObj.source,
             status: defObj.status,
-            type: defObj.type
+            type: defObj.type,
           }))
         }
         this.setWatValues([...oldValue.value])
@@ -172,10 +172,10 @@ export class WatCompPopupComponent implements OnInit {
       compId: _.get(val, 'compId'),
       compName: _.get(val, 'compName'),
       compDescription: _.get(val, 'compDescription'),
-      compLevel: _.get(_.first(_.filter(val.acDetail, (vall) => !!vall.isSelected)), 'level'),
+      compLevel: _.get(_.first(_.filter(val.acDetail, vall => !!vall.isSelected)), 'level'),
       compType: _.get(val, 'compType'),
       compArea: _.get(val, 'compArea'),
-      localOd: _.get(this.data, 'localOd')
+      localOd: _.get(this.data, 'localOd'),
       // compSource: _.get(val, 'source'),
       // type: _.get(val, 'type'),
       // isSelected: undefined
