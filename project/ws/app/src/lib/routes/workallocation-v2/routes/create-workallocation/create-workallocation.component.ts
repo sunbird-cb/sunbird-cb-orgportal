@@ -72,7 +72,19 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   getEditData() {
     const data = _.get(this.route.snapshot, 'data.watData.data')
     if (data) {
-
+      const roleCompetencyList = _.get(data, 'roleCompetencyList')
+      const unmappedActivities = _.get(data, 'unmappedActivities')
+      const unmappedCompetencies = _.get(data, 'unmappedCompetencies')
+      const user = {
+        officerName: _.get(data, 'userName'),
+        userId: _.get(data, 'userId'),
+        userEmail: _.get(data, 'userEmail')
+      }
+      const position = {
+        userPosition: _.get(data, 'userPosition'),
+        positionId: _.get(data, 'positionId'),
+        positionDescription: _.get(data, 'positionDescription')
+      }
     }
   }
   getdeptUsers() {
