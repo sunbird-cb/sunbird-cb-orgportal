@@ -39,7 +39,7 @@ const routes: Routes = [
         },
         resolve: {
           pageData: PageResolve,
-          watData: UserWorkResolverService
+          watData: UserWorkResolverService,
         },
       },
       {
@@ -63,6 +63,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],
-  providers: [UserWorkResolverService]
+  providers: [UserWorkResolverService],
 })
 export class WorkallocationV2RoutingModule { }
