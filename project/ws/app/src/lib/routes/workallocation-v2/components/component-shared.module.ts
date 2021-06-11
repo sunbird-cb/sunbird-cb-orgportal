@@ -12,12 +12,14 @@ import { AutocompleteModule } from './autocomplete/autocomplete.module'
 import { InitialAvatarComponent } from './initial-avatar/initial-avatar.component'
 import { PublishPopupComponent } from './publish-popup/publish-popup.component'
 import { PdfViewerModule } from 'ng2-pdf-viewer'
+import { PlayerDialogComponent } from './player-dialog/player-dialog.component'
 
 @NgModule({
   declarations: [
     UserAutocompleteCardComponent,
     InitialAvatarComponent,
     PublishPopupComponent,
+    PlayerDialogComponent,
   ],
   imports: [
     CommonModule, PdfViewerModule,
@@ -32,7 +34,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer'
     UserAutocompleteCardComponent,
     InitialAvatarComponent,
     PublishPopupComponent,
+    PlayerDialogComponent,
   ],
-  entryComponents: [PublishPopupComponent],
+  entryComponents: [PublishPopupComponent, PlayerDialogComponent],
 })
 export class ComponentSharedModule { }

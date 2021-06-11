@@ -46,20 +46,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   departmentName: any
   departmentID: any
   workOrderId: any
-  content1 = {
-    name: 'Drafting competencies',
-    // tslint:disable-next-line: max-line-length
-    appIcon: 'https://igot.blob.core.windows.net/public/content/do_11327647969989427214307/artifact/do_11327647970098380814308_1620664026741_test448192519201591623096543.thumb.jpg',
-    duration: '12 minutes',
-    mimeType: 'video',
-  }
-  content2 = {
-    name: '12 step work allocation process',
-    // tslint:disable-next-line: max-line-length
-    appIcon: 'https://igot.blob.core.windows.net/public/content/do_11328133285267046414498/artifact/do_11327648079200256014382_1620664160384_gdp11597836661217.thumb.jpg',
-    duration: '8 minutes',
-    mimeType: 'pdf',
-  }
+  officerId: any
+  pageData: any
+  editDataStruct: any
   // tslinr=t
   constructor(
     private watStore: WatStoreService,
@@ -70,11 +59,47 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   ) {
     this.route.params.subscribe(params => {
       this.workOrderId = params['workorder']
+      this.officerId = params['officerId']
     })
+    this.pageData = _.get(this.route.snapshot, 'data.pageData.data')
   }
   ngOnInit(): void {
+    if (this.officerId) {
+      this.setEditData()
+    }
     this.fetchFormsData()
     this.getdeptUsers()
+  }
+  setEditData() {
+    const data = _.get(this.route.snapshot, 'data.watData.data')
+    if (data) {
+      const roleCompetencyList = _.get(data, 'roleCompetencyList')
+      const unmappedActivities = _.get(data, 'unmappedActivities')
+      const unmappedCompetencies = _.get(data, 'unmappedCompetencies')
+      const user = {
+        officerName: _.get(data, 'userName'),
+        userId: _.get(data, 'userId'),
+        userEmail: _.get(data, 'userEmail')
+      }
+      const position = {
+        userPosition: _.get(data, 'userPosition'),
+        positionId: _.get(data, 'positionId'),
+        positionDescription: _.get(data, 'positionDescription')
+      }
+      this.editDataStruct = {
+        roleCompetencyList,
+        unmappedActivities,
+        unmappedCompetencies,
+        user,
+        position
+      }
+    }
+  }
+  get getOfficerDataEdit() {
+    return { usr: this.editDataStruct.user, position: this.editDataStruct.position }
+  }
+  get getActivityDataEdit() {
+    return { unmdA: this.editDataStruct.unmappedActivities, list: this.editDataStruct.roleCompetencyList }
   }
 
   getdeptUsers() {
@@ -135,7 +160,8 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     return `./#${this.selectedTab}`
   }
   get getOfficerName(): string {
-    return _.get(this.dataStructure, 'officerFormData.officerName')
+    return _.get(this.dataStructure, 'officerFormData.officerName') ||
+      _.get(this.editDataStruct, 'user.officerName')
   }
   // This method is used to fetch the form data from all children components
   fetchFormsData() {

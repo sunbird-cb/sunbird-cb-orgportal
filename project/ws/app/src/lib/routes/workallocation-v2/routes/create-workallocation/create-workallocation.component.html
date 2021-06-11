@@ -71,7 +71,7 @@
                                 <span class="mat-subheading-1 margin-left-xs">{{'Officer'}}</span>
                             </div>
                             <div class="flex flex-1">
-                                <ws-app-officer class="w-full"></ws-app-officer>
+                                <ws-app-officer class="w-full" [editData]="getOfficerDataEdit"></ws-app-officer>
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,8 @@
                                 <span class="mat-subheading-1 margin-left-xs">{{'Roles and activities'}}</span>
                             </div>
                             <div class="flex flex-1">
-                                <ws-app-activity-labels class="flex flex-1"></ws-app-activity-labels>
+                                <ws-app-activity-labels class="flex flex-1" [editData]="getActivityDataEdit">
+                                </ws-app-activity-labels>
                             </div>
                         </div>
                     </div>
@@ -108,7 +109,8 @@
                                 </div>
                             </div>
                             <div class="flex flex-1">
-                                <ws-app-competency-labels class="flex flex-1"></ws-app-competency-labels>
+                                <ws-app-competency-labels class="flex flex-1" [editData]="null">
+                                </ws-app-competency-labels>
                             </div>
                         </div>
                     </div>
@@ -142,8 +144,9 @@
                     </ng-container>
                     <div class="flex flex-1 flex-column margin-top-l">
                         <p class="mat-subheading-1">Help</p>
-                        <ws-app-assistant-content-card [content]="content1"></ws-app-assistant-content-card>
-                        <ws-app-assistant-content-card [content]="content2"></ws-app-assistant-content-card>
+                        <ng-container *ngFor="let content of pageData?.assistant?.help">
+                            <ws-app-assistant-content-card [content]="content"></ws-app-assistant-content-card>
+                        </ng-container>
                     </div>
                 </div>
             </mat-card>

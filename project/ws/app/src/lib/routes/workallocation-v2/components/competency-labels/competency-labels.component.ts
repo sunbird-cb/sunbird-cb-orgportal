@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop'
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 // import { debounceTime } from 'rxjs/operators'
@@ -13,6 +13,7 @@ import { NSWatActivity } from '../../models/activity-wot.model'
 // tslint:disable
 import _ from 'lodash'
 import { WatCompPopupComponent } from './wat-comp-popup/wat-comp-popup.component'
+import { ActivatedRoute } from '@angular/router'
 // tslint:enable
 
 @Component({
@@ -25,6 +26,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   private unsubscribe = new Subject<void>()
   labels: NSWatCompetency.ICompActivity[] = []
   groups: NSWatActivity.IActivityGroup[] = []
+  @Input() editData!: any
   activeGroupIdx = 0
   selectedCompIdx = 0
   untitedRole = 'Untitled role'
@@ -40,8 +42,8 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     private watStore: WatStoreService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
+    private activated: ActivatedRoute,
   ) {
-
   }
 
   get labelsList(): FormArray {
@@ -171,6 +173,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   addNewLabel() {
     const oldValue = this.labelsList
     const fg = this.formBuilder.group({
+      localId: this.watStore.getID,
       activityName: '',
       compDescription: '',
       assignedTo: '',
@@ -184,6 +187,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   addNewGroup(name?: string, desc?: string, id?: string) {
     const oldValue = this.groupList
     const fg = this.formBuilder.group({
+      localId: this.watStore.getID,
       competincies: this.formBuilder.array([]),
       roleId: id || '',
       roleName: name || this.untitedRole,
@@ -191,6 +195,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     })
     const activits = fg.get('competincies') as FormArray
     const fga = this.formBuilder.group({
+      localId: this.watStore.getID,
       compId: '',
       compName: '',
       compDescription: '',
@@ -205,6 +210,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     // to show hide Role name
     this.canshowName = this.groupList.length - 1
   }
+  //** not in USE */
   addNewGroupActivityCustom(idx: number, competincies: NSWatCompetency.ICompActivity[]) {
     if (idx >= 0) {
       // const oldValue = this.groupActivityList as FormArray
@@ -228,6 +234,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     if (idx >= 0) {
       const oldValue = this.groupActivityList as FormArray
       const fga = this.formBuilder.group({
+        localId: this.watStore.getID,
         compId: '',
         compName: '',
         compDescription: '',
@@ -270,8 +277,13 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       labelsArray: this.formBuilder.array([]),
       groupsArray: this.formBuilder.array([]),
     })
-    this.addNewGroup()
+    if (this.editData) {
+
+    } else {
+      this.addNewGroup()
+    }
   }
+  //**not in USE */
   createActivityControl(activityObj: NSWatCompetency.ICompActivity) {
     const newControl = this.formBuilder.group({
       compId: new FormControl(activityObj.compId),
@@ -286,6 +298,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   }
   createGroupControl(activityObj: NSWatCompetency.ICompActivityGroup) {
     const newControl = this.formBuilder.group({
+      localId: this.watStore.getID,
       roleId: new FormControl(activityObj.roleId),
       roleName: new FormControl(activityObj.roleName),
       roleDescription: new FormControl(activityObj.roleDescription),
@@ -297,6 +310,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   createActivtyControl(activityObj: NSWatCompetency.ICompActivity[]) {
     return activityObj.map((v: NSWatCompetency.ICompActivity) => {
       return this.formBuilder.array([{
+        localId: this.watStore.getID,
         activityId: new FormControl(v.compId),
         activityName: new FormControl(v.compName),
         compDescription: new FormControl(v.compDescription),
@@ -336,34 +350,63 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   }
   public competencySelected(event: any, gIdx: number) {
     const lst = this.groupList.at(gIdx).get('competincies') as FormArray
+    // tslint:disable
+    const localOd = lst.at(this.selectedCompIdx).get('localId')!.value
+    // tslint:enable
+    // _.get(event, 'option.value.localId')
+    let oldcompData = null
+    if (localOd) {
+      oldcompData = _.first(_.filter(lst.value, { localId: localOd }))
+      if (typeof oldcompData.compName === 'object') {
+        //**override object */
+        if (!_.get(oldcompData, 'compName.id') || _.get(oldcompData, 'name.id')) {
+          oldcompData = {
+            name: oldcompData.compName.name,
+            id: oldcompData.compId,
+            description: oldcompData.compDescription,
+            type: oldcompData.compType,
+            area: oldcompData.compArea,
+            source: oldcompData.compSource,
+          }
+        } else {
+          oldcompData = { ...oldcompData.compName, ...{ localId: localOd } }
+        }
+      }
+    } else {
+      //** if you are here meaning Something is wrong in code */
+      // oldcompData = _.first(_.filter(lst.value, { compName: _.get(event, 'option.value.name') }))
+    }
 
     const dialogRef = this.dialog.open(WatCompPopupComponent, {
       restoreFocus: false,
       disableClose: true,
-      data: event.option.value,
+      data: oldcompData || event.option.value,
     })
-
+    if (this.activated.snapshot.data && this.activated.snapshot.data.pageData) {
+      dialogRef.componentInstance.defaultCompLevels = this.activated.snapshot.data.pageData
+    }
     // Manually restore focus to the menu trigger since the element that
     // opens the dialog won't be in the DOM any more when the dialog closes.
     dialogRef.afterClosed().subscribe((val: any) => {
       if (val.ok) {
+        const newVal = val.data
         const frmctrl0 = lst.at(this.selectedCompIdx).get('compId') as FormControl
-        frmctrl0.patchValue(_.get(event, 'option.value.id') || '')
-
+        // frmctrl0.patchValue(_.get(event, 'option.value.id') || '')
+        frmctrl0.patchValue(_.get(newVal, 'compId') || '')
         const frmctrl = lst.at(this.selectedCompIdx).get('compDescription') as FormControl
-        frmctrl.patchValue(_.get(event, 'option.value.description') || '')
+        frmctrl.patchValue(_.get(newVal, 'compDescription') || '')
 
         const frmctrl1 = lst.at(this.selectedCompIdx).get('compName') as FormControl
-        frmctrl1.patchValue(_.get(event, 'option.value.name') || '')
+        frmctrl1.patchValue(_.get(newVal, 'compName') || '')
 
-        // const frmctrl2 = lst.at(this.selectedCompIdx).get('compLevel') as FormControl
-        // frmctrl2.patchValue(event.option.value.additionalProperties.)
+        const frmctrl2 = lst.at(this.selectedCompIdx).get('compLevel') as FormControl
+        frmctrl2.patchValue(_.get(newVal, 'compLevel'))
 
         const frmctrl3 = lst.at(this.selectedCompIdx).get('compType') as FormControl
-        frmctrl3.patchValue(_.get(event, 'option.value.additionalProperties.competencyType') || '')
+        frmctrl3.patchValue(_.get(newVal, 'compType') || '')
 
         const frmctrl4 = lst.at(this.selectedCompIdx).get('compArea') as FormControl
-        frmctrl4.patchValue(_.get(event, 'option.value.additionalProperties.competencyArea') || '')
+        frmctrl4.patchValue(_.get(newVal, 'compArea') || '')
 
         this.watStore.setgetcompetencyGroup(this.groupList.value)
         this.updateCompData()

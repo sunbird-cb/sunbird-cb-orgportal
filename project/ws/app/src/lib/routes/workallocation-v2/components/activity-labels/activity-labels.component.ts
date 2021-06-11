@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop'
 import { NSWatActivity } from '../../models/activity-wot.model'
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
@@ -47,6 +47,7 @@ import * as _ from 'lodash'
 })
 export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit {
   private unsubscribe = new Subject<void>()
+  @Input() editData!: any
   labels: NSWatActivity.IActivity[] = []
   groups: NSWatActivity.IActivityGroup[] = []
   selectedActivityIdx = 0
@@ -67,6 +68,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     public dialog: MatDialog,
   ) {
     this.evenPredicate = this.evenPredicate.bind(this)
+    if (this.editData) {
+
+    }
   }
 
   get labelsList(): FormArray {

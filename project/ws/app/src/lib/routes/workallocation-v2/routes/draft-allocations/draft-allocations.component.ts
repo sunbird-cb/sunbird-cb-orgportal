@@ -138,7 +138,7 @@ export class DraftAllocationsComponent implements OnInit {
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
     dialogConfig.width = '77%'
-    dialogConfig.height = '75%'
+    dialogConfig.height = '78%'
     dialogConfig.maxHeight = 'auto'
     dialogConfig.data = {
       data: this.workorderData
@@ -155,5 +155,7 @@ export class DraftAllocationsComponent implements OnInit {
       this.data = this.workorderData.users
     })
   }
-
+  edit(id: string) {
+    this.router.navigate(['/app/workallocation/update/', this.workorderID, id])
+  }
 }

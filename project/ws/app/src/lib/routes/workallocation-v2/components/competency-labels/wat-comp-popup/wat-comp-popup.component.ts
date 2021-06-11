@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core'
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { Component, Inject, Input, OnInit } from '@angular/core'
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatCheckboxChange } from '@angular/material'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 /* tslint:disable */
@@ -7,13 +7,14 @@ import _ from 'lodash'
 /* tslint:enable */
 
 export interface IWatCompPopupData {
-  children: IChield[],
-  description: string,
-  id: string,
-  name: string,
-  source: string,
-  status: string,
-  type: string,
+  children: IChield[]
+  description: string
+  id: string
+  name: string
+  area: string
+  source: string
+  status: string
+  type: string
 }
 export interface IChield {
   isSelected: boolean
@@ -21,6 +22,7 @@ export interface IChield {
   id: string
   name: string
   level: string
+  alias: string[]
   // parentRole?: any
   source: string
   status: string
@@ -39,16 +41,25 @@ export class WatCompPopupComponent implements OnInit {
   isChecked = true
   isCheckedAllA = true
   watForm!: FormGroup
+  isNew = false
+  compTypList!: string[]
+  @Input() defaultCompLevels!: any
   constructor(
     public dialogRef: MatDialogRef<WatCompPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IWatCompPopupData,
     private formBuilder: FormBuilder) {
     this.watForm = new FormGroup({})
+
     this.watForm = this.formBuilder.group({
+      compName: new FormControl(data.name, [Validators.required]),
+      compDescription: new FormControl(data.description, [Validators.required]),
+      compId: new FormControl(data.id, []),
+      compType: new FormControl(data.type, []),
+      compArea: new FormControl(data.area, []),
+      compSource: new FormControl(data.source, []),
       acDetail: this.formBuilder.array([]),
       IsRoleSelected: new FormControl(true, []),
     })
-
   }
   get getList() {
     return this.watForm.get('acDetail') as FormArray
@@ -57,22 +68,47 @@ export class WatCompPopupComponent implements OnInit {
     this.watForm.patchValue(val)
   }
   ngOnInit(): void {
-    if (this.data.children) {
-      const oldValue = this.getList
+    if (this.defaultCompLevels.data && this.defaultCompLevels.data.compTypes) {
+      this.compTypList = this.defaultCompLevels.data.compTypes
+    }
+    if (!!!this.data.id) {
+      this.isNew = true
+    }
+    const oldValue = this.getList
+    if (this.data.children && this.data.children.length > 0) {
       _.each(this.data.children, itm => {
         oldValue.push(this.createItem(itm))
       })
       this.setWatValues([...oldValue.value])
 
+    } else {
+      if (this.defaultCompLevels && this.defaultCompLevels.data && this.defaultCompLevels.data.levels) {
+        for (let i = 0; i < this.defaultCompLevels.data.levels.length; i += 1) {
+          const defObj = this.defaultCompLevels.data.levels[i] as IChield
+          oldValue.push(this.createItem({
+            description: defObj.description,
+            id: '',
+            alias: defObj.alias,
+            isSelected: false,
+            level: defObj.level,
+            name: defObj.name,
+            source: defObj.source,
+            status: defObj.status,
+            type: defObj.type
+          }))
+        }
+        this.setWatValues([...oldValue.value])
+      }
     }
   }
   createItem(itm: IChield): import('@angular/forms').AbstractControl {
     const ctrl = this.formBuilder.group({
-      isSelected: itm.description ? true : false,
+      isSelected: false,
       description: itm.description,
       id: itm.id,
       name: itm.name,
       level: itm.level,
+      alias: itm.alias,
       // parentRole: itm.parentRole,
       source: itm.source,
       status: itm.status,
@@ -130,20 +166,25 @@ export class WatCompPopupComponent implements OnInit {
     }
   }
   generateData(val: any) {
-    return _.map(_.filter(val.acDetail, (vall: IChield) => vall.isSelected), val1 => {
-      return {
-        // description: "Work relating to financial inclusion"
-        activityId: _.get(val1, 'id'),
-        activityName: _.get(val1, 'name'),
-        activityDescription: _.get(val1, 'description'),
-        assignedTo: '',
-        // isSelected: undefined
-        // name: "Work relating to financial inclusion"
-        // parentRole: "RID003"
-        // source: "ISTM"
-        // status: "UNVERIFIED"
-        // type: "ACTIVITY"
-      }
-    })
+    return {
+      // description: "Work relating to financial inclusion"
+      // assignedTo: '',
+      compId: _.get(val, 'compId'),
+      compName: _.get(val, 'compName'),
+      compDescription: _.get(val, 'compDescription'),
+      compLevel: _.get(_.first(_.filter(val.acDetail, (vall) => !!vall.isSelected)), 'level'),
+      compType: _.get(val, 'compType'),
+      compArea: _.get(val, 'compArea'),
+      localOd: _.get(this.data, 'localOd')
+      // compSource: _.get(val, 'source'),
+      // type: _.get(val, 'type'),
+      // isSelected: undefined
+      // name: "Work relating to financial inclusion"
+      // parentRole: "RID003"
+      // source: "ISTM"
+      // status: "UNVERIFIED"
+      // type: "ACTIVITY"acDetail
+    }
+
   }
 }

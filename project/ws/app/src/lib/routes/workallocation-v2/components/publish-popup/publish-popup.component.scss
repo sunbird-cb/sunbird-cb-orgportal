@@ -1,23 +1,28 @@
 .pdf-upload {
   text-align: center;
   height: 44vh;
+
   img {
     margin: 0 auto;
     width: 120px;
     height: 120px;
     display: block;
   }
-  img.publish-success{
+
+  img.publish-success {
     width: 132px;
     height: 130px;
   }
 }
+
 .width-48 {
   width: 48%;
 }
+
 .margin-bottom-0 {
   margin-bottom: 0 !important;
 }
+
 button.flex-auto-display {
   box-shadow: none !important;
   border: 2px solid #0074b6;
@@ -54,8 +59,10 @@ button.flex-auto-display {
   }
 
 }
+
 .pdfviewer {
-  width:100%; height:300px
+  width: 100%;
+  height: 300px
 }
 
 .greybar {
@@ -65,5 +72,9 @@ button.flex-auto-display {
 }
 
 ::ng-deep.ng2-pdf-viewer-container {
-    border: 1px solid #dddddd !important;
+  border: 1px solid #dddddd !important;
+}
+
+.next-btn.mat-raised-button[disabled] {
+  opacity: 0.5;
 }
