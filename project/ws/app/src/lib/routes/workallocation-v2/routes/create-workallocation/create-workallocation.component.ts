@@ -65,12 +65,12 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   }
   ngOnInit(): void {
     if (this.officerId) {
-      this.getEditData()
+      this.setEditData()
     }
     this.fetchFormsData()
     this.getdeptUsers()
   }
-  getEditData() {
+  setEditData() {
     const data = _.get(this.route.snapshot, 'data.watData.data')
     if (data) {
       const roleCompetencyList = _.get(data, 'roleCompetencyList')
@@ -97,6 +97,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   }
   get getOfficerDataEdit() {
     return { usr: this.editDataStruct.user, position: this.editDataStruct.position }
+  }
+  get getActivityDataEdit() {
+    return { unmdA: this.editDataStruct.unmappedActivities, list: this.editDataStruct.roleCompetencyList }
   }
 
   getdeptUsers() {
@@ -157,7 +160,8 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     return `./#${this.selectedTab}`
   }
   get getOfficerName(): string {
-    return _.get(this.dataStructure, 'officerFormData.officerName')
+    return _.get(this.dataStructure, 'officerFormData.officerName') ||
+      _.get(this.editDataStruct, 'user.officerName')
   }
   // This method is used to fetch the form data from all children components
   fetchFormsData() {
