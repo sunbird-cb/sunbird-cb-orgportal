@@ -120,6 +120,7 @@ export class WatCompPopupComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close({
       ok: false,
+      data: this.data,
     })
   }
   onOkClick(): void {
@@ -175,7 +176,7 @@ export class WatCompPopupComponent implements OnInit {
       compLevel: _.get(_.first(_.filter(val.acDetail, vall => !!vall.isSelected)), 'level'),
       compType: _.get(val, 'compType'),
       compArea: _.get(val, 'compArea'),
-      localOd: _.get(this.data, 'localOd'),
+      localId: _.get(this.data, 'localId'),
       // compSource: _.get(val, 'source'),
       // type: _.get(val, 'type'),
       // isSelected: undefined

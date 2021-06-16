@@ -68,9 +68,6 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     public dialog: MatDialog,
   ) {
     this.evenPredicate = this.evenPredicate.bind(this)
-    if (this.editData) {
-
-    }
   }
 
   get labelsList(): FormArray {
@@ -208,25 +205,27 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     // this.changeDetector.detectChanges()
 
   }
-  addNewGroup() {
+  addNewGroup(_needDefaultActivity = true, grp?: NSWatActivity.IActivityGroup) {
     const oldValue = this.groupList
     const fg = this.formBuilder.group({
       activities: this.formBuilder.array([]),
-      groupId: '',
-      groupName: this.untitedRole,
-      groupDescription: '',
+      groupId: grp && grp.groupId || '',
+      groupName: grp && grp.groupName || this.untitedRole,
+      groupDescription: grp && grp.groupDescription || '',
     })
-    const activits = fg.get('activities') as FormArray
-    const fga = this.formBuilder.group({
-      activityId: '',
-      activityName: '',
-      activityDescription: '',
-      assignedTo: '',
-      assignedToId: '',
-      assignedToEmail: '',
-    })
-    activits.push(fga)
-    fg.controls.activities.patchValue([...activits.value])
+    if (_needDefaultActivity) {
+      const activits = fg.get('activities') as FormArray
+      const fga = this.formBuilder.group({
+        activityId: '',
+        activityName: '',
+        activityDescription: '',
+        assignedTo: '',
+        assignedToId: '',
+        assignedToEmail: '',
+      })
+      activits.push(fga)
+      fg.controls.activities.patchValue([...activits.value])
+    }
     oldValue.push(fg)
     this.setGroupValues([...oldValue.value])
     // to show hide Role name
@@ -275,32 +274,43 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       labelsArray: this.formBuilder.array([]),
       groupsArray: this.formBuilder.array([]),
     })
-    // if (this.labels && this.labels.length) {
-    //   this.labels.forEach((v: NSWatActivity.IActivity) => {
-    //     if (v) {
-    // this.createActivityControl({
-    //   activityName: '',
-    //   activityDescription: '',
-    //   assignedTo: '',
-    // })
-    this.addNewGroup()
-    // this.addNewGroupActivity(0)
-    // this.createGroupControl({
-    //   groupName: 'Untitled role',
-    //   groupDescription: 'Role description',
-    //   activities: [{
-    //     activityName: 'unmed',
-    //     activityDescription: 'desc',
-    //     assignedTo: ''
-    //   }]
-    // })
-    //     }
-    //   })
-    // }
-    // this.activityForm.valueChanges.pipe(debounceTime(100)).subscribe(() => {
-    //   // this.value.emit(JSON.parse(JSON.stringify(this.qualityForm.value)))
-    // })
+    if (this.editData) {
+      const unmappedActivities = _.get(this.editData, 'unmdA')
+      if (unmappedActivities && unmappedActivities.length) {
+        /**this will always be on index 0 */
+        this.addNewGroup(false)
+        this.addNewGroupActivityCustom(0, unmappedActivities)
+      } else {
+        this.addNewGroup(true)
+      }
+      const grpData = _.get(this.editData, 'list')
+      for (let i = 0; i < grpData.length; i += 1) {
+        const actlist = _.map(_.get(grpData[i], 'roleDetails.childNodes'), (numa: any) => {
+          return {
+            activityId: _.get(numa, 'id'),
+            activityName: _.get(numa, 'name'),
+            activityDescription: _.get(numa, 'description'),
+            assignedTo: _.get(numa, 'submittedToName'),
+            assignedToId: _.get(numa, 'submittedToId'),
+            assignedToEmail: _.get(numa, 'submittedToEmail'),
+          }
+        })
+        const grp = {
+          activities: [],
+          groupId: _.get(grpData[i], 'roleDetails.id'),
+          groupName: _.get(grpData[i], 'roleDetails.name'),
+          groupDescription: _.get(grpData[i], 'roleDetails.description') || '',
+        }
+        this.addNewGroup(false, grp)
+        this.activeGroupIdx = i + 1
+        this.addNewGroupActivityCustom(i + 1, actlist)
+        this.watStore.setgetactivitiesGroup(this.groupList.value)
+      }
+    } else {
+      this.addNewGroup()
+    }
   }
+
   createActivityControl(activityObj: NSWatActivity.IActivity) {
     const newControl = this.formBuilder.group({
       activityId: new FormControl(activityObj.activityId),

@@ -7,6 +7,7 @@ const API_END_POINTS = {
   CREATE_ASSET: 'apis/proxies/v8/action/content/v3/create',
   UPLOAD_FILE: 'apis/proxies/v8/upload/action/content/v3/upload',
   UPDATE_WORKORDER: 'apis/protected/v8/workallocation/update/workorder',
+  DOWNLOAD_PDF: 'apis/protected/v8/workallocation/getWOPdf',
 }
 
 @Injectable({
@@ -35,6 +36,10 @@ export class UploadFileService {
 
   updateWorkOrder(req: any): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.UPDATE_WORKORDER}`, req)
+  }
+
+  getDraftPDF(val: any): Observable<any> {
+    return this.http.get<any>(`${API_END_POINTS.DOWNLOAD_PDF}/${val}`, { responseType: 'blob' as 'json' })
   }
 
 }

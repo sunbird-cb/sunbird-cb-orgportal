@@ -28,7 +28,7 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
     this.fetchData()
     this.subscribeForm = this.compDetailForm.valueChanges.subscribe(val => {
       if (val) {
-        this.watStore.setCompGroup(val)
+        this.watStore.updateCompGroup(_.get(val, 'competencyList'))
       }
     })
   }
@@ -61,6 +61,8 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
     for (let index = 0; index < this.dataStructure.length; index += 1) {
       if (this.dataStructure && this.dataStructure[index] && this.dataStructure[index].compName) {
         const fg = this.formBuilder.group({
+          localId: this.dataStructure[index].localId,
+          compId: this.dataStructure[index].compId,
           compName: this.dataStructure[index].compName,
           compDescription: this.dataStructure[index].compDescription,
           compLevel: this.dataStructure[index].compLevel,

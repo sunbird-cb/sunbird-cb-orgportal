@@ -172,8 +172,8 @@
                           <mat-option (optionSelected)="activitySelected($event,i)" [value]="{
                                                                           'description': '',
                                                                           'name': compName.value,
-                                                                          'id':'',
-                                                                           localId: ga?.get('localID')?.value,
+                                                                          'id': ga?.get('compId')?.value,
+                                                                           localId: ga?.get('localId')?.value,
                                                                           'additionalProperties':{
                                                                             competencyType:''
                                                                           }

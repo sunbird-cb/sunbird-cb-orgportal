@@ -95,9 +95,14 @@ export class PublishPopupComponent implements OnInit {
   }
 
   compareFiles() {
-    this.comparePDF = true
-    this.signedPDF = this.workorderData.signedPdfLink
-    this.draftPDF = this.workorderData.signedPdfLink
+    this.uploadService.getDraftPDF(this.workorderData.id).subscribe((fileurl: any) => {
+      this.comparePDF = true
+
+      const file = new Blob([fileurl], { type: 'application/pdf' })
+      const fileURL = URL.createObjectURL(file)
+      this.signedPDF = this.workorderData.signedPdfLink
+      this.draftPDF = fileURL
+    })
   }
 
   publishOrder() {
@@ -116,7 +121,13 @@ export class PublishPopupComponent implements OnInit {
 
   dismiss() {
     this.dialogRef.close()
-    this.router.navigate([`/app/home/workallocation`])
+    this.router.navigate([`/app/home/workallocation`, { tab: 'Published' }])
   }
 
+  reupload() {
+    this.comparePDF = false
+    this.uploadedFile = ''
+    this.uploading = false
+    this.uploadSuccessful = false
+  }
 }

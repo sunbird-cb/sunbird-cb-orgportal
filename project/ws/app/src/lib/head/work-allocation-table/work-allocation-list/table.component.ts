@@ -1,3 +1,4 @@
+import { WorkallocationService } from './../../../routes/home/services/workallocation.service'
 import {
   Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges,
 } from '@angular/core'
@@ -12,7 +13,6 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { UserPopupComponent } from '../user-popup/user-popup'
 import { CreateMDOService } from '../create-mdo.services'
 import { ExportAsConfig } from 'ngx-export-as'
-import * as fileSavers from 'file-saver'
 
 @Component({
   selector: 'ws-work-allocation-table',
@@ -54,7 +54,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
     private router: Router, public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private createMDOService: CreateMDOService,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar, private wrkAllocServ: WorkallocationService) {
     this.dataSource = new MatTableDataSource<any>()
     this.actionsClick = new EventEmitter()
     this.clicked = new EventEmitter()
@@ -113,52 +113,40 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
       this.dataSource.filter = ''
     }
   }
-  buttonClick(action: string, row: any) {
-    if (action && row.fromdata === 'draft') {
-      const pdfName = 'draft'
-      const pdfUrl = '/assets/files/draft.pdf'
-      fileSavers.saveAs(pdfUrl, pdfName)
-    } else if (action && row.fromdata === 'published') {
+  buttonClick(row: any) {
 
-      const pdfName = 'published'
-      const pdfUrl = '/assets/files/published.pdf'
-      fileSavers.saveAs(pdfUrl, pdfName)
-    } else {
-      const pdfName = 'scaned'
-      const pdfUrl = '/assets/files/scaned.pdf'
-      fileSavers.saveAs(pdfUrl, pdfName)
+    if (row) {
+      this.wrkAllocServ.getPDF(row.id).subscribe(response => {
+        const file = new Blob([response], { type: 'application/pdf' })
+        const fileURL = URL.createObjectURL(file)
+        window.open(fileURL)
+      })
+
     }
-    // this.onClickDownloadPdf()
-
   }
-  // downloadPdf(base64String: string, fileName: string) {
-  //   if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-  //     // download PDF in IE
-  //     const byteChar = atob(base64String)
-  //     const byteArray = new Array(byteChar.length)
-  //     for (let i = 0; i < byteChar.length; i++) {
-  //       byteArray[i] = byteChar.charCodeAt(i)
-  //     }
-  //     const uIntArray = new Uint8Array(byteArray)
-  //     const blob = new Blob([uIntArray], { type: 'application/pdf' })
-  //     window.navigator.msSaveOrOpenBlob(blob, `${fileName}.pdf`)
-  //   } else {
-  //     // Download PDF in Chrome etc.
-  //     const source = `data:application/pdf;base64,${base64String}`
-  //     const link = document.createElement('a')
-  //     link.href = source
-  //     link.download = `${fileName}.pdf`
-  //     link.click()
-  //   }
-  // }
-  // onClickDownloadPdf() {
-  //   const base64String = 'TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWF' +
-  //     'zb24sIGJ1dCBieSB0aGlzIHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaC' +
-  //     'BpcyBhIGx1c3Qgb2YgdGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGl' +
-  //     'udWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRoZSBzaG9ydCB2ZWhlbWVu' +
-  //     'Y2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4='
-  //   this.downloadPdf(base64String, 'sample')
-  // }
+
+  blobToSaveAs(fileName: string, blob: Blob) {
+
+    // try {
+
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    if (link.download !== undefined) { // feature detection
+      link.setAttribute('href', url)
+      link.setAttribute('download', fileName)
+      link.style.visibility = 'hidden'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
+    // }
+    //  catch (e) {
+    //   console.error('BlobToSaveAs error', e)
+    // }
+  }
+  selectWorkOrder(workOrder: any) {
+    this.eOnRowClick.emit(workOrder)
+  }
   getFinalColumns() {
     if (this.tableData !== undefined) {
       const columns = _.map(this.tableData.columns, c => c.key)
@@ -236,6 +224,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
   }
 
   onRowClick(e: any) {
+    this.eOnRowClick.emit(e)
     if (e.fromdata === 'Draft') {
       this.router.navigate([`/app/workallocation/drafts`, e.id])
     } else if (e.fromdata === 'Published') {

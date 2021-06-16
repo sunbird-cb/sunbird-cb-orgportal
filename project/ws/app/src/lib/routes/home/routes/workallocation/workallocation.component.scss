@@ -90,6 +90,13 @@ a:not([href]):not([tabindex]) {
   background-color: #fff;
   border-color: #dee2e6;
 }
+ .page-link-2 {
+  color: darkgray;
+  pointer-events: none;
+  cursor: auto;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
 
 .container-balanced {
   @extend %page-center;
@@ -218,7 +225,6 @@ a:not([href]):not([tabindex]) {
     cursor: pointer;
   }
 }
-
 .custom-table-nav {
   .search {
     display: flex;
@@ -275,6 +281,18 @@ a:not([href]):not([tabindex]) {
     font-size: 14px;
   }
 }
+.print-btn-2 {
+    min-width: 130px;
+    width: auto;
+    border:1px solid #DEDEDE;
+    border-radius: 4px;
+    margin: 0 12px 0 5px;
+    color: darkgray !important;
+    font-family: 'Lato';
+    font-weight: 400;
+    font-size: 14px;
+  }
+
 
 #downloadtemp {
   display: none !important;

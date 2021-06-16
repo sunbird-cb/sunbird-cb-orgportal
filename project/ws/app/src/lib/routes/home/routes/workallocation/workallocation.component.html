@@ -39,18 +39,24 @@
               <!-- <button type="button" mat-button class="downlaod-btn" (click)="export()"  *ngIf="data && data.length > 0">
                 <mat-icon>cloud_download</mat-icon> Download
               </button> -->
-              <button type="button" mat-button class="print-btn" (click)="export()" *ngIf="data && data.length > 0">
+              <button type="button" mat-button [ngClass]="{'print-btn-2': !isPrint, 'print-btn': isPrint}"
+                (click)="export()" [disabled]="!isPrint">
                 <mat-icon>print</mat-icon> Print
               </button>
               <button type="button" mat-button class="allocation-btn" (click)="onNewAllocationClick()">
-                New work allocation
+                New work order
               </button>
             </div>
           </div>
         </div>
-        <ws-work-allocation-table [tableData]='tabledata' [data]='data' (eOnRowClick)="onRoleClick()"
-          [needAddAdmin]='false' [needCreateUser]='false'>
+        <ws-work-allocation-table [tableData]='tabledata' [data]='data' *ngIf="currentFilter !== 'Archived'"
+          (eOnRowClick)="onRoleClick($event)" [needAddAdmin]='false' [needCreateUser]='false'>
         </ws-work-allocation-table>
+        <div class="text-center margin-m" *ngIf="currentFilter === 'Archived'">
+          <img class="block mx-auto mb-3" src="/assets/instances/eagle/app_logos/allocation_empty.svg"
+            alt="Feature comming soon">
+          <span class="block mat-subheading-2 mt-3"> Feature coming soon</span>
+        </div>
         <mat-menu #cardMenu="matMenu">
           <ng-template matMenuContent let-rowData="data">
             <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item

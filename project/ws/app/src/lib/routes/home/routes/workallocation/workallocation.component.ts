@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
 import { MatDialog, MatPaginator } from '@angular/material'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 /* tslint:disable */
 import _ from 'lodash'
@@ -15,7 +15,7 @@ import FileSaver from 'file-saver'
   styleUrls: ['./workallocation.component.scss'],
 })
 export class WorkallocationComponent implements OnInit, OnDestroy {
-  currentFilter = 'Draft'
+  currentFilter: any
   tabs: any
   currentUser!: string | null
   tabledata!: ITableData
@@ -37,6 +37,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   downloaddata: any = []
   totalusersCount: any
   p: number = 1;
+  isPrint = false
+
 
   ngOnDestroy() {
     if (this.tabs) {
@@ -45,8 +47,15 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   }
 
   constructor(private exportAsService: ExportAsService, private router: Router,
-    private workallocationSrvc: WorkallocationService,
-    public dialog: MatDialog) { }
+    private workallocationSrvc: WorkallocationService, private activeRoute: ActivatedRoute,
+    public dialog: MatDialog) {
+    const paramsMap = this.activeRoute.snapshot.params.tab
+    if (paramsMap === 'Published') {
+      this.currentFilter = 'Published'
+    } else {
+      this.currentFilter = 'Draft'
+    }
+  }
 
   ngOnInit() {
     // this.getdeptUsers()
@@ -125,11 +134,15 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     })
     //}
   }
-  onRoleClick() {
+  onRoleClick(element: any) {
+    if (element) {
+      this.isPrint = true
+    }
 
   }
 
   filter(key: string) {
+    this.isPrint = false
     if (key === 'Published') {
       this.tabledata['columns'][2] = { displayName: 'Published on', key: 'lastupdatedon' }
       this.tabledata['columns'][3] = { displayName: 'Published by', key: 'lastupdatedby' }
@@ -172,7 +185,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
           const watData = {
             id: element.id,
             workorders: element.name,
-            officers: 0,
+            officers: (element.userIds && element.userIds.length) || 0,
             lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
             lastupdatedby: element.updatedByName,
             errors: element.errorCount,
@@ -200,7 +213,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
         res.result.data.forEach((element: any) => {
           const watData = {
             workorders: element.name,
-            officers: 0,
+            officers: (element.userIds && element.userIds.length) || 0,
             lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
             lastupdatedby: element.updatedByName,
             errors: element.errorCount,
@@ -267,7 +280,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   buttonClick(action: string, row: any) {
     this.downloaddata = []
     if (action === 'Download') {
-      console.log('row data', row)
       this.downloaddata.push(row)
       this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
         // save started
@@ -282,7 +294,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     }
   }
   searchBasedOnQurey(newValue: Event) {
-    console.log(newValue)
     this.getWATBySearch(newValue.toString(), this.currentFilter)
 
   }
