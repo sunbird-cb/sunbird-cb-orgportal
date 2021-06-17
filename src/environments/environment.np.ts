@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  sitePath: 'mdo-sb.idc.tarento.com',
-  karmYogiPath: 'https://karmayogi.nic.in',
-  cbpPath: 'https://cbp.karmayogi.nic.in',
+  sitePath: 'mdo.karmayogiprod.nic.in',
+  karmYogiPath: 'https://karmayogiprod.nic.in',
+  cbpPath: 'https://cbp.karmayogiprod.nic.in',
 }
