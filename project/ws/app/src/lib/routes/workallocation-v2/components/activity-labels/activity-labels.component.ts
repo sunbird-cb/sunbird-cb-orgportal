@@ -11,6 +11,7 @@ import { WatStoreService } from '../../services/wat.store.service'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations'
 import { WatRolePopupComponent } from './wat-role-popup/wat-role-popup.component'
+import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
 // tslint:disable
 import * as _ from 'lodash'
 // tslint:enable
@@ -126,8 +127,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       moveItemInArray(this.groupActivityList.controls, event.previousIndex, event.currentIndex)
       moveItemInArray(this.groupActivityList.value, event.previousIndex, event.currentIndex)
     } else {
-      if (!event.item.data.activityDescription) {
-        this.snackBar.open('Activity is required to drag', undefined, { duration: 2000 })
+      if (!(event.item.data.activityDescription || event.item.data.submissionFrom || event.item.data.assignedTo)) {
+        this.snackBar.open('Empty activity!! You can not drag', undefined, { duration: 2000 })
         return
       }
       const previousContainerIndex = parseInt(event.previousContainer.id.replace('groups_', ''), 10)
@@ -222,6 +223,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         assignedTo: '',
         assignedToId: '',
         assignedToEmail: '',
+        submissionFrom: '',
+        submissionFromId: '',
+        submissionFromEmail: '',
       })
       activits.push(fga)
       fg.controls.activities.patchValue([...activits.value])
@@ -240,6 +244,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
           activityId: ac.activityId,
           activityName: ac.activityName,
           activityDescription: ac.activityDescription,
+          submissionFrom: ac.submissionFrom,
+          submissionFromId: ac.submissionFromId,
+          submissionFromEmail: ac.submissionFromEmail,
           assignedTo: ac.assignedTo,
           assignedToId: ac.assignedToId,
           assignedToEmail: ac.assignedToEmail,
@@ -261,6 +268,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         assignedTo: '',
         assignedToId: '',
         assignedToEmail: '',
+        submissionFrom: '',
+        submissionFromId: '',
+        submissionFromEmail: '',
       })
       oldValue.push(fga)
       this.setGroupActivityValues([...oldValue.value])
@@ -290,6 +300,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
             activityId: _.get(numa, 'id'),
             activityName: _.get(numa, 'name'),
             activityDescription: _.get(numa, 'description'),
+            submissionFrom: _.get(numa, 'submissionFrom'),
+            submissionFromId: _.get(numa, 'submissionFromId'),
+            submissionFromEmail: _.get(numa, 'submissionFromEmail'),
             assignedTo: _.get(numa, 'submittedToName'),
             assignedToId: _.get(numa, 'submittedToId'),
             assignedToEmail: _.get(numa, 'submittedToEmail'),
@@ -319,6 +332,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       assignedTo: new FormControl(activityObj.assignedTo),
       assignedToId: new FormControl(activityObj.assignedToId),
       assignedToEmail: new FormControl(activityObj.assignedToEmail),
+      submissionFrom: new FormControl(activityObj.submissionFrom),
+      submissionFromId: new FormControl(activityObj.submissionFromId),
+      submissionFromEmail: new FormControl(activityObj.submissionFromEmail),
     })
     const optionsArr = this.activityForm.controls['labelsArray'] as FormArray
     optionsArr.push(newControl)
@@ -342,6 +358,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         assignedTo: new FormControl(v.assignedTo),
         assignedToId: new FormControl(v.assignedToId),
         assignedToEmail: new FormControl(v.assignedToEmail),
+        submissionFrom: new FormControl(v.submissionFrom),
+        submissionFromId: new FormControl(v.submissionFromId),
+        submissionFromEmail: new FormControl(v.submissionFromEmail),
       }])
     })
   }
@@ -511,33 +530,80 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     return data ? data.activityDescription : ''
   }
 
-  userClicked(event: any, gIdx: number) {
+  userClicked(event: any, gIdx: number, type = 'to') {
     if (event) {
-      this.activeGroupIdx = gIdx
-      let assignedTo = ''
-      let assignedToId = ''
-      let assignedToEmail = ''
-      if (_.get(event, 'option.value') === 'Final authority') {
-        assignedTo = 'Final authority'
-        assignedToId = '',
-          assignedToEmail = ''
+      if (type === 'to') {
+        this.activeGroupIdx = gIdx
+        let assignedTo = ''
+        let assignedToId = ''
+        let assignedToEmail = ''
+        if (_.get(event, 'option.value') === 'Final authority') {
+          assignedTo = 'Final authority'
+          assignedToId = '',
+            assignedToEmail = ''
+        } else {
+          // tslint:disable-next-line: prefer-template
+          assignedTo = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
+          assignedToId = _.get(event, 'option.value.userDetails.wid'),
+            assignedToEmail = _.get(event, 'option.value.userDetails.email')
+        }
+        const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
+        const frmctrl = lst.at(this.selectedActivityIdx).get('assignedTo') as FormControl
+        frmctrl.patchValue(assignedTo || '')
+
+        const frmctrl1 = lst.at(this.selectedActivityIdx).get('assignedToId') as FormControl
+        frmctrl1.patchValue(assignedToId)
+
+        const frmctrl2 = lst.at(this.selectedActivityIdx).get('assignedToEmail') as FormControl
+        frmctrl2.patchValue(assignedToEmail)
       } else {
-        // tslint:disable-next-line: prefer-template
-        assignedTo = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
-        assignedToId = _.get(event, 'option.value.userDetails.wid'),
-          assignedToEmail = _.get(event, 'option.value.userDetails.email')
+        this.activeGroupIdx = gIdx
+        let submissionFrom = ''
+        let submissionFromId = ''
+        let submissionFromEmail = ''
+        if (_.get(event, 'option.value') === 'Final authority') {
+          submissionFrom = 'Final authority'
+          submissionFromId = '',
+            submissionFromEmail = ''
+        } else {
+          // tslint:disable-next-line: prefer-template
+          submissionFrom = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
+          submissionFromId = _.get(event, 'option.value.userDetails.wid')
+          submissionFromEmail = _.get(event, 'option.value.userDetails.email')
+        }
+        const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
+        const frmctrl = lst.at(this.selectedActivityIdx).get('submissionFrom') as FormControl
+        frmctrl.patchValue(submissionFrom || '')
+
+        const frmctrl1 = lst.at(this.selectedActivityIdx).get('submissionFromId') as FormControl
+        frmctrl1.patchValue(submissionFromId)
+
+        const frmctrl2 = lst.at(this.selectedActivityIdx).get('submissionFromEmail') as FormControl
+        frmctrl2.patchValue(submissionFromEmail)
       }
-      const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
-      const frmctrl = lst.at(this.selectedActivityIdx).get('assignedTo') as FormControl
-      frmctrl.patchValue(assignedTo || '')
-
-      const frmctrl1 = lst.at(this.selectedActivityIdx).get('assignedToId') as FormControl
-      frmctrl1.patchValue(assignedToId)
-
-      const frmctrl2 = lst.at(this.selectedActivityIdx).get('assignedToEmail') as FormControl
-      frmctrl2.patchValue(assignedToEmail)
-
       this.watStore.setgetactivitiesGroup(this.groupList.value)
+    }
+  }
+  deleteRowActivity(roleIdx: number, activityIdx: number) {
+    const roleGrp = this.groupList.at(roleIdx) as FormGroup
+    const activitiesLst = roleGrp.get('activities') as FormArray
+    activitiesLst.removeAt(activityIdx)
+    this.watStore.setgetactivitiesGroup(this.groupList.value)
+  }
+  deleteSingleActivity(roleIdx: number, activityIdx: number) {
+    if (roleIdx >= 0 && activityIdx >= 0) {
+      const dialogRef = this.dialog.open(DialogConfirmComponent, {
+        data: {
+          title: 'Remove Activity',
+          body: '  You are removing activicity from this group, Press "YES" to confirm otherwise Press "NO"',
+        },
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.deleteRowActivity(roleIdx, activityIdx)
+          this.snackBar.open('Activity removed successfully!! ', undefined, { duration: 2000 })
+        }
+      })
     }
   }
 
@@ -554,5 +620,27 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
 
   hideName() {
     this.canshowName = -1
+  }
+  deleteGrp(grpidx: number) {
+    if (grpidx >= 0) {
+      this.snackBar.open('This feature will come soon!! ', undefined, { duration: 2000 })
+      //   const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      //     data: {
+      //       title: 'Remove Role',
+      //       body: '  You are removing role, Press "YES" to confirm otherwise Press "NO"',
+      //     },
+      //   })
+      //   dialogRef.afterClosed().subscribe(result => {
+      //     if (result) {
+      //       // const roleGrp = this.groupList.at(grpidx) as FormGroup
+      //       // const activitiesLst = roleGrp.get('activities') as FormArray
+      //       // for (let i = 0; i < activitiesLst.value.length; i += 1) {
+      //       //   // this.deleteRowActivity(grpidx, i)
+      //       // }
+      //       this.snackBar.open('Role removed successfully!! ', undefined, { duration: 2000 })
+      //     }
+      //   })
+    }
+    return
   }
 }

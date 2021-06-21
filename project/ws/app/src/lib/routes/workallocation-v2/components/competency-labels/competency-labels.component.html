@@ -209,6 +209,10 @@
                         cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
                     </mat-form-field>
                   </div>
+                  <div *ngIf="i === 0" class="flex margin-auto">
+                    <mat-icon class="cursor-pointer ws-mat-black60-text" (click)="deleteSingleCompetency(i,gaIdx)">
+                      delete</mat-icon>
+                  </div>
                 </div>
               </div>
             </ng-container>

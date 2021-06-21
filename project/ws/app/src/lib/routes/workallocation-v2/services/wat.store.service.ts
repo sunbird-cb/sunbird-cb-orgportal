@@ -51,9 +51,9 @@ export class WatStoreService {
         itm.competincies.forEach(a => {
           const existing = this.getUpdateCompGroupById(a.localId) || null
           if (existing && a.compName && (a.localId === existing.localId)) {
-            const level = _.get(existing, 'compLevel')
-            const compType = _.get(existing, 'compType')
-            const compArea = _.get(existing, 'compArea')
+            const level = _.get(a, 'compLevel') || _.get(existing, 'compLevel')
+            const compType = _.get(a, 'compType') || _.get(existing, 'compType')
+            const compArea = _.get(a, 'compArea') || _.get(existing, 'compArea')
             const newA = { ...a, level, compType, compArea }
             complist.push(newA)
           } else {

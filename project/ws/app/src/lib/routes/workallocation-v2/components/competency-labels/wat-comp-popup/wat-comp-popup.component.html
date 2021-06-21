@@ -27,8 +27,8 @@
           </div>
           <div class="row">
             <div class="flex-1 row-cell margin-r-2px ws-mat-accent-border">
-              <!-- <span class="mat-body-2" *ngIf="!isNew">{{data.name}}</span> -->
-              <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+              <span class="mat-body-2" *ngIf="!isNew">{{data.name}}</span>
+              <mat-form-field *ngIf="isNew" appearance="outline" class="full-width no-pb square outline-color">
                 <input matInput #compName i18n-placeholder placeholder="Type here" i18n-aria-label
                   formControlName="compName" aria-label="Activity description input" class="form-input flex-1"
                   autocomplete="off" />
@@ -36,7 +36,7 @@
             </div>
             <div class="flex-3 row-cell ws-mat-accent-border">
               <span class="mat-body-2" *ngIf="!isNew">{{data.description}}</span>
-              <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+              <mat-form-field *ngIf="isNew" appearance="outline" class="full-width no-pb square outline-color">
                 <input matInput #compDescription i18n-placeholder placeholder="Type here" i18n-aria-label
                   formControlName="compDescription" aria-label="Activity description input" class="form-input flex-1"
                   autocomplete="off" />
@@ -110,7 +110,7 @@
                       class="padding-bottom-s padding-top-s" color="accent">
                       <!-- [ngClass]="{'font-bold':_comp.get('isSelected')}" -->
                       <span class="mat-body-2">{{_comp.get('level')?.value}}</span>
-                      <span class="mat-body-2"> - {{_comp.get('isSelected')?.value}}</span>
+                      <span class="mat-body-2"> - {{_comp.get('alias')?.value}}</span>
                     </mat-radio-button>
                     <!-- <span class="mat-body-2">{{_comp.get("name")?.value}}</span> -->
                     <!-- </mat-radio-group> -->

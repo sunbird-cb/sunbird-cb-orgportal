@@ -258,6 +258,26 @@
   margin-bottom: 2px;
 }
 
+.f-white {
+  color: white !important;
+}
+
+.del {
+  // this should move to _theme
+  $colorBlack60: rgba(0, 0, 0, 0.60);
+  background: $colorBlack60;
+  border-radius: 0 0 0 8px;
+  right: 0;
+  width: 77px;
+  height: 32px;
+  z-index: 2;
+}
+
+
+.m-auto {
+  margin: auto;
+}
+
 .break-a {
   overflow-wrap: anywhere;
 }

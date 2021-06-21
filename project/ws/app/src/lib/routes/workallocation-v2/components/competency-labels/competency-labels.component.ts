@@ -14,6 +14,7 @@ import { NSWatActivity } from '../../models/activity-wot.model'
 import _ from 'lodash'
 import { WatCompPopupComponent } from './wat-comp-popup/wat-comp-popup.component'
 import { ActivatedRoute } from '@angular/router'
+import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
 // tslint:enable
 
 @Component({
@@ -419,15 +420,15 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
             level: oldcompData.compLevel,
           }
         } else {
-          oldcompData.compName = _.get(oldcompData, 'compName.name')
+          const oldOptionData = _.get(oldcompData, 'compName')
           const finalLevel = this.watStore.getUpdateCompGroupById(localOd)
           oldcompData = {
-            name: oldcompData.compName,
-            id: oldcompData.compId,
-            description: oldcompData.compDescription,
-            type: _.get(finalLevel, 'compType'),
-            area: _.get(finalLevel, 'compArea'),
-            source: oldcompData.compSource,
+            name: typeof (oldcompData.compName) === 'object' ? oldOptionData.name : oldcompData.compName,
+            id: oldcompData.compId || oldOptionData.id,
+            description: oldcompData.compDescription || oldOptionData.description,
+            type: _.get(finalLevel, 'compType') || _.get(oldOptionData, 'additionalProperties.competencyType'),
+            area: _.get(finalLevel, 'compArea') || _.get(oldOptionData, 'additionalProperties.competencyArea'),
+            source: oldcompData.compSource || oldOptionData.source,
             level: _.get(finalLevel, 'compLevel'),
             localId: localOd,
           }
@@ -458,7 +459,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         const frmctrl = lst.at(this.selectedCompIdx).get('compDescription') as FormControl
         frmctrl.patchValue(_.get(newVal, 'compDescription') || '')
 
-        frmctrl0.patchValue(_.get(newVal, 'localId') || '')
+        // frmctrl0.patchValue(_.get(newVal, 'localId') || '')
         const frmctrlw = lst.at(this.selectedCompIdx).get('localId') as FormControl
         frmctrlw.patchValue(_.get(newVal, 'localId') || localOd || this.watStore.getID)
 
@@ -515,5 +516,27 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
 
   hideName() {
     this.canshowName = -1
+  }
+  deleteRowCompetency(roleIdx: number, compIdx: number) {
+    const roleGrp = this.groupList.at(roleIdx) as FormGroup
+    const competinciesLst = roleGrp.get('competincies') as FormArray
+    competinciesLst.removeAt(compIdx)
+    this.watStore.setgetcompetencyGroup(this.groupList.value)
+  }
+  deleteSingleCompetency(grpIdx: number, compIdx: number) {
+    if (grpIdx >= 0 && compIdx >= 0) {
+      const dialogRef = this.dialog.open(DialogConfirmComponent, {
+        data: {
+          title: 'Remove Competency',
+          body: '  You are removing Competency from this group, Press "YES" to confirm otherwise Press "NO"',
+        },
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.deleteRowCompetency(grpIdx, compIdx)
+          this.snackBar.open('Activity removed successfully!! ', undefined, { duration: 2000 })
+        }
+      })
+    }
   }
 }
