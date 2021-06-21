@@ -44,6 +44,15 @@
   ::ng-deep .mat-select-arrow-wrapper {
     padding-top: 1rem;
   }
+
+  ::ng-deep mat-select-panel {
+    max-width: 500px !important;
+  }
+
+  .mat-select-panel .mat-optgroup-label,
+  .mat-select-panel .mat-option {
+    height: auto !important;
+  }
 }
 
 .margin-0 {

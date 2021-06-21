@@ -416,9 +416,21 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
             type: oldcompData.compType,
             area: oldcompData.compArea,
             source: oldcompData.compSource,
+            level: oldcompData.compLevel,
           }
         } else {
-          oldcompData = { ...oldcompData.compName, ...{ localId: localOd } }
+          oldcompData.compName = _.get(oldcompData, 'compName.name')
+          const finalLevel = this.watStore.getUpdateCompGroupById(localOd)
+          oldcompData = {
+            name: oldcompData.compName,
+            id: oldcompData.compId,
+            description: oldcompData.compDescription,
+            type: _.get(finalLevel, 'compType'),
+            area: _.get(finalLevel, 'compArea'),
+            source: oldcompData.compSource,
+            level: _.get(finalLevel, 'compLevel'),
+            localId: localOd,
+          }
         }
       }
     } else {

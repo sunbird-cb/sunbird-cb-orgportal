@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms'
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core'
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
@@ -11,6 +11,9 @@ import { WatStoreService } from '../../services/wat.store.service'
   selector: 'ws-app-comp-details',
   templateUrl: './comp-details.component.html',
   styleUrls: ['./comp-details.component.scss'],
+  // tslint:disable
+  encapsulation: ViewEncapsulation.None,
+  // tslint:enable
 })
 export class CompDetailsComponent implements OnInit, OnDestroy {
   dataStructure: NSWatCompetency.ICompActivity[] = []
@@ -63,7 +66,7 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
         const fg = this.formBuilder.group({
           localId: this.dataStructure[index].localId,
           compId: this.dataStructure[index].compId,
-          compName: this.dataStructure[index].compName,
+          compName: new FormControl({ value: this.dataStructure[index].compName, disabled: true }),
           compDescription: this.dataStructure[index].compDescription,
           compLevel: this.dataStructure[index].compLevel,
           compType: this.dataStructure[index].compType,
@@ -74,5 +77,9 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
     }
     this.setCompValues([...oldValue.value])
     // to show hide Role name
+  }
+  getLocalPrint(data: string) {
+    return `<ul>${(_.compact(data.split('• '))
+      .map(i => { if (i) { return `<li>${i}</li>` } return null })).join('')}</ul>`
   }
 }

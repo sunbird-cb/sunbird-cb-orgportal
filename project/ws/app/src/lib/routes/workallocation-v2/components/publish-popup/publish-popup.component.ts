@@ -97,7 +97,6 @@ export class PublishPopupComponent implements OnInit {
   compareFiles() {
     this.uploadService.getDraftPDF(this.workorderData.id).subscribe((fileurl: any) => {
       this.comparePDF = true
-
       const file = new Blob([fileurl], { type: 'application/pdf' })
       const fileURL = URL.createObjectURL(file)
       this.signedPDF = this.workorderData.signedPdfLink
@@ -107,13 +106,14 @@ export class PublishPopupComponent implements OnInit {
 
   publishOrder() {
     this.comparePDF = false
+    this.uploading = false
     this.uploadedFile = ''
+    this.uploadSuccessful = true
     this.workorderData.status = 'Published'
     const req = this.workorderData
 
     this.uploadService.updateWorkOrder(req).subscribe((fres: any) => {
       if (fres) {
-        this.uploading = false
         this.uploadSuccessful = true
       }
     })

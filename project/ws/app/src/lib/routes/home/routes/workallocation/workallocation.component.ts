@@ -7,7 +7,6 @@ import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 import _ from 'lodash'
 import { WorkallocationService } from '../../services/workallocation.service'
 import { WorkAllocationPopUpComponent } from '../../../../head/work-allocation-table/work-order-popup/pop-up.component'
-import FileSaver from 'file-saver'
 
 @Component({
   selector: 'ws-app-workallocation',
@@ -27,6 +26,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   paginator!: MatPaginator
   departmentName: any
   departmentID: any
+  selectedPDFid: any
   searchQuery!: string
 
   config: ExportAsConfig = {
@@ -46,7 +46,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private exportAsService: ExportAsService, private router: Router,
+  constructor(private exportAsService: ExportAsService, private router: Router, private wrkAllocServ: WorkallocationService,
     private workallocationSrvc: WorkallocationService, private activeRoute: ActivatedRoute,
     public dialog: MatDialog) {
     const paramsMap = this.activeRoute.snapshot.params.tab
@@ -79,25 +79,11 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
 
   // Download format
   export() {
-    // download the file using old school javascript method
-    // this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
-    //   // save started
-    // })
-    if (this.currentFilter === 'Draft') {
-      const pdfName = 'draft'
-      const pdfUrl = '/assets/files/draft.pdf'
-      FileSaver.saveAs(pdfUrl, pdfName)
-    } else if (this.currentFilter === 'Published') {
-      const pdfName = 'publish'
-      const pdfUrl = '/assets/files/published.pdf'
-      FileSaver.saveAs(pdfUrl, pdfName)
-    }
-
-
-    // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
-    // this.exportAsService.get(this.config).subscribe(content => {
-    //   console.log(content)
-    // })
+    this.wrkAllocServ.getPDF(this.selectedPDFid).subscribe(response => {
+      const file = new Blob([response], { type: 'application/pdf' })
+      const fileURL = URL.createObjectURL(file)
+      window.open(fileURL)
+    })
   }
 
   pdfCallbackFn(pdf: any) {
@@ -136,6 +122,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   }
   onRoleClick(element: any) {
     if (element) {
+      this.selectedPDFid = element.id
       this.isPrint = true
     }
 

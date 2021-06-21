@@ -51,7 +51,7 @@ export class AllocationService {
     return this.http.post<any>(`${API_END_POINTS.CREATE_ALLOCATIONV2}`, req)
   }
   updateAllocationV2(req: any): Observable<any> {
-    return this.http.post<any>(`${API_END_POINTS.CREATE_ALLOCATIONV2}`, req)
+    return this.http.post<any>(`${API_END_POINTS.UPDATE_ALLOCATIONV2}`, req)
   }
 
   updateAllocation(req: any): Observable<any> {

@@ -1,12 +1,13 @@
 import { Component, Inject, Input, OnInit } from '@angular/core'
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
-import { MatCheckboxChange } from '@angular/material'
+import { MatCheckboxChange, MatRadioChange } from '@angular/material'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */
 
 export interface IWatCompPopupData {
+  level?: string
   children: IChield[]
   description: string
   id: string
@@ -42,6 +43,7 @@ export class WatCompPopupComponent implements OnInit {
   isCheckedAllA = true
   watForm!: FormGroup
   isNew = false
+  selectedLevel = ''
   compTypList!: string[]
   @Input() defaultCompLevels!: any
   constructor(
@@ -60,6 +62,7 @@ export class WatCompPopupComponent implements OnInit {
       acDetail: this.formBuilder.array([]),
       IsRoleSelected: new FormControl(true, []),
     })
+    this.selectedLevel = data.level || ''
   }
   get getList() {
     return this.watForm.get('acDetail') as FormArray
@@ -87,7 +90,7 @@ export class WatCompPopupComponent implements OnInit {
           const defObj = this.defaultCompLevels.data.levels[i] as IChield
           oldValue.push(this.createItem({
             description: defObj.description,
-            id: '',
+            id: defObj.id || '',
             alias: defObj.alias,
             isSelected: false,
             level: defObj.level,
@@ -116,7 +119,9 @@ export class WatCompPopupComponent implements OnInit {
     })
     return ctrl
   }
-
+  radioChange(event: MatRadioChange) {
+    this.selectedLevel = event.value
+  }
   onNoClick(): void {
     this.dialogRef.close({
       ok: false,
@@ -173,7 +178,7 @@ export class WatCompPopupComponent implements OnInit {
       compId: _.get(val, 'compId'),
       compName: _.get(val, 'compName'),
       compDescription: _.get(val, 'compDescription'),
-      compLevel: _.get(_.first(_.filter(val.acDetail, vall => !!vall.isSelected)), 'level'),
+      compLevel: this.selectedLevel,
       compType: _.get(val, 'compType'),
       compArea: _.get(val, 'compArea'),
       localId: _.get(this.data, 'localId'),

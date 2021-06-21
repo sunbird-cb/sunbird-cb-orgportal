@@ -13,7 +13,7 @@
       </div>
       <div class="text-center" *ngIf="!uploading && !uploadedFile && !comparePDF && !uploadSuccessful">
         <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
-        <input type="file" #file style="display: none" (change)="onFilesAdded($event)" multiple />
+        <input type="file" #file style="display: none" (change)="onFilesAdded($event)" multiple accept=".pdf" />
         <button mat-raised-button type="button" class="flex-auto-display margin-bottom-l" (click)="addFiles()">
           <span class="ws-mat-default-text" i18n>Browse for files</span>
         </button>
@@ -49,7 +49,7 @@
           <p class="greybar text-left"><span>Draft to be published</span></p>
           <!-- <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s"> -->
           <div class="pdfviewer">
-            <pdf-viewer [src]="signedPDF" [fit-to-page]="false" [zoom]="0.5" [zoom-scale]="page-fit" [render-text]="true"
+            <pdf-viewer [src]="draftPDF" [fit-to-page]="false" [zoom]="0.5" [zoom-scale]="page-fit" [render-text]="true"
               style="display: block;">
             </pdf-viewer>
           </div>

@@ -375,7 +375,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
                   name: compp.compName,
                   description: compp.compDescription,
                   // id='123',
-                  // compLevel
+                  level: compp.compLevel,
                   // source: 'ISTM',
                   // status: 'UNVERIFIED',
                   additionalProperties: {
@@ -421,19 +421,20 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   getUnmappedCompetency() {
     const unmapedComps = _.get(_.first(this.dataStructure.compGroups), 'competincies')
     const unmapedCompsReq = _.compact(unmapedComps.map((uc: any) => {
-      if (uc.compName || uc.compDescription) {
+      const compp = this.watStore.getUpdateCompGroupById(uc.localId)
+      if (compp && (compp.compName || compp.compDescription)) {
         return {
           type: 'COMPETENCY',
-          id: uc.compId,
-          name: uc.compName,
-          description: uc.compDescription,
+          id: compp.compId,
+          name: compp.compName,
+          description: compp.compDescription,
           // id='123',
-          // compLevel
+          level: compp.compLevel,
           // source: 'ISTM',
           // status: 'UNVERIFIED',
           additionalProperties: {
-            competencyArea: uc.compArea,
-            competencyType: uc.compType,
+            competencyArea: compp.compArea,
+            competencyType: compp.compType,
           },
         }
       }
