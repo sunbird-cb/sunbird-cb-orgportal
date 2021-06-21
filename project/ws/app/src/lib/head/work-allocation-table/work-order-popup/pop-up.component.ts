@@ -95,7 +95,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
     this.workallocationSrvc.addWAT(this.currentCheckedValue, this.departmentID).subscribe(res => {
       if (res.result.data.id) {
         this.dialogRef.close()
-        this.router.navigate([`app/home/workallocation`])
+        this.router.navigate([`app/workallocation/drafts/${res.result.data.id}`])
       }
     })
 
@@ -104,7 +104,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
     this.workallocationSrvc.copyWAT(this.currentCheckedValue2, this.currentCheckedValue).subscribe(res => {
       if (res.result.data.id) {
         this.dialogRef.close()
-        this.router.navigate([`app/home/workallocation`])
+        this.router.navigate([`app/workallocation/drafts/${res.result.data.id}`])
       }
     })
 

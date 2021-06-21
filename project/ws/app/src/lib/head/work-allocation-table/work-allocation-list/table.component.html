@@ -17,8 +17,10 @@
             class=" example-table table1 responsiveTable">
 
             <ng-container matColumnDef="{{col.key}}" *ngFor="let col of tableData!.columns">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> {{col.displayName}} </mat-header-cell>
-                <mat-cell *matCellDef="let element" (click)="selection.toggle(element)">
+                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="{
+                            'min-wid':col.displayName === 'Work order'}"> {{col.displayName}} </mat-header-cell>
+                <mat-cell *matCellDef="let element" (click)="selection.toggle(element)" [ngClass]="{
+                            'min-wid':col.displayName === 'Work order'}">
                     <mat-radio-button *ngIf="col.displayName==='Work order'" (click)="selectWorkOrder(element)">
                     </mat-radio-button>
                     <span *ngIf="!col.isList && element[col.key]!='Download'" class="flex textclass mat-body-2">

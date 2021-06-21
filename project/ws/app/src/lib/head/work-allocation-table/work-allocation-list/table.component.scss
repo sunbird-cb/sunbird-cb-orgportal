@@ -12,6 +12,11 @@ $card-standard-width: 268px;
     @content;
   }
 }
+.min-wid{
+  min-width: 350px;
+   max-width: 350px;
+   padding-right: 20px;
+}
 .url_value{
   color: #0375B7;
   text-decoration-color: #0375B7;
