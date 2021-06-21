@@ -1,104 +1,144 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms'
+// import { untilDestroyed } from 'ngx-take-until-destroy'
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import { MatSnackBar } from '@angular/material'
+import { ActivatedRoute, Router } from '@angular/router'
+// tslint:disable
+import _ from 'lodash'
+import { NSWatActivity } from '../../models/activity-wot.model'
+import { NSWatCompetency } from '../../models/competency-wat.model'
+// tslint:enable
+// import { NSWatActivity } from '../../models/activity-wot.model'
 import { AllocationService } from '../../services/allocation.service'
-import { Router } from '@angular/router'
-import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
-import { MatSnackBar, MatDialog } from '@angular/material'
-import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
-import { AllocationActionsComponent } from '../../components/allocation-actions/allocation-actions.component'
+import { WatStoreService } from '../../services/wat.store.service'
 
 @Component({
   selector: 'ws-app-create-workallocation',
   templateUrl: './create-workallocation.component.html',
   styleUrls: ['./create-workallocation.component.scss'],
 })
-export class CreateWorkallocationComponent implements OnInit {
-  @ViewChild('childNodes', { static: false })
-  inputvar!: ElementRef
-  tabsData!: any[]
-  userslist!: any[]
-  currentTab = 'officer'
-  sticky = false
-  newAllocationForm: FormGroup
-  formdata = {
-    fname: '',
-    email: '',
-    position: '',
-    rolelist: [
-      {
-        name: '',
-        childNodes: '',
-      },
-    ],
-  }
-  similarUsers!: any[]
-  nosimilarUsers = false
-  similarRoles!: any[]
-  nosimilarRoles = false
-  similarPositions!: any[]
-  nosimilarPositions = false
-  similarActivities!: any[]
-  nosimilarActivities = false
-  selectedUser: any
-  selectedRole: any
-  selectedActivity: any
-  selectedPosition: any
-  ralist: any[] = []
+export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnDestroy {
+  canPublish = false
+  /**
+   * this is for selecting tabs dynamically
+   */
+  selectedTab = 'officer'
+  public officerOffset!: number | null
+  public activitiesOffset!: number | null
+  public competenciesOffset!: number | null
+  public competencyDetailsOffset!: number | null
+
+  @ViewChild('mainWindow', { static: true }) mainWindowElement!: ElementRef
+  @ViewChild('officer', { static: true }) officerElement!: ElementRef
+  @ViewChild('activities', { static: true }) activitiesElement!: ElementRef
+  // @ViewChild('roles', { static: true }) rolesElement!: ElementRef
+  @ViewChild('competencies', { static: true }) competenciesElement!: ElementRef
+  @ViewChild('competencyDetails', { static: true }) competencyDetailsElement!: ElementRef
+  /**
+   * this is for selecting tabs dynamically
+   */
+  private activitySubscription: any
+  private groupSubscription: any
+  private compDetailsSubscription: any
+  officerFormSubscription: any
+  private errorCountSubscription: any
+  private progressSubscription: any
+  dataStructure: any = {}
   departmentName: any
   departmentID: any
-  showRAerror = false
-  width = '35vw'
-  dialogRef: any
-  selectedIndex: number | null  // for tabs
-
-  config: ExportAsConfig = {
-    type: 'pdf',
-    elementIdOrContent: 'mytable',
-    options: {
-      jsPDF: {
-        orientation: 'landscape',
-      },
-      pdfCallbackFn: this.pdfCallbackFn, // to add header and footer
-    },
-  }
-  activitieslist: any[] = []
-  showPublishButton = false
-  publishWorkAllocationData: any
-  waId: any
-  roleCompetencyList!: any[]
-  showAddNewRole = false
-
-  constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
-              private fb: FormBuilder, private allocateSrvc: AllocationService,
-              private router: Router, public dialog: MatDialog) {
-    this.selectedIndex = 0
-    this.newAllocationForm = this.fb.group({
-      fname: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      position: ['', Validators.required],
-      rolelist: this.fb.array([this.newRole()]),
+  workOrderId: any
+  officerId: any
+  pageData: any
+  editDataStruct: any
+  // tslinr=t
+  constructor(
+    private watStore: WatStoreService,
+    private allocateSrvc: AllocationService,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
+    this.route.params.subscribe(params => {
+      this.workOrderId = params['workorder']
+      this.officerId = params['officerId']
     })
+    this.pageData = _.get(this.route.snapshot, 'data.pageData.data')
   }
-
-  ngOnInit() {
-    this.tabsData = [
-      {
-        name: 'Officer',
-        key: 'officer',
-        render: true,
-        enabled: true,
-      },
-      {
-        name: 'Roles and activities',
-        key: 'roles',
-        render: true,
-        enabled: true,
-      },
-    ]
-
+  ngOnInit(): void {
+    if (this.officerId) {
+      this.setEditData()
+    }
+    this.fetchFormsData()
     this.getdeptUsers()
   }
-
+  setEditData() {
+    const data = _.get(this.route.snapshot, 'data.watData.data')
+    if (data) {
+      const roleCompetencyList = _.get(data, 'roleCompetencyList')
+      const unmappedActivities = _.get(data, 'unmappedActivities')
+      const unmappedCompetencies = _.get(data, 'unmappedCompetencies')
+      const user = {
+        officerName: _.get(data, 'userName'),
+        userId: _.get(data, 'userId'),
+        userEmail: _.get(data, 'userEmail'),
+      }
+      const position = {
+        userPosition: _.get(data, 'userPosition'),
+        positionId: _.get(data, 'positionId'),
+        positionDescription: _.get(data, 'positionDescription'),
+      }
+      this.editDataStruct = {
+        roleCompetencyList,
+        unmappedActivities,
+        unmappedCompetencies,
+        user,
+        position,
+        createdBy: _.get(data, 'createdBy'),
+        id: _.get(data, 'id'),
+        createdByName: _.get(data, 'createdByName'),
+      }
+    }
+  }
+  get getOfficerDataEdit() {
+    if (this.editDataStruct) {
+      return { usr: this.editDataStruct.user, position: this.editDataStruct.position }
+    } return null
+  }
+  get getActivityDataEdit() {
+    if (this.editDataStruct) {
+      return {
+        unmdA: _.map(_.get(this.editDataStruct, 'unmappedActivities'), (numa: NSWatActivity.IActivity) => {
+          return {
+            activityId: _.get(numa, 'id'),
+            activityName: _.get(numa, 'name'),
+            activityDescription: _.get(numa, 'description'),
+            assignedTo: _.get(numa, 'submittedToName'),
+            assignedToId: _.get(numa, 'submittedToId'),
+            assignedToEmail: _.get(numa, 'submittedToEmail'),
+          }
+        }),
+        list: _.get(this.editDataStruct, 'roleCompetencyList'),
+      }
+    }
+    return null
+  }
+  get getCompDataEdit() {
+    if (this.editDataStruct) {
+      return {
+        unmdC: _.map(_.get(this.editDataStruct, 'unmappedCompetencies'), (numa: NSWatCompetency.ICompActivity) => {
+          return {
+            compId: _.get(numa, 'id'),
+            compName: _.get(numa, 'name'),
+            compDescription: _.get(numa, 'description'),
+            compLevel: _.get(numa, 'level') || '', // still not found
+            compType: _.get(numa, 'additionalProperties.competencyType') || '',
+            compArea: _.get(numa, 'additionalProperties.competencyArea') || '',
+          }
+        }),
+        list: _.get(this.editDataStruct, 'roleCompetencyList'),
+      }
+    }
+    return null
+  }
   getdeptUsers() {
     this.allocateSrvc.getAllUsers().subscribe(res => {
       this.departmentName = res.deptName
@@ -106,381 +146,307 @@ export class CreateWorkallocationComponent implements OnInit {
     })
   }
 
-  export() {
-    // download the file using old school javascript method
-    this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
-      // save started
-    })
-    // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
-    // this.exportAsService.get(this.config).subscribe(content => {
-    //   console.log(content)
-    // })
-  }
-
-  pdfCallbackFn(pdf: any) {
-    // example to add page number as footer to every page of pdf
-    const noOfPages = pdf.internal.getNumberOfPages()
-    // tslint:disable-next-line:no-increment-decrement
-    for (let i = 1; i <= noOfPages; i++) {
-      pdf.setPage(i)
-      // tslint:disable-next-line:prefer-template
-      pdf.text('Page ' + i + ' of ' + noOfPages, pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 30)
-    }
-  }
-
-  onSideNavTabClick(id: string) {
-    this.currentTab = id
-    const el = document.getElementById(id)
-    if (el != null) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
-    }
-  }
-
-  // to set roles array field
-  setRole() {
-    const control = this.newAllocationForm.get('rolelist') as FormArray
-    this.formdata.rolelist.forEach((x: any) => {
-      control.push(this.fb.group({
-        name: x.name,
-        childNodes: x.childNodes,
-      }))
-    })
-  }
-
-  newRole(): FormGroup {
-    return this.fb.group({
-      name: new FormControl(''),
-      childNodes: new FormControl(''),
-    })
-  }
-
-  get newroleControls() {
-    const rl = this.newAllocationForm.get('rolelist')
-    return (<any>rl)['controls']
-  }
-
-  // to get suggested similar users in right sidebar
-  onSearchUser(event: any) {
-    this.showAddNewRole = false
-    const val = event.target.value
-    if (val.length > 2) {
-      this.displayLoader('true')
-      this.nosimilarUsers = false
-      this.similarUsers = []
-      this.similarRoles = []
-      this.similarActivities = []
-      this.similarPositions = []
-
-      this.allocateSrvc.onSearchUser(val).subscribe(res => {
-        this.userslist = res.result.data
-        this.similarUsers = this.userslist
-        this.displayLoader('false')
-        if (this.similarUsers && this.similarUsers.length === 0) {
-          this.nosimilarUsers = true
-          this.nosimilarRoles = false
-          this.nosimilarPositions = false
-          this.nosimilarActivities = false
-        } else {
-          this.setAllMsgFalse()
-        }
-      })
-    }
-  }
-
-  // to get suggested similar roles in right sidebar
-  onSearchRole(event: any) {
-    const val = event.target.value
-    if (val.length > 2) {
-      this.displayLoader('true')
-      this.nosimilarRoles = false
-      this.similarUsers = []
-      this.similarRoles = []
-      this.similarActivities = []
-      this.similarPositions = []
-      this.allocateSrvc.onSearchRole(val).subscribe(res => {
-        this.similarRoles = res
-        this.displayLoader('false')
-        if (this.similarRoles && this.similarRoles.length === 0) {
-          this.nosimilarUsers = false
-          this.nosimilarRoles = true
-          this.nosimilarPositions = false
-          this.nosimilarActivities = false
-        } else {
-          this.setAllMsgFalse()
-        }
-      })
-    }
-  }
-
-  // to get suggested position in right sidebar
-  onSearchPosition(event: any) {
-    this.showAddNewRole = false
-    const val = event.target.value
-    if (val.length > 2) {
-      this.displayLoader('true')
-      this.nosimilarPositions = false
-      this.similarUsers = []
-      this.similarRoles = []
-      this.similarActivities = []
-      this.similarPositions = []
-      const req = {
-        searches: [
-          {
-            type: 'POSITION',
-            field: 'name',
-            keyword: val,
-          },
-          {
-            type: 'POSITION',
-            field: 'status',
-            keyword: 'VERIFIED',
-          },
-        ],
-      }
-      this.allocateSrvc.onSearchPosition(req).subscribe(res => {
-        this.similarPositions = res.responseData
-        this.displayLoader('false')
-        if (this.similarPositions && this.similarPositions.length === 0) {
-          this.nosimilarUsers = false
-          this.nosimilarRoles = false
-          this.nosimilarPositions = true
-          this.nosimilarActivities = false
-        } else {
-          this.setAllMsgFalse()
-        }
-      })
-    }
-  }
-
-  setAllMsgFalse() {
-    this.nosimilarUsers = false
-    this.nosimilarRoles = false
-    this.nosimilarPositions = false
-    this.nosimilarActivities = false
-  }
-
-  displayLoader(value: any) {
-    // tslint:disable-next-line:no-non-null-assertion
-    const vart = document.getElementById('loader')!
-    if (value === 'true') {
-      vart.style.display = 'block'
-    } else {
-      vart.style.display = 'none'
-    }
-  }
-
-  // to add the selected user to form value
-  selectUser(user: any) {
-    this.selectedUser = user
-    this.similarUsers = []
-    // tslint:disable-next-line:prefer-template
-    const fullname = user.userDetails.last_name ? user.userDetails.first_name + ' ' +
-      user.userDetails.last_name : user.userDetails.first_name
-
-    this.newAllocationForm.patchValue({
-      fname: fullname,
-      email: this.selectedUser.userDetails.email,
-      // tslint:disable-next-line:max-line-length
-      position: (this.newAllocationForm.value.position === '') ? (this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '') : this.newAllocationForm.value.position,
-    })
-    if (this.newAllocationForm.value.position !== undefined) {
-      this.showAddNewRole = true
-    }
-    // if (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.activeList.length > 0) {
-    //   this.ralist = this.selectedUser.allocationDetails.activeList
-    // }
-  }
-  removeSelectedUSer() {
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
-      data: {
-        title: 'Remove User',
-        body: 'Removing the selected user will clear all the form values',
-      },
-    })
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.selectedUser = ''
-        this.ralist = []
-        this.activitieslist = []
-        this.newAllocationForm.reset()
-      }
-    })
-  }
-  // to add the selected role to form value
-  selectRole(role: any) {
-    this.selectedRole = role
-    // this.activitieslist = this.selectedRole.childNodes
-    this.selectedRole.childNodes.forEach((node: any) => {
-      if (node.name) {
-        this.activitieslist.push(node)
-      }
-    })
-    this.similarRoles = []
-    this.selectedActivity = ''
-
-    const formatselectedRole = role
-    const actnodes: any[] = []
-    formatselectedRole.childNodes.forEach((x: any) => {
-      actnodes.push(x.name)
-    })
-    formatselectedRole.childNodes = actnodes
-    const newrole = this.newAllocationForm.get('rolelist') as FormArray
-    // newrole.push(this.newRole())
-    newrole.at(0).patchValue(formatselectedRole)
-    this.inputvar.nativeElement.value = ''
-    this.newAllocationForm.value.rolelist[0].childNodes = ''
-  }
-
-  selectActivity(activity: any) {
-    this.selectedActivity = activity
-    this.similarActivities = []
-    this.inputvar.nativeElement.value = ''
-    this.activitieslist.push(activity)
-    this.selectedActivity = ''
-  }
-
-  selectPosition(pos: any) {
-    this.selectedPosition = pos
-    this.similarPositions = []
-    this.newAllocationForm.patchValue({
-      position: this.selectedPosition.name,
-    })
-    this.selectedUser.userDetails.position = this.selectedPosition.name
-    if (this.newAllocationForm.value.fname !== '' && this.newAllocationForm.value.email !== '') {
-      this.showAddNewRole = true
-    }
-  }
-
-  // to push new obj to rolelist
-  addRolesActivity(index: number) {
-    if (index === 0 && this.selectedRole) {
-      if (this.activitieslist.length > 0) {
-        this.showRAerror = false
-        this.selectedRole.childNodes = this.activitieslist
-        this.ralist.push(this.selectedRole)
-        this.selectedRole = ''
-        this.activitieslist = []
-
-        const control = this.newAllocationForm.get('rolelist') as FormArray
-        // tslint:disable-next-line:no-increment-decrement
-        for (let i = control.length - 1; i >= 0; i--) {
-          control.removeAt(i)
-        }
-
-        const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
-        newrolefield.push(this.newRole())
-
-        this.newAllocationForm.value.rolelist = this.ralist
+  @HostListener('window:scroll', ['$event'])
+  /**
+    * this is for selecting tabs dynamically
+    */
+  onScroll(_$event: any) {
+    // const offset = $event.srcElement.scrollTop || this.document.body.scrollTop || 0
+    const offset = window.pageYOffset || 0
+    if (this.officerOffset != null &&
+      this.activitiesOffset &&
+      this.competenciesOffset &&
+      this.competencyDetailsOffset
+    ) {
+      if (offset >= this.officerOffset && offset < this.activitiesOffset) {
+        this.selectedTab = 'officer'
+      } else if (offset >= this.activitiesOffset && offset < this.competenciesOffset) {
+        this.selectedTab = 'activities'
+      } else if (offset >= this.competenciesOffset && offset < this.competencyDetailsOffset) {
+        this.selectedTab = 'competencies'
+      } else if (offset >= this.competencyDetailsOffset) {
+        this.selectedTab = 'competencyDetails'
       } else {
-        this.showRAerror = true
-      }
-    } else {
-      if (this.newAllocationForm.value.rolelist[0].name && this.activitieslist.length > 0) {
-        this.showRAerror = false
-        const newroleformat = {
-          description: '',
-          id: '',
-          name: this.newAllocationForm.value.rolelist[0].name,
-          source: 'ISTM',
-          status: 'UNVERIFIED',
-          type: 'ROLE',
-          childNodes: this.activitieslist,
-        }
-        this.ralist.push(newroleformat)
-        this.activitieslist = []
-
-        const control = this.newAllocationForm.get('rolelist') as FormArray
-        // tslint:disable-next-line:no-increment-decrement
-        for (let i = control.length - 1; i >= 0; i--) {
-          control.removeAt(i)
-        }
-        const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
-        newrolefield.push(this.newRole())
-        // const newrole = this.newAllocationForm.get('rolelist') as FormArray
-        // newrole.at(0).patchValue(newroleformat)
-        this.newAllocationForm.value.rolelist = this.ralist
-      } else {
-        this.showRAerror = true
+        this.selectedTab = 'officer'
       }
     }
   }
+  /**
+  * this is for selecting tabs dynamically
+  */
+  ngAfterViewInit() {
+    /**
+  * this is for selecting tabs dynamically
+  */
+    const defaultOffsetToMinus = 146
+    this.officerOffset = this.officerElement.nativeElement.offsetTop - defaultOffsetToMinus
+    this.activitiesOffset = this.activitiesElement.nativeElement.offsetTop - defaultOffsetToMinus
+    this.competenciesOffset = this.competenciesElement.nativeElement.offsetTop - defaultOffsetToMinus
+    this.competencyDetailsOffset = this.competencyDetailsElement.nativeElement.offsetTop - defaultOffsetToMinus
+    /**
+  * this is for selecting tabs dynamically
+  */
+  }
 
-  addActivity() {
-    if (!this.selectedActivity) {
-      const newactivity = this.newAllocationForm.value.rolelist[0].childNodes
-      if (newactivity) {
-        const activityformat = {
-          description: '',
-          id: '',
-          name: newactivity,
-          parentRole: '',
-          source: 'ISTM',
-          status: 'UNVERIFIED',
+  filterComp($element: any, filterType: string) {
+    this.selectedTab = filterType
+    $element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
+  }
+
+  get getsubPath(): string {
+    return `./#${this.selectedTab}`
+  }
+  get getOfficerName(): string {
+    return _.get(this.dataStructure, 'officerFormData.officerName') ||
+      _.get(this.editDataStruct, 'user.officerName')
+  }
+  // This method is used to fetch the form data from all children components
+  fetchFormsData() {
+    this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(activities => {
+      if (activities.length > 0) {
+        this.dataStructure.activityGroups = activities
+      }
+    })
+    this.groupSubscription = this.watStore.getcompetencyGroup.subscribe(comp => {
+      if (comp.length > 0) {
+        this.dataStructure.compGroups = comp
+      }
+    })
+
+    this.compDetailsSubscription = this.watStore.get_compGrp.subscribe(comp => {
+      if (comp.length > 0) {
+        this.dataStructure.compDetails = comp
+      }
+    })
+
+    this.officerFormSubscription = this.watStore.getOfficerGroup.subscribe(officerFormData => {
+      this.dataStructure.officerFormData = officerFormData
+    })
+
+    this.errorCountSubscription = this.watStore.getErrorCount.subscribe(data => {
+      this.dataStructure.errorCount = data
+    })
+
+    this.progressSubscription = this.watStore.getCurrentProgress.subscribe(data => {
+      this.dataStructure.currentProgress = data
+    })
+  }
+
+  saveWAT() {
+    if (this.getWorkOrderId) {
+      const req = this.getStrcuturedReq()
+      // console.log(req)
+      this.allocateSrvc.createAllocationV2(req).subscribe(res => {
+        if (res) {
+          this.openSnackbar('Work order update successfully!')
+          this.router.navigate(['/app/workallocation/drafts', this.getWorkOrderId])
+        }
+        this.watStore.clear()
+      })
+    } else {
+      this.openSnackbar('Error in updating Work order, please try again!')
+    }
+  }
+  updateWat() {
+    if (this.getWorkOrderId) {
+      const req = this.getStrcuturedReqUpdate()
+      // console.log(req)
+      this.allocateSrvc.updateAllocationV2(req).subscribe(res => {
+        if (res) {
+          this.openSnackbar('Work order saved!')
+          this.router.navigate(['/app/workallocation/drafts', this.getWorkOrderId])
+        }
+        this.watStore.clear()
+      })
+    } else {
+      this.openSnackbar('Error in saving Work order, please try again!')
+    }
+  }
+
+  getStrcuturedReqUpdate(): any {
+    let req = {}
+    const officer = this.getUserDetails()
+    const roles = this.getRoles
+    const unmappedActivity = this.getUnmappedActivity()
+    const unmappedCompetency = this.getUnmappedCompetency()
+    req = {
+      userId: officer.user ? officer.user.userId : '',
+      positionDescription: officer.positionDescription,
+      userPosition: officer.position,
+      positionId: officer.positionObj && officer.positionObj.positionId ? officer.positionObj.positionId : '',
+      userName: officer.officerName,
+      userEmail: officer.user ? officer.user.userEmail : '',
+      roleCompetencyList: roles,
+      unmappedActivities: unmappedActivity,
+      unmappedCompetencies: unmappedCompetency,
+      progress: this.dataStructure.currentProgress,
+      errorCount: this.dataStructure.errorCount,
+      workOrderId: this.getWorkOrderId,
+      createdBy: _.get(this.editDataStruct, 'createdBy'),
+      id: _.get(this.editDataStruct, 'id'),
+      createdByName: _.get(this.editDataStruct, 'createdByName'),
+    }
+    return req
+  }
+  getStrcuturedReq(): any {
+    let req = {}
+    const officer = this.getUserDetails()
+    const roles = this.getRoles
+    const unmappedActivity = this.getUnmappedActivity()
+    const unmappedCompetency = this.getUnmappedCompetency()
+    req = {
+      userId: officer.user ? officer.user.userDetails.wid : '',
+      positionDescription: officer.positionDescription,
+      userPosition: officer.position,
+      positionId: officer.positionObj && officer.positionObj.id ? officer.positionObj.id : '',
+      userName: officer.officerName,
+      userEmail: officer.user ? officer.user.userDetails.email : '',
+
+      // deptId: this.departmentID,
+      // deptName: this.departmentName,
+      // status: 'DRAFT',
+      // activeList: this.ralist,
+
+      roleCompetencyList: roles,
+      unmappedActivities: unmappedActivity,
+      unmappedCompetencies: unmappedCompetency,
+      progress: this.dataStructure.currentProgress,
+      errorCount: this.dataStructure.errorCount,
+      workOrderId: this.getWorkOrderId,
+    }
+    return req
+  }
+
+  get getWorkOrderId() {
+    if (this.workOrderId) { return this.workOrderId }
+    return null
+
+  }
+
+  getUserDetails() {
+    if (this.dataStructure && this.dataStructure.officerFormData && this.dataStructure.officerFormData.user) {
+      return {
+        user: this.dataStructure.officerFormData.user,
+        positionObj: this.dataStructure.officerFormData.positionObj,
+        officerName: this.dataStructure.officerFormData.officerName || '',
+        position: this.dataStructure.officerFormData.position || '',
+        positionDescription: this.dataStructure.officerFormData.positionDescription || '',
+      }
+    }
+    return {}
+  }
+
+  get getRoles() {
+    return _.compact(_.map(this.dataStructure.activityGroups, (ag: NSWatActivity.IActivityGroup, index: number) => {
+      if (index !== 0) {
+        return {
+          roleDetails: {
+            type: 'ROLE',
+            name: ag.groupName,
+            description: ag.groupDescription,
+            // status: 'VERIFIED',
+            // source: 'ISTM',
+            childNodes: _.compact(_.map(ag.activities, (a: NSWatActivity.IActivity) => {
+              if (a.activityDescription || a.assignedTo) {
+                return {
+                  type: 'ACTIVITY',
+                  id: a.activityId,
+                  name: a.activityName,
+                  description: a.activityDescription,
+                  submittedToName: a.assignedTo,
+                  submittedToId: a.assignedToId,
+                  submittedToEmail: a.assignedToEmail,
+                  submissionFrom: a.submissionFrom,
+                  submissionFromId: a.submissionFromId,
+                  submissionFromEmail: a.submissionFromEmail,
+                  // status: 'UNVERIFIED',
+                  // source: 'WAT',
+                  // parentRole: null,
+                }
+              }
+              return null
+            })),
+          },
+          competencyDetails: _.compact(_.map(
+            // tslint:disable-next-line: max-line-length
+            _.get(_.first(_.flatten(_.filter(this.dataStructure.compGroups, i => i.roleName === ag.groupName))), 'competincies'), (c: NSWatCompetency.ICompActivity) => {
+              const compp = this.watStore.getUpdateCompGroupById(c.localId)
+              if (compp && (compp.compName || c.compName || compp.compDescription)) {
+                return {
+                  type: 'COMPETENCY',
+                  id: compp.compId,
+                  name: compp.compName || c.compName,
+                  description: compp.compDescription,
+                  // id='123',
+                  level: compp.compLevel,
+                  // source: 'ISTM',
+                  // status: 'UNVERIFIED',
+                  additionalProperties: {
+                    competencyArea: compp.compArea,
+                    competencyType: compp.compType,
+                  },
+                  // children: [],
+                }
+              }
+              return null
+            })),
+        }
+      }
+      return undefined
+    }))
+    // _.chain(this.dataStructure.compGroups).filter(i => i.roleName === ag.groupName)
+    // .flatten().map('competincies').map((c: NSWatCompetency.ICompActivity) => {
+    // }).flatten().compact().value()
+  }
+
+  getUnmappedActivity() {
+    const unmapedActivities = _.get(_.first(this.dataStructure.activityGroups), 'activities')
+    const unmapedActivitiesReq = _.compact(unmapedActivities.map((ua: any) => {
+      if (ua.activityDescription || ua.assignedTo) {
+        return {
           type: 'ACTIVITY',
-        }
-        this.activitieslist.push(activityformat)
-      }
-      this.inputvar.nativeElement.value = ''
-      this.newAllocationForm.value.rolelist[0].childNodes = ''
-    }
-  }
-
-  showRemoveActivity(index: any) {
-    const id = `showremove${index}`
-    // tslint:disable-next-line:no-non-null-assertion
-    const vart = document.getElementById(id)!
-    vart.style.display = 'block'
-  }
-
-  removeActivity(index: any) {
-    if (index >= 0) {
-      this.activitieslist.splice(index, 1)
-    }
-  }
-
-  buttonClick(action: string, row: any) {
-    if (this.ralist) {
-      if (action === 'Delete') {
-        const index = this.ralist.indexOf(row)
-        if (index >= 0) {
-          this.ralist.splice(index, 1)
+          id: ua.activityId,
+          name: ua.activityName,
+          description: ua.activityDescription,
+          submittedToName: ua.assignedTo,
+          submittedToId: ua.assignedToId,
+          submittedToEmail: ua.assignedToEmail,
+          submissionFrom: ua.submissionFrom,
+          submissionFromId: ua.submissionFromId,
+          submissionFromEmail: ua.submissionFromEmail,
+          // status: 'UNVERIFIED',
+          // source: 'WAT',
+          // parentRole: null,
         }
       }
-    }
+      return null
+    }))
+    return unmapedActivitiesReq
   }
 
-  // final form submit
-  onSubmit() {
-    this.ralist.forEach((r: any) => {
-      r.isArchived = false
-    })
-    this.newAllocationForm.value.rolelist = this.ralist
-    const reqdata = {
-      userId: this.selectedUser ? this.selectedUser.userDetails.wid : '',
-      deptId: this.departmentID,
-      deptName: this.departmentName,
-      activeList: this.ralist,
-      userName: this.newAllocationForm.value.fname,
-      userEmail: this.newAllocationForm.value.email,
-      userPosition: this.newAllocationForm.value.position,
-      positionId: this.selectedPosition ? this.selectedPosition.id : '',
-      archivedList: [],
-    }
-
-    if (this.selectedUser && this.selectedUser.allocationDetails) {
-      reqdata.activeList = this.selectedUser.allocationDetails.archivedList
-    }
-    this.allocateSrvc.createAllocation(reqdata).subscribe(res => {
-      if (res) {
-        this.openSnackbar('Work Allocated Successfully')
-        this.newAllocationForm.reset()
-        this.selectedUser = ''
-        this.selectedRole = ''
-        this.ralist = []
-        this.router.navigate(['/app/home/workallocation'])
+  getUnmappedCompetency() {
+    const unmapedComps = _.get(_.first(this.dataStructure.compGroups), 'competincies')
+    const unmapedCompsReq = _.compact(unmapedComps.map((uc: any) => {
+      const compp = this.watStore.getUpdateCompGroupById(uc.localId)
+      if (compp && (compp.compName || uc.compName || compp.compDescription)) {
+        return {
+          type: 'COMPETENCY',
+          id: compp.compId,
+          name: compp.compName || uc.compName,
+          description: compp.compDescription,
+          // id='123',
+          level: compp.compLevel,
+          // source: 'ISTM',
+          // status: 'UNVERIFIED',
+          additionalProperties: {
+            competencyArea: compp.compArea,
+            competencyType: compp.compType,
+          },
+        }
       }
-    })
+      return null
+    }))
+    return unmapedCompsReq
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
@@ -488,65 +454,12 @@ export class CreateWorkallocationComponent implements OnInit {
       duration,
     })
   }
-
-  // openDialog() {
-  //   this.dialog.open(AllocationActionsComponent, {
-  //     width: '500px',
-  //     minHeight: '350px',
-  //     data: {},
-  //   })
-  // }
-
-  openDialog() {
-    const userObj = {
-      userData: this.selectedUser,
-      department_name: this.departmentName,
-      department_id: this.departmentID,
-    }
-    this.dialogRef = this.dialog.open(AllocationActionsComponent, {
-      width: '1000px',
-      height: '80%',
-      panelClass: 'wa-dialog',
-      data: userObj,
-    })
-    this.dialogRef.afterClosed().subscribe((result: any) => {
-
-      if (result.data !== undefined) {
-        this.showPublishButton = true
-        this.publishWorkAllocationData = result.data
-        if (this.publishWorkAllocationData !== undefined) {
-          this.roleCompetencyList = this.publishWorkAllocationData.roleCompetencyList
-        }
-        this.getWorkAllocationDetails(result.data.userId)
-      }
-    })
+  ngOnDestroy() {
+    this.activitySubscription.unsubscribe()
+    this.groupSubscription.unsubscribe()
+    this.officerFormSubscription.unsubscribe()
+    this.compDetailsSubscription.unsubscribe()
+    this.errorCountSubscription.unsubscribe()
+    this.progressSubscription.unsubscribe()
   }
-
-  getWorkAllocationDetails(reqUserId: any) {
-    const reqUserObj = {
-      pageNo: 0,
-      pageSize: 100,
-      departmentName: this.departmentName,
-      status: 'Draft',
-      userId: reqUserId,
-
-    }
-    this.allocateSrvc.getAllocationDetails(reqUserObj).subscribe((res: any) => {
-      if (res) {
-        this.waId = res.result.data[0].allocationDetails.draftWAObject.id
-      }
-    })
-  }
-
-  publishWorkOrder() {
-    this.publishWorkAllocationData.waId = this.waId
-    this.publishWorkAllocationData.status = 'Published'
-    this.allocateSrvc.updateAllocation(this.publishWorkAllocationData).subscribe((res: any) => {
-      if (res) {
-        this.openSnackbar('Work Allocated Successfully')
-        this.router.navigate(['/app/home/workallocation'])
-      }
-    })
-  }
-
 }
