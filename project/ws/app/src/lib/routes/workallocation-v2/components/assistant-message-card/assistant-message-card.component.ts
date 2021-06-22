@@ -81,9 +81,9 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.compDetailsSubscription = this.watStore.get_compGrp.subscribe((comp: any) => {
-      if (comp.competencyList && comp.competencyList.length > 0) {
-        this.dataStructure.compDetails = comp.competencyList
+    this.compDetailsSubscription = this.watStore.getUpdateCompGroupO.subscribe((comp: any) => {
+      if (comp && comp.length > 0) {
+        this.dataStructure.compDetails = comp
         this.validationsCombined()
       }
     })

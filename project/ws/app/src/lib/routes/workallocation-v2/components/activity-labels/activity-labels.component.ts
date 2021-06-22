@@ -594,14 +594,16 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     if (roleIdx >= 0 && activityIdx >= 0) {
       const dialogRef = this.dialog.open(DialogConfirmComponent, {
         data: {
-          title: 'Remove Activity',
-          body: '  You are removing activicity from this group, Press "YES" to confirm otherwise Press "NO"',
+          title: 'Delete activity',
+          body: '  The activity will be deleted from this work order',
+          ok: 'Delete',
+          cancel: 'Go back',
         },
       })
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.deleteRowActivity(roleIdx, activityIdx)
-          this.snackBar.open('Activity removed successfully!! ', undefined, { duration: 2000 })
+          this.snackBar.open('Activity deleted successfully!! ', undefined, { duration: 2000 })
         }
       })
     }
@@ -623,24 +625,36 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
   deleteGrp(grpidx: number) {
     if (grpidx >= 0) {
-      this.snackBar.open('This feature will come soon!! ', undefined, { duration: 2000 })
-      //   const dialogRef = this.dialog.open(DialogConfirmComponent, {
-      //     data: {
-      //       title: 'Remove Role',
-      //       body: '  You are removing role, Press "YES" to confirm otherwise Press "NO"',
-      //     },
-      //   })
-      //   dialogRef.afterClosed().subscribe(result => {
-      //     if (result) {
-      //       // const roleGrp = this.groupList.at(grpidx) as FormGroup
-      //       // const activitiesLst = roleGrp.get('activities') as FormArray
-      //       // for (let i = 0; i < activitiesLst.value.length; i += 1) {
-      //       //   // this.deleteRowActivity(grpidx, i)
-      //       // }
-      //       this.snackBar.open('Role removed successfully!! ', undefined, { duration: 2000 })
-      //     }
-      //   })
+      // const countA = (this.groupList.at(grpidx).get('activities') as FormArray || []).length
+      // const countC = 0  // this.watStore.getcompetencyGroup.subscribe
+      // const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      //   data: {
+      //     title: 'Delete role',
+      //     body: `  <div>Deleting this role will also delete the following
+      //               <br>
+      //              <ul><li>Associated activities (${countA})</li><li>Associated competencies (${countC})</li></ul>
+      //     <div class="custom-delete">
+      //       <span>
+      //        To keep the activities/competencies, 'Go back' and move them to the unmapped activities/competencies before
+      //       </span>
+      //      </div>
+      //     </div>`,
+      //     cancel: 'Go back',
+      //     ok: 'Delete',
+      //   },
+      // })
+      // dialogRef.afterClosed().subscribe(result => {
+      //   if (result) {
+      this.snackBar.open('This feature will be available soon!! ', undefined, { duration: 2000 })
+      // this.groupList.removeAt(grpidx)
+      // this.watStore.setgetactivitiesGroup(this.groupList.value)
+      // const activitiesLst = roleGrp.get('activities') as FormArray
+      // for (let i = 0; i < activitiesLst.value.length; i += 1) {
+      //   // this.deleteRowActivity(grpidx, i)
+      // }
+      // this.snackBar.open('Role removed successfully!! ', undefined, { duration: 2000 })
+      // }
+      // })
     }
-    return
   }
 }

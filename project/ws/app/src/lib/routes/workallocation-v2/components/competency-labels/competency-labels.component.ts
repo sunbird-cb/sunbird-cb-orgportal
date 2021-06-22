@@ -527,14 +527,16 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     if (grpIdx >= 0 && compIdx >= 0) {
       const dialogRef = this.dialog.open(DialogConfirmComponent, {
         data: {
-          title: 'Remove Competency',
-          body: '  You are removing Competency from this group, Press "YES" to confirm otherwise Press "NO"',
+          title: 'Delete competency',
+          body: '  The activity will be deleted from this work order',
+          ok: 'Delete',
+          cancel: 'Go back',
         },
       })
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.deleteRowCompetency(grpIdx, compIdx)
-          this.snackBar.open('Activity removed successfully!! ', undefined, { duration: 2000 })
+          this.snackBar.open('Activity deleted successfully!! ', undefined, { duration: 2000 })
         }
       })
     }
