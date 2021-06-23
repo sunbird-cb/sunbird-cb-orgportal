@@ -17,14 +17,15 @@
           <!-- <button type="button" mat-button class="print-btn" *ngIf="data && data.length > 0">
             <mat-icon>more_horiz_outlined</mat-icon> More
           </button> -->
-          <button type="button" mat-button class="downlaod-btn" (click)="export()" *ngIf="data && data.length > 0">
+          <button type="button" mat-button class="downlaod-btn" (click)="printDraft()" *ngIf="data && data.length > 0">
             <mat-icon>print</mat-icon> Print
           </button>
           <button type="button" mat-button class="allocation-btn mat-accent-border" (click)="onNewAllocationClick()">
             New officer
           </button>
-          <button mat-stroked-button color="accent" type="button" class="publish-btn mat-accent-border flex-auto-display"
-            (click)="publishWorkOrder()" id="publishbtn" *ngIf="data && data.length > 0">
+          <button mat-stroked-button color="accent" type="button"
+            class="publish-btn mat-accent-border flex-auto-display" (click)="publishWorkOrder()" id="publishbtn"
+            *ngIf="data && data.length > 0">
             <span i18n>Publish</span>
           </button>
         </div>
@@ -62,14 +63,14 @@
                 </li>
                 <li class="margin-right-s">
                   <div>
-                    <p class="mat-body-3">Competencies</p>
-                    <p class="mat-subheading-2">{{workorderData ? workorderData.competenciesCount : 0}}</p>
+                    <p class="mat-body-3">Activities</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.activitiesCount : 0}}</p>
                   </div>
                 </li>
                 <li class="margin-right-s">
                   <div>
-                    <p class="mat-body-3">Activities</p>
-                    <p class="mat-subheading-2">{{workorderData ? workorderData.activitiesCount : 0}}</p>
+                    <p class="mat-body-3">Competencies</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.competenciesCount : 0}}</p>
                   </div>
                 </li>
               </ul>
@@ -78,14 +79,15 @@
               <div class="search margin-top-l">
                 <div class=rsearch>
                   <mat-icon class="color-60 search-icon">search</mat-icon>
-                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal" [(ngModel)]="term"
-                    placeholder="Search">
+                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal"
+                    [(ngModel)]="term" placeholder="Search">
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <table class="allocation-table margin-bottom-l mat-body-2" id="allocation-table" cell-spacing='0' cell-padding='0'>
+        <table class="allocation-table margin-bottom-l mat-body-2" id="allocation-table" cell-spacing='0'
+          cell-padding='0'>
           <tr>
             <th>Name and designation <mat-icon class="sort-icon">arrow_upward</mat-icon>
             </th>
@@ -94,23 +96,26 @@
             <th>Submit to</th>
             <th>Submission from</th>
           </tr>
-          <tr *ngFor="let d of data | filter: term | paginate: { itemsPerPage: 5, currentPage: p, totalItems: data.length }"
-            class="data-row">
+          <tr
+            *ngFor="let d of data | filter: term | paginate: { itemsPerPage: 5, currentPage: p, totalItems: data.length }"
+            class="data-row" (click)="edit(d.id)">
             <td aria-rowspan="d.roles.length+1">
               <div class="initials">
-                <!-- {{d.firstname.charAt(0).toUpperCase()}} {{d.surname.charAt(0).toUpperCase()}} -->
-                {{d.userName.charAt(0).toUpperCase()}}
+                <ws-app-initial-avatar [name]="d.userName">
+                </ws-app-initial-avatar>
               </div>
               <div>
                 <b class="username">{{d.userName}}</b>
                 <div>
                   {{ d.userPosition }}
                 </div>
-                <div class="margin-top-s margin-bottom-s">
+                <!-- <div class="margin-top-s margin-bottom-s">
                   <mat-icon>more_horiz_outlined</mat-icon>
-                </div>
-                <div class="error mat-body-2" *ngIf="d.error">
-                  <mat-icon>info</mat-icon> <b>3 errors</b>
+                </div> -->
+                <div class="error mat-body-2">
+                  <mat-icon *ngIf="d.errorCount > 0">info</mat-icon> <b *ngIf="d.errorCount > 0">{{d.errorCount}}
+                    errors</b>
+                  <mat-icon *ngIf="d.progress > 0"></mat-icon> <b *ngIf="d.progress > 0">{{d.progress}}% progress</b>
                 </div>
               </div>
             </td>
@@ -120,23 +125,41 @@
                   <table>
                     <tr>
                       <td class="table-role">
-                        <b>{{rc.roleDetails.name}}</b>
+                        <b *ngIf="rc.roleDetails.name">{{rc.roleDetails.name}}</b>
+                        <b *ngIf="!rc.roleDetails.name" class="color-40">Untitled Role</b>
                         <div class="margin-top-xs">
-                          <span *ngFor="let c of rc.competencyDetails">{{c.name}}</span>
+                          <span *ngFor="let c of rc.competencyDetails">
+                            <span *ngIf="c.name" class="compname">{{c.name}}</span>
+                            <span *ngIf="!c.name" class="compname"> - </span>
+                          </span>
                         </div>
                       </td>
                       <td class="table-activity">
                         <table>
                           <tr *ngFor="let a of rc.roleDetails.childNodes">
                             <td class="activityname">
-                              <span>{{a.name}}</span>
+                              <span *ngIf="a.description">{{a.description}}</span>
+                              <span *ngIf="!a.description"> - </span>
                             </td>
                             <td class="submittd">
-                              <span class="initials" *ngIf="a.submittedFromId">{{a.submittedFromName.charAt(0).toUpperCase()}}</span>
-                              {{a.submittedFromName}}
+                              <span class="initials" *ngIf="a.submittedToName && !a.submittedToId">
+                                <mat-icon class="ws-mat-default-text veralign-btm">sports_score</mat-icon>
+                              </span>
+                              <span class="initials" *ngIf="a.submittedToId">
+                                <ws-app-initial-avatar *ngIf="a.submittedToName !== null" [name]="a.submittedToName">
+                                </ws-app-initial-avatar>
+                              </span>
+                              {{a.submittedToName}}
                             </td>
                             <td class="submittd">
-                              <span class="initials" *ngIf="a.submittedFromId">{{a.submittedFromName.charAt(0).toUpperCase()}}</span>
+                              <span class="initials" *ngIf="a.submittedFromName && !a.submittedFromId">
+                                <mat-icon class="ws-mat-default-text veralign-btm">sports_score</mat-icon>
+                              </span>
+                              <span class="initials" *ngIf="a.submittedFromId">
+                                <ws-app-initial-avatar *ngIf="a.submittedFromName !== null"
+                                  [name]="a.submittedFromName">
+                                </ws-app-initial-avatar>
+                              </span>
                               {{a.submittedFromName}}
                             </td>
                           </tr>
@@ -149,10 +172,10 @@
             </td>
           </tr>
         </table>
-        <div class="custompagination" *ngIf="data && data.length > 0">
+        <!-- <div class="custompagination" *ngIf="data && data.length > 0">
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
           <div class="totalcount">of {{data.length}}</div>
-        </div>
+        </div> -->
 
         <div *ngIf="data && data.length === 0" class="nodata margin-left-xs margin-l text-center font-medium ">
           <img src="/assets/icons/Officers_empty.svg" alt="No Officers" class="margin-top-xl margin-bottom-m">
@@ -163,7 +186,7 @@
           </button>
         </div>
 
-        <mat-menu #cardMenu="matMenu">
+        <!-- <mat-menu #cardMenu="matMenu">
           <ng-template matMenuContent let-rowData="data">
             <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item name="channel-analytics-button"
               class="ws-mat-primary-text downlaod-btn" i18n-aria-label aria-label="Analytics">
@@ -174,7 +197,7 @@
               <mat-icon>archive</mat-icon> <span>Archive allocation</span>
             </button>
           </ng-template>
-        </mat-menu>
+        </mat-menu> -->
       </ng-container>
     </mat-card-content>
   </mat-card>

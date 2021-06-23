@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
 import { MatDialog, MatPaginator } from '@angular/material'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 /* tslint:disable */
 import _ from 'lodash'
 import { WorkallocationService } from '../../services/workallocation.service'
 import { WorkAllocationPopUpComponent } from '../../../../head/work-allocation-table/work-order-popup/pop-up.component'
-import FileSaver from 'file-saver'
 
 @Component({
   selector: 'ws-app-workallocation',
@@ -15,7 +14,7 @@ import FileSaver from 'file-saver'
   styleUrls: ['./workallocation.component.scss'],
 })
 export class WorkallocationComponent implements OnInit, OnDestroy {
-  currentFilter = 'Draft'
+  currentFilter: any
   tabs: any
   currentUser!: string | null
   tabledata!: ITableData
@@ -27,6 +26,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   paginator!: MatPaginator
   departmentName: any
   departmentID: any
+  selectedPDFid: any
   searchQuery!: string
 
   config: ExportAsConfig = {
@@ -37,6 +37,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   downloaddata: any = []
   totalusersCount: any
   p: number = 1;
+  isPrint = false
+
 
   ngOnDestroy() {
     if (this.tabs) {
@@ -44,9 +46,16 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private exportAsService: ExportAsService, private router: Router,
-    private workallocationSrvc: WorkallocationService,
-    public dialog: MatDialog) { }
+  constructor(private exportAsService: ExportAsService, private router: Router, private wrkAllocServ: WorkallocationService,
+    private workallocationSrvc: WorkallocationService, private activeRoute: ActivatedRoute,
+    public dialog: MatDialog) {
+    const paramsMap = this.activeRoute.snapshot.params.tab
+    if (paramsMap === 'Published') {
+      this.currentFilter = 'Published'
+    } else {
+      this.currentFilter = 'Draft'
+    }
+  }
 
   ngOnInit() {
     // this.getdeptUsers()
@@ -70,25 +79,11 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
 
   // Download format
   export() {
-    // download the file using old school javascript method
-    // this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
-    //   // save started
-    // })
-    if (this.currentFilter === 'Draft') {
-      const pdfName = 'draft'
-      const pdfUrl = '/assets/files/draft.pdf'
-      FileSaver.saveAs(pdfUrl, pdfName)
-    } else if (this.currentFilter === 'Published') {
-      const pdfName = 'publish'
-      const pdfUrl = '/assets/files/published.pdf'
-      FileSaver.saveAs(pdfUrl, pdfName)
-    }
-
-
-    // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
-    // this.exportAsService.get(this.config).subscribe(content => {
-    //   console.log(content)
-    // })
+    this.wrkAllocServ.getPDF(this.selectedPDFid).subscribe(response => {
+      const file = new Blob([response], { type: 'application/pdf' })
+      const fileURL = URL.createObjectURL(file)
+      window.open(fileURL)
+    })
   }
 
   pdfCallbackFn(pdf: any) {
@@ -125,11 +120,16 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     })
     //}
   }
-  onRoleClick() {
+  onRoleClick(element: any) {
+    if (element) {
+      this.selectedPDFid = element.id
+      this.isPrint = true
+    }
 
   }
 
   filter(key: string) {
+    this.isPrint = false
     if (key === 'Published') {
       this.tabledata['columns'][2] = { displayName: 'Published on', key: 'lastupdatedon' }
       this.tabledata['columns'][3] = { displayName: 'Published by', key: 'lastupdatedby' }
@@ -172,7 +172,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
           const watData = {
             id: element.id,
             workorders: element.name,
-            officers: "officers",
+            officers: (element.userIds && element.userIds.length) || 0,
             lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
             lastupdatedby: element.updatedByName,
             errors: element.errorCount,
@@ -180,6 +180,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
             publishedby: element.createdByName,
             approval: "Approval",
             fromdata: currentStatus,
+            publishedPdfLink: element.publishedPdfLink,
+            signedPdfLink: element.signedPdfLink
 
           }
           finalData.push(watData)
@@ -198,7 +200,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
         res.result.data.forEach((element: any) => {
           const watData = {
             workorders: element.name,
-            officers: "officers",
+            officers: (element.userIds && element.userIds.length) || 0,
             lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
             lastupdatedby: element.updatedByName,
             errors: element.errorCount,
@@ -206,6 +208,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
             publishedby: element.createdByName,
             approval: "Approval",
             fromdata: 'published',
+            publishedPdfLink: element.publishedPdfLink,
+            signedPdfLink: element.signedPdfLink
+
 
           }
           finalData.push(watData)
@@ -262,7 +267,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   buttonClick(action: string, row: any) {
     this.downloaddata = []
     if (action === 'Download') {
-      console.log('row data', row)
       this.downloaddata.push(row)
       this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
         // save started
@@ -277,7 +281,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     }
   }
   searchBasedOnQurey(newValue: Event) {
-    console.log(newValue)
     this.getWATBySearch(newValue.toString(), this.currentFilter)
 
   }

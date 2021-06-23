@@ -15,7 +15,7 @@ import { BtnContentFeedbackV2Module } from '../btn-content-feedback-v2/btn-conte
 // import { BtnContentMailMeModule } from '../btn-content-mail-me/btn-content-mail-me.module'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { UserPopupComponent } from './user-popup/user-popup'
-import { MatDialogModule, MatButtonModule, MatCheckboxModule } from '@angular/material'
+import { MatDialogModule, MatButtonModule, MatCheckboxModule, MatFormFieldModule } from '@angular/material'
 import { FormsModule } from '@angular/forms'
 import { MatRadioModule } from '@angular/material/radio'
 import { WorkAllocationPopUpComponent } from './work-order-popup/pop-up.component'
@@ -44,6 +44,7 @@ import { ComponentSharedModule } from '../../routes/workallocation-v2/components
     MatRadioModule,
     RouterModule,
     ComponentSharedModule,
+    MatFormFieldModule,
   ],
   entryComponents: [WorkAllocationPopUpComponent],
   exports: [WorkAllocationTableComponent, UIDirectoryTableComponent, WorkAllocationPopUpComponent],

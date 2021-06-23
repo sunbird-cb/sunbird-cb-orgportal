@@ -1,76 +1,77 @@
-<div class="flex flex-4 flex-column">
-  <mat-card class="flex-custom">
-    <mat-card-header class="flex-custom-m">
-      <div class="flex-1" role="link" tabindex="0">
-        <div class="flex flex-1">
-          <mat-card-title class="flex-4 mobile-margin">
-            <span class="h-600-s-20-m color-87">Work allocation tool</span>
-          </mat-card-title>
-        </div>
+<div class="flex flex-4 flex-column ml-5">
+  <mat-card-header class="flex-custom-m">
+    <div class="flex-1" role="link" tabindex="0">
+      <div class="flex flex-1">
+        <span class="h-600-s-20-m mt-10 mb-10 color-87">Work allocation tool</span>
       </div>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="flex flex-1 flex-column margin-fix">
-        <div class="flex flex-1 filter max-height-60">
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Draft',
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="flex flex-1">
+      <div class="flex flex-1 filter max-height-60">
+        <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Draft',
           'ws-mat-accent-border font-medium':currentFilter !== 'Draft'}" mat-button (click)="filter('Draft')"
-            role="button">Drafts</a>
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Published',
+          role="button">Drafts</a>
+        <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Published',
           'ws-mat-accent-border font-medium':currentFilter !== 'Published'}" mat-button (click)="filter('Published')"
-            role="button">Published</a>
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Archived',
+          role="button">Published</a>
+        <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Archived',
           'ws-mat-accent-border font-medium':currentFilter !== 'Archived'}" mat-button (click)="filter('Archived')"
-            role="button">Archived</a>
-        </div>
+          role="button">Archived</a>
       </div>
-      <ng-container>
-        <div class="custom-table-nav container-balanced margin-top-xl margin-bottom-xl">
-          <div class="flex flex-1 custom">
-            <div class="flex-4">
-              <div class="search">
-                <div class=rsearch>
-                  <mat-icon class="color-60 search-icon">search</mat-icon>
-                  <input class="sinput color-60" type="Standard" label="searchVal"
-                    (ngModelChange)="searchBasedOnQurey($event)" [(ngModel)]="searchQuery" placeholder="Search">
-                </div>
+    </div>
+    <ng-container>
+      <div class="custom-table-nav container-balanced margin-top-xl margin-bottom-xl">
+        <div class="flex flex-1 custom">
+          <div class="flex-4">
+            <div class="search">
+              <div class=rsearch>
+                <mat-icon class="color-60 search-icon">search</mat-icon>
+                <input class="sinput color-60" type="Standard" label="searchVal"
+                  (ngModelChange)="searchBasedOnQurey($event)" [(ngModel)]="searchQuery" placeholder="Search">
               </div>
             </div>
-            <div class="flex-2">
-              <!-- <button type="button" mat-button class="downlaod-btn" (click)="export()"  *ngIf="data && data.length > 0">
+          </div>
+          <div class="flex-2">
+            <!-- <button type="button" mat-button class="downlaod-btn" (click)="export()"  *ngIf="data && data.length > 0">
                 <mat-icon>cloud_download</mat-icon> Download
               </button> -->
-              <button type="button" mat-button class="print-btn" (click)="export()" *ngIf="data && data.length > 0">
-                <mat-icon>print</mat-icon> Print
-              </button>
-              <button type="button" mat-button class="allocation-btn" (click)="onNewAllocationClick()">
-                New work allocation
-              </button>
-            </div>
+            <button type="button" mat-button [ngClass]="{'print-btn-2': !isPrint, 'print-btn': isPrint}"
+              (click)="export()" [disabled]="!isPrint">
+              <mat-icon>print</mat-icon> Print
+            </button>
+            <button type="button" mat-button class="allocation-btn" (click)="onNewAllocationClick()">
+              New work order
+            </button>
           </div>
         </div>
-        <ws-work-allocation-table [tableData]='tabledata' [data]='data' (eOnRowClick)="onRoleClick()"
-          [needAddAdmin]='false' [needCreateUser]='false'>
-        </ws-work-allocation-table>
-        <mat-menu #cardMenu="matMenu">
-          <ng-template matMenuContent let-rowData="data">
-            <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item
-              name="channel-analytics-button" class="ws-mat-primary-text downlaod-btn" i18n-aria-label
-              aria-label="Analytics">
-              <mat-icon>cloud_download</mat-icon> <span>Download</span>
-            </button>
-            <!-- <button (click)="buttonClick('Print',rowData)"mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
+      </div>
+      <ws-work-allocation-table [tableData]='tabledata' [data]='data' *ngIf="currentFilter !== 'Archived'"
+        (eOnRowClick)="onRoleClick($event)" [needAddAdmin]='false' [needCreateUser]='false'>
+      </ws-work-allocation-table>
+      <div class="text-center margin-m" *ngIf="currentFilter === 'Archived'">
+        <img class="block mx-auto mb-3" src="/assets/instances/eagle/app_logos/allocation_empty.svg"
+          alt="Feature comming soon">
+        <span class="block mat-subheading-2 mt-3"> Feature coming soon</span>
+      </div>
+      <mat-menu #cardMenu="matMenu">
+        <ng-template matMenuContent let-rowData="data">
+          <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item name="channel-analytics-button"
+            class="ws-mat-primary-text downlaod-btn" i18n-aria-label aria-label="Analytics">
+            <mat-icon>cloud_download</mat-icon> <span>Download</span>
+          </button>
+          <!-- <button (click)="buttonClick('Print',rowData)"mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
                     aria-label="Analytics">
                     <mat-icon>print</mat-icon> <span>Print</span>
                 </button> -->
-            <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button"
-              class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
-              <mat-icon>archive</mat-icon> <span>Archive allocation</span>
-            </button>
-          </ng-template>
-        </mat-menu>
-      </ng-container>
-    </mat-card-content>
-  </mat-card>
+          <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button"
+            class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
+            <mat-icon>archive</mat-icon> <span>Archive allocation</span>
+          </button>
+        </ng-template>
+      </mat-menu>
+    </ng-container>
+  </mat-card-content>
 
   <!-- <div *ngIf="downloaddata && downloaddata.length > 0">
         <ws-app-download-allocation id="downloadtemp" [data]="downloaddata" [deptname]="departmentName"></ws-app-download-allocation>

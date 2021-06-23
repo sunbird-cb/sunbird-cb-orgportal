@@ -32,6 +32,7 @@ import { CompDetailModule } from './components/comp-details/comp-details.module'
 import { NgxPaginationModule } from 'ngx-pagination'
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { NgCircleProgressModule } from 'ng-circle-progress'
+import { UserWorkService } from './services/user-work.service'
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress'
     // AllocationActionsComponent,
     // WatRolePopup,
   ],
-  providers: [WINDOW_PROVIDERS, WatStoreService],
+  providers: [WINDOW_PROVIDERS, WatStoreService, UserWorkService],
   // exports: [DownloadAllocationComponent],
 })
 export class WorkallocationV2Module { }

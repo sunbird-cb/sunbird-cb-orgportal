@@ -12,6 +12,11 @@ $card-standard-width: 268px;
     @content;
   }
 }
+.min-wid{
+  min-width: 350px;
+   max-width: 350px;
+   padding-right: 20px;
+}
 .url_value{
   color: #0375B7;
   text-decoration-color: #0375B7;
@@ -78,6 +83,22 @@ $card-standard-width: 268px;
     margin-left: -$card-padding;
     margin-top: -$card-padding;
   }
+
+  .mat-column-workorders {
+      word-wrap: break-word !important;
+      white-space: unset !important;
+      flex: 0 0 17% !important;
+      width: 17% !important;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+
+      word-break: break-word;
+
+      -ms-hyphens: auto;
+      -moz-hyphens: auto;
+      -webkit-hyphens: auto;
+      hyphens: auto;
+}
 
   mat-card-content {
     margin: 0 -0.25 * $card-padding;

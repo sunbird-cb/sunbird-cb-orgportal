@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms'
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core'
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { ActivatedRoute } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
 // tslint:enable
@@ -10,6 +11,9 @@ import { WatStoreService } from '../../services/wat.store.service'
   selector: 'ws-app-comp-details',
   templateUrl: './comp-details.component.html',
   styleUrls: ['./comp-details.component.scss'],
+  // tslint:disable
+  encapsulation: ViewEncapsulation.None,
+  // tslint:enable
 })
 export class CompDetailsComponent implements OnInit, OnDestroy {
   dataStructure: NSWatCompetency.ICompActivity[] = []
@@ -18,14 +22,16 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
   subscribeForm: any
   levelLest = ['Basic', 'Proficient', 'Advanced', 'Expert', 'Ustad']
   compTypList = ['Behavioural', 'Domain', 'Functional']
-  constructor(private watStore: WatStoreService, private formBuilder: FormBuilder) {
+  constructor(private watStore: WatStoreService, private formBuilder: FormBuilder, activated: ActivatedRoute) {
     this.generateForm()
+    this.levelLest = activated.snapshot.data.pageData.data.levels
+    this.compTypList = activated.snapshot.data.pageData.data.compTypes
   }
   ngOnInit() {
     this.fetchData()
     this.subscribeForm = this.compDetailForm.valueChanges.subscribe(val => {
       if (val) {
-        this.watStore.setCompGroup(val)
+        this.watStore.updateCompGroup(_.get(val, 'competencyList'))
       }
     })
   }
@@ -58,7 +64,9 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
     for (let index = 0; index < this.dataStructure.length; index += 1) {
       if (this.dataStructure && this.dataStructure[index] && this.dataStructure[index].compName) {
         const fg = this.formBuilder.group({
-          compName: this.dataStructure[index].compName,
+          localId: this.dataStructure[index].localId,
+          compId: this.dataStructure[index].compId,
+          compName: new FormControl({ value: this.dataStructure[index].compName, disabled: true }),
           compDescription: this.dataStructure[index].compDescription,
           compLevel: this.dataStructure[index].compLevel,
           compType: this.dataStructure[index].compType,
@@ -69,5 +77,9 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
     }
     this.setCompValues([...oldValue.value])
     // to show hide Role name
+  }
+  getLocalPrint(data: string) {
+    return `<ul>${(_.compact(data.split('• '))
+      .map(i => { if (i) { return `<li>${i}</li>` } return null })).join('')}</ul>`
   }
 }

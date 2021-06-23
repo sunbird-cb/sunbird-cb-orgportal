@@ -1,3 +1,4 @@
+import { WorkallocationService } from './../../../routes/home/services/workallocation.service'
 import {
   Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges,
 } from '@angular/core'
@@ -12,7 +13,6 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { UserPopupComponent } from '../user-popup/user-popup'
 import { CreateMDOService } from '../create-mdo.services'
 import { ExportAsConfig } from 'ngx-export-as'
-import * as fileSavers from 'file-saver'
 
 @Component({
   selector: 'ws-work-allocation-table',
@@ -54,7 +54,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
     private router: Router, public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private createMDOService: CreateMDOService,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar, private wrkAllocServ: WorkallocationService) {
     this.dataSource = new MatTableDataSource<any>()
     this.actionsClick = new EventEmitter()
     this.clicked = new EventEmitter()
@@ -113,24 +113,40 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
       this.dataSource.filter = ''
     }
   }
-  buttonClick(action: string, row: any) {
-    if (action && row.fromdata === 'draft') {
-      const pdfName = 'draft'
-      const pdfUrl = '/assets/files/draft.pdf'
-      fileSavers.saveAs(pdfUrl, pdfName)
-    } else if (action && row.fromdata === 'published') {
+  buttonClick(row: any) {
 
-      const pdfName = 'published'
-      const pdfUrl = '/assets/files/published.pdf'
-      fileSavers.saveAs(pdfUrl, pdfName)
-    } else {
-      const pdfName = 'scaned'
-      const pdfUrl = '/assets/files/scaned.pdf'
-      fileSavers.saveAs(pdfUrl, pdfName)
+    if (row) {
+      this.wrkAllocServ.getPDF(row.id).subscribe(response => {
+        const file = new Blob([response], { type: 'application/pdf' })
+        const fileURL = URL.createObjectURL(file)
+        window.open(fileURL)
+      })
+
     }
-
   }
 
+  blobToSaveAs(fileName: string, blob: Blob) {
+
+    // try {
+
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    if (link.download !== undefined) { // feature detection
+      link.setAttribute('href', url)
+      link.setAttribute('download', fileName)
+      link.style.visibility = 'hidden'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
+    // }
+    //  catch (e) {
+    //   console.error('BlobToSaveAs error', e)
+    // }
+  }
+  selectWorkOrder(workOrder: any) {
+    this.eOnRowClick.emit(workOrder)
+  }
   getFinalColumns() {
     if (this.tableData !== undefined) {
       const columns = _.map(this.tableData.columns, c => c.key)
@@ -208,6 +224,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
   }
 
   onRowClick(e: any) {
+    this.eOnRowClick.emit(e)
     if (e.fromdata === 'Draft') {
       this.router.navigate([`/app/workallocation/drafts`, e.id])
     } else if (e.fromdata === 'Published') {

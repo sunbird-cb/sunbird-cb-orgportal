@@ -190,7 +190,7 @@ a:not([href]):not([tabindex]) {
             .table-role {
                 width: 22%;
                 margin-right: 1em;
-                padding: 0 !important;
+                padding: 0 2em 0 0 !important;
                 b {
                   margin-left: 2px;
                 }
@@ -214,10 +214,10 @@ a:not([href]):not([tabindex]) {
                   padding: 0 4em 0 0;
 
                   span {
-                    background: #FDECDE !important;
+                    background: #F5F5F5 !important;
                     margin: 2px 2px 8px;
                     border: 1px solid rgba(0, 0, 0, 0.08);
-                    padding: 1px 8px;
+                    padding: 4px 8px;
                     border-radius: 4px;
                     word-break: break-word;
                     display: block
@@ -336,19 +336,21 @@ b.username {
   font-weight: 600;
   margin-left: 4px;
 }
-
+::ng-deep.letter-color {
+    float: left !important;
+  }
 .initials {
-  border-radius: 4px;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  justify-content: center;
-  color: white;
-  font-size: 11px;
-  align-items: center;
-  background-color: #306933;
-  float: left;
-  margin-right: 8px;
+  // border-radius: 4px;
+  // width: 24px;
+  // height: 24px;
+  // display: flex;
+  // justify-content: center;
+  // color: white;
+  // font-size: 11px;
+  // align-items: center;
+  // background-color: #306933;
+  // float: left;
+  // margin-right: 8px;
 }
 #downloadtemp {
   display: none !important;
@@ -380,7 +382,8 @@ b.username {
   list-style-type: none;
 
   li {
-    display: inline-block;
+    display: inline-flex;
+    vertical-align: bottom;
 
     div	{
       background: #F5F5F5;
@@ -400,5 +403,22 @@ b.username {
 
   .peach-bg {
     background: #FDECDE !important
+  }
+}
+
+.veralign-btm {
+  vertical-align: bottom;
+}
+
+.updated-date {
+  width: 17em !important;
+  border: 3px solid #1A8C21;
+  height: 50px !important;
+  background: RGBA(29, 137, 35, 0.1) !important;
+  display: flex;
+  align-items: center;
+
+  .material-icons {
+    color: #1A8C21;
   }
 }

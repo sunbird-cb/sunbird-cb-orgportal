@@ -1,5 +1,6 @@
 export namespace NSWatCompetency {
   export interface ICompActivity {
+    localId: number
     compId: string
     compName: string
     compDescription: string

@@ -39,6 +39,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
   currentCheckedValue = null
   currentCheckedValue2 = null
   favoriteSeason: string | undefined
+  workOrder = 'Work Order'
   pageSizeOptions = [5, 10, 20]
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   @ViewChild(MatSort, { static: true }) sort?: MatSort
@@ -66,8 +67,8 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
       columns: [
         { displayName: 'Work orders', key: 'workorders' },
         { displayName: 'Officers', key: 'officers' },
-        { displayName: 'Published by', key: 'publishedby' },
         { displayName: 'Published on', key: 'publishedon' },
+        { displayName: 'Published by', key: 'publishedby' },
       ],
       actions: [],
       needCheckBox: false,
@@ -94,7 +95,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
     this.workallocationSrvc.addWAT(this.currentCheckedValue, this.departmentID).subscribe(res => {
       if (res.result.data.id) {
         this.dialogRef.close()
-        this.router.navigate([`app/home/workallocation`])
+        this.router.navigate([`app/workallocation/drafts/${res.result.data.id}`])
       }
     })
 
@@ -103,7 +104,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
     this.workallocationSrvc.copyWAT(this.currentCheckedValue2, this.currentCheckedValue).subscribe(res => {
       if (res.result.data.id) {
         this.dialogRef.close()
-        this.router.navigate([`app/home/workallocation`])
+        this.router.navigate([`app/workallocation/drafts/${res.result.data.id}`])
       }
     })
 
@@ -144,7 +145,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
     })
   }
   getAllUserByKey() {
-    const currentStatus = 'published'
+    const currentStatus = 'Published'
     const finalData: any[] = []
     this.workallocationSrvc.fetchWAT(currentStatus).subscribe(res => {
       if (res.result.data) {
@@ -152,7 +153,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
           const watData = {
             id: element.id,
             workorders: element.name,
-            officers: 'officers',
+            officers: element.userIds.length || 0,
             lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
             lastupdatedby: element.updatedByName,
             errors: element.errorCount,

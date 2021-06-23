@@ -4,7 +4,6 @@ import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 /* tslint:disable */
 import _ from 'lodash'
 import { AllocationService } from '../../services/allocation.service'
-import FileSaver from 'file-saver'
 import { ActivatedRoute } from '@angular/router'
 @Component({
   selector: 'ws-app-published-allocations',
@@ -48,58 +47,18 @@ export class PublishedAllocationsComponent implements OnInit {
   }
 
   viewscanned() {
-    const pdfName = 'Scanned'
-    const pdfUrl = '/assets/files/scaned.pdf'
-    FileSaver.saveAs(pdfUrl, pdfName)
+    // const pdfName = 'Scanned'
+    const pdfUrl = this.workorderData.signedPdfLink
+    // FileSaver.saveAs(pdfUrl, pdfName)
+    window.open(pdfUrl)
   }
 
   print() {
-    const pdfName = 'Published'
-    const pdfUrl = '/assets/files/published.pdf'
-    FileSaver.saveAs(pdfUrl, pdfName)
+    // const pdfName = 'Published'
+    const pdfUrl = this.workorderData.publishedPdfLink
+    // FileSaver.saveAs(pdfUrl, pdfName)
+    window.open(pdfUrl)
   }
-
-  // Download format
-  export() {
-    this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
-      // save started
-    })
-  }
-
-  pdfCallbackFn(pdf: any) {
-    // example to add page number as footer to every page of pdf
-    const noOfPages = pdf.internal.getNumberOfPages()
-    // tslint:disable-next-line:no-increment-decrement
-    for (let i = 1; i <= noOfPages; i++) {
-      pdf.setPage(i)
-      // tslint:disable-next-line:prefer-template
-      pdf.text('Page ' + i + ' of ' + noOfPages, pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 30)
-    }
-  }
-
-  // getdeptUsers() {
-  //   this.workallocationSrvc.getAllUsers().subscribe(res => {
-  //     this.departmentName = res.deptName
-  //     this.departmentID = res.id
-  //     this.getAllUsers('Draft')
-  //   })
-  // }
-
-  // getAllUsers(statusKey: string) {
-  //   const req = {
-  //     pageNo: 0,
-  //     pageSize: 1000,
-  //     departmentName: this.departmentName,
-  //     status: (statusKey !== '') ? statusKey : "Draft",
-  //   }
-  //   //if (this.currentFilter !== statusKey) {
-  //   this.workallocationSrvc.getUsers(req).subscribe(res => {
-  //     this.userslist = res.result.data
-  //     this.totalusersCount = res.result.totalhit
-  //     // this.filter(statusKey)
-  //   })
-  //   //}
-  // }
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnChanges(data: SimpleChanges) {

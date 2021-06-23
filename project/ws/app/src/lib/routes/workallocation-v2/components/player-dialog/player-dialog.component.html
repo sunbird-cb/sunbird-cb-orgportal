@@ -1,0 +1,18 @@
+<div class="flex flex-1 justify-end">
+  <mat-icon class="cursor-pointer" [mat-dialog-close]="true">close</mat-icon>
+</div>
+<h2 mat-dialog-title>{{data.name}}</h2>
+<mat-dialog-content class="mat-typography">
+  <ng-container *ngIf="data?.mimeType === 'video'">
+    <video autoplay crossorigin="Anonymous" [poster]="data?.appIcon" #realvideoTag class="w-full"
+      *ngIf="data?.artifactUrl" controls>
+      <source [src]="data.artifactUrl" type="video/mp4" />
+      <source [src]="data.artifactUrl" type="application/x-mpegURL" />
+    </video>
+  </ng-container>
+  <ng-container *ngIf="data?.mimeType === 'pdf'">
+    <pdf-viewer [src]="data.artifactUrl" [fit-to-page]="false" [zoom]="0.5" [zoom-scale]="page-fit" [render-text]="true"
+      style="display: block;">
+    </pdf-viewer>
+  </ng-container>
+</mat-dialog-content>

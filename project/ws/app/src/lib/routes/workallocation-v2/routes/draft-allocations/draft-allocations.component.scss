@@ -10,18 +10,23 @@
   align-content: center;
   text-align: center;
 }
+
 ::ng-deep.container-balanced .text-capitalize {
   text-transform: none !important
 }
+
 ::ng-deep.flex-custom.mat-card {
-    padding: 1em 4em !important
+  padding: 1em 4em !important
 }
+
 ::ng-deep.mat-card-header-text {
   display: none !important;
 }
+
 .font-medium {
   font-weight: 500 !important;
 }
+
 .margin-fix {
   @include breakpoint-xs {
     margin: 0 $size-l 0 $size-l;
@@ -31,6 +36,7 @@
     margin: 0 $size-l 0 $size-l;
   }
 }
+
 .custom {
   @include breakpoint-xs {
     flex-direction: column;
@@ -44,6 +50,7 @@
 .flex-3 {
   flex: 3;
 }
+
 .flex-4 {
   flex: 4;
 }
@@ -151,13 +158,14 @@ a:not([href]):not([tabindex]) {
   box-shadow: none !important;
 }
 
-.mat-card-title{
+.mat-card-title {
   margin-left: -31px !important;
 }
 
 .allocation-table {
-    border-spacing: unset;
-    width: 100%;
+  border-spacing: unset;
+  width: 100%;
+
   th {
     background-color: #f5f5f5;
     cursor: pointer;
@@ -167,101 +175,118 @@ a:not([href]):not([tabindex]) {
     color: rgba(0, 0, 0, 0.6);
     font-weight: normal;
   }
+
   td {
     padding: 1em 0.3em;
     vertical-align: top;
     border-bottom: 1px solid rgba(0, 0, 0, 0.16);
 
     ul {
-        list-style-type: none;
-        padding-left: 0 !important;
-        margin: 0 !important;
-        li {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.16);
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            table {
-              width: 100%;
-            }
-            td {
-              border-bottom: 0 !important
-            }
+      list-style-type: none;
+      padding-left: 0 !important;
+      margin: 0 !important;
 
-            .table-role {
-                width: 22%;
-                margin-right: 1em;
-                padding: 0 !important;
-                b {
-                  margin-left: 2px;
-                }
-                span {
-                  background: #FDECDE !important;
-                  margin: 2px 2px 8px;
-                  border: 1px solid rgba(0, 0, 0, 0.08);
-                  padding: 1px 8px;
-                  border-radius: 4px;
-                  word-break: break-word;
-                  display: inline-block;
-                }
-            }
-            .table-activity {
-                width: 70%;
-                margin-right: 3em;
-                padding: 0;
+      li {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+        margin-bottom: 10px;
+        padding-bottom: 10px;
 
-                .activityname {
-                  width: 52%;
-                  padding: 0 4em 0 0;
-
-                  span {
-                    background: #FDECDE !important;
-                    margin: 2px 2px 8px;
-                    border: 1px solid rgba(0, 0, 0, 0.08);
-                    padding: 1px 8px;
-                    border-radius: 4px;
-                    word-break: break-word;
-                    display: block
-                  }
-                }
-
-                td.submittd {
-                  width: 24% !important;
-                  padding: 0.3em 0.6em;
-                }
-            }
-            // .table-activity1 {
-            //     display: inline-block;
-            //     width: 20%;
-            //     vertical-align: top;
-
-            //     div {
-            //       margin-bottom: 10px;
-            //     }
-            // }
+        table {
+          width: 100%;
         }
 
-        li:last-child {
-          border-bottom: none !important;
-          margin-bottom: 0 !important;
-          padding-bottom: 0 !important;
+        td {
+          border-bottom: 0 !important
         }
+
+        .table-role {
+          width: 22%;
+          margin-right: 1em;
+          padding: 0 2em 0 0 !important;
+
+          b {
+            margin-left: 2px;
+          }
+
+          .compname {
+            background: #FDECDE !important;
+            margin: 2px 2px 8px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 4px 8px;
+            border-radius: 4px;
+            word-break: break-word;
+            display: inline-block;
+          }
+        }
+
+        .table-activity {
+          width: 70%;
+          margin-right: 3em;
+          padding: 0;
+
+          .activityname {
+            width: 52%;
+            padding: 0 4em 0 0;
+
+            span {
+              background: #FDECDE !important;
+              margin: 2px 2px 8px;
+              border: 1px solid rgba(0, 0, 0, 0.08);
+              padding: 4px 8px;
+              border-radius: 4px;
+              word-break: break-word;
+              display: block
+            }
+          }
+
+          td.submittd {
+            width: 24% !important;
+            padding: 0.3em 0.6em;
+          }
+        }
+
+        // .table-activity1 {
+        //     display: inline-block;
+        //     width: 20%;
+        //     vertical-align: top;
+
+        //     div {
+        //       margin-bottom: 10px;
+        //     }
+        // }
+      }
+
+      li:last-child {
+        border-bottom: none !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
     }
   }
 
-  th:nth-child(1), td:nth-child(1) {
+  th:nth-child(1),
+  td:nth-child(1) {
     width: 18%;
     position: relative;
   }
-  th:nth-child(2), td:nth-child(2) {
+
+  th:nth-child(2),
+  td:nth-child(2) {
     width: 20%
   }
-  th:nth-child(3), td:nth-child(3) {
+
+  th:nth-child(3),
+  td:nth-child(3) {
     width: 32%
   }
-  th:nth-child(4), td:nth-child(4) {
+
+  th:nth-child(4),
+  td:nth-child(4) {
     width: 15%
   }
-  th:nth-child(5), td:nth-child(5) {
+
+  th:nth-child(5),
+  td:nth-child(5) {
     width: 18%
   }
 
@@ -278,7 +303,7 @@ a:not([href]):not([tabindex]) {
     display: flex;
     flex: 1;
 
-    .rsearch  {
+    .rsearch {
       display: flex;
       position: relative;
       flex: 1 1 auto;
@@ -309,7 +334,7 @@ a:not([href]):not([tabindex]) {
   .allocation-btn {
     min-width: 112px;
     width: auto;
-    border:1px solid #0075B7;
+    border: 1px solid #0075B7;
     border-radius: 4px;
     margin: 0 12px 0 5px;
     color: #0075B7 !important;
@@ -321,23 +346,27 @@ a:not([href]):not([tabindex]) {
     color: white !important;
   }
 
-  .downlaod-btn, .print-btn {
+  .downlaod-btn,
+  .print-btn {
     min-width: 102px;
     width: auto;
-    border:1px solid #DEDEDE;
+    border: 1px solid #DEDEDE;
     border-radius: 4px;
     margin: 0 12px 0 5px;
     color: #848484 !important;
   }
 }
+
 .error {
   position: absolute;
   bottom: 5%;
+
   .mat-icon {
     color: #D13924;
     vertical-align: bottom;
   }
 }
+
 b.username {
   display: block;
   margin: 4px 0 8px 0;
@@ -349,19 +378,25 @@ b.username {
   font-weight: 600;
   margin-left: 4px;
 }
-.initials {
-  border-radius: 4px;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  justify-content: center;
-  color: white;
-  font-size: 11px;
-  align-items: center;
-  background-color: #306933;
-  float: left;
-  margin-right: 8px;
+
+::ng-deep.letter-color {
+  float: left !important;
 }
+
+// .initials {
+//   // border-radius: 4px;
+//   // width: 24px;
+//   // height: 24px;
+//   // display: flex;
+//   // justify-content: center;
+//   // color: white;
+//   // font-size: 11px;
+//   // align-items: center;
+//   // background-color: #306933;
+//   // float: left;
+//   // margin-right: 8px;
+// }
+
 #downloadtemp {
   display: none !important;
 }
@@ -370,17 +405,21 @@ b.username {
 ::ng-deep.ngx-pagination {
   display: inline-block !important;
   color: rgba(0, 0, 0, 0.60) !important;
+
   .current {
     border-bottom: 1px solid rgba(0, 0, 0, 0.40) !important;
     color: rgba(0, 0, 0, 0.87) !important;
     background: none !important
   }
+
   a {
     color: rgba(0, 0, 0, 0.60) !important;
   }
 }
+
 .custompagination {
   float: right;
+
   .totalcount {
     display: inline-block;
   }
@@ -394,7 +433,7 @@ b.username {
   li {
     display: inline-block;
 
-    div	{
+    div {
       background: #F5F5F5;
       width: 75px;
       height: 56px;
@@ -413,4 +452,8 @@ b.username {
   .peach-bg {
     background: #FDECDE !important
   }
+}
+
+.veralign-btm {
+  vertical-align: bottom;
 }

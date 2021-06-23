@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop'
 import { NSWatActivity } from '../../models/activity-wot.model'
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
@@ -11,6 +11,7 @@ import { WatStoreService } from '../../services/wat.store.service'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations'
 import { WatRolePopupComponent } from './wat-role-popup/wat-role-popup.component'
+import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
 // tslint:disable
 import * as _ from 'lodash'
 // tslint:enable
@@ -47,6 +48,7 @@ import * as _ from 'lodash'
 })
 export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit {
   private unsubscribe = new Subject<void>()
+  @Input() editData!: any
   labels: NSWatActivity.IActivity[] = []
   groups: NSWatActivity.IActivityGroup[] = []
   selectedActivityIdx = 0
@@ -125,8 +127,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       moveItemInArray(this.groupActivityList.controls, event.previousIndex, event.currentIndex)
       moveItemInArray(this.groupActivityList.value, event.previousIndex, event.currentIndex)
     } else {
-      if (!event.item.data.activityDescription) {
-        this.snackBar.open('Activity is required to drag', undefined, { duration: 2000 })
+      if (!(event.item.data.activityDescription || event.item.data.submissionFrom || event.item.data.assignedTo)) {
+        this.snackBar.open('Empty activity!! You can not drag', undefined, { duration: 2000 })
         return
       }
       const previousContainerIndex = parseInt(event.previousContainer.id.replace('groups_', ''), 10)
@@ -204,25 +206,30 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     // this.changeDetector.detectChanges()
 
   }
-  addNewGroup() {
+  addNewGroup(_needDefaultActivity = true, grp?: NSWatActivity.IActivityGroup) {
     const oldValue = this.groupList
     const fg = this.formBuilder.group({
       activities: this.formBuilder.array([]),
-      groupId: '',
-      groupName: this.untitedRole,
-      groupDescription: '',
+      groupId: grp && grp.groupId || '',
+      groupName: grp && grp.groupName || this.untitedRole,
+      groupDescription: grp && grp.groupDescription || '',
     })
-    const activits = fg.get('activities') as FormArray
-    const fga = this.formBuilder.group({
-      activityId: '',
-      activityName: '',
-      activityDescription: '',
-      assignedTo: '',
-      assignedToId: '',
-      assignedToEmail: '',
-    })
-    activits.push(fga)
-    fg.controls.activities.patchValue([...activits.value])
+    if (_needDefaultActivity) {
+      const activits = fg.get('activities') as FormArray
+      const fga = this.formBuilder.group({
+        activityId: '',
+        activityName: '',
+        activityDescription: '',
+        assignedTo: '',
+        assignedToId: '',
+        assignedToEmail: '',
+        submissionFrom: '',
+        submissionFromId: '',
+        submissionFromEmail: '',
+      })
+      activits.push(fga)
+      fg.controls.activities.patchValue([...activits.value])
+    }
     oldValue.push(fg)
     this.setGroupValues([...oldValue.value])
     // to show hide Role name
@@ -237,6 +244,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
           activityId: ac.activityId,
           activityName: ac.activityName,
           activityDescription: ac.activityDescription,
+          submissionFrom: ac.submissionFrom,
+          submissionFromId: ac.submissionFromId,
+          submissionFromEmail: ac.submissionFromEmail,
           assignedTo: ac.assignedTo,
           assignedToId: ac.assignedToId,
           assignedToEmail: ac.assignedToEmail,
@@ -258,6 +268,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         assignedTo: '',
         assignedToId: '',
         assignedToEmail: '',
+        submissionFrom: '',
+        submissionFromId: '',
+        submissionFromEmail: '',
       })
       oldValue.push(fga)
       this.setGroupActivityValues([...oldValue.value])
@@ -271,32 +284,46 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       labelsArray: this.formBuilder.array([]),
       groupsArray: this.formBuilder.array([]),
     })
-    // if (this.labels && this.labels.length) {
-    //   this.labels.forEach((v: NSWatActivity.IActivity) => {
-    //     if (v) {
-    // this.createActivityControl({
-    //   activityName: '',
-    //   activityDescription: '',
-    //   assignedTo: '',
-    // })
-    this.addNewGroup()
-    // this.addNewGroupActivity(0)
-    // this.createGroupControl({
-    //   groupName: 'Untitled role',
-    //   groupDescription: 'Role description',
-    //   activities: [{
-    //     activityName: 'unmed',
-    //     activityDescription: 'desc',
-    //     assignedTo: ''
-    //   }]
-    // })
-    //     }
-    //   })
-    // }
-    // this.activityForm.valueChanges.pipe(debounceTime(100)).subscribe(() => {
-    //   // this.value.emit(JSON.parse(JSON.stringify(this.qualityForm.value)))
-    // })
+    if (this.editData) {
+      const unmappedActivities = _.get(this.editData, 'unmdA')
+      if (unmappedActivities && unmappedActivities.length) {
+        /**this will always be on index 0 */
+        this.addNewGroup(false)
+        this.addNewGroupActivityCustom(0, unmappedActivities)
+      } else {
+        this.addNewGroup(true)
+      }
+      const grpData = _.get(this.editData, 'list')
+      for (let i = 0; i < grpData.length; i += 1) {
+        const actlist = _.map(_.get(grpData[i], 'roleDetails.childNodes'), (numa: any) => {
+          return {
+            activityId: _.get(numa, 'id'),
+            activityName: _.get(numa, 'name'),
+            activityDescription: _.get(numa, 'description'),
+            submissionFrom: _.get(numa, 'submissionFrom'),
+            submissionFromId: _.get(numa, 'submissionFromId'),
+            submissionFromEmail: _.get(numa, 'submissionFromEmail'),
+            assignedTo: _.get(numa, 'submittedToName'),
+            assignedToId: _.get(numa, 'submittedToId'),
+            assignedToEmail: _.get(numa, 'submittedToEmail'),
+          }
+        })
+        const grp = {
+          activities: [],
+          groupId: _.get(grpData[i], 'roleDetails.id'),
+          groupName: _.get(grpData[i], 'roleDetails.name'),
+          groupDescription: _.get(grpData[i], 'roleDetails.description') || '',
+        }
+        this.addNewGroup(false, grp)
+        this.activeGroupIdx = i + 1
+        this.addNewGroupActivityCustom(i + 1, actlist)
+        this.watStore.setgetactivitiesGroup(this.groupList.value)
+      }
+    } else {
+      this.addNewGroup()
+    }
   }
+
   createActivityControl(activityObj: NSWatActivity.IActivity) {
     const newControl = this.formBuilder.group({
       activityId: new FormControl(activityObj.activityId),
@@ -305,6 +332,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       assignedTo: new FormControl(activityObj.assignedTo),
       assignedToId: new FormControl(activityObj.assignedToId),
       assignedToEmail: new FormControl(activityObj.assignedToEmail),
+      submissionFrom: new FormControl(activityObj.submissionFrom),
+      submissionFromId: new FormControl(activityObj.submissionFromId),
+      submissionFromEmail: new FormControl(activityObj.submissionFromEmail),
     })
     const optionsArr = this.activityForm.controls['labelsArray'] as FormArray
     optionsArr.push(newControl)
@@ -328,6 +358,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         assignedTo: new FormControl(v.assignedTo),
         assignedToId: new FormControl(v.assignedToId),
         assignedToEmail: new FormControl(v.assignedToEmail),
+        submissionFrom: new FormControl(v.submissionFrom),
+        submissionFromId: new FormControl(v.submissionFromId),
+        submissionFromEmail: new FormControl(v.submissionFromEmail),
       }])
     })
   }
@@ -497,33 +530,82 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     return data ? data.activityDescription : ''
   }
 
-  userClicked(event: any, gIdx: number) {
+  userClicked(event: any, gIdx: number, type = 'to') {
     if (event) {
-      this.activeGroupIdx = gIdx
-      let assignedTo = ''
-      let assignedToId = ''
-      let assignedToEmail = ''
-      if (_.get(event, 'option.value') === 'Final authority') {
-        assignedTo = 'Final authority'
-        assignedToId = '',
-          assignedToEmail = ''
+      if (type === 'to') {
+        this.activeGroupIdx = gIdx
+        let assignedTo = ''
+        let assignedToId = ''
+        let assignedToEmail = ''
+        if (_.get(event, 'option.value') === 'Final authority') {
+          assignedTo = 'Final authority'
+          assignedToId = '',
+            assignedToEmail = ''
+        } else {
+          // tslint:disable-next-line: prefer-template
+          assignedTo = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
+          assignedToId = _.get(event, 'option.value.userDetails.wid'),
+            assignedToEmail = _.get(event, 'option.value.userDetails.email')
+        }
+        const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
+        const frmctrl = lst.at(this.selectedActivityIdx).get('assignedTo') as FormControl
+        frmctrl.patchValue(assignedTo || '')
+
+        const frmctrl1 = lst.at(this.selectedActivityIdx).get('assignedToId') as FormControl
+        frmctrl1.patchValue(assignedToId)
+
+        const frmctrl2 = lst.at(this.selectedActivityIdx).get('assignedToEmail') as FormControl
+        frmctrl2.patchValue(assignedToEmail)
       } else {
-        // tslint:disable-next-line: prefer-template
-        assignedTo = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
-        assignedToId = _.get(event, 'option.value.userDetails.wid'),
-          assignedToEmail = _.get(event, 'option.value.userDetails.email')
+        this.activeGroupIdx = gIdx
+        let submissionFrom = ''
+        let submissionFromId = ''
+        let submissionFromEmail = ''
+        if (_.get(event, 'option.value') === 'Final authority') {
+          submissionFrom = 'Final authority'
+          submissionFromId = '',
+            submissionFromEmail = ''
+        } else {
+          // tslint:disable-next-line: prefer-template
+          submissionFrom = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
+          submissionFromId = _.get(event, 'option.value.userDetails.wid')
+          submissionFromEmail = _.get(event, 'option.value.userDetails.email')
+        }
+        const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
+        const frmctrl = lst.at(this.selectedActivityIdx).get('submissionFrom') as FormControl
+        frmctrl.patchValue(submissionFrom || '')
+
+        const frmctrl1 = lst.at(this.selectedActivityIdx).get('submissionFromId') as FormControl
+        frmctrl1.patchValue(submissionFromId)
+
+        const frmctrl2 = lst.at(this.selectedActivityIdx).get('submissionFromEmail') as FormControl
+        frmctrl2.patchValue(submissionFromEmail)
       }
-      const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
-      const frmctrl = lst.at(this.selectedActivityIdx).get('assignedTo') as FormControl
-      frmctrl.patchValue(assignedTo || '')
-
-      const frmctrl1 = lst.at(this.selectedActivityIdx).get('assignedToId') as FormControl
-      frmctrl1.patchValue(assignedToId)
-
-      const frmctrl2 = lst.at(this.selectedActivityIdx).get('assignedToEmail') as FormControl
-      frmctrl2.patchValue(assignedToEmail)
-
       this.watStore.setgetactivitiesGroup(this.groupList.value)
+    }
+  }
+  deleteRowActivity(roleIdx: number, activityIdx: number) {
+    const roleGrp = this.groupList.at(roleIdx) as FormGroup
+    const activitiesLst = roleGrp.get('activities') as FormArray
+    activitiesLst.removeAt(activityIdx)
+    this.watStore.setgetactivitiesGroup(this.groupList.value)
+  }
+  deleteSingleActivity(roleIdx: number, activityIdx: number) {
+    if (roleIdx >= 0 && activityIdx >= 0) {
+      const dialogRef = this.dialog.open(DialogConfirmComponent, {
+        data: {
+          title: 'Delete activity',
+          body: '  The activity will be deleted from this work order',
+          ok: 'Delete',
+          cancel: 'Go back',
+        },
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.deleteRowActivity(roleIdx, activityIdx)
+          this.snackBar.open('Activity deleted successfully!! ', undefined, { duration: 2000 })
+        }
+      })
     }
   }
 
@@ -540,5 +622,39 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
 
   hideName() {
     this.canshowName = -1
+  }
+  deleteGrp(grpidx: number) {
+    if (grpidx >= 0) {
+      // const countA = (this.groupList.at(grpidx).get('activities') as FormArray || []).length
+      // const countC = 0  // this.watStore.getcompetencyGroup.subscribe
+      // const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      //   data: {
+      //     title: 'Delete role',
+      //     body: `  <div>Deleting this role will also delete the following
+      //               <br>
+      //              <ul><li>Associated activities (${countA})</li><li>Associated competencies (${countC})</li></ul>
+      //     <div class="custom-delete">
+      //       <span>
+      //        To keep the activities/competencies, 'Go back' and move them to the unmapped activities/competencies before
+      //       </span>
+      //      </div>
+      //     </div>`,
+      //     cancel: 'Go back',
+      //     ok: 'Delete',
+      //   },
+      // })
+      // dialogRef.afterClosed().subscribe(result => {
+      //   if (result) {
+      this.snackBar.open('This feature will be available soon!! ', undefined, { duration: 2000 })
+      // this.groupList.removeAt(grpidx)
+      // this.watStore.setgetactivitiesGroup(this.groupList.value)
+      // const activitiesLst = roleGrp.get('activities') as FormArray
+      // for (let i = 0; i < activitiesLst.value.length; i += 1) {
+      //   // this.deleteRowActivity(grpidx, i)
+      // }
+      // this.snackBar.open('Role removed successfully!! ', undefined, { duration: 2000 })
+      // }
+      // })
+    }
   }
 }

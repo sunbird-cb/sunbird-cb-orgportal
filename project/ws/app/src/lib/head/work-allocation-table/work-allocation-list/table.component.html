@@ -17,21 +17,26 @@
             class=" example-table table1 responsiveTable">
 
             <ng-container matColumnDef="{{col.key}}" *ngFor="let col of tableData!.columns">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> {{col.displayName}} </mat-header-cell>
-                <mat-cell *matCellDef="let element" (click)="selection.toggle(element)">
+                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="{
+                            'min-wid':col.displayName === 'Work order'}"> {{col.displayName}} </mat-header-cell>
+                <mat-cell *matCellDef="let element" (click)="selection.toggle(element)" [ngClass]="{
+                            'min-wid':col.displayName === 'Work order'}">
+                    <mat-radio-button *ngIf="col.displayName==='Work order'" (click)="selectWorkOrder(element)">
+                    </mat-radio-button>
                     <span *ngIf="!col.isList && element[col.key]!='Download'" class="flex textclass mat-body-2">
-                        <mat-radio-button *ngIf="col.displayName==='Work order'">
-                        </mat-radio-button>
+
                         <ws-app-initial-avatar
                             *ngIf="col.displayName ==='Published by' ||  col.displayName ==='Last updated by'"
                             [name]="element[col.key]">
-                        </ws-app-initial-avatar> <span
-                            [ngStyle]="{'color':col.displayName != 'Errors' ? 'black' : 'red', 'font-weight':col.displayName != 'Work order' ? 'normal' : 'bold'}"
+                        </ws-app-initial-avatar> <span [ngClass]="{
+                            'mat-button':col.displayName === 'Work order',
+                            'mat-body-2':col.displayName != 'Work order',
+                            'ws-mat-red-text':col.displayName === 'Errors' }"
                             (click)="onRowClick(element)">{{element[col.key]}}
                             {{col.isList}}</span>
                     </span>
-                    <div *ngIf="!col.isList && element[col.key]==='Download'"
-                        (click)="buttonClick(element.name,element)" class="url_value">
+                    <div *ngIf="!col.isList && element[col.key]==='Download'" (click)="buttonClick(element)"
+                        class="url_value">
                         <a class="textclass mat-body-2">
                             {{element[col.key]}} {{col.isList}}
                         </a>
@@ -45,11 +50,11 @@
                         <div *ngIf="ac.optional">
                             <ws-widget-app-button *ngIf="row[ac.optional_key] === ac.optional_Value" [type]="ac.type"
                                 [icon]="ac.icon" [disabled]="ac.disabled || false" [label]="ac.label"
-                                (click)="buttonClick(ac.name,row)"></ws-widget-app-button>
+                                (click)="buttonClick(row)"></ws-widget-app-button>
                         </div>
                         <div *ngIf="!ac.optional">
                             <ws-widget-app-button [type]="ac.type" [icon]="ac.icon" [label]="ac.label"
-                                [disabled]="ac.disabled || false" (click)="buttonClick(ac.name,row)">
+                                [disabled]="ac.disabled || false" (click)="buttonClick(row)">
                             </ws-widget-app-button>
                         </div>
                     </div>
@@ -73,7 +78,10 @@
         </mat-table>
         <div class="no-information-found" *ngIf="showLoading"><i>Loading...</i>
         </div>
-        <div class="no-information-found" *ngIf="showNoData">No data found
+        <div class="text-center margin-m" *ngIf="showNoData">
+            <img class="block mx-auto mb-3" src="/assets/instances/eagle/app_logos/allocation_empty.svg"
+                alt="No CBPs found">
+            <span class="block mat-subheading-2 mt-3">No data Found</span>
         </div>
     </div>
 
@@ -83,15 +91,8 @@
 
 <mat-menu #cardMenu="matMenu">
     <ng-template matMenuContent let-rowData="data">
-        <!-- <div > -->
-        <button (click)="buttonClick('download', rowData)" mat-menu-item name="channel-analytics-button"
-            class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
-            <mat-icon>cloud_download</mat-icon> Download
-        </button>
-        <!-- </div> -->
-        <!-- <div mat-menu-item> -->
-        <button (click)="buttonClick('block',rowData)" mat-menu-item name="channel-analytics-button"
-            class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
+        <button (click)="buttonClick(rowData)" mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text"
+            i18n-aria-label aria-label="Analytics">
             <mat-icon>print</mat-icon> Print
         </button>
     </ng-template>

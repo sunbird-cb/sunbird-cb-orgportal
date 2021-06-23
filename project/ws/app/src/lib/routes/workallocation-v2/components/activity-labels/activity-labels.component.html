@@ -58,7 +58,7 @@
                     <input [attr.id]="'assignto_' + i" matInput #assignto formControlName="assignedTo" i18n-placeholder
                       placeholder="Type here" i18n-aria-label #assignedTo class="form-input flex-1"
                       [matAutocomplete]="assignToAuto" (input)="filterUsers(assignedTo.value)" autocomplete="off" />
-                    <mat-autocomplete #assignToAuto="matAutocomplete" (optionSelected)="userClicked($event, i)">
+                    <mat-autocomplete #assignToAuto="matAutocomplete" (optionSelected)="userClicked($event, i,'to')">
                       <mat-option [value]="''">
                         <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
                           <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{'Final authority'}}</div>
@@ -98,8 +98,15 @@
             {{'Unmapped activities'}}
           </span>
         </div>
-        <div *ngIf="i !==0 " class="flex flex-1 flex-column margin-r-2px">
-          <div class="flex flex-1 group-background margin-b-2px" (focusout)="hideName()">
+        <div *ngIf="i !==0 " class="flex flex-1 flex-column margin-r-2px relative">
+          <div class="flex absolute del cursor-pointer" (click)="deleteGrp(i)"
+            [hidden]="((canshowName === -1 && !grp.get('groupName').value) || !(canshowName === i && activeGroupIdx === i)) ">
+            <span class="flex mat-caption f-white m-auto">
+              <mat-icon class="flex f-white">delete</mat-icon>
+              <span class="flex m-auto">Delete </span>
+            </span>
+          </div>
+          <div class="flex flex-1 group-background margin-b-2px del-focus" (focusout)="hideName()">
             <span
               [hidden]="!((canshowName === -1 && !grp.get('groupName').value) || !(canshowName === i && activeGroupIdx === i)) "
               (click)="showName(i)" class="flex margin-left-m  margin-top-m mat-subheading-2 break-a">
@@ -159,6 +166,12 @@
               </span>
 
             </div>
+            <!-- <div class="flex flex-1">
+              <span class="flex mat-subheading-2 margin-top-xs">Submission from
+                <mat-icon class="ws-mat-black40-text margin-left-s">info</mat-icon>
+              </span>
+
+            </div> -->
           </div>
           <div [id]="'groups_' + i" cdkDropList [cdkDropListData]="groupActivityList"
             (cdkDropListDropped)="dropgroup($event)" [cdkDropListEnterPredicate]="evenPredicate"
@@ -182,14 +195,32 @@
                         cdkAutosizeMaxRows="5"></textarea>
                       <mat-autocomplete #roleDescriptionAuto="matAutocomplete"
                         (optionSelected)="activitySelected($event,i)">
-                        <div class="mat-body-4 ws-mat-accent-text padding-s">From activity dictionary</div>
-                        <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity">
-                          <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
-                            <!-- <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div> -->
-                            <div class="mat-body-2  margin-bottom-xxs">{{activity.description}}</div>
-                          </div>
-                        </mat-option>
+                        <ng-container
+                          *ngIf="(filteredActivityDesc | async)?.length <= 0 && (actDesc.value || '').length>3">
+                          <mat-option (optionSelected)="activitySelected($event,i)" [value]="{
+                            'description': actDesc.value,
+                            'type': 'ACTIVITY',
+                            'id':''
+                          }">
+                            <div class="mat-body-4 padding-s flex">
+                              <mat-icon>add</mat-icon>
+                              <span class="flex">
+                                {{actDesc.value}}
+                              </span>
+                            </div>
+                          </mat-option>
+                        </ng-container>
+                        <ng-container *ngIf="(filteredActivityDesc | async)?.length > 0">
+                          <div class="mat-body-4 ws-mat-accent-text padding-s">From activity dictionary</div>
+                          <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity">
+                            <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
+                              <!-- <div class="mat-body-2 font-bold-i margin-bottom-xxs">{{activity.name}}</div> -->
+                              <div class="mat-body-2  margin-bottom-xxs">{{activity.description}}</div>
+                            </div>
+                          </mat-option>
+                        </ng-container>
                       </mat-autocomplete>
+
                     </mat-form-field>
                   </div>
                   <div class="flex flex-1 margin-2px">
@@ -201,17 +232,17 @@
                         [name]="assignedTo.value">
                       </ws-app-initial-avatar>
                       <mat-icon class="margin-right-xs ws-mat-default-text"
-                        *ngIf="assignedTo.value.length && assignedTo.value === 'Final authority'">flag
+                        *ngIf="assignedTo.value.length && assignedTo.value === 'Final authority'">sports_score
                       </mat-icon>
                       <input [attr.id]="'assignto_' + gaIdx" class="form-input flex-1" matInput #assignedTo
                         formControlName="assignedTo" i18n-placeholder placeholder="Type here" i18n-aria-label
                         aria-label="Type here" [matAutocomplete]="auto" (input)="filterUsers(assignedTo.value)"
-                        autocomplete="off">
-                      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="userClicked($event, i)">
+                        autocomplete="off" (click)="setSelectedFilter(gaIdx)">
+                      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="userClicked($event, i,'to')">
                         <mat-option [value]="'Final authority'">
                           <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
                             <div class="mat-body-2 font-bold-i margin-bottom-xxs flex">
-                              <mat-icon class="margin-right-xs mat ws-mat-default-text">flag</mat-icon>
+                              <mat-icon class="margin-right-xs mat ws-mat-default-text">sports_score</mat-icon>
                               {{'Final authority'}}
                             </div>
                           </div>
@@ -230,6 +261,31 @@
                         </mat-option> -->
                       </mat-autocomplete>
                     </mat-form-field>
+                  </div>
+                  <!-- <div class="flex flex-1 margin-2px">
+                    <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                      <ws-app-initial-avatar
+                        *ngIf="submissionFrom.value.length && submissionFrom.value !== 'Final authority'"
+                        [name]="submissionFrom.value">
+                      </ws-app-initial-avatar>
+                      <input [attr.id]="'submissionFrom_' + gaIdx" class="form-input flex-1" matInput #submissionFrom
+                        formControlName="submissionFrom" i18n-placeholder placeholder="Type here" i18n-aria-label
+                        aria-label="Type here" [matAutocomplete]="auto" (input)="filterUsers(submissionFrom.value)"
+                        autocomplete="off" (click)="setSelectedFilter(gaIdx)">
+                      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="userClicked($event, i,'From')">
+                        <div class="mat-body-4 ws-mat-accent-text padding-s" *ngIf="userslist?.length">
+                          From Karmayogi officer portal
+                        </div>
+                        <mat-option *ngFor="let user of userslist" [value]="user">
+                          <ws-app-user-autocomplete-card [user]="user">
+                          </ws-app-user-autocomplete-card>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div> -->
+                  <div *ngIf="i === 0" class="flex margin-auto">
+                    <mat-icon class="cursor-pointer ws-mat-black60-text" (click)="deleteSingleActivity(i,gaIdx)">delete
+                    </mat-icon>
                   </div>
                 </div>
               </div>

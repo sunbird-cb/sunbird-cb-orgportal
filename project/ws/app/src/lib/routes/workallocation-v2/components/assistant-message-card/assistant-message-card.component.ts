@@ -31,14 +31,14 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
     roles: {
       weight: 60,
       minRole: 1,
-      minRolePercent: 30,
+      minRolePercent: 20,
       minActivity: 1,
-      minActivityPercent: 30,
+      minActivityPercent: 20,
       controls: {
-        label: 10,
-        description: 10,
-        activityDescription: 10,
-        activitySubmitTo: 10,
+        label: 15,
+        description: 15,
+        activityDescription: 15,
+        activitySubmitTo: 15,
       },
     },
     competecy: {
@@ -81,9 +81,9 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.compDetailsSubscription = this.watStore.get_compGrp.subscribe((comp: any) => {
-      if (comp.competencyList && comp.competencyList.length > 0) {
-        this.dataStructure.compDetails = comp.competencyList
+    this.compDetailsSubscription = this.watStore.getUpdateCompGroupO.subscribe((comp: any) => {
+      if (comp && comp.length > 0) {
+        this.dataStructure.compDetails = comp
         this.validationsCombined()
       }
     })
@@ -311,19 +311,19 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
     let compDetailsProgress = 0
     if (this.dataStructure.officerFormData) {
       officerProgress = this.calculateOfficerProgress(this.dataStructure.officerFormData)
-      officerProgress = Math.ceil(officerProgress * (this.defaultProgressValues.officer.weight / 100))
+      officerProgress = Math.floor(officerProgress * (this.defaultProgressValues.officer.weight / 100))
     }
     if (this.dataStructure.activityGroups) {
       activityProgress = this.calculateActivityProgress(this.dataStructure.activityGroups)
-      activityProgress = Math.ceil(activityProgress * (this.defaultProgressValues.roles.weight / 100))
+      activityProgress = Math.floor(activityProgress * (this.defaultProgressValues.roles.weight / 100))
     }
     if (this.dataStructure.compGroups) {
       competencyProgress = this.calculateCompProgress(this.dataStructure.compGroups)
-      competencyProgress = Math.ceil(competencyProgress * (this.defaultProgressValues.competecy.weight / 100))
+      competencyProgress = Math.floor(competencyProgress * (this.defaultProgressValues.competecy.weight / 100))
     }
     if (this.dataStructure.compDetails) {
       compDetailsProgress = this.calculateCompDetailsProgress(this.dataStructure.compDetails)
-      compDetailsProgress = Math.ceil(compDetailsProgress * (this.defaultProgressValues.competecyDetails.weight / 100))
+      compDetailsProgress = Math.floor(compDetailsProgress * (this.defaultProgressValues.competecyDetails.weight / 100))
     }
     try {
       progress = Math.ceil(officerProgress +
@@ -356,14 +356,17 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
     if (data && data.positionDescription) {
       progress += this.defaultProgressValues.officer.controls.positionDescription
     }
-    return Math.ceil(progress) >= 100 ? 100 : Math.ceil(progress)
+    return progress >= 99.90 ? 100 : Math.floor(progress)
   }
   calculateActivityProgress(data: any): number {
     let progress = 0
     // excluding unmapped section, considering all other roles(each row) and activities inside
     const roles = _.without(data, _.first(data))
+    const rolesCount = roles.length
     if (roles.length >= this.defaultProgressValues.roles.minRole) {
-      progress += this.defaultProgressValues.roles.minRolePercent
+      if (rolesCount >= 1) {
+        progress += this.defaultProgressValues.roles.minRolePercent
+      }
     }
     const rolePercentList = roles.map((role: any) => {
       let rolePercent = 0
@@ -379,64 +382,79 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
         rolePercent += this.defaultProgressValues.roles.controls.description
       }
       const roleActivities = _.get(role, 'activities')
+      const roleActivitiesCount = roleActivities.length
       if (roleActivities && roleActivities.length >= this.defaultProgressValues.roles.minActivity) {
         rolePercent += this.defaultProgressValues.roles.minActivityPercent
         roleActivityPercentList = roleActivities.map((ra: any) => {
           let roleActivityPercent = 0
           if (ra.activityDescription) {
-            roleActivityPercent += this.defaultProgressValues.roles.controls.activityDescription
+            roleActivityPercent += this.defaultProgressValues.roles.controls.activityDescription / roleActivitiesCount
           }
           if (ra.assignedTo) {
-            roleActivityPercent += this.defaultProgressValues.roles.controls.activitySubmitTo
+            roleActivityPercent += this.defaultProgressValues.roles.controls.activitySubmitTo / roleActivitiesCount
           }
           return roleActivityPercent
         })
-        return rolePercent + _.max(roleActivityPercentList)
+        // return rolePercent + _.max(roleActivityPercentList)
+        if (rolesCount >= 1) {
+          return (rolePercent + roleActivityPercentList.reduce((a, b) => a + b, 0)) / rolesCount
+        }
+        return (rolePercent + roleActivityPercentList.reduce((a, b) => a + b, 0))
       }
     })
-    return Math.ceil(progress + (_.max(rolePercentList) || 0)) >= 100 ? 100 : Math.ceil(progress + (_.max(rolePercentList) || 0))
+    // return Math.ceil(progress + (_.max(rolePercentList) || 0)) >= 100 ? 100 : Math.ceil(progress + (_.max(rolePercentList) || 0))
+    return progress + rolePercentList.reduce((a, b) => a + b, 0) >= 99.99 ?
+      100 :
+      progress + rolePercentList.reduce((a, b) => a + b, 0)
   }
   calculateCompProgress(data: any): number {
     const progress = 0
     // excluding unmapped section, considering all other roles(each row) and competencies inside
-    const competencies = _.without(data, _.first(data))
-    const compPercentList = competencies.map((comp: any) => {
+    const roles = _.without(data, _.first(data))
+    const rolesCount = roles.length
+    const compPercentList = roles.map((comp: any) => {
       let compPercent = 0
       let roleCompPercentList: any[] = []
       const roleComps = _.get(comp, 'competincies')
+      const roleCompsCount = roleComps.length
       if (roleComps && roleComps.length >= this.defaultProgressValues.competecy.minCompetency) {
-        compPercent += this.defaultProgressValues.competecy.minCompetencyPercent
+        compPercent += (this.defaultProgressValues.competecy.minCompetencyPercent)
       }
       roleCompPercentList = roleComps.map((rc: any) => {
         let roleCompPercent = 0
         if (rc.compDescription) {
-          roleCompPercent += this.defaultProgressValues.competecy.controls.description
+          roleCompPercent += this.defaultProgressValues.competecy.controls.description / roleCompsCount
         }
         if (rc.compName) {
-          roleCompPercent += this.defaultProgressValues.competecy.controls.label
+          roleCompPercent += this.defaultProgressValues.competecy.controls.label / roleCompsCount
         }
         return roleCompPercent
       })
-      return compPercent + _.max(roleCompPercentList)
+      if (rolesCount >= 1) {
+        return (compPercent + roleCompPercentList.reduce((a, b) => a + b, 0)) / rolesCount
+      }
+      return (compPercent + roleCompPercentList.reduce((a, b) => a + b, 0))
     })
-    return Math.ceil(progress + (_.max(compPercentList) || 0)) >= 100 ? 100 : Math.ceil(progress + (_.max(compPercentList) || 0))
+    return progress + compPercentList.reduce((a, b) => a + b, 0) >= 99.99 ?
+      100 :
+      progress + compPercentList.reduce((a, b) => a + b, 0)
   }
   calculateCompDetailsProgress(data: any): number {
     let progress = 0
     if (data && data.length) {
       data.map((comp: any) => {
         if (comp.compLevel) {
-          progress += this.defaultProgressValues.competecyDetails.controls.level
+          progress += this.defaultProgressValues.competecyDetails.controls.level / data.length
         }
         if (comp.compType) {
-          progress += this.defaultProgressValues.competecyDetails.controls.type
+          progress += this.defaultProgressValues.competecyDetails.controls.type / data.length
         }
         if (comp.compArea) {
-          progress += this.defaultProgressValues.competecyDetails.controls.area
+          progress += this.defaultProgressValues.competecyDetails.controls.area / data.length
         }
       })
     }
-    return Math.ceil(progress) >= 100 ? 100 : Math.ceil(progress)
+    return progress >= 99.90 ? 100 : Math.floor(progress)
   }
 
   ngOnDestroy() {

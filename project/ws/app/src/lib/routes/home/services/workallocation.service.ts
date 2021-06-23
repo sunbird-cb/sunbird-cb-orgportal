@@ -10,6 +10,7 @@ const API_END_POINTS = {
   GET_USER_BY_WID: `${PROTECTED_SLAG_V8}/workallocation/getUserBasicInfo/`,
   ADD_WORK_ORDERS: `${PROTECTED_SLAG_V8}/workallocation/add/workorder`,
   COPY_WORK_ORDERS: `${PROTECTED_SLAG_V8}/workallocation/copy/workOrder`,
+  GET_PDF: `${PROTECTED_SLAG_V8}/workallocation/getWOPdf`,
 }
 
 @Injectable({
@@ -19,7 +20,9 @@ export class WorkallocationService {
   constructor(private http: HttpClient, private configService: ConfigurationsService
   ) { }
   getTime(dateString: number) {
-    return new Date(dateString).toISOString().substr(0, 10)
+    const time = new Date(dateString)
+    return `${new Date(dateString).toISOString().substr(0, 10)}
+    ${time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`
   }
   getUsers(req: any): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.USERS}`, req)
@@ -64,6 +67,16 @@ export class WorkallocationService {
   }
   fetchUserByWID(wid: string): Observable<any> {
     return this.http.get<any>(API_END_POINTS.GET_USER_BY_WID + wid)
+  }
+  getPDF(val: any) {
+    // const hTTPOptions = {
+    //   headers: new HttpHeaders({
+    //     Accept: 'application/pdf',
+    //   }),
+    //   responseType: 'blob' as 'json',
+    // }
+    // return this.http.get(`${API_END_POINTS.GET_PDF}`, hTTPOptions)
+    return this.http.get<any>(`${API_END_POINTS.GET_PDF}/${val}`, { responseType: 'blob' as 'json' })
   }
 
 }

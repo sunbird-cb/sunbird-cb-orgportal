@@ -38,8 +38,12 @@
               <mat-select [attr.id]="'compLevel_' + _comp" class="form-input flex-1" matInput #compLevel
                 i18n-placeholder formControlName="compLevel" placeholder="Type here" i18n-aria-label
                 aria-label="Type here" autocomplete="off">
-                <mat-option *ngFor="let _level of levelLest" [value]="_level">
-                  <span class="flex flex-1 margin-left-s">{{_level}}</span>
+                <mat-option *ngFor="let _level of levelLest" [value]="_level.level">
+                  <span
+                    class="flex flex-1 margin-left-s margin-bottom-xs margin-top-xs mat-subheading-2">{{_level.level}} -
+                    {{_level.alias}}</span>
+                  <!-- <br /> -->
+                  <!-- <span class="flex flex-1 margin-left-s mat-body-2 ws-mat-black60-text">{{_level.description}}</span> -->
                 </mat-option>
               </mat-select>
             </mat-form-field>

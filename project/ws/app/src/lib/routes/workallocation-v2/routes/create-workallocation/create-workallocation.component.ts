@@ -46,20 +46,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   departmentName: any
   departmentID: any
   workOrderId: any
-  content1 = {
-    name: 'Drafting competencies',
-    // tslint:disable-next-line: max-line-length
-    appIcon: 'https://igot.blob.core.windows.net/public/content/do_11327647969989427214307/artifact/do_11327647970098380814308_1620664026741_test448192519201591623096543.thumb.jpg',
-    duration: '12 minutes',
-    mimeType: 'video',
-  }
-  content2 = {
-    name: '12 step work allocation process',
-    // tslint:disable-next-line: max-line-length
-    appIcon: 'https://igot.blob.core.windows.net/public/content/do_11328133285267046414498/artifact/do_11327648079200256014382_1620664160384_gdp11597836661217.thumb.jpg',
-    duration: '8 minutes',
-    mimeType: 'pdf',
-  }
+  officerId: any
+  pageData: any
+  editDataStruct: any
   // tslinr=t
   constructor(
     private watStore: WatStoreService,
@@ -70,13 +59,86 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   ) {
     this.route.params.subscribe(params => {
       this.workOrderId = params['workorder']
+      this.officerId = params['officerId']
     })
+    this.pageData = _.get(this.route.snapshot, 'data.pageData.data')
   }
   ngOnInit(): void {
+    if (this.officerId) {
+      this.setEditData()
+    }
     this.fetchFormsData()
     this.getdeptUsers()
   }
-
+  setEditData() {
+    const data = _.get(this.route.snapshot, 'data.watData.data')
+    if (data) {
+      const roleCompetencyList = _.get(data, 'roleCompetencyList')
+      const unmappedActivities = _.get(data, 'unmappedActivities')
+      const unmappedCompetencies = _.get(data, 'unmappedCompetencies')
+      const user = {
+        officerName: _.get(data, 'userName'),
+        userId: _.get(data, 'userId'),
+        userEmail: _.get(data, 'userEmail'),
+      }
+      const position = {
+        userPosition: _.get(data, 'userPosition'),
+        positionId: _.get(data, 'positionId'),
+        positionDescription: _.get(data, 'positionDescription'),
+      }
+      this.editDataStruct = {
+        roleCompetencyList,
+        unmappedActivities,
+        unmappedCompetencies,
+        user,
+        position,
+        createdBy: _.get(data, 'createdBy'),
+        id: _.get(data, 'id'),
+        createdByName: _.get(data, 'createdByName'),
+      }
+    }
+  }
+  get getOfficerDataEdit() {
+    if (this.editDataStruct) {
+      return { usr: this.editDataStruct.user, position: this.editDataStruct.position }
+    } return null
+  }
+  get getActivityDataEdit() {
+    if (this.editDataStruct) {
+      return {
+        unmdA: _.map(_.get(this.editDataStruct, 'unmappedActivities'), (numa: NSWatActivity.IActivity) => {
+          return {
+            activityId: _.get(numa, 'id'),
+            activityName: _.get(numa, 'name'),
+            activityDescription: _.get(numa, 'description'),
+            assignedTo: _.get(numa, 'submittedToName'),
+            assignedToId: _.get(numa, 'submittedToId'),
+            assignedToEmail: _.get(numa, 'submittedToEmail'),
+          }
+        }),
+        list: _.get(this.editDataStruct, 'roleCompetencyList'),
+      }
+    }
+    return null
+  }
+  get getCompDataEdit() {
+    if (this.editDataStruct) {
+      return {
+        unmdC: _.map(_.get(this.editDataStruct, 'unmappedCompetencies'), (numa: NSWatCompetency.ICompActivity) => {
+          return {
+            compId: _.get(numa, 'id'),
+            compName: _.get(numa, 'name'),
+            compDescription: _.get(numa, 'description'),
+            compLevel: _.get(numa, 'level') || '', // still not found
+            compType: _.get(numa, 'additionalProperties.competencyType') || '',
+            compArea: _.get(numa, 'additionalProperties.competencyArea') || '',
+          }
+        }),
+        list: _.get(this.editDataStruct, 'roleCompetencyList'),
+      }
+    }
+    return null
+  }
   getdeptUsers() {
     this.allocateSrvc.getAllUsers().subscribe(res => {
       this.departmentName = res.deptName
@@ -135,7 +197,8 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     return `./#${this.selectedTab}`
   }
   get getOfficerName(): string {
-    return _.get(this.dataStructure, 'officerFormData.officerName')
+    return _.get(this.dataStructure, 'officerFormData.officerName') ||
+      _.get(this.editDataStruct, 'user.officerName')
   }
   // This method is used to fetch the form data from all children components
   fetchFormsData() {
@@ -175,6 +238,21 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       // console.log(req)
       this.allocateSrvc.createAllocationV2(req).subscribe(res => {
         if (res) {
+          this.openSnackbar('Work order update successfully!')
+          this.router.navigate(['/app/workallocation/drafts', this.getWorkOrderId])
+        }
+        this.watStore.clear()
+      })
+    } else {
+      this.openSnackbar('Error in updating Work order, please try again!')
+    }
+  }
+  updateWat() {
+    if (this.getWorkOrderId) {
+      const req = this.getStrcuturedReqUpdate()
+      // console.log(req)
+      this.allocateSrvc.updateAllocationV2(req).subscribe(res => {
+        if (res) {
           this.openSnackbar('Work order saved!')
           this.router.navigate(['/app/workallocation/drafts', this.getWorkOrderId])
         }
@@ -185,6 +263,31 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
+  getStrcuturedReqUpdate(): any {
+    let req = {}
+    const officer = this.getUserDetails()
+    const roles = this.getRoles
+    const unmappedActivity = this.getUnmappedActivity()
+    const unmappedCompetency = this.getUnmappedCompetency()
+    req = {
+      userId: officer.user ? officer.user.userId : '',
+      positionDescription: officer.positionDescription,
+      userPosition: officer.position,
+      positionId: officer.positionObj && officer.positionObj.positionId ? officer.positionObj.positionId : '',
+      userName: officer.officerName,
+      userEmail: officer.user ? officer.user.userEmail : '',
+      roleCompetencyList: roles,
+      unmappedActivities: unmappedActivity,
+      unmappedCompetencies: unmappedCompetency,
+      progress: this.dataStructure.currentProgress,
+      errorCount: this.dataStructure.errorCount,
+      workOrderId: this.getWorkOrderId,
+      createdBy: _.get(this.editDataStruct, 'createdBy'),
+      id: _.get(this.editDataStruct, 'id'),
+      createdByName: _.get(this.editDataStruct, 'createdByName'),
+    }
+    return req
+  }
   getStrcuturedReq(): any {
     let req = {}
     const officer = this.getUserDetails()
@@ -243,39 +346,49 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
             description: ag.groupDescription,
             // status: 'VERIFIED',
             // source: 'ISTM',
-            childNodes: _.map(ag.activities, (a: NSWatActivity.IActivity) => {
-              return {
-                type: 'ACTIVITY',
-                id: a.activityId,
-                name: a.activityName,
-                description: a.activityDescription,
-                submittedToName: a.assignedTo,
-                submittedToId: a.assignedToId,
-                submittedToEmail: a.assignedToEmail,
-                // status: 'UNVERIFIED',
-                // source: 'WAT',
-                // parentRole: null,
+            childNodes: _.compact(_.map(ag.activities, (a: NSWatActivity.IActivity) => {
+              if (a.activityDescription || a.assignedTo) {
+                return {
+                  type: 'ACTIVITY',
+                  id: a.activityId,
+                  name: a.activityName,
+                  description: a.activityDescription,
+                  submittedToName: a.assignedTo,
+                  submittedToId: a.assignedToId,
+                  submittedToEmail: a.assignedToEmail,
+                  submissionFrom: a.submissionFrom,
+                  submissionFromId: a.submissionFromId,
+                  submissionFromEmail: a.submissionFromEmail,
+                  // status: 'UNVERIFIED',
+                  // source: 'WAT',
+                  // parentRole: null,
+                }
               }
-            }),
+              return null
+            })),
           },
           competencyDetails: _.compact(_.map(
             // tslint:disable-next-line: max-line-length
             _.get(_.first(_.flatten(_.filter(this.dataStructure.compGroups, i => i.roleName === ag.groupName))), 'competincies'), (c: NSWatCompetency.ICompActivity) => {
-              return {
-                type: 'COMPETENCY',
-                id: c.compId,
-                name: c.compName,
-                description: c.compDescription,
-                // id='123',
-                // compLevel
-                // source: 'ISTM',
-                // status: 'UNVERIFIED',
-                additionalProperties: {
-                  competencyArea: c.compArea,
-                  competencyType: c.compType,
-                },
-                // children: [],
+              const compp = this.watStore.getUpdateCompGroupById(c.localId)
+              if (compp && (compp.compName || c.compName || compp.compDescription)) {
+                return {
+                  type: 'COMPETENCY',
+                  id: compp.compId,
+                  name: compp.compName || c.compName,
+                  description: compp.compDescription,
+                  // id='123',
+                  level: compp.compLevel,
+                  // source: 'ISTM',
+                  // status: 'UNVERIFIED',
+                  additionalProperties: {
+                    competencyArea: compp.compArea,
+                    competencyType: compp.compType,
+                  },
+                  // children: [],
+                }
               }
+              return null
             })),
         }
       }
@@ -288,41 +401,51 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
 
   getUnmappedActivity() {
     const unmapedActivities = _.get(_.first(this.dataStructure.activityGroups), 'activities')
-    const unmapedActivitiesReq = unmapedActivities.map((ua: any) => {
-      return {
-        type: 'ACTIVITY',
-        id: ua.activityId,
-        name: ua.activityName,
-        description: ua.activityDescription,
-        submittedToName: ua.assignedTo,
-        submittedToId: ua.assignedToId,
-        submittedToEmail: ua.assignedToEmail,
-        // status: 'UNVERIFIED',
-        // source: 'WAT',
-        // parentRole: null,
+    const unmapedActivitiesReq = _.compact(unmapedActivities.map((ua: any) => {
+      if (ua.activityDescription || ua.assignedTo) {
+        return {
+          type: 'ACTIVITY',
+          id: ua.activityId,
+          name: ua.activityName,
+          description: ua.activityDescription,
+          submittedToName: ua.assignedTo,
+          submittedToId: ua.assignedToId,
+          submittedToEmail: ua.assignedToEmail,
+          submissionFrom: ua.submissionFrom,
+          submissionFromId: ua.submissionFromId,
+          submissionFromEmail: ua.submissionFromEmail,
+          // status: 'UNVERIFIED',
+          // source: 'WAT',
+          // parentRole: null,
+        }
       }
-    })
+      return null
+    }))
     return unmapedActivitiesReq
   }
 
   getUnmappedCompetency() {
     const unmapedComps = _.get(_.first(this.dataStructure.compGroups), 'competincies')
-    const unmapedCompsReq = unmapedComps.map((uc: any) => {
-      return {
-        type: 'COMPETENCY',
-        id: uc.compId,
-        name: uc.compName,
-        description: uc.compDescription,
-        // id='123',
-        // compLevel
-        // source: 'ISTM',
-        // status: 'UNVERIFIED',
-        additionalProperties: {
-          competencyArea: uc.compArea,
-          competencyType: uc.compType,
-        },
+    const unmapedCompsReq = _.compact(unmapedComps.map((uc: any) => {
+      const compp = this.watStore.getUpdateCompGroupById(uc.localId)
+      if (compp && (compp.compName || uc.compName || compp.compDescription)) {
+        return {
+          type: 'COMPETENCY',
+          id: compp.compId,
+          name: compp.compName || uc.compName,
+          description: compp.compDescription,
+          // id='123',
+          level: compp.compLevel,
+          // source: 'ISTM',
+          // status: 'UNVERIFIED',
+          additionalProperties: {
+            competencyArea: compp.compArea,
+            competencyType: compp.compType,
+          },
+        }
       }
-    })
+      return null
+    }))
     return unmapedCompsReq
   }
 

@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Observable, Subject } from 'rxjs'
 import { debounceTime, map, switchMap, takeUntil } from 'rxjs/operators'
 import { AllocationService } from '../../services/allocation.service'
@@ -15,6 +15,7 @@ import _ from 'lodash'
 })
 export class OfficerComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject<void>()
+  @Input() editData!: any
   userslist!: any[]
   userCtrl = new FormControl()
   filteredUserslist!: Observable<any[]>
@@ -45,12 +46,15 @@ export class OfficerComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.officerForm = this.formBuilder.group({
-      officerName: this.formBuilder.control('', []),
-      position: this.formBuilder.control('', []),
-      positionDescription: this.formBuilder.control('', []),
-      user: this.formBuilder.control('', []),
-      positionObj: this.formBuilder.control('', []),
+      officerName: this.formBuilder.control(_.get(this.editData, 'usr.officerName') || '', [Validators.required]),
+      position: this.formBuilder.control(_.get(this.editData, 'position.userPosition') || '', [Validators.required]),
+      positionDescription: this.formBuilder.control(_.get(this.editData, 'position.positionDescription') || '', []),
+      user: this.formBuilder.control(_.get(this.editData, 'usr') || {}, []),
+      positionObj: this.formBuilder.control(_.get(this.editData, 'position') || {}, []),
     })
+    if (this.editData && _.get(this.editData, 'usr.officerName')) {
+      this.watStore.setOfficerGroup(this.officerForm.value)
+    }
   }
 
   public filterUsers(value: string) {

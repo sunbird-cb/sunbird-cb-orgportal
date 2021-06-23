@@ -13,7 +13,12 @@
     background-color: #0074B6;
     color: rgba(255, 255, 255, 0.95);
   }
+}
 
+::ng-deep mat-option ng-star-inserted .mat-selected {
+  .ws-mat-accent-text {
+    color: inherit;
+  }
 }
 
 ::ng-deep mat-form-field .mat-form-field-infix .mat-form-field-label,
