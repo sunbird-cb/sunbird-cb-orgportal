@@ -178,7 +178,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
             errors: element.errorCount,
             publishedon: this.workallocationSrvc.getTime(element.createdAt),
             publishedby: element.createdByName,
-            approval: "Approval",
+            approval: "Download",
             fromdata: currentStatus,
             publishedPdfLink: element.publishedPdfLink,
             signedPdfLink: element.signedPdfLink

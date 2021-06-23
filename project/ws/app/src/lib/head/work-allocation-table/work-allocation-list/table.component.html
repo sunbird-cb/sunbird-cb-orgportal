@@ -37,9 +37,8 @@
                     </span>
                     <div *ngIf="!col.isList && element[col.key]==='Download'" (click)="buttonClick(element)"
                         class="url_value">
-                        <a class="textclass mat-body-2">
-                            {{element[col.key]}} {{col.isList}}
-                        </a>
+                        <img src="/assets/icons/pdf.svg" alt="PDF upload" class="pdf">
+                        <a>{{element[col.key]}} {{col.isList}}</a>
                     </div>
                 </mat-cell>
             </ng-container>

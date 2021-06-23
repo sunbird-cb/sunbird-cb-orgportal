@@ -469,7 +469,11 @@ $card-standard-width: 268px;
     line-height: $description-line-height;
   }
 }
-
+.right{
+  position: absolute;
+  left: 0;
+  margin-left: 13%;
+}
 .card-basic-infomartion-container {
   $card-padding: $size-m;
   $card-width: 265px;
@@ -617,7 +621,8 @@ $title-line-count: 2;
 .table1 {
   width: 100%;
   display: flex;
-  // flex: 1;
+  max-height: 290px;
+  overflow-x: scroll;
   flex-direction: column;
 }
 

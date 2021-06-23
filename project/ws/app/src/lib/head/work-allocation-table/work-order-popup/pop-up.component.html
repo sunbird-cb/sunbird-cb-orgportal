@@ -1,15 +1,11 @@
 <div class="example-container">
-    <h1 class="title-margin">Create a new draft work orders</h1>
-
-
+    <h1 class="title-margin">Create a new draft work order</h1>
     <div class="search ml-5">
-
         <div>
             <span class="mat-button mar-15">Name of the draft</span> <br />
             <input class="sinput-1" type="Standard" [(ngModel)]="workOrder" [disabled]='true' placeholder="Work Order"
                 required>
         </div>
-
         <span class="hypen">-</span>
         <div>
             <input class="sinput-2" type="Standard" [(ngModel)]="currentCheckedValue" #wordOrderName="ngModel"
@@ -19,8 +15,6 @@
             <span class="ws-mat-red-text" *ngIf="(!wordOrderName.valid) && wordOrderName.touched && !isBlank">
                 Please enter the copy work order name</span>
         </div>
-
-
     </div>
     <div class="max-margin mat-subheading-1" *ngIf="this.dataSource.data.length>0">
         <label>Copy from a published work order (optional)</label>
@@ -63,18 +57,6 @@
                 </span>
             </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="Menu">
-            <mat-header-cell *matHeaderCellDef class="clr-darkish-blue action-header">
-                <mat-icon>view_comfy</mat-icon>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row" class="action-cell">
-                <button type="button" mat-icon-button i18n-aria-label aria-label="action items"
-                    [matMenuTriggerFor]="cardMenu" class="action-btn">
-                    <mat-icon>more_horiz</mat-icon>
-                </button>
-            </mat-cell>
-        </ng-container>
-
         <mat-header-row *matHeaderRowDef="getFinalColumns()"></mat-header-row>
         <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection.toggle(row); onRowClick(row)">
         </mat-row>
@@ -86,7 +68,9 @@
 
 <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
 </mat-paginator>
+
 <mat-dialog-actions align="end" class="mb-0-imp">
+    <a class="right mat-button" *ngIf="!isBlank" (click)="clearSelection()">Clear selection</a>
     <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display">
         <span class="ws-mat-default-text" i18n>Cancel</span>
     </button>
@@ -101,34 +85,3 @@
     </button>
 
 </mat-dialog-actions>
-
-
-
-<mat-menu #cardMenu="matMenu">
-    <ng-template matMenuContent>
-        <div mat-menu-item>
-            <button name="channel-analytics-button" class="ws-mat-primary-text" mat-icon-button i18n-aria-label
-                aria-label="Analytics">
-                <mat-icon>input</mat-icon> <span>Show on karmayogi</span>
-            </button>
-        </div>
-        <div mat-menu-item>
-            <button name="channel-analytics-button" class="ws-mat-primary-text" mat-icon-button i18n-aria-label
-                aria-label="Analytics">
-                <mat-icon>block</mat-icon><span>Block user</span>
-            </button>
-        </div>
-        <div mat-menu-item>
-            <button name="channel-analytics-button" class="ws-mat-primary-text" mat-icon-button i18n-aria-label
-                aria-label="Analytics">
-                <mat-icon>edit_attributes</mat-icon><span>Deactivate user</span>
-            </button>
-        </div>
-        <div mat-menu-item>
-            <button name="channel-analytics-button" class="ws-mat-primary-text" mat-icon-button i18n-aria-label
-                aria-label="Analytics">
-                <mat-icon>delete</mat-icon><span>Delete user</span>
-            </button>
-        </div>
-    </ng-template>
-</mat-menu>

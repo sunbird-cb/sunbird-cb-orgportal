@@ -34,6 +34,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
   pageSize = 5
   userData: any
   isBlank = true
+  tableElement: any
   departmentName!: string
   departmentID!: number
   currentCheckedValue = null
@@ -130,16 +131,16 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
 
   }
   checkState(el: any) {
-
+    this.tableElement = el
     setTimeout(() => {
-      if (this.currentCheckedValue2 && this.currentCheckedValue2 === el.value.id) {
-        el.checked = false
-        this.ren.removeClass(el['_elementRef'].nativeElement, 'cdk-focused')
-        this.ren.removeClass(el['_elementRef'].nativeElement, 'cdk-program-focused')
+      if (this.currentCheckedValue2 && this.currentCheckedValue2 === this.tableElement.value.id) {
+        this.tableElement.checked = false
+        this.ren.removeClass(this.tableElement['_elementRef'].nativeElement, 'cdk-focused')
+        this.ren.removeClass(this.tableElement['_elementRef'].nativeElement, 'cdk-program-focused')
         this.currentCheckedValue2 = null
         this.isBlank = true
       } else {
-        this.currentCheckedValue2 = el.value.id
+        this.currentCheckedValue2 = this.tableElement.value.id
         this.isBlank = false
       }
     })
@@ -159,7 +160,7 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
             errors: element.errorCount,
             publishedon: this.workallocationSrvc.getTime(element.createdAt),
             publishedby: element.createdByName,
-            approval: 'Approval',
+            approval: 'Download',
             fromdata: currentStatus,
 
           }
@@ -199,6 +200,13 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
 
   filterList(list: any[], key: string) {
     return list.map(lst => lst[key])
+  }
+  clearSelection() {
+    this.tableElement.checked = false
+    this.ren.removeClass(this.tableElement['_elementRef'].nativeElement, 'cdk-focused')
+    this.ren.removeClass(this.tableElement['_elementRef'].nativeElement, 'cdk-program-focused')
+    this.currentCheckedValue2 = null
+    this.isBlank = true
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
