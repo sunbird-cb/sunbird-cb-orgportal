@@ -1,0 +1,168 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  // min-height: calc(100vh - 2 * 56px - 2 * 52px) vh;
+  // padding: 12px;
+}
+
+.sticky-nav {
+  position: sticky;
+    top: 55px;
+    background: #fff;
+    z-index: 999;
+    padding: 16px 0;
+}
+
+.sticky-nav-content {
+  display: flex;
+  flex: 1 1 0%;
+  position: sticky;
+  top: 40px;
+}
+
+.sticky-right-section {
+  position: relative;
+  top: 0;
+  max-width: 320px;
+}
+
+.sticky-right-section-content {
+  position: sticky;
+  top: 73px;
+}
+
+.min-height35 {
+  min-height: 35px;
+}
+
+.width-fill {
+  max-width: fit-content;
+}
+
+.filter {
+  .filter-option {
+    // margin: $size-xs $size-m;
+    /* border-bottom: darkslateblue; */
+    border-radius: 0;
+    border-bottom-width: 2px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .in-margin {
+    margin: $size-xs $size-m;
+  }
+}
+
+.font-bold-i {
+  font-weight: 700 !important;
+}
+
+.btn:disabled {
+  background: rgba(0, 0, 0, 0.16);
+  color: white !important;
+}
+
+.not-selected {
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.margin-b-0 {
+  margin-bottom: 0 !important;
+}
+
+.custom-pad {
+  padding: $size-s $size-xl $size-xs 0;
+}
+
+.text-white {
+  color: white !important;
+}
+
+.fix-top {
+  // position: fixed;
+  top: calc(#{$mat-toolbar-gt-xs});
+  left: 0;
+  // background: rgb(247, 159, 159);
+  width: 100%;
+  flex: 1;
+  padding: $size-m 0;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.flex-3 {
+  flex: 3;
+}
+
+.flex-4 {
+  flex: 4;
+}
+
+.wi {
+  min-width: 100%;
+  // max-height: calc(100vh - 2 * 56px - 2 * 52px);
+  /* height: -webkit-fill-available; */
+  padding: 0;
+  overflow-y: overlay;
+  overflow-x: hidden;
+}
+
+.left-indicator {
+  width: $size-s;
+  min-height: 190px;
+  height: auto;
+  border-radius: 0 4px 4px 0;
+}
+
+.border-r {
+  border-radius: calc(#{$size-xs} / 2);
+}
+
+.box-1 {
+  display: flex;
+  margin: 45px 0;
+}
+
+.font-semibold {
+  font-weight: 600 !important;
+}
+
+.example-margin {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.fix-h {
+  max-height: 40px;
+  align-self: center;
+}
+
+@include breakpoint-lt-m {
+  .respon {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .resporow {
+    flex-direction: column;
+
+  }
+
+  .fix-top {
+    position: relative;
+  }
+
+  .wi {
+    min-height: auto;
+  }
+}

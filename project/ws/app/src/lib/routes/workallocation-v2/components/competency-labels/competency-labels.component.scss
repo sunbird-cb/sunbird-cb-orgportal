@@ -1,0 +1,255 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.example-container {
+  // width: 400px;
+  max-width: 100%;
+  margin: 0;
+  display: inline-block;
+  vertical-align: top;
+
+  ::selection {
+    background-color: #0074B6;
+    color: rgba(255, 255, 255, 0.95);
+  }
+}
+
+::ng-deep mat-option ng-star-inserted .mat-selected {
+  .ws-mat-accent-text {
+    color: inherit;
+  }
+}
+
+::ng-deep mat-form-field .mat-form-field-infix .mat-form-field-label,
+::ng-deep mat-form-field .mat-form-field-infix .mat-select-value {
+  line-height: normal !important;
+}
+
+::ng-deep .theme-igot.day-mode .mat-form-field.mat-focused .mat-form-field-label {
+  color: #333232 !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  // padding: 0.6em 0 0.6em 0 !important;
+  border-top: none !important;
+}
+
+::ng-deep .mat-form-field {
+  width: 100%;
+  max-width: 340px;
+
+  &.full-width {
+    max-width: 100%;
+  }
+
+  &.no-pb .mat-form-field-wrapper {
+    padding-bottom: 0;
+    margin: 0;
+  }
+
+  &.square .mat-form-field-outline-start,
+  .mat-form-field-outline-end {
+    border-radius: 0 !important;
+  }
+
+  &.outline-color mat-form-field-outline {
+    color: rgba(0, 0, 0, 0.16);
+  }
+}
+
+.txt-b {
+  ::ng-deep .mat-form-field-outline {
+    background: #CDE4F0;
+  }
+}
+
+.txt-b-b {
+  ::ng-deep .mat-form-field {
+    font-weight: 700;
+  }
+
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.example-list {
+  // border: solid 1px #ccc;
+  min-height: 60px;
+  background: rgba(0, 0, 0, 0.04);
+  // border-radius: 4px;
+  overflow: hidden;
+  display: block;
+}
+
+.min-w {
+  min-height: 40px;
+}
+
+.margin-bottom-xxs {
+  margin-bottom: 4px !important;
+}
+
+.font-bold-i {
+  font-weight: 700 !important;
+}
+
+.font-semibold {
+  font-weight: 600 !important;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
+.group-background {
+  // background: rgba(0, 0, 0, 0.04);
+  animation: background-fade 3s forwards;
+  -webkit-animation: background-fade 3s forwards;
+  -moz-animation: background-fade 3s forwards;
+}
+
+@-webkit-keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: #F2ECF4;
+  }
+}
+
+@-moz-keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: #F2ECF4;
+  }
+}
+
+@keyframes background-fade {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: #F2ECF4;
+  }
+}
+
+
+.example-box {
+  padding: 0 10px;
+  // border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  // background: white;
+  font-size: inherit;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.custom-drag {
+  width: 40px;
+  // height: 48px;
+  background: transparent;
+}
+
+.min-w-200 {
+  min-width: 200px;
+}
+
+.custom-w {
+  height: 48px;
+  width: 40px;
+}
+
+.custom-w1 {
+  width: 40px;
+}
+
+.padding-left-0 {
+  padding-left: 0 !important;
+}
+
+.flex-4 {
+  flex: 4
+}
+
+.flex-2 {
+  flex: 2
+}
+
+.input-wrapper {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.margin-0 {
+  margin: 0 !important;
+}
+
+.margin-2px {
+  margin: 2px !important;
+}
+
+.margin-r-2px {
+  margin-right: 2px;
+}
+
+.margin-b-2px {
+  margin-bottom: 2px;
+}
+
+.break-a {
+  overflow-wrap: anywhere;
+}
+
+@include breakpoint-lt-m {
+  .resporow {
+    flex-direction: column;
+
+  }
+}

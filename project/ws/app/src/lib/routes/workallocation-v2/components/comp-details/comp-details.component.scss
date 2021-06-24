@@ -1,0 +1,121 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.example-list {
+  // border: solid 1px #ccc;
+  // min-height: 60px;
+  background: rgba(0, 0, 0, 0.04);
+  // border-radius: 4px;
+  // overflow: hidden;
+  // display: block;
+  max-width: 100%;
+  margin: 0;
+  display: inline-block;
+  vertical-align: top;
+
+  ::ng-deep .mat-form-field {
+    width: 100%;
+    max-width: 340px;
+
+    &.full-width {
+      max-width: 100%;
+    }
+
+    &.no-pb .mat-form-field-wrapper {
+      padding-bottom: 0;
+      margin: 0;
+    }
+
+    &.square .mat-form-field-outline-start,
+    .mat-form-field-outline-end {
+      border-radius: 0 !important;
+    }
+
+    &.outline-color mat-form-field-outline {
+      color: rgba(0, 0, 0, 0.16);
+    }
+  }
+
+  ::ng-deep .mat-form-field-infix {
+    padding-top: 0.7em;
+  }
+
+  ::ng-deep .mat-select-arrow-wrapper {
+    padding-top: 1rem;
+  }
+
+  ::ng-deep mat-select-panel {
+    max-width: 500px !important;
+  }
+
+  .mat-select-panel .mat-optgroup-label,
+  .mat-select-panel .mat-option {
+    height: auto !important;
+  }
+}
+
+.margin-0 {
+  margin: 0 !important;
+}
+
+.margin-2px {
+  margin: 2px !important;
+}
+
+.margin-r-2px {
+  margin-right: 2px;
+}
+
+.mh-40 {
+  max-height: 40px;
+}
+
+.auto-background {
+  // background: rgba(0, 0, 0, 0.04);
+  animation: background-fade1 2s forwards;
+  -webkit-animation: background-fade1 3s forwards;
+  -moz-animation: background-fade1 3s forwards;
+}
+
+@-webkit-keyframes background-fade1 {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: inherit;
+  }
+}
+
+@-moz-keyframes background-fade1 {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: inherit;
+  }
+}
+
+@keyframes background-fade1 {
+  0% {
+    background: #CDE4F0;
+  }
+
+  50% {
+    background: #CDE4F0;
+  }
+
+  100% {
+    background: inherit;
+  }
+}

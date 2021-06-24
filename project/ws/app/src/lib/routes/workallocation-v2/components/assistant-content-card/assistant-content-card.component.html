@@ -1,0 +1,26 @@
+<!-- <div class="flex flex-1 ws-mat-accent-border border-r padding-s margin-bottom-xs content-card">
+  <div class="flex flex-1">
+    <div>
+
+    </div>
+  </div>
+</div> -->
+
+<div class="flex items-center margin-bottom-xs flex-1 ws-mat-accent-border content-card" (click)="openDialog()">
+  <div class="content-img ws-mat-black040-bg" *ngIf="content?.appIcon">
+    <img alt="Thumbnail" class="card-thumbnail ws-mat-primary-lite-background" src="{{content?.appIcon}}">
+  </div>
+  <div class="content-img ws-mat-black040-bg flex flex-center items-center " *ngIf="!content?.appIcon">
+    <mat-icon>collections</mat-icon>
+  </div>
+  <div class="flex flex-col content text-truncate cursor-pointer">
+    <div class="margin-bottom-xxs">
+      <span class="two-line text-truncate">{{content?.name}}</span>
+    </div>
+    <div class="flex items-center">
+      <mat-icon class="margin-right-xs" *ngIf="content?.mimeType==='video'">slideshow</mat-icon>
+      <mat-icon class="margin-right-xs" *ngIf="content?.mimeType==='pdf'">picture_as_pdf</mat-icon>
+      <span> {{content?.duration}}</span>
+    </div>
+  </div>
+</div>

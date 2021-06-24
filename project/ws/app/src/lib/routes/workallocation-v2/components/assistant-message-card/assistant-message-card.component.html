@@ -1,0 +1,80 @@
+<div class="flex flex-1 items-center progress ws-mat-accent-border border-r margin-top-s padding-s">
+  <span class=" flex flex-1 items-center">
+    <!-- <mat-progress-spinner [diameter]="24" class="example-margin red" mode="determinate" [value]="currentProgress"
+      [color]="getColor(currentProgress)">
+    </mat-progress-spinner> -->
+    <circle-progress class="flex items-center progress" [percent]="currentProgress" [radius]="12" [outerStrokeWidth]="5"
+      [innerStrokeWidth]="5" [space]="-5" [outerStrokeColor]="progressColor()" [innerStrokeColor]="'rgba(0,0,0,.16)'"
+      [animation]="true" [animationDuration]="300" [showTitle]="false" [showUnits]="false" [showSubtitle]="false"
+      [showInnerStroke]="true" [clockwise]="true" [backgroundOpacity]="0" [backgroundGradient]="false"
+      [backgroundStrokeWidth]="3" [showZeroOuterStroke]=false [backgroundPadding]="-9" [startFromZero]="false"
+      [backgroundPadding]="0" [imageHeight]="24" [imageWidth]="24" [showBackground]="false"
+      [outerStrokeLinecap]="'butt'">
+    </circle-progress>
+    <span class="margin-left-m mat-body-1" *ngIf="currentProgress <= 0">{{'Not started yet'}}</span>
+    <span class="margin-left-m mat-body-1" *ngIf="currentProgress > 0">{{'Progress of completion'}}</span>
+  </span>
+  <span class="flex items-center mat-body-1 font-semibold margin-left-m">{{currentProgress}}%</span>
+</div>
+<div class="flex flex-1 margin-top-s" *ngIf="currentProgress <= 0">
+  <span class="mat-body-2 ws-mat-black60-text">
+    We will continously scan the workspace and show you reports and recommendations to help you
+    refine the content
+  </span>
+</div>
+<ng-container *ngIf="currentProgress > 0">
+
+  <div class="flex flex-1 flex-column margin-top-l">
+    <p class=" mat-body-2 font-bold-i margin-bottom-xs">
+      Errors
+      <span class=" margin-left-xxs ws-mat-red-dark-text font-bold-i"> {{validations?.error?.length}} </span>
+    </p>
+    <ng-container *ngIf="validations?.error?.length; else noError">
+      <ng-container *ngFor="let error of validations?.error">
+        <!-- <ws-app-assistant-message-card [type]="error.type" [count]="error.counts" [message]="error.label">
+    </ws-app-assistant-message-card> -->
+        <ng-container [ngTemplateOutlet]="messageSection" [ngTemplateOutletContext]="{data:error}">
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="flex flex-1 flex-column margin-top-l">
+    <p class="mat-body-2 font-bold-i margin-bottom-xs">
+      Warnings
+      <span class="margin-left-xxs ws-mat-red-dark-text font-bold-i"> {{validations?.warning?.length}} </span>
+    </p>
+    <ng-container *ngIf="validations?.warning?.length; else noWarning">
+      <ng-container *ngFor="let warn of validations?.warning">
+        <!-- <ws-app-assistant-message-card [type]="warn.type" [count]="warn.counts" [message]="warn.label">
+    </ws-app-assistant-message-card> -->
+        <ng-container [ngTemplateOutlet]="messageSection" [ngTemplateOutletContext]="{data:warn}">
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-template #messageSection let-data="data">
+  <div class="flex flex-1 ws-mat-accent-border border-r padding-s message-card">
+    <div class="flex flex-1">
+      <mat-icon class="margin-right-xs ws-mat-black60-text" *ngIf="data.type === 'activity'">directions_walk</mat-icon>
+      <mat-icon class="margin-right-xs ws-mat-black60-text" *ngIf="data.type === 'role'">settings</mat-icon>
+      <mat-icon class="margin-right-xs ws-mat-black60-text" *ngIf="data.type === 'competency'">extension</mat-icon>
+      <mat-icon class="margin-right-xs ws-mat-black60-text" *ngIf="data.type === 'officer'">person</mat-icon>
+      <mat-icon class="margin-right-xs ws-mat-black60-text" *ngIf="!(data.type === 'activity') &&
+      !(data.type === 'role') &&
+      !(data.type === 'competency') &&
+      !(data.type === 'officer')">
+        settings</mat-icon>
+      <span class="margin-right-xs" *ngIf="data.counts > 0">({{data.counts}})</span>
+      <span class="mat-body-2 custom-line-height">{{data.label}}</span>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noError>
+  <span class="mat-body-2 custom-line-height ws-mat-black60-text">No errors found</span>
+</ng-template>
+
+<ng-template #noWarning>
+  <span class="mat-body-2 custom-line-height ws-mat-black60-text">No warnings found</span>
+</ng-template>

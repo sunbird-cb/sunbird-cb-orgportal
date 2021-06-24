@@ -1,0 +1,88 @@
+<div class="custom-popup">
+  <mat-dialog-content>
+    <div class="pdf-upload">
+      <div class="mat-title margin-top-l margin-bottom-m">
+        Publish new work allocation order
+      </div>
+      <div class="mat-body-1 margin-bottom-l" *ngIf="!comparePDF && !uploadSuccessful">
+        Upload a scanned copy of the signed work allocation order
+      </div>
+      <div class="mat-body-1 margin-bottom-m" *ngIf="comparePDF">
+        Please compare the signed copy and the draft version being published. Click publish only if both versions are
+        matching.
+      </div>
+      <div class="text-center" *ngIf="!uploading && !uploadedFile && !comparePDF && !uploadSuccessful">
+        <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
+        <input type="file" #file style="display: none" (change)="onFilesAdded($event)" multiple accept=".pdf" />
+        <button mat-raised-button type="button" class="flex-auto-display margin-bottom-l" (click)="addFiles()">
+          <span class="ws-mat-default-text" i18n>Browse for files</span>
+        </button>
+        <!--
+        <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display margin-bottom-s">
+          <span class="ws-mat-default-text" i18n>Browse for files</span>
+        </button>
+        <p>Or drag and drop a pdf file here</p> -->
+      </div>
+      <div class="text-center margin-top-xl" *ngIf="uploading && !uploadedFile">
+        <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-top-m margin-bottom-s">
+        <p class="loadingbar margin-bottom-l"><span class="w70"></span></p>
+      </div>
+      <div class="text-center margin-top-xl" *ngIf="uploadedFile && !comparePDF && !uploadSuccessful">
+        <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
+        <p class="ws-mat-default-text">{{uploadedFile.name}}</p>
+        <!-- <mat-progress-bar mode="determinate" *ngIf="progress" [value]="progress[uploadedFile.name].progress | async"></mat-progress-bar> -->
+        <p class="loadingbar"><span class="w100"></span></p>
+      </div>
+      <div class="text-center" *ngIf="comparePDF">
+        <div class="inline-block margin-right-s margin-top-m float-left width-48">
+          <p class="greybar text-left">
+            <span>Signed approval</span>
+            <!-- <span class="mat-body-2 ws-mat-default-text float-right">{{uploadedFile.name}}</span>s -->
+          </p>
+          <div class="pdfviewer">
+            <pdf-viewer [src]="signedPDF" [fit-to-page]="false" [zoom]="0.5" [zoom-scale]="page-fit" [render-text]="true"
+              style="display: block;">
+            </pdf-viewer>
+          </div>
+        </div>
+        <div class="inline-block margin-left-s margin-top-m width-48">
+          <p class="greybar text-left"><span>Draft to be published</span></p>
+          <!-- <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s"> -->
+          <div class="pdfviewer">
+            <pdf-viewer [src]="draftPDF" [fit-to-page]="false" [zoom]="0.5" [zoom-scale]="page-fit" [render-text]="true"
+              style="display: block;">
+            </pdf-viewer>
+          </div>
+        </div>
+      </div>
+      <div class="text-center margin-bottom-xl margin-top-xl" *ngIf="uploadSuccessful">
+        <img src="/assets/icons/Publish_Success.svg" alt="PDF upload" class="margin-top-xl margin-bottom-l publish-success">
+        <p class="mat-title margin-bottom-m margin-top-xl">Published successfully</p>
+        <p class="margin-bottom-0 mat-body-1">Work allocation order published successfully.</p>
+        <p class="mat-body-1 margin-bottom-xl">It will be available under 'Published' tab.</p>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <div class="footer">
+      <button mat-raised-button type="button" [mat-dialog-close]="true" class="ws-mat-primary-background flex-auto-display"
+        (click)="dismiss()" *ngIf="uploadSuccessful">
+        <span class="text-white" i18n>Dismiss</span>
+      </button>
+      <button mat-raised-button type="button" class="ws-mat-primary-background flex-auto-display" (click)="publishOrder()"
+        *ngIf="comparePDF && !uploadSuccessful">
+        <span class="text-white" i18n>Publish</span>
+      </button>
+      <button mat-raised-button type="button" [disabled]="!uploadedFile" class="next-btn ws-mat-primary-background flex-auto-display"
+        (click)="compareFiles()" *ngIf="!comparePDF && !uploadSuccessful">
+        <span class="text-white" i18n>Next</span>
+      </button>
+      <button mat-raised-button type="button" class="flex-auto-display margin-right-s" (click)="reupload()" *ngIf="comparePDF && !uploadSuccessful">
+        <span class="ws-mat-default-text" i18n>Reupload scanned copy</span>
+      </button>
+      <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display margin-right-s" *ngIf="!uploadSuccessful">
+        <span class="ws-mat-default-text" i18n>Cancel</span>
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

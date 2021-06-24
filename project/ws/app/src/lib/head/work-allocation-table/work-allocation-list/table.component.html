@@ -1,0 +1,98 @@
+<div class="example-container">
+    <div class="example-table-container">
+
+        <div class="search">
+            <button mat-raised-button type="button" *ngIf="needCreateUser"
+                class="text-white ws-mat-primary-background text-white margin-right-l custom-btn"
+                (click)="gotoCreateUser()">
+                <b class="text-white" i18n>Create user</b>
+            </button>
+            <button mat-raised-button type="button" *ngIf="needAddAdmin"
+                class="text-white ws-mat-primary-background text-white margin-right-m custom-btn" (click)="openPopup()">
+                <b class="text-white" i18n>Add admin</b>
+            </button>
+        </div>
+        <mat-table #table matSort [ngStyle]="{'height': bodyHeight}" [matSortActive]="tableData!.sortColumn"
+            [matSortDirection]="tableData!.sortState" [dataSource]="dataSource" *ngIf="dataSource.data.length > 0"
+            class=" example-table table1 responsiveTable">
+
+            <ng-container matColumnDef="{{col.key}}" *ngFor="let col of tableData!.columns">
+                <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="{
+                            'min-wid':col.displayName === 'Work order'}"> {{col.displayName}} </mat-header-cell>
+                <mat-cell *matCellDef="let element" (click)="selection.toggle(element)" [ngClass]="{
+                            'min-wid':col.displayName === 'Work order'}">
+                    <mat-radio-button *ngIf="col.displayName==='Work order'" (click)="selectWorkOrder(element)">
+                    </mat-radio-button>
+                    <span *ngIf="!col.isList && element[col.key]!='Download'" class="flex textclass mat-body-2">
+
+                        <ws-app-initial-avatar
+                            *ngIf="col.displayName ==='Published by' ||  col.displayName ==='Last updated by'"
+                            [name]="element[col.key]">
+                        </ws-app-initial-avatar> <span [ngClass]="{
+                            'mat-button':col.displayName === 'Work order',
+                            'mat-body-2':col.displayName != 'Work order',
+                            'ws-mat-red-text':col.displayName === 'Errors' }"
+                            (click)="onRowClick(element)">{{element[col.key]}}
+                            {{col.isList}}</span>
+                    </span>
+                    <div *ngIf="!col.isList && element[col.key]==='Download'" (click)="buttonClick(element)"
+                        class="url_value">
+                        <img src="/assets/icons/pdf.svg" alt="PDF upload" class="pdf">
+                        <a>{{element[col.key]}} {{col.isList}}</a>
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Actions" *ngIf="tableData!.actions && tableData!.actions.length > 0">
+                <mat-header-cell *matHeaderCellDef class="clr-darkish-blue action-header"> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let row" class="action-cell">
+                    <div *ngFor="let ac of tableData!.actions">
+                        <div *ngIf="ac.optional">
+                            <ws-widget-app-button *ngIf="row[ac.optional_key] === ac.optional_Value" [type]="ac.type"
+                                [icon]="ac.icon" [disabled]="ac.disabled || false" [label]="ac.label"
+                                (click)="buttonClick(row)"></ws-widget-app-button>
+                        </div>
+                        <div *ngIf="!ac.optional">
+                            <ws-widget-app-button [type]="ac.type" [icon]="ac.icon" [label]="ac.label"
+                                [disabled]="ac.disabled || false" (click)="buttonClick(row)">
+                            </ws-widget-app-button>
+                        </div>
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Menu">
+                <mat-header-cell *matHeaderCellDef class="clr-darkish-blue action-header">
+                    Actions
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row" class="action-cell">
+                    <button type="button" mat-icon-button i18n-aria-label aria-label="action items"
+                        [matMenuTriggerFor]="cardMenu" [matMenuTriggerData]="{'data':row}" class="action-btn">
+                        <mat-icon>more_horiz</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="getFinalColumns()"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection.toggle(row);">
+            </mat-row>
+        </mat-table>
+        <div class="no-information-found" *ngIf="showLoading"><i>Loading...</i>
+        </div>
+        <div class="text-center margin-m" *ngIf="showNoData">
+            <img class="block mx-auto mb-3" src="/assets/instances/eagle/app_logos/allocation_empty.svg"
+                alt="No CBPs found">
+            <span class="block mat-subheading-2 mt-3">No data Found</span>
+        </div>
+    </div>
+
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
+    </mat-paginator>
+</div>
+
+<mat-menu #cardMenu="matMenu">
+    <ng-template matMenuContent let-rowData="data">
+        <button (click)="buttonClick(rowData)" mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text"
+            i18n-aria-label aria-label="Analytics">
+            <mat-icon>print</mat-icon> Print
+        </button>
+    </ng-template>
+</mat-menu>

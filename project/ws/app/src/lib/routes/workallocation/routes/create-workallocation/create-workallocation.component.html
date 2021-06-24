@@ -1,0 +1,364 @@
+<div class="container-balanced">
+    <div class="flex flex-1 custom">
+        <div class="flex-3" class="dynamic-overflow">
+            <div class="page_title_flex top-bar">
+                <div class="flex">
+                    <ws-widget-breadcrumbs-org
+                        [widgetData]="{titles:[{title:'Work allocation tool', url:'/app/home/workallocation'},{title:'New', url:'none'}] }">
+                    </ws-widget-breadcrumbs-org>
+                </div>
+                <span class="spacer"></span>
+                <div class="flex flex-3 custom button-row-inline">
+                    <button mat-stroked-button color="accent" type="button" class="mat-accent-border flex-auto-display"
+                        (click)="publishWorkOrder()" id="publishbtn" *ngIf="showPublishButton">
+                        <span i18n>Publish</span>
+                    </button>
+                    <button mat-button class="create-btn" type="button" (click)="onSubmit()" id="savebtn">
+                        <span i18n>Save</span>
+                    </button>
+                </div>
+            </div>
+            <!-- main content -->
+            <div class="flex flex-4 flex-column">
+                <div class="flex flex-1 custom">
+                    <div class="flex-1" style="position: relative;">
+                        <div #stickyMenu [class.sticky]="sticky">
+                            <ws-widget-scrollspy-left-menu [currentTab]="currentTab" [tabsData]="tabsData"
+                                class="flex flex-1" (eSideNavClick)="onSideNavTabClick($event)">
+                            </ws-widget-scrollspy-left-menu>
+                        </div>
+                    </div>
+                    <div class="flex-3">
+                        <div class="flex flex-1 flex-column">
+                            <form class="create-user-form" [formGroup]="newAllocationForm">
+                                <!-- Officer Info card -->
+                                <mat-card id="officer"
+                                    class="flex flex-1 flex-column margin-left-m margin-bottom-m margin-right-m ws-mat-accent-border">
+                                    <div class="flex-custom">
+                                        <mat-card-content
+                                            class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
+                                            <span class="card-heading flex-4 mobile-margin appr-section-heading"
+                                                role="link" tabindex="0">
+                                                Officer
+                                            </span>
+
+                                            <div class="margin-top-xl new-mobile">
+                                                <div class="flex flex-row mobile-break">
+                                                    <div class="flex-1" *ngIf="selectedUser">
+                                                        <div class="officer-card">
+                                                            <div class="bg-grey">
+                                                                <mat-icon class="close-icon"
+                                                                    (click)="removeSelectedUSer()">close</mat-icon>
+                                                            </div>
+                                                            <div class="padding-m userdata">
+                                                                <p class="letter-color">
+                                                                    {{selectedUser.userDetails.first_name.charAt(0)}}{{selectedUser.userDetails.last_name.charAt(0)}}
+                                                                </p>
+                                                                <p class="username">
+                                                                    {{selectedUser.userDetails.first_name}}
+                                                                    {{selectedUser.userDetails.last_name ?
+                                                                    selectedUser.userDetails.last_name : '' }}</p>
+                                                                <p class="userpos">{{selectedUser.userDetails.position}}
+                                                                    at {{selectedUser.userDetails.department_name}}</p>
+                                                            </div>
+                                                            <div class="padding-m userinfo">
+                                                                <!-- <p><mat-icon class="close-icon">phone</mat-icon> {{selectedUser.userDetails.phone}}</p> -->
+                                                                <p>
+                                                                    <mat-icon class="close-icon">email</mat-icon>
+                                                                    {{selectedUser.userDetails.email}}
+                                                                </p>
+                                                                <p class="blue-color-text">
+                                                                    <mat-icon class="close-icon">group</mat-icon>
+                                                                    Network Profile
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-3">
+                                                        <label for="fname" class="margin-remove-bottom form-label"
+                                                            i18n="First Name label|Label which explains the user to enter first name"
+                                                            i18n-aria-label aria-label="First name label">
+                                                            Name
+                                                        </label>
+                                                        <mat-form-field appearance="outline" class="margin-top-xs">
+                                                            <input id="fname" matInput #fname formControlName="fname"
+                                                                i18n-placeholder placeholder="Type here" i18n-aria-label
+                                                                aria-label="First name input" class="form-input"
+                                                                autocomplete="off" (keypress)="onSearchUser($event)"
+                                                                (keyup)="onSearchUser($event)" />
+                                                            <mat-error [hidden]="false"
+                                                                i18n="First name Error|Explains name is required"
+                                                                i18n-aria-label
+                                                                aria-label="First name Error|Explains name is required "
+                                                                *ngIf="newAllocationForm?.controls['fname']?.touched && newAllocationForm?.controls['fname'].errors?.required">
+                                                                Name is mandatory
+                                                            </mat-error>
+                                                        </mat-form-field>
+
+                                                        <label for="email"
+                                                            class="margin-remove-bottom margin-top-xs form-label"
+                                                            i18n="Email label|Label which explains the user to enter email"
+                                                            i18n-aria-label aria-label="Email label">
+                                                            Email
+                                                        </label>
+                                                        <mat-form-field appearance="outline" class="margin-top-xs">
+                                                            <input id="email" matInput #email formControlName="email"
+                                                                i18n-placeholder placeholder="Type here" i18n-aria-label
+                                                                aria-label="Email input" class="form-input"
+                                                                autocomplete="off" (keypress)="onSearchUser($event)"
+                                                                (keyup)="onSearchUser($event)" />
+                                                            <mat-error [hidden]="false"
+                                                                i18n="Email Error|Explains name is required"
+                                                                i18n-aria-label
+                                                                aria-label="Email Error|Explains name is required "
+                                                                *ngIf="newAllocationForm?.controls['email']?.touched && newAllocationForm?.controls['email'].errors?.required">
+                                                                Email is mandatory
+                                                            </mat-error>
+                                                            <mat-error [hidden]="false"
+                                                                *ngIf="newAllocationForm?.controls['email'].errors?.invalid"
+                                                                i18n-aria-label
+                                                                aria-label="Email Error|Name fields not valid ">
+                                                                Email field is not valid
+                                                            </mat-error>
+                                                        </mat-form-field>
+
+                                                        <label for="position" class="margin-remove-bottom form-label"
+                                                            i18n="Position label|Label which explains the user to enter position"
+                                                            i18n-aria-label aria-label="Position label">
+                                                            Position
+                                                        </label>
+                                                        <mat-form-field appearance="outline" class="margin-top-xs">
+                                                            <input type="text" id="position" matInput #position
+                                                                formControlName="position" i18n-placeholder
+                                                                placeholder="Type here" i18n-aria-label
+                                                                aria-label="position input" class="form-input"
+                                                                autocomplete="off" (keypress)="onSearchPosition($event)"
+                                                                (keyup)="onSearchPosition($event)" />
+                                                            <mat-error [hidden]="false"
+                                                                i18n="Position Error|Explains position is required"
+                                                                i18n-aria-label
+                                                                aria-label="Position Error|Explains position is required "
+                                                                *ngIf="newAllocationForm?.controls['position']?.touched && newAllocationForm?.controls['position'].errors?.required">
+                                                                Position is mandatory
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </mat-card-content>
+                                    </div>
+                                </mat-card>
+                                <!-- Roles & Activities card -->
+                                <mat-card id="roles"
+                                    class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
+                                    <div class="flex-custom">
+                                        <mat-card-content
+                                            class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
+                                            <span class="card-heading flex-4 mobile-margin appr-section-heading"
+                                                role="link" tabindex="0">
+                                                Roles, activites & competencies
+                                            </span>
+
+                                            <div class="margin-top-m new-mobile" formArrayName="rolelist">
+                                                <div class="flex flex-wrap mobile-break">
+                                                    <ul class="rolesactivities-ul">
+                                                        <li *ngFor="let rl of newroleControls; let ri=index">
+                                                            <div [formGroupName]="ri">
+                                                                <!-- <div class="roles-div">
+                                                                    <label for="name"
+                                                                        class="margin-remove-bottom form-label"
+                                                                        i18n="rolename label|Label which explains the user to enter rolename"
+                                                                        i18n-aria-label aria-label="rolename label">
+                                                                        Role
+                                                                    </label>
+                                                                    <mat-form-field appearance="outline"
+                                                                        class="margin-top-xs">
+                                                                        <input id="name" matInput #name
+                                                                            formControlName="name" i18n-placeholder
+                                                                            placeholder="Role label here"
+                                                                            i18n-aria-label aria-label="name input"
+                                                                            class="form-input" autocomplete="off"
+                                                                            (keypress)="onSearchRole($event)"
+                                                                            (keyup)="onSearchRole($event)" />
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="activites-div">
+                                                                    <label for="childNodes"
+                                                                        class="margin-remove-bottom form-label"
+                                                                        i18n="roleactivity label|Label which explains the user to enter roleactivity"
+                                                                        i18n-aria-label aria-label="activites label">
+                                                                        Activities
+                                                                    </label>
+                                                                    <mat-form-field appearance="outline"
+                                                                        class="margin-top-xs">
+                                                                        <input id="childNodes" matInput #childNodes
+                                                                            formControlName="childNodes"
+                                                                            i18n-placeholder
+                                                                            placeholder="Activities here"
+                                                                            i18n-aria-label
+                                                                            aria-label="childNodes input"
+                                                                            class="form-input" autocomplete="off"
+                                                                            (keypress)="onSearchActivity($event)"
+                                                                            (keyup)="onSearchActivity($event)" />
+                                                                        <span (click)="addActivity()"
+                                                                            class="addbtn blue-color-text"
+                                                                            *ngIf="newAllocationForm.value.rolelist[0].childNodes">Add</span>
+                                                                    </mat-form-field>
+                                                                </div> -->
+
+                                                                <!-- <div class="activitieslist margin-bottom-m"
+                                                                    *ngIf="activitieslist && activitieslist.length > 0">
+                                                                    <h3>Associated activities</h3>
+                                                                    <p><span *ngFor="let a of activitieslist; let i = index"
+                                                                            (click)="showRemoveActivity(i)">{{a.name}}
+                                                                            <mat-icon id="showremove{{i}}"
+                                                                                (click)="removeActivity(i)">close
+                                                                            </mat-icon>
+                                                                        </span></p>
+                                                                </div> -->
+                                                                <p *ngIf="showRAerror" class="mat-error font-xs">Add
+                                                                    both role & activities</p>
+                                                                <button mat-raised-button type="button"
+                                                                    class="text-white btn-success btn-responsive"
+                                                                    id="addtolist-btn" (click)="openDialog()">
+                                                                    <span class="text-white" i18n>Add new role</span>
+                                                                </button>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="margin-top-m new-mobile">
+                                                <div class="flex flex-wrap mobile-break">
+                                                    <table class="roleactivity-table">
+                                                        <tr>
+                                                            <th class="padding-s">Roles</th>
+                                                            <th class="padding-s">Activities</th>
+                                                            <th class="padding-s">Competencies</th>
+                                                            <!-- <th></th> -->
+                                                        </tr>
+                                                        <tr *ngFor="let r of ralist">
+                                                            <td class="font-bold padding-s">{{r.name}}</td>
+                                                            <td class="padding-s"><span
+                                                                    *ngFor="let a of r.childNodes">{{a.name}}</span>
+                                                            </td>
+                                                            <td class="action-cell">
+                                                                <button type="button" mat-icon-button i18n-aria-label
+                                                                    aria-label="action items"
+                                                                    [matMenuTriggerFor]="cardMenu"
+                                                                    [matMenuTriggerData]="{'data':r}"
+                                                                    class="action-btn">
+                                                                    <mat-icon>more_horiz</mat-icon>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr *ngIf="ralist && ralist.length === 0" class="nodata">
+                                                            <td class="padding-s nodata">Roles you add will appear here
+                                                            </td>
+                                                            <td class="padding-s nodata">Activities you add under the
+                                                                role will appear here</td>
+                                                            <td class="padding-s nodata">Competencies you add under the
+                                                                role will appear here</td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <mat-menu #cardMenu="matMenu">
+                                                        <ng-template matMenuContent let-rowData="data">
+                                                            <!-- <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button"
+                                                            class="ws-mat-primary-text" i18n-aria-label
+                                                            aria-label="Analytics">
+                                                            <mat-icon>archive</mat-icon> <span>Archive role</span>
+                                                            </button> -->
+                                                            <button (click)="buttonClick('Delete', rowData)"
+                                                                mat-menu-item name="channel-analytics-button"
+                                                                class="ws-mat-primary-text" i18n-aria-label
+                                                                aria-label="Analytics">
+                                                                <mat-icon>delete</mat-icon> <span>Delete role</span>
+                                                            </button>
+                                                        </ng-template>
+                                                    </mat-menu>
+
+                                                </div>
+                                            </div>
+                                        </mat-card-content>
+                                    </div>
+                                </mat-card>
+                            </form>
+                            <!-- Form value: {{ newAllocationForm?.getRawValue() | json }}
+                    <hr>
+                    Form Status: {{newAllocationForm.status}} -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- right sidebar -->
+        <div class="flex-1 similar-sidebar">
+            <ng-container id="changelog">
+                <div>
+                    <label class="change-log-text margin-top-l margin-bottom-l margin-left-m margin-right-m">Similar
+                        items</label>
+                    <div class="w-full similarUsersList" *ngIf="similarUsers && similarUsers.length > 0">
+                        <div class="suser-card" *ngFor="let user of similarUsers">
+                            <div class="padding-top-m padding-left-s padding-right-s">
+                                <span
+                                    class="letter-color">{{user.userDetails.first_name.charAt(0)}}{{user.userDetails.last_name.charAt(0)}}</span>
+                                <mat-icon class="groupicon">group</mat-icon>
+                            </div>
+                            <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s">
+                                <p class="username">{{user.userDetails.first_name}} {{user.userDetails.last_name ?
+                                    user.userDetails.last_name : ''}}</p>
+                                <p class="useremail">{{user.userDetails.email}}</p>
+                                <p class="userpos">{{user.userDetails.position ? user.userDetails.position : ''}}
+                                    at {{user.userDetails.department_name}}</p>
+                            </div>
+                            <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                                <button id="adduser" (click)="selectUser(user)">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full similarUsersList" *ngIf="similarRoles && similarRoles.length > 0">
+                        <div class="suser-card" *ngFor="let role of similarRoles">
+                            <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                                <p class="username">{{role.name}}</p>
+                                <p class="userpos">{{role.childNodes.length}} activities</p>
+                            </div>
+                            <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                                <button id="addrole" (click)="selectRole(role)">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full similarUsersList" *ngIf="similarActivities && similarActivities.length > 0">
+                        <div class="suser-card" *ngFor="let act of similarActivities">
+                            <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                                <p class="username">{{act.name}}</p>
+                            </div>
+                            <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                                <button id="addactivity" (click)="selectActivity(act)">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full similarUsersList" *ngIf="similarPositions && similarPositions.length > 0">
+                        <div class="suser-card" *ngFor="let pos of similarPositions">
+                            <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                                <p class="username">{{pos.name}}</p>
+                            </div>
+                            <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                                <button id="addpos" (click)="selectPosition(pos)">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="loader"></div>
+                    <div class="no-request-text margin-m">
+                        <label *ngIf="!similarUsers && !similarRoles && !similarActivities && !similarPositions">System
+                            will recommend similar items to avoid duplication</label>
+                        <label *ngIf="nosimilarUsers && similarUsers.length === 0">No users found</label>
+                        <label *ngIf="nosimilarRoles && similarRoles.length === 0">No roles found</label>
+                        <label *ngIf="nosimilarPositions && similarPositions.length === 0">No position found</label>
+                        <label *ngIf="nosimilarActivities && similarActivities.length === 0">No activity found</label>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

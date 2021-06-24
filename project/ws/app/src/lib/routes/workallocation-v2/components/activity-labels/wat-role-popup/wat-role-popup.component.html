@@ -1,0 +1,79 @@
+<mat-card class="example-container flex-1 flex-column">
+  <form [formGroup]="watForm" (ngSubmit)="submitResult(watForm.value)">
+    <mat-card-header>
+      <div class="flex flex-1 flex-column">
+        <span class="mat-title">Confirm auto fill</span>
+        <span class="mat-body-2">{{'Adding this role will auto fill associated data in the form.'}}</span>
+        <span class="mat-body-2">{{'Choose from the list below the items you want to be auto filled.'}}</span>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="flex flex-1 flex-column">
+        <div class="flex flex-1 flex-column">
+          <div class="flex flex-1">
+            <!-- <mat-checkbox class="padding-bottom-s padding-top-s" (click)="onChange($event)" color="accent"
+              formControlName="IsRoleSelected"> -->
+            <span class="padding-bottom-s padding-top-s mat-subheading-1">Role</span>
+            <!-- </mat-checkbox> -->
+          </div>
+          <div class="table ws-mat-accent-border-bottom">
+            <div class="flex-1 head-cell margin-r-2px">
+              <!-- <mat-radio-button *ngFor="let op of listOfOptions" [checked]="op.checked" name="opList">{{ op.name}}</mat-radio-button> -->
+              <span class="mat-subheading-2">Role label</span>
+            </div>
+            <div class="flex-3 head-cell">
+              <span class="mat-body-2 ws-mat-black60-text">Role description</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="flex-1 row-cell margin-r-2px ws-mat-accent-border">
+              <span class="mat-body-2">{{data.name}}</span>
+            </div>
+            <div class="flex-3 row-cell ws-mat-accent-border">
+              <span class="mat-body-2">{{data.description}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-1 flex-column" *ngIf="data.childNodes && data.childNodes.length>0">
+          <mat-checkbox [checked]="checkedAllActivities" class="padding-bottom-s padding-top-s"
+            (change)="onChangeAllAct($event)" color="accent">
+            <span class="mat-subheading-1">Activities</span>
+          </mat-checkbox>
+          <div class="flex flex-1 scroll flex-column">
+            <ng-container *ngFor="let _activity of watForm?.get('acDetail')?.controls; let i=index">
+              <div class=" flex flex-1 flex-column" [formGroup]="_activity">
+                <div class="table ws-mat-accent-border-bottom">
+                  <div class="flex-1 head-cell margin-r-2px">
+                    <mat-checkbox class="padding-bottom-s padding-top-s" color="accent" formControlName="isSelected">
+                      <span class="mat-subheading-2">Activities</span>
+                    </mat-checkbox>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="flex-1 row-cell margin-r-2px ws-mat-accent-border">
+                    <span class="mat-body-2">{{_activity.get("description")?.value}}</span>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <!-- <div class="flex flex-1 flex-row-reverse margin-right-s"> -->
+      <button mat-dialog-close mat-button (click)="onNoClick()"
+        class="btn accent-border-local ws-mat-primary-lite-background ws-mat-default-text margin-right-xs padding-s"
+        type="button" id="cancel">
+        <span i18n class="mat-subheading-2">Go back</span>
+      </button>
+      <button type="submit" cdkFocusInitial mat-button
+        class="btn ws-mat-accent-background text-white noborder margin-left-xs padding-s" id="add">
+        <span i18n class="mat-subheading-2">Add selected fields</span>
+      </button>
+
+      <!-- </div> -->
+    </mat-card-actions>
+  </form>
+</mat-card>

@@ -1,0 +1,19 @@
+@import 'ws-mixins';
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+}
+
+.font-12 {
+  font-size: 12px !important;
+}
+
+.py-1-5 {
+  padding-top: 0.5rem;
+  padding-bottom: 1.25rem;
+}

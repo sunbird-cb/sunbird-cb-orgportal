@@ -1,0 +1,344 @@
+<!-- <div mat-dialog-content class="modal-content"></div> -->
+<mat-dialog-content class="mat-typography">
+  <div style="display:inline-flex;">
+    <div style="width: 635px; overflow-y:auto;">
+      <mat-tab-group #tabGroup mat-stretch-tabs [(selectedIndex)]="selectedTabIndex"
+        (selectedTabChange)="tabChange(tabGroup)"
+        style="height: calc(100% - 64px); min-height: calc(100% - 64px); min-width: 100%; width: 100%; margin: 0px;">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span i18n>1. Role</span>
+          </ng-template>
+          <ng-template matTabContent>
+            <!-- <div>
+              <div class="ui">
+                <button class="p-1" mat-icon-button i18n-aria-label aria-label="Open side panel" i18n-matTooltip
+                  matTooltipPosition="right" matTooltip="Open side panel">
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+              </div>
+            </div> -->
+            <div class="margin-top-xl new-mobile">
+              <div class="mobile-break">
+                <form class="create-user-form" [formGroup]="allocationFieldForm">
+                  <div class="flex-3">
+                    <label for="role" class="margin-remove-bottom form-label"
+                      i18n="Role label|Label which explains the user to enter first name" i18n-aria-label
+                      aria-label="Role label">
+                      Role<i>*</i>
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="role" matInput #role formControlName="role" i18n-placeholder placeholder="Type here"
+                        i18n-aria-label aria-label="Role input" class="form-input" autocomplete="off"
+                        (keypress)="onSearchRole($event)" (keyup)="onSearchRole($event)" />
+                    </mat-form-field>
+
+                    <label for="roleDesc" class="margin-remove-bottom margin-top-xs form-label"
+                      i18n="Description label|Label which explains the user to enter email" i18n-aria-label
+                      aria-label="Description label">
+                      Description
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <textarea id="roleDesc" matInput #roleDesc formControlName="roleDesc" i18n-placeholder
+                        placeholder="Description here" i18n-aria-label aria-label="Description input" class="form-input"
+                        autocomplete="off" rows="8"></textarea>
+                    </mat-form-field>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span i18n>2.Activities</span>
+          </ng-template>
+          <ng-template matTabContent style="height: 650px;">
+            <div class="margin-top-xl new-mobile">
+              <div class="mobile-break">
+                <form class="create-user-form" [formGroup]="allocationFieldForm">
+                  <div class="flex-3">
+                    <label for="role" class="margin-remove-bottom form-label"
+                      i18n="Role label|Label which explains the user to enter first name" i18n-aria-label
+                      aria-label="Role label">
+                      Role
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="role_act" matInput #role formControlName="role" i18n-placeholder
+                        placeholder="Type here" i18n-aria-label aria-label="Role input" class="form-input"
+                        autocomplete="off" disabled="disabled" readonly />
+                    </mat-form-field>
+
+                    <label for="mapActivities" class="margin-remove-bottom margin-top-xs form-label"
+                      i18n="Map Activities label|Label which explains the user to enter email" i18n-aria-label
+                      aria-label="Map Activities label">
+                      Map activities
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="mapActivities" matInput #mapActivities formControlName="mapActivities" i18n-placeholder
+                        placeholder="Type here" i18n-aria-label aria-label="Map Activities input" class="form-input"
+                        autocomplete="off" (keypress)="onSearchActivity($event)" (keyup)="onSearchActivity($event)"
+                        maxlength="40" />
+                      <span class="form-control" style="color:#0074B6; cursor:pointer; margin-left:10px;"
+                        (click)="mapSelectedActivity()" *ngIf="selectedActivity !== ''">Map</span>
+                    </mat-form-field>
+
+                    <label for="mapActivities" class="margin-remove-bottom margin-top-xs form-label"
+                      i18n="Already Map Activities label|Label which explains the user to enter email" i18n-aria-label
+                      aria-label="Map Activities label" *ngIf="activitieslist && activitieslist.length > 0">
+                      Already mapped activities
+                    </label>
+
+                    <ul *ngIf="activitieslist && activitieslist.length > 0"
+                      style="list-style-type: none; padding-left: 0px; margin-top: 10px; height: 35px;">
+                      <li *ngFor="let a of activitieslist; let i = index" id="elementActivity{{i}}"
+                        (click)="showRemoveActivity(i)" style="height:35px;margin-bottom:10px; background-color:#FFF4ED; color:black; line-height: 35px; padding-left:15px; float:left;
+                        clear:left; word-wrap:break-word; border-radius: 4px; color:#716B66;padding-right: 15px;">
+                        {{a.name}}
+                        <mat-icon id="showremove{{i}}" (click)="removeActivity(i)"
+                          style="cursor:pointer; margin-left:10px; display:none; padding:5px;line-height: 35px;">close
+                        </mat-icon>
+                      </li>
+                    </ul>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span i18n>3. Competencies</span>
+            <ng-container></ng-container>
+          </ng-template>
+          <ng-template matTabContent style="padding-bottom: 20px;">
+            <div class="margin-top-xl new-mobile">
+              <div class="mobile-break">
+                <form class="create-user-form" [formGroup]="allocationFieldForm">
+                  <div class="flex-3">
+                    <label for="role" class="margin-remove-bottom form-label"
+                      i18n="Role label|Label which explains the user to enter first name" i18n-aria-label
+                      aria-label="Role label">
+                      Role
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="role_comp" matInput #role formControlName="role" i18n-placeholder
+                        placeholder="Type here" i18n-aria-label aria-label="Role input" class="form-input"
+                        autocomplete="off" disabled="disabled" readonly />
+                    </mat-form-field>
+
+                    <label for="competency" class="margin-remove-bottom margin-top-xs form-label"
+                      i18n="Competency label|Label which explains the user to enter email" i18n-aria-label
+                      aria-label="Competency label">
+                      Map competencies
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="competency" matInput #competency formControlName="competency" i18n-placeholder
+                        placeholder="Type here" i18n-aria-label aria-label="Competency input" class="form-input"
+                        autocomplete="off" (keypress)="onSearchCompetency($event)"
+                        (keyup)="onSearchCompetency($event)" />
+                    </mat-form-field>
+
+                    <label for="compDesc" class="margin-remove-bottom margin-top-xs form-label"
+                      i18n="Competency Description label|Label which explains the user to enter email" i18n-aria-label
+                      aria-label="Competency Description label">
+                      Description
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <textarea id="compDesc" matInput #compDesc formControlName="compDesc" i18n-placeholder
+                        placeholder="Description here" i18n-aria-label aria-label="Competency Description input"
+                        class="form-input" autocomplete="off" rows="8"></textarea>
+                    </mat-form-field>
+
+                    <label for="compArea" class="margin-remove-bottom form-label"
+                      i18n="Competency area label|Label which explains the user to enter first name" i18n-aria-label
+                      aria-label="Competency area label">
+                      Competency area
+                    </label>
+                    <mat-form-field appearance="outline" class="margin-top-xs">
+                      <input id="compArea" matInput #compArea formControlName="compArea" i18n-placeholder
+                        placeholder="Competency area here" i18n-aria-label aria-label="Competency area input"
+                        class="form-input" autocomplete="off" />
+                    </mat-form-field>
+
+                    <label for="compLevel" class="margin-remove-bottom form-label"
+                      i18n="Levels area label|Label which explains the user to enter first name" i18n-aria-label
+                      aria-label="Levels label">
+                      Levels
+                    </label>
+
+                    <ul class="competency-level" style="list-style-type: none; width:300px;padding-inline-start:0px;">
+                      <li
+                        style="border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px; margin-bottom:10px; border-radius: 2px; width:325px;">
+                        <input type="radio" name="competencylevel" value="level1" (change)="selectLevel('level1')">
+                        Level 1
+                      </li>
+                      <li
+                        style="border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius: 2px; width:325px;">
+                        <input type="radio" name="competencylevel" value="level2" (change)="selectLevel('level2')">
+                        Level 2
+                      </li>
+                      <li style=" border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius:
+                          2px; width:325px;">
+                        <input type="radio" name="competencylevel" value="level3" (change)="selectLevel('level3')">
+                        Level 3
+                      </li>
+                      <li style=" border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius:
+                          2px; width:325px;">
+                        <input type="radio" name="competencylevel" value="level4" (change)="selectLevel('level4')">
+                        Level 4
+                      </li>
+                      <li style=" border:1px solid rgba(0, 0, 0, 0.87) ; padding:5px;margin-bottom:10px;border-radius:
+                          2px; width:325px;">
+                        <input type="radio" name="competencylevel" value="level5" (change)="selectLevel('level5')">
+                        Level 5
+                      </li>
+                    </ul>
+
+                    <button [disabled]="!selectedCompetency" mat-raised-button class="text-white  btn-responsive"
+                      id="mapcompetency-btn" (click)="mapSelectedCompetency()">
+                      <span class="text-white" i18n>Map competency to this role</span>
+                    </button>
+
+                    <label for="mapCompetency" class="margin-remove-bottom margin-top-xs form-label"
+                      i18n="Already Map Competencies label|Label which explains the user to enter email" i18n-aria-label
+                      aria-label="Map Competencies label" *ngIf="competencieslist && competencieslist.length > 0">
+                      Already mapped competencies
+                    </label>
+
+                    <!-- <ul *ngIf="competencieslist && competencieslist.length > 0"
+                      style="list-style-type: none; border: 1px solid #ededed; width:250px; padding-left: 0px; margin-top: 10px; height: 35px;">
+                      <li *ngFor="let a of competencieslist; let i = index" (click)="showRemoveCompetency(i)"
+                        style="height:35px;margin-bottom:5px; background-color:#ffe7d0; color:black; width:250px; line-height: 35px; padding-left:11px;">
+                        {{a.name}}
+                      </li>
+                    </ul> -->
+
+                    <ul *ngIf="competencieslist && competencieslist.length > 0"
+                      style="list-style-type: none; padding-left: 0px; margin-top: 10px; height: 35px;">
+                      <li *ngFor="let a of activitieslist; let i = index" id="elemenComp{{i}}"
+                        (click)="showRemoveCompetency(i)" style="height:35px;margin-bottom:10px; background-color:#FFF4ED; color:black; line-height: 35px; padding-left:15px; float:left;
+                      clear:left; word-wrap:break-word; border-radius: 4px; color:#716B66;padding-right: 15px;">
+                        {{a.name}}
+                        <mat-icon id="showremoveComp{{i}}" (click)="removeCompetency(i)"
+                          style="cursor:pointer; margin-left:10px; display:none; padding:5px;line-height: 35px;">close
+                        </mat-icon>
+                      </li>
+                    </ul>
+
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <!-- right sidebar -->
+    <div class="flex-1 similar-sidebar" style="position: relative; height: 620px;">
+      <ng-container id="changelog">
+        <div>
+          <label class="change-log-text margin-top-l margin-bottom-l margin-left-m margin-right-m">Similar
+            items</label>
+          <!-- <div class="w-full similarUsersList" *ngIf="similarUsers && similarUsers.length > 0">
+            <div class="suser-card" *ngFor="let user of similarUsers">
+              <div class="padding-top-m padding-left-s padding-right-s">
+                <span
+                  class="letter-color">{{user.userDetails.first_name.charAt(0)}}{{user.userDetails.last_name.charAt(0)}}</span>
+                <mat-icon class="groupicon">group</mat-icon>
+              </div>
+              <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s">
+                <p class="username">{{user.userDetails.first_name}} {{user.userDetails.last_name ?
+                  user.userDetails.last_name : ''}}</p>
+                <p class="useremail">{{user.userDetails.email}}</p>
+                <p class="userpos">{{user.userDetails.position ? user.userDetails.position : ''}}</p>
+              </div>
+              <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                <button id="adduser" (click)="selectUser(user)">Add</button>
+              </div>
+            </div>
+          </div> -->
+          <div class="w-full similarUsersList" *ngIf="similarRoles && similarRoles.length > 0">
+            <div class="suser-card" *ngFor="let role of similarRoles;let i = index;">
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="username">{{role.name}}</p>
+                <p class="userpos" *ngIf="role.childNodes && role.childNodes.length > 0">{{role.childNodes.length}}
+                  activities</p>
+              </div>
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="desc">{{role.description}}</p>
+              </div>
+              <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                <button (click)="selectRole(role)">Add</button>
+              </div>
+            </div>
+          </div>
+          <div class="w-full similarUsersList" *ngIf="similarActivities && similarActivities.length > 0">
+            <div class="suser-card" *ngFor="let act of similarActivities">
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="username">{{act.name}}</p>
+              </div>
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="desc">{{act.description}}</p>
+              </div>
+              <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                <button id="addactivity" (click)="selectActivity(act)">Add</button>
+              </div>
+            </div>
+          </div>
+          <div class="w-full similarUsersList" *ngIf="similarPositions && similarPositions.length > 0">
+            <div class="suser-card" *ngFor="let pos of similarPositions">
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="username">{{pos.name}}</p>
+              </div>
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="desc">{{pos.description}}</p>
+              </div>
+              <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                <button id="addpos" (click)="selectPosition(pos)">Add</button>
+              </div>
+            </div>
+          </div>
+          <div class="w-full similarUsersList" *ngIf="similarCompetencies && similarCompetencies.length > 0">
+            <div class="suser-card" *ngFor="let comp of similarCompetencies">
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="username">{{comp.name}}</p>
+              </div>
+              <div class="padding-top-m padding-bottom-xs padding-left-s padding-right-s">
+                <p class="desc">{{comp.description}}</p>
+              </div>
+              <div class="padding-top-xs padding-bottom-xs padding-left-s padding-right-s btn-div">
+                <button id="addcomp" (click)="selectCompetency(comp)">Add</button>
+              </div>
+            </div>
+          </div>
+          <div id="loader"></div>
+          <div class="no-request-text margin-m">
+            <label
+              *ngIf="!similarUsers && !similarRoles && !similarActivities && !similarPositions && !similarCompetencies">System
+              will recommend similar items to avoid duplication</label>
+            <label *ngIf="nosimilarUsers && similarUsers.length === 0">No users found</label>
+            <label *ngIf="nosimilarRoles && similarRoles.length === 0">No roles found</label>
+            <label *ngIf="nosimilarPositions && similarPositions.length === 0">No position found</label>
+            <label *ngIf="nosimilarActivities && similarActivities.length === 0">No activity found</label>
+            <label *ngIf="nosimilarCompetencies && similarCompetencies.length === 0">No competency found</label>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <!-- </div> -->
+</mat-dialog-content>
+<mat-dialog-actions align="end" layout="row">
+  <button mat-raised-button class="btn-success btn-responsive" id="savebtn" [mat-dialog-close]="true">
+    <span i18n>Cancel</span>
+  </button>
+  <button *ngIf="selectedTabIndex !== 2" mat-raised-button class="text-white btn-success btn-responsive"
+    id="addtolist-btn" (click)="tabChange(tabGroup)">
+    <span class="text-white" i18n>Next</span>
+  </button>
+  <button *ngIf="selectedTabIndex === 2" mat-raised-button class="text-white btn-success btn-responsive"
+    id="addworkorder-btn" (click)="saveWorkOrder()">
+    <span class="text-white" i18n>Add to work order</span>
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,46 @@
+<div class="download-template" id="downloadtemplate">
+    <div class="dwnld-header margin-top-m margin-bottom-m">
+        <h2 class="margin-bottom-xs">Work allocation summary</h2>
+        <p class="margin-bottom-xs">As of {{today | date:'shortTime'}} {{today | date}}</p>
+    </div>
+    <div class="dwnld-table margin-bottom-l">
+        <table border="1" cellspacing="2" cellpadding="2">
+            <tr>
+                <th>Full name</th>
+                <th>Roles</th>
+                <th>Activities</th>
+                <th *ngIf="currentFilter === 'Draft'">Competencies</th>
+            </tr>
+            <tr *ngFor="let d of data; let i=index">
+                <td>{{d.fullname}}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <div class="table-role">
+                                {{d.roles.name}}
+                            </div>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>
+                            <div class="dwnld-activity">
+                                <span *ngFor="let a of d.roles.childNodes">{{a.name}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </td>
+                <td *ngIf="currentFilter === 'Draft'">
+                    <ul>
+                        <li *ngFor="let r of d.competencies">
+                            <div class="table-role">
+                                {{r.name}}
+                            </div>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

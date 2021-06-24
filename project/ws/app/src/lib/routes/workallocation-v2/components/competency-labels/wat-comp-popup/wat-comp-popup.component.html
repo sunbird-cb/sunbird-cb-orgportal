@@ -1,0 +1,160 @@
+<mat-card class="example-container flex-1 flex-column">
+  <form [formGroup]="watForm" (ngSubmit)="submitResult(watForm.value)">
+    <mat-card-header>
+      <div class="flex flex-1 flex-column">
+        <span class="mat-title">Confirm auto fill</span>
+        <span class="mat-body-2">{{'Adding this Competency will auto fill associated data in the form.'}}</span>
+        <span class="mat-body-2">{{'Choose from the list below the items you want to be auto filled.'}}</span>
+      </div>
+    </mat-card-header>
+    <mat-card-content class="scroll">
+      <div class="flex flex-1 flex-column">
+        <div class="flex flex-1 flex-column">
+          <div class="flex flex-1">
+            <!-- <mat-checkbox class="padding-bottom-s padding-top-s" (click)="onChange($event)" color="accent"
+              formControlName="IsRoleSelected"> -->
+            <span class="padding-bottom-s padding-top-s mat-subheading-1">Competencies</span>
+            <!-- </mat-checkbox> -->
+          </div>
+          <div class="table ws-mat-accent-border-bottom">
+            <div class="flex-1 head-cell margin-r-2px">
+              <!-- <mat-radio-button *ngFor="let op of listOfOptions" [checked]="op.checked" name="opList">{{ op.name}}</mat-radio-button> -->
+              <span class="mat-subheading-2">Competency label</span>
+            </div>
+            <div class="flex-3 head-cell">
+              <span class="mat-body-2 ws-mat-black60-text">Competency description</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="flex-1 row-cell margin-r-2px ws-mat-accent-border">
+              <span class="mat-body-2" *ngIf="!isNew">{{data.name}}</span>
+              <mat-form-field *ngIf="isNew" appearance="outline" class="full-width no-pb square outline-color">
+                <input matInput #compName i18n-placeholder placeholder="Type here" i18n-aria-label
+                  formControlName="compName" aria-label="Activity description input" class="form-input flex-1"
+                  autocomplete="off" />
+              </mat-form-field>
+            </div>
+            <div class="flex-3 row-cell ws-mat-accent-border">
+              <span class="mat-body-2" *ngIf="!isNew">{{data.description}}</span>
+              <mat-form-field *ngIf="isNew" appearance="outline" class="full-width no-pb square outline-color">
+                <input matInput #compDescription i18n-placeholder placeholder="Type here" i18n-aria-label
+                  formControlName="compDescription" aria-label="Activity description input" class="form-input flex-1"
+                  autocomplete="off" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-1 flex-column">
+          <!-- <div class="flex flex-1">
+            <span class="padding-bottom-s padding-top-s mat-subheading-1">Additional</span>
+          </div>
+          <div class="table ws-mat-accent-border-bottom">
+            <div class="flex-3 head-cell">
+              <span class="mat-body-2 ws-mat-black60-text">Competency type</span>
+            </div>
+            <div class="flex-3 head-cell">
+              <span class="mat-body-2 ws-mat-black60-text">Competency area</span>
+            </div>
+          </div> -->
+          <div class="row margin-top-l">
+            <div class="flex flex-column flex-1">
+              <span class="mat-subheading-1">Competency type</span>
+              <!-- <span class="mat-body-2" *ngIf="!isNew">{{data.compType}}</span> -->
+              <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                <mat-select [attr.id]="'compType_'" class="form-input flex-1" matInput #compLevel i18n-placeholder
+                  formControlName="compType" placeholder="select type" i18n-aria-label aria-label="select type"
+                  autocomplete="off">
+                  <mat-option *ngFor="let _level of compTypList" [value]="_level">
+                    <span class="flex flex-1 margin-left-s">{{_level}}</span>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="flex flex-column flex-1 margin-left-l">
+              <span class="mat-subheading-1">Competency area</span>
+              <!-- <span class="mat-body-2" *ngIf="!isNew">{{data.compArea}}</span> -->
+              <mat-form-field appearance="outline" class="full-width no-pb square outline-color">
+                <input matInput #compArea i18n-placeholder placeholder="Type here" i18n-aria-label
+                  formControlName="compArea" aria-label="Activity description input" class="form-input flex-1"
+                  autocomplete="off" />
+              </mat-form-field>
+            </div>
+            <div class="flex-3">
+              &nbsp;
+            </div>
+          </div>
+        </div>
+        <!-- *ngIf="data.childNodes && data.childNodes.length>0" -->
+        <div class="flex flex-1 flex-column margin-top-m">
+          <span class="mat-subheading-1">Choose competency levels</span>
+          <div class="flex flex-1 flex-column">
+            <!-- *ngFor="let _activity of watForm?.get('acDetail')?.controls; let i=index" -->
+
+            <!-- [formGroup]="_activity" -->
+            <div class=" flex flex-1 flex-column">
+              <div class="table ws-mat-accent-border-bottom">
+                <div class="flex-1 head-cell margin-r-2px">
+                  <span class="padding-bottom-s padding-top-s mat-subheading-2">Level</span>
+                </div>
+                <div class="flex-1 head-cell">
+                  <span class="padding-bottom-s padding-top-s mat-subheading-2">Level description</span>
+                </div>
+              </div>
+              <!-- -----loop wil come -->
+              <ng-container *ngFor="let _comp of watForm?.get('acDetail')?.controls; let i=index">
+                <div class="row" [formGroup]="_comp">
+                  <div class="flex-1 row-cell margin-r-2px ws-mat-accent-border flex-column">
+                    <!-- <mat-radio-group  formControlName="isSelected"> -->
+                    <mat-radio-button name="aa" [checked]="(_comp.get('level')?.value === selectedLevel)"
+                      (change)="radioChange($event)" [value]="(_comp.get('level')?.value)"
+                      class="padding-bottom-s padding-top-s" color="accent">
+                      <!-- [ngClass]="{'font-bold':_comp.get('isSelected')}" -->
+                      <span class="mat-body-2">{{_comp.get('level')?.value}}</span>
+                      <span class="mat-body-2"> - {{_comp.get('alias')?.value}}</span>
+                    </mat-radio-button>
+                    <!-- <span class="mat-body-2">{{_comp.get("name")?.value}}</span> -->
+                    <!-- </mat-radio-group> -->
+                  </div>
+                  <div class="flex-1 row-cell ws-mat-accent-border">
+                    <span class="mat-body-2 new-line" [innerHtml]="getLocalPrint(_comp.get('description')?.value)">
+                      <!-- <ol start="1">
+                        <li>
+                          Demonstrates good time management skills to meet short- and medium-term objectives
+                        </li>
+                        <li>
+                          Plans own work schedule and monitors progress against it optimally
+                        </li>
+                        <li>
+                          Uses available resources optimally to meet work objective
+                        </li>
+                        <li>
+                          Identifies and tries to solve bottlenecks in own area of work
+                        </li>
+                      </ol> -->
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <!-- <div class="flex flex-1 flex-row-reverse margin-right-s"> -->
+      <button mat-dialog-close mat-button (click)="onNoClick()"
+        class="btn accent-border-local ws-mat-primary-lite-background ws-mat-default-text margin-right-xs padding-s"
+        type="button" id="cancel">
+        <span i18n class="mat-subheading-2">Go back</span>
+      </button>
+      <button type="submit" cdkFocusInitial mat-button
+        class="btn ws-mat-accent-background text-white noborder margin-left-xs padding-s" id="add">
+        <span i18n class="mat-subheading-2">Add selected fields</span>
+      </button>
+
+      <!-- </div> -->
+    </mat-card-actions>
+  </form>
+</mat-card>

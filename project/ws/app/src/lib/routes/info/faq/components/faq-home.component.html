@@ -1,0 +1,50 @@
+<mat-toolbar [color]="pageNavbar.color" [ngStyle]="pageNavbar?.styles">
+  <button type="button" mat-icon-button *ngIf="faqConfigs?.length > 1" (click)="sideNavBarOpened = !sideNavBarOpened">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <ws-widget-breadcrumbs-org [widgetData]="{ url: 'home',titles:[{title:'Support',url:'none'}] }">
+  </ws-widget-breadcrumbs-org>
+  <!-- <span class="margin-left-xs text-truncate">
+    <span i18n="page title: faq" class="margin-left-xs">Support</span>
+  </span> -->
+</mat-toolbar>
+<div *ngIf="!isFaqFeature">
+  <h1 i18n class="mat-title margin-top-xl text-center">
+    Frequently asked questions can be configured here.
+  </h1>
+</div>
+<mat-sidenav-container class="sidenav-content-min-112">
+  <mat-sidenav class="sidenav" [mode]="mode$ | async" [(opened)]="sideNavBarOpened" *ngIf="faqConfigs?.length > 1">
+    <mat-nav-list *ngFor="let faqConfig of faqConfigs; let i = index">
+      <a mat-list-item aria-label="Faqs Related" [ngClass]="{ 'mat-toolbar active-tab': i === selectedTabIndex }"
+        (click)="sideNavOnClick(i)">{{ faqConfig.groupName }}</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!-- <div *ngIf="screenSizeIsLtMedium" class="flex flex-middle padding-m">
+      <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h2
+        class="mat-subheading-2 margin-remove padding-left-xs"
+        *ngFor="let faqConfig of faqConfigs; let i = index"
+      >
+        <span
+          (click)="sideNavOnClick(i)"
+          [ngClass]="{ 'mat-toolbar active-tab': i === selectedTabIndex }"
+          >{{ faqConfig.groupName }}</span
+        >
+      </h2>
+    </div> -->
+    <section class="padding-m" *ngFor="let selectedTabDatum of selectedTabData">
+      <p class="mat-body-2">
+        {{ selectedTabDatum.heading }}
+      </p>
+      <p *ngIf="selectedTabDatum.value" class="mat-body-1"
+        [innerHTML]="selectedTabDatum.value | pipeSafeSanitizer: 'html'">
+        <!-- [innerHTML]="selectedTabDatum.value | pipeSafeSanitizer: 'html'" -->
+      </p>
+    </section>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

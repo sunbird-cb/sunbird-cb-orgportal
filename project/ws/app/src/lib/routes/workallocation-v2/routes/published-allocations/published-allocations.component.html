@@ -1,0 +1,192 @@
+<div class="container-balanced custom-table-nav">
+  <mat-card class="flex-custom">
+    <mat-card-header class="flex-custom-m">
+      <!-- <div class="flex-1" role="link" tabindex="0">
+            <div class="flex flex-1">
+              <mat-card-title class="flex-4 mobile-margin">
+                <span class="h-600-s-20-m color-87">Work allocation tool</span>
+              </mat-card-title>
+            </div>
+          </div> -->
+      <div class="flex flex-1 custom">
+        <div class="flex-4">
+          <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }">
+          </ws-widget-breadcrumbs-org>
+        </div>
+        <div class="flex-2">
+          <!-- <button type="button" mat-button class="print-btn" *ngIf="data && data.length > 0">
+            <mat-icon>more_horiz_outlined</mat-icon> More
+          </button> -->
+          <button type="button" mat-button class="print-btn" *ngIf="data && data.length > 0" (click)="viewscanned()">
+            <img src="/assets/icons/pdf.svg" alt="PDF"> View signed approval
+          </button>
+          <button type="button" mat-button class="print-btn" (click)="print()" *ngIf="data && data.length > 0">
+            <mat-icon>print</mat-icon> Print
+          </button>
+          <!-- <button type="button" mat-button class="allocation-btn mat-accent-border" (click)="onNewAllocationClick()">
+            New Officer
+          </button>
+          <button mat-stroked-button color="accent" type="button" class="publish-btn mat-accent-border flex-auto-display"
+            (click)="publishWorkOrder()" id="publishbtn">
+            <span i18n>Publish</span>
+          </button> -->
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <ng-container>
+        <div class="margin-top-xsl margin-bottom-xs">
+          <div class="flex flex-1 custom">
+            <div class="flex-3">
+              <ul class="statistics">
+                <li class="margin-right-s" *ngIf="workorderData && workorderData.updatedAt">
+                  <div class="updated-date">
+                    <!-- <p class="mat-body-3">Officers</p> -->
+                    <p class="mat-subheading-2">
+                      <mat-icon class="ws-mat-default-text veralign-btm">check_circle_rounded</mat-icon>
+                      Published at {{workorderData.updatedAt | date:'shortTime'}} {{workorderData.updatedAt | date}}
+                    </p>
+                  </div>
+                </li>
+                <li class="margin-right-s">
+                  <div>
+                    <p class="mat-body-3">Officers</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.users.length : 0}}</p>
+                  </div>
+                </li>
+                <li class="margin-right-s">
+                  <div>
+                    <p class="mat-body-3">Roles</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.rolesCount : 0}}</p>
+                  </div>
+                </li>
+                <li class="margin-right-s">
+                  <div>
+                    <p class="mat-body-3">Activities</p>
+                    <p class="mat-subheading-2">{{workorderData ? workorderData.activitiesCount : 0}}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="flex-3">
+              <div class="search margin-top-l">
+                <div class=rsearch>
+                  <mat-icon class="color-60 search-icon">search</mat-icon>
+                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal" [(ngModel)]="term"
+                    placeholder="Search">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <table class="allocation-table margin-bottom-l mat-body-2" id="allocation-table" cell-spacing='0' cell-padding='0'>
+          <tr>
+            <th>Name and designation <mat-icon class="sort-icon">arrow_upward</mat-icon>
+            </th>
+            <th>Roles</th>
+            <th>Activities</th>
+            <th>Submit to</th>
+            <th>Submission from</th>
+          </tr>
+          <tr *ngFor="let d of data | filter: term | paginate: { itemsPerPage: 5, currentPage: p, totalItems: data.length }"
+            class="data-row">
+            <td aria-rowspan="d.roles.length+1">
+              <div class="initials">
+                <ws-app-initial-avatar [name]="d.userName">
+                </ws-app-initial-avatar>
+              </div>
+              <div>
+                <b class="username">{{d.userName}}</b>
+                <div>
+                  {{ d.userPosition }}
+                </div>
+                <!-- <div class="margin-top-s margin-bottom-s">
+                  <mat-icon>more_horiz_outlined</mat-icon>
+                </div> -->
+              </div>
+            </td>
+            <td colspan="4" (click)="viewAllocation(d)">
+              <ul>
+                <li *ngFor="let rc of d.roleCompetencyList">
+                  <table>
+                    <tr>
+                      <td class="table-role">
+                        <b *ngIf="rc.roleDetails.name">{{rc.roleDetails.name}}</b>
+                        <b *ngIf="!rc.roleDetails.name" class="color-40">Untitled Role</b>
+                        <!-- <div>
+                          <span *ngFor="let c of rc.competencyDetails">{{c.name}}</span>
+                        </div> -->
+                      </td>
+                      <td class="table-activity">
+                        <table>
+                          <tr *ngFor="let a of rc.roleDetails.childNodes">
+                            <td class="activityname">
+                              <span *ngIf="a.description">{{a.description}}</span>
+                              <span *ngIf="!a.description"> - </span>
+                            </td>
+                            <td class="submittd">
+                              <span class="initials" *ngIf="a.submittedToName && !a.submittedToId">
+                                <mat-icon class="ws-mat-default-text veralign-btm">sports_score</mat-icon>
+                              </span>
+                              <span class="initials" *ngIf="a.submittedToId">
+                                <ws-app-initial-avatar *ngIf="a.submittedToName !== null" [name]="a.submittedToName">
+                                </ws-app-initial-avatar>
+                              </span>
+                              {{a.submittedToName}}
+                            </td>
+                            <td class="submittd">
+                              <span class="initials" *ngIf="a.submittedFromName && !a.submittedFromId">
+                                <mat-icon class="ws-mat-default-text veralign-btm">sports_score</mat-icon>
+                              </span>
+                              <span class="initials" *ngIf="a.submittedFromId">
+                                <ws-app-initial-avatar *ngIf="a.submittedFromName !== null" [name]="a.submittedFromName">
+                                </ws-app-initial-avatar>
+                              </span>
+                              {{a.submittedFromName}}
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </table>
+        <!-- <div class="custompagination">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          <div class="totalcount">of {{data.length}}</div>
+        </div> -->
+
+        <div *ngIf="data && data.length === 0" class="margin-left-xs margin-l font-medium ">
+          No data found
+        </div>
+
+        <mat-menu #cardMenu="matMenu">
+          <ng-template matMenuContent let-rowData="data">
+            <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item name="channel-analytics-button"
+              class="ws-mat-primary-text downlaod-btn" i18n-aria-label aria-label="Analytics">
+              <mat-icon>cloud_download</mat-icon> <span>Download</span>
+            </button>
+            <!-- <button (click)="buttonClick('Print',rowData)"mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
+                        aria-label="Analytics">
+                        <mat-icon>print</mat-icon> <span>Print</span>
+                    </button> -->
+            <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text"
+              i18n-aria-label aria-label="Analytics">
+              <mat-icon>archive</mat-icon> <span>Archive allocation</span>
+            </button>
+          </ng-template>
+        </mat-menu>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- <div *ngIf="downloaddata && downloaddata.length > 0">
+            <ws-app-download-allocation id="downloadtemp" [data]="downloaddata" [deptname]="departmentName"></ws-app-download-allocation>
+        </div>
+        <div *ngIf="!downloaddata && data && data.length > 0"> -->
+  <!-- <ws-app-download-allocation id="downloadtemp" [data]="data" [deptname]="departmentName" [currentFilter]="currentFilter"></ws-app-download-allocation> -->
+  <!-- </div> -->
+</div>
