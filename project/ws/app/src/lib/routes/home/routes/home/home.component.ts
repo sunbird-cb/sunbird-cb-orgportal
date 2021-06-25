@@ -52,9 +52,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private activeRoute: ActivatedRoute,
     private configService: ConfigurationsService
   ) {
-    if (this.configService.userRoles) {
-      this.myRoles = this.configService.userRoles
+    if (_.get(this.activeRoute, 'snapshot.data.configService.userRoles')) {
+      this.myRoles = _.get(this.activeRoute, 'snapshot.data.configService.userRoles')
     }
+
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.bindUrl(event.urlAfterRedirects.replace('/app/home/', ''))

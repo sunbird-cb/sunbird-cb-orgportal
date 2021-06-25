@@ -337,6 +337,7 @@ const routes: Routes = [
     loadChildren: () => import('./routes/route-workallocation-v2.module').then(u => u.RouteWorkAllocationV2Module),
     canActivate: [GeneralGuard],
     data: {
+      requiredRoles: [],
       pageType: 'feature',
       pageKey: 'workallocation',
     },
