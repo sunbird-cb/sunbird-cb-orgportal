@@ -11,6 +11,7 @@ import { RolesAccessComponent } from './routes/roles-access/roles-access.compone
 import { ApprovalsComponent } from './routes/approvals/approvals.component'
 import { WorkallocationComponent } from './routes/workallocation/workallocation.component'
 import { WelcomeComponent } from './routes/welcome/welcome.component'
+import { ConfigResolveService } from './resolvers/config-resolve.service'
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     component: HomeComponent,
     resolve: {
       department: DepartmentResolve,
+      configService: ConfigResolveService,
       tabs: HomeResolve,
     },
     children: [
@@ -60,6 +62,7 @@ const routes: Routes = [
   providers: [
     HomeResolve,
     DepartmentResolve,
+    ConfigResolveService,
   ],
 })
 export class HomeRoutingModule { }
