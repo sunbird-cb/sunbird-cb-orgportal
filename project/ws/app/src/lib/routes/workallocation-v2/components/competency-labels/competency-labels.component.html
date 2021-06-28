@@ -1,5 +1,6 @@
-<div class="example-container flex-1 flex-column" cdkDropListGroup>
-  <form [formGroup]="activityForm" (ngSubmit)="submitResult(activityForm.value)" class="margin-top-xs">
+<div class="example-container container-role flex-1 flex-column" cdkDropListGroup>
+  <form id="container-role" [formGroup]="activityForm" (ngSubmit)="submitResult(activityForm.value)"
+    class="margin-top-xs">
     <div *ngIf="false" class=" flex flex-1 flex-row resporow">
       <div class="flex flex-1 flex-column example-list margin-r-2px">
         <span class="flex margin-left-m mat-subheading-2 margin-top-s">
@@ -156,6 +157,9 @@
                 cdkDrag>
                 <div class="margin-right-xs cursor-move" cdkDragHandle>
                   <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
+                </div>
+                <div class="example-custom-placeholder" *cdkDragPlaceholder>
+                  <span class="flex flex-1 margin-auto flex-center mat-subheading-1">Drop Here</span>
                 </div>
                 <div class="flex flex-1" [formGroup]="ga">
                   <div class="flex flex-1 margin-2px">

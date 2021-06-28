@@ -1,4 +1,4 @@
-<div class="example-container flex-1 flex-column" cdkDropListGroup>
+<div class="example-container container-activiry flex-1 flex-column" cdkDropListGroup>
   <form [formGroup]="activityForm" (ngSubmit)="submitResult(activityForm.value)" class="margin-top-xs">
     <div *ngIf="false" class=" flex flex-1 flex-row resporow">
       <div class="flex flex-1 flex-column example-list margin-r-2px">
@@ -87,8 +87,11 @@
         </div>
       </div>
     </div>
+    <pre>
+      {{getControls }}
+    </pre>
     <!-- <div *ngIf="groups.length > 0" class="flex flex-1 flex-column margin-top-xs"> -->
-    <ng-container *ngFor="let grp of grpArray?.controls; let i=index;">
+    <ng-container *ngFor="let grp of getControls; let i=index; trackBy:trackByFn">
       <div @fadeInGrow (mouseenter)="enter(i)" class=" flex flex-1 flex-row resporow margin-top-xs" [formGroup]="grp">
         <div *ngIf="i === 0" class="flex flex-1 flex-column example-list margin-r-2px">
           <span class="flex margin-left-m mat-subheading-2 margin-top-s">
@@ -180,9 +183,12 @@
               <!-- {{log(ga)}} -->
               <!-- <span class="mat-subheading-2">{{'Unmapped activities'}}</span> -->
               <div [attr.id]="'cdkDragData_' + gaIdx" class="example-box cursor-default" [cdkDragData]="ga.value"
-                cdkDrag>
+                cdkDrag isPointerOverContainer="false">
                 <div class="margin-right-xs cursor-move" cdkDragHandle>
                   <mat-icon class="ws-mat-black40-text">drag_indicator</mat-icon>
+                </div>
+                <div class="example-custom-placeholder" *cdkDragPlaceholder>
+                  <span class="flex flex-1 margin-auto flex-center mat-subheading-1">Drop Here</span>
                 </div>
                 <div class="flex flex-1" [formGroup]="ga">
                   <div class="flex flex-2 margin-2px">

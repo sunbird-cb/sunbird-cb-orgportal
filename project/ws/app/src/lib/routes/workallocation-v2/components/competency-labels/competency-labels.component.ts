@@ -15,6 +15,7 @@ import _ from 'lodash'
 import { WatCompPopupComponent } from './wat-comp-popup/wat-comp-popup.component'
 import { ActivatedRoute } from '@angular/router'
 import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
+// import { DOCUMENT } from '@angular/common'
 // tslint:enable
 
 @Component({
@@ -44,6 +45,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private activated: ActivatedRoute,
+    // @Inject(DOCUMENT) private document: Document
   ) {
   }
 
@@ -81,7 +83,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     // to fill edit data once
     this.watStore.getactivitiesGroup.pipe(first()).subscribe(() => {
       const grpData = _.get(this.editData, 'list')
-      for (let i = 0; i < grpData.length && ((grpData.length || 0) + 1) === this.groups.length; i += 1) {
+      for (let i = 0; grpData && i < grpData.length && ((grpData.length || 0) + 1) === this.groups.length; i += 1) {
         const grpROle = _.get(grpData[i], 'roleDetails')
         const grp: NSWatCompetency.ICompActivityGroup = {
           localId: grpROle && grpROle.localId || this.watStore.getID,

@@ -1,20 +1,20 @@
 export namespace NSWatActivity {
 
   export interface IActivity {
-    localId?: string
+    localId?: any
     activityId: string
     activityName: string
     activityDescription: string
     assignedTo: string
     assignedToId: string
     assignedToEmail: string
-    submissionFrom: string
-    submissionFromId: string
-    submissionFromEmail: string
+    submissionFrom?: string
+    submissionFromId?: string
+    submissionFromEmail?: string
   }
   // In UI it's Role
   export interface IActivityGroup {
-    localId?: number
+    localId?: any
     groupId: string
     groupName: string
     groupDescription: string
