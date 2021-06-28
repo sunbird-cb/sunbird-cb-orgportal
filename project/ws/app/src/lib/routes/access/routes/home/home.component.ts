@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   role: any
   constructor(private valueSvc: ValueService,
-    private router: Router,
-    private activeRoute: ActivatedRoute,
+              private router: Router,
+              private activeRoute: ActivatedRoute,
   ) {
     if (_.get(this.activeRoute, 'snapshot.data.configService.userRoles')) {
       this.myRoles = _.get(this.activeRoute, 'snapshot.data.configService.userRoles')

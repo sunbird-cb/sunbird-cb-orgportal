@@ -296,7 +296,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     this.activeGroupIdx = i
   }
   updateForm() {
-    if ((this.groups.length - 1) == this.groupList.length) {
+    if ((this.groups.length - 1) === this.groupList.length) {
       if (this.groups.length >= 2) {
         const lastGroup = _.last(this.groups)
         // tslint:disable-next-line: no-non-null-assertion
