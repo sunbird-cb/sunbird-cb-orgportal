@@ -1,6 +1,7 @@
 export namespace NSWatActivity {
 
   export interface IActivity {
+    localId?: string
     activityId: string
     activityName: string
     activityDescription: string
@@ -13,6 +14,7 @@ export namespace NSWatActivity {
   }
   // In UI it's Role
   export interface IActivityGroup {
+    localId?: number
     groupId: string
     groupName: string
     groupDescription: string
