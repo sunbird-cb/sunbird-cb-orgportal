@@ -644,11 +644,22 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     if (index) { }
     return item.value.localId
   }
+  getCompCount(roleName: string, localId: number, roleId: any) {
+    let count = 0
+    const values = this.watStore.getcompetencyGroupValue
+    _.each(values, i => {
+      if (i.roleName === roleName || i.localId === localId || i.roleId === roleId) {
+        count += i.competincies.length
+      }
+    })
+    return count
+  }
   deleteGrp(grpidx: number) {
     // this.snackBar.open('This feature will be available soon!! ', undefined, { duration: 2000 })
     if (grpidx >= 0) {
+      const role = this.groupList.at(grpidx).value
       const countA = (this.groupList.at(grpidx).get('activities') as FormArray || []).length
-      const countC = 0  // this.watStore.getcompetencyGroup.subscribe
+      const countC = this.getCompCount(_.get(role, 'groupName'), _.get(role, 'localId'), _.get(role, 'roleId'))
       const dialogRef = this.dialog.open(DialogConfirmComponent, {
         data: {
           title: 'Delete role?',

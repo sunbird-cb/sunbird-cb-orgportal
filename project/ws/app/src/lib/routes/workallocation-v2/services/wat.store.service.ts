@@ -46,6 +46,11 @@ export class WatStoreService {
   public get getcompetencyGroup(): Observable<NSWatCompetency.ICompActivityGroup[]> {
     return this.competencyGroup.asObservable()
   }
+  /** retrieve Current Comp list of Role */
+  public get getcompetencyGroupValue() {
+    return this.competencyGroup.value
+  }
+
   setgetcompetencyGroup(data: NSWatCompetency.ICompActivityGroup[]) {
     this.competencyGroup.next(data)
     this.setCompGroup()
