@@ -655,6 +655,10 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     return count
   }
   deleteGrp(grpidx: number) {
+    if (!this.watStore.getOfficerId) {
+      this.snackBar.open('Please save work order and open in edit mode !! ', undefined, { duration: 2000 })
+      return
+    }
     // this.snackBar.open('This feature will be available soon!! ', undefined, { duration: 2000 })
     if (grpidx >= 0) {
       const role = this.groupList.at(grpidx).value
@@ -682,7 +686,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
           (this.activityForm.controls['groupsArray'] as FormArray).removeAt(grpidx)
           this.changeDetector.detectChanges()
           this.watStore.setgetactivitiesGroup(this.groupList.value, true)
-          this.snackBar.open('Role removed successfully!! ', undefined, { duration: 2000 })
+          this.snackBar.open('Role removed successfully, Please sit back, Page will reload.!! ', undefined, { duration: 2000 })
         }
       })
     }
