@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core'
-import { CdkDrag, CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop'
+import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop'
 import { NSWatActivity } from '../../models/activity-wot.model'
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 // import { debounceTime } from 'rxjs/operators'
@@ -641,39 +641,40 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     this.canshowName = -1
   }
   trackByFn(index: number, item: FormGroup) {
+    if (index) { }
     return item.value.localId
   }
   deleteGrp(grpidx: number) {
     this.snackBar.open('This feature will be available soon!! ', undefined, { duration: 2000 })
 
-    // if (grpidx >= 0) {
-    //   const countA = (this.groupList.at(grpidx).get('activities') as FormArray || []).length
-    //   const countC = 0  // this.watStore.getcompetencyGroup.subscribe
-    //   const dialogRef = this.dialog.open(DialogConfirmComponent, {
-    //     data: {
-    //       title: 'Delete role?',
-    //       body: `  <div>Deleting this role will also delete the following
-    //                 <br>
-    //                <ul><li>Associated activities (${countA})</li><li>Associated competencies (${countC})</li></ul>
-    //       <div class="custom-delete">
-    //         <span>
-    //          To keep the activities/competencies, 'Go back' and move them to the unmapped activities/competencies before
-    //         </span>
-    //        </div>
-    //       </div>`,
-    //       cancel: 'Go back',
-    //       ok: 'Delete',
-    //     },
-    //   })
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     if (result) {
-    //       // this.snackBar.open('This feature will be available soon!! ', undefined, { duration: 2000 })
-    //       (this.activityForm.controls['groupsArray'] as FormArray).removeAt(grpidx)
-    //       this.changeDetector.detectChanges()
-    //       this.watStore.setgetactivitiesGroup(this.groupList.value)
-    //       this.snackBar.open('Role removed successfully!! ', undefined, { duration: 2000 })
-    //     }
-    //   })
-    // }
+    if (grpidx >= 0) {
+      //   const countA = (this.groupList.at(grpidx).get('activities') as FormArray || []).length
+      //   const countC = 0  // this.watStore.getcompetencyGroup.subscribe
+      //   const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      //     data: {
+      //       title: 'Delete role?',
+      //       body: `  <div>Deleting this role will also delete the following
+      //                 <br>
+      //                <ul><li>Associated activities (${countA})</li><li>Associated competencies (${countC})</li></ul>
+      //       <div class="custom-delete">
+      //         <span>
+      //          To keep the activities/competencies, 'Go back' and move them to the unmapped activities/competencies before
+      //         </span>
+      //        </div>
+      //       </div>`,
+      //       cancel: 'Go back',
+      //       ok: 'Delete',
+      //     },
+      //   })
+      //   dialogRef.afterClosed().subscribe(result => {
+      //     if (result) {
+      //       // this.snackBar.open('This feature will be available soon!! ', undefined, { duration: 2000 })
+      //       (this.activityForm.controls['groupsArray'] as FormArray).removeAt(grpidx)
+      //       this.changeDetector.detectChanges()
+      //       this.watStore.setgetactivitiesGroup(this.groupList.value)
+      //       this.snackBar.open('Role removed successfully!! ', undefined, { duration: 2000 })
+      //     }
+      //   })
+    }
   }
 }
