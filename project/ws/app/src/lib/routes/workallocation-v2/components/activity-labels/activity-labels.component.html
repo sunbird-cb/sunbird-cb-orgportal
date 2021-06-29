@@ -87,9 +87,6 @@
         </div>
       </div>
     </div>
-    <pre>
-      {{getControls }}
-    </pre>
     <!-- <div *ngIf="groups.length > 0" class="flex flex-1 flex-column margin-top-xs"> -->
     <ng-container *ngFor="let grp of getControls; let i=index; trackBy:trackByFn">
       <div @fadeInGrow (mouseenter)="enter(i)" class=" flex flex-1 flex-row resporow margin-top-xs" [formGroup]="grp">
