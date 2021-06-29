@@ -15,6 +15,7 @@ import _ from 'lodash'
 })
 export class OfficerComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject<void>()
+  private unsubscribe1 = new Subject<void>()
   @Input() editData!: any
   userslist!: any[]
   userCtrl = new FormControl()
@@ -55,6 +56,23 @@ export class OfficerComponent implements OnInit, OnDestroy {
     if (this.editData && _.get(this.editData, 'usr.officerName')) {
       this.watStore.setOfficerGroup(this.officerForm.value)
     }
+    this.officerForm.controls['officerName'].valueChanges
+      .pipe(debounceTime(100),
+        // pairwise()
+        switchMap(async (val: any) => {
+          // tslint:disable
+          const usrObj = this.officerForm.get('user')!.value
+          let usrName = ''
+          if (_.get(usrObj, 'userDetails.first_name')) {
+            usrName = `${_.get(usrObj, 'userDetails.first_name')} ${_.get(usrObj, 'userDetails.last_name')}`
+          } else {
+            usrName = `${_.get(usrObj, 'officerName')}`
+          }
+          if ((val || '').trim() !== (usrName || '').trim()) {
+            this.officerForm.get('user')!.patchValue({})
+            // tslint:enable
+          }
+        }), takeUntil(this.unsubscribe1)).subscribe()
   }
 
   public filterUsers(value: string) {
@@ -131,6 +149,7 @@ export class OfficerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.unsubscribe.next()
+    this.unsubscribe1.next()
   }
 
 }
