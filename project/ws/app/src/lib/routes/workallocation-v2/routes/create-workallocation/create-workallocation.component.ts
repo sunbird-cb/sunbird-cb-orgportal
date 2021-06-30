@@ -80,7 +80,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     this.autoSave()
   }
   autoSave() {
-    this.autoSaveSubscription = this.watStore.triggerSave().subscribe((reload: { reload: boolean }) => {
+    this.autoSaveSubscription = this.watStore.triggerSave().subscribe((params: { reload: boolean, serverCall: boolean }) => {
       if (this.getWorkOrderId) {
         const officer = this.getUserDetails()
         if (_.get(this.editDataStruct, 'id')) {
@@ -92,7 +92,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
           if (ofcr || post) {
             // mandatory fields missing
           } else {
-            this.updateWat(true, reload.reload)
+            this.updateWat(true, params.reload, params.serverCall)
           }
         } else {
           // trigger save
@@ -228,6 +228,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   */
   }
 
+  getExternalUrl(key: string, field: string) {
+    return _.get(_.first(_.filter(_.get(this.pageData, 'externalUrls'), { key })), field)
+  }
   filterComp($element: any, filterType: string) {
     this.selectedTab = filterType
     $element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
@@ -295,25 +298,31 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       this.openSnackbar('Error in updating Work order, please try again!')
     }
   }
-  updateWat(autoSave: boolean = false, reload: boolean = false) {
-    if (this.getWorkOrderId) {
-      const req = this.getStrcuturedReqUpdate()
-      // console.log(req)
-      this.allocateSrvc.updateAllocationV2(req).subscribe(res => {
-        if (res) {
-          if (!autoSave) {
-            this.openSnackbar('Work order updated successfully!')
-            this.watStore.clear()
-            this.router.navigate(['/app/workallocation/drafts', this.getWorkOrderId])
+  updateWat(autoSave: boolean = false, reload: boolean = false, serverCall: boolean = true) {
+    if (serverCall) {
+      if (this.getWorkOrderId) {
+        const req = this.getStrcuturedReqUpdate()
+        // console.log(req)
+        this.allocateSrvc.updateAllocationV2(req).subscribe(res => {
+          if (res) {
+            if (!autoSave) {
+              this.openSnackbar('Work order updated successfully!')
+              this.watStore.clear()
+              this.router.navigate(['/app/workallocation/drafts', this.getWorkOrderId])
+            }
+            if (reload) {
+              this.router.navigate(['/app/workallocation/update', this.watStore.getworkOrderId, this.watStore.getOfficerId])
+              this.document.location.reload()
+            }
+          } else {
+            this.openSnackbar('Error in saving Work order, please try again!')
           }
-          if (reload) {
-            this.router.navigate(['/app/workallocation/update', this.watStore.getworkOrderId, this.watStore.getOfficerId])
-            this.document.location.reload()
-          }
-        }
-      })
+        })
+      } else {
+        this.openSnackbar('Error! Work order not found, please try again!')
+      }
     } else {
-      this.openSnackbar('Error in saving Work order, please try again!')
+      // nothing required to do
     }
   }
 

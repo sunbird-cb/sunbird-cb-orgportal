@@ -16,7 +16,7 @@ export class WatStoreService {
   private currentProgress = new BehaviorSubject<number>(0)
   private errorCount = new BehaviorSubject<number>(0)
   private finalCompDetail = new BehaviorSubject<NSWatCompetency.ICompActivity[]>([])
-  private _triggerSave = new BehaviorSubject<any>({ reload: false })
+  private _triggerSave = new BehaviorSubject<any>({ reload: false, serverCall: false })
   private initCount = 100
   private officerId = ''
   private workOrderId = ''
@@ -39,9 +39,9 @@ export class WatStoreService {
   public get getactivitiesGroup(): Observable<NSWatActivity.IActivityGroup[]> {
     return this.activitiesGroup.asObservable()
   }
-  setgetactivitiesGroup(data: NSWatActivity.IActivityGroup[], reload = false) {
+  setgetactivitiesGroup(data: NSWatActivity.IActivityGroup[], reload = false, serverCall = false) {
     this.activitiesGroup.next(data)
-    this._triggerSave.next({ reload })
+    this._triggerSave.next({ reload, serverCall })
   }
   public get getcompetencyGroup(): Observable<NSWatCompetency.ICompActivityGroup[]> {
     return this.competencyGroup.asObservable()
@@ -51,12 +51,13 @@ export class WatStoreService {
     return this.competencyGroup.value
   }
 
-  setgetcompetencyGroup(data: NSWatCompetency.ICompActivityGroup[]) {
+  setgetcompetencyGroup(data: NSWatCompetency.ICompActivityGroup[], reload = false, serverCall = true) {
     this.competencyGroup.next(data)
-    this.setCompGroup()
+    this.setCompGroup(reload, serverCall)
   }
-  updateCompGroup(val: NSWatCompetency.ICompActivity[]) {
+  updateCompGroup(val: NSWatCompetency.ICompActivity[], reload = false, serverCall = true) {
     this.finalCompDetail.next(val)
+    this._triggerSave.next({ reload, serverCall })
   }
   public get getUpdateCompGroupO() {
     return this.finalCompDetail.asObservable()
@@ -65,7 +66,7 @@ export class WatStoreService {
     return _.first(_.filter(this.finalCompDetail.value, { localId: locallId }))
   }
 
-  setCompGroup() {
+  setCompGroup(reload = false, serverCall = true) {
     const complist: NSWatCompetency.ICompActivity[] = []
     _.each(_.get(this.competencyGroup, 'value'), (itm: NSWatCompetency.ICompActivityGroup) => {
       if (itm && itm.competincies) {
@@ -84,7 +85,7 @@ export class WatStoreService {
       }
     })
     this._competencyGroup.next(complist)
-    this._triggerSave.next({ reload: false })
+    this._triggerSave.next({ reload, serverCall })
   }
   public get get_compGrp() {
     return this._competencyGroup.asObservable()
@@ -92,9 +93,9 @@ export class WatStoreService {
   public get getOfficerGroup(): Observable<NSWatOfficer.IOfficerGroup[]> {
     return this.officerGroup.asObservable()
   }
-  setOfficerGroup(data: NSWatOfficer.IOfficerGroup[]) {
+  setOfficerGroup(data: NSWatOfficer.IOfficerGroup[], reload = false, serverCall = true) {
     this.officerGroup.next(data)
-    this._triggerSave.next({ reload: false })
+    this._triggerSave.next({ reload, serverCall })
   }
   public setCurrentProgress(progress: number) {
     this.currentProgress.next(progress)
@@ -121,7 +122,7 @@ export class WatStoreService {
     this.officerGroup = new BehaviorSubject<NSWatOfficer.IOfficerGroup[]>([])
     this._competencyGroup = new BehaviorSubject<NSWatCompetency.ICompActivity[]>([])
     this.finalCompDetail = new BehaviorSubject<NSWatCompetency.ICompActivity[]>([])
-    this._triggerSave = new BehaviorSubject<any>({ reload: false })
+    this._triggerSave = new BehaviorSubject<any>({ reload: false, serverCall: false })
     this.currentProgress = new BehaviorSubject<number>(0)
     this.errorCount = new BehaviorSubject<number>(0)
   }

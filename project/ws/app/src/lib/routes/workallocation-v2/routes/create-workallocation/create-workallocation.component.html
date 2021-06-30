@@ -101,10 +101,12 @@
                                     <span class="mat-subheading-1 margin-left-xs">{{'Competencies'}}</span>
                                 </div>
                                 <div class="flex">
-                                    <mat-icon class="ws-mat-black60-text ">launch</mat-icon>
-                                    <a target="_blank" href="https://frac-dictionary.tarento.com"
+                                    <mat-icon class="ws-mat-black60-text ">
+                                        {{getExternalUrl('COMPETENCY','icon')}}
+                                    </mat-icon>
+                                    <a target="_blank" [href]="getExternalUrl('COMPETENCY','uri')"
                                         class="mat-subheading-1 margin-left-xs ws-mat-black60-text-imp">
-                                        Competency Dictionary
+                                        {{getExternalUrl('COMPETENCY','displayName')}}
                                     </a>
                                 </div>
                             </div>

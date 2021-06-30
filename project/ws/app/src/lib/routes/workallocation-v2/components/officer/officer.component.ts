@@ -39,7 +39,7 @@ export class OfficerComponent implements OnInit, OnDestroy {
       .pipe(
         debounceTime(500),
         switchMap(async formValue => {
-          this.watStore.setOfficerGroup(formValue)
+          this.watStore.setOfficerGroup(formValue, false, true)
         }),
         takeUntil(this.unsubscribe)
       ).subscribe()
@@ -54,7 +54,7 @@ export class OfficerComponent implements OnInit, OnDestroy {
       positionObj: this.formBuilder.control(_.get(this.editData, 'position') || {}, []),
     })
     if (this.editData && _.get(this.editData, 'usr.officerName')) {
-      this.watStore.setOfficerGroup(this.officerForm.value)
+      this.watStore.setOfficerGroup(this.officerForm.value, false, false)
     }
     this.officerForm.controls['officerName'].valueChanges
       .pipe(debounceTime(100),
@@ -131,7 +131,7 @@ export class OfficerComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line: prefer-template
       const fullName = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
       frmctr1.patchValue(fullName || '')
-      this.watStore.setOfficerGroup(this.officerForm.value)
+      this.watStore.setOfficerGroup(this.officerForm.value, false, true)
     }
   }
 
@@ -143,7 +143,7 @@ export class OfficerComponent implements OnInit, OnDestroy {
       frmctr1.patchValue(_.get(event, 'option.value.description') || '')
       // tslint:disable-next-line: no-non-null-assertion
       this.officerForm.get('positionObj')!.setValue(_.get(event, 'option.value'))
-      this.watStore.setOfficerGroup(this.officerForm.value)
+      this.watStore.setOfficerGroup(this.officerForm.value, false, true)
     }
   }
 

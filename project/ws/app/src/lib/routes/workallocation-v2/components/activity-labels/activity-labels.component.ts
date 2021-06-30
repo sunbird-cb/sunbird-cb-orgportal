@@ -106,7 +106,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       .pipe(
         debounceTime(500),
         switchMap(async formValue => {
-          this.watStore.setgetactivitiesGroup(formValue)
+          this.watStore.setgetactivitiesGroup(formValue, false, true)
         }),
         takeUntil(this.unsubscribe)
       ).subscribe()
@@ -159,7 +159,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     }
     // console.log(this.groupList.value)
 
-    this.watStore.setgetactivitiesGroup(this.groupList.value)
+    this.watStore.setgetactivitiesGroup(this.groupList.value, false, true)
   }
   // sortPredicate(index: number, item: CdkDrag<NSWatActivity.IActivity>) {
   //   return (index + 1) % 2 === item.data % 2
@@ -331,7 +331,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         this.addNewGroup(false, grp)
         this.activeGroupIdx = i + 1
         this.addNewGroupActivityCustom(i + 1, actlist)
-        this.watStore.setgetactivitiesGroup(this.groupList.value)
+        this.watStore.setgetactivitiesGroup(this.groupList.value, false, false)
       }
     } else {
       this.addNewGroup()
@@ -500,9 +500,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         const frmctrl2 = lst.get('groupId') as FormControl
         frmctrl2.patchValue(event.option.value.id || '')
 
-        this.watStore.setgetactivitiesGroup(this.groupList.value)
+        this.watStore.setgetactivitiesGroup(this.groupList.value, false, false)
       }
-      this.watStore.setgetactivitiesGroup(this.groupList.value)
+      this.watStore.setgetactivitiesGroup(this.groupList.value, false, true)
     })
 
   }
@@ -531,7 +531,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     const frmctrl1 = lst.at(this.selectedActivityIdx).get('activityId') as FormControl
     frmctrl1.patchValue(event.option.value.id)
 
-    this.watStore.setgetactivitiesGroup(this.groupList.value)
+    this.watStore.setgetactivitiesGroup(this.groupList.value, false, true)
   }
 
   setSelectedFilter(index: number) {
@@ -598,14 +598,14 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         // const frmctrl2 = lst.at(this.selectedActivityIdx).get('submissionFromEmail') as FormControl
         // frmctrl2.patchValue(submissionFromEmail)
       }
-      this.watStore.setgetactivitiesGroup(this.groupList.value)
+      this.watStore.setgetactivitiesGroup(this.groupList.value, false, true)
     }
   }
   deleteRowActivity(roleIdx: number, activityIdx: number) {
     const roleGrp = this.groupList.at(roleIdx) as FormGroup
     const activitiesLst = roleGrp.get('activities') as FormArray
     activitiesLst.removeAt(activityIdx)
-    this.watStore.setgetactivitiesGroup(this.groupList.value)
+    this.watStore.setgetactivitiesGroup(this.groupList.value, false, true)
   }
   deleteSingleActivity(roleIdx: number, activityIdx: number) {
     if (roleIdx >= 0 && activityIdx >= 0) {
@@ -685,7 +685,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
           // this.snackBar.open('This feature will be available soon!! ', undefined, { duration: 2000 })
           (this.activityForm.controls['groupsArray'] as FormArray).removeAt(grpidx)
           this.changeDetector.detectChanges()
-          this.watStore.setgetactivitiesGroup(this.groupList.value, true)
+          this.watStore.setgetactivitiesGroup(this.groupList.value, true, true)
           this.snackBar.open('Role removed successfully, Please sit back, Page will reload.!! ', undefined, { duration: 2000 })
         }
       })
