@@ -34,16 +34,6 @@ export class OfficerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.officerForm = new FormGroup({})
     this.createForm()
-
-    this.officerForm.controls['position'].valueChanges
-      .pipe(
-        debounceTime(500),
-        switchMap(async formValue => {
-          console.log(formValue)
-        }),
-        takeUntil(this.unsubscribe)
-      ).subscribe()
-
     this.officerForm.valueChanges
       .pipe(
         debounceTime(500),
@@ -56,7 +46,7 @@ export class OfficerComponent implements OnInit, OnDestroy {
             this.officerForm.controls['positionObj'].patchValue({
               name: txtPosition,
               description: positionDesc,
-              id: ''
+              id: '',
             })
           } else {
             this.watStore.setOfficerGroup(formValue, false, true)

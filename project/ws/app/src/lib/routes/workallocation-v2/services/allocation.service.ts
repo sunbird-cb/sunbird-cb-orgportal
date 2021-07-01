@@ -23,8 +23,6 @@ export class AllocationService {
 
   oldObj = {}
   constructor(private http: HttpClient) { }
-
-
   onSearchUser(val: any): Observable<any> {
     return this.http.get<any>(`${API_END_POINTS.SEARCH_USER}/${val}`)
   }
@@ -56,10 +54,8 @@ export class AllocationService {
     if (JSON.stringify(this.oldObj || {}) !== JSON.stringify(req || {})) {
       this.oldObj = req
       return this.http.post<any>(`${API_END_POINTS.UPDATE_ALLOCATIONV2}`, req)
-    } else {
-      return of(EMPTY)
     }
-
+    return of(EMPTY)
   }
 
   updateAllocation(req: any): Observable<any> {
