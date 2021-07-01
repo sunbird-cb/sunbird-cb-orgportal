@@ -38,7 +38,7 @@ export class OfficerComponent implements OnInit, OnDestroy {
       .pipe(
         debounceTime(500),
         switchMap(async formValue => {
-          let obj = this.officerForm.value
+          const obj = this.officerForm.value
           const txtPosition = _.get(obj, 'position')
           const objPosition = _.get(obj, 'positionObj.name')
           if (txtPosition !== objPosition) {
