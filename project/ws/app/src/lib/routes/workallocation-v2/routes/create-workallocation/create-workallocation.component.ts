@@ -51,6 +51,8 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   officerId: any
   pageData: any
   editDataStruct: any
+  private firstEdit = true
+
   // tslinr=t
   constructor(
     private watStore: WatStoreService,
@@ -72,6 +74,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     }
   }
   ngOnInit(): void {
+    this.firstEdit = false
     if (this.officerId) {
       this.setEditData()
     }
@@ -79,6 +82,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     this.getdeptUsers()
     this.autoSave()
   }
+
   autoSave() {
     this.autoSaveSubscription = this.watStore.triggerSave().subscribe((params: { reload: boolean, serverCall: boolean }) => {
       if (this.getWorkOrderId) {
@@ -87,22 +91,22 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
           // trigger update
           // tslint:disable
           const ofcr = !((officer && officer.user && officer.user && officer.user.userId) || (officer && officer.user && officer.user.userDetails && officer.user.userDetails.wid))
-          const post = !((officer && officer.positionObj && officer.positionObj.id) || (officer && officer.positionObj && officer.positionObj.positionId))
+          // const post = !((officer && officer.positionObj && officer.positionObj.id) || (officer && officer.positionObj && officer.positionObj.positionId))
           // tslint:enable
-          if (ofcr || post) {
+          if (ofcr) { // ofcr || post
             // mandatory fields missing
           } else {
-            this.updateWat(true, params.reload, params.serverCall)
+            this.updateWat(true, params.reload, params.serverCall && this.firstEdit)
           }
         } else {
           // trigger save
           // tslint:disable
-          const OfcrExist = !(officer && officer.user && officer.user.userDetails && officer.user.userDetails.wid)
-          const ofcrPost = !(officer && officer.positionObj && officer.positionObj.id)
-          // tslint:enable
-          if (OfcrExist || ofcrPost) {
-            return
-          }
+          // const OfcrExist = !(officer && officer.user && officer.user.userDetails && officer.user.userDetails.wid)
+          // const ofcrPost = !(officer && officer.positionObj && officer.positionObj.id)
+          // // tslint:enable
+          // if (OfcrExist || ofcrPost) {
+          //   return
+          // }
           // else {
           //   // this.saveWAT(true)
           // }
@@ -226,6 +230,11 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     /**
   * this is for selecting tabs dynamically
   */
+    // tslint:disable
+    setTimeout(() => {
+      this.firstEdit = true
+    }, 1000)
+    // tslint:enable
   }
 
   getExternalUrl(key: string, field: string) {
@@ -337,10 +346,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       this.snackBar.open('Please select a valid officer')
       return null
     }
-    if (!((officer && officer.positionObj && officer.positionObj.id) || (officer && officer.positionObj && officer.positionObj.positionId))) {
-      this.snackBar.open('Please select a valid position')
-      return null
-    }
+    // if (!((officer && officer.positionObj && officer.positionObj.id) || (officer && officer.positionObj && officer.positionObj.positionId))) {
+    //   this.snackBar.open('Please select a valid position')
+    //   return null
+    // }
     req = {
       userId: officer.user && officer.user.userId ? officer.user.userId : (officer.user ? officer.user.userDetails.wid : ''),
       positionDescription: officer.positionDescription,
@@ -371,10 +380,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       this.snackBar.open('Please select a valid officer')
       return null
     }
-    if (!(officer && officer.positionObj && officer.positionObj.id)) {
-      this.snackBar.open('Please select a valid position')
-      return null
-    }
+    // if (!(officer && officer.positionObj && officer.positionObj.id)) {
+    //   this.snackBar.open('Please select a valid position')
+    //   return null
+    // }
     req = {
       userId: officer.user ? officer.user.userDetails.wid : '',
       positionDescription: officer.positionDescription,

@@ -53,7 +53,7 @@ export class AllocationService {
     return this.http.post<any>(`${API_END_POINTS.CREATE_ALLOCATIONV2}`, req)
   }
   updateAllocationV2(req: any): Observable<any> {
-    if (this.oldObj != req) {
+    if (JSON.stringify(this.oldObj || {}) !== JSON.stringify(req || {})) {
       this.oldObj = req
       return this.http.post<any>(`${API_END_POINTS.UPDATE_ALLOCATIONV2}`, req)
     } else {

@@ -35,11 +35,32 @@ export class OfficerComponent implements OnInit, OnDestroy {
     this.officerForm = new FormGroup({})
     this.createForm()
 
+    this.officerForm.controls['position'].valueChanges
+      .pipe(
+        debounceTime(500),
+        switchMap(async formValue => {
+          console.log(formValue)
+        }),
+        takeUntil(this.unsubscribe)
+      ).subscribe()
+
     this.officerForm.valueChanges
       .pipe(
         debounceTime(500),
         switchMap(async formValue => {
-          this.watStore.setOfficerGroup(formValue, false, true)
+          let obj = this.officerForm.value
+          const txtPosition = _.get(obj, 'position')
+          const objPosition = _.get(obj, 'positionObj.name')
+          if (txtPosition !== objPosition) {
+            const positionDesc = this.officerForm.controls['positionDescription'].value
+            this.officerForm.controls['positionObj'].patchValue({
+              name: txtPosition,
+              description: positionDesc,
+              id: ''
+            })
+          } else {
+            this.watStore.setOfficerGroup(formValue, false, true)
+          }
         }),
         takeUntil(this.unsubscribe)
       ).subscribe()
