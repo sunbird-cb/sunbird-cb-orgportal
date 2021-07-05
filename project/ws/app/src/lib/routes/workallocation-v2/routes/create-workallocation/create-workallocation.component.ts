@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
+import { delay } from 'rxjs/operators'
 import { NSWatActivity } from '../../models/activity-wot.model'
 import { NSWatCompetency } from '../../models/competency-wat.model'
 // tslint:enable
@@ -312,7 +313,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       if (this.getWorkOrderId) {
         const req = this.getStrcuturedReqUpdate()
         // console.log(req)
-        this.allocateSrvc.updateAllocationV2(req).subscribe(res => {
+        this.allocateSrvc.updateAllocationV2(req).pipe(delay(500)).subscribe(res => {
           if (res) {
             if (!autoSave) {
               this.openSnackbar('Work order updated successfully!')
@@ -459,8 +460,8 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
           },
           competencyDetails: _.compact(_.map(
             // tslint:disable-next-line: max-line-length
-            _.get(_.first(_.flatten(_.filter(this.dataStructure.compGroups, i => i.roleName === ag.groupName))), 'competincies'), (c: NSWatCompetency.ICompActivity) => {
-              const compp = this.watStore.getUpdateCompGroupById(c.localId)
+            _.get(_.last(_.flatten(_.filter(this.dataStructure.compGroups, i => i.roleName === ag.groupName))), 'competincies'), (c: NSWatCompetency.ICompActivity) => {
+              const compp = this.watStore.getUpdateCompGroupById(c.localId) || { ...c }
               if (compp && (compp.compName || c.compName || compp.compDescription)) {
                 return {
                   type: 'COMPETENCY',
@@ -517,7 +518,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   getUnmappedCompetency() {
     const unmapedComps = _.get(_.first(this.dataStructure.compGroups), 'competincies')
     const unmapedCompsReq = _.compact((unmapedComps || []).map((uc: any) => {
-      const compp = this.watStore.getUpdateCompGroupById(uc.localId)
+      const compp = this.watStore.getUpdateCompGroupById(uc.localId) || { ...uc }
       if (compp && (compp.compName || uc.compName || compp.compDescription)) {
         return {
           type: 'COMPETENCY',

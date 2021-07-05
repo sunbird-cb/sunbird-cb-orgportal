@@ -167,6 +167,19 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       // console.log(actualIdx)
       const oldArray = (this.activityForm.get('groupsArray') as any)!.at(previousContainerIndex).get('competincies')
       const newArray = (this.activityForm.get('groupsArray') as any)!.at(targetContainerIndex).get('competincies')
+
+      if (targetContainerIndex === 0) {
+        // means dropped to unmapped
+        let aaa = (oldArray as FormArray).at(event.previousIndex) as FormGroup
+
+        (oldArray as FormArray).at(event.previousIndex).patchValue({
+          ...(aaa.value),
+          roleId: '',
+          roleName: this.untitedRole,
+          roleDescription: 'Role description',
+        })
+      }
+
       // tslint:enable
       transferArrayItem(oldArray.controls, newArray.controls, event.previousIndex, event.currentIndex)
       transferArrayItem(oldArray.value, newArray.value, event.previousIndex, event.currentIndex)
