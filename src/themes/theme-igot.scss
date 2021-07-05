@@ -1,7 +1,8 @@
 @import '~@angular/material/theming';
 @import './theme-mixins';
 // Plus imports for other components in your app.
-// @include mat-core();
+@include mat-core();
+// @include mat-core($typography-configuration);
 
 
 
