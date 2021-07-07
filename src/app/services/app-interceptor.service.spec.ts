@@ -6,7 +6,7 @@ describe('AppInterceptorService', () => {
   beforeEach(() => TestBed.configureTestingModule({}))
 
   it('should be created', () => {
-    const service: AppInterceptorService = TestBed.get(AppInterceptorService)
+    const service: AppInterceptorService = TestBed.inject(AppInterceptorService)
     expect(service).toBeTruthy()
   })
 })
