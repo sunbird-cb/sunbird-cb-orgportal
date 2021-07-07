@@ -32,14 +32,14 @@ export class NeedsApprovalComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog, private matSnackBar: MatSnackBar) {
-    this.activeRoute.data.subscribe(data => {
+    this.activeRoute.data.subscribe((data: any) => {
       this.profileData = data.pageData.data.profileData
     })
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.userwfData = _.first(_.get(this.activeRoute.snapshot, 'data.workflowData.data.result.data'))
         if (_.get(this, 'userwfData.wfInfo')) {
-          _.each(_.get(this, 'userwfData.wfInfo') || [])((wf: any) => {
+          _.forEach(_.get(this, 'userwfData.wfInfo') || [], (wf: any) => {
             if (typeof wf.updateFieldValues === 'string') {
               const fields = JSON.parse(wf.updateFieldValues)
               if (fields.length > 0) {

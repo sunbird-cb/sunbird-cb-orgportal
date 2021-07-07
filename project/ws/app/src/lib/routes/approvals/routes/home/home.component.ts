@@ -41,9 +41,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getDepartment()
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        const workflowData = this.activeRoute.snapshot.data.workflowData.data.result.data[0] || {}
+        const workflowData = (this.activeRoute.snapshot.data.workflowData.data.result.data &&
+          this.activeRoute.snapshot.data.workflowData.data.result.data[0]) || {}
         let wfHistoryDatas = this.activeRoute.snapshot.data.workflowHistoryData.data.result.data || {}
-        this.fullname = workflowData ? `${_.get(workflowData, 'userInfo.first_name') || ''} ${_.get(workflowData, 'userInfo.last_name') || ''}` : ''
+        this.fullname = workflowData
+          ?
+          `${_.get(workflowData, 'userInfo.first_name') || ''} ${_.get(workflowData, 'userInfo.last_name') || ''}`
+          : ''
         const datas: any[] = Object.values(wfHistoryDatas)
         wfHistoryDatas = [].concat.apply([], datas)
         const wfHistoryData = wfHistoryDatas.filter((wfh: { inWorkflow: any }) => !wfh.inWorkflow)
