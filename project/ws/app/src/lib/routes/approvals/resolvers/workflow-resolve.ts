@@ -19,7 +19,7 @@ export class WorkflowResolve
 
   ): Observable<IResolveResponse<NSProfileDataV2.IProfile>> {
     const path = _route.routeConfig && _route.routeConfig.path
-    const departName = this.configSvc.userProfile && this.configSvc.userProfile.departmentName || ''
+    const departName = this.configSvc.userProfileV2 && this.configSvc.userProfileV2.departmentName || ''
     let userId = ''
     if (path !== 'me') {
       userId = _route.params.userId
