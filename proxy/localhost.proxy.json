@@ -8,6 +8,24 @@
       "/apis": "/apis"
     }
   },
+  "/api/*": {
+    "target": "https://igot-dev.in",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "/apis": "/apis"
+    }
+  },
+  "/event/*": {
+    "target": "https://igot-dev.in",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "/apis": "/apis"
+    }
+  },
   "/content-api/*": {
     "target": "http://localhost:3004",
     "secure": false,

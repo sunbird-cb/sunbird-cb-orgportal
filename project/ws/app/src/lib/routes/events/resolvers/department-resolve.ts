@@ -2,8 +2,8 @@
 // import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router'
 // import { EMPTY, Observable } from 'rxjs'
 // import { map, catchError } from 'rxjs/operators'
-// import { } from '@sunbird-cb/collection'
-// import { AuthKeycloakService, IResolveResponse } from '@sunbird-cb/utils'
+// import { } from '@ws-widget/collection'
+// import { AuthKeycloakService, IResolveResponse } from '@ws-widget/utils'
 // import { NSProfileDataV2 } from '../../home/models/profile-v2.model'
 // import { UsersService } from '../services/users.service'
 

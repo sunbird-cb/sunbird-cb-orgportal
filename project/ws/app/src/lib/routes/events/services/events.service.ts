@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpBackend } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
 const API_END_POINTS = {
-  CREATE_EVENT: '/apis/authApi/action/content/create?rootOrg=igot&org=dopt',
+  // OLD API
+  // CREATE_EVENT: '/apis/authApi/action/content/create?rootOrg=igot&org=dopt',
+  // PUBLISH_EVENT: '/apis/authApi/action/content/status/change',
+  // SEARCH_EVENT: '/apis/protected/v8/content/searchV6',
+  // SEARCH_USERS: '/apis/protected/v8/user/autocomplete/department',
+
+  CREATE_EVENT: '/api/event/v4/create',
   UPDATE_EVENT: '/apis/authApi/action/content/v2/hierarchy/update?rootOrg=igot&org=dopt',
-  PUBLISH_EVENT: '/apis/authApi/action/content/status/change',
-  SEARCH_EVENT: '/apis/protected/v8/content/searchV6',
+  PUBLISH_EVENT: '/api/event/v4/publish',
+  SEARCH_EVENT: '/apis/proxies/v8/sunbirdigot/read',
   GET_PARTICIPANTS: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=true',
   IMAGE_UPLOAD: '/apis/authContent/upload/igot/dopt/Public',
   SEARCH_USERS: '/apis/protected/v8/user/autocomplete',
@@ -16,21 +22,39 @@ const API_END_POINTS = {
   providedIn: 'root',
 })
 export class EventsService {
-  constructor(private http: HttpClient) { }
+
+  private newHttp: HttpClient
+  private newHttp2: HttpClient
+
+  constructor(private http: HttpClient, handler: HttpBackend, handler2: HttpBackend) {
+    this.newHttp = new HttpClient(handler)
+    this.newHttp2 = new HttpClient(handler2)
+  }
 
   createEvent(req: any): Observable<any> {
-    return this.http.post<any>(API_END_POINTS.CREATE_EVENT, req)
+    const options = {
+      headers: {
+        Authorization: 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJRekw4VVA1dUtqUFdaZVpMd1ZtTFJvNHdqWTg2a2FrcSJ9.TPjV0xLacSbp3FbJ7XeqHoKFN35Rl4YHx3DZNN9pm0o',
+      },
+    }
+    return this.newHttp.post<any>(API_END_POINTS.CREATE_EVENT, req, options)
   }
 
   updateEvent(req: any): Observable<any> {
     return this.http.post<any>(API_END_POINTS.UPDATE_EVENT, req)
   }
 
-  publishEvent(req: any, eventId: string): Observable<any> {
-    return this.http.post<any>(`${API_END_POINTS.PUBLISH_EVENT}/${eventId}`, req)
+  publishEvent(eventId: string): Observable<any> {
+    const options = {
+      headers: {
+        Authorization: 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJRekw4VVA1dUtqUFdaZVpMd1ZtTFJvNHdqWTg2a2FrcSJ9.TPjV0xLacSbp3FbJ7XeqHoKFN35Rl4YHx3DZNN9pm0o',
+      },
+    }
+    return this.newHttp2.post<any>(`${API_END_POINTS.PUBLISH_EVENT}/${eventId}`, '', options)
   }
 
   searchEvent(req: any) {
+    console.log(API_END_POINTS.SEARCH_EVENT)
     return this.http.post<any>(API_END_POINTS.SEARCH_EVENT, req)
   }
 
@@ -46,7 +70,7 @@ export class EventsService {
     return this.http.get<any>(API_END_POINTS.SEARCH_EVENT)
   }
 
-  searchUser(value: any, req: any): Observable<any> {
-      return this.http.post<any>(`${API_END_POINTS.SEARCH_USERS}/${value}`, req)
+  searchUser(value: any): Observable<any> {
+    return this.http.get<any>(`${API_END_POINTS.SEARCH_USERS}/${value}`)
   }
 }

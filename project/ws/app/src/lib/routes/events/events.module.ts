@@ -10,11 +10,11 @@ import { EventsHomeComponent } from './routes/events-home/events-home.component'
 import { EventThumbnailComponent } from './components/event-thumbnail/event-thumbnail.component'
 import { RouterModule } from '@angular/router'
 import { EventsRoutingModule } from './events.routing.module'
-import { BreadcrumbsOrgModule, ScrollspyLeftMenuModule } from '@sunbird-cb/collection'
-import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
+import { BtnPageBackModule, ScrollspyLeftMenuModule } from '@ws-widget/collection'
+import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@ws-widget/utils'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
-import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { WidgetResolverModule } from '@ws-widget/resolver'
 import {
   MatSidenavModule, MatGridListModule, MatListModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatIconModule, MatButtonModule, MatRadioModule, MatDialogModule, MatSelectModule, MatDatepickerModule,
@@ -40,7 +40,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     CommonModule,
     RouterModule,
     EventsRoutingModule,
-    BreadcrumbsOrgModule,
+    BtnPageBackModule,
     MatSidenavModule,
     MatListModule,
     ScrollspyLeftMenuModule,
@@ -67,7 +67,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     PipeHtmlTagRemovalModule,
     PipeRelativeTimeModule,
     PipeOrderByModule,
-    BreadcrumbsOrgModule,
+    BtnPageBackModule,
     WidgetResolverModule,
     ScrollspyLeftMenuModule,
     MatRadioModule,
