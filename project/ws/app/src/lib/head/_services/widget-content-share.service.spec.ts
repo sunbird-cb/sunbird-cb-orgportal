@@ -6,7 +6,7 @@ describe('WidgetContentShareService', () => {
   beforeEach(() => TestBed.configureTestingModule({}))
 
   it('should be created', () => {
-    const service: WidgetContentShareService = TestBed.get(WidgetContentShareService)
+    const service: WidgetContentShareService = TestBed.inject(WidgetContentShareService)
     expect(service).toBeTruthy()
   })
 })

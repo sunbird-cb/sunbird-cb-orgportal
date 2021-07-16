@@ -84,12 +84,12 @@ export class CreateEventComponent implements OnInit {
   todayTime: any
 
   constructor(private snackBar: MatSnackBar,
-              private eventsSvc: EventsService,
-              private matDialog: MatDialog,
-              private router: Router,
-              private configSvc: ConfigurationsService,
-              private changeDetectorRefs: ChangeDetectorRef
-              ) {
+    private eventsSvc: EventsService,
+    private matDialog: MatDialog,
+    private router: Router,
+    private configSvc: ConfigurationsService,
+    private changeDetectorRefs: ChangeDetectorRef
+  ) {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId
       this.username = this.configSvc.userProfile.userName
@@ -116,7 +116,7 @@ export class CreateEventComponent implements OnInit {
     const minCurrentDate = new Date()
     const maxNewDate = new Date()
     this.minDate = minCurrentDate
-    this.maxDate  = maxNewDate.setMonth(maxNewDate.getMonth() + 1)
+    this.maxDate = maxNewDate.setMonth(maxNewDate.getMonth() + 1)
     this.todayDate = new Date((new Date().getTime()))
     this.todayTime = '00:00'
   }
@@ -164,30 +164,30 @@ export class CreateEventComponent implements OnInit {
       height: '600px',
     })
     this.dialogRef.afterClosed().subscribe((response: any) => {
-        if (response) {
-          this.addPresenters(response)
-        }
+      if (response) {
+        this.addPresenters(response)
+      }
     })
   }
 
   addPresenters(responseObj: any) {
-      Object.keys(responseObj.data).forEach((index: any) => {
+    Object.keys(responseObj.data).forEach((index: any) => {
       const obj = responseObj.data[index]
-        const setSelectedPresentersObj = {
-          firstname: obj.firstname,
-          lastname: obj.lastname,
-          email: obj.email,
-          type: 'Karmayogi User',
-        }
-        const contactsObj = {
-          id: obj.id,
-          name: `${obj.firstname} ${obj.lastname}`,
-        }
-        this.presentersArr.push(contactsObj)
-        this.participantsArr.push(setSelectedPresentersObj)
-        this.changeDetectorRefs.detectChanges()
-        this.createEventForm.controls['presenters'].setValue(this.presentersArr)
-      })
+      const setSelectedPresentersObj = {
+        firstname: obj.firstname,
+        lastname: obj.lastname,
+        email: obj.email,
+        type: 'Karmayogi User',
+      }
+      const contactsObj = {
+        id: obj.id,
+        name: `${obj.firstname} ${obj.lastname}`,
+      }
+      this.presentersArr.push(contactsObj)
+      this.participantsArr.push(setSelectedPresentersObj)
+      this.changeDetectorRefs.detectChanges()
+      this.createEventForm.controls['presenters'].setValue(this.presentersArr)
+    })
   }
 
   close() {
@@ -215,63 +215,96 @@ export class CreateEventComponent implements OnInit {
     this.createEventForm.controls['eventPicture'].setValue('')
   }
 
-    fileSubmit(identifier: string) {
-      const formData = new FormData()
-      formData.append('file', this.imageSrc)
-      this.eventsSvc.uploadCoverImage(formData, identifier).subscribe(
-        res => {
-          this.artifactURL = res.artifactURL
-          this.updateContent(identifier)
-        },
-        (err: any) => {
-          this.openSnackbar(err.error.split(':')[1])
-        }
-      )
-    }
+  fileSubmit(identifier: string) {
+    const formData = new FormData()
+    formData.append('file', this.imageSrc)
+    this.eventsSvc.uploadCoverImage(formData, identifier).subscribe(
+      res => {
+        this.artifactURL = res.artifactURL
+        this.updateContent(identifier)
+      },
+      (err: any) => {
+        this.openSnackbar(err.error.split(':')[1])
+      }
+    )
+  }
 
-    changeEventType(event: any) {
-     this.createEventForm.controls['eventType'].setValue(event.target.value)
-    }
+  changeEventType(event: any) {
+    this.createEventForm.controls['eventType'].setValue(event.target.value)
+  }
 
-    updateContent(identifier: any) {
-      const contentObj = {
-        nodesModified: {
-          [identifier]: {
-              isNew: false,
-              root: true,
-              metadata: {
-                appIcon: this.artifactURL,
-              },
+  updateContent(identifier: any) {
+    const contentObj = {
+      nodesModified: {
+        [identifier]: {
+          isNew: false,
+          root: true,
+          metadata: {
+            appIcon: this.artifactURL,
           },
         },
-        hierarchy: {
-        },
-      }
-      const formJson = this.encodeToBase64(contentObj)
-      this.eventsSvc.updateEvent(formJson).subscribe(
-        res => {
-          if (res || !res) {
-            this.publishEvent(identifier)
-          }
-        },
-        (err: any) => {
-          this.openSnackbar(err.error.split(':')[1])
+      },
+      hierarchy: {
+      },
+    }
+    const formJson = this.encodeToBase64(contentObj)
+    this.eventsSvc.updateEvent(formJson).subscribe(
+      res => {
+        if (res || !res) {
+          this.publishEvent(identifier)
         }
-      )
+      },
+      (err: any) => {
+        this.openSnackbar(err.error.split(':')[1])
+      }
+    )
+  }
+
+  onSubmit() {
+    const eventDurationMinutes = this.addMinutes(
+      this.createEventForm.controls['eventDurationHours'].value,
+      this.createEventForm.controls['eventDurationMinutes'].value
+    )
+    const timeArr = this.createEventForm.controls['eventTime'].value.split(':')
+    const expiryDateTime = moment(this.createEventForm.controls['eventDate'].value)
+      .set('hour', timeArr[0])
+      .set('minute', timeArr[1]).format('YYYYMMDDTHHmmss+0000')
+
+    const startTimeArr = this.createEventForm.controls['eventTime'].value.split(':')
+    // tslint:disable-next-line:radix
+    const startMinutes = (startTimeArr[0] * 60) + parseInt(startTimeArr[1])
+    // tslint:disable-next-line:radix
+    const endMinutes = parseInt(this.createEventForm.controls['eventDurationHours'].value) * 60
+    // tslint:disable-next-line:radix
+    const totalMinutes = startMinutes + endMinutes + parseInt(this.createEventForm.controls['eventDurationMinutes'].value)
+    // tslint:disable-next-line:prefer-template
+    const hours = (Math.floor(totalMinutes / 60) < 10) ? '0' + Math.floor(totalMinutes / 60) : Math.floor(totalMinutes / 60)
+    const minutes = totalMinutes % 60
+    let finalTime
+    if (hours < 24) {
+      if (minutes === 0) {
+        // tslint:disable-next-line:prefer-template
+        finalTime = hours + ':' + '00' + ':00+05:30'
+      } else if (hours === 0) {
+        // tslint:disable-next-line:prefer-template
+        finalTime = '00' + ':' + minutes + ':00+05:30'
+      } else {
+        // tslint:disable-next-line:prefer-template
+        finalTime = hours + ':' + minutes + ':00+05:30'
+      }
+    } else {
+      if (hours === 0) {
+        // tslint:disable-next-line:prefer-template
+        finalTime = '00' + ':' + minutes + ':00+05:30'
+      } else {
+        // tslint:disable-next-line:prefer-template
+        finalTime = hours + ':' + minutes + ':00+05:30'
+      }
     }
 
-    onSubmit() {
-      const eventDurationMinutes = this.addMinutes(
-         this.createEventForm.controls['eventDurationHours'].value,
-         this.createEventForm.controls['eventDurationMinutes'].value
-      )
-      const timeArr = this.createEventForm.controls['eventTime'].value.split(':')
-      const expiryDateTime = moment(this.createEventForm.controls['eventDate'].value)
-        .set('hour', timeArr[0])
-        .set('minute', timeArr[1]).format('YYYYMMDDTHHmmss+0000')
-      const form = {
-        content: {
-          contentType: 'Event',
+    const form = {
+      request: {
+        event: {
           mimeType: 'application/html',
           locale: 'en',
           isExternal: true,
@@ -285,83 +318,85 @@ export class CreateEventComponent implements OnInit {
           learningObjective: this.createEventForm.controls['agenda'].value,
           expiryDate: expiryDateTime,
           duration: eventDurationMinutes,
-          artifactUrl: this.createEventForm.controls['conferenceLink'].value,
+          registrationLink: this.createEventForm.controls['conferenceLink'].value,
           resourceType: this.createEventForm.controls['eventType'].value,
           categoryType: 'Article',
           creatorDetails: this.createEventForm.controls['presenters'].value,
           sourceName: this.department,
+          startDate: moment(this.createEventForm.controls['eventDate'].value).format('YYYY-MM-DD'),
+          endDate: moment(this.createEventForm.controls['eventDate'].value).format('YYYY-MM-DD'),
+          // tslint:disable-next-line:prefer-template
+          startTime: this.createEventForm.controls['eventTime'].value + ':00+05:30',
+          endTime: finalTime,
+          code: '1234',
+          eventType: 'Online',
+          // contentType: 'Event',
+          onlineProvider: 'Zoom',
+          registrationEndDate: moment(this.createEventForm.controls['eventDate'].value).format('YYYY-MM-DD'),
         },
+      },
+    }
+    // console.log(form)
+    // const formJson = this.encodeToBase64(form)
+    // console.log(formJson)
+    this.eventsSvc.createEvent(form).subscribe(
+      res => {
+        const identifier = res.result.identifier
+        // this.fileSubmit(identifier)
+        this.publishEvent(identifier)
+      },
+      (err: any) => {
+        this.openSnackbar(err.error.split(':')[1])
       }
-      const formJson = this.encodeToBase64(form)
-      this.eventsSvc.createEvent(formJson).subscribe(
-        res => {
-          const identifier = res.identifier
-          this.fileSubmit(identifier)
-        },
-        (err: any) => {
-          this.openSnackbar(err.error.split(':')[1])
-        }
-      )
-    }
+    )
+  }
 
-    encodeToBase64 (body: any) {
-      const sString = JSON.stringify(body)
-      const aUTF16CodeUnits = new Uint16Array(sString.length)
-      Array.prototype.forEach.call(aUTF16CodeUnits, (_el, idx, arr) => arr[idx] = sString.charCodeAt(idx))
-      return { data: btoa(new Uint8Array(aUTF16CodeUnits.buffer).reduce((data, byte) => data + String.fromCharCode(byte), '')) }
-    }
+  encodeToBase64(body: any) {
+    const sString = JSON.stringify(body)
+    const aUTF16CodeUnits = new Uint16Array(sString.length)
+    Array.prototype.forEach.call(aUTF16CodeUnits, (_el, idx, arr) => arr[idx] = sString.charCodeAt(idx))
+    return { data: btoa(new Uint8Array(aUTF16CodeUnits.buffer).reduce((data, byte) => data + String.fromCharCode(byte), '')) }
+  }
 
-    private openSnackbar(primaryMsg: string, duration: number = 5000) {
-      this.snackBar.open(primaryMsg, 'X', {
-        duration,
-      })
-    }
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
+  }
 
-    addMinutes(hrs: number, mins: number) {
-      const minutes = (hrs * 60) + mins
-      return minutes
-    }
+  addMinutes(hrs: number, mins: number) {
+    const minutes = (hrs * 60) + mins
+    return minutes
+  }
 
-    publishEvent(identifierkey: any) {
-        const requestObj = {
-          actor: this.userId,
-          comment: 'done',
-          operation: 1,
-          org: 'dopt',
-          rootOrg: 'igot',
-          appName: 'iGoT',
-          appUrl: 'https://d136953gtttd92.cloudfront.net',
-          actorName: this.username,
-          action: 'publisherApproved',
-        }
-        const formJson = this.encodeToBase64(requestObj)
-        this.eventsSvc.publishEvent(formJson, identifierkey).subscribe(
-          res => {
-            this.showSuccess(res)
-          },
-          (err: any) => {
-            this.openSnackbar(err.error.split(':')[1])
-          }
-        )
+  publishEvent(identifierkey: any) {
+    this.eventsSvc.publishEvent(identifierkey).subscribe(
+      res => {
+        this.showSuccess(res)
+      },
+      (err: any) => {
+        this.openSnackbar(err.error.split(':')[1])
       }
+    )
+  }
 
-    goToList() {
+  goToList() {
+    this.router.navigate([`/app/events`])
+  }
+
+  showSuccess(res: any) {
+    this.dialogRef = this.matDialog.open(SuccessComponent, {
+      width: '630px',
+      height: '520px',
+      data: res,
+    })
+    this.dialogRef.afterClosed().subscribe(() => {
       this.router.navigate([`/app/events`])
-    }
-
-    showSuccess(res: any) {
-      this.dialogRef = this.matDialog.open(SuccessComponent, {
-        width: '630px',
-        height: '520px',
-        data: res,
-      })
-      this.dialogRef.afterClosed().subscribe(() => {
-        this.router.navigate([`/app/events`])
-      })
-    }
+    })
+  }
 
   omit_special_char(event: any) {
     const k = event.charCode
-    return((k > 64 && k < 91) || (k > 96 && k < 123) || k === 8 || k === 32 || (k >= 48 && k <= 57))
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k === 8 || k === 32 || (k >= 48 && k <= 57))
   }
 }

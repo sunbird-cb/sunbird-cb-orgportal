@@ -44,26 +44,27 @@ export class ParticipantsComponent implements OnInit {
 
     masterToggle() {
         this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach((row: any) => this.selection.select(row))
+            this.selection.clear() :
+            this.dataSource.data.forEach((row: any) => this.selection.select(row))
     }
 
     ngOnInit() {
-        const requestObj = {
-            departments: [
-            'igot',
-            'istm',
-            'iGOT',
-            'NPA',
-            'NACIN',
-            'LSNAA',
-            ],
-        }
+        // const requestObj = {
+        //     departments: [
+        //     'igot',
+        //     'istm',
+        //     'iGOT',
+        //     'NPA',
+        //     'NACIN',
+        //     'LSNAA',
+        //     ],
+        // }
+        // const requestObj = {}
         this.searchUserCtrl.valueChanges.pipe(
             debounceTime(200),
             distinctUntilChanged(),
         ).subscribe(() => {
-            this.eventSrc.searchUser(this.searchUserCtrl.value, requestObj).subscribe((data: any) => {
+            this.eventSrc.searchUser(this.searchUserCtrl.value).subscribe((data: any) => {
                 this.dataSource = new MatTableDataSource<IParticipantElement>(data)
                 this.participants = []
                 Object.keys(data).forEach((key: any) => {

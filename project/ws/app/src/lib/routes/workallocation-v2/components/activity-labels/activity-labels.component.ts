@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop'
 import { NSWatActivity } from '../../models/activity-wot.model'
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 // import { debounceTime } from 'rxjs/operators'
 import { inspect } from 'util'
 import { AllocationService } from '../../../workallocation/services/allocation.service'
@@ -77,14 +77,19 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   get groupList(): FormArray {
+    // console.log(this.activityForm.get('groupsArray'))
     return this.activityForm.get('groupsArray') as FormArray
   }
   get grpArray(): FormArray | null {
+    // console.log(this.activityForm.get('groupsArray'))
     return this.activityForm ? this.activityForm.get('groupsArray') as FormArray : null
+  }
+  get getControls(): AbstractControl[] {
+    return this.grpArray ? this.grpArray.controls : []
   }
   get groupActivityList(): FormArray {
     const lst = this.groupList.at(this.activeGroupIdx) as FormGroup
-    const frmctrl = lst.get('activities') as FormArray
+    const frmctrl = (lst ? lst.get('activities') : new FormArray([])) as FormArray
     return frmctrl
   }
   get getActivityForm() {
@@ -101,7 +106,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       .pipe(
         debounceTime(500),
         switchMap(async formValue => {
-          this.watStore.setgetactivitiesGroup(formValue)
+          this.watStore.setgetactivitiesGroup(formValue, false, true)
         }),
         takeUntil(this.unsubscribe)
       ).subscribe()
@@ -154,7 +159,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     }
     // console.log(this.groupList.value)
 
-    this.watStore.setgetactivitiesGroup(this.groupList.value)
+    this.watStore.setgetactivitiesGroup(this.groupList.value, false, true)
   }
   // sortPredicate(index: number, item: CdkDrag<NSWatActivity.IActivity>) {
   //   return (index + 1) % 2 === item.data % 2
@@ -213,6 +218,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     const oldValue = this.groupList
     const fg = this.formBuilder.group({
       activities: this.formBuilder.array([]),
+      localId: (grp && grp.localId) || this.watStore.getID,
       groupId: grp && grp.groupId || '',
       groupName: grp && grp.groupName || this.untitedRole,
       groupDescription: grp && grp.groupDescription || '',
@@ -220,6 +226,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     if (_needDefaultActivity) {
       const activits = fg.get('activities') as FormArray
       const fga = this.formBuilder.group({
+        localId: this.watStore.getID,
         activityId: '',
         activityName: '',
         activityDescription: '',
@@ -244,6 +251,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       // const newForlAryList = this.formBuilder.array([])
       activities.forEach((ac: NSWatActivity.IActivity) => {
         const fga = this.formBuilder.group({
+          localId: ac.localId,
           activityId: ac.activityId,
           activityName: ac.activityName,
           activityDescription: ac.activityDescription,
@@ -265,6 +273,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     if (idx >= 0) {
       const oldValue = this.groupActivityList as FormArray
       const fga = this.formBuilder.group({
+        localId: this.watStore.getID,
         activityId: '',
         activityName: '',
         activityDescription: '',
@@ -300,6 +309,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       for (let i = 0; i < grpData.length; i += 1) {
         const actlist = _.map(_.get(grpData[i], 'roleDetails.childNodes'), (numa: any) => {
           return {
+            localId: this.watStore.getID,
             activityId: _.get(numa, 'id'),
             activityName: _.get(numa, 'name'),
             activityDescription: _.get(numa, 'description'),
@@ -313,6 +323,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         })
         const grp = {
           activities: [],
+          localId: this.watStore.getID,
           groupId: _.get(grpData[i], 'roleDetails.id'),
           groupName: _.get(grpData[i], 'roleDetails.name'),
           groupDescription: _.get(grpData[i], 'roleDetails.description') || '',
@@ -320,7 +331,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         this.addNewGroup(false, grp)
         this.activeGroupIdx = i + 1
         this.addNewGroupActivityCustom(i + 1, actlist)
-        this.watStore.setgetactivitiesGroup(this.groupList.value)
+        this.watStore.setgetactivitiesGroup(this.groupList.value, false, false)
       }
     } else {
       this.addNewGroup()
@@ -329,6 +340,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
 
   createActivityControl(activityObj: NSWatActivity.IActivity) {
     const newControl = this.formBuilder.group({
+      localId: activityObj.localId || this.watStore.getID,
       activityId: new FormControl(activityObj.activityId),
       activityName: new FormControl(activityObj.activityName),
       activityDescription: new FormControl(activityObj.activityDescription),
@@ -344,6 +356,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
   createGroupControl(activityObj: NSWatActivity.IActivityGroup) {
     const newControl = this.formBuilder.group({
+      localId: activityObj.localId || this.watStore.getID,
       groupId: new FormControl(activityObj.groupId),
       groupName: new FormControl(activityObj.groupName),
       groupDescription: new FormControl(activityObj.groupDescription),
@@ -355,6 +368,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   createActivtyControl(activityObj: NSWatActivity.IActivity[]) {
     return activityObj.map((v: NSWatActivity.IActivity) => {
       return this.formBuilder.array([{
+        localId: v.localId || this.watStore.getID,
         activityId: new FormControl(v.activityId),
         activityName: new FormControl(v.activityName),
         activityDescription: new FormControl(v.activityDescription),
@@ -486,9 +500,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         const frmctrl2 = lst.get('groupId') as FormControl
         frmctrl2.patchValue(event.option.value.id || '')
 
-        this.watStore.setgetactivitiesGroup(this.groupList.value)
+        this.watStore.setgetactivitiesGroup(this.groupList.value, false, false)
       }
-      this.watStore.setgetactivitiesGroup(this.groupList.value)
+      this.watStore.setgetactivitiesGroup(this.groupList.value, false, true)
     })
 
   }
@@ -517,7 +531,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     const frmctrl1 = lst.at(this.selectedActivityIdx).get('activityId') as FormControl
     frmctrl1.patchValue(event.option.value.id)
 
-    this.watStore.setgetactivitiesGroup(this.groupList.value)
+    this.watStore.setgetactivitiesGroup(this.groupList.value, false, true)
   }
 
   setSelectedFilter(index: number) {
@@ -555,43 +569,43 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
         frmctrl.patchValue(assignedTo || '')
 
         const frmctrl1 = lst.at(this.selectedActivityIdx).get('assignedToId') as FormControl
-        frmctrl1.patchValue(assignedToId)
+        frmctrl1.patchValue(assignedToId || '')
 
         const frmctrl2 = lst.at(this.selectedActivityIdx).get('assignedToEmail') as FormControl
-        frmctrl2.patchValue(assignedToEmail)
+        frmctrl2.patchValue(assignedToEmail || '')
       } else {
         this.activeGroupIdx = gIdx
-        let submissionFrom = ''
-        let submissionFromId = ''
-        let submissionFromEmail = ''
-        if (_.get(event, 'option.value') === 'Final authority') {
-          submissionFrom = 'Final authority'
-          submissionFromId = '',
-            submissionFromEmail = ''
-        } else {
-          // tslint:disable-next-line: prefer-template
-          submissionFrom = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
-          submissionFromId = _.get(event, 'option.value.userDetails.wid')
-          submissionFromEmail = _.get(event, 'option.value.userDetails.email')
-        }
-        const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
-        const frmctrl = lst.at(this.selectedActivityIdx).get('submissionFrom') as FormControl
-        frmctrl.patchValue(submissionFrom || '')
+        // let submissionFrom = ''
+        // let submissionFromId = ''
+        // let submissionFromEmail = ''
+        // if (_.get(event, 'option.value') === 'Final authority') {
+        //   submissionFrom = 'Final authority'
+        //   submissionFromId = '',
+        //     submissionFromEmail = ''
+        // } else {
+        //   // tslint:disable-next-line: prefer-template
+        //   submissionFrom = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
+        //   submissionFromId = _.get(event, 'option.value.userDetails.wid')
+        //   submissionFromEmail = _.get(event, 'option.value.userDetails.email')
+        // }
+        // const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
+        // const frmctrl = lst.at(this.selectedActivityIdx).get('submissionFrom') as FormControl
+        // frmctrl.patchValue(submissionFrom || '')
 
-        const frmctrl1 = lst.at(this.selectedActivityIdx).get('submissionFromId') as FormControl
-        frmctrl1.patchValue(submissionFromId)
+        // const frmctrl1 = lst.at(this.selectedActivityIdx).get('submissionFromId') as FormControl
+        // frmctrl1.patchValue(submissionFromId)
 
-        const frmctrl2 = lst.at(this.selectedActivityIdx).get('submissionFromEmail') as FormControl
-        frmctrl2.patchValue(submissionFromEmail)
+        // const frmctrl2 = lst.at(this.selectedActivityIdx).get('submissionFromEmail') as FormControl
+        // frmctrl2.patchValue(submissionFromEmail)
       }
-      this.watStore.setgetactivitiesGroup(this.groupList.value)
+      this.watStore.setgetactivitiesGroup(this.groupList.value, false, true)
     }
   }
   deleteRowActivity(roleIdx: number, activityIdx: number) {
     const roleGrp = this.groupList.at(roleIdx) as FormGroup
     const activitiesLst = roleGrp.get('activities') as FormArray
     activitiesLst.removeAt(activityIdx)
-    this.watStore.setgetactivitiesGroup(this.groupList.value)
+    this.watStore.setgetactivitiesGroup(this.groupList.value, false, true)
   }
   deleteSingleActivity(roleIdx: number, activityIdx: number) {
     if (roleIdx >= 0 && activityIdx >= 0) {
@@ -626,47 +640,53 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   hideName() {
     this.canshowName = -1
   }
+  trackByFn(index: number, item: FormGroup) {
+    if (index) { }
+    return item.value.localId
+  }
+  getCompCount(roleName: string, localId: number, roleId: any) {
+    let count = 0
+    const values = this.watStore.getcompetencyGroupValue
+    _.each(values, i => {
+      if (i.roleName === roleName || i.localId === localId || i.roleId === roleId) {
+        count += i.competincies.length
+      }
+    })
+    return count
+  }
   deleteGrp(grpidx: number) {
+    if (!this.watStore.getOfficerId) {
+      this.snackBar.open('Please save work order and open in edit mode !! ', undefined, { duration: 2000 })
+      return
+    }
+    // this.snackBar.open('This feature will be available soon!! ', undefined, { duration: 2000 })
     if (grpidx >= 0) {
+      const role = this.groupList.at(grpidx).value
       const countA = (this.groupList.at(grpidx).get('activities') as FormArray || []).length
-      const countC = 0  // this.watStore.getcompetencyGroup.subscribe
+      const countC = this.getCompCount(_.get(role, 'groupName'), _.get(role, 'localId'), _.get(role, 'roleId'))
       const dialogRef = this.dialog.open(DialogConfirmComponent, {
         data: {
           title: 'Delete role?',
           body: `  <div>Deleting this role will also delete the following
-                    <br>
-                   <ul><li>Associated activities (${countA})</li><li>Associated competencies (${countC})</li></ul>
-          <div class="custom-delete">
-            <span>
-             To keep the activities/competencies, 'Go back' and move them to the unmapped activities/competencies before
-            </span>
-           </div>
-          </div>`,
+                      <br>
+                     <ul><li>Associated activities (${countA})</li><li>Associated competencies (${countC})</li></ul>
+            <div class="custom-delete">
+              <span>
+               To keep the activities/competencies, 'Go back' and move them to the unmapped activities/competencies before
+              </span>
+             </div>
+            </div>`,
           cancel: 'Go back',
           ok: 'Delete',
         },
       })
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.snackBar.open('This feature will be available soon!! ', undefined, { duration: 2000 })
-          // let grplst = this.activityForm.get('groupsArray') as FormArray
-          // grplst.removeAt(grpidx)
-          // (this.activityForm.controls['groupsArray'] as FormArray).removeAt(grpidx)
-          // this.activityForm.patchValue({
-          //   groupsArray: this.activityForm.value.groupsArray,
-          // })
-          // this.activeGroupIdx = grpidx - 1
-          // this.watStore.setgetactivitiesGroup(this.groupList.value)
-          // this.activityForm.markAsDirty()
-          // console.log(this.activityForm)
-          // this.appRef.tick()
-          // this.changeDetector.detectChanges()
-          // this.activityForm.markAsDirty()
-          // const activitiesLst = roleGrp.get('activities') as FormArray
-          // for (let i = 0; i < activitiesLst.value.length; i += 1) {
-          // this.deleteRowActivity(grpidx, i)
-          // }
-          // this.snackBar.open('Role removed successfully!! ', undefined, { duration: 2000 })
+          // this.snackBar.open('This feature will be available soon!! ', undefined, { duration: 2000 })
+          (this.activityForm.controls['groupsArray'] as FormArray).removeAt(grpidx)
+          this.changeDetector.detectChanges()
+          this.watStore.setgetactivitiesGroup(this.groupList.value, true, true)
+          this.snackBar.open('Role removed successfully, Please sit back, Page will reload.!! ', undefined, { duration: 2000 })
         }
       })
     }

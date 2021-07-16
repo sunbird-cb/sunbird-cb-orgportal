@@ -1,7 +1,8 @@
 import { Injectable, LOCALE_ID, Inject } from '@angular/core'
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http'
+import { Observable, throwError } from 'rxjs'
 import { ConfigurationsService } from '@sunbird-cb/utils'
+import { catchError } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,18 @@ export class AppInterceptorService implements HttpInterceptor {
           hostPath: this.configSvc.hostPath,
         },
       })
-      return next.handle(modifiedReq)
+      return next.handle(modifiedReq).pipe(
+        catchError(error => {
+          if (error instanceof HttpErrorResponse) {
+            switch (error.status) {
+              case 419:      // login
+                window.location.href = error.error.redirectUrl // 'http://localhost:3003/protected/v8/user/resource/'
+                break
+            }
+          }
+          return throwError('error')
+        })
+      )
     }
     return next.handle(req)
   }

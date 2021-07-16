@@ -33,6 +33,8 @@ import { NgxPaginationModule } from 'ngx-pagination'
 import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { NgCircleProgressModule } from 'ng-circle-progress'
 import { UserWorkService } from './services/user-work.service'
+import { DebounceClickDirective } from './directive/DebounceClickDirective'
+import { DisableButtonOnSubmitDirective } from './directive/DisableButtonOnSubmitDirective'
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { UserWorkService } from './services/user-work.service'
     AssistantContentCardComponent,
     DraftAllocationsComponent,
     PublishedAllocationsComponent,
+    DebounceClickDirective,
+    DisableButtonOnSubmitDirective,
   ],
   imports: [
     CommonModule, ReactiveFormsModule, WorkallocationV2RoutingModule, BreadcrumbsOrgModule,

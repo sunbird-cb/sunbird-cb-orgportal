@@ -34,7 +34,8 @@ export class WorkallocationService {
   fetchWAT(currentStatus: string): Observable<any> {
     const request = {
       status: currentStatus,
-      departmentName: this.configService.userProfile && this.configService.userProfile.departmentName || '',
+      departmentName: ((this.configService.userProfile && this.configService.userProfile.departmentName)
+        || (this.configService.userProfileV2 && this.configService.userProfileV2.departmentName) || ''),
       pageNo: 0,
       pageSize: 100,
     }

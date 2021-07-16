@@ -96,15 +96,13 @@
             <th>Submit to</th>
             <th>Submission from</th>
           </tr>
-          <tr
-            *ngFor="let d of data | filter: term | paginate: { itemsPerPage: 5, currentPage: p, totalItems: data.length }"
-            class="data-row" (click)="edit(d.id)">
-            <td aria-rowspan="d.roles.length+1">
+          <tr *ngFor="let d of data" class="data-row" (click)="edit(d.id)">
+            <td [attr.rowspan]="(d && d.roles) ? (d.roles.length+1) : 1 ">
               <div class="initials">
                 <ws-app-initial-avatar [name]="d.userName">
                 </ws-app-initial-avatar>
               </div>
-              <div>
+              <div class="min-h">
                 <b class="username">{{d.userName}}</b>
                 <div>
                   {{ d.userPosition }}

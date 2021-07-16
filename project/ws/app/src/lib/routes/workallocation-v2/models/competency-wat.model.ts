@@ -11,6 +11,7 @@ export namespace NSWatCompetency {
   }
   // In UI it's Role
   export interface ICompActivityGroup {
+    localId: number
     roleId: string
     roleName: string
     roleDescription: string

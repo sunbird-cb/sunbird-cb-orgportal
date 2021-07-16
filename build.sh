@@ -1,4 +1,3 @@
-  
 #!/bin/bash
 # Build script
 set -eo pipefail

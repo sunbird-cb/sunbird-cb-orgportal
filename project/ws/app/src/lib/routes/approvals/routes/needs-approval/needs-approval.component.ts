@@ -3,7 +3,9 @@ import { NeedApprovalsService } from '../../services/need-approvals.service'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import { NSProfileDataV2 } from '../../models/profile-v2.model'
-
+// tslint:disable
+import _ from 'lodash'
+// tslint:enable
 @Component({
   selector: 'ws-app-needs-approval',
   templateUrl: './needs-approval.component.html',
@@ -30,34 +32,36 @@ export class NeedsApprovalComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog, private matSnackBar: MatSnackBar) {
-    this.activeRoute.data.subscribe(data => {
+    this.activeRoute.data.subscribe((data: any) => {
       this.profileData = data.pageData.data.profileData
     })
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        this.userwfData = this.activeRoute.snapshot.data.workflowData.data.result.data[0] || {}
-        this.userwfData.wfInfo.forEach((wf: any) => {
-          if (typeof wf.updateFieldValues === 'string') {
-            const fields = JSON.parse(wf.updateFieldValues)
-            if (fields.length > 0) {
-              fields.forEach((field: any) => {
-                const labelKey = Object.keys(field.toValue)[0]
-                const feildNameObj = this.profileData.filter(userData => userData.key === labelKey)[0]
+        this.userwfData = _.first(_.get(this.activeRoute.snapshot, 'data.workflowData.data.result.data'))
+        if (_.get(this, 'userwfData.wfInfo')) {
+          _.forEach(_.get(this, 'userwfData.wfInfo') || [], (wf: any) => {
+            if (typeof wf.updateFieldValues === 'string') {
+              const fields = JSON.parse(wf.updateFieldValues)
+              if (fields.length > 0) {
+                fields.forEach((field: any) => {
+                  const labelKey = Object.keys(field.toValue)[0]
+                  const feildNameObj = this.profileData.filter(userData => userData.key === labelKey)[0]
 
-                this.needApprovalList.push(
-                  Object.assign({
-                    wf,
-                    feildName: labelKey,
-                    label: feildNameObj ? feildNameObj.name : null,
-                    value: field.toValue[labelKey],
-                    fieldKey: field.fieldKey,
-                    wfId: wf.wfId,
-                  })
-                )
-              })
+                  this.needApprovalList.push(
+                    Object.assign({
+                      wf,
+                      feildName: labelKey,
+                      label: feildNameObj ? feildNameObj.name : null,
+                      value: field.toValue[labelKey],
+                      fieldKey: field.fieldKey,
+                      wfId: wf.wfId,
+                    })
+                  )
+                })
+              }
             }
-          }
-        })
+          })
+        }
       }
     })
 

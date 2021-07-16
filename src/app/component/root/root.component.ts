@@ -17,7 +17,7 @@ import {
 // import { interval, concat, timer } from 'rxjs'
 import { BreadcrumbsOrgService } from '@sunbird-cb/collection'
 import {
-  AuthKeycloakService,
+  // AuthKeycloakService,
   ConfigurationsService,
   TelemetryService,
   ValueService,
@@ -54,7 +54,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   isSetupPage = false
   constructor(
     private router: Router,
-    public authSvc: AuthKeycloakService,
+    // public authSvc: AuthKeycloakService,
     public configSvc: ConfigurationsService,
     private valueSvc: ValueService,
     private telemetrySvc: TelemetryService,
@@ -75,11 +75,13 @@ export class RootComponent implements OnInit, AfterViewInit {
 
     this.btnBackSvc.initialize()
     // Application start telemetry
-    if (this.authSvc.isAuthenticated) {
-      this.telemetrySvc.start('app', 'view', '')
-      this.appStartRaised = true
+    this.telemetrySvc.start('app', 'view', '')
+    this.appStartRaised = true
+    // if (this.authSvc.isAuthenticated) {
+    //   this.telemetrySvc.start('app', 'view', '')
+    //   this.appStartRaised = true
 
-    }
+    // }
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         if (event.url.includes('/setup/')) {

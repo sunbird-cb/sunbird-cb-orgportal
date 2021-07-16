@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { EMPTY, Observable, of } from 'rxjs'
 
 const API_END_POINTS = {
   SEARCH_USER: 'apis/protected/v8/workallocation/user/autocomplete',
@@ -21,8 +21,8 @@ const API_END_POINTS = {
 })
 export class AllocationService {
 
+  oldObj = {}
   constructor(private http: HttpClient) { }
-
   onSearchUser(val: any): Observable<any> {
     return this.http.get<any>(`${API_END_POINTS.SEARCH_USER}/${val}`)
   }
@@ -51,7 +51,11 @@ export class AllocationService {
     return this.http.post<any>(`${API_END_POINTS.CREATE_ALLOCATIONV2}`, req)
   }
   updateAllocationV2(req: any): Observable<any> {
-    return this.http.post<any>(`${API_END_POINTS.UPDATE_ALLOCATIONV2}`, req)
+    if (JSON.stringify(this.oldObj || {}) !== JSON.stringify(req || {})) {
+      this.oldObj = req
+      return this.http.post<any>(`${API_END_POINTS.UPDATE_ALLOCATIONV2}`, req)
+    }
+    return of(EMPTY)
   }
 
   updateAllocation(req: any): Observable<any> {

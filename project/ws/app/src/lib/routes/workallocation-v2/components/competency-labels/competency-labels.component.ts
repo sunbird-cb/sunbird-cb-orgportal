@@ -15,6 +15,7 @@ import _ from 'lodash'
 import { WatCompPopupComponent } from './wat-comp-popup/wat-comp-popup.component'
 import { ActivatedRoute } from '@angular/router'
 import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
+// import { DOCUMENT } from '@angular/common'
 // tslint:enable
 
 @Component({
@@ -44,6 +45,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private activated: ActivatedRoute,
+    // @Inject(DOCUMENT) private document: Document
   ) {
   }
 
@@ -60,7 +62,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
 
   get groupcompetencyList(): FormArray {
     const lst = this.groupList.at(this.activeGroupIdx) as FormGroup
-    const frmctrl = lst.get('competincies') as FormArray
+    const frmctrl = (lst ? lst.get('competincies') : new FormArray([])) as FormArray
     return frmctrl
   }
   get getActivityForm() {
@@ -81,7 +83,19 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     // to fill edit data once
     this.watStore.getactivitiesGroup.pipe(first()).subscribe(() => {
       const grpData = _.get(this.editData, 'list')
-      for (let i = 0; i < grpData.length && ((grpData.length || 0) + 1) === this.groups.length; i += 1) {
+      for (let i = 0; grpData && i < grpData.length && ((grpData.length || 0) + 1) === this.groups.length; i += 1) {
+        const grpROle = _.get(grpData[i], 'roleDetails')
+        const grp: NSWatCompetency.ICompActivityGroup = {
+          localId: grpROle && grpROle.localId || this.watStore.getID,
+          competincies: this.formBuilder.array([]) as unknown as NSWatCompetency.ICompActivity[],
+          roleId: grpROle && grpROle.id || '',
+          roleName: grpROle && grpROle.name || this.untitedRole,
+          roleDescription: grpROle && grpROle.description || 'Role description',
+        }
+        if (!(this.groupcompetencyList && this.groupcompetencyList.value)) {
+          this.addNewGroup(false, grp)
+        }
+
         const complist = _.map(_.get(grpData[i], 'competencyDetails'), (numa: any) => {
           return {
             localId: this.watStore.getID,
@@ -96,7 +110,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         this.activeGroupIdx = i + 1
         this.addNewGroupActivityCustom(i + 1, complist)
       }
-      this.watStore.setgetcompetencyGroup(this.groupList.value)
+      this.watStore.setgetcompetencyGroup(this.groupList.value, false, false)
       this.updateCompData()
     })
   }
@@ -112,7 +126,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
             }
           })
           if (update) {
-            this.watStore.setgetcompetencyGroup(formValue)
+            this.watStore.setgetcompetencyGroup(formValue, false, true)
           }
         }),
         takeUntil(this.unsubscribe)
@@ -153,6 +167,19 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       // console.log(actualIdx)
       const oldArray = (this.activityForm.get('groupsArray') as any)!.at(previousContainerIndex).get('competincies')
       const newArray = (this.activityForm.get('groupsArray') as any)!.at(targetContainerIndex).get('competincies')
+
+      if (targetContainerIndex === 0) {
+        // means dropped to unmapped
+        let aaa = (oldArray as FormArray).at(event.previousIndex) as FormGroup
+
+        (oldArray as FormArray).at(event.previousIndex).patchValue({
+          ...(aaa.value),
+          roleId: '',
+          roleName: this.untitedRole,
+          roleDescription: 'Role description',
+        })
+      }
+
       // tslint:enable
       transferArrayItem(oldArray.controls, newArray.controls, event.previousIndex, event.currentIndex)
       transferArrayItem(oldArray.value, newArray.value, event.previousIndex, event.currentIndex)
@@ -166,7 +193,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     }
     // console.log(this.groupList.value)
 
-    this.watStore.setgetcompetencyGroup(this.groupList.value)
+    this.watStore.setgetcompetencyGroup(this.groupList.value, false, true)
 
   }
   // sortPredicate(index: number, item: CdkDrag<NSWatCompetency.ICompActivity>) {
@@ -258,8 +285,10 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         })
         oldValue.push(fga)
       })
-      // tslint:disable-next-line: no-non-null-assertion
-      this.setGroupActivityValues([...oldValue!.value])
+      if (oldValue && oldValue.value) {
+        // tslint:disable-next-line: no-non-null-assertion
+        this.setGroupActivityValues([...oldValue!.value])
+      }
     }
   }
   addNewGroupActivity(idx: number) {
@@ -282,11 +311,12 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     this.activeGroupIdx = i
   }
   updateForm() {
-    if (this.groups.length > this.groupList.length) {
+    if ((this.groups.length - 1) === this.groupList.length) {
       if (this.groups.length >= 2) {
         const lastGroup = _.last(this.groups)
         // tslint:disable-next-line: no-non-null-assertion
         const grp = {
+          localId: _.get(lastGroup, 'localId') || this.watStore.getID,
           competincies: [],
           roleId: _.get(lastGroup, 'groupId') || '',
           roleName: _.get(lastGroup, 'groupName') || '',
@@ -298,17 +328,29 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       for (let index = 0; index < this.groups.length; index += 1) {
         // this.groupListByIndex(index).
         if (index > 0) {
+          const grp = {
+            localId: _.get(this.groups[index], 'localId') || this.watStore.getID,
+            competincies: [],
+            roleId: _.get(this.groups[index], 'groupId') || '',
+            roleName: _.get(this.groups[index], 'groupName') || '',
+            roleDescription: _.get(this.groups[index], 'groupDescription') || '',
+          }
+          if (!(this.groupList.at(index) && this.groupList.at(index).value)) {
+            this.addNewGroup(false, grp)
+          }
+          const oldLocalValue = this.groupList.at(index).get('localId') as FormControl
           const oldRIdValue = this.groupList.at(index).get('roleId') as FormControl
           const oldRNameValue = this.groupList.at(index).get('roleName') as FormControl
           const oldRDescValue = this.groupList.at(index).get('roleDescription') as FormControl
           oldRIdValue.patchValue(this.groups[index].groupId)
           oldRNameValue.patchValue(this.groups[index].groupName)
           oldRDescValue.patchValue(this.groups[index].groupDescription)
+          oldLocalValue.patchValue(this.groups[index].localId)
           // this.setGroupValues([...oldValue.value])
         }
       }
     }
-    this.watStore.setgetcompetencyGroup(this.groupList.value)
+    this.watStore.setgetcompetencyGroup(this.groupList.value, false, false)
   }
   createForm() {
     this.activityForm = this.formBuilder.group({
@@ -322,7 +364,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         this.addNewGroup(false)
         this.addNewGroupActivityCustom(0, unmappedCompetencies)
         /**to update all comp store */
-        this.watStore.setgetcompetencyGroup(this.groupList.value)
+        this.watStore.setgetcompetencyGroup(this.groupList.value, false, false)
         this.updateCompData()
       } else {
         this.addNewGroup(true)
@@ -475,14 +517,14 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         const frmctrl4 = lst.at(this.selectedCompIdx).get('compArea') as FormControl
         frmctrl4.patchValue(_.get(newVal, 'compArea') || '')
 
-        this.watStore.setgetcompetencyGroup(this.groupList.value)
+        this.watStore.setgetcompetencyGroup(this.groupList.value, false, true)
         this.updateCompData()
       } else {
         const frmctrl1 = lst.at(this.selectedCompIdx).get('compName') as FormControl
         frmctrl1.patchValue(_.get(val, 'data.name') || '')
         // const frmctrl = lst.at(this.selectedCompIdx).get('compDescription') as FormControl
         // frmctrl.patchValue(_.get(event, 'option.value.description') || '')
-        this.watStore.setgetcompetencyGroup(this.groupList.value)
+        this.watStore.setgetcompetencyGroup(this.groupList.value, false, true)
         this.updateCompData()
       }
     })
@@ -521,7 +563,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     const roleGrp = this.groupList.at(roleIdx) as FormGroup
     const competinciesLst = roleGrp.get('competincies') as FormArray
     competinciesLst.removeAt(compIdx)
-    this.watStore.setgetcompetencyGroup(this.groupList.value)
+    this.watStore.setgetcompetencyGroup(this.groupList.value, false, true)
   }
   deleteSingleCompetency(grpIdx: number, compIdx: number) {
     if (grpIdx >= 0 && compIdx >= 0) {

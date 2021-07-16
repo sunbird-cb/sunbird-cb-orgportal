@@ -7,8 +7,8 @@
       <div class="flex flex-1 control">
         <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
           <ws-app-initial-avatar *ngIf="officerName.value.length" [name]="officerName.value"></ws-app-initial-avatar>
-          <input matInput aria-label="Officer" [matAutocomplete]="auto" #officerName name="officerName"
-            formControlName="officerName" i18n-placeholder placeholder="Type here" i18n-aria-label
+          <input matInput onfocus="this.select()" aria-label="Officer" [matAutocomplete]="auto" #officerName
+            name="officerName" formControlName="officerName" i18n-placeholder placeholder="Type here" i18n-aria-label
             aria-label="Type here" (input)="filterUsers(officerName.value)">
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)="officerClicked($event)">
             <div class="mat-body-4 ws-mat-accent-text padding-s">From Karmayogi officer portal</div>
@@ -67,7 +67,7 @@
       </div>
       <div class="flex flex-1 control ws-mat-accent-b">
         <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
-          <textarea id="position" class="form-input flex-1" matInput #position name="position"
+          <textarea onfocus="this.select()" id="position" class="form-input flex-1" matInput #position name="position"
             formControlName="position" i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Type here"
             autocomplete="off" [matAutocomplete]="positionAuto" (input)="filterPositions(position.value)"
             cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5">
@@ -90,9 +90,10 @@
       </div>
       <div class=" flex flex-1 control">
         <mat-form-field appearance="outline" class="flex-1 full-width no-pb square outline-color">
-          <textarea id="description" class="form-input flex-1" matInput #description name="description"
-            formControlName="positionDescription" i18n-placeholder placeholder="Type here" i18n-aria-label
-            aria-label="Type here" autocomplete="off" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>
+          <textarea onfocus="this.select()" id="description" class="form-input flex-1" matInput #description
+            name="description" formControlName="positionDescription" i18n-placeholder placeholder="Type here"
+            i18n-aria-label aria-label="Type here" autocomplete="off" matTextareaAutosize matAutosizeMinRows=1
+            matAutosizeMaxRows=5>
           </textarea>
         </mat-form-field>
       </div>

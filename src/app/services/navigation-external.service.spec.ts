@@ -6,7 +6,7 @@ describe('NavigationExternalService', () => {
   beforeEach(() => TestBed.configureTestingModule({}))
 
   it('should be created', () => {
-    const service: NavigationExternalService = TestBed.get(NavigationExternalService)
+    const service: NavigationExternalService = TestBed.inject(NavigationExternalService)
     expect(service).toBeTruthy()
   })
 })

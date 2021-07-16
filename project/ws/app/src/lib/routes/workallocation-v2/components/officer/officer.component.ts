@@ -15,6 +15,7 @@ import _ from 'lodash'
 })
 export class OfficerComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject<void>()
+  private unsubscribe1 = new Subject<void>()
   @Input() editData!: any
   userslist!: any[]
   userCtrl = new FormControl()
@@ -33,12 +34,23 @@ export class OfficerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.officerForm = new FormGroup({})
     this.createForm()
-
     this.officerForm.valueChanges
       .pipe(
         debounceTime(500),
         switchMap(async formValue => {
-          this.watStore.setOfficerGroup(formValue)
+          const obj = this.officerForm.value
+          const txtPosition = _.get(obj, 'position')
+          const objPosition = _.get(obj, 'positionObj.name')
+          if (txtPosition !== objPosition) {
+            const positionDesc = this.officerForm.controls['positionDescription'].value
+            this.officerForm.controls['positionObj'].patchValue({
+              name: txtPosition,
+              description: positionDesc,
+              id: '',
+            })
+          } else {
+            this.watStore.setOfficerGroup(formValue, false, true)
+          }
         }),
         takeUntil(this.unsubscribe)
       ).subscribe()
@@ -53,8 +65,25 @@ export class OfficerComponent implements OnInit, OnDestroy {
       positionObj: this.formBuilder.control(_.get(this.editData, 'position') || {}, []),
     })
     if (this.editData && _.get(this.editData, 'usr.officerName')) {
-      this.watStore.setOfficerGroup(this.officerForm.value)
+      this.watStore.setOfficerGroup(this.officerForm.value, false, false)
     }
+    this.officerForm.controls['officerName'].valueChanges
+      .pipe(debounceTime(100),
+        // pairwise()
+        switchMap(async (val: any) => {
+          // tslint:disable
+          const usrObj = this.officerForm.get('user')!.value
+          let usrName = ''
+          if (_.get(usrObj, 'userDetails.first_name')) {
+            usrName = `${_.get(usrObj, 'userDetails.first_name')} ${_.get(usrObj, 'userDetails.last_name')}`
+          } else {
+            usrName = `${_.get(usrObj, 'officerName')}`
+          }
+          if ((val || '').trim() !== (usrName || '').trim()) {
+            this.officerForm.get('user')!.patchValue({})
+            // tslint:enable
+          }
+        }), takeUntil(this.unsubscribe1)).subscribe()
   }
 
   public filterUsers(value: string) {
@@ -113,7 +142,7 @@ export class OfficerComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line: prefer-template
       const fullName = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
       frmctr1.patchValue(fullName || '')
-      this.watStore.setOfficerGroup(this.officerForm.value)
+      this.watStore.setOfficerGroup(this.officerForm.value, false, true)
     }
   }
 
@@ -125,12 +154,13 @@ export class OfficerComponent implements OnInit, OnDestroy {
       frmctr1.patchValue(_.get(event, 'option.value.description') || '')
       // tslint:disable-next-line: no-non-null-assertion
       this.officerForm.get('positionObj')!.setValue(_.get(event, 'option.value'))
-      this.watStore.setOfficerGroup(this.officerForm.value)
+      this.watStore.setOfficerGroup(this.officerForm.value, false, true)
     }
   }
 
   ngOnDestroy() {
     this.unsubscribe.next()
+    this.unsubscribe1.next()
   }
 
 }

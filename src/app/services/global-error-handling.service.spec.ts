@@ -6,7 +6,7 @@ describe('GlobalErrorHandlingService', () => {
   beforeEach(() => TestBed.configureTestingModule({}))
 
   it('should be created', () => {
-    const service: GlobalErrorHandlingService = TestBed.get(GlobalErrorHandlingService)
+    const service: GlobalErrorHandlingService = TestBed.inject(GlobalErrorHandlingService)
     expect(service).toBeTruthy()
   })
 })

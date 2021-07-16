@@ -12,7 +12,7 @@ import {
   WidgetResolverService,
 } from '@sunbird-cb/resolver'
 import {
-  AuthKeycloakService,
+  // AuthKeycloakService,
   ConfigurationsService,
   LoggerService,
   NsAppsConfig,
@@ -50,7 +50,7 @@ export class InitService {
   constructor(
     private logger: LoggerService,
     private configSvc: ConfigurationsService,
-    private authSvc: AuthKeycloakService,
+    // private authSvc: AuthKeycloakService,
     private widgetResolverService: WidgetResolverService,
     private settingsSvc: BtnSettingsService,
     private userPreference: UserPreferenceService,
@@ -95,13 +95,13 @@ export class InitService {
   async init() {
     // this.logger.removeConsoleAccess()
     await this.fetchDefaultConfig()
-    const authenticated = await this.authSvc.initAuth()
-    if (!authenticated) {
-      this.settingsSvc.initializePrefChanges(environment.production)
-      this.updateNavConfig()
-      this.logger.info('Not Authenticated')
-      return false
-    }
+    // const authenticated = await this.authSvc.initAuth()
+    // if (!authenticated) {
+    //   this.settingsSvc.initializePrefChanges(environment.production)
+    //   this.updateNavConfig()
+    //   this.logger.info('Not Authenticated')
+    //   return false
+    // }
     // Invalid User
     try {
       await this.fetchStartUpDetails() // detail: depends only on userID
@@ -319,7 +319,7 @@ export class InitService {
         throw new Error('Invalid user')
       }
       if (userPidProfileV2) {
-        const userData: any = _.first(endpoint.profileV2)
+        const userData: any = _.first(_.get(userPidProfileV2, 'result.UserProfile'))
         this.configSvc.userProfileV2 = {
           userId: _.get(userData, 'userId'),
           firstName: _.get(userData, 'personalDetails.firstname'),
@@ -333,8 +333,8 @@ export class InitService {
           isManager: false,
         }
         // if (this.configSvc.userProfile) {
-          // tslint:disable-next-line: max-line-length
-          // this.configSvc.userProfile.departmentName = (_.get(userData, 'employmentDetails.departmentName')) ? _.get(userData, 'employmentDetails.departmentName') : null
+        // tslint:disable-next-line: max-line-length
+        // this.configSvc.userProfile.departmentName = (_.get(userData, 'employmentDetails.departmentName')) ? _.get(userData, 'employmentDetails.departmentName') : null
         // }
 
       }

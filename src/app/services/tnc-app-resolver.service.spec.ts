@@ -6,7 +6,7 @@ describe('TncAppResolverService', () => {
   beforeEach(() => TestBed.configureTestingModule({}))
 
   it('should be created', () => {
-    const service: TncAppResolverService = TestBed.get(TncAppResolverService)
+    const service: TncAppResolverService = TestBed.inject(TncAppResolverService)
     expect(service).toBeTruthy()
   })
 })

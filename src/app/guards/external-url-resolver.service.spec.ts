@@ -6,7 +6,7 @@ describe('ExternalUrlResolverService', () => {
   beforeEach(() => TestBed.configureTestingModule({}))
 
   it('should be created', () => {
-    const service: ExternalUrlResolverService = TestBed.get(ExternalUrlResolverService)
+    const service: ExternalUrlResolverService = TestBed.inject(ExternalUrlResolverService)
     expect(service).toBeTruthy()
   })
 })

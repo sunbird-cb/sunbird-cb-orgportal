@@ -46,8 +46,9 @@
                         </div>
                     </div>
                     <div class="flex flex-1 flex-row-reverse margin-right-l fix-h">
-                        <button mat-button class="ws-mat-accent-background text-white margin-left-xs" type="button"
-                            id="savebtn" (click)="editDataStruct && editDataStruct.id ? updateWat() : saveWAT()">
+                        <button n-submit mat-button class="ws-mat-accent-background text-white margin-left-xs"
+                            type="button" id="savebtn"
+                            (click)="editDataStruct && editDataStruct.id ? updateWat() : saveWAT()">
                             <span i18n>{{editDataStruct && editDataStruct.id? 'Update draft' : 'Save as draft'}}</span>
                         </button>
                         <!-- <button mat-stroked-button type="button"
@@ -100,10 +101,12 @@
                                     <span class="mat-subheading-1 margin-left-xs">{{'Competencies'}}</span>
                                 </div>
                                 <div class="flex">
-                                    <mat-icon class="ws-mat-black60-text ">launch</mat-icon>
-                                    <a target="_blank" href="https://frac-dictionary.tarento.com"
+                                    <mat-icon class="ws-mat-black60-text ">
+                                        {{getExternalUrl('COMPETENCY','icon')}}
+                                    </mat-icon>
+                                    <a target="_blank" [href]="getExternalUrl('COMPETENCY','uri')"
                                         class="mat-subheading-1 margin-left-xs ws-mat-black60-text-imp">
-                                        Competency Dictionary
+                                        {{getExternalUrl('COMPETENCY','displayName')}}
                                     </a>
                                 </div>
                             </div>

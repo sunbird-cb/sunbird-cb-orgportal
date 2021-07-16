@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Router, Event, NavigationEnd, ActivatedRoute } from '@angular/router'
 import { ILeftMenuWithoutLogo } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
 /* tslint:disable */
 import _ from 'lodash'
@@ -25,10 +25,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private valueSvc: ValueService,
               private router: Router,
               private activeRoute: ActivatedRoute,
-              private configService: ConfigurationsService
   ) {
-    if (this.configService.userRoles) {
-      this.myRoles = this.configService.userRoles
+    if (_.get(this.activeRoute, 'snapshot.data.configService.userRoles')) {
+      this.myRoles = _.get(this.activeRoute, 'snapshot.data.configService.userRoles')
     }
 
     this.router.events.subscribe((event: Event) => {

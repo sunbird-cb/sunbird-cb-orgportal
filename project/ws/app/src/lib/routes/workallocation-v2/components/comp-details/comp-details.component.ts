@@ -31,7 +31,7 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
     this.fetchData()
     this.subscribeForm = this.compDetailForm.valueChanges.subscribe(val => {
       if (val) {
-        this.watStore.updateCompGroup(_.get(val, 'competencyList'))
+        this.watStore.updateCompGroup(_.get(val, 'competencyList'), false, true)
       }
     })
   }
