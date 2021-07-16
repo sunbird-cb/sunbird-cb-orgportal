@@ -4,9 +4,9 @@
 
 export const environment: IEnvironment = {
   production: false,
-  sitePath: 'localhost_3000',
-  karmYogiPath: 'https://igot-dev.in',
-  cbpPath: 'https://cbp.igot-dev.in',
+  sitePath: (window as { [key: string]: any })['env']['sitePath'] || '',
+  karmYogiPath: (window as { [key: string]: any })['env']['karmYogiPath'] || '',
+  cbpPath: (window as { [key: string]: any })['env']['cbpPath'] || '',
 }
 interface IEnvironment {
   production: boolean

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  sitePath: 'mdo-sb.idc.tarento.com',
-  karmYogiPath: 'https://igot-dev.in',
-  cbpPath: 'https://cbp.igot-dev.in',
+  sitePath: (window as { [key: string]: any })['env']['sitePath'] || '',
+  karmYogiPath: (window as { [key: string]: any })['env']['karmYogiPath'] || '',
+  cbpPath: (window as { [key: string]: any })['env']['cbpPath'] || '',
 }
