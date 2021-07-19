@@ -5,7 +5,7 @@ const helmet = require('helmet')
 const timeout = require('connect-timeout')
 const morgan = require('morgan')
 const httpProxy = require('http-proxy')
-const healthcheck = require('express-healthcheck')
+// const healthcheck = require('express-healthcheck')
 
 const CONSTANTS = {
   PORTAL_PORT: parseInt(process.env.PORTAL_PORT || '3002', 10),
@@ -20,11 +20,11 @@ var proxy = httpProxy.createProxyServer({
 })
 app.use(timeout('100s'))
 
-app.use('/healthcheck', healthcheck({
-  healthy() {
-    return { everything: 'is ok' }
-  },
-}))
+// app.use('/healthcheck', healthcheck({
+//   healthy() {
+//     return { everything: 'is ok' }
+//   },
+// }))
 
 // Add required helmet configurations
 app.use(
