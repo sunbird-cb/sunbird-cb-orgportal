@@ -77,6 +77,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     this.filter("Draft")
   }
 
+  get getTableData() {
+    return this.data
+  }
   // Download format
   export() {
     this.wrkAllocServ.getPDF(this.selectedPDFid).subscribe(response => {
@@ -199,6 +202,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       if (res.result.data) {
         res.result.data.forEach((element: any) => {
           const watData = {
+            id: element.id,
             workorders: element.name,
             officers: (element.userIds && element.userIds.length) || 0,
             lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
