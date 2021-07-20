@@ -140,7 +140,7 @@
   "workbench.settings.enableNaturalLanguageSearch": false,
   "telemetry.enableTelemetry": false,
   "telemetry.enableCrashReporter": false,
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "typescript.tsdk": "node_modules/typescript/lib",
   "tslint.configFile": "tslint.json",
   "update.showReleaseNotes": false,
   "peacock.color": "#68217a",

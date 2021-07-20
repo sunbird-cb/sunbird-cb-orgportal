@@ -28,6 +28,7 @@ export class AppInterceptorService implements HttpInterceptor {
 
     if (this.configSvc.activeOrg && this.configSvc.rootOrg) {
       const modifiedReq = req.clone({
+        // url: req.url.indexOf('.json') >= 0 ? req.url : `https://igot-dev.in${req.url}`,
         setHeaders: {
           org: this.configSvc.activeOrg,
           rootOrg: this.configSvc.rootOrg,

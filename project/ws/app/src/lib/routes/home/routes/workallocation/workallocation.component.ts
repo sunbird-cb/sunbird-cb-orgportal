@@ -14,7 +14,7 @@ import { WorkAllocationPopUpComponent } from '../../../../head/work-allocation-t
   styleUrls: ['./workallocation.component.scss'],
 })
 export class WorkallocationComponent implements OnInit, OnDestroy {
-  currentFilter: any
+  currentFilter = 'Draft'
   tabs: any
   currentUser!: string | null
   tabledata!: ITableData
@@ -207,7 +207,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
             publishedon: this.workallocationSrvc.getTime(element.createdAt),
             publishedby: element.createdByName,
             approval: "Approval",
-            fromdata: 'published',
+            fromdata: currentStatus,
             publishedPdfLink: element.publishedPdfLink,
             signedPdfLink: element.signedPdfLink
 

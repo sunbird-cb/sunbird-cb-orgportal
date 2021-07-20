@@ -176,7 +176,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe((response: any) => {
       response.data.forEach((user: { userId: string }) => {
         if (this.departmentId) {
-          const role = `MDO ADMIN`
+          const role = `MDO_ADMIN`
           this.createMDOService.assignAdminToDepartment(user.userId, this.departmentId, role).subscribe(res => {
             if (res) {
               this.snackBar.open('Admin assigned Successfully')
@@ -225,9 +225,9 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
 
   onRowClick(e: any) {
     this.eOnRowClick.emit(e)
-    if (e.fromdata === 'Draft') {
+    if ((e.fromdata || '').toUpperCase() === 'DRAFT') {
       this.router.navigate([`/app/workallocation/drafts`, e.id])
-    } else if (e.fromdata === 'Published') {
+    } else if ((e.fromdata || '').toUpperCase() === 'PUBLISHED') {
       this.router.navigate([`/app/workallocation/published`, e.id])
     }
 
