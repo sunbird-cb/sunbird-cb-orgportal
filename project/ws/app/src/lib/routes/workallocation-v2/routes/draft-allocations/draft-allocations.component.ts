@@ -56,9 +56,9 @@ export class DraftAllocationsComponent implements OnInit {
     // FileSaver.saveAs(pdfUrl, pdfName)
 
     this.uploadService.getDraftPDF(this.workorderID).subscribe((response) => {
-      let file = new Blob([response], { type: 'application/pdf' });
-      var fileURL = URL.createObjectURL(file);
-      window.open(fileURL);
+      let file = new Blob([response], { type: 'application/pdf' })
+      var fileURL = URL.createObjectURL(file)
+      window.open(fileURL)
     })
   }
 
@@ -107,6 +107,16 @@ export class DraftAllocationsComponent implements OnInit {
     }
 
     this.dialog.open(PublishPopupComponent, dialogConfig)
+  }
+
+  get filteredData() {
+    if (!this.term) {
+      return this.data
+    } else {
+      return _.filter(this.data, op => {
+        return ((op.userName || '').toLowerCase()).indexOf((this.term || '').toLowerCase()) >= 0 || ((this.term || '').toLowerCase()).indexOf((op.userName || '').toLowerCase()) >= 0
+      })
+    }
   }
 
   getAllocatedUsers(woId: any) {
