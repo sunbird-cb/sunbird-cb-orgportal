@@ -1,11 +1,12 @@
 // import { untilDestroyed } from 'ngx-take-until-destroy'
 import { DOCUMENT } from '@angular/common'
 import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 // tslint:disable
 import _ from 'lodash'
 import { delay } from 'rxjs/operators'
+import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
 import { NSWatActivity } from '../../models/activity-wot.model'
 import { NSWatCompetency } from '../../models/competency-wat.model'
 // tslint:enable
@@ -61,7 +62,8 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     private snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    public dialog: MatDialog,
   ) {
     this.route.params.subscribe(params => {
       this.workOrderId = params['workorder']
@@ -313,21 +315,23 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       if (this.getWorkOrderId) {
         const req = this.getStrcuturedReqUpdate()
         // console.log(req)
-        this.allocateSrvc.updateAllocationV2(req).pipe(delay(500)).subscribe(res => {
-          if (res) {
-            if (!autoSave) {
-              this.openSnackbar('Work order updated successfully!')
-              this.watStore.clear()
-              this.router.navigate(['/app/workallocation/drafts', this.getWorkOrderId])
+        if (req) {
+          this.allocateSrvc.updateAllocationV2(req).pipe(delay(500)).subscribe(res => {
+            if (res) {
+              if (!autoSave) {
+                this.openSnackbar('Work order updated successfully!')
+                this.watStore.clear()
+                this.router.navigate(['/app/workallocation/drafts', this.getWorkOrderId])
+              }
+              if (reload) {
+                this.router.navigate(['/app/workallocation/update', this.watStore.getworkOrderId, this.watStore.getOfficerId])
+                this.document.location.reload()
+              }
+            } else {
+              this.openSnackbar('Error in saving Work order, please try again!')
             }
-            if (reload) {
-              this.router.navigate(['/app/workallocation/update', this.watStore.getworkOrderId, this.watStore.getOfficerId])
-              this.document.location.reload()
-            }
-          } else {
-            this.openSnackbar('Error in saving Work order, please try again!')
-          }
-        })
+          })
+        }
       } else {
         this.openSnackbar('Error! Work order not found, please try again!')
       }
@@ -344,7 +348,15 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     const unmappedCompetency = this.getUnmappedCompetency()
     // tslint:disable
     if (!((officer && officer.user && officer.user && officer.user.userId) || (officer && officer.user && officer.user.userDetails && officer.user.userDetails.wid))) {
-      this.snackBar.open('Please select a valid officer')
+      // this.snackBar.open('Please select a valid officer')
+      this.dialog.open(DialogConfirmComponent, {
+        data: {
+          title: 'Invalid User',
+          body: 'Please select a valid officer',
+          ok: 'OK',
+          cancel: 'hide',
+        },
+      })
       return null
     }
     // if (!((officer && officer.positionObj && officer.positionObj.id) || (officer && officer.positionObj && officer.positionObj.positionId))) {
@@ -378,9 +390,18 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     const unmappedActivity = this.getUnmappedActivity()
     const unmappedCompetency = this.getUnmappedCompetency()
     if (!(officer && officer.user && officer.user.userDetails && officer.user.userDetails.wid)) {
-      this.snackBar.open('Please select a valid officer')
+      // this.snackBar.open('Please select a valid officer')
+      this.dialog.open(DialogConfirmComponent, {
+        data: {
+          title: 'Invalid User',
+          body: 'Please select a valid officer',
+          ok: 'OK',
+          cancel: 'hide',
+        },
+      })
       return null
     }
+
     // if (!(officer && officer.positionObj && officer.positionObj.id)) {
     //   this.snackBar.open('Please select a valid position')
     //   return null

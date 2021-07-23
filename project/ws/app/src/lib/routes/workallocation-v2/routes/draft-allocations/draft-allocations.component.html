@@ -96,7 +96,7 @@
             <th>Submit to</th>
             <th>Submission from</th>
           </tr>
-          <tr *ngFor="let d of data" class="data-row" (click)="edit(d.id)">
+          <tr *ngFor="let d of filteredData" class="data-row" (click)="edit(d.id)">
             <td [attr.rowspan]="(d && d.roles) ? (d.roles.length+1) : 1 ">
               <div class="initials">
                 <ws-app-initial-avatar [name]="d.userName">
