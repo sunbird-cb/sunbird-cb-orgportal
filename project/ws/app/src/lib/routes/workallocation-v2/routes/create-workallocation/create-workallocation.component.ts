@@ -351,8 +351,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       // this.snackBar.open('Please select a valid officer')
       this.dialog.open(DialogConfirmComponent, {
         data: {
-          title: 'Invalid User',
-          body: 'Please select a valid officer',
+          title: 'Invalid officer name',
+          // tslint: disable-next-line
+          body: '<p>The selected officer is not part of Karmayogi platform.  Please contact your <b>MDO admin</b> to add this officer to the platform.</p>',
           ok: 'OK',
           cancel: 'hide',
         },
@@ -393,8 +394,9 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       // this.snackBar.open('Please select a valid officer')
       this.dialog.open(DialogConfirmComponent, {
         data: {
-          title: 'Invalid User',
-          body: 'Please select a valid officer',
+          title: 'Invalid officer name',
+          /* tslint:disable-next-line */
+          body: '<p>The selected officer is not part of Karmayogi platform. Please contact your <b>MDO admin</b> to add this officer to the platform.</p>',
           ok: 'OK',
           cancel: 'hide',
         },
