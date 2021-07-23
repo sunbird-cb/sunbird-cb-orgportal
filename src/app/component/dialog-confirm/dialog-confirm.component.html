@@ -3,10 +3,11 @@
 </div>
 <mat-divider class="margin-top-l margin-bottom-l"></mat-divider>
 <div mat-dialog-actions class="flex-row-reverse">
-  <button mat-flat-button [color]="(data.ok === 'delete' || data.ok === 'Delete'  ) ? 'warn': 'primary'"
-    (click)="confirmed()" i18n>
+  <button *ngIf="data.ok !== 'hide'" mat-flat-button class="ws-mat-accent-border-active"
+    [color]="(data.ok === 'delete' || data.ok === 'Delete'  ) ? 'warn': 'blue'" (click)="confirmed()" i18n>
     {{data.ok}}
   </button>
-  <button mat-button class="ws-mat-accent-text ws-mat-accent-border-active margin-right-xs" [mat-dialog-close]
+  <button *ngIf="data.cancel !== 'hide'" mat-button
+    [ngClass]="{'ws-mat-accent-text ws-mat-accent-border-active margin-right-xs': true}" [mat-dialog-close]
     cdkFocusInitial i18n>{{data.cancel}}</button>
 </div>
