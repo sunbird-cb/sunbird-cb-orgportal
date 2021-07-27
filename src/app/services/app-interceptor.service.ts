@@ -28,11 +28,13 @@ export class AppInterceptorService implements HttpInterceptor {
 
     if (this.configSvc.activeOrg && this.configSvc.rootOrg) {
       const modifiedReq = req.clone({
+        // url: req.url.indexOf('.json') >= 0 ? req.url : `https://igot-dev.in${req.url}`,
         setHeaders: {
           org: this.configSvc.activeOrg,
           rootOrg: this.configSvc.rootOrg,
           locale: lang.join(','),
           wid: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+          // wid: '',
           hostPath: this.configSvc.hostPath,
         },
       })
@@ -41,7 +43,15 @@ export class AppInterceptorService implements HttpInterceptor {
           if (error instanceof HttpErrorResponse) {
             switch (error.status) {
               case 419:      // login
-                window.location.href = error.error.redirectUrl // 'http://localhost:3003/protected/v8/user/resource/'
+                const localUrl = location.origin
+                const pageName = '/app/home/welcome'
+                if (localUrl.includes('localhost')) {
+                  // tslint:disable-next-line: prefer-template
+                  window.location.href = error.error.redirectUrl + `?q=${localUrl}${pageName}`
+                } else {
+                  // tslint:disable-next-line: prefer-template
+                  window.location.href = error.error.redirectUrl + `?q=${pageName}`
+                }
                 break
             }
           }

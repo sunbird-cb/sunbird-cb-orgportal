@@ -84,11 +84,11 @@ export class CreateEventComponent implements OnInit {
   todayTime: any
 
   constructor(private snackBar: MatSnackBar,
-    private eventsSvc: EventsService,
-    private matDialog: MatDialog,
-    private router: Router,
-    private configSvc: ConfigurationsService,
-    private changeDetectorRefs: ChangeDetectorRef
+              private eventsSvc: EventsService,
+              private matDialog: MatDialog,
+              private router: Router,
+              private configSvc: ConfigurationsService,
+              private changeDetectorRefs: ChangeDetectorRef
   ) {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId

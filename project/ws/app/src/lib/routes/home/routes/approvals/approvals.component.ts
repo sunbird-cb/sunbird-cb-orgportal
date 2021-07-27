@@ -103,7 +103,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
           })
 
           this.data.push({
-            fullname: approval.userInfo ? `${approval.userInfo.first_name} ${approval.userInfo.last_name}` : null,
+            fullname: approval.userInfo ? `${approval.userInfo.first_name} ${approval.userInfo.last_name}` : '--',
             requestedon: `${currentdate.getDate()}
           ${moment(currentdate.getMonth() + 1, 'MM').format('MMM')}
           ${currentdate.getFullYear()}

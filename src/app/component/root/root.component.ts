@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
   ViewContainerRef,
+  ApplicationRef,
 } from '@angular/core'
 import {
   NavigationCancel,
@@ -22,12 +23,16 @@ import {
   TelemetryService,
   ValueService,
   WsEvents,
+  LoggerService,
 } from '@sunbird-cb/utils'
-import { delay } from 'rxjs/operators'
+import { delay, first } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'
-// import { SwUpdate } from '@angular/service-worker'
-// import { environment } from '../../../environments/environment'
+import { SwUpdate } from '@angular/service-worker'
+import { environment } from '../../../environments/environment'
+import { interval, concat, timer } from 'rxjs'
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
+import { MatDialog } from '@angular/material'
 // import { MatDialog } from '@angular/material'
 // import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
 
@@ -35,6 +40,7 @@ import { RootService } from './root.service'
   selector: 'ws-root',
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
+  providers: [SwUpdate],
 })
 export class RootComponent implements OnInit, AfterViewInit {
   @ViewChild('previewContainer', { read: ViewContainerRef, static: true })
@@ -55,6 +61,10 @@ export class RootComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     // public authSvc: AuthKeycloakService,
+    private appRef: ApplicationRef,
+    private logger: LoggerService,
+    private swUpdate: SwUpdate,
+    private dialog: MatDialog,
     public configSvc: ConfigurationsService,
     private valueSvc: ValueService,
     private telemetrySvc: TelemetryService,
@@ -122,47 +132,47 @@ export class RootComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.initAppUpdateCheck()
+    this.initAppUpdateCheck()
   }
 
-  // initAppUpdateCheck() {
-  //   this.logger.log('LOGGING IN ROOT FOR PWA INIT CHECK')
-  //   if (environment.production) {
-  //     const appIsStable$ = this.appRef.isStable.pipe(
-  //       first(isStable => isStable),
-  //     )
-  //     const everySixHours$ = interval(6 * 60 * 60 * 1000)
-  //     const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$)
-  //     everySixHoursOnceAppIsStable$.subscribe(() => this.swUpdate.checkForUpdate())
-  //     if (this.swUpdate.isEnabled) {
-  //       this.swUpdate.available.subscribe(() => {
-  //         const dialogRef = this.dialog.open(DialogConfirmComponent, {
-  //           data: {
-  //             title: (this.appUpdateTitleRef && this.appUpdateTitleRef.nativeElement.value) || '',
-  //             body: (this.appUpdateBodyRef && this.appUpdateBodyRef.nativeElement.value) || '',
-  //           },
-  //         })
-  //         dialogRef.afterClosed().subscribe(
-  //           result => {
-  //             if (result) {
-  //               this.swUpdate.activateUpdate().then(() => {
-  //                 if ('caches' in window) {
-  //                   caches.keys()
-  //                     .then(keyList => {
-  //                       timer(2000).subscribe(
-  //                         _ => window.location.reload(),
-  //                       )
-  //                       return Promise.all(keyList.map(key => {
-  //                         return caches.delete(key)
-  //                       }))
-  //                     })
-  //                 }
-  //               })
-  //             }
-  //           },
-  //         )
-  //       })
-  //     }
-  //   }
-  // }
+  initAppUpdateCheck() {
+    this.logger.log('LOGGING IN ROOT FOR PWA INIT CHECK')
+    if (environment.production) {
+      const appIsStable$ = this.appRef.isStable.pipe(
+        first(isStable => isStable),
+      )
+      const everySixHours$ = interval(6 * 60 * 60 * 1000)
+      const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$)
+      everySixHoursOnceAppIsStable$.subscribe(() => this.swUpdate.checkForUpdate())
+      if (this.swUpdate.isEnabled) {
+        this.swUpdate.available.subscribe(() => {
+          const dialogRef = this.dialog.open(DialogConfirmComponent, {
+            data: {
+              title: (this.appUpdateTitleRef && this.appUpdateTitleRef.nativeElement.value) || '',
+              body: (this.appUpdateBodyRef && this.appUpdateBodyRef.nativeElement.value) || '',
+            },
+          })
+          dialogRef.afterClosed().subscribe(
+            (result: any) => {
+              if (result) {
+                this.swUpdate.activateUpdate().then(() => {
+                  if ('caches' in window) {
+                    caches.keys()
+                      .then(keyList => {
+                        timer(2000).subscribe(
+                          _ => window.location.reload(),
+                        )
+                        return Promise.all(keyList.map(key => {
+                          return caches.delete(key)
+                        }))
+                      })
+                  }
+                })
+              }
+            },
+          )
+        })
+      }
+    }
+  }
 }

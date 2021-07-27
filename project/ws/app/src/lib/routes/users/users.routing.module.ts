@@ -5,6 +5,8 @@ import { CreateUserComponent } from './routes/create-user/create-user.component'
 import { DepartmentResolve } from '../users/resolvers/department-resolve'
 import { UserResolve } from '../users/resolvers/user-resolve'
 import { WorkflowHistoryResolve } from '../users/resolvers/workflow-history-resolve'
+import { RolesResolver } from './resolvers/roles-resolve.service'
+import { ConfigResolveService } from '../home/resolvers/config-resolve.service'
 
 const routes: Routes = [
   {
@@ -13,14 +15,18 @@ const routes: Routes = [
     resolve: {
       profileData: UserResolve,
       workflowHistoryData: WorkflowHistoryResolve,
-      department: DepartmentResolve,
+      // department: DepartmentResolve,
+      rolesList: RolesResolver,
+      configService: ConfigResolveService,
     },
   },
   {
     path: 'create-user',
     component: CreateUserComponent,
     resolve: {
-      department: DepartmentResolve,
+      // department: DepartmentResolve,
+      profileData: UserResolve,
+      rolesList: RolesResolver,
     },
   },
 ]
@@ -32,6 +38,8 @@ const routes: Routes = [
     UserResolve,
     DepartmentResolve,
     WorkflowHistoryResolve,
+    RolesResolver,
+    ConfigResolveService,
   ],
 })
 export class UsersRoutingModule { }

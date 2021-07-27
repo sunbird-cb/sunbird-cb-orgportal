@@ -14,7 +14,7 @@ import { WorkAllocationPopUpComponent } from '../../../../head/work-allocation-t
   styleUrls: ['./workallocation.component.scss'],
 })
 export class WorkallocationComponent implements OnInit, OnDestroy {
-  currentFilter: any
+  currentFilter = 'Draft'
   tabs: any
   currentUser!: string | null
   tabledata!: ITableData
@@ -77,6 +77,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     this.filter("Draft")
   }
 
+  get getTableData() {
+    return this.data
+  }
   // Download format
   export() {
     this.wrkAllocServ.getPDF(this.selectedPDFid).subscribe(response => {
@@ -199,6 +202,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       if (res.result.data) {
         res.result.data.forEach((element: any) => {
           const watData = {
+            id: element.id,
             workorders: element.name,
             officers: (element.userIds && element.userIds.length) || 0,
             lastupdatedon: this.workallocationSrvc.getTime(element.updatedAt),
@@ -207,7 +211,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
             publishedon: this.workallocationSrvc.getTime(element.createdAt),
             publishedby: element.createdByName,
             approval: "Approval",
-            fromdata: 'published',
+            fromdata: currentStatus,
             publishedPdfLink: element.publishedPdfLink,
             signedPdfLink: element.signedPdfLink
 
