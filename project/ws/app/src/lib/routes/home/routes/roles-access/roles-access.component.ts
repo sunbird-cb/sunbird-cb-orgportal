@@ -1,6 +1,7 @@
-import { ProfileV2Service } from './../../services/home.servive'
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
+// tslint:disable-next-line
+import _ from 'lodash'
 @Component({
   selector: 'ws-app-roles-access',
   templateUrl: './roles-access.component.html',
@@ -10,7 +11,7 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
   tabledata: any = []
   data: any = []
 
-  constructor(private router: Router, private profile: ProfileV2Service) { }
+  constructor(private router: Router, private activeRouter: ActivatedRoute) { }
 
   ngOnInit() {
     this.tabledata = {
@@ -38,19 +39,16 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* API call to get all roles*/
   fetchRolesNew() {
-    const totalUsers: any[] = []
-    this.profile.getMyDepartment().subscribe(user => {
-      user.rolesInfo.forEach((element: { roleName: any, noOfUsers: any }) => {
-        element.roleName = element.roleName.replace(/[/_/]/g, ' ')
-        totalUsers.push({
-          role: element.roleName,
-          count: element.noOfUsers,
-        })
-
-      })
-      this.data = totalUsers
-
+    let totalUsers: any[] = []
+    const usrsList = _.get(this.activeRouter.snapshot, 'data.usersList.data.content') || []
+    totalUsers = _.map(_.groupBy(_.flatten(_.map(_.flatten(_.map(usrsList, 'organisations')), 'roles'))), (k, v) => {
+      return {
+        role: (v || ''),
+        // .replace(/[/_/]/g, ' '),
+        count: (k || []).length || 0,
+      }
     })
+    this.data = totalUsers
   }
 
   ngOnDestroy() { }

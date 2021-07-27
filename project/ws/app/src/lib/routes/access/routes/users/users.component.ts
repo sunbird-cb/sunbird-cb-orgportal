@@ -1,6 +1,5 @@
-import { ProfileV2Service } from './../../../home/services/home.servive'
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { UsersService } from '../../services/users.service'
 /* tslint:disable */
@@ -15,18 +14,20 @@ import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/in
 
 export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   tabledata!: ITableData
+  configSvc: any
   data: any = []
+  usersData: any
   data2: any
   role: any
   roleName: string | undefined
   private defaultSideNavBarOpenedSubscription: any
 
-  constructor(private usersSvc: UsersService, private router: Router, private profile: ProfileV2Service) { }
+  constructor(private usersSvc: UsersService, private router: Router, private route: ActivatedRoute) { }
   ngOnInit() {
     const url = this.router.url.split('/')
     this.role = url[url.length - 2]
     this.roleName = this.role.replace('%20', ' ')
-    this.getMyDepartment()
+    this.configSvc = _.get(this.route, 'snapshot.parent.data.configService') || {}
     // int left blank
     this.tabledata = {
       actions: [{ name: 'Details', label: 'Details', icon: 'remove_red_eye', type: 'link' }],
@@ -34,7 +35,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
         { displayName: 'Full name', key: 'fullName' },
         { displayName: 'Email', key: 'email' },
         // { displayName: 'Position', key: 'position' },
-        { displayName: 'Role', key: 'role' },
+        { displayName: 'Role', key: 'role', isList: true },
       ],
       needCheckBox: false,
       needHash: false,
@@ -42,6 +43,8 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       sortState: 'asc',
       needUserMenus: false,
     }
+    this.usersData = _.get(this.route, 'snapshot.data.usersList.data') || {}
+    this.getMyDepartment()
   }
 
   ngAfterViewInit() {
@@ -63,36 +66,59 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     })
   }
+  getRoleList(user: any) {
+    if (user.organisations && user.organisations.length > 0) {
+      // tslint:disable-next-line
+      return _.join(_.map(_.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles'), role => `<li>${role}</li>`), '')
+    }
+    return []
+  }
   getMyDepartment() {
-    const users: any[] = []
-    this.profile.getMyDepartmentAll().subscribe(res => {
-      res.active_users.map((user: any) => {
-        if (user.roleInfo.length > 0) {
-          // if (user.roleInfo[0].roleName === this.roleName) {
-          //   users.push({
-          //     fullName: `${user.firstName} ${user.lastName}`,
-          //     email: user.emailId,
-          //     position: user.department_name,
-          //     role: this.roleName,
-          //     wid: user.wid,
-          //   })
-          // }
-          user.roleInfo.forEach((eachrole: any) => {
-            eachrole.roleName = eachrole.roleName.replace('_', ' ')
-            if (eachrole.roleName === this.roleName) {
-              users.push({
-                fullName: `${user.firstName} ${user.lastName}`,
-                email: user.emailId,
-                position: user.department_name,
-                role: this.roleName,
-                wid: user.wid,
-              })
+    let users: any[] = []
+    if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
+      users = _.map(_.compact(_.map(this.usersData.content, i => {
+        let consider = false
+        if (!i.isDeleted && i.organisations && i.organisations.length > 0) {
+          _.each(i.organisations, o => {
+            if (!o.isDeleted && (o.roles || []).indexOf(this.roleName) >= 0) {
+              consider = true
             }
           })
         }
-        this.data = users
-      })
-    })
+        return consider ? i : null
+      })),
+        // tslint:disable-next-line
+        user => {
+          return {
+            fullName: `${user.firstName} ${user.lastName}`,
+            email: _.get(user, 'profileDetails.personalDetails.primaryEmail') || user.email,
+            position: user.department_name,
+            role: this.getRoleList(user),
+            wid: user.userId,
+          }
+        })
+    }
+    this.data = users
+
+    // this.profile.getMyDepartmentAll().subscribe(res => {
+    //   res.active_users.map((user: any) => {
+    //     if (user.roleInfo.length > 0) {
+    //       user.roleInfo.forEach((eachrole: any) => {
+    //         eachrole.roleName = eachrole.roleName.replace('_', ' ')
+    //         if (eachrole.roleName === this.roleName) {
+    //           users.push({
+    //             fullName: `${user.firstName} ${user.lastName}`,
+    //             email: user.emailId,
+    //             position: user.department_name,
+    //             role: this.roleName,
+    //             wid: user.wid,
+    //           })
+    //         }
+    //       })
+    //     }
+    //     this.data = users
+    //   })
+    // })
 
   }
 

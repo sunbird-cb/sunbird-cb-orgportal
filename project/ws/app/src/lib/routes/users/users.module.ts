@@ -14,6 +14,7 @@ import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
+import { RolesService } from './services/roles.service'
 
 @NgModule({
   declarations: [CreateUserComponent, ViewUserComponent],
@@ -24,5 +25,6 @@ import { WidgetResolverModule } from '@sunbird-cb/resolver'
     MatRadioModule, MatDialogModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule,
   ],
+  providers: [RolesService],
 })
 export class UsersModule { }

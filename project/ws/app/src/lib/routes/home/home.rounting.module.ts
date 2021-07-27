@@ -12,6 +12,7 @@ import { ApprovalsComponent } from './routes/approvals/approvals.component'
 import { WorkallocationComponent } from './routes/workallocation/workallocation.component'
 import { WelcomeComponent } from './routes/welcome/welcome.component'
 import { ConfigResolveService } from './resolvers/config-resolve.service'
+import { UsersListResolve } from './resolvers/users-list-resolve.service'
 
 const routes: Routes = [
   {
@@ -35,6 +36,9 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersViewComponent,
+        resolve: {
+          usersList: UsersListResolve,
+        },
       },
       {
         path: 'about',
@@ -43,6 +47,9 @@ const routes: Routes = [
       {
         path: 'roles-access',
         component: RolesAccessComponent,
+        resolve: {
+          usersList: UsersListResolve,
+        },
       },
       {
         path: 'approvals',
@@ -63,6 +70,7 @@ const routes: Routes = [
     HomeResolve,
     DepartmentResolve,
     ConfigResolveService,
+    UsersListResolve,
   ],
 })
 export class HomeRoutingModule { }
