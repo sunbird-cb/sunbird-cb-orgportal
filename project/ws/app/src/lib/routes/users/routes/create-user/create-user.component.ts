@@ -43,23 +43,25 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private router: Router, private activeRoute: ActivatedRoute,
-              private snackBar: MatSnackBar,
-              private usersSvc: UsersService,
-              private configService: ConfigurationsService,
-              private valueSvc: ValueService) {
+  constructor(
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    private usersSvc: UsersService,
+    private configService: ConfigurationsService,
+    private valueSvc: ValueService) {
     if (this.configService.userRoles) {
       this.myRoles = this.configService.userRoles
     }
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.bindUrl(event.urlAfterRedirects.replace('/app/home/', ''))
-        if (this.activeRoute.snapshot.data.department.data) {
+        if (_.get(this.activeRoute.snapshot, 'data.profileData.data')) {
           const leftData = this.activeRoute.snapshot.data.pageData.data.menus
           _.set(leftData, 'widgetData.logo', true)
-          _.set(leftData, 'widgetData.logoPath', _.get(this.activeRoute, 'snapshot.data.department.data.logo'))
-          _.set(leftData, 'widgetData.name', _.get(this.activeRoute, 'snapshot.data.department.data.deptName')
-            || _.get(this.activeRoute, 'snapshot.data.department.data.description'))
+          _.set(leftData, 'widgetData.logoPath', _.get(this.activeRoute, 'snapshot.data.profileData.data.rootOrg.imgUrl'))
+          _.set(leftData, 'widgetData.name', _.get(this.activeRoute, 'snapshot.data.profileData.data.channel')
+            || _.get(this.activeRoute, 'snapshot.data.profileData.data.rootOrg.description'))
           _.set(leftData, 'widgetData.userRoles', this.myRoles)
           this.widgetData = leftData
         } else {
@@ -69,9 +71,11 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     })
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        this.department = this.activeRoute.snapshot.data.department.data
-        this.departmentName = this.department ? this.department.deptName : ''
-        this.rolesList = this.department.rolesInfo
+        const fullProfile = _.get(this.activeRoute.snapshot, 'data.profileData.data')
+        this.department = fullProfile.rootOrg
+        this.departmentName = fullProfile ? fullProfile.channel : ''
+        /* tslint:disable-next-line */
+        this.rolesList = _.map(_.compact(_.flatten(_.map(_.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList'), 'roles'))), rol => { return { roleName: rol, description: rol } })
         if (this.configService.userProfile && this.configService.userProfile.departmentName) {
           this.configService.userProfile.departmentName = this.departmentName
         }
@@ -96,40 +100,22 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   onSubmit(form: any) {
     const newobj = {
       personalDetails: {
-          email: form.value.email,
-          userName : form.value.fname,
-          firstName: form.value.fname,
-          lastName: form.value.lname,
-          channel: this.department ? this.department.deptName : null,
+        email: form.value.email,
+        userName: form.value.fname,
+        firstName: form.value.fname,
+        lastName: form.value.lname,
+        channel: this.departmentName ? this.departmentName : null,
       },
     }
 
     this.usersSvc.createUser(newobj).subscribe(res => {
-      // let user
-      // const deptRole = this.department.rolesInfo.filter((role: { roleName: string }) => role.roleName === 'MEMBER')[0]
-      // this.openSnackbar(res.data)
       if (res) {
-        const req = {
-          departments: [
-            'igot',
-            'istm',
-            'iGOT',
-            'NPA',
-            'NACIN',
-            'LSNAA',
-            'ISTM',
-          ],
-        }
-        if (req.departments.indexOf(this.department.deptName) === -1) {
-          req.departments.push(this.department.deptName)
-        }
-
         const dreq = {
-          userId: res.userId,
-          deptId: this.department ? this.department.id : null,
-          roles: form.value.roles,
-          isActive: true,
-          isBlocked: false,
+          request: {
+            organisationId: _.get(this.department, 'id'),
+            userId: res.userId,
+            roles: form.value.roles,
+          },
         }
 
         this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
@@ -138,11 +124,13 @@ export class CreateUserComponent implements OnInit, OnDestroy {
             this.openSnackbar('User Created Successfully')
             this.router.navigate(['/app/home/users'])
           }
-        })
+        },
+          // tslint:disable-next-line
+          (err: any) => { this.openSnackbar(err.error || err || `Some error occurred while updateing new user's role, Please try again later!`) })
       }
-    },                                         (err: { error: string }) => {
-      this.openSnackbar(err.error)
-    })
+    },
+      // tslint:disable-next-line
+      (err: any) => { this.openSnackbar(err.error || err || 'Some error occurred while creating user, Please try again later!') })
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
@@ -169,8 +157,5 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     if (this.defaultSideNavBarOpenedSubscription) {
       this.defaultSideNavBarOpenedSubscription.unsubscribe()
     }
-    // if (this.bannerSubscription) {
-    //   this.bannerSubscription.unsubscribe()
-    // }
   }
 }

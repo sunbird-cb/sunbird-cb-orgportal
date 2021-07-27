@@ -33,8 +33,8 @@ export class AppInterceptorService implements HttpInterceptor {
           org: this.configSvc.activeOrg,
           rootOrg: this.configSvc.rootOrg,
           locale: lang.join(','),
-          // wid: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
-          wid: '',
+          wid: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+          // wid: '',
           hostPath: this.configSvc.hostPath,
         },
       })

@@ -28,8 +28,10 @@ import {
 } from '@angular/material'
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { BtnFeatureModule, ErrorResolverModule, TourModule, WIDGET_REGISTERED_MODULES,
-  WIDGET_REGISTRATION_CONFIG, PipeContentRoutePipe, StickyHeaderModule } from '@sunbird-cb/collection'
+import {
+  BtnFeatureModule, ErrorResolverModule, TourModule, WIDGET_REGISTERED_MODULES,
+  WIDGET_REGISTRATION_CONFIG, PipeContentRoutePipe, StickyHeaderModule,
+} from '@sunbird-cb/collection'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
 import { LoggerService, PipeSafeSanitizerModule } from '@sunbird-cb/utils'
 import { SearchModule } from '@ws/app/src/public-api'
@@ -45,8 +47,6 @@ import { LoginComponent } from './component/login/login.component'
 import { AppFooterComponent } from './component/app-footer/app-footer.component'
 import { AppNavBarComponent } from './component/app-nav-bar/app-nav-bar.component'
 import { AppPublicNavBarComponent } from './component/app-public-nav-bar/app-public-nav-bar.component'
-// import { ServiceWorkerModule } from '@angular/service-worker'
-// import { environment } from '../environments/environment'
 import { DialogConfirmComponent } from './component/dialog-confirm/dialog-confirm.component'
 import { InvalidUserComponent } from './component/invalid-user/invalid-user.component'
 import { LoginRootComponent } from './component/login-root/login-root.component'
@@ -62,9 +62,8 @@ import { AppRetryInterceptorService } from './services/app-retry-interceptor.ser
 import { TncAppResolverService } from './services/tnc-app-resolver.service'
 import { TncPublicResolverService } from './services/tnc-public-resolver.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-// import { ServiceWorkerModule } from '@angular/service-worker'
-// import { environment } from '../environments/environment'
-
+import { ServiceWorkerModule } from '@angular/service-worker'
+import { environment } from '../environments/environment'
 @Injectable()
 export class HammerConfig extends GestureConfig {
   buildHammer(element: HTMLElement) {
@@ -139,7 +138,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     MobileAppModule,
     PipeSafeSanitizerModule,
     TourModule,
-    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   exports: [
     TncComponent,

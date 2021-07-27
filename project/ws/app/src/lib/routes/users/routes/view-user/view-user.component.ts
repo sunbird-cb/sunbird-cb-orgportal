@@ -4,6 +4,8 @@ import moment from 'moment'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { UsersService } from '../../services/users.service'
 import { MatSnackBar } from '@angular/material'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-view-user',
@@ -29,6 +31,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   department: any = {}
   departmentName = ''
   rolesList: any = []
+  configSvc: any
   userID: any
   public userRoles: Set<string> = new Set()
   orguserRoles: any = []
@@ -52,46 +55,57 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        const profileData = this.activeRoute.snapshot.data.profileData.data.result.UserProfile[0] || {}
-        this.userID = profileData.id
-        this.basicInfo = profileData.personalDetails
-        this.academicDetails = profileData.academics
-        this.professionalDetails = profileData.professionalDetails ? profileData.professionalDetails[0] : []
-        this.employmentDetails = profileData.employmentDetails
-        this.skillDetails = profileData.skills
-        this.interests = profileData.interests
-        this.fullname = `${this.basicInfo.firstname} ${this.basicInfo.surname}`
-
-        this.department = this.activeRoute.snapshot.data.department.data
-        this.departmentName = this.department ? this.department.deptName : ''
-        this.rolesList = this.department.rolesInfo
-
-        if (this.department.active_users && this.department.active_users.length > 0) {
-          this.department.active_users.forEach((user: any) => {
-            if (this.userID === user.userId) {
-              this.userStatus = 'Active'
-              const usrRoles = user.roleInfo
-              usrRoles.forEach((role: any) => {
-                this.orguserRoles.push(role.roleName)
-                this.modifyUserRoles(role.roleName)
-              })
-            }
-          })
+        this.configSvc = this.activeRoute.snapshot.data.configService || {}
+        const profileDataAll = this.activeRoute.snapshot.data.profileData.data || {}
+        const profileData = profileDataAll.profiledetails
+        if (profileData) {
+          this.userID = profileData.id || profileData.userId
+          this.basicInfo = profileData.personalDetails
+          if (this.basicInfo) {
+            this.fullname = `${this.basicInfo.firstname} ${this.basicInfo.surname}`
+          }
+          this.academicDetails = profileData.academics
+          this.professionalDetails = profileData.professionalDetails ? profileData.professionalDetails[0] : []
+          this.employmentDetails = profileData.employmentDetails
+          this.skillDetails = profileData.skills
+          this.interests = profileData.interests
+          this.userStatus = profileData.isDeleted ? 'Inactive' : 'Active'
         }
-        if (this.department.blocked_users && this.department.blocked_users.length > 0) {
-          this.department.blocked_users.forEach((user: any) => {
-            if (this.userID === user.userId) {
-              this.userStatus = 'Blocked'
-            }
-          })
-        }
-        if (this.department.inActive_users && this.department.inActive_users.length > 0) {
-          this.department.inActive_users.forEach((user: any) => {
-            if (this.userID === user.userId) {
-              this.userStatus = 'Inactive'
-            }
-          })
-        }
+        this.department = this.configSvc.unMappedUser.rootOrg
+        this.departmentName = this.department ? this.department.channel : ''
+        // tslint:disable-next-line
+        this.rolesList = _.sortBy(_.uniq(_.flatten(_.map(_.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList'), 'roles')))) || []
+        const usrRoles = profileDataAll.roles
+        usrRoles.forEach((role: any) => {
+          this.orguserRoles.push(role)
+          this.modifyUserRoles(role)
+        })
+        // if (this.department.active_users && this.department.active_users.length > 0) {
+        //   this.department.active_users.forEach((user: any) => {
+        //     if (this.userID === user.userId) {
+        //       this.userStatus = 'Active'
+        //       const usrRoles = user.roleInfo
+        //       usrRoles.forEach((role: any) => {
+        //         this.orguserRoles.push(role.roleName)
+        //         this.modifyUserRoles(role.roleName)
+        //       })
+        //     }
+        //   })
+        // }
+        // if (this.department.blocked_users && this.department.blocked_users.length > 0) {
+        //   this.department.blocked_users.forEach((user: any) => {
+        //     if (this.userID === user.userId) {
+        //       this.userStatus = 'Blocked'
+        //     }
+        //   })
+        // }
+        // if (this.department.inActive_users && this.department.inActive_users.length > 0) {
+        //   this.department.inActive_users.forEach((user: any) => {
+        //     if (this.userID === user.userId) {
+        //       this.userStatus = 'Inactive'
+        //     }
+        //   })
+        // }
 
         let wfHistoryDatas = this.activeRoute.snapshot.data.workflowHistoryData.data.result.data || {}
         const datas: any[] = Object.values(wfHistoryDatas)
@@ -216,7 +230,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         isBlocked: false,
       }
 
-      this.usersSvc.addUserRoleToDepartment(dreq).subscribe(dres => {
+      this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
         if (dres) {
           this.updateUserRoleForm.reset({ roles: '' })
           this.openSnackbar('User role updated Successfully')

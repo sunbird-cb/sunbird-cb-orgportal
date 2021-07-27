@@ -4,6 +4,8 @@ import { DepartmentResolve } from '../home/resolvers/department-resolve'
 import { HomeComponent } from './routes/home/home.component'
 import { PrivilegesComponent } from './routes/privileges/privileges.component'
 import { UsersComponent } from './routes/users/users.component'
+import { UsersListResolve } from '../home/resolvers/users-list-resolve.service'
+import { ConfigResolveService } from '../home/resolvers/config-resolve.service'
 
 const routes: Routes = [
   {
@@ -11,6 +13,7 @@ const routes: Routes = [
     component: HomeComponent,
     resolve: {
       department: DepartmentResolve,
+      configService: ConfigResolveService,
     },
     children: [
       {
@@ -20,6 +23,9 @@ const routes: Routes = [
       {
         path: ':role/users',
         component: UsersComponent,
+        resolve: {
+          usersList: UsersListResolve,
+        },
       },
     ],
   },
@@ -28,5 +34,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [UsersListResolve],
 })
 export class AccessRoutingModule { }

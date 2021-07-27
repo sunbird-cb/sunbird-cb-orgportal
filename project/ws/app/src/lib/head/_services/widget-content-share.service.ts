@@ -4,7 +4,7 @@ import { Observable } from 'rxjs'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { NsContent } from './widget-content.model'
 import { NsShare } from './widget-share.model'
-import { ICommon } from '../_models/common.model'
+import { ICommon } from '@sunbird-cb/collection/lib/_models/common.model'
 
 const API_END_POINTS = {
   USER_SHARE: `/apis/protected/v8/user/share`,
