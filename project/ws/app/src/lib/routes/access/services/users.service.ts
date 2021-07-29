@@ -5,6 +5,8 @@ import { Observable } from 'rxjs'
 const API_END_POINTS = {
   USERS: '/apis/protected/v8/user/roles/getUsersV2',
   USER_BDD: '/apis/protected/v8/portal/mdo/deptAction/userrole',
+  ACTIVE_USER: 'apis/proxies/v8/user/v1/unblock',
+  DE_ACTIVE_USER: 'apis/proxies/v8/user/v1/block',
 }
 
 @Injectable({
@@ -19,7 +21,10 @@ export class UsersService {
     return this.http.patch<any>(`${API_END_POINTS.USER_BDD}/`, user)
   }
   deActiveUser(user: object): Observable<any> {
-    return this.http.patch<any>(`${API_END_POINTS.USER_BDD}/`, user)
+    return this.http.patch<any>(`${API_END_POINTS.DE_ACTIVE_USER}/`, user)
+  }
+  activeUser(user: object): Observable<any> {
+    return this.http.patch<any>(`${API_END_POINTS.ACTIVE_USER}/`, user)
   }
   deleteUser(user: object): Observable<any> {
     return this.http.patch<any>(`${API_END_POINTS.USER_BDD}/`, user)
