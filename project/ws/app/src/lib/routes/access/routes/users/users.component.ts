@@ -153,7 +153,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       case 'active':
         _.set(user, 'isActive', true)
         _.set(user, 'roles', _.map(_.get($event.row, 'roleInfo'), i => i.roleName))
-        this.usersSvc.deActiveUser(user)
+        this.usersSvc.activeUser(user)
         break
       //   case 'delete':
       //     _.set(user, 'isBlocked', false)

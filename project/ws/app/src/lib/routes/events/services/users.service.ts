@@ -9,7 +9,7 @@ const API_END_POINTS = {
   CREATE_USER: 'apis/protected/v8/admin/userRegistration/create-user',
   // PROFILE_REGISTRY: 'apis/protected/v8/user/profileRegistry/getUserRegistryByUser/',
   PROFILE_REGISTRY_V1: '/apis/proxies/v8/user/v1/read/',
-  PROFILE_REGISTRY_V2: '/apis/proxies/v8/api/user/v2/read/',
+  PROFILE_REGISTRY_V2: '/apis/proxies/v8/api/user/v2/read',
   ADD_USER_TO_DEPARTMENT: 'apis/protected/v8/portal/deptAction',
   WF_HISTORY_BY_APPID: 'apis/protected/v8/workflowhandler/historyByApplicationId/',
   SEARCH_USER: 'apis/protected/v8/user/autocomplete/department',

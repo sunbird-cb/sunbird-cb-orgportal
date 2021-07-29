@@ -13,12 +13,14 @@ const API_END_POINTS = {
   CREATE_USER: 'apis/protected/v8/user/profileDetails/createUser',
   // PROFILE_REGISTRY: 'apis/protected/v8/user/profileRegistry/getUserRegistryByUser/',
   PROFILE_REGISTRY_V1: '/apis/proxies/v8/user/v1/read/',
-  PROFILE_REGISTRY_V2: '/apis/proxies/v8/api/user/v2/read/',
+  PROFILE_REGISTRY_V2: '/apis/proxies/v8/api/user/v2/read',
   CREATE_PROFILE_REGISTRY: '/apis/protected/v8/user/profileRegistry/createUserRegistryV2',
   ADD_USER_TO_DEPARTMENT: '/apis/proxies/v8/user/private/v1/assign/role',
   WF_HISTORY_BY_APPID: 'apis/protected/v8/workflowhandler/historyByApplicationId/',
   SEARCH_USER: 'apis/protected/v8/user/autocomplete/department',
   USER_BDD: '/apis/protected/v8/portal/mdo/deptAction/userrole',
+  ACTIVE_USER: 'apis/proxies/v8/user/v1/unblock',
+  DE_ACTIVE_USER: 'apis/proxies/v8/user/v1/block',
   // GET_BULKUPLOAD_DATA: '/apis/protected/v8/admin/userRegistration/bulkUploadData',
 }
 
@@ -70,7 +72,10 @@ export class UsersService {
     return this.http.patch<any>(`${API_END_POINTS.USER_BDD}/`, user)
   }
   deActiveUser(user: object): Observable<any> {
-    return this.http.patch<any>(`${API_END_POINTS.USER_BDD}/`, user)
+    return this.http.patch<any>(`${API_END_POINTS.DE_ACTIVE_USER}/`, user)
+  }
+  activeUser(user: object): Observable<any> {
+    return this.http.patch<any>(`${API_END_POINTS.ACTIVE_USER}/`, user)
   }
   deleteUser(user: object): Observable<any> {
     return this.http.patch<any>(`${API_END_POINTS.USER_BDD}/`, user)
