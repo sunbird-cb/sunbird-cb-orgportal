@@ -1192,7 +1192,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngOnInit() {
     this.getUserDetails()
-    this.fetchRoles()
+    // this.fetchRoles()
     this.selectDashbord()
   }
 
@@ -1218,41 +1218,41 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     })
   }
-  fetchRoles() {
-    const rolesAndAccessData: any[] = []
-    this.homeResolver.getMyDepartment().subscribe((roles: any) => {
-      this.deptName = roles.deptName
-      if (this.deptName) {
-        // this.sliderData1 = {
-        //   widgetType: 'slider',
-        //   widgetSubType: 'sliderOrgBanners',
-        //   style: {
-        //     'border-radius': '8px',
-        //   },
-        //   widgetData: [
-        //     {
-        //       banners: {
-        //         l: 'assets/images/banners/home/home_banner_l.jpg',
-        //         m: 'assets/images/banners/home/home_banner_m.jpg',
-        //         s: 'assets/images/banners/home/home_banner_m.jpg',
-        //         xl: 'assets/images/banners/home/home_banner_xl.jpg',
-        //         xs: 'assets/images/banners/home/home_banner_xl.jpg',
-        //         xxl: 'assets/images/banners/home/home_banner_xl.jpg',
-        //       },
-        //       title: this.deptName,
-        //       logo: 'assets/icons/govtlogo.jpg',
-        //     },
-        //   ],
-        // }
-      }
-      roles.rolesInfo.forEach((role: { roleName: string }) => {
-        rolesAndAccessData.push({
-          role: role.roleName,
-          count: roles.noOfUsers,
-        })
-      })
-    })
-  }
+  // fetchRoles() {
+  // const rolesAndAccessData: any[] = []
+  // this.homeResolver.getMyDepartment().subscribe((roles: any) => {
+  //   this.deptName = roles.deptName
+  //   if (this.deptName) {
+  // this.sliderData1 = {
+  //   widgetType: 'slider',
+  //   widgetSubType: 'sliderOrgBanners',
+  //   style: {
+  //     'border-radius': '8px',
+  //   },
+  //   widgetData: [
+  //     {
+  //       banners: {
+  //         l: 'assets/images/banners/home/home_banner_l.jpg',
+  //         m: 'assets/images/banners/home/home_banner_m.jpg',
+  //         s: 'assets/images/banners/home/home_banner_m.jpg',
+  //         xl: 'assets/images/banners/home/home_banner_xl.jpg',
+  //         xs: 'assets/images/banners/home/home_banner_xl.jpg',
+  //         xxl: 'assets/images/banners/home/home_banner_xl.jpg',
+  //       },
+  //       title: this.deptName,
+  //       logo: 'assets/icons/govtlogo.jpg',
+  //     },
+  //   ],
+  // }
+  //   }
+  //   roles.rolesInfo.forEach((role: { roleName: string }) => {
+  //     rolesAndAccessData.push({
+  //       role: role.roleName,
+  //       count: roles.noOfUsers,
+  //     })
+  //   })
+  // })
+  // }
 
   openky() {
     this.openNewWindow()

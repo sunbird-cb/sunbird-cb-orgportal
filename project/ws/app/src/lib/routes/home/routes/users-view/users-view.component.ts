@@ -30,7 +30,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   location!: string | null
   tabs: any
   // tabsData: NSProfileDataV2.IProfileTab[]
-  currentUser!: string | null
+  currentUser!: any
   connectionRequests!: any[]
   data: any = []
   usersData!: any
@@ -182,9 +182,10 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
   menuActions($event: { action: string, row: any }) {
     const user = { userId: _.get($event.row, 'userId') }
-    _.set(user, 'deptId', _.get(_.first(_.filter(this.usersData.content, { id: user.userId })), 'rootOrgId'))
-    _.set(user, 'isBlocked', _.get($event.row, 'blocked'))
-    _.set(user, 'isDeleted', _.get($event.row, 'active'))
+    // _.set(user, 'deptId', _.get(_.first(_.filter(this.usersData.content, { id: user.userId })), 'rootOrgId'))
+    // _.set(user, 'isBlocked', _.get($event.row, 'blocked'))
+    // _.set(user, 'isDeleted', _.get($event.row, 'active'))
+    _.set(user, 'requestedBy', this.currentUser)
 
     switch ($event.action) {
       case 'showOnKarma':
@@ -212,8 +213,8 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         })
         break
       case 'deactive':
-        _.set(user, 'isDeleted', true)
-        _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i))
+        // _.set(user, 'isDeleted', true)
+        // _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i))
         this.usersService.deActiveUser(user).subscribe(response => {
           if (response) {
             this.getAllUsers()

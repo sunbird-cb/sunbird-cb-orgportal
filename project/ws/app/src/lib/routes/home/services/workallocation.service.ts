@@ -5,7 +5,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
   USERS: `${PROTECTED_SLAG_V8}/workallocation/userSearch`,
-  GET_ALL_USERS: `${PROTECTED_SLAG_V8}/portal/mdo/mydepartment?allUsers=false`,
+  GET_ALL_USERS: `/apis/proxies/v8/api/user/v2/read`,
   GET_ALL_WAT_LIST: `${PROTECTED_SLAG_V8}/workallocation/getWorkOrders`,
   GET_USER_BY_WID: `${PROTECTED_SLAG_V8}/workallocation/getUserBasicInfo/`,
   ADD_WORK_ORDERS: `${PROTECTED_SLAG_V8}/workallocation/add/workorder`,

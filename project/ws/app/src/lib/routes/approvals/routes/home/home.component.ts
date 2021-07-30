@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import moment from 'moment'
-import { ConfigurationsService } from '@sunbird-cb/utils'
-import { NeedApprovalsService } from '../../services/need-approvals.service'
+// import { ConfigurationsService } from '@sunbird-cb/utils'
+// import { NeedApprovalsService } from '../../services/need-approvals.service'
 // tslint:disable
 import _ from 'lodash'
 // tslint:enable
@@ -33,12 +33,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   constructor(
-    private configSvc: ConfigurationsService,
+    // private configSvc: ConfigurationsService,
     private activeRoute: ActivatedRoute,
     private router: Router,
-    private needApprService: NeedApprovalsService
+    // private needApprService: NeedApprovalsService
   ) {
-    this.getDepartment()
+    // this.getDepartment()
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         const workflowData = (this.activeRoute.snapshot.data.workflowData.data.result.data &&
@@ -93,16 +93,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     })
   }
-  getDepartment() {
-    this.needApprService.getMyDepartment().subscribe(res => {
-      if (res && res.deptName) {
-        if (this.configSvc.userProfile && this.configSvc.userProfile.departmentName) {
-          this.configSvc.userProfile.departmentName = res.deptName
-        }
+  // getDepartment() {
+  //   this.needApprService.getMyDepartment().subscribe(res => {
+  //     if (res && res.deptName) {
+  //       if (this.configSvc.userProfile && this.configSvc.userProfile.departmentName) {
+  //         this.configSvc.userProfile.departmentName = res.deptName
+  //       }
 
-      }
-    })
-  }
+  //     }
+  //   })
+  // }
   ngOnInit() {
     this.tabsData = [{
       name: 'Needs approval',

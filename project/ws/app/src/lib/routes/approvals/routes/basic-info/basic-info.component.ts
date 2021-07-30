@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */
-import { ConfigurationsService } from '@sunbird-cb/utils'
+// import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-basic-info',
@@ -13,13 +13,14 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 export class BasicInfoComponent implements OnInit {
   basicInfo: any
   imagePath: any
-  constructor(private activeRoute: ActivatedRoute, private router: Router, private configSvc: ConfigurationsService) {
+  constructor(private activeRoute: ActivatedRoute, private router: Router) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        const profileData = this.activeRoute.snapshot.data.profileData.data.result.UserProfile[0] || {}
-        if (this.configSvc.userProfile && this.configSvc.userProfile.departmentName) {
-          this.configSvc.userProfile.departmentName = _.get(this.activeRoute, 'snapshot.data.department.data.deptName')
-        }
+        // const profileData = this.activeRoute.snapshot.data.profileData.data.result.UserProfile[0] || {}
+        const profileData = this.activeRoute.snapshot.data.profileData.data.result.response.profileDetails || {}
+        // if (this.configSvc.userProfile && this.configSvc.userProfile.departmentName) {
+        //   this.configSvc.userProfile.departmentName = _.get(this.activeRoute, 'snapshot.data.department.data.deptName')
+        // }
         this.basicInfo = profileData.personalDetails
         this.imagePath = profileData.photo
       }
