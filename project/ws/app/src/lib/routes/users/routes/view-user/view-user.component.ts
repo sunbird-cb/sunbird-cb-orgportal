@@ -57,9 +57,9 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
       if (event instanceof NavigationEnd) {
         this.configSvc = this.activeRoute.snapshot.data.configService || {}
         const profileDataAll = this.activeRoute.snapshot.data.profileData.data || {}
-        const profileData = profileDataAll.profiledetails
+        const profileData = profileDataAll.profileDetails
         if (profileData) {
-          this.userID = profileData.id || profileData.userId
+          this.userID = profileData.id || profileData.userId || profileDataAll.id
           this.basicInfo = profileData.personalDetails
           if (this.basicInfo) {
             this.fullname = `${this.basicInfo.firstname} ${this.basicInfo.surname}`
@@ -69,10 +69,10 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           this.employmentDetails = profileData.employmentDetails
           this.skillDetails = profileData.skills
           this.interests = profileData.interests
-          this.userStatus = profileData.isDeleted ? 'Inactive' : 'Active'
+          this.userStatus = profileDataAll.isDeleted ? 'Inactive' : 'Active'
         }
-        this.department = this.configSvc.unMappedUser.rootOrg
-        this.departmentName = this.department ? this.department.channel : ''
+        this.department = this.configSvc.unMappedUser.rootOrgId
+        this.departmentName = this.configSvc.unMappedUser.channel
         // tslint:disable-next-line
         this.rolesList = _.sortBy(_.uniq(_.flatten(_.map(_.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList'), 'roles')))) || []
         const usrRoles = profileDataAll.roles
@@ -223,11 +223,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   onSubmit(form: any) {
     if (form.value.roles !== this.orguserRoles) {
       const dreq = {
-        userId: this.userID,
-        deptId: this.department ? this.department.id : null,
-        roles: form.value.roles,
-        isActive: true,
-        isBlocked: false,
+        request: {
+          organisationId: this.department,
+          userId: this.userID,
+          roles: form.value.roles,
+        },
       }
 
       this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {

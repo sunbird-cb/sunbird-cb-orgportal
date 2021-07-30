@@ -24,8 +24,9 @@ const routes: Routes = [
     component: CreateUserComponent,
     resolve: {
       // department: DepartmentResolve,
-      profileData: UserResolve,
+      // profileData: UserResolve,
       rolesList: RolesResolver,
+      configService: ConfigResolveService,
     },
   },
 ]
