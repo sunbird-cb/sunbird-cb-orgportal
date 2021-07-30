@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { ViewUserComponent } from './routes/view-user/view-user.component'
 import { CreateUserComponent } from './routes/create-user/create-user.component'
-import { DepartmentResolve } from '../users/resolvers/department-resolve'
 import { UserResolve } from '../users/resolvers/user-resolve'
 import { WorkflowHistoryResolve } from '../users/resolvers/workflow-history-resolve'
 import { RolesResolver } from './resolvers/roles-resolve.service'
@@ -25,8 +24,9 @@ const routes: Routes = [
     component: CreateUserComponent,
     resolve: {
       // department: DepartmentResolve,
-      profileData: UserResolve,
+      // profileData: UserResolve,
       rolesList: RolesResolver,
+      configService: ConfigResolveService,
     },
   },
 ]
@@ -36,7 +36,7 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     UserResolve,
-    DepartmentResolve,
+    // DepartmentResolve,
     WorkflowHistoryResolve,
     RolesResolver,
     ConfigResolveService,

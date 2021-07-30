@@ -23,8 +23,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   sideNavBarOpened = true
   role: any
   constructor(private valueSvc: ValueService,
-              private router: Router,
-              private activeRoute: ActivatedRoute,
+    // tslint:disable-next-line:align
+    private router: Router,
+    // tslint:disable-next-line:align
+    private activeRoute: ActivatedRoute,
   ) {
     if (_.get(this.activeRoute, 'snapshot.data.configService.userRoles')) {
       this.myRoles = _.get(this.activeRoute, 'snapshot.data.configService.userRoles')
@@ -33,12 +35,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.bindUrl(event.urlAfterRedirects.replace('/app/roles-access/', ''))
-        if (this.activeRoute.snapshot.data.department.data) {
+        const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
+        const departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
+        // if (this.activeRoute.snapshot.data.department.data) {
+        if (fullProfile) {
           const leftData = this.activeRoute.snapshot.data.pageData.data.menus
           _.set(leftData, 'widgetData.logo', true)
-          _.set(leftData, 'widgetData.logoPath', _.get(this.activeRoute, 'snapshot.data.department.data.logo'))
-          _.set(leftData, 'widgetData.name', _.get(this.activeRoute, 'snapshot.data.department.data.deptName')
-            || _.get(this.activeRoute, 'snapshot.data.department.data.description'))
+          // _.set(leftData, 'widgetData.logoPath', _.get(this.activeRoute, 'snapshot.data.department.data.logo'))
+          _.set(leftData, 'widgetData.name', departmentName)
           _.set(leftData, 'widgetData.userRoles', this.myRoles)
           this.widgetData = leftData
         } else {

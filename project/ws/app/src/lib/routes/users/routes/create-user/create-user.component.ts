@@ -5,7 +5,7 @@ import { UsersService } from '../../services/users.service'
 import { MatSnackBar } from '@angular/material'
 import { ILeftMenu } from '@sunbird-cb/collection'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
-import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
+import { ValueService } from '@sunbird-cb/utils'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */
@@ -32,6 +32,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   toastSuccess: any
   rolesList: any = []
   public userRoles: Set<string> = new Set()
+  configService: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -48,8 +49,8 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     private activeRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
     private usersSvc: UsersService,
-    private configService: ConfigurationsService,
     private valueSvc: ValueService) {
+    this.configService = this.activeRoute.snapshot.data.configService
     if (this.configService.userRoles) {
       this.myRoles = this.configService.userRoles
     }
@@ -71,11 +72,17 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     })
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        const fullProfile = _.get(this.activeRoute.snapshot, 'data.profileData.data')
-        this.department = fullProfile.rootOrg
-        this.departmentName = fullProfile ? fullProfile.channel : ''
+        const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
+        this.department = fullProfile.unMappedUser.rootOrgId
+        this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
         /* tslint:disable-next-line */
-        this.rolesList = _.map(_.compact(_.flatten(_.map(_.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList'), 'roles'))), rol => { return { roleName: rol, description: rol } })
+        const rolesListFull = _.map(_.compact(_.flatten(_.map(_.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList'), 'roles'))), rol => { return { roleName: rol, description: rol } })
+
+        rolesListFull.forEach((role: any) => {
+          if (!this.rolesList.some((item: any) => item.roleName === role.roleName)) {
+            this.rolesList.push(role)
+          }
+        })
         if (this.configService.userProfile && this.configService.userProfile.departmentName) {
           this.configService.userProfile.departmentName = this.departmentName
         }
@@ -112,7 +119,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       if (res) {
         const dreq = {
           request: {
-            organisationId: _.get(this.department, 'id'),
+            organisationId: this.department,
             userId: res.userId,
             roles: form.value.roles,
           },
