@@ -6,6 +6,7 @@ import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 import { MatSnackBar, MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
 import { AllocationActionsComponent } from '../../components/allocation-actions/allocation-actions.component'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-create-workallocation',
@@ -69,8 +70,9 @@ export class CreateWorkallocationComponent implements OnInit {
   showAddNewRole = false
 
   constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
-              private fb: FormBuilder, private allocateSrvc: AllocationService,
-              private router: Router, public dialog: MatDialog) {
+    private fb: FormBuilder, private allocateSrvc: AllocationService,
+    private router: Router, public dialog: MatDialog,
+    private configSvc: ConfigurationsService) {
     this.selectedIndex = 0
     this.newAllocationForm = this.fb.group({
       fname: ['', Validators.required],
@@ -100,10 +102,10 @@ export class CreateWorkallocationComponent implements OnInit {
   }
 
   getdeptUsers() {
-    this.allocateSrvc.getAllUsers().subscribe(res => {
-      this.departmentName = res.deptName
-      this.departmentID = res.id
-    })
+    // this.allocateSrvc.getAllUsers().subscribe(res => {
+    this.departmentName = this.configSvc.unMappedUser.channel
+    this.departmentID = this.configSvc.unMappedUser.rootOrgId
+    // })
   }
 
   export() {

@@ -10,7 +10,7 @@ const API_END_POINTS = {
   CREATE_ALLOCATIONV2: '/apis/protected/v8/workallocation/v2/add',
   UPDATE_ALLOCATIONV2: '/apis/protected/v8/workallocation/v2/update',
   UPDATE_ALLOCATION: 'apis/protected/v8/workallocation/update',
-  GET_ALL_USERS: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
+  // GET_ALL_USERS: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
   USERS: '/apis/protected/v8/workallocation/userSearch',
   SEARCH_COMPETENCY: '/apis/protected/v8/frac/COMPETENCY',
   GET_ALLOCATEDUSERS: '/apis/protected/v8/workallocation/getWorkOrderById',
@@ -62,9 +62,9 @@ export class AllocationService {
     return this.http.post<any>(`${API_END_POINTS.UPDATE_ALLOCATION}`, req)
   }
 
-  getAllUsers(): Observable<any> {
-    return this.http.get<any>(`${API_END_POINTS.GET_ALL_USERS}`)
-  }
+  // getAllUsers(): Observable<any> {
+  //   return this.http.get<any>(`${API_END_POINTS.GET_ALL_USERS}`)
+  // }
 
   getUsers(req: any): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.USERS}`, req)

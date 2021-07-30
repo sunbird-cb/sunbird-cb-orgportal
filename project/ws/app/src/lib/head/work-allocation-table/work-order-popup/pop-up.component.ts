@@ -47,8 +47,8 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
   selection = new SelectionModel<any>(true, [])
 
   constructor(private router: Router, private ren: Renderer2,
-              public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>, private workallocationSrvc: WorkallocationService,
-              @Inject(MAT_DIALOG_DATA) public dialogData: any) {
+    public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>, private workallocationSrvc: WorkallocationService,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any) {
     this.dataSource = new MatTableDataSource<any>()
     this.actionsClick = new EventEmitter()
     this.clicked = new EventEmitter()
@@ -88,8 +88,8 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
   }
   getdeptUsers() {
     this.workallocationSrvc.getAllUsers().subscribe(res => {
-      this.departmentName = res.deptName
-      this.departmentID = res.id
+      this.departmentName = res.result.response.channel
+      this.departmentID = res.result.response.rootOrgId
     })
   }
   goToNewWat() {

@@ -102,8 +102,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
 
   getdeptUsers() {
     this.workallocationSrvc.getAllUsers().subscribe(res => {
-      this.departmentName = res.deptName
-      this.departmentID = res.id
+      this.departmentName = res.result.response.channel
+      this.departmentID = res.result.response.rootOrgId
       this.getAllUsers('Draft')
     })
   }
