@@ -14,7 +14,8 @@ export class CertificationAndSkillsComponent implements OnInit {
   constructor(private activeRoute: ActivatedRoute, private router: Router) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        const profileData = this.activeRoute.snapshot.data.profileData.data.result.UserProfile[0] || {}
+        // const profileData = this.activeRoute.snapshot.data.profileData.data.result.UserProfile[0] || {}
+        const profileData = this.activeRoute.snapshot.data.profileData.data.result.response.profileDetails || {}
         this.skillDetails = profileData.skills
         this.interests = profileData.interests
       }

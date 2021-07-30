@@ -13,7 +13,7 @@ const API_END_POINTS = {
   // getUserdetailsV2FromRegistry: '/apis/protected/v8/user/profileRegistry/getUserRegistryByUser',
   READ_PROFILE: '/apis/proxies/v8/api/user/v2/read',
   CHECK_ISADMIN: '/apis/protected/v8/portal/isAdmin/mdo',
-  GET_MY_DEPARTMENT: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
+  // GET_MY_DEPARTMENT: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
   GET_MY_DEPARTMENT_ALL: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=true',
   GET_USER_DETAILS: `/apis/protected/v8/user/details?ts='${Date.now()}`,
 }
@@ -41,9 +41,9 @@ export class ProfileV2Service {
   getMyDepartmentAll(): Observable<any> {
     return this.http.get<any>(`${API_END_POINTS.GET_MY_DEPARTMENT_ALL}`)
   }
-  getMyDepartment(): Observable<any> {
-    return this.http.get<any>(`${API_END_POINTS.GET_MY_DEPARTMENT}`)
-  }
+  // getMyDepartment(): Observable<any> {
+  //   return this.http.get<any>(`${API_END_POINTS.GET_MY_DEPARTMENT}`)
+  // }
 
   getUserDetails(): Observable<any> {
     return this.http.get<any>(`${API_END_POINTS.GET_USER_DETAILS}`)
