@@ -61,20 +61,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.bindUrl(event.urlAfterRedirects.replace('/app/home/', ''))
         // this.widgetData = this.activeRoute.snapshot.data &&
         //   this.activeRoute.snapshot.data.pageData.data.menus || []
-        if (_.get(this.activeRoute.snapshot, 'data.department.data')) {
+
+        // if (_.get(this.activeRoute.snapshot, 'data.department.data')) {
+        const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
+        this.department = fullProfile.unMappedUser.rootOrgId
+        this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
+        if (fullProfile) {
           const leftData = this.activeRoute.snapshot.data.pageData.data.menus
           _.set(leftData, 'widgetData.logo', true)
-          _.set(leftData, 'widgetData.logoPath', _.get(this.activeRoute, 'snapshot.data.department.data.logo'))
-          _.set(leftData, 'widgetData.name', _.get(this.activeRoute, 'snapshot.data.department.data.deptName')
-            || _.get(this.activeRoute, 'snapshot.data.department.data.description'))
+          // _.set(leftData, 'widgetData.logoPath', _.get(this.activeRoute, 'snapshot.data.department.data.logo'))
+          _.set(leftData, 'widgetData.name', this.departmentName)
           _.set(leftData, 'widgetData.userRoles', this.myRoles)
           this.widgetData = leftData
         } else {
           this.widgetData = _.get(this.activeRoute, 'snapshot.data.pageData.data.menus')
         }
 
-        this.department = _.get(this.activeRoute, 'snapshot.data.department.data')
-        this.departmentName = this.department ? this.department.deptName : ''
+        // this.department = _.get(this.activeRoute, 'snapshot.data.department.data')
+        // this.departmentName = this.department ? this.department.deptName : ''
         if (this.configService.userProfile && this.configService.userProfile.departmentName) {
           this.configService.userProfile.departmentName = this.departmentName || 'Not Available'
         }
