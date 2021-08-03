@@ -76,7 +76,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         this.department = fullProfile.unMappedUser.rootOrgId
         this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
         /* tslint:disable-next-line */
-        const rolesListFull = _.map(_.compact(_.flatten(_.map(_.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList'), 'roles'))), rol => { return { roleName: rol, description: rol } })
+        const rolesListFull = _.map(_.compact(_.flatten(_.map(_.filter(_.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList'), { name: 'MDO' }), 'roles'))), rol => { return { roleName: rol, description: rol } })
 
         rolesListFull.forEach((role: any) => {
           if (!this.rolesList.some((item: any) => item.roleName === role.roleName)) {
