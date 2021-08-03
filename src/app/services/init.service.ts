@@ -19,6 +19,7 @@ import {
   NsInstanceConfig,
   // NsUser,
   UserPreferenceService,
+  AuthKeycloakService,
 } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
 import { environment } from '../../environments/environment'
@@ -50,7 +51,7 @@ export class InitService {
   constructor(
     private logger: LoggerService,
     private configSvc: ConfigurationsService,
-    // private authSvc: AuthKeycloakService,
+    private authSvc: AuthKeycloakService,
     private widgetResolverService: WidgetResolverService,
     private settingsSvc: BtnSettingsService,
     private userPreference: UserPreferenceService,
@@ -248,7 +249,8 @@ export class InitService {
         this.configSvc.userProfile = null
         throw new Error('Invalid user')
       }
-      if (completeProdata) {
+      if (completeProdata && completeProdata.roles && completeProdata.roles.length > 0 &&
+        this.hasRole(completeProdata.roles)) {
         this.configSvc.unMappedUser = completeProdata
         const profileV2 = _.get(completeProdata, 'profiledetails')
         this.configSvc.userProfile = {
@@ -265,7 +267,7 @@ export class InitService {
           dealerCode: null,
           isManager: false,
           departmentName: completeProdata.channel,
-          // unit: userPidProfile.user.unit_name,
+          // unit: completeProdata.user.unit_name,
           // tslint:disable-next-line:max-line-length
           // source_profile_picture: completeProdata.source_profile_picture || '',
           // dealerCode:
@@ -296,6 +298,8 @@ export class InitService {
           isManager: false,
         }
 
+      } else {
+        this.authSvc.logout()
       }
       const details = {
         group: [], profileDetailsStatus: completeProdata.profileDetailStatus, roles: (completeProdata.roles || [])
@@ -496,5 +500,15 @@ export class InitService {
         this.logger.error('Error updating index html meta >', error)
       }
     }
+  }
+  hasRole(role: string[]): boolean {
+    let returnValue = false
+    const rolesForCBP = environment.portalRoles
+    role.forEach(v => {
+      if ((rolesForCBP).includes(v)) {
+        returnValue = true
+      }
+    })
+    return returnValue
   }
 }
