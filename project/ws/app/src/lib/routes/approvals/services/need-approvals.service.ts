@@ -4,10 +4,11 @@ import { Observable } from 'rxjs'
 
 const API_END_POINTS = {
   WORKFLOW_TO_APPROVE: '/apis/protected/v8/workflowhandler/applicationsSearch',
-  PROFILE_REGISTRY: 'apis/protected/v8/user/profileRegistry/getUserRegistryByUser/',
+  // PROFILE_REGISTRY: 'apis/protected/v8/user/profileRegistry/getUserRegistryByUser/',
+  PROFILE_REGISTRY: 'apis/proxies/v8/api/user/v2/read/',
   WORKFLOW_HANDLER: 'apis/protected/v8/workflowhandler/transition',
   WF_HISTORY_BY_APPID: 'apis/protected/v8/workflowhandler/historyByApplicationId/',
-  GET_MY_DEPARTMENT: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
+  // GET_MY_DEPARTMENT: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
 }
 
 @Injectable({
@@ -30,7 +31,7 @@ export class NeedApprovalsService {
   getWfHistoryByAppId(appid: string): Observable<any> {
     return this.http.get<any>(API_END_POINTS.WF_HISTORY_BY_APPID + appid)
   }
-  getMyDepartment(): Observable<any> {
-    return this.http.get<any>(`${API_END_POINTS.GET_MY_DEPARTMENT}`)
-  }
+  // getMyDepartment(): Observable<any> {
+  //   return this.http.get<any>(`${API_END_POINTS.GET_MY_DEPARTMENT}`)
+  // }
 }

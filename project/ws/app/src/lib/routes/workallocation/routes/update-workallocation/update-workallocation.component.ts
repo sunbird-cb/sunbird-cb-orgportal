@@ -4,6 +4,7 @@ import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 import { AllocationService } from '../../services/allocation.service'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-update-workallocation',
@@ -29,20 +30,20 @@ export class UpdateWorkallocationComponent implements OnInit {
       },
     ],
   }
-  similarUsers!: any []
-  similarRoles!: any []
+  similarUsers!: any[]
+  similarRoles!: any[]
   nosimilarRoles = false
-  similarPositions!: any []
+  similarPositions!: any[]
   nosimilarPositions = false
-  similarActivities!: any []
+  similarActivities!: any[]
   nosimilarActivities = false
   selectedUser: any
   orgselectedUser: any
   selectedRole: any
   selectedActivity: any
   selectedPosition: any
-  ralist: any [] = []
-  archivedlist: any [] = []
+  ralist: any[] = []
+  archivedlist: any[] = []
   data: any = []
   showRAerror = false
   today: number = Date.now()
@@ -65,17 +66,18 @@ export class UpdateWorkallocationComponent implements OnInit {
   currentTime = new Date()
 
   constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar, private router: Router,
-              private fb: FormBuilder, private allocateSrvc: AllocationService, private activeRoute: ActivatedRoute) {
-            this.allocateduserID = this.activeRoute.snapshot.params.userId
+    private fb: FormBuilder, private allocateSrvc: AllocationService,
+    private activeRoute: ActivatedRoute, private configSvc: ConfigurationsService) {
+    this.allocateduserID = this.activeRoute.snapshot.params.userId
 
-            this.newAllocationForm = this.fb.group({
-              fname: ['', Validators.required],
-              email: ['', [Validators.required, Validators.email]],
-              position: ['', Validators.required],
-              rolelist: this.fb.array([]),
-            })
-            // this.setRole()
-            this.getdeptUsers()
+    this.newAllocationForm = this.fb.group({
+      fname: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      position: ['', Validators.required],
+      rolelist: this.fb.array([]),
+    })
+    // this.setRole()
+    this.getdeptUsers()
   }
 
   ngOnInit() {
@@ -102,54 +104,54 @@ export class UpdateWorkallocationComponent implements OnInit {
 
   }
   getdeptUsers() {
-    this.allocateSrvc.getAllUsers().subscribe(res => {
-      this.departmentName = res.deptName
-      this.departmentID = res.id
+    // this.allocateSrvc.getAllUsers().subscribe(res => {
+    this.departmentName = this.configSvc.unMappedUser.channel
+    this.departmentID = this.configSvc.unMappedUser.rootOrgId
 
-      this.getAllUsers()
-    })
+    this.getAllUsers()
+    // })
   }
 
   getAllUsers() {
     const req = {
-      pageNo : 0,
-      pageSize : 1000,
-      departmentName : this.departmentName,
+      pageNo: 0,
+      pageSize: 1000,
+      departmentName: this.departmentName,
     }
     this.allocateSrvc.getUsers(req).subscribe(res => {
       const userslist = res.result.data
       userslist.forEach((user: any) => {
         // if (user.userDetails) {
-          if (this.allocateduserID === (user.allocationDetails.id || user.allocationDetails.userId)) {
-            this.orgselectedUser = user
-            this.selectedUser = user
+        if (this.allocateduserID === (user.allocationDetails.id || user.allocationDetails.userId)) {
+          this.orgselectedUser = user
+          this.selectedUser = user
 
-            if (this.selectedUser) {
-              this.newAllocationForm.patchValue({
-                fname: this.selectedUser.allocationDetails.userName,
-                email: this.selectedUser.allocationDetails.userEmail,
-                position: this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '',
-              })
+          if (this.selectedUser) {
+            this.newAllocationForm.patchValue({
+              fname: this.selectedUser.allocationDetails.userName,
+              email: this.selectedUser.allocationDetails.userEmail,
+              position: this.selectedUser.allocationDetails ? this.selectedUser.allocationDetails.userPosition : '',
+            })
 
-              const downloaddata = {
-                fullname: user.allocationDetails.userName,
-                email: user.allocationDetails.userEmail,
-                roles: user.allocationDetails.activeList,
-                userId: user.userDetails ? user.userDetails.wid : user.allocationDetails.userId,
-              }
-              this.data.push(downloaddata)
-
-              this.setRole()
-              // const newrole = this.newAllocationForm.get('rolelist') as FormArray
-              // newrole.at(0).patchValue(this.selectedUser.allocationDetails.activeList)
-
-              this.ralist = this.selectedUser.allocationDetails.activeList
-              this.archivedlist = this.selectedUser.allocationDetails.archivedList
-
-              // this.newAllocationForm.controls['fname'].disable()
-              // this.newAllocationForm.controls['email'].disable()
+            const downloaddata = {
+              fullname: user.allocationDetails.userName,
+              email: user.allocationDetails.userEmail,
+              roles: user.allocationDetails.activeList,
+              userId: user.userDetails ? user.userDetails.wid : user.allocationDetails.userId,
             }
+            this.data.push(downloaddata)
+
+            this.setRole()
+            // const newrole = this.newAllocationForm.get('rolelist') as FormArray
+            // newrole.at(0).patchValue(this.selectedUser.allocationDetails.activeList)
+
+            this.ralist = this.selectedUser.allocationDetails.activeList
+            this.archivedlist = this.selectedUser.allocationDetails.archivedList
+
+            // this.newAllocationForm.controls['fname'].disable()
+            // this.newAllocationForm.controls['email'].disable()
           }
+        }
         // }
       })
     })
@@ -158,19 +160,19 @@ export class UpdateWorkallocationComponent implements OnInit {
   export() {
     // download the file using old school javascript method
     // if (this.data) {
-      this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
-        // save started
-        this.displaytemplate = true
-      })
-      this.displaytemplate = false
+    this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
+      // save started
+      this.displaytemplate = true
+    })
+    this.displaytemplate = false
     // }
-     // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+    // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
     // this.exportAsService.get(this.config).subscribe(content => {
     //   console.log(content)
     // })
   }
 
-  pdfCallbackFn (pdf: any) {
+  pdfCallbackFn(pdf: any) {
     // example to add page number as footer to every page of pdf
     const noOfPages = pdf.internal.getNumberOfPages()
     // tslint:disable-next-line:no-increment-decrement
@@ -213,8 +215,8 @@ export class UpdateWorkallocationComponent implements OnInit {
     return (<any>rl)['controls']
   }
 
-   // to get suggested position in right sidebar
-   onSearchPosition(event: any) {
+  // to get suggested position in right sidebar
+  onSearchPosition(event: any) {
     const val = event.target.value
     if (val.length > 2) {
       this.displayLoader('true')
@@ -224,18 +226,18 @@ export class UpdateWorkallocationComponent implements OnInit {
       this.similarPositions = []
       const req = {
         searches: [
-            {
-                type: 'POSITION',
-                field: 'name',
-                keyword: val,
-            },
-            {
-              type: 'POSITION',
-              field: 'status',
-              keyword: 'VERIFIED',
-            },
+          {
+            type: 'POSITION',
+            field: 'name',
+            keyword: val,
+          },
+          {
+            type: 'POSITION',
+            field: 'status',
+            keyword: 'VERIFIED',
+          },
         ],
-    }
+      }
       this.allocateSrvc.onSearchPosition(req).subscribe(res => {
         this.similarPositions = res.responseData
         this.displayLoader('false')
@@ -273,7 +275,7 @@ export class UpdateWorkallocationComponent implements OnInit {
     }
   }
 
-  onSearchActivity (event: any) {
+  onSearchActivity(event: any) {
     const val = event.target.value
     if (val.length > 2) {
       this.displayLoader('true')
@@ -320,7 +322,7 @@ export class UpdateWorkallocationComponent implements OnInit {
     const vart = document.getElementById('loader')!
     if (value === 'true') {
       vart.style.display = 'block'
-    }  else {
+    } else {
       vart.style.display = 'none'
     }
   }
@@ -352,7 +354,7 @@ export class UpdateWorkallocationComponent implements OnInit {
     this.selectedActivity = ''
   }
 
-  selectPosition (pos: any) {
+  selectPosition(pos: any) {
     this.selectedPosition = pos
     this.similarPositions = []
     this.newAllocationForm.patchValue({
@@ -364,7 +366,7 @@ export class UpdateWorkallocationComponent implements OnInit {
   addRolesActivity(index: number) {
     if (index === 0 && this.selectedRole) {
       if (this.activitieslist.length > 0) {
-        this.showRAerror =  false
+        this.showRAerror = false
         this.selectedRole.childNodes = this.activitieslist
         this.ralist.push(this.selectedRole)
         this.selectedRole = ''
@@ -373,7 +375,7 @@ export class UpdateWorkallocationComponent implements OnInit {
         const control = this.newAllocationForm.get('rolelist') as FormArray
         // tslint:disable-next-line:no-increment-decrement
         for (let i = control.length - 1; i >= 0; i--) {
-            control.removeAt(i)
+          control.removeAt(i)
         }
 
         const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
@@ -381,7 +383,7 @@ export class UpdateWorkallocationComponent implements OnInit {
 
         this.newAllocationForm.value.rolelist = this.ralist
       } else {
-        this.showRAerror =  true
+        this.showRAerror = true
       }
     } else {
       if (this.newAllocationForm.value.rolelist[0].name && this.activitieslist.length > 0) {
@@ -401,13 +403,13 @@ export class UpdateWorkallocationComponent implements OnInit {
         const control = this.newAllocationForm.get('rolelist') as FormArray
         // tslint:disable-next-line:no-increment-decrement
         for (let i = control.length - 1; i >= 0; i--) {
-            control.removeAt(i)
+          control.removeAt(i)
         }
         const newrolefield = this.newAllocationForm.get('rolelist') as FormArray
         newrolefield.push(this.newRole())
         this.newAllocationForm.value.rolelist = this.ralist
-      } else  {
-        this.showRAerror =  true
+      } else {
+        this.showRAerror = true
       }
     }
   }
@@ -467,37 +469,37 @@ export class UpdateWorkallocationComponent implements OnInit {
   // final form submit
   onSubmit() {
     // if (this.orgselectedUser !== this.selectedUser) {
-      const reqdata = {
-        id: (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.id !== null) ?
+    const reqdata = {
+      id: (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.id !== null) ?
         this.selectedUser.allocationDetails.id : '',
-        userId: (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.userId !== null) ?
+      userId: (this.selectedUser.allocationDetails && this.selectedUser.allocationDetails.userId !== null) ?
         this.selectedUser.allocationDetails.userId : '',
-        deptId: this.departmentID,
-        deptName: this.departmentName,
-        activeList: this.ralist,
-        archivedList: this.archivedlist,
-        // userPosition: this.selectedPosition ? this.selectedPosition.name : this.selectedUser.allocationDetails.userPosition,
-        userName: this.newAllocationForm.value.fname,
-        userEmail: this.newAllocationForm.value.email,
-        userPosition: this.newAllocationForm.value.position,
-        positionId: this.selectedPosition ? this.selectedPosition.id : this.selectedUser.allocationDetails.positionId,
+      deptId: this.departmentID,
+      deptName: this.departmentName,
+      activeList: this.ralist,
+      archivedList: this.archivedlist,
+      // userPosition: this.selectedPosition ? this.selectedPosition.name : this.selectedUser.allocationDetails.userPosition,
+      userName: this.newAllocationForm.value.fname,
+      userEmail: this.newAllocationForm.value.email,
+      userPosition: this.newAllocationForm.value.position,
+      positionId: this.selectedPosition ? this.selectedPosition.id : this.selectedUser.allocationDetails.positionId,
+    }
+    if (!this.selectedPosition && this.selectedUser.allocationDetails.positionId) {
+      if (this.selectedUser.allocationDetails.userPosition !== this.newAllocationForm.value.position) {
+        reqdata.positionId = ''
       }
-      if (!this.selectedPosition && this.selectedUser.allocationDetails.positionId) {
-        if (this.selectedUser.allocationDetails.userPosition !== this.newAllocationForm.value.position) {
-          reqdata.positionId = ''
-        }
+    }
+    this.allocateSrvc.updateAllocation(reqdata).subscribe(res => {
+      if (res) {
+        this.openSnackbar('Work Allocation updated Successfully')
+        this.newAllocationForm.reset()
+        this.selectedUser = ''
+        this.selectedRole = ''
+        this.ralist = []
+        this.archivedlist = []
+        this.router.navigate(['/app/home/workallocation'])
       }
-      this.allocateSrvc.updateAllocation(reqdata).subscribe(res => {
-        if (res) {
-          this.openSnackbar('Work Allocation updated Successfully')
-          this.newAllocationForm.reset()
-          this.selectedUser = ''
-          this.selectedRole = ''
-          this.ralist = []
-          this.archivedlist = []
-          this.router.navigate(['/app/home/workallocation'])
-        }
-      })
+    })
     // } else {
     //   this.openSnackbar('No changes to update')
     // }

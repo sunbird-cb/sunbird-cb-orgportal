@@ -82,7 +82,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       this.setEditData()
     }
     this.fetchFormsData()
-    this.getdeptUsers()
+    // this.getdeptUsers()
     this.autoSave()
   }
 
@@ -186,12 +186,12 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     }
     return null
   }
-  getdeptUsers() {
-    this.allocateSrvc.getAllUsers().subscribe(res => {
-      this.departmentName = res.deptName
-      this.departmentID = res.id
-    })
-  }
+  // getdeptUsers() {
+  //   this.allocateSrvc.getAllUsers().subscribe(res => {
+  //   this.departmentName = res.deptName
+  //   this.departmentID = res.id
+  //   })
+  // }
 
   @HostListener('window:scroll', ['$event'])
   /**
