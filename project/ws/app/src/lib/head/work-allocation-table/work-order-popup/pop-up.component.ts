@@ -46,7 +46,8 @@ export class WorkAllocationPopUpComponent implements OnInit, OnChanges {
   @ViewChild(MatSort, { static: true }) sort?: MatSort
   selection = new SelectionModel<any>(true, [])
 
-  constructor(private router: Router, private ren: Renderer2,
+  constructor(
+    private router: Router, private ren: Renderer2,
     public dialogRef: MatDialogRef<WorkAllocationPopUpComponent>, private workallocationSrvc: WorkallocationService,
     @Inject(MAT_DIALOG_DATA) public dialogData: any) {
     this.dataSource = new MatTableDataSource<any>()

@@ -65,7 +65,8 @@ export class UpdateWorkallocationComponent implements OnInit {
   departmentID: any
   currentTime = new Date()
 
-  constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar, private router: Router,
+  constructor(
+    private exportAsService: ExportAsService, private snackBar: MatSnackBar, private router: Router,
     private fb: FormBuilder, private allocateSrvc: AllocationService,
     private activeRoute: ActivatedRoute, private configSvc: ConfigurationsService) {
     this.allocateduserID = this.activeRoute.snapshot.params.userId
