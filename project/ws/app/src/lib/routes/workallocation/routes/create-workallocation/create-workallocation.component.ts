@@ -69,7 +69,8 @@ export class CreateWorkallocationComponent implements OnInit {
   roleCompetencyList!: any[]
   showAddNewRole = false
 
-  constructor(private exportAsService: ExportAsService, private snackBar: MatSnackBar,
+  constructor(
+    private exportAsService: ExportAsService, private snackBar: MatSnackBar,
     private fb: FormBuilder, private allocateSrvc: AllocationService,
     private router: Router, public dialog: MatDialog,
     private configSvc: ConfigurationsService) {
