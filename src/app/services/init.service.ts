@@ -252,17 +252,17 @@ export class InitService {
       if (completeProdata && completeProdata.roles && completeProdata.roles.length > 0 &&
         this.hasRole(completeProdata.roles)) {
         this.configSvc.unMappedUser = completeProdata
-        const profileV2 = _.get(completeProdata, 'profiledetails')
+        const profileV2 = _.get(completeProdata, 'profileDetails')
         this.configSvc.userProfile = {
           country: _.get(profileV2, 'personalDetails.countryCode') || null,
-          email: completeProdata.email,
+          email: completeProdata.profileDetails.personalDetails.officialEmail || completeProdata.email,
           givenName: completeProdata.firstName,
           userId: completeProdata.userId,
           firstName: completeProdata.firstName,
           lastName: completeProdata.lastName,
-
+          userName: completeProdata.userName,
           // tslint:disable-next-line: max-line-length
-          userName: `${completeProdata.firstName ? completeProdata.firstName : ' '}${completeProdata.lastName ? completeProdata.lastName : ' '}`,
+          // userName: `${completeProdata.firstName ? completeProdata.firstName : ' '}${completeProdata.lastName ? completeProdata.lastName : ' '}`,
           profileImage: completeProdata.thumbnail || _.get(profileV2, 'photo'),
           dealerCode: null,
           isManager: false,
@@ -285,15 +285,16 @@ export class InitService {
           // userName: `${userPidProfile.user.first_name} ${userPidProfile.user.last_name}`,
         }
         this.configSvc.userProfileV2 = {
-          userId: _.get(profileV2, 'userId'),
-          email: _.get(profileV2, 'personalDetails.officialEmail'),
-          firstName: _.get(profileV2, 'personalDetails.firstname'),
-          surName: _.get(profileV2, 'personalDetails.surname'),
-          middleName: _.get(profileV2, 'personalDetails.middlename'),
-          departmentName: _.get(profileV2, 'employmentDetails.departmentName'),
+          userId: _.get(profileV2, 'userId') || completeProdata.userId,
+          email: _.get(profileV2, 'personalDetails.officialEmail') || completeProdata.email,
+          firstName: _.get(profileV2, 'personalDetails.firstname') || completeProdata.firstName,
+          surName: _.get(profileV2, 'personalDetails.surname') || completeProdata.lastName,
+          middleName: _.get(profileV2, 'personalDetails.middlename') || '',
+          departmentName: _.get(profileV2, 'employmentDetails.departmentName') || completeProdata.channel,
           // tslint:disable-next-line: max-line-length
-          userName: `${_.get(profileV2, 'personalDetails.firstname') ? _.get(profileV2, 'personalDetails.firstname') : ''}${_.get(profileV2, 'personalDetails.surname') ? _.get(profileV2, 'personalDetails.surname') : ''}`,
-          profileImage: _.get(profileV2, 'photo'),
+          // userName: `${_.get(profileV2, 'personalDetails.firstname') ? _.get(profileV2, 'personalDetails.firstname') : ''}${_.get(profileV2, 'personalDetails.surname') ? _.get(profileV2, 'personalDetails.surname') : ''}`,
+          userName: _.get(profileV2, 'personalDetails.userName') || completeProdata.userName,
+          profileImage: _.get(profileV2, 'photo') || completeProdata.thumbnail,
           dealerCode: null,
           isManager: false,
         }
@@ -302,8 +303,11 @@ export class InitService {
         this.authSvc.logout()
       }
       const details = {
-        group: [], profileDetailsStatus: completeProdata.profileDetailStatus, roles: (completeProdata.roles || [])
-          .map((v: any) => v.toLowerCase()), tncStatus: !completeProdata.promptTnC,
+        group: [],
+        // profileDetailsStatus: completeProdata.profileDetailStatus,
+        profileDetailsStatus: !!_.get(completeProdata, 'profileDetails.mandatoryFieldsExists'),
+        roles: (completeProdata.roles || []).map((v: any) => v.toLowerCase()),
+        tncStatus: !completeProdata.promptTnC,
       }
       this.configSvc.hasAcceptedTnc = details.tncStatus
       this.configSvc.profileDetailsStatus = details.profileDetailsStatus

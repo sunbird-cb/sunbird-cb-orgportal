@@ -72,7 +72,7 @@ export class UsersService {
     return this.http.patch<any>(`${API_END_POINTS.USER_BDD}/`, user)
   }
   deActiveUser(user: object): Observable<any> {
-    return this.http.patch<any>(`${API_END_POINTS.DE_ACTIVE_USER}/`, user)
+    return this.http.post<any>(`${API_END_POINTS.DE_ACTIVE_USER}/`, user)
   }
   activeUser(user: object): Observable<any> {
     return this.http.patch<any>(`${API_END_POINTS.ACTIVE_USER}/`, user)
