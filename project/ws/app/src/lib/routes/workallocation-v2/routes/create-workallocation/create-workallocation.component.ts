@@ -347,7 +347,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     const unmappedActivity = this.getUnmappedActivity()
     const unmappedCompetency = this.getUnmappedCompetency()
     // tslint:disable
-    if (!((officer && officer.user && officer.user && officer.user.userId) || (officer && officer.user && officer.user.userDetails && officer.user.userDetails.wid))) {
+    if (!(officer && officer.user && officer.user.userId)) {
       // this.snackBar.open('Please select a valid officer')
       this.dialog.open(DialogConfirmComponent, {
         data: {
@@ -365,12 +365,14 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     //   return null
     // }
     req = {
-      userId: officer.user && officer.user.userId ? officer.user.userId : (officer.user ? officer.user.userDetails.wid : ''),
+      userId: officer.user.userId,
       positionDescription: officer.positionDescription,
       userPosition: officer.position,
       positionId: officer.positionObj && officer.positionObj.positionId ? officer.positionObj.positionId : (officer.positionObj.id || ''),
       userName: officer.officerName,
-      userEmail: officer.user && officer.user.userEmail ? officer.user.userEmail : (_.get(officer, 'user.userDetails.email') || ''),
+      // tslint:disable-next-line:max-line-length
+      userEmail: officer.user && officer.user.userEmail ? officer.user.userEmail :
+        (_.get(officer, 'user.email') || ''),
       roleCompetencyList: roles,
       unmappedActivities: unmappedActivity,
       unmappedCompetencies: unmappedCompetency,
@@ -390,7 +392,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     const roles = this.getRoles
     const unmappedActivity = this.getUnmappedActivity()
     const unmappedCompetency = this.getUnmappedCompetency()
-    if (!(officer && officer.user && officer.user.userDetails && officer.user.userDetails.wid)) {
+    if (!(officer && officer.user && officer.user.userId)) {
       // this.snackBar.open('Please select a valid officer')
       this.dialog.open(DialogConfirmComponent, {
         data: {
@@ -408,18 +410,18 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     //   return null
     // }
     req = {
-      userId: officer.user ? officer.user.userDetails.wid : '',
+      userId: officer.user.userId,
       positionDescription: officer.positionDescription,
       userPosition: officer.position,
       positionId: officer.positionObj && officer.positionObj.id ? officer.positionObj.id : '',
       userName: officer.officerName,
-      userEmail: officer.user ? officer.user.userDetails.email : '',
-
+      // userEmail: officer.user ? officer.user.userDetails.email : '',
+      // tslint:disable-next-line:max-line-length
+      userEmail: officer.user && officer.user.profileDetails.personalDetails ? officer.user.profileDetails.personalDetails.primaryEmail : officer.user.email,
       // deptId: this.departmentID,
       // deptName: this.departmentName,
       // status: 'DRAFT',
       // activeList: this.ralist,
-
       roleCompetencyList: roles,
       unmappedActivities: unmappedActivity,
       unmappedCompetencies: unmappedCompetency,
