@@ -181,15 +181,21 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     this.router.navigate([`/app/users/${user.userId}/details`])
   }
   menuActions($event: { action: string, row: any }) {
-    const user = { userId: _.get($event.row, 'userId') }
+    // const user = { userId: _.get($event.row, 'userId') }
     // _.set(user, 'deptId', _.get(_.first(_.filter(this.usersData.content, { id: user.userId })), 'rootOrgId'))
     // _.set(user, 'isBlocked', _.get($event.row, 'blocked'))
     // _.set(user, 'isDeleted', _.get($event.row, 'active'))
-    _.set(user, 'requestedBy', this.currentUser)
+    // _.set(user, 'requestedBy', this.currentUser)
+    const user = {
+      request: {
+        userId: _.get($event.row, 'userId'),
+        requestedBy: this.currentUser,
+      },
+    }
 
     switch ($event.action) {
       case 'showOnKarma':
-        window.open(`${environment.karmYogiPath}/app/person-profile/${user.userId}`)
+        window.open(`${environment.karmYogiPath}/app/person-profile/${user.request.userId}`)
         break
       case 'block':
         _.set(user, 'isBlocked', true)
@@ -220,7 +226,11 @@ export class UsersViewComponent implements OnInit, OnDestroy {
             this.getAllUsers()
             this.snackBar.open('Updated successfully !')
           }
-        })
+        },
+          // tslint:disable-next-line:align
+          () => {
+            this.snackBar.open('Given User Data doesnt exist in our records. Please provide a valid one.')
+          })
         break
       case 'active':
         const state = _.get(user, 'isBlocked')
