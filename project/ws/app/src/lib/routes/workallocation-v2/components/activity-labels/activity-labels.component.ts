@@ -390,7 +390,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
     const filterValue = value.toLowerCase()
     // tslint:disable-next-line: deprecation
     this.allocateSrvc.onSearchUser(filterValue).subscribe(res => {
-      this.userslist = res.result.data
+      this.userslist = res.result.response.content
     })
     // } else {
     // this.userslist = []
@@ -560,9 +560,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
             assignedToEmail = ''
         } else {
           // tslint:disable-next-line: prefer-template
-          assignedTo = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
-          assignedToId = _.get(event, 'option.value.userDetails.wid'),
-            assignedToEmail = _.get(event, 'option.value.userDetails.email')
+          assignedTo = _.get(event, 'option.value.firstName') + ' ' + _.get(event, 'option.value.lastName')
+          assignedToId = _.get(event, 'option.value.userId'),
+            assignedToEmail = _.get(event, 'option.value.profileDetails.personalDetails.primaryEmail')
         }
         const lst = this.groupList.at(this.activeGroupIdx).get('activities') as FormArray
         const frmctrl = lst.at(this.selectedActivityIdx).get('assignedTo') as FormControl

@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http'
 import { EMPTY, Observable, of } from 'rxjs'
 
 const API_END_POINTS = {
-  SEARCH_USER: 'apis/protected/v8/workallocation/user/autocomplete',
+  // SEARCH_USER: 'apis/protected/v8/workallocation/user/autocomplete',
+  SEARCH_USER: 'apis/proxies/v8/user/v1/autocomplete',
   SEARCH_ROLE: 'apis/protected/v8/roleactivity',
   SEARCH_NODES: 'apis/protected/v8/frac/searchNodes',
   CREATE_ALLOCATION: 'apis/protected/v8/workallocation/add',

@@ -419,7 +419,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     const filterValue = value.toLowerCase()
     // tslint:disable-next-line: deprecation
     this.allocateSrvc.onSearchUser(filterValue).subscribe(res => {
-      this.userslist = res.result.data
+      this.userslist = res.result.response.content
     })
     // } else {
     // this.userslist = []

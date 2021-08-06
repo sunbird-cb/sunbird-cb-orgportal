@@ -74,8 +74,8 @@ export class OfficerComponent implements OnInit, OnDestroy {
           // tslint:disable
           const usrObj = this.officerForm.get('user')!.value
           let usrName = ''
-          if (_.get(usrObj, 'userDetails.first_name')) {
-            usrName = `${_.get(usrObj, 'userDetails.first_name')} ${_.get(usrObj, 'userDetails.last_name')}`
+          if (_.get(usrObj, 'firstName')) {
+            usrName = `${_.get(usrObj, 'firstName')} ${_.get(usrObj, 'lastName')}`
           } else {
             usrName = `${_.get(usrObj, 'officerName')}`
           }
@@ -95,9 +95,12 @@ export class OfficerComponent implements OnInit, OnDestroy {
     //   this.userslist = res.result.data
     // })
     this.filteredUserslist = this.allocateSrvc.onSearchUser(filterValue).pipe(
-      map(res => res.result.data.filter((user: any) => {
-        return user.userDetails.first_name.toLowerCase().indexOf(value.toLowerCase()) === 0
+      map(res => res.result.response.content.filter((user: any) => {
+        return user.firstName.toLowerCase().indexOf(value.toLowerCase()) === 0
       }))
+      // map(res => res.result.data.filter((user: any) => {
+      //   return user.userDetails.first_name.toLowerCase().indexOf(value.toLowerCase()) === 0
+      // }))
     )
     // } else {
     // this.userslist = []
@@ -139,8 +142,9 @@ export class OfficerComponent implements OnInit, OnDestroy {
       frmctr.patchValue(_.get(event, 'option.value') || '')
 
       const frmctr1 = this.officerForm.get('officerName') as FormControl
+      // const fullName = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
       // tslint:disable-next-line: prefer-template
-      const fullName = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
+      const fullName = _.get(event, 'option.value.firstName') + ' ' + _.get(event, 'option.value.lastName')
       frmctr1.patchValue(fullName || '')
       this.watStore.setOfficerGroup(this.officerForm.value, false, true)
     }
