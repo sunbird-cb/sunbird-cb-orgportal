@@ -5,6 +5,9 @@ import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewEncapsulation 
 import _ from 'lodash'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { ProfileV2Service } from '../../services/home.servive'
+import {
+  dashboardListData,
+} from "../../../../../../../../../src/mdo-assets/data/data"
 /* tslint:enable */
 
 @Component({
@@ -30,25 +33,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedDashboardId = ''
 
   // List of available dashboards
-  dashboardList = [
-    {
-      statusInfo: {
-        statusCode: 200,
-        statusMessage: 'success',
-        errorMessage: '',
-      },
-      responseData: [
-        {
-          name: 'Work allocation',
-          id: 'workAllocation',
-        },
-        {
-          name: 'CBP overview',
-          id: 'cbpOverview',
-        },
-      ],
-    },
-  ]
+  dashboardList = dashboardListData
 
   currentDashboard: any = []
 
@@ -57,6 +42,10 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
     showWidgets: 'true',
     widgetTitle: 'This month so far',
     showWidgetTitle: 'true',
+    showMessage: true,
+    messageType: 'warning',
+    message:
+      'Please note that the data shown here is not actual and is only intended to showcase the capability of the platform until the actual usage begins.',
     visualizationDetails: [
       {
         row: 1,
@@ -64,8 +53,9 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
         vizArray: [
           {
             id: 23,
-            name: 'Status of work allocation order (Top 5)',
-            description: 'Percentage of approved work allocation order by MDO',
+            name: 'Status of work allocation orders (top 5)',
+            description: 'Percentage of approved work allocation orders by MDO',
+            info: 'Percentage of approved work allocation orders by MDO',
             dimensions: {
               height: 250,
               width: 6,
@@ -75,9 +65,9 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
             charts: [
               {
                 id: 'topWAT',
-                name: 'Status of work allocation order (Top 5)',
+                name: 'Status of work allocation orders (top 5)',
                 code: '',
-                chartType: 'table-bar',
+                chartType: 'table_bar',
                 filter: '',
                 headers: [],
               },
@@ -85,8 +75,9 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           {
             id: 24,
-            name: 'Status of work allocation orders (Bottom 5)',
+            name: 'Status of work allocation orders (bottom 5)',
             description: 'Percentage of approved work allocation orders by MDO',
+            info: 'Percentage of approved work allocation orders by MDO',
             dimensions: {
               height: 250,
               width: 6,
@@ -96,9 +87,9 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
             charts: [
               {
                 id: 'btmpWAT',
-                name: 'Status of work allocation orders (Bottom 5)',
+                name: 'Status of work allocation orders (bottom 5)',
                 code: '',
-                chartType: 'table-bar',
+                chartType: 'table_bar',
                 filter: '',
                 headers: [],
               },
@@ -114,6 +105,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
             id: 25,
             name: 'Content quality score (Top 5)',
             description: 'Representation of CBP providers based on quality of CBPs (avg. CQS score ) ',
+            info: 'Representation of CBP providers based on quality of CBPs (avg. CQS score ) ',
             dimensions: {
               height: 250,
               width: 6,
@@ -125,7 +117,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
                 id: 'cqTop',
                 name: 'Content quality score (Top 5)',
                 code: '',
-                chartType: 'table-bar',
+                chartType: 'table_bar',
                 filter: '',
                 headers: [],
               },
@@ -135,6 +127,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
             id: 26,
             name: 'Content quality score (Bottom 5)',
             description: 'Representation of CBP providers based on quality of CBPs (avg. CQS score ) ',
+            info: 'Representation of CBP providers based on quality of CBPs (avg. CQS score ) ',
             dimensions: {
               height: 250,
               width: 6,
@@ -146,7 +139,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
                 id: 'cqBtm',
                 name: 'Content quality score (Bottom 5)',
                 code: '',
-                chartType: 'table-bar',
+                chartType: 'table_bar',
                 filter: '',
                 headers: [],
               },
@@ -162,6 +155,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
             id: 27,
             name: 'Platform usage trend',
             description: 'Time spent on the platform',
+            info: 'Time spent on the platform',
             dimensions: {
               height: 250,
               width: 12,
@@ -190,7 +184,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
           errorMessage: '',
         },
         responseData: {
-          chartType: 'table-bar',
+          chartType: 'table_bar',
           visualizationCode: 'topWAT',
           chartFormat: null,
           drillDownChartId: 'none',
@@ -266,7 +260,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
               isDecimal: null,
             },
             {
-              headerName: 'Work allocation completed',
+              headerName: 'Work allocation orders approved',
               headerValue: 309,
               headerSymbol: 'number',
               colorPaletteCode: '#7B47A4',
@@ -341,7 +335,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
           errorMessage: '',
         },
         responseData: {
-          chartType: 'table-bar',
+          chartType: 'table_bar',
           visualizationCode: 'btmpWAT',
           chartFormat: null,
           drillDownChartId: 'none',
@@ -417,7 +411,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
               isDecimal: null,
             },
             {
-              headerName: 'Work allocation completed',
+              headerName: 'Work allocation orders approved',
               headerValue: 92,
               headerSymbol: 'number',
               colorPaletteCode: '#F3457E',
@@ -492,7 +486,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
           errorMessage: '',
         },
         responseData: {
-          chartType: 'table-bar',
+          chartType: 'table_bar',
           visualizationCode: 'cqTop',
           chartFormat: null,
           drillDownChartId: 'none',
@@ -643,7 +637,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
           errorMessage: '',
         },
         responseData: {
-          chartType: 'table-bar',
+          chartType: 'table_bar',
           visualizationCode: 'cqBtm',
           chartFormat: null,
           drillDownChartId: 'none',
@@ -787,7 +781,6 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
           ],
         },
       },
-
       {
         statusInfo: {
           statusCode: 200,
@@ -1048,6 +1041,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
               isDecimal: false,
               isPercentage: true,
               insightStatus: 'up',
+              info: 'Approved work allocations %',
             },
           ],
         },
@@ -1079,6 +1073,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
               isDecimal: false,
               isPercentage: false,
               insightStatus: 'up',
+              info: 'Approved work allocations',
             },
           ],
         },
@@ -1110,6 +1105,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
               isDecimal: false,
               isPercentage: false,
               insightStatus: 'down',
+              info: 'Average content quality score',
             },
           ],
         },
@@ -1141,6 +1137,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
               isDecimal: false,
               isPercentage: false,
               insightStatus: 'up',
+              info: 'Platform engagement',
             },
           ],
         },
@@ -1172,6 +1169,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
               isDecimal: false,
               isPercentage: false,
               insightStatus: 'down',
+              info: 'New users onboarded',
             },
           ],
         },
