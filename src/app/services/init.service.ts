@@ -263,6 +263,7 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             departmentName: completeProdata.channel,
+            rootOrgId: completeProdata.rootOrgId,
             // unit: completeProdata.user.unit_name,
             // tslint:disable-next-line:max-line-length
             // source_profile_picture: completeProdata.source_profile_picture || '',

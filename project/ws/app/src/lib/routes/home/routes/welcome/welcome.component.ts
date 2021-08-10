@@ -45,6 +45,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
     showMessage: true,
     messageType: 'warning',
     message:
+      // tslint:disable-next-line:max-line-length
       'Please note that the data shown here is not actual and is only intended to showcase the capability of the platform until the actual usage begins.',
     visualizationDetails: [
       {

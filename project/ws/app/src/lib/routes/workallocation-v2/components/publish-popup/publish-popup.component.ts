@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
 import { FormGroup } from '@angular/forms'
 import { UploadFileService } from '../../services/uploadfile.service'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 @Component({
   selector: 'ws-app-publish-popup',
   templateUrl: './publish-popup.component.html',
@@ -26,6 +27,8 @@ export class PublishPopupComponent implements OnInit {
   constructor(private uploadService: UploadFileService, private router: Router,
     // tslint:disable-next-line:align
     private dialogRef: MatDialogRef<PublishPopupComponent>,
+    // tslint:disable-next-line:align
+    private configSvc: ConfigurationsService,
     // tslint:disable-next-line:align
     @Inject(MAT_DIALOG_DATA) data: any) {
     this.workorderData = data.data
@@ -53,6 +56,12 @@ export class PublishPopupComponent implements OnInit {
 
   closeDialog() {
     const username = `${this.userData.firstName} ${this.userData.lastName}`
+    const org = []
+    const createdforarray: any[] = []
+    if (this.configSvc.userProfile) {
+      createdforarray.push(this.configSvc.userProfile.rootOrgId)
+      org.push(this.configSvc.userProfile.departmentName)
+    }
 
     const request = {
       request: {
@@ -64,8 +73,8 @@ export class PublishPopupComponent implements OnInit {
           mimeType: 'application/pdf',
           contentType: 'Asset',
           primaryCategory: 'Asset',
-          organisation: ['igot-karmayogi'],
-          createdFor: ['0131397178949058560'],
+          organisation: org,
+          createdFor: createdforarray,
         },
       },
     }
