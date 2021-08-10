@@ -60,7 +60,7 @@ export class PublishPopupComponent implements OnInit {
     const createdforarray: any[] = []
     if (this.configSvc.userProfile) {
       createdforarray.push(this.configSvc.userProfile.rootOrgId)
-      org.push(this.configSvc.userProfile.rootOrgName)
+      org.push(this.configSvc.userProfile.departmentName)
     }
 
     const request = {

@@ -7,10 +7,12 @@ import { ITableData } from '../../interfaces/interfaces'
 import { MatDialog } from '@angular/material/dialog'
 import { ParticipantsComponent } from '../../components/participants/participants.component'
 import { SuccessComponent } from '../../components/success/success.component'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import * as moment from 'moment'
-
+/* tslint:disable */
+import _ from 'lodash'
+/* tslint:enable */
 @Component({
   selector: 'ws-app-create-event',
   templateUrl: './create-event.component.html',
@@ -83,18 +85,33 @@ export class CreateEventComponent implements OnInit {
   todayDate: any
   todayTime: any
   eventimageURL: any
+  departmentID: any
 
   constructor(private snackBar: MatSnackBar,
               private eventsSvc: EventsService,
               private matDialog: MatDialog,
               private router: Router,
               private configSvc: ConfigurationsService,
-              private changeDetectorRefs: ChangeDetectorRef
+              private changeDetectorRefs: ChangeDetectorRef,
+              private activeRoute: ActivatedRoute,
   ) {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId
       this.username = this.configSvc.userProfile.userName
       this.department = this.configSvc.userProfile.departmentName
+    } else {
+      if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
+        this.departmentID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
+      }
+      if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')) {
+        this.department = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')
+      }
+      if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')) {
+        this.userId = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')
+      }
+      if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.userName')) {
+        this.username = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.userName')
+      }
     }
     this.createEventForm = new FormGroup({
       eventPicture: new FormControl(''),
@@ -211,10 +228,8 @@ export class CreateEventComponent implements OnInit {
 
       const org = []
       const createdforarray: any[] = []
-      if (this.configSvc.userProfile) {
-        createdforarray.push(this.configSvc.userProfile.rootOrgId)
-        org.push(this.configSvc.userProfile.rootOrgName)
-      }
+      createdforarray.push(this.departmentID)
+      org.push(this.department)
 
       const request = {
         request: {
