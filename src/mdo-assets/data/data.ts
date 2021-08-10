@@ -227,7 +227,6 @@ export const dashboardListData: any[] = [
           },
         ],
       },
-
       {
         row: 3,
         name: 'Visualization Row 3',
@@ -1919,7 +1918,6 @@ export const dashboardListData: any[] = [
               insight: null,
               isDecimal: null,
             },
-
             {
               headerName: 'DoPT',
               headerValue: 9,
@@ -1965,7 +1963,6 @@ export const dashboardListData: any[] = [
               insight: null,
               isDecimal: null,
             },
-
             {
               headerName: 'DRDO',
               headerValue: 10,
@@ -2014,7 +2011,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-
       {
         statusInfo: {
           statusCode: 200,
@@ -2484,7 +2480,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-
       {
         statusInfo: {
           statusCode: 200,
@@ -6848,7 +6843,7 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-
+  
   // Dashboard one last month data
   export const dashboardOneLastMonthData: any = {
     showFilters: 'true',
@@ -7033,7 +7028,6 @@ export const dashboardListData: any[] = [
           },
         ],
       },
-
       {
         row: 4,
         name: 'Visualization Row 4',
@@ -10928,7 +10922,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-
       {
         statusInfo: {
           statusCode: 200,
@@ -12055,7 +12048,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-
       {
         statusInfo: {
           statusCode: 200,
@@ -12198,7 +12190,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12270,7 +12261,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12342,7 +12332,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12414,7 +12403,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12486,7 +12474,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12558,7 +12545,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12630,7 +12616,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12702,7 +12687,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12774,7 +12758,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -14643,7 +14626,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-
   // Dashbaord two data
   export const dashboardTwoData: any = {
     showFilters: 'true',
@@ -16697,7 +16679,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-
       {
         statusInfo: {
           statusCode: 200,
@@ -18788,7 +18769,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-
   // Dashboard three data
   export const dashboardThreeData: any = {
     showFilters: 'true',
@@ -19258,7 +19238,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-
       {
         statusInfo: {
           statusCode: 200,
@@ -20216,7 +20195,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-
   // Dashboard four data
   export const dashboardFourData: any = {
     showFilters: 'true',
@@ -21328,7 +21306,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-
   // Dashboard five data
   export const dashboardFiveData: any = {
     showFilters: 'true',
@@ -21770,7 +21747,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-
   // Dashboard six data
   export const dashboardSixData: any = {
     showFilters: 'true',
@@ -26750,7 +26726,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-
   // Dashboard empty data
   export const dashboardEmptyData: any = {
     showFilters: 'false',
