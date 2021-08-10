@@ -209,6 +209,13 @@ export class CreateEventComponent implements OnInit {
       this.imageSrc = file
       this.createEventForm.controls['eventPicture'].setValue(this.imageSrc)
 
+      const org = []
+      const createdforarray: any[] = []
+      if (this.configSvc.userProfile) {
+        createdforarray.push(this.configSvc.userProfile.rootOrgId)
+        org.push(this.configSvc.userProfile.rootOrgName)
+      }
+
       const request = {
         request: {
           content: {
@@ -220,8 +227,8 @@ export class CreateEventComponent implements OnInit {
             mediaType: 'image',
             contentType: 'Asset',
             primaryCategory: 'Asset',
-            organisation: ['igot-karmayogi'],
-            createdFor: ['0131397178949058560'],
+            organisation: org,
+            createdFor: createdforarray,
           },
         },
       }
