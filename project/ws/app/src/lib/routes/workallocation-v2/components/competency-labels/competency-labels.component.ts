@@ -481,10 +481,12 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       // oldcompData = _.first(_.filter(lst.value, { compName: _.get(event, 'option.value.name') }))
     }
 
+    const children = [..._.get(event, 'option.value.children')]
+
     const dialogRef = this.dialog.open(WatCompPopupComponent, {
       restoreFocus: false,
       disableClose: true,
-      data: oldcompData || event.option.value,
+      data: { ...oldcompData, children } || event.option.value,
     })
     if (this.activated.snapshot.data && this.activated.snapshot.data.pageData) {
       dialogRef.componentInstance.defaultCompLevels = this.activated.snapshot.data.pageData
