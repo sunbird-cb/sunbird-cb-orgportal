@@ -82,6 +82,7 @@ export class CreateEventComponent implements OnInit {
   maxDate: any
   todayDate: any
   todayTime: any
+  eventimageURL: any
 
   constructor(private snackBar: MatSnackBar,
               private eventsSvc: EventsService,
@@ -96,7 +97,7 @@ export class CreateEventComponent implements OnInit {
       this.department = this.configSvc.userProfile.departmentName
     }
     this.createEventForm = new FormGroup({
-      eventPicture: new FormControl('', [Validators.required]),
+      eventPicture: new FormControl(''),
       eventTitle: new FormControl('', [Validators.required]),
       summary: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
@@ -207,12 +208,40 @@ export class CreateEventComponent implements OnInit {
       reader.readAsDataURL(file)
       this.imageSrc = file
       this.createEventForm.controls['eventPicture'].setValue(this.imageSrc)
+
+      const request = {
+        request: {
+          content: {
+            name: 'image asset',
+            creator: this.username,
+            createdBy: this.userId,
+            code: 'image asset',
+            mimeType: this.imageSrc.type,
+            mediaType: 'image',
+            contentType: 'Asset',
+            primaryCategory: 'Asset',
+            organisation: ['igot-karmayogi'],
+            createdFor: ['0131397178949058560'],
+          },
+        },
+      }
+      // start the upload and save the progress map
+      this.eventsSvc.crreateAsset(request).subscribe((res: any) => {
+        const contentID = res.result.identifier
+        const formData: FormData = new FormData()
+        formData.append('data', file)
+
+        this.eventsSvc.uploadFile(contentID, formData).subscribe((fdata: any) => {
+          this.eventimageURL = fdata.result.artifactUrl
+        })
+      })
     }
   }
 
   removeSelectedFile() {
     this.imageSrcURL = ''
     this.createEventForm.controls['eventPicture'].setValue('')
+    this.eventimageURL = ''
   }
 
   fileSubmit(identifier: string) {
@@ -309,7 +338,9 @@ export class CreateEventComponent implements OnInit {
           locale: 'en',
           isExternal: true,
           name: this.createEventForm.controls['eventTitle'].value,
-          description: this.createEventForm.controls['summary'].value,
+          description: this.createEventForm.controls['description'].value,
+          instructions: this.createEventForm.controls['summary'].value,
+          appIcon: this.eventimageURL,
           category: 'Event',
           createdBy: this.userId,
           authoringDisabled: false,
