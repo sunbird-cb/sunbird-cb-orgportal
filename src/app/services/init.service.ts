@@ -251,7 +251,7 @@ export class InitService {
           const profileV2 = _.get(completeProdata, 'profileDetails')
           this.configSvc.userProfile = {
             country: _.get(profileV2, 'personalDetails.countryCode') || null,
-            email: completeProdata.profileDetails.personalDetails.primaryEmail || completeProdata.email,
+            email: _.get(completeProdata, 'profileDetails.personalDetails.primaryEmail ') || completeProdata.email,
             givenName: completeProdata.firstName,
             userId: completeProdata.userId,
             firstName: completeProdata.firstName,
