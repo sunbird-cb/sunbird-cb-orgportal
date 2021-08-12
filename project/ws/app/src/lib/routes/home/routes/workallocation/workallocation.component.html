@@ -46,6 +46,7 @@
           </div>
         </div>
       </div>
+      <div id="loader"></div>
       <ws-work-allocation-table [tableData]='tabledata' [data]='getTableData' *ngIf="currentFilter !== 'Archived'"
         (eOnRowClick)="onRoleClick($event)" [needAddAdmin]='false' [needCreateUser]='false'>
       </ws-work-allocation-table>

@@ -60,6 +60,7 @@ export const dashboardListData: any[] = [
     showMessage: true,
     messageType: 'warning',
     message:
+      // tslint:disable-next-line:max-line-length
       'Please note that the data shown here is not actual and is only intended to showcase the capability of the platform until the actual usage begins.',
     filtersDetails: [
       {
@@ -110,6 +111,7 @@ export const dashboardListData: any[] = [
                 id: 12.1,
                 name: 'Status of work allocation orders in ISTM (by designation)',
                 description:
+                  // tslint:disable-next-line:max-line-length
                   'The number of positions for which draft work allocation order has been initiated.Work allocation orders in ISTM by designation',
                 info: 'Percentage of positions for which a work allocation order has been approved and issued',
                 dimensions: {
@@ -125,6 +127,7 @@ export const dashboardListData: any[] = [
                     parent: 'statusWaoTop10',
                     name: 'Status of work allocation orders in ISTM (by designation)',
                     description:
+                    // tslint:disable-next-line:max-line-length
                       'The number of positions for which draft work allocation order has been initiated.Work allocation orders in ISTM by designation',
                     code: '',
                     chartType: 'horizontal_bar',
@@ -224,7 +227,6 @@ export const dashboardListData: any[] = [
           },
         ],
       },
-  
       {
         row: 3,
         name: 'Visualization Row 3',
@@ -361,6 +363,7 @@ export const dashboardListData: any[] = [
                 name: 'Change in work allocation orders (Top 10 MDOs) in Delhi',
                 description:
                   'Percentage point change in the percentage of positions with approved work allocation order by State MDO',
+                // tslint:disable-next-line:max-line-length
                 info: 'Percentage point change (from the previous time period) in the percentage of positions for which a work allocation order has been issued and approved',
                 dimensions: {
                   height: 250,
@@ -1915,7 +1918,6 @@ export const dashboardListData: any[] = [
               insight: null,
               isDecimal: null,
             },
-  
             {
               headerName: 'DoPT',
               headerValue: 9,
@@ -1961,7 +1963,6 @@ export const dashboardListData: any[] = [
               insight: null,
               isDecimal: null,
             },
-  
             {
               headerName: 'DRDO',
               headerValue: 10,
@@ -2010,7 +2011,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-  
       {
         statusInfo: {
           statusCode: 200,
@@ -2480,7 +2480,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-  
       {
         statusInfo: {
           statusCode: 200,
@@ -6854,6 +6853,7 @@ export const dashboardListData: any[] = [
     showMessage: true,
     messageType: 'warning',
     message:
+      // tslint:disable-next-line:max-line-length
       'Please note that the data shown here is not actual and is only intended to showcase the capability of the platform until the actual usage begins.',
     filtersDetails: [
       {
@@ -6966,6 +6966,7 @@ export const dashboardListData: any[] = [
             id: 14,
             name: 'Change in work allocation orders (top 5)',
             description:
+              // tslint:disable-next-line:max-line-length
               'Rank of MDOs (top) with respect to percentage point change (from the previous time period) in the percentage of positions for which a work allocation order has been issued and approved',
             dimensions: {
               height: 250,
@@ -6997,6 +6998,7 @@ export const dashboardListData: any[] = [
             id: 15,
             name: 'Change in work allocation orders (bottom 5)',
             description:
+              // tslint:disable-next-line:max-line-length
               'Rank of MDOs (top) with respect to percentage point change (from the previous time period) in the percentage of positions for which a work allocation order has been issued and approved',
             dimensions: {
               height: 250,
@@ -7026,7 +7028,6 @@ export const dashboardListData: any[] = [
           },
         ],
       },
-  
       {
         row: 4,
         name: 'Visualization Row 4',
@@ -10921,7 +10922,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-  
       {
         statusInfo: {
           statusCode: 200,
@@ -12048,7 +12048,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-  
       {
         statusInfo: {
           statusCode: 200,
@@ -12191,7 +12190,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-  
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12263,7 +12261,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-  
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12335,7 +12332,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-  
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12407,7 +12403,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-  
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12479,7 +12474,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-  
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12551,7 +12545,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-  
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12623,7 +12616,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-  
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12695,7 +12687,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-  
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -12767,7 +12758,6 @@ export const dashboardListData: any[] = [
                   colorCode: 'three',
                   showBar: false,
                 },
-  
                 {
                   label: 'Header',
                   name: 'Position with ≤ 1 role',
@@ -14636,7 +14626,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-  
   // Dashbaord two data
   export const dashboardTwoData: any = {
     showFilters: 'true',
@@ -14646,6 +14635,7 @@ export const dashboardListData: any[] = [
     showMessage: true,
     messageType: 'warning',
     message:
+      // tslint:disable-next-line:max-line-length
       'Please note that the data shown here is not actual and is only intended to showcase the capability of the platform until the actual usage begins.',
     filtersDetails: [
       {
@@ -14898,7 +14888,9 @@ export const dashboardListData: any[] = [
             id: 17,
             name: 'Status of CBP on the platform',
             description:
+              // tslint:disable-next-line:max-line-length
               'Total number of CBPs in record into the stages it is in: self-certification, external review and finally published/registered on iGOT',
+            // tslint:disable-next-line:max-line-length
             info: 'Total number of CBPs in record into the stages it is in: self-certification, external review and finally published/registered on iGOT',
             dimensions: {
               height: 250,
@@ -16687,7 +16679,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-  
       {
         statusInfo: {
           statusCode: 200,
@@ -18778,7 +18769,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-  
   // Dashboard three data
   export const dashboardThreeData: any = {
     showFilters: 'true',
@@ -18788,6 +18778,7 @@ export const dashboardListData: any[] = [
     showMessage: true,
     messageType: 'warning',
     message:
+      // tslint:disable-next-line:max-line-length
       'Please note that the data shown here is not actual and is only intended to showcase the capability of the platform until the actual usage begins.',
     filtersDetails: [
       {
@@ -19247,7 +19238,6 @@ export const dashboardListData: any[] = [
           ],
         },
       },
-  
       {
         statusInfo: {
           statusCode: 200,
@@ -20205,7 +20195,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-  
   // Dashboard four data
   export const dashboardFourData: any = {
     showFilters: 'true',
@@ -20215,6 +20204,7 @@ export const dashboardListData: any[] = [
     showMessage: true,
     messageType: 'warning',
     message:
+      // tslint:disable-next-line:max-line-length
       'Please note that the data shown here is not actual and is only intended to showcase the capability of the platform until the actual usage begins.',
     filtersDetails: [
       {
@@ -21316,7 +21306,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-  
   // Dashboard five data
   export const dashboardFiveData: any = {
     showFilters: 'true',
@@ -21326,6 +21315,7 @@ export const dashboardListData: any[] = [
     showMessage: true,
     messageType: 'warning',
     message:
+      // tslint:disable-next-line:max-line-length
       'Please note that the data shown here is not actual and is only intended to showcase the capability of the platform until the actual usage begins.',
     filtersDetails: [
       {
@@ -21757,7 +21747,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-  
   // Dashboard six data
   export const dashboardSixData: any = {
     showFilters: 'true',
@@ -21767,6 +21756,7 @@ export const dashboardListData: any[] = [
     showMessage: true,
     messageType: 'warning',
     message:
+      // tslint:disable-next-line:max-line-length
       'Please note that the data shown here is not actual and is only intended to showcase the capability of the platform until the actual usage begins.',
     filtersDetails: [
       {
@@ -22012,6 +22002,7 @@ export const dashboardListData: any[] = [
                     parent: 'coverageRoleAndActApprovedAndIssued',
                     name: 'Change in tagged competencies in approved work allocation orders in MoRD',
                     description:
+                      // tslint:disable-next-line:max-line-length
                       'Change in Coverage of roles and activities in positions with work allocation orders approved and issued for each designation',
                     code: '',
                     chartType: 'table_bar_large',
@@ -26663,6 +26654,7 @@ export const dashboardListData: any[] = [
               isDecimal: false,
               isPercentage: false,
               insightStatus: 'up',
+              // tslint:disable-next-line:max-line-length
               info: 'Absolute change in the number of competencies submitted and pending with the review board (compared to previous time period)',
             },
           ],
@@ -26734,7 +26726,6 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-  
   // Dashboard empty data
   export const dashboardEmptyData: any = {
     showFilters: 'false',
@@ -26744,10 +26735,10 @@ export const dashboardListData: any[] = [
     showMessage: true,
     messageType: 'warning',
     message:
+      // tslint:disable-next-line:max-line-length
       'Please note that the data shown here is not actual and is only intended to showcase the capability of the platform until the actual usage begins.',
     filtersDetails: [],
     visualizationDetails: [],
     chartDetails: [],
     widgetData: [],
   }
-  

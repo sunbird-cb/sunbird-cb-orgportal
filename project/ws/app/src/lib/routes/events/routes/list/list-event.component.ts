@@ -41,8 +41,8 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
             columns: [
                 { displayName: 'Cover Picture', key: 'eventThumbnail' },
                 { displayName: 'Title', key: 'eventName' },
-                { displayName: 'Date and time', key: 'eventDate' },
-                { displayName: 'Created On', key: 'eventUpdatedOn' },
+                { displayName: 'Date and time', key: 'eventStartDate' },
+                { displayName: 'Created On', key: 'eventCreatedOn' },
                 { displayName: 'Duration', key: 'eventDuration' },
                 { displayName: 'Joined', key: 'eventjoined' },
             ],
@@ -62,83 +62,59 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     fetchEvents() {
-        // Old object format
-        // const requestObj = {
-        //     locale: ['en'],
-        //     pageSize: 25,
-        //     query: 'all',
-        //     didYouMean: true,
-        //     filters: [
-        //         {
-        //             andFilters: [
-        //                 { lastUpdatedOn: ['month'] },
-        //                 { category: ['Event'] },
-        //                 { sourceName: [this.department] },
-        //                 { contentType: "Event" }
-        //             ],
-        //         },
-        //     ],
-        //     includeSourceFields: ['creatorLogo', 'thumbnail'],
-        // }
-
-        // const requestObj = {
-        //     "request": {
-        //         "filters": { "category": ["Event"] },
-        //         "sort_by": { "lastUpdatedOn": "desc" },
-        //         "fields": ["name", "appIcon", "instructions", "description", "purpose", "mimeType", "gradeLevel", "identifier", "medium",
-        //             "pkgVersion", "board", "subject", "resourceType", "primaryCategory",
-        // "contentType", "channel", "organisation", "trackable",
-        //             "license", "posterImage", "idealScreenSize", "learningMode", "creatorLogo", "duration"]
-        //     }, "query": ""
-        // }
-
-        // const requestObj = { locale: ['en'], query: '', request: { query: '', filters: { category: ['Event'],
-        // publisherIDs: [], reviewerIDs: [], contentType: ['Event'] }, sort_by: { lastUpdatedOn: 'desc' },
-        //  facets: ['primaryCategory', 'mimeType'] } }
-        // const requestObj = { "locale": ["en"], "query": "", "request": { "query": "", "filters": { "status":
-        // ["Live"], "category": ["Event"] }, "sort_by": { "lastUpdatedOn": "desc" }, "facets": ["primaryCategory", "mimeType"] } }
-        // const requestObj = { request: { filters: { status: ['Live'] }, sort_by: { createdOn: 'desc' } } }
+        // const requestObj = { "request": { "filters": { "status": ["Live"] }, "sort_by": { "createdOn": "desc" } } }
         // this.eventSvc.searchEvent(requestObj).subscribe(events => {
         //     this.setEventListData(events)
         // })
 
-        this.eventSvc.getEventDetails('do_113284105762111488139').subscribe((events: any) => {
+        const requestObj = {
+            locale: [
+                'en',
+            ],
+            query: '',
+            request: {
+                query: '',
+                filters: {
+                    status: ['Live'],
+                    contentType: 'Event',
+                },
+                sort_by: {
+                    createdOn: 'desc',
+                },
+            },
+        }
+
+        this.eventSvc.getEventsList(requestObj).subscribe((events: any) => {
             this.setEventListData(events)
         })
     }
 
     setEventListData(eventObj: any) {
         if (eventObj !== undefined) {
-            const data = eventObj.result
+            const data = eventObj.result.Event
             this.eventData['pastEvents'] = []
             this.eventData['upcomingEvents'] = []
             Object.keys(data).forEach((index: any) => {
-                let expiryDateFormat = data[index]
-                // const obj = data[index]
-                // const expiryDateFormat = this.customDateFormat(obj.expiryDate)
-                expiryDateFormat = '2021-07-25 05:30'
-                // const floor = Math.floor
-                // const hours = floor(obj.duration / 60)
-                // const minutes = obj.duration % 60
-                // const duration = (hours === 0) ? ((minutes === 0) ? '---' : `${minutes} minutes`) : (minutes === 0) ? (hours === 1) ?
-                //     `${hours} hour` : `${hours} hours` : (hours === 1) ? `${hours} hour ${minutes} minutes` :
-                //         `${hours} hours ${minutes} minutes`
-                // const eventDataObj = {
-                //     eventName: obj.name.substring(0, 30),
-                //     eventDate: this.allEventDateFormat(obj.expiryDate, true),
-                //     eventUpdatedOn: this.allEventDateFormat(obj.lastUpdatedOn, false),
-                //     eventDuration: duration,
-                //     eventjoined: (obj.creatorDetails !== undefined && obj.creatorDetails.length > 0) ?
-                //         ((obj.creatorDetails.length === 1) ? '1 person' : `${obj.creatorDetails.length} people`) : ' --- ',
-                //     eventThumbnail: (obj.appIcon !== null || obj.appIcon !== undefined) ? obj.appIcon : '---',
-                // }
+                const obj = data[index]
+                const expiryDateFormat = this.customDateFormat(obj.endDate, obj.endTime)
+                const floor = Math.floor
+                const hours = floor(obj.duration / 60)
+                const minutes = obj.duration % 60
+                const duration = (hours === 0) ? ((minutes === 0) ? '---' : `${minutes} minutes`) : (minutes === 0) ? (hours === 1) ?
+                    `${hours} hour` : `${hours} hours` : (hours === 1) ? `${hours} hour ${minutes} minutes` :
+                    `${hours} hours ${minutes} minutes`
+                const creatordata = obj.creatorDetails !== undefined ? obj.creatorDetails : []
+                const str = creatordata && creatordata.length > 0 ? creatordata.replace(/\\/g, '') : []
+                const creatorDetails = str && str.length > 0 ? JSON.parse(str) : creatordata
                 const eventDataObj = {
-                    eventDate: '2021-07-25',
-                    eventDuration: '2 hours 30 minutes',
-                    eventName: 'Introduction Time Management',
-                    eventThumbnail: undefined,
-                    eventUpdatedOn: '2021-07-12',
-                    eventjoined: ' --- ',
+                    eventName: obj.name.substring(0, 25),
+                    eventStartDate: this.customDateFormat(obj.startDate, obj.startTime),
+                    eventCreatedOn: this.allEventDateFormat(obj.createdOn),
+                    eventDuration: duration,
+                    eventjoined: (creatorDetails !== undefined && creatorDetails.length > 0) ?
+                        ((creatorDetails.length === 1) ? '1 person' : `${creatorDetails.length} people`) : ' --- ',
+                    eventThumbnail: obj.appIcon && (obj.appIcon !== null || obj.appIcon !== undefined) ? obj.appIcon : 
+                    '/assets/icons/Events_default.png',
                 }
                 const isPast = this.compareDate(expiryDateFormat);
                 (isPast) ? this.eventData['pastEvents'].push(eventDataObj) : this.eventData['upcomingEvents'].push(eventDataObj)
@@ -147,13 +123,17 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    customDateFormat(date: any) {
-        const year = date.split('T')[0].substring(0, 4)
-        const month = date.split('T')[0].substring(4, 6)
-        const dDate = date.split('T')[0].substring(6, 8)
-        const hour = date.split('T')[1].substring(0, 2)
-        const min = date.split('T')[1].substring(2, 4)
-        return `${dDate}-${month}-${year} ${hour}:${min}`
+    customDateFormat(date: any, time: any) {
+        // const year = date.split('T')[0].substring(0, 4)
+        // const month = date.split('T')[0].substring(4, 6)
+        // const dDate = date.split('T')[0].substring(6, 8)
+        // const hour = date.split('T')[1].substring(0, 2)
+        // const min = date.split('T')[1].substring(2, 4)
+        // return `${dDate}-${month}-${year} ${hour}:${min}`
+        const stime = time.split('+')[0]
+        const hour = stime.substr(0, 2)
+        const min = stime.substr(2, 3)
+        return `${date} ${hour}${min}`
     }
 
     filter(key: string | 'timestamp' | 'best' | 'saved') {
@@ -201,25 +181,22 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
 
     compareDate(selectedDate: any) {
         const now = new Date()
-        const today = moment(now).format('DD-MM-YYYY HH:mm')
+        const today = moment(now).format('YYYY-MM-DD HH:mm')
         return (selectedDate < today) ? true : false
     }
 
-    allEventDateFormat(datetime: any, timeAllow: any) {
-        const dateTimeArr = datetime.split('T')
-        const date = dateTimeArr[0]
-        const year = date.substr(0, 4)
-        const month = date.substr(4, 2)
-        const day = date.substr(6, 2)
-        const time = dateTimeArr[1]
-        const hours = time.substr(0, 2)
-        const minutes = time.substr(2, 2)
-        const seconds = time.substr(4, 2)
-        const formatedDate = new Date(year, month - 1, day, hours, minutes, seconds, 0)
-        let format = 'YYYY-MM-DD hh:mm a'
-        if (!timeAllow) {
-            format = 'YYYY-MM-DD'
-        }
+    allEventDateFormat(datetime: any) {
+        const date = new Date(datetime).getDate()
+        const year = new Date(datetime).getFullYear()
+        const month = new Date(datetime).getMonth()
+        const hours = new Date(datetime).getHours()
+        const minutes = new Date(datetime).getMinutes()
+        const seconds = new Date(datetime).getSeconds()
+        const formatedDate = new Date(year, month, date, hours, minutes, seconds, 0)
+        // let format = 'YYYY-MM-DD hh:mm a'
+        // if (!timeAllow) {
+        const format = 'YYYY-MM-DD'
+        // }
         const readableDateMonth = moment(formatedDate).format(format)
         const finalDateTimeValue = `${readableDateMonth}`
         return finalDateTimeValue

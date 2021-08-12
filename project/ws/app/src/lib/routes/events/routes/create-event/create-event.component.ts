@@ -7,10 +7,12 @@ import { ITableData } from '../../interfaces/interfaces'
 import { MatDialog } from '@angular/material/dialog'
 import { ParticipantsComponent } from '../../components/participants/participants.component'
 import { SuccessComponent } from '../../components/success/success.component'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import * as moment from 'moment'
-
+/* tslint:disable */
+import _ from 'lodash'
+/* tslint:enable */
 @Component({
   selector: 'ws-app-create-event',
   templateUrl: './create-event.component.html',
@@ -82,21 +84,37 @@ export class CreateEventComponent implements OnInit {
   maxDate: any
   todayDate: any
   todayTime: any
+  eventimageURL: any
+  departmentID: any
 
   constructor(private snackBar: MatSnackBar,
               private eventsSvc: EventsService,
               private matDialog: MatDialog,
               private router: Router,
               private configSvc: ConfigurationsService,
-              private changeDetectorRefs: ChangeDetectorRef
+              private changeDetectorRefs: ChangeDetectorRef,
+              private activeRoute: ActivatedRoute,
   ) {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId
       this.username = this.configSvc.userProfile.userName
       this.department = this.configSvc.userProfile.departmentName
+    } else {
+      if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
+        this.departmentID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
+      }
+      if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')) {
+        this.department = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')
+      }
+      if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')) {
+        this.userId = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')
+      }
+      if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.userName')) {
+        this.username = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.userName')
+      }
     }
     this.createEventForm = new FormGroup({
-      eventPicture: new FormControl('', [Validators.required]),
+      eventPicture: new FormControl(''),
       eventTitle: new FormControl('', [Validators.required]),
       summary: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
@@ -207,12 +225,45 @@ export class CreateEventComponent implements OnInit {
       reader.readAsDataURL(file)
       this.imageSrc = file
       this.createEventForm.controls['eventPicture'].setValue(this.imageSrc)
+
+      const org = []
+      const createdforarray: any[] = []
+      createdforarray.push(this.departmentID)
+      org.push(this.department)
+
+      const request = {
+        request: {
+          content: {
+            name: 'image asset',
+            creator: this.username,
+            createdBy: this.userId,
+            code: 'image asset',
+            mimeType: this.imageSrc.type,
+            mediaType: 'image',
+            contentType: 'Asset',
+            primaryCategory: 'Asset',
+            organisation: org,
+            createdFor: createdforarray,
+          },
+        },
+      }
+      // start the upload and save the progress map
+      this.eventsSvc.crreateAsset(request).subscribe((res: any) => {
+        const contentID = res.result.identifier
+        const formData: FormData = new FormData()
+        formData.append('data', file)
+
+        this.eventsSvc.uploadFile(contentID, formData).subscribe((fdata: any) => {
+          this.eventimageURL = fdata.result.artifactUrl
+        })
+      })
     }
   }
 
   removeSelectedFile() {
     this.imageSrcURL = ''
     this.createEventForm.controls['eventPicture'].setValue('')
+    this.eventimageURL = ''
   }
 
   fileSubmit(identifier: string) {
@@ -309,7 +360,9 @@ export class CreateEventComponent implements OnInit {
           locale: 'en',
           isExternal: true,
           name: this.createEventForm.controls['eventTitle'].value,
-          description: this.createEventForm.controls['summary'].value,
+          description: this.createEventForm.controls['description'].value,
+          instructions: this.createEventForm.controls['summary'].value,
+          appIcon: this.eventimageURL,
           category: 'Event',
           createdBy: this.userId,
           authoringDisabled: false,

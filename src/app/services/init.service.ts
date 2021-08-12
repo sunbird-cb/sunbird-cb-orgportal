@@ -251,7 +251,7 @@ export class InitService {
           const profileV2 = _.get(completeProdata, 'profileDetails')
           this.configSvc.userProfile = {
             country: _.get(profileV2, 'personalDetails.countryCode') || null,
-            email: completeProdata.profileDetails.personalDetails.primaryEmail || completeProdata.email,
+            email: _.get(completeProdata, 'profileDetails.personalDetails.primaryEmail ') || completeProdata.email,
             givenName: completeProdata.firstName,
             userId: completeProdata.userId,
             firstName: completeProdata.firstName,
@@ -263,6 +263,7 @@ export class InitService {
             dealerCode: null,
             isManager: false,
             departmentName: completeProdata.channel,
+            rootOrgId: completeProdata.rootOrgId,
             // unit: completeProdata.user.unit_name,
             // tslint:disable-next-line:max-line-length
             // source_profile_picture: completeProdata.source_profile_picture || '',
