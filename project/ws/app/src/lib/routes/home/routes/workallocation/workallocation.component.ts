@@ -24,6 +24,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   pageSize = 10
   pageSizeOptions = [10, 20]
   paginator!: MatPaginator
+  showLoading: boolean = false
   departmentName: any
   departmentID: any
   selectedPDFid: any
@@ -169,6 +170,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   getWAT(currentStatus: string) {
     this.data = []
     const finalData: any[] = []
+    this.displayLoader(true)
     this.workallocationSrvc.fetchWAT(currentStatus).subscribe(res => {
       if (res.result.data) {
         res.result.data.forEach((element: any) => {
@@ -191,6 +193,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
         })
       }
       this.data = finalData
+      this.displayLoader(false)
+    }, () => {
+      this.displayLoader(false)
     })
 
   }
@@ -198,6 +203,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   getWATBySearch(searchQuery: string, currentStatus: string) {
     this.data = []
     const finalData: any[] = []
+    this.displayLoader(true)
     this.workallocationSrvc.fetchAllWATRequestBySearch(searchQuery, currentStatus).subscribe(res => {
       if (res.result.data) {
         res.result.data.forEach((element: any) => {
@@ -221,6 +227,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
         })
       }
       this.data = finalData
+      this.displayLoader(false)
+    }, () => {
+      this.displayLoader(false)
     })
 
   }
@@ -287,5 +296,15 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   searchBasedOnQurey(newValue: Event) {
     this.getWATBySearch(newValue.toString(), this.currentFilter)
 
+  }
+
+  displayLoader(value: any) {
+    // tslint:disable-next-line:no-non-null-assertion
+    const vart = document.getElementById('loader')!
+    if (value) {
+      vart.style.display = 'block'
+    } else {
+      vart.style.display = 'none'
+    }
   }
 }
