@@ -105,8 +105,8 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
             compLevel: _.get(numa, 'level') || '',
             compType: _.get(numa, 'additionalProperties.competencyType') || '',
             compArea: _.get(numa, 'additionalProperties.competencyArea') || '',
-            levelList: _.get(numa, 'chield') || this.activated.snapshot.data.pageData.data.levels,
-            compSource: _.get(numa, 'source') || 'WAT'
+            levelList: [_.get(numa, 'chield')] || [this.activated.snapshot.data.pageData.data.levels],
+            compSource: _.get(numa, 'source') || 'WAT',
           }
         })
         this.activeGroupIdx = i + 1
@@ -263,7 +263,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         compType: '',
         compArea: '',
         levelList: [],
-        compSource: 'WAT'
+        compSource: 'WAT',
       })
       comps.push(fga)
       fg.controls.competincies.patchValue([...comps.value])
@@ -287,7 +287,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
           compType: ac.compType,
           compArea: ac.compArea,
           levelList: ac.levelList || [],
-          compSource: ac.compSource
+          compSource: ac.compSource,
         })
         oldValue.push(fga)
       })
@@ -309,7 +309,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         compType: '',
         compArea: '',
         compSource: '',
-        levelList: []
+        levelList: [],
       })
       oldValue.push(fga)
       this.setGroupActivityValues([...oldValue.value])

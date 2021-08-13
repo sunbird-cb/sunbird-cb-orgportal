@@ -199,7 +199,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     */
   onScroll(_$event: any) {
     // const offset = $event.srcElement.scrollTop || this.document.body.scrollTop || 0
-    const offset = window.pageYOffset || 0
+    const offset = (window.pageYOffset || 0) + 10
     if (this.officerOffset != null &&
       this.activitiesOffset &&
       this.competenciesOffset &&

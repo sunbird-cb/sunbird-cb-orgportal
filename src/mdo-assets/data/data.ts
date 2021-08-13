@@ -6843,7 +6843,7 @@ export const dashboardListData: any[] = [
       },
     ],
   }
-  
+
   // Dashboard one last month data
   export const dashboardOneLastMonthData: any = {
     showFilters: 'true',
