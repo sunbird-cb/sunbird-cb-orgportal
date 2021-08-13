@@ -76,7 +76,9 @@ export class WatStoreService {
             const level = _.get(a, 'compLevel') || _.get(existing, 'compLevel')
             const compType = _.get(a, 'compType') || _.get(existing, 'compType')
             const compArea = _.get(a, 'compArea') || _.get(existing, 'compArea')
-            const newA = { ...a, level, compType, compArea }
+            const source = _.get(a, 'compSource') || _.get(existing, 'compSource')
+            const levelList = _.get(a, 'levelList') || _.get(existing, 'levelList') || []
+            const newA = { ...a, levelList, level, compType, compArea, source }
             complist.push(newA)
           } else {
             complist.push(a)

@@ -199,7 +199,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     */
   onScroll(_$event: any) {
     // const offset = $event.srcElement.scrollTop || this.document.body.scrollTop || 0
-    const offset = window.pageYOffset || 0
+    const offset = (window.pageYOffset || 0) + 10
     if (this.officerOffset != null &&
       this.activitiesOffset &&
       this.competenciesOffset &&
@@ -494,7 +494,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
                   description: compp.compDescription,
                   // id='123',
                   level: compp.compLevel,
-                  // source: 'ISTM',
+                  source: compp.compSource,
                   // status: 'UNVERIFIED',
                   additionalProperties: {
                     competencyArea: compp.compArea,
@@ -551,7 +551,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
           description: compp.compDescription,
           // id='123',
           level: compp.compLevel,
-          // source: 'ISTM',
+          source: compp.compSource,
           // status: 'UNVERIFIED',
           additionalProperties: {
             competencyArea: compp.compArea,
