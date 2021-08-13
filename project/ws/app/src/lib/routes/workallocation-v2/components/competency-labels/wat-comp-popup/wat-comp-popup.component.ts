@@ -182,7 +182,8 @@ export class WatCompPopupComponent implements OnInit {
       compType: _.get(val, 'compType'),
       compArea: _.get(val, 'compArea'),
       localId: _.get(this.data, 'localId'),
-      // compSource: _.get(val, 'source'),
+      levelList: _.get(this.data, 'children'),
+      compSource: _.get(val, 'compSource') || _.get(val, 'source'),
       // type: _.get(val, 'type'),
       // isSelected: undefined
       // name: "Work relating to financial inclusion"

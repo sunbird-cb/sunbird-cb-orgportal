@@ -95,7 +95,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         if (!(this.groupcompetencyList && this.groupcompetencyList.value)) {
           this.addNewGroup(false, grp)
         }
-
+        debugger
         const complist = _.map(_.get(grpData[i], 'competencyDetails'), (numa: any) => {
           return {
             localId: this.watStore.getID,
@@ -105,6 +105,8 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
             compLevel: _.get(numa, 'level') || '',
             compType: _.get(numa, 'additionalProperties.competencyType') || '',
             compArea: _.get(numa, 'additionalProperties.competencyArea') || '',
+            levelList: _.get(numa, 'chield') || this.activated.snapshot.data.pageData.data.levels,
+            compSource: _.get(numa, 'source') || 'WAT'
           }
         })
         this.activeGroupIdx = i + 1
@@ -260,6 +262,8 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         compLevel: '',
         compType: '',
         compArea: '',
+        levelList: [],
+        compSource: 'WAT'
       })
       comps.push(fga)
       fg.controls.competincies.patchValue([...comps.value])
@@ -282,6 +286,8 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
           compLevel: ac.compLevel,
           compType: ac.compType,
           compArea: ac.compArea,
+          levelList: ac.levelList || [],
+          compSource: ac.source
         })
         oldValue.push(fga)
       })
@@ -302,6 +308,8 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         compLevel: '',
         compType: '',
         compArea: '',
+        compSource: '',
+        levelList: []
       })
       oldValue.push(fga)
       this.setGroupActivityValues([...oldValue.value])
@@ -480,8 +488,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       // ** if you are here meaning Something is wrong in code */
       // oldcompData = _.first(_.filter(lst.value, { compName: _.get(event, 'option.value.name') }))
     }
-
-    const children = [..._.get(event, 'option.value.children')]
+    const chldrnVal = _.get(event, 'option.value.children') ||
+      this.activated.snapshot.data.pageData.data.levels || {}
+    const children = [...chldrnVal]
 
     const dialogRef = this.dialog.open(WatCompPopupComponent, {
       restoreFocus: false,
@@ -510,6 +519,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         const frmctrl1 = lst.at(this.selectedCompIdx).get('compName') as FormControl
         frmctrl1.patchValue(_.get(newVal, 'compName') || '')
 
+        const source = lst.at(this.selectedCompIdx).get('compSource') as FormControl
+        source.patchValue(_.get(newVal, 'compSource') || '')
+
         const frmctrl2 = lst.at(this.selectedCompIdx).get('compLevel') as FormControl
         frmctrl2.patchValue(_.get(newVal, 'compLevel'))
 
@@ -518,6 +530,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
 
         const frmctrl4 = lst.at(this.selectedCompIdx).get('compArea') as FormControl
         frmctrl4.patchValue(_.get(newVal, 'compArea') || '')
+
+        const levelList = lst.at(this.selectedCompIdx).get('levelList') as FormArray
+        levelList.patchValue(_.get(newVal, 'levelList') || [])
 
         this.watStore.setgetcompetencyGroup(this.groupList.value, false, true)
         this.updateCompData()

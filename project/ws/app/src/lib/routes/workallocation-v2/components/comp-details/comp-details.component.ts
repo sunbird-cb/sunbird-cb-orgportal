@@ -63,6 +63,10 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
     const oldValue = this.compList
     for (let index = 0; index < this.dataStructure.length; index += 1) {
       if (this.dataStructure && this.dataStructure[index] && this.dataStructure[index].compName) {
+        const lst = _.map(_.get(this.dataStructure[index], 'levelList') || [], r => {
+          return { alias: r.alias, level: r.level }
+        })
+        debugger
         const fg = this.formBuilder.group({
           localId: this.dataStructure[index].localId,
           compId: this.dataStructure[index].compId,
@@ -71,6 +75,8 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
           compLevel: this.dataStructure[index].compLevel,
           compType: this.dataStructure[index].compType,
           compArea: this.dataStructure[index].compArea,
+          compSource: this.dataStructure[index].source,
+          levelList: lst && lst.length > 0 ? [lst] : [this.levelLest],
         })
         oldValue.push(fg)
       }
@@ -81,5 +87,8 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
   getLocalPrint(data: string) {
     return `<ul>${(_.compact(data.split('• '))
       .map(i => { if (i) { return `<li>${i}</li>` } return null })).join('')}</ul>`
+  }
+  log(a: any) {
+    console.log(a)
   }
 }
