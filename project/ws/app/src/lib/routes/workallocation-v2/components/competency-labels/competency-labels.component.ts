@@ -287,7 +287,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
           compType: ac.compType,
           compArea: ac.compArea,
           levelList: ac.levelList || [],
-          compSource: ac.source
+          compSource: ac.compSource
         })
         oldValue.push(fga)
       })
@@ -391,6 +391,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       compLevel: new FormControl(activityObj.compLevel),
       compType: new FormControl(activityObj.compType),
       compArea: new FormControl(activityObj.compArea),
+      compSource: new FormControl(activityObj.compSource),
     })
     const optionsArr = this.activityForm.controls['labelsArray'] as FormArray
     optionsArr.push(newControl)

@@ -75,7 +75,7 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
           compLevel: this.dataStructure[index].compLevel,
           compType: this.dataStructure[index].compType,
           compArea: this.dataStructure[index].compArea,
-          compSource: this.dataStructure[index].source,
+          compSource: this.dataStructure[index].compSource,
           levelList: lst && lst.length > 0 ? [lst] : [this.levelLest],
         })
         oldValue.push(fg)
