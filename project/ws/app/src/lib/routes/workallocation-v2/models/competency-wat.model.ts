@@ -8,7 +8,7 @@ export namespace NSWatCompetency {
     compType?: string
     compArea?: string
     levelList?: any[]
-    source?: string
+    compSource?: string
     // assignedTo: string
   }
   // In UI it's Role

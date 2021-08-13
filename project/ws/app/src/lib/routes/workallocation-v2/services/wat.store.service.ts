@@ -78,11 +78,9 @@ export class WatStoreService {
             const compArea = _.get(a, 'compArea') || _.get(existing, 'compArea')
             const source = _.get(a, 'compSource') || _.get(existing, 'compSource')
             const levelList = _.get(a, 'levelList') || _.get(existing, 'levelList') || []
-            debugger
             const newA = { ...a, levelList, level, compType, compArea, source }
             complist.push(newA)
           } else {
-            debugger
             complist.push(a)
           }
         })
