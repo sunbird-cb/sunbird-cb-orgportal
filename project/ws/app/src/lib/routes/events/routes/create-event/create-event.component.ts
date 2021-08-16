@@ -353,6 +353,9 @@ export class CreateEventComponent implements OnInit {
       }
     }
 
+    const createdforarray: any[] = []
+    createdforarray.push(this.departmentID)
+
     const form = {
       request: {
         event: {
@@ -381,11 +384,13 @@ export class CreateEventComponent implements OnInit {
           // tslint:disable-next-line:prefer-template
           startTime: this.createEventForm.controls['eventTime'].value + ':00+05:30',
           endTime: finalTime,
-          code: '1234',
+          code: this.createEventForm.controls['eventTitle'].value,
           eventType: 'Online',
           // contentType: 'Event',
-          onlineProvider: 'Zoom',
+          // onlineProvider: 'Zoom',
           registrationEndDate: moment(this.createEventForm.controls['eventDate'].value).format('YYYY-MM-DD'),
+          owner: this.department,
+          createdFor: createdforarray,
         },
       },
     }
@@ -439,8 +444,8 @@ export class CreateEventComponent implements OnInit {
 
   showSuccess(res: any) {
     this.dialogRef = this.matDialog.open(SuccessComponent, {
-      width: '630px',
-      height: '520px',
+      width: '612px',
+      height: '368px',
       data: res,
     })
     this.dialogRef.afterClosed().subscribe(() => {
