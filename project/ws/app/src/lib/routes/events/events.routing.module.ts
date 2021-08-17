@@ -19,6 +19,9 @@ const routes: Routes = [
       {
         path: 'list',
         component: ListEventComponent,
+        resolve: {
+          configService: ConfigResolveService,
+        },
       },
       {
         path: ':eventId/details',
