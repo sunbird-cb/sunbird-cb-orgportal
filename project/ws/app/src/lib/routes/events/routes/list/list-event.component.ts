@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { EventsService } from '../../services/events.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import * as moment from 'moment'
-
+/* tslint:disable */
+import _ from 'lodash'
+/* tslint:enable */
 @Component({
     selector: 'ws-app-list-event',
     templateUrl: './list-event.component.html',
@@ -24,16 +26,30 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     connectionRequests!: any[]
     usersData!: any
     department: any
+    departmentID: any
 
     constructor(
         private router: Router,
         private eventSvc: EventsService,
         private configSvc: ConfigurationsService,
+        private activeRoute: ActivatedRoute,
     ) {
         this.math = Math
-
-        this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
-        this.department = this.configSvc.userProfile && this.configSvc.userProfile.departmentName
+        if (this.configSvc.userProfile) {
+            this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
+            this.department = this.configSvc.userProfile && this.configSvc.userProfile.departmentName
+            this.departmentID = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId
+        } else {
+            if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
+            this.departmentID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
+            }
+            if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')) {
+            this.department = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')
+            }
+            if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')) {
+            this.currentUser = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')
+            }
+        }
     }
 
     ngOnInit() {
@@ -79,7 +95,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
                     contentType: 'Event',
                 },
                 sort_by: {
-                    createdOn: 'desc',
+                    startDate: 'desc',
                 },
             },
         }
@@ -96,28 +112,30 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
             this.eventData['upcomingEvents'] = []
             Object.keys(data).forEach((index: any) => {
                 const obj = data[index]
-                const expiryDateFormat = this.customDateFormat(obj.endDate, obj.endTime)
-                const floor = Math.floor
-                const hours = floor(obj.duration / 60)
-                const minutes = obj.duration % 60
-                const duration = (hours === 0) ? ((minutes === 0) ? '---' : `${minutes} minutes`) : (minutes === 0) ? (hours === 1) ?
-                    `${hours} hour` : `${hours} hours` : (hours === 1) ? `${hours} hour ${minutes} minutes` :
-                    `${hours} hours ${minutes} minutes`
-                const creatordata = obj.creatorDetails !== undefined ? obj.creatorDetails : []
-                const str = creatordata && creatordata.length > 0 ? creatordata.replace(/\\/g, '') : []
-                const creatorDetails = str && str.length > 0 ? JSON.parse(str) : creatordata
-                const eventDataObj = {
-                    eventName: obj.name.substring(0, 25),
-                    eventStartDate: this.customDateFormat(obj.startDate, obj.startTime),
-                    eventCreatedOn: this.allEventDateFormat(obj.createdOn),
-                    eventDuration: duration,
-                    eventjoined: (creatorDetails !== undefined && creatorDetails.length > 0) ?
-                        ((creatorDetails.length === 1) ? '1 person' : `${creatorDetails.length} people`) : ' --- ',
-                    eventThumbnail: obj.appIcon && (obj.appIcon !== null || obj.appIcon !== undefined) ? obj.appIcon :
-                        '/assets/icons/Events_default.png',
+                if (obj.createdFor && obj.createdFor[0] === this.departmentID) {
+                    const expiryDateFormat = this.customDateFormat(obj.endDate, obj.endTime)
+                    const floor = Math.floor
+                    const hours = floor(obj.duration / 60)
+                    const minutes = obj.duration % 60
+                    const duration = (hours === 0) ? ((minutes === 0) ? '---' : `${minutes} minutes`) : (minutes === 0) ? (hours === 1) ?
+                        `${hours} hour` : `${hours} hours` : (hours === 1) ? `${hours} hour ${minutes} minutes` :
+                        `${hours} hours ${minutes} minutes`
+                    const creatordata = obj.creatorDetails !== undefined ? obj.creatorDetails : []
+                    const str = creatordata && creatordata.length > 0 ? creatordata.replace(/\\/g, '') : []
+                    const creatorDetails = str && str.length > 0 ? JSON.parse(str) : creatordata
+                    const eventDataObj = {
+                        eventName: obj.name.substring(0, 25),
+                        eventStartDate: this.customDateFormat(obj.startDate, obj.startTime),
+                        eventCreatedOn: this.allEventDateFormat(obj.createdOn),
+                        eventDuration: duration,
+                        eventjoined: (creatorDetails !== undefined && creatorDetails.length > 0) ?
+                            ((creatorDetails.length === 1) ? '1 person' : `${creatorDetails.length} people`) : ' --- ',
+                        eventThumbnail: obj.appIcon && (obj.appIcon !== null || obj.appIcon !== undefined) ? obj.appIcon :
+                            '/assets/icons/Events_default.png',
+                    }
+                    const isPast = this.compareDate(expiryDateFormat);
+                    (isPast) ? this.eventData['pastEvents'].push(eventDataObj) : this.eventData['upcomingEvents'].push(eventDataObj)
                 }
-                const isPast = this.compareDate(expiryDateFormat);
-                (isPast) ? this.eventData['pastEvents'].push(eventDataObj) : this.eventData['upcomingEvents'].push(eventDataObj)
             })
             this.filter('upcoming')
         }

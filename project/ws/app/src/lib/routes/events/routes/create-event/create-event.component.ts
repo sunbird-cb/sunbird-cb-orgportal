@@ -192,14 +192,14 @@ export class CreateEventComponent implements OnInit {
     Object.keys(responseObj.data).forEach((index: any) => {
       const obj = responseObj.data[index]
       const setSelectedPresentersObj = {
-        firstname: obj.firstname,
-        lastname: obj.lastname,
+        firstname: obj.firstName || obj.firstname,
+        lastname: obj.lastName || obj.lastname,
         email: obj.email,
         type: 'Karmayogi User',
       }
       const contactsObj = {
         id: obj.id,
-        name: `${obj.firstname} ${obj.lastname}`,
+        name: `${obj.firstName || obj.firstname} ${obj.lastName || obj.lastname}`,
       }
       this.presentersArr.push(contactsObj)
       this.participantsArr.push(setSelectedPresentersObj)
