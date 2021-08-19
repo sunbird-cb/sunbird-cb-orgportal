@@ -166,6 +166,19 @@ export class CreateEventComponent implements OnInit {
         render: true,
         enabled: true,
       }]
+
+    if (this.timeArr) {
+      const hr = new Date().getHours()
+      const min =  new Date().getMinutes()
+      const currentTime = `${hr}:${min}`
+      const newtimearray: any = []
+      this.timeArr.forEach((time: any) => {
+        if (time.value > currentTime) {
+          newtimearray.push(time)
+        }
+      })
+      this.timeArr = newtimearray
+    }
   }
 
   onSideNavTabClick(id: string) {
