@@ -138,10 +138,6 @@ table {
 div.item {
     vertical-align: top;
     display: inline-block;
-    text-align: center;
-}
-.caption {
-    display: block;
 }
 
 .mat-cell {
@@ -699,4 +695,30 @@ input.mat-input-element {
   font-size: 20px;
   display: block;
   padding: 15px 0;
+}
+.dispaly-inlineflex{
+  display: inline-flex !important;
+}
+.maxwidth-150 {
+  max-width: 150px !important;
+}
+.margin-l65 {
+  margin-left: 65px !important
+}
+
+.image-box {
+  display:flex; 
+  justify-content: right;
+  .mat-card {
+    width: 200px;
+    border:1px solid #ededed;
+  }
+
+  .imgicon {
+    width: 35px;
+  }
+
+  #blah {
+    width: 200px;
+  }
 }
