@@ -140,7 +140,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    
     this.tabsData = [
       {
         name: 'Event details',
@@ -167,7 +167,7 @@ export class CreateEventComponent implements OnInit {
         enabled: true,
       }]
 
-    if (this.timeArr) {
+      if (this.timeArr) {
       const hr = new Date().getHours()
       const min =  new Date().getMinutes()
       const currentTime = `${hr}:${min}`
@@ -458,7 +458,7 @@ export class CreateEventComponent implements OnInit {
   showSuccess(res: any) {
     this.dialogRef = this.matDialog.open(SuccessComponent, {
       width: '612px',
-      height: '368px',
+      height: '471px',
       data: res,
     })
     this.dialogRef.afterClosed().subscribe(() => {
