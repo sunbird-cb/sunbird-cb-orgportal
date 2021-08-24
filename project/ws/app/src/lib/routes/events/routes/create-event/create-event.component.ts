@@ -167,7 +167,7 @@ export class CreateEventComponent implements OnInit {
         enabled: true,
       }]
 
-      if (this.timeArr) {
+    if (this.timeArr) {
       const hr = new Date().getHours()
       const min =  new Date().getMinutes()
       const currentTime = `${hr}:${min}`
