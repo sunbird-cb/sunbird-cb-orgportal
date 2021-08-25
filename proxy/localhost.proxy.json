@@ -1,29 +1,14 @@
 {
   "/apis/*": {
-    "target": "https://igot-dev.in",
+    "target": "https://aastrika-sb-cbp.idc.tarento.com",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,
     "pathRewrite": {
       "/apis": "/apis"
-    }
-  },
-  "/api/*": {
-    "target": "https://igot-dev.in",
-    "secure": false,
-    "logLevel": "debug",
-    "changeOrigin": true,
-    "pathRewrite": {
-      "/api": "/api"
-    }
-  },
-  "/event/*": {
-    "target": "https://igot-dev.in",
-    "secure": false,
-    "logLevel": "debug",
-    "changeOrigin": true,
-    "pathRewrite": {
-      "/apis": "/apis"
+    },
+    "headers": {
+      "Cookie":"connect.sid=s%3AiTJeh7x9CK09yNMKTaLP-2IjGlDs7L58.%2B10zd06WelsOLBo52NJJI0TQllSRr6PDnWSMxEL%2FlOk"
     }
   },
   "/content-api/*": {
@@ -72,7 +57,7 @@
     }
   },
   "/assets/*": {
-    "target": "http://127.0.0.1:8080",
+    "target": "http://localhost:8080",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,
