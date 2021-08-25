@@ -2,9 +2,9 @@
     <div class="flex flex-1 custom">
         <div class="flex-3">
             <div class="page_title_flex">
-                <div class="flex">
+                <div class="flex margin-left-xl">
                     <ws-widget-breadcrumbs-org
-                        [widgetData]="{titles:[{title:'Events', url:'/app/events'},{title:'New Event',url:'none'}] }">
+                        [widgetData]="{titles:[{title:'Events', url:'/app/events'},{title:'New event',url:'none'}] }">
                     </ws-widget-breadcrumbs-org>
                 </div>
                 <span class="spacer"></span>
@@ -26,18 +26,18 @@
                             </ws-widget-scrollspy-left-menu>
                         </div>
                     </div>
-                    <div class="flex-3">
+                    <div class="flex-3 border-left">
                         <div class="flex flex-1 flex-column">
                             <div class="profile-container container-balanced">
                                 <div class="profile-box">
                                     <form class="create-event-form" [formGroup]="createEventForm">
-                                        <div class="input-column px-2 ws-mat-accent-border mb-10  padding-top-xl padding-bottom-l padding-right-xl padding-left-l" id="eventInfo">
-                                            <label class="heading">Event Details</label>
+                                        <div class="input-column px-2 ws-mat-accent-border mb-5 padding-top-l padding-bottom-l padding-right-xl padding-left-xl" id="eventInfo">
+                                            <label class="heading">Event details</label>
                                             <div class="input-wrapper margin-top-s">
                                                 <div class="image-box">
                                                     <mat-card class="mb-10 text-center margin-right-l" [ngClass]="imageSrcURL ? 'button-row' : 'button-row-inline'">
                                                         <div class="item text-center">
-                                                            <img class="imgicon" src="/assets/icons/jpg.svg">
+                                                            <img class="imgicon display-block" src="/assets/icons/jpg.svg">
                                                             <div id="thumbnail" class="deleteIcon" *ngIf="imageSrcURL">
                                                                 <a href="javascript:void(0);" (click)="removeSelectedFile()">
                                                                     <span id="btnDelete" >X</span>
@@ -45,7 +45,7 @@
                                                             </div>
                                                             <input type="file" id="coverPicture" (change)="onFileSelect($event);" accept="image/x-png,image/gif,image/jpeg" />
                                                             <img *ngIf="imageSrcURL" id="blah" [src]="imageSrcURL" alt="your image" />
-                                                            <button  *ngIf="!imageSrcURL" mat-stroked-button color="accent" type="button" class="caption dispaly-block mat-accent-border flex-auto-display" (click)="selectCover()">Cover Picture</button>
+                                                            <button  *ngIf="!imageSrcURL" mat-stroked-button color="accent" type="button" class="caption dispaly-block mat-accent-border flex-auto-display" (click)="selectCover()">Cover picture</button>
                                                             <mat-card-content *ngIf="!imageSrcURL" class="caption dispaly-block ws-mat-black60-text text-center">
                                                                 Upload cover picture here
                                                             </mat-card-content>
@@ -112,7 +112,7 @@
                                                 <label for="agenda" class=" margin-remove-bottom form-label required"
                                                     i18n="agenda label|Label which explains the user to enter agenda" i18n-aria-label 
                                                     aria-label="agenda label">
-                                                        Event Agenda
+                                                        Event agenda
                                                 </label>
                                                 <mat-form-field appearance="outline" class="margin-top-xs">
                                                     <textarea id="agenda" matInput #agenda formControlName="agenda" i18n-placeholder placeholder="Type here"
@@ -146,8 +146,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="input-column px-2 ws-mat-accent-border mb-10  padding-top-xl padding-bottom-l padding-right-xl padding-left-l" id="datetime">
-                                            <label class="heading">Date Time</label>
+                                        <div class="input-column px-2 ws-mat-accent-border mb-5 padding-top-xl padding-bottom-l padding-right-xl padding-left-l" id="datetime">
+                                            <label class="heading">Date time</label>
                                             <div class="input-wrapper margin-top-s">
                                                 <label for="eventDate" class=" margin-remove-bottom form-label required"
                                                     i18n="Event Date label|Label which explains the user to enter event date" i18n-aria-label
@@ -229,14 +229,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="input-column px-2 ws-mat-accent-border mb-10  padding-top-xl padding-bottom-l padding-right-xl padding-left-l" id="videoinfo">
-                                            <label class="heading">Video Conferencing</label>
+                                        <div class="input-column px-2 ws-mat-accent-border mb-5 padding-top-xl padding-bottom-l padding-right-xl padding-left-l" id="videoinfo">
+                                            <label class="heading">Video conferencing</label>
                                             <div class="input-wrapper margin-top-s">
                                                 <label for="conferenceLink" class=" margin-remove-bottom form-label required"
                                                     i18n="conferenceLink label|Label which explains the user to enter conferenceLink" 
                                                     i18n-aria-label
                                                     aria-label="conferenceLink label">
-                                                    Video Conferencing
+                                                    Video conferencing link
                                                 </label>
                                                 <mat-form-field appearance="outline" class="margin-top-xs">
                                                     <input id="conferenceLink" matInput #conferenceLink formControlName="conferenceLink" 
@@ -245,7 +245,7 @@
                                                     <mat-error [hidden]="false" i18n="conferenceLink Error|Explains conferenceLink is required" i18n-aria-label
                                                     aria-label="conferenceLink Error|Explains conferenceLink is required "
                                                     *ngIf="createEventForm?.controls['conferenceLink']?.touched && createEventForm?.controls['conferenceLink'].errors?.required">
-                                                        Conference Link is mandatory
+                                                        Conference link is mandatory
                                                     </mat-error>
                                                     <mat-error [hidden]="false" *ngIf="createEventForm?.controls['conferenceLink'].errors?.pattern" 
                                                     i18n-aria-label
@@ -255,7 +255,7 @@
                                                 </mat-form-field>
                                             </div>
                                         </div>
-                                        <div class="input-column px-2 ws-mat-accent-border mb-10 padding-top-xl padding-bottom-l padding-right-xl padding-left-l" id="presenter">
+                                        <div class="input-column px-2 ws-mat-accent-border mb-5 padding-top-xl padding-bottom-l padding-right-xl padding-left-l" id="presenter">
                                             <label class="heading">Presenters</label>
                                             <div class="input-wrapper margin-top-s">
                                                 <label class="form-label required" aria-label="conferenceLink label mb-10 ws-mat-black60-text">

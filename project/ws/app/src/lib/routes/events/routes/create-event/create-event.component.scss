@@ -13,6 +13,9 @@ td, th {
   padding: 8px;
 }
 
+.border-left {
+  border-left: 1px solid #d3d3d3;
+}
 .page_title_flex {
   display:flex; 
   justify-content: right;
@@ -716,9 +719,19 @@ input.mat-input-element {
 
   .imgicon {
     width: 35px;
-  }
+    margin: 0 auto;
+  }  
 
   #blah {
     width: 200px;
   }
+}
+::ng-deep.border-margin {
+  border: 0 !important;
+}
+.padding-left-xl {
+  padding-left: 32px !important;
+}
+::ng-deep.theme-igot.day-mode .mat-stroked-button:not([disabled]) {
+  border-color: #0074b6;
 }
