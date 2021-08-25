@@ -407,10 +407,11 @@ export class CreateEventComponent implements OnInit {
         },
       },
     }
-    // console.log(form)
     // const formJson = this.encodeToBase64(form)
-    // console.log(formJson)
-    this.eventsSvc.createEvent(form).subscribe(
+    if (eventDurationMinutes === 0) {
+      this.openSnackbar('Duration cannot be zero')
+    } else {
+      this.eventsSvc.createEvent(form).subscribe(
       res => {
         const identifier = res.result.identifier
         // this.fileSubmit(identifier)
@@ -419,7 +420,8 @@ export class CreateEventComponent implements OnInit {
       (err: any) => {
         this.openSnackbar(err.error.split(':')[1])
       }
-    )
+      )
+    }
   }
 
   encodeToBase64(body: any) {
