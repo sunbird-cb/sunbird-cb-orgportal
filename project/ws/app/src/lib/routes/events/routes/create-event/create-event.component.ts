@@ -140,7 +140,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.tabsData = [
       {
         name: 'Event details',
