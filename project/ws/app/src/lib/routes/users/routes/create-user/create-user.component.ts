@@ -73,9 +73,11 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
+        console.log(fullProfile.unMappedUser.rootOrg)
         this.department = fullProfile.unMappedUser.rootOrgId
         this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
         const orgLst = _.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList')
+        console.log(orgLst)
         const filteredDept = _.compact(_.map(orgLst, ls => {
           const f = _.filter(ls.flags, (fl: any) => fullProfile.unMappedUser.rootOrg[fl])
           if (f && f.length > 0) {
@@ -85,7 +87,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         }))
         /* tslint:disable-next-line */
         const rolesListFull = _.uniq(_.map(_.compact(_.flatten(_.map(filteredDept, 'roles'))), rol => ({ roleName: rol, description: rol })))
-
+        console.log(rolesListFull)
         rolesListFull.forEach((role: any) => {
           if (!this.rolesList.some((item: any) => item.roleName === role.roleName)) {
             this.rolesList.push(role)
@@ -94,6 +96,22 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         if (this.configService.userProfile && this.configService.userProfile.departmentName) {
           this.configService.userProfile.departmentName = this.departmentName
         }
+
+        this.rolesList = [
+          { roleName: 'CONTENT_CREATOR' },
+          { roleName: 'CONTENT_REVIEWER' },
+          { roleName: 'FRAC_ADMIN' },
+          { roleName: 'CONTENT_PUBLISHER' },
+          { roleName: 'EDITOR' },
+          { roleName: 'FRAC_ADMIN' },
+          { roleName: 'MDO_ADMIN' },
+          { roleName: 'SPV_ADMIN' },
+          { roleName: 'PUBLIC' },
+          { roleName: 'FRAC_COMPETENCY_MEMBER' },
+          { roleName: 'FRAC_COMPETENCY_REVIEWER' },
+          { roleName: 'FRAC_REVIEWER_L2' },
+          { roleName: 'ORG_ADMIN' }
+        ]
       }
     })
     this.createUserForm = new FormGroup({
