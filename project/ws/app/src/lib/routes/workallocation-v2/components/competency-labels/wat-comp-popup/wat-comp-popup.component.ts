@@ -132,7 +132,7 @@ export class WatCompPopupComponent implements OnInit {
 
   }
   getLocalPrint(data: string) {
-    return `<ul>${(_.compact(data.split('• '))
+    return `<ul>${(_.compact(data.split('\n'))
       .map(i => { if (i) { return `<li>${i}</li>` } return null })).join('')}</ul>`
   }
   onChange($event: any) {
