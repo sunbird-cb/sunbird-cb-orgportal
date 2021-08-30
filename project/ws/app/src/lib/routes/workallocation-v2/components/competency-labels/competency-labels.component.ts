@@ -5,7 +5,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { inspect } from 'util'
 import { AllocationService } from '../../../workallocation/services/allocation.service'
 import { debounceTime, first, map, switchMap, takeUntil } from 'rxjs/operators'
-import { Observable, Subject } from 'rxjs'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { WatStoreService } from '../../services/wat.store.service'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { NSWatCompetency } from '../../models/competency-wat.model'
@@ -37,6 +37,8 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   canshowName = 1
   canshow = -1
   filteredCompetencies!: Observable<any[]>
+  filteredCompetenciesV1 = new BehaviorSubject<any[]>([])
+
   constructor(
     private changeDetector: ChangeDetectorRef,
     private formBuilder: FormBuilder,
@@ -213,11 +215,6 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   /** Predicate function that doesn't allow items to be dropped into a list. */
   noReturnPredicate() {
     return true
-  }
-  log(value: any) {
-    if (value) {
-      // console.log(value)
-    }
   }
   setlabelsValues(val: any) {
     this.labelsList.patchValue(val)
@@ -438,11 +435,19 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
   public async filterCompetencies(val: string, index: number) {
     this.selectedCompIdx = index
     if (val.length > 2) {
-      this.filteredCompetencies = this.allocateSrvc.onSearchCompetency(val).pipe(
+      // this.filteredCompetencies = this.allocateSrvc.onSearchCompetency(val).pipe(
+      //   map(res => {
+      //     return res.responseData
+      //   })
+      // )
+      this.allocateSrvc.onSearchCompetency(val).pipe(
         map(res => {
           return res.responseData
         })
-      )
+      ).subscribe((response: any) => {
+        this.filteredCompetenciesV1.next(response)
+      })
+
     }
   }
   setSelectedFilter(index: number) {
@@ -599,5 +604,9 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         }
       })
     }
+  }
+  log(val: any) {
+    // tslint:disable-next-line
+    console.log(val)
   }
 }
