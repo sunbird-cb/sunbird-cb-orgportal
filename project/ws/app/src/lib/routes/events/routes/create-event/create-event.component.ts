@@ -345,6 +345,7 @@ export class CreateEventComponent implements OnInit {
     const hours = (Math.floor(totalMinutes / 60) < 10) ? '0' + Math.floor(totalMinutes / 60) : Math.floor(totalMinutes / 60)
     const minutes = totalMinutes % 60
     let finalTime
+    let newendDate
     if (hours < 24) {
       if (minutes === 0) {
         // tslint:disable-next-line:prefer-template
@@ -361,8 +362,23 @@ export class CreateEventComponent implements OnInit {
         // tslint:disable-next-line:prefer-template
         finalTime = '00' + ':' + minutes + ':00+05:30'
       } else {
+        const fhr = Number(hours)
         // tslint:disable-next-line:prefer-template
-        finalTime = hours + ':' + minutes + ':00+05:30'
+        const nhr = ('0' + (fhr - 24)).slice(-2)
+        if (minutes === 0) {
+          // tslint:disable-next-line:prefer-template
+          finalTime = nhr + ':' + '00' + ':00+05:30'
+        } else {
+          // tslint:disable-next-line:prefer-template
+          finalTime = nhr + ':' + minutes + ':00+05:30'
+        }
+        const selectedStartDate = this.createEventForm.controls['eventDate'].value
+        // tslint:disable-next-line:prefer-template
+        const date =  ('0' + (new Date(selectedStartDate).getDate() + 1)).slice(-2)
+        // tslint:disable-next-line:prefer-template
+        const month =  ('0' + (new Date(selectedStartDate).getMonth() + 1)).slice(-2)
+        const year = new Date(selectedStartDate).getFullYear()
+        newendDate = `${year}-${month}-${date}`
       }
     }
 
@@ -393,7 +409,7 @@ export class CreateEventComponent implements OnInit {
           creatorDetails: this.createEventForm.controls['presenters'].value,
           sourceName: this.department,
           startDate: moment(this.createEventForm.controls['eventDate'].value).format('YYYY-MM-DD'),
-          endDate: moment(this.createEventForm.controls['eventDate'].value).format('YYYY-MM-DD'),
+          endDate: newendDate ? newendDate : moment(this.createEventForm.controls['eventDate'].value).format('YYYY-MM-DD'),
           // tslint:disable-next-line:prefer-template
           startTime: this.createEventForm.controls['eventTime'].value + ':00+05:30',
           endTime: finalTime,
