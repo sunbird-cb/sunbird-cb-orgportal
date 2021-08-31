@@ -18,7 +18,6 @@ const API_END_POINTS = {
   providedIn: 'root',
 })
 export class AllocationService {
-
   constructor(private http: HttpClient) { }
 
   onSearchUser(val: any): Observable<any> {
