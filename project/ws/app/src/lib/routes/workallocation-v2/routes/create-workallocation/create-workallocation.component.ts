@@ -494,7 +494,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
                   description: compp.compDescription,
                   // id='123',
                   level: compp.compLevel,
-                  source: compp.compSource || 'WAT',
+                  source: compp.compSource || 'Work Allocation Tool',
                   // status: 'UNVERIFIED',
                   additionalProperties: {
                     competencyArea: compp.compArea,
@@ -551,7 +551,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
           description: compp.compDescription,
           // id='123',
           level: compp.compLevel,
-          source: compp.compSource || 'WAT',
+          source: compp.compSource || 'Work Allocation Tool',
           // status: 'UNVERIFIED',
           additionalProperties: {
             competencyArea: compp.compArea,
