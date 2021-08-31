@@ -72,7 +72,7 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
           compId: this.dataStructure[index].compId,
           compName: new FormControl({ value: this.dataStructure[index].compName, disabled: true }),
           compDescription: this.dataStructure[index].compDescription,
-          compLevel: this.dataStructure[index].compLevel,
+          compLevel: new FormControl({ value: this.dataStructure[index].compLevel, disabled: false }),
           compType: this.dataStructure[index].compType,
           compArea: this.dataStructure[index].compArea,
           compSource: this.dataStructure[index].compSource,
