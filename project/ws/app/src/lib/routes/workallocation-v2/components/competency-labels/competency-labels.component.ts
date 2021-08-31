@@ -108,7 +108,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
             compType: _.get(numa, 'additionalProperties.competencyType') || '',
             compArea: _.get(numa, 'additionalProperties.competencyArea') || '',
             levelList: [_.get(numa, 'chield')] || [this.activated.snapshot.data.pageData.data.levels],
-            compSource: _.get(numa, 'source') || 'WAT',
+            compSource: _.get(numa, 'source') || 'Work Allocation Tool',
           }
         })
         this.activeGroupIdx = i + 1
@@ -260,7 +260,7 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         compType: '',
         compArea: '',
         levelList: [],
-        compSource: 'WAT',
+        compSource: 'Work Allocation Tool',
       })
       comps.push(fga)
       fg.controls.competincies.patchValue([...comps.value])
