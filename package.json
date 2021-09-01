@@ -41,7 +41,7 @@
     "@angular/pwa": "^0.803.14",
     "@angular/router": "~8.2.1",
     "@angular/service-worker": "~8.2.1",
-    "@sunbird-cb/collection": "^1.0.5",
+    "@sunbird-cb/collection": "^1.0.6",
     "@sunbird-cb/design-system": "0.0.1",
     "@sunbird-cb/rain-dashboards": "^0.1.7",
     "@sunbird-cb/resolver": "^1.0.0",
