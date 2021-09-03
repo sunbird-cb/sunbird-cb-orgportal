@@ -170,7 +170,13 @@ export class CreateEventComponent implements OnInit {
     if (this.timeArr) {
       const hr = new Date().getHours()
       const min =  new Date().getMinutes()
-      const currentTime = `${hr}:${min}`
+
+      // tslint:disable-next-line:prefer-template
+      const nhr = ('0' + hr).slice(-2)
+      // tslint:disable-next-line:prefer-template
+      const nmin = ('0' + min).slice(-2)
+
+      const currentTime = `${nhr}:${nmin}`
       const newtimearray: any = []
       this.timeArr.forEach((time: any) => {
         if (time.value > currentTime) {
