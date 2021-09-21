@@ -8,6 +8,7 @@ import { ProfileV2Service } from '../../services/home.servive'
 import {
   dashboardListData,
 } from "../../../../../../../../../src/mdo-assets/data/data"
+import { Router } from '@angular/router'
 /* tslint:enable */
 
 @Component({
@@ -1178,7 +1179,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
     ],
   }
 
-  constructor(@Inject(DOCUMENT) private document: Document, private homeResolver: ProfileV2Service) {
+  constructor(@Inject(DOCUMENT) private document: Document, private homeResolver: ProfileV2Service, private router: Router) {
   }
   filterR(type: string) {
     this.resolutionFilter = type
@@ -1274,5 +1275,15 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
     link.remove()
   }
   ngAfterViewInit() {
+  }
+
+  viewmdoinfo(tab: any) {
+    if (tab === 'leadership') {
+      this.router.navigate(['/app/home/mdoinfo/leadership'])
+    } else if (tab === 'staff') {
+      this.router.navigate(['/app/home/mdoinfo/staff'])
+    } else if (tab === 'budget') {
+      this.router.navigate(['/app/home/mdoinfo/budget'])
+    }
   }
 }
