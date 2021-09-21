@@ -18,6 +18,7 @@ import {
   MatProgressSpinnerModule,
   MatProgressBarModule,
   MatRadioModule,
+  MatTabsModule,
 } from '@angular/material'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatPaginatorModule } from '@angular/material/paginator'
@@ -40,6 +41,16 @@ import { NgxPaginationModule } from 'ngx-pagination'
 import { UIAdminTableModule } from '../../head/work-allocation-table/ui-admin-table.module'
 import { WelcomeComponent } from './routes/welcome/welcome.component'
 import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
+import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
+import { LeadershipComponent } from './routes/leadership/leadership.component'
+import { StaffComponent } from './routes/staff/staff.component'
+import { BudgetComponent } from './routes/budget/budget.component'
+import { LeftMenuComponent } from './components/left-menu/left-menu.component'
+import { MatTableModule } from '@angular/material/table'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatSortModule } from '@angular/material/sort'
+import { LeadershiptableComponent } from './components/leadershiptable/leadershiptable.component'
+import { BudgettableComponent } from './components/budgettable/budgettable.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -49,6 +60,13 @@ import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
     ApprovalsComponent,
     WorkallocationComponent,
     WelcomeComponent,
+    MdoinfoComponent,
+    LeadershipComponent,
+    StaffComponent,
+    BudgetComponent,
+    LeftMenuComponent,
+    LeadershiptableComponent,
+    BudgettableComponent,
   ],
   imports: [
     CommonModule,
@@ -95,6 +113,10 @@ import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
     NgxPaginationModule,
     UIAdminTableModule,
     RainDashboardsModule,
+    MatTabsModule,
+    MatTableModule,
+    MatTooltipModule,
+    MatSortModule,
   ],
   entryComponents: [
   ],

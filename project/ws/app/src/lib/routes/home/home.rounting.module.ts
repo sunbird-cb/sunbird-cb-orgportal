@@ -12,6 +12,10 @@ import { WorkallocationComponent } from './routes/workallocation/workallocation.
 import { WelcomeComponent } from './routes/welcome/welcome.component'
 import { ConfigResolveService } from './resolvers/config-resolve.service'
 import { UsersListResolve } from './resolvers/users-list-resolve.service'
+import { LeadershipComponent } from './routes/leadership/leadership.component'
+import { StaffComponent } from './routes/staff/staff.component'
+import { BudgetComponent } from './routes/budget/budget.component'
+import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
 
 const routes: Routes = [
   {
@@ -57,6 +61,27 @@ const routes: Routes = [
       {
         path: 'workallocation',
         component: WorkallocationComponent,
+      },
+    ],
+  },
+  {
+    path: 'mdoinfo',
+    component: MdoinfoComponent,
+    resolve: {
+      configService: ConfigResolveService,
+    },
+    children: [
+      {
+        path: 'leadership',
+        component: LeadershipComponent,
+      },
+      {
+        path: 'staff',
+        component: StaffComponent,
+      },
+      {
+        path: 'budget',
+        component: BudgetComponent,
       },
     ],
   },
