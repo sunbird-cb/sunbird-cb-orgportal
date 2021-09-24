@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, SimpleChanges, OnChanges } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
-import { MatPaginator, MatSnackBar } from '@angular/material'
+import { MatPaginator, MatSnackBar, MatDialogConfig, MatDialog } from '@angular/material'
 import { MatSort } from '@angular/material/sort'
 import { ITableData, IColums } from '../../interface/interfaces'
 import * as _ from 'lodash'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { StaffdetailspopupComponent } from '../../components/staffdetailspopup/staffdetailspopup.component'
 
 @Component({
   selector: 'ws-app-staff',
@@ -37,13 +38,14 @@ export class StaffComponent implements OnInit, OnChanges {
   selection = new SelectionModel<any>(true, [])
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   data!: { srnumber: number; position: string; positionfilled: number; positionvacant: number; }[]
+  userInfo: any = []
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
       this.dataSource.sort = sort
     }
   }
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(private snackBar: MatSnackBar, public dialog: MatDialog) {
     this.staffdata = new FormGroup({
       totalpositions: new FormControl('', [Validators.required]),
       posfilled: new FormControl('', [Validators.required]),
@@ -63,7 +65,7 @@ export class StaffComponent implements OnInit, OnChanges {
         positionvacant: 2,
       },
       {
-        srnumber: 1,
+        srnumber: 2,
         position: 'Deputy Director',
         positionfilled: 2,
         positionvacant: 2,
@@ -79,7 +81,7 @@ export class StaffComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(data: SimpleChanges) {
-    this.dataSource.data = _.get(data, 'data.currentValue')
+    this.dataSource.data = data.currentValue ? _.get(data, 'data.currentValue') : []
     this.length = this.dataSource.data.length
     this.paginator.firstPage()
   }
@@ -140,9 +142,25 @@ export class StaffComponent implements OnInit, OnChanges {
     // this.eOnRowClick.emit(e)
   // }
 
-  // onCreateClick() {
-    // this.eOnCreateClick.emit()
-  // }
+  onAddPosition() {
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = true
+    dialogConfig.width = '50%'
+    dialogConfig.height = '52%'
+    dialogConfig.maxHeight = 'auto'
+    dialogConfig.data = {
+      data: this.userInfo,
+    }
+
+    const dialogRef = this.dialog.open(StaffdetailspopupComponent, dialogConfig)
+
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (response) {
+        console.log('response', response)
+      }
+    })
+  }
 
   onSubmit(form: any) {
     console.log('form', form.value)

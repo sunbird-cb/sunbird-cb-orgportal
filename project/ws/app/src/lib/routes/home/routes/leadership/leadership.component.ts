@@ -21,17 +21,24 @@ export class LeadershipComponent implements OnInit {
     sortState: 'asc',
     needUserMenus: true,
   }
-  data!: {
+  ltdata!: {
     srnumber: number;
     fullname: string;
     position: string;
     email: string;
   }[]
+  admindata!: {
+    srnumber: number;
+    fullname: string;
+    position: string;
+    email: string;
+  }[]
+  usersData:  any = []
   bodyHeight = document.body.clientHeight - 125
   constructor() {}
 
   ngOnInit() {
-    this.data = [
+    this.ltdata = [
       {
         srnumber: 1,
         fullname: 'Devansh',

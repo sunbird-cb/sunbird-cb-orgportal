@@ -19,6 +19,7 @@ import {
   MatProgressBarModule,
   MatRadioModule,
   MatTabsModule,
+  MatCheckboxModule,
 } from '@angular/material'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatPaginatorModule } from '@angular/material/paginator'
@@ -51,6 +52,12 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatSortModule } from '@angular/material/sort'
 import { LeadershiptableComponent } from './components/leadershiptable/leadershiptable.component'
 import { BudgettableComponent } from './components/budgettable/budgettable.component'
+import { AdduserpopupComponent } from './components/adduserpopup/adduserpopup.component'
+import { StaffdetailspopupComponent } from './components/staffdetailspopup/staffdetailspopup.component'
+import { MdoInfoService } from './services/mdoinfo.service'
+import { BudgetschemepopupComponent } from './components/budgetschemepopup/budgetschemepopup.component'
+import { BudgetproofspopupComponent } from './components/budgetproofspopup/budgetproofspopup.component'
+import { UploadService } from './services/upload.service'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -67,6 +74,10 @@ import { BudgettableComponent } from './components/budgettable/budgettable.compo
     LeftMenuComponent,
     LeadershiptableComponent,
     BudgettableComponent,
+    AdduserpopupComponent,
+    StaffdetailspopupComponent,
+    BudgetschemepopupComponent,
+    BudgetproofspopupComponent,
   ],
   imports: [
     CommonModule,
@@ -87,6 +98,7 @@ import { BudgettableComponent } from './components/budgettable/budgettable.compo
     MatChipsModule,
     MatListModule,
     MatSelectModule,
+    MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
@@ -119,11 +131,17 @@ import { BudgettableComponent } from './components/budgettable/budgettable.compo
     MatSortModule,
   ],
   entryComponents: [
+    AdduserpopupComponent,
+    StaffdetailspopupComponent,
+    BudgetschemepopupComponent,
+    BudgetproofspopupComponent,
   ],
   providers: [
     // CKEditorService,
     // LoaderService,
     InitResolver,
+    MdoInfoService,
+    UploadService,
   ],
 })
 export class HomeModule {

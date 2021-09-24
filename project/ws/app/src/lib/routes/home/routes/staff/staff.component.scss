@@ -5,6 +5,13 @@
     // flex: 1;
     flex-direction: column;
 }
+.mat-column-srnumber, .mat-column-Menu {
+  width: 8% !important;
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 8% !important;
+  word-break: break-word;
+}
 
 .textclass {
     word-break: break-word;

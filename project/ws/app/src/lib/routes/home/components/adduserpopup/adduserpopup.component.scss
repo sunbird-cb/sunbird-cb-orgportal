@@ -2,21 +2,17 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
-.mat-column-srnumber, .mat-column-Menu {
-    width: 8% !important;
-    word-wrap: break-word !important;
-    white-space: unset !important;
-    flex: 0 0 8% !important;
-    word-break: break-word;
-}
-
-.table1 {
+.mat-table {
+    background: white;
     width: 100%;
-    display: flex;
-    // flex: 1;
-    flex-direction: column;
+    box-shadow: none !important;
 }
-
+.mat-raised-button[disabled] {
+    opacity: 0.6;
+}
+.footer {
+    width: 100%;
+}
 .textclass {
     word-break: break-word;
     margin: 5px;

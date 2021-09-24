@@ -17,7 +17,7 @@
                                     Total positions
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-xs">
-                                    <input type="number" id="totalpositions" matInput #totalpositions formControlName="totalpositions" i18n-placeholder placeholder="Type here"
+                                    <input type="text" id="totalpositions" matInput #totalpositions formControlName="totalpositions" i18n-placeholder placeholder="Type here"
                                     i18n-aria-label aria-label="Total positions input" class="form-input" autocomplete="off" />
                                     <mat-error [hidden]="false" i18n="Total positions Error|Explains name is required" i18n-aria-label
                                     aria-label="Total positions Error|Explains name is required "
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="flex-1 right-align">
-                                <button type="button" mat-button class="create-btn mat-subheading-2" (click)="onCreateClick()">
+                                <button type="button" mat-button class="create-btn mat-subheading-2" (click)="onAddPosition()">
                                     Add position
                                 </button>
                             </div>

@@ -8,6 +8,7 @@ import { NsWidgetResolver } from '@sunbird-cb/resolver'
 import { ValueService } from '@sunbird-cb/utils'
 /* tslint:disable */
 import _ from 'lodash'
+import { Subscription } from 'rxjs'
 /* tslint:enable */
 @Component({
   selector: 'ws-app-create-user',
@@ -33,6 +34,10 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   rolesList: any = []
   public userRoles: Set<string> = new Set()
   configService: any
+  routeSubscription: Subscription | null = null
+  qpParam: any
+  qpPath: any
+  breadcrumbs: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -94,6 +99,18 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         if (this.configService.userProfile && this.configService.userProfile.departmentName) {
           this.configService.userProfile.departmentName = this.departmentName
         }
+      }
+    })
+    this.routeSubscription = this.activeRoute.queryParamMap.subscribe(qParamsMap => {
+      this.qpParam = qParamsMap.get('param')
+      this.qpPath = qParamsMap.get('path')
+
+      if (this.qpParam === 'MDOinfo') {
+        // tslint:disable-next-line:max-line-length
+        this.breadcrumbs = { titles: [{ title: 'Home', url: '/app/home' }, { title: 'MDO information', url: '/app/home/mdoinfo/leadership' }, { title: 'New User', url: 'none' }] }
+      } else {
+        // tslint:disable-next-line:max-line-length
+        this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: 'Active', url: 'none' }, { title: 'New User', url: 'none' }] }
       }
     })
     this.createUserForm = new FormGroup({

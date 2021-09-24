@@ -100,7 +100,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 right-align">
-                                                    <button type="button" mat-button class="create-btn mat-subheading-2" (click)="onCreateClick()">
+                                                    <button type="button" mat-button class="create-btn mat-subheading-2" (click)="onaddScehme()">
                                                         Add scheme
                                                     </button>
                                                 </div>
@@ -193,7 +193,7 @@
                                         <button type="button" mat-button class="allocation-btn mat-accent-border float-right" (click)="browsefiles('overallmdo')" *ngIf="overallmdodata && overallmdodata.length > 0">Browse for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <ws-app-budgettable [type]="'overallmdo'" [tableData]="tableData" [data]="overallmdodata"></ws-app-budgettable>
+                                        <ws-app-budgettable [type]="'overallmdo'" [tableData]="tableData" [data]="overallmdodata" (onUploadFilesClick)="browsefiles('overallmdo')"></ws-app-budgettable>
                                     </div>
                                 </div>
                                 <!-- mdosalary -->
@@ -203,7 +203,7 @@
                                         <button type="button" mat-button class="allocation-btn mat-accent-border float-right" (click)="browsefiles('mdosalary')" *ngIf="mdosalarydata && mdosalarydata.length > 0">Browse for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <ws-app-budgettable [type]="'mdosalary'" [tableData]="tableData" [data]="mdosalarydata"></ws-app-budgettable>
+                                        <ws-app-budgettable [type]="'mdosalary'" [tableData]="tableData" [data]="mdosalarydata" (onUploadFilesClick)="browsefiles('mdosalary')"></ws-app-budgettable>
                                     </div>
                                 </div>
                                 <!-- mdotraining -->
@@ -213,7 +213,7 @@
                                         <button type="button" mat-button class="allocation-btn mat-accent-border float-right" (click)="browsefiles('mdotraining')" *ngIf="mdotrainingdata && mdotrainingdata.length > 0">Browse for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <ws-app-budgettable [type]="'mdotraining'" [tableData]="tableData" [data]="mdotrainingdata"></ws-app-budgettable>
+                                        <ws-app-budgettable [type]="'mdotraining'" [tableData]="tableData" [data]="mdotrainingdata" (onUploadFilesClick)="browsefiles('mdotraining')"></ws-app-budgettable>
                                     </div>
                                 </div>
                                 <!-- schemewise -->
@@ -223,7 +223,7 @@
                                         <button type="button" mat-button class="allocation-btn mat-accent-border float-right" (click)="browsefiles('schemewise')" *ngIf="schemewisedata && schemewisedata.length > 0">Browse for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <ws-app-budgettable [type]="'schemewise'" [tableData]="tableData" [data]="schemewisedata"></ws-app-budgettable>
+                                        <ws-app-budgettable [type]="'schemewise'" [tableData]="tableData" [data]="schemewisedata" (onUploadFilesClick)="browsefiles('schemewise')"></ws-app-budgettable>
                                     </div>
                                 </div>
                             </mat-tab>

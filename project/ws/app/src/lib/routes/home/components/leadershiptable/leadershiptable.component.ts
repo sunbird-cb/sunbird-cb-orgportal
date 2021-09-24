@@ -1,10 +1,11 @@
 import { Component, OnInit, OnChanges, Input, ViewChild, SimpleChanges } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
-import { MatPaginator } from '@angular/material'
+import { MatPaginator, MatDialogConfig, MatDialog } from '@angular/material'
 import { MatSort } from '@angular/material/sort'
 import { IColums } from '../../interface/interfaces'
 import * as _ from 'lodash'
+import { AdduserpopupComponent } from '../adduserpopup/adduserpopup.component'
 
 @Component({
   selector: 'ws-app-leadershiptable',
@@ -19,6 +20,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
     email: string;
   }[]
   @Input() tableData: any = []
+  @Input() usersData: any = []
   dataSource!: any
   widgetData: any
   length!: number
@@ -27,13 +29,14 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   displayedColumns: IColums[] | undefined
   selection = new SelectionModel<any>(true, [])
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
+  // tslint:disable-next-line:max-line-length
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
       this.dataSource.sort = sort
     }
   }
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource<any>()
     // this.actionsClick = new EventEmitter()
     // this.clicked = new EventEmitter()
@@ -51,7 +54,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(data: SimpleChanges) {
-    this.dataSource.data = _.get(data, 'data.currentValue')
+    this.dataSource.data = data.currentValue ? _.get(data, 'data.currentValue') : []
     this.length = this.dataSource.data.length
     this.paginator.firstPage()
   }
@@ -112,8 +115,24 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
     // this.eOnRowClick.emit(e)
   // }
 
-  // onCreateClick() {
-    // this.eOnCreateClick.emit()
-  // }
+  adduser() {
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = true
+    dialogConfig.width = '77%'
+    dialogConfig.height = '75%'
+    dialogConfig.maxHeight = 'auto'
+    dialogConfig.data = {
+      data: this.usersData,
+    }
+
+    const dialogRef = this.dialog.open(AdduserpopupComponent, dialogConfig)
+
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (response) {
+        console.log('response', response)
+      }
+    })
+  }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, ViewChild, SimpleChanges } from '@angular/core'
+import { Component, OnInit, OnChanges, Input, Output, ViewChild, SimpleChanges, EventEmitter } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
 import { MatPaginator } from '@angular/material'
@@ -9,7 +9,7 @@ import * as _ from 'lodash'
 @Component({
   selector: 'ws-app-budgettable',
   templateUrl: './budgettable.component.html',
-  styleUrls: ['./budgettable.component.scss']
+  styleUrls: ['./budgettable.component.scss'],
 })
 export class BudgettableComponent implements OnInit, OnChanges {
   @Input() type: any
@@ -20,11 +20,12 @@ export class BudgettableComponent implements OnInit, OnChanges {
     email: string;
   }[]
   @Input() tableData: any = []
+  @Output() onUploadFilesClick = new EventEmitter<any>()
   dataSource!: any
   widgetData: any
   length!: number
-  pageSize = 5
-  pageSizeOptions = [5, 10, 20]
+  pageSize = 20
+  pageSizeOptions = [20, 40, 60]
   displayedColumns: IColums[] | undefined
   selection = new SelectionModel<any>(true, [])
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
@@ -110,9 +111,9 @@ export class BudgettableComponent implements OnInit, OnChanges {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`
   }
 
-  // onRowClick(e: any) {
-    // this.eOnRowClick.emit(e)
-  // }
+  uploadFilesClick(e: any) {
+    this.onUploadFilesClick.emit(e)
+  }
 
   // onCreateClick() {
     // this.eOnCreateClick.emit()

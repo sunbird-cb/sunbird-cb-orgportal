@@ -26,13 +26,11 @@
                         <!-- <ws-widget-app-button *ngIf="row[ac.optional_key] === ac.optional_Value" [type]="ac.type"
                             [icon]="ac.icon" [disabled]="ac.disabled || false" [label]="ac.label"
                             (click)="buttonClick(ac.name,row)"></ws-widget-app-button> -->
-                            1
                         </div>
                         <div *ngIf="!ac.optional">
                         <!-- <ws-widget-app-button [type]="ac.type" [icon]="ac.icon" [label]="ac.label"
                             [disabled]="ac.disabled || false" (click)="buttonClick(ac.name,row)">
                         </ws-widget-app-button> -->
-                        2
                         </div>
                     </div>
                 </mat-cell>
@@ -55,7 +53,7 @@
         <div class="flex text-center" *ngIf="dataSource.filteredData.length == 0">
             <mat-card class="margin-top-l margin-bottom-l flex-1" role="none">
                <button type="button" mat-button class="create-btn mat-accent-border margin-bottom-m" 
-                    (click)="browsefiles('overallmdo')">Browse for files</button>
+                    (click)="uploadFilesClick('overallmdo')">Browse for files</button>
                 <p class="ws-mat-black60-text">Or drag a file (csv, excel, docx, pdf) here</p>
             </mat-card>
         </div>
