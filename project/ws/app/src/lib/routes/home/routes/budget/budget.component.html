@@ -16,10 +16,35 @@
                                             <form class="example-container" [formGroup]="budgetdata" >
                                                 <div class="display-inline-block margin-right-xl">
                                                 <div class="margin-bottom-m">
+                                                    <label for="budgetyear" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                                        i18n="Budget year label|Label which explains the user to enter Budget year" i18n-aria-label
+                                                        aria-label="Budget year label" style="    float: left;
+                                                        background: #fff;
+                                                        padding: 6px 10px;
+                                                        border-radius: 5px 0 0 5px;
+                                                        font-weight: 400 !important;">
+                                                        Budget for financial year
+                                                    </label>
+                                                    <mat-form-field appearance="outline" class="margin-top-xs" style="    margin-top: -5px !important;
+                                                    font-size: 14px;">
+                                                    <mat-label>Select year</mat-label>
+                                                        <mat-select>
+                                                            <mat-option *ngFor="let year of yearsList" [value]="year">
+                                                                {{year}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                        <mat-error [hidden]="false" i18n="Budget year Error|Explains name is required" i18n-aria-label
+                                                        aria-label="Budget year Error|Explains name is required "
+                                                        *ngIf="budgetdata?.controls['budgetyear']?.touched && budgetdata?.controls['budgetyear'].errors?.required">
+                                                        Field is mandatory
+                                                        </mat-error>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="margin-bottom-m">
                                                     <label for="salarybudget" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                                         i18n="Salary budget allocated label|Label which explains the user to enter Salary budget allocated" i18n-aria-label
                                                         aria-label="Salary budget allocated label">
-                                                        Salary budget allocated for current FY
+                                                        Allocate salary budget
                                                     </label>
                                                     <mat-form-field appearance="outline" class="margin-top-xs">
                                                         <input type="number" id="salarybudget" matInput #salarybudget formControlName="salarybudget" i18n-placeholder placeholder="Type here"
@@ -35,7 +60,7 @@
                                                     <label for="trainingbudget" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                                         i18n="Training budget allocated label|Label which explains the user to enter Training budget allocated" i18n-aria-label
                                                         aria-label="Training budget allocated">
-                                                        Training/capacity building budget allocated for current FY
+                                                        Allocate training/capacity building budget
                                                     </label>
                                                     <mat-form-field appearance="outline" class="margin-top-xs">
                                                         <input id="trainingbudget" matInput #trainingbudget formControlName="trainingbudget" i18n-placeholder placeholder="Type here"
@@ -51,7 +76,7 @@
                                                     <label for="budgetutilized" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                                         i18n="Training budget utilization label|Label which explains the user to enter Training budget utilization" i18n-aria-label
                                                         aria-label="Training budget utilization label">
-                                                        Training budget utilization in current FY
+                                                        Projected utilization of training budget
                                                     </label>
                                                     <mat-form-field appearance="outline" class="margin-top-xs">
                                                         <input id="budgetutilized" matInput #budgetutilized formControlName="budgetutilized" i18n-placeholder placeholder="Type here"
@@ -65,13 +90,13 @@
                                                 </div>
                                                 </div>
                                                 <div class="display-inline-block float-right">
-                                                    <div class="margin-bottom-m avg-box">
+                                                    <div class="margin-bottom-m avg-box" style="margin-top: 88px;">
                                                         <p class="mat-title">0</p>
-                                                        <p class="mat-subheading-2">Overall budget allocated for current FY</p>
+                                                        <p class="mat-subheading-2">Overall budget allocated for the FY</p>
                                                     </div>
                                                     <div class="margin-bottom-m avg-box">
                                                         <p class="mat-title">0%</p>
-                                                        <p class="mat-subheading-2">Total % of training budget utilization in current FY</p>
+                                                        <p class="mat-subheading-2">Total % of training budget utilization in the FY</p>
                                                     </div>
                                                 </div>
                                                 <button mat-raised-button type="submit" (click)="onSubmit(budgetdata)"

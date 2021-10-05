@@ -60,6 +60,7 @@ export class BudgetComponent implements OnInit, OnChanges {
   mdotrainingdata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string}[]
   schemewisedata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string}[]
   scehemetableDatadata!: { srnumber: number; schemename: string; budgetallocated: number; budgetutilization: number; }[]
+  yearsList: any = []
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource1.sort) {
       this.dataSource1.sort = sort
@@ -71,6 +72,7 @@ export class BudgetComponent implements OnInit, OnChanges {
 
   constructor(private snackBar: MatSnackBar, public dialog: MatDialog) {
     this.budgetdata = new FormGroup({
+      budgetyear: new FormControl('', [Validators.required]),
       salarybudget: new FormControl('', [Validators.required]),
       trainingbudget: new FormControl('', [Validators.required]),
       budgetutilized: new FormControl('', [Validators.required]),
@@ -117,6 +119,8 @@ export class BudgetComponent implements OnInit, OnChanges {
         uploadedon: '22 Sep, 2021',
       },
     ]
+
+    this.yearsList = ['2020-2021' , '2021-2022' ]
   }
 
   ngOnChanges(data: SimpleChanges) {
