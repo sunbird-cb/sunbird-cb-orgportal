@@ -13,7 +13,7 @@
       </div>
       <div class="text-center" *ngIf="!uploading && !uploadedFile && !comparePDF && !uploadSuccessful">
         <img src="/assets/icons/pdf.svg" alt="PDF upload" class="margin-bottom-s">
-        <input type="file" #file style="display: none" (change)="onFilesAdded($event)" multiple accept=".pdf" />
+        <input type="file" #file style="display: none" (change)="onFilesAdded($event)" accept=".pdf" />
         <button mat-raised-button type="button" class="flex-auto-display margin-bottom-l" (click)="addFiles()">
           <span class="ws-mat-default-text" i18n>Browse for files</span>
         </button>
