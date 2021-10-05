@@ -34,13 +34,20 @@
   </mat-card>
   <div class="bootstrap-rain margin-top-m" *ngIf="currentDashboard[0]">
     <div class="rain-lib-container relative">
-      <lib-rain-dashboards [layoutConfig]="currentDashboard[0].visualizationDetails"
-        [chartConfig]="currentDashboard[0].chartDetails" [dashboardConfig]="dashboardList" [showFilters]="false"
-        [showWidgets]="true" [filtersConfig]="currentDashboard[0].filtersDetails"
-        [widgetConfig]="currentDashboard[0].widgetDetails" [widgetData]="currentDashboard[0].widgetData"
-        (libDashboardId)="getDashboardId($event)" [showWidgetTitle]="currentDashboard[0].showWidgetTitle"
-        [widgetTitle]="currentDashboard[0].widgetTitle" [showMessage]="currentDashboard[0].showMessage"
-        [messageType]="currentDashboard[0].messageType" [message]="currentDashboard[0].message"></lib-rain-dashboards>
+        <lib-rain-dashboards
+        [showFilters]="false"
+        [showMessage]="false"
+        [messageType]="currentDashboard[0].messageType"
+        [message]="currentDashboard[0].message"
+        [mapLayoutFilePath]="mapPath"
+        (libDashboardId)="getDashboardId($event)"
+        (libDateFilterPreset)="getDateFilterPreset($event)"
+        [authToken]="token"
+        [getDashboardForKM]="getDashboardForKM"
+        [getDashboardForProfile]="getDashboardForProfile"
+        [getChartV2]="getChartV2"
+        [isFrontPage]="true"
+      ></lib-rain-dashboards>
     </div>
   </div>
 </div>
