@@ -74,14 +74,23 @@ const routes: Routes = [
       {
         path: 'leadership',
         component: LeadershipComponent,
+        resolve: {
+          configService: ConfigResolveService,
+        },
       },
       {
         path: 'staff',
         component: StaffComponent,
+        resolve: {
+          configService: ConfigResolveService,
+        },
       },
       {
         path: 'budget',
         component: BudgetComponent,
+        resolve: {
+          configService: ConfigResolveService,
+        },
       },
     ],
   },

@@ -58,6 +58,7 @@ import { MdoInfoService } from './services/mdoinfo.service'
 import { BudgetschemepopupComponent } from './components/budgetschemepopup/budgetschemepopup.component'
 import { BudgetproofspopupComponent } from './components/budgetproofspopup/budgetproofspopup.component'
 import { UploadService } from './services/upload.service'
+import { AdmintableComponent } from './components/admintable/admintable.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -73,6 +74,7 @@ import { UploadService } from './services/upload.service'
     BudgetComponent,
     LeftMenuComponent,
     LeadershiptableComponent,
+    AdmintableComponent,
     BudgettableComponent,
     AdduserpopupComponent,
     StaffdetailspopupComponent,

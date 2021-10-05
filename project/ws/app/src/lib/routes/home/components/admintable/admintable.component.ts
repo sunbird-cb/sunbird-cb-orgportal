@@ -11,11 +11,11 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
 
 @Component({
-  selector: 'ws-app-leadershiptable',
-  templateUrl: './leadershiptable.component.html',
-  styleUrls: ['./leadershiptable.component.scss'],
+  selector: 'ws-app-admintable',
+  templateUrl: './admintable.component.html',
+  styleUrls: ['./admintable.component.scss'],
 })
-export class LeadershiptableComponent implements OnInit, OnChanges {
+export class AdmintableComponent implements OnInit, OnChanges {
   tableData: ITableData = {
     actions: [],
     columns: [
@@ -67,7 +67,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
       }
     }
     if (this.deptID) {
-      this.getUsers('MDO_LEADER')
+      this.getUsers('MDO_ADMIN')
       this.getAllUsers(this.deptID)
     }
   }
@@ -217,7 +217,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
         console.log('assign role res', res)
         this.openSnackbar('User is added successfully!')
     })
-    this.getUsers('MDO_LEADER')
+    this.getUsers('MDO_ADMIN')
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

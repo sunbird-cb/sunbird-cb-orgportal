@@ -6,18 +6,20 @@ import { Router } from '@angular/router'
 
 // tslint:disable-next-line:interface-name
 export interface PeriodicElement {
-  name: string
+  fullname: string
   email: string
   mobile: number
+  position: string
+  id: number,
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Devprathap Nagendra', email: 'test@tt.com', mobile: 1234567890 },
-  { name: 'Nancy Jimenez', email: 'test@tt.com', mobile: 1234567890 },
-  { name: 'Manish Malhthra', email: 'test@tt.com', mobile: 1234567890 },
-  { name: 'Priya Sood', email: 'test@tt.com', mobile: 1234567890 },
-  { name: 'Charmi Singh', email: 'test@tt.com', mobile: 1234567890 },
-]
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   { name: 'Devprathap Nagendra', email: 'test@tt.com', mobile: 1234567890 },
+//   { name: 'Nancy Jimenez', email: 'test@tt.com', mobile: 1234567890 },
+//   { name: 'Manish Malhthra', email: 'test@tt.com', mobile: 1234567890 },
+//   { name: 'Priya Sood', email: 'test@tt.com', mobile: 1234567890 },
+//   { name: 'Charmi Singh', email: 'test@tt.com', mobile: 1234567890 },
+// ]
 
 @Component({
   selector: 'ws-app-adduserpopup',
@@ -25,17 +27,27 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./adduserpopup.component.scss'],
 })
 export class AdduserpopupComponent implements OnInit {
-  usersListData: any
+  usersListData: PeriodicElement[] = []
   statedata: {
     param: any, path: any
   } | undefined
   form!: FormGroup
   displayedColumns: string[] = ['select', 'name', 'email', 'mobile']
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA)
+  dataSource = new MatTableDataSource<PeriodicElement>(this.usersListData)
   selection = new SelectionModel<PeriodicElement>(true, [])
 
   constructor(private dialogRef: MatDialogRef<AdduserpopupComponent>, @Inject(MAT_DIALOG_DATA) data: any, private router: Router) {
     this.usersListData = data.data
+    this.usersListData.forEach((user: any) => {
+      const obj = {
+        fullname: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+        position: user.channel,
+        id: user.id,
+        mobile: user.phone,
+      }
+      this.dataSource.data.push(obj)
+    })
   }
 
   ngOnInit() {
@@ -68,7 +80,6 @@ export class AdduserpopupComponent implements OnInit {
   }
 
   addUser() {
-    console.log('this.selection.selected', this.selection.selected)
     this.dialogRef.close({ data: this.selection.selected })
   }
 

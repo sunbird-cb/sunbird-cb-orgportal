@@ -19,7 +19,6 @@
                 </div>
             </div>
         </div>
-
         <mat-table #table matSort [ngStyle]="{'height': bodyHeight}" [matSortActive]="tableData!.sortColumn"
         [matSortDirection]="tableData!.sortState" [dataSource]="dataSource"
         class="example-table table1 responsiveTable" *ngIf="dataSource.filteredData.length > 0">
@@ -69,7 +68,7 @@
             </mat-row>
         </mat-table>
         <mat-card class="flex-1" role="none" *ngIf="dataSource.filteredData.length == 0">
-        <span class="mat-subtitle ws-mat-black40-text">Click on 'Add user' to add users to the leadership team.</span>
+        <span class="mat-subtitle ws-mat-black40-text">Click on 'Add user' to add users to the admin team.</span>
         </mat-card>
     </div>
     <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
@@ -93,4 +92,5 @@
             <span>Edit</span>
         </button>
     </ng-template>
-</mat-menu>
+</mat-menu> 
+    

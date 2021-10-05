@@ -9,10 +9,11 @@
                     <div class="w-full profile-cols-full bg-grey">
                         <mat-tab-group mat-align-tabs="start" vertical>
                             <mat-tab label="Leadership team">
-                                <ws-app-leadershiptable [tableData]="tableData" [data]="ltdata" [usersData]="usersData"></ws-app-leadershiptable>
+                                <ws-app-leadershiptable></ws-app-leadershiptable>
                             </mat-tab>
                             <mat-tab label="Admin team">
-                                <ws-app-leadershiptable [tableData]="tableData" [data]="admindata" [usersData]="usersData"></ws-app-leadershiptable>
+                                <!-- Admins -->
+                                <ws-app-admintable></ws-app-admintable>
                             </mat-tab>
                         </mat-tab-group>
                     </div>

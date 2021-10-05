@@ -67,3 +67,12 @@
     margin-left : 16px;
     margin-right : 16px;
 }
+
+::ng-deep.ws-active-discuss-route {
+    background: rgba(0, 0, 0, 0.04) !important;
+    font-weight: 700;
+}
+
+::ng-deep.mat-tab-label-active {
+    opacity: 1 !important;
+}
