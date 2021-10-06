@@ -136,4 +136,13 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngAfterViewInit() {
   }
+
+  getDashboardId(value: string) {
+    if (value && value !== null) {
+      this.selectedDashboardId = value
+    } else {
+      this.currentDashboard = []
+      this.currentDashboard.push(this.dashboardEmpty)
+    }
+  }
 }
