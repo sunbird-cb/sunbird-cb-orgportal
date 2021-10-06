@@ -146,4 +146,13 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.router.navigate(['/app/home/mdoinfo/budget'])
     }
   }
+
+  getDashboardId(value: string) {
+    if (value && value !== null) {
+      this.selectedDashboardId = value
+    } else {
+      this.currentDashboard = []
+      this.currentDashboard.push(this.dashboardEmpty)
+    }
+  }
 }
