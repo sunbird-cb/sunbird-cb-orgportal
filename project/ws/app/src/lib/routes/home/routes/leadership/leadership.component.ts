@@ -54,7 +54,7 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
-    this.getUsers('MDO_LEADER')
+    // this.getUsers('MDO_LEADER')
     if (this.configSvc.userProfile) {
       this.deptID = this.configSvc.userProfile.rootOrgId
     } else {

@@ -24,6 +24,7 @@ export interface PeriodicElement {
 })
 export class BudgetproofspopupComponent implements OnInit {
   @ViewChild('file', { static: false }) file: any
+  uploadedFilesAssets: PeriodicElement[] = []
   uploadform: FormGroup
   sectioname: any
 
@@ -38,9 +39,8 @@ export class BudgetproofspopupComponent implements OnInit {
   uploading = false
   uploadSuccessful = false
   uploadedFiles: any = []
-  uploadedFilesAssets: any = []
   userData: any
-  dataSource = new MatTableDataSource<PeriodicElement>()
+  dataSource = new MatTableDataSource<PeriodicElement>(this.uploadedFilesAssets)
   selection = new SelectionModel<PeriodicElement>(true, [])
 
   constructor(private dialogRef: MatDialogRef<BudgetproofspopupComponent>, @Inject(MAT_DIALOG_DATA) data: any,
@@ -86,7 +86,6 @@ export class BudgetproofspopupComponent implements OnInit {
   }
 
   addFiles() {
-    console.log('files added', this.selection.selected)
     this.file.nativeElement.click()
   }
 
@@ -100,7 +99,6 @@ export class BudgetproofspopupComponent implements OnInit {
       Array.from(fileList).forEach((file: any, index: any) => {
         this.uploadedFiles.push(file)
         console.log('this.uploadedFiles', this.uploadedFiles)
-        
         const currentDate = new Date()
         const tabinfo = {
           srno: index + 1,
@@ -112,16 +110,15 @@ export class BudgetproofspopupComponent implements OnInit {
         }
         // file.identifier = res.result.identifier
         this.uploadedFilesAssets.push(tabinfo)
-        console.log('this.uploadedFilesAssets', this.uploadedFilesAssets)
-        // this.uploadedFiles.forEach((file: any) => {
-          this.uploadFilesList(file, index)
-        // })
+        this.dataSource.data.push(tabinfo)
+        // console.log('this.uploadedFilesAssets', this.uploadedFilesAssets)
+        // this.uploadFilesList(file, index)
       })
     }
   }
 
   uploadFilesList(file: any, index: any) {
-    this.dataSource.data = this.uploadedFilesAssets
+    // this.dataSource.data = this.uploadedFilesAssets
     console.log('this.dataSource', this.dataSource)
     console.log('index', index)
     const username = `${this.userData.firstName} ${this.userData.lastName}`

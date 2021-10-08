@@ -154,7 +154,11 @@ export class CreateUserComponent implements OnInit, OnDestroy {
           if (dres) {
             this.createUserForm.reset({ fname: '', lname: '', email: '', department: this.departmentName, roles: '' })
             this.openSnackbar('User Created Successfully')
-            this.router.navigate(['/app/home/users'])
+            if (this.qpParam === 'MDOinfo') {
+              this.router.navigate(['/app/home/mdoinfo/leadership'])
+            } else {
+              this.router.navigate(['/app/home/users'])
+            }
           }
         },
           // tslint:disable-next-line

@@ -68,7 +68,6 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
     }
     if (this.deptID) {
       this.getUsers('MDO_LEADER')
-      this.getAllUsers(this.deptID)
     }
   }
 
@@ -134,9 +133,9 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
             })
 
             if (this.data) {
-              console.log('this.data', this.data)
               this.dataSource.data = this.data
               this.dataSource.paginator = this.paginator
+              this.getAllUsers(this.deptID)
             }
           }
         },
@@ -188,7 +187,6 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(AdduserpopupComponent, dialogConfig)
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response && response.data && response.data.length > 0) {
-        console.log('response', response.data)
         response.data.forEach((seluser: any) => {
           this.usersData.forEach((user: any) => {
             if (seluser.id === user.id) {
@@ -201,7 +199,6 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   }
 
   assignRole(user: any) {
-    console.log(user)
     let nroles: any = []
     nroles = user.organisations[0].roles
     nroles.push('MDO_LEADER')

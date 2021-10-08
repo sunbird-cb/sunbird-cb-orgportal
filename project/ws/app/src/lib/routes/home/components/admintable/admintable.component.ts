@@ -53,12 +53,6 @@ export class AdmintableComponent implements OnInit, OnChanges {
               private mdoinfoSrvc: MdoInfoService,  private configSvc: ConfigurationsService) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
-  }
-
-  ngOnInit() {
-    if (this.tableData) {
-      this.displayedColumns = this.tableData.columns
-    }
     if (this.configSvc.userProfile) {
       this.deptID = this.configSvc.userProfile.rootOrgId
     } else {
@@ -66,10 +60,22 @@ export class AdmintableComponent implements OnInit, OnChanges {
         this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
       }
     }
+  }
+
+  ngOnInit() {
+    if (this.tableData) {
+      this.displayedColumns = this.tableData.columns
+    }
     if (this.deptID) {
       this.getUsers('MDO_ADMIN')
-      this.getAllUsers(this.deptID)
+      // this.getAllUsers(this.deptID)
     }
+    // if (this.dataSource.data && this.dataSource.data.length > 0) {
+    //   this.length = this.dataSource.data.length
+    //   this.paginator.firstPage()
+    //   this.dataSource.paginator = this.paginator
+    //   this.getAllUsers(this.deptID)
+    // }
   }
 
   ngOnChanges(data: SimpleChanges) {
@@ -89,8 +95,8 @@ export class AdmintableComponent implements OnInit, OnChanges {
     }
     this.mdoinfoSrvc.getAllUsers(filterObj).subscribe(
       (res: any) => {
-        // this.usersData = res.content
-        this.filterAllUsers(res.content)
+        this.usersData = res.content
+        // this.filterAllUsers(res.content)
     })
   }
 
@@ -123,25 +129,25 @@ export class AdmintableComponent implements OnInit, OnChanges {
         (res: any) => {
           this.usersData1 = res.result.response.content
           if (this.usersData1.length > 0) {
+            this.length = this.usersData1.length
+            this.paginator.firstPage()
+            this.dataSource.paginator = this.paginator
             this.usersData1.forEach((user: any)  => {
               const obj = {
                 fullname: `${user.firstName} ${user.lastName}`,
                 email: user.email,
-                position: user.profileDetails ? user.profileDetails.professionalDetails[0].designation : '',
+                // tslint:disable-next-line:max-line-length
+                position: user.profileDetails && user.profileDetails.professionalDetails ?
+                user.profileDetails.professionalDetails[0].designation : '',
                 id: user.id,
               }
               this.data.push(obj)
+              this.dataSource.data.push(obj)
             })
-
-            if (this.data) {
-              console.log('this.data', this.data)
-              this.dataSource.data = this.data
-              this.dataSource.paginator = this.paginator
-            }
           }
         },
         (_err: any) => {
-        })
+      })
     }
   }
 
