@@ -43,7 +43,7 @@
     "@angular/service-worker": "~8.2.1",
     "@sunbird-cb/collection": "^1.0.6",
     "@sunbird-cb/design-system": "0.0.1",
-    "@sunbird-cb/rain-dashboards": "^0.1.8",
+    "@sunbird-cb/rain-dashboards": "^0.1.9",
     "@sunbird-cb/resolver": "^1.0.0",
     "@sunbird-cb/utils": "^1.0.3",
     "@types/file-saver": "^2.0.1",
