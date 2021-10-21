@@ -17,13 +17,13 @@
                                     Total positions
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-xs">
-                                    <input type="text" id="totalpositions" matInput #totalpositions formControlName="totalpositions" i18n-placeholder placeholder="Type here"
-                                    i18n-aria-label aria-label="Total positions input" class="form-input" autocomplete="off" />
-                                    <mat-error [hidden]="false" i18n="Total positions Error|Explains name is required" i18n-aria-label
+                                    <input type="text" [readonly]="this.isDisabled"  id="totalpositions" matInput #totalpositions formControlName="totalpositions" i18n-placeholder placeholder="Type here"
+                                    i18n-aria-label aria-label="Total positions input" class="form-input" autocomplete="off" [disabled]="isDisabled" style="opacity: 0.6" />
+                                    <!-- <mat-error [hidden]="false" i18n="Total positions Error|Explains name is required" i18n-aria-label
                                     aria-label="Total positions Error|Explains name is required "
                                     *ngIf="staffdata?.controls['totalpositions']?.touched && staffdata?.controls['totalpositions'].errors?.required">
                                     Field is mandatory
-                                    </mat-error>
+                                    </mat-error> -->
                                 </mat-form-field>
                             </div>
                             <div class="display-inline-block margin-right-xl">
@@ -159,11 +159,17 @@
                         aria-label="Analytics">
                         <mat-icon>block</mat-icon><span>{{rowData && rowData.blocked ? 'Unblock user':'Block user' }}</span>
                     </button> -->
-                    <button (click)="rowData && rowData.active ? buttonClick('deactive',rowData): buttonClick('active',rowData)"
+                    <button (click)="updateData(rowData)"
                         mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
                         aria-label="Analytics">
-                        <mat-icon>edit_attributes</mat-icon>
+                        <!-- <mat-icon>edit_attributes</mat-icon> -->
                         <span>Edit</span>
+                    </button>
+                    <button (click)="deleteStaffDetails(rowData)"
+                        mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
+                        aria-label="Analytics">
+                        <!-- <mat-icon>edit_attributes</mat-icon> -->
+                        <span>Delete</span>
                     </button>
                 </ng-template>
             </mat-menu> 

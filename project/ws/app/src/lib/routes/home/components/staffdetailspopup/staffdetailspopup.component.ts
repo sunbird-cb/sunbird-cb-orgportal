@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Inject } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { MatDialogRef } from '@angular/material'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { MdoInfoService } from '../../services/mdoinfo.service'
 
 @Component({
@@ -11,14 +11,22 @@ import { MdoInfoService } from '../../services/mdoinfo.service'
 export class StaffdetailspopupComponent implements OnInit {
   staffform: FormGroup
   designationsMeta: any = []
+  formInputData: any
 
-  constructor(private dialogRef: MatDialogRef<StaffdetailspopupComponent>,
+  constructor(private dialogRef: MatDialogRef<StaffdetailspopupComponent>, @Inject(MAT_DIALOG_DATA) data: any,
               private mdoinfoSrvc: MdoInfoService) {
     this.staffform = new FormGroup({
       designation: new FormControl('', [Validators.required]),
       posfilled: new FormControl('', [Validators.required]),
       posvacant: new FormControl('', [Validators.required]),
     })
+
+    if (data.data) {
+      this.formInputData = data.data
+      this.staffform.controls['designation'].setValue(this.formInputData.position)
+      this.staffform.controls['posfilled'].setValue(this.formInputData.totalPositionsFilled)
+      this.staffform.controls['posvacant'].setValue(this.formInputData.totalPositionsVacant)
+    }
   }
 
   ngOnInit() {
@@ -46,7 +54,14 @@ export class StaffdetailspopupComponent implements OnInit {
 
   addstaffdetails(form: any) {
     console.log('form value', form.value)
-    this.dialogRef.close({ data: form.value })
+    if (this.formInputData) {
+      this.formInputData.position = this.staffform.value.designation
+      this.formInputData.totalPositionsFilled = this.staffform.value.posfilled
+      this.formInputData.totalPositionsVacant = this.staffform.value.posvacant
+      this.dialogRef.close({ data: this.formInputData })
+    } else {
+      this.dialogRef.close({ data: form.value })
+    }
   }
 
   otherDropDownChange(value: any, field: string) {

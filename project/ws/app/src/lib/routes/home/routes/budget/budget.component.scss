@@ -129,3 +129,7 @@ mat-header-row {
     padding: 22px;
     border-radius: 4px;
 }
+
+::ng-deep.mat-form-field-label {
+    margin-top: -16px !important;
+}

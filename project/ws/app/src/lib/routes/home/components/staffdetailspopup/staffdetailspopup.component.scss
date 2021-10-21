@@ -7,3 +7,6 @@
 ::ng-deep.staffform-form .mat-form-field-infix {
     width: 250px !important;
 }
+.mat-raised-button[disabled] {
+    opacity: 0.6;
+}

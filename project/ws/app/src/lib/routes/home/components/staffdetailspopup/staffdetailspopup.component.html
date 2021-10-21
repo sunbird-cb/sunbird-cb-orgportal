@@ -78,7 +78,8 @@
                     </button>
                     <button mat-raised-button type="submit" [disabled]="staffform?.invalid" class="next-btn ws-mat-primary-background flex-auto-display" 
                     (click)="addstaffdetails(staffform)">
-                        <span class="text-white" i18n>Add</span>
+                        <span class="text-white" i18n *ngIf="!formInputData.id">Add</span>
+                        <span class="text-white" i18n *ngIf="formInputData.id">Update</span>
                     </button>
                 </div>
             </div>

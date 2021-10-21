@@ -7,6 +7,9 @@ import { ITableData, IColums } from '../../interface/interfaces'
 import * as _ from 'lodash'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { StaffdetailspopupComponent } from '../../components/staffdetailspopup/staffdetailspopup.component'
+import { ActivatedRoute } from '@angular/router'
+import { MdoInfoService } from '../../services/mdoinfo.service'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-staff',
@@ -20,8 +23,8 @@ export class StaffComponent implements OnInit, OnChanges {
     columns: [
       { displayName: 'Sr. no.', key: 'srnumber' },
       { displayName: 'Position', key: 'position' },
-      { displayName: 'Total positions filled currently', key: 'positionfilled', isList: true },
-      { displayName: 'Total positions vacant currently', key: 'positionvacant' },
+      { displayName: 'Total positions filled currently', key: 'totalPositionsFilled', isList: true },
+      { displayName: 'Total positions vacant currently', key: 'totalPositionsVacant' },
     ],
     needCheckBox: false,
     needHash: false,
@@ -38,14 +41,18 @@ export class StaffComponent implements OnInit, OnChanges {
   selection = new SelectionModel<any>(true, [])
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   data!: { srnumber: number; position: string; positionfilled: number; positionvacant: number; }[]
-  userInfo: any = []
+  deptID: any
+  overallpos: any
+  isDisabled =  true
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
       this.dataSource.sort = sort
     }
   }
 
-  constructor(private snackBar: MatSnackBar, public dialog: MatDialog) {
+  constructor(private snackBar: MatSnackBar, public dialog: MatDialog, private activeRoute: ActivatedRoute,
+    // tslint:disable-next-line:align
+    private configSvc: ConfigurationsService, private mdoinfoSrvc: MdoInfoService) {
     this.staffdata = new FormGroup({
       totalpositions: new FormControl('', [Validators.required]),
       posfilled: new FormControl('', [Validators.required]),
@@ -55,22 +62,30 @@ export class StaffComponent implements OnInit, OnChanges {
     // this.actionsClick = new EventEmitter()
     // this.clicked = new EventEmitter()
     this.dataSource.paginator = this.paginator
+
+    if (this.configSvc.userProfile) {
+      this.deptID = this.configSvc.userProfile.rootOrgId
+      this.getStaffDetails()
+    } else if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
+      this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
+      this.getStaffDetails()
+    }
   }
   ngOnInit() {
-    this.data = [
-      {
-        srnumber: 1,
-        position: 'Deputy Director',
-        positionfilled: 2,
-        positionvacant: 2,
-      },
-      {
-        srnumber: 2,
-        position: 'Deputy Director',
-        positionfilled: 2,
-        positionvacant: 2,
-      },
-    ]
+    // this.data = [
+    //   {
+    //     srnumber: 1,
+    //     position: 'Deputy Director',
+    //     positionfilled: 2,
+    //     positionvacant: 2,
+    //   },
+    //   {
+    //     srnumber: 2,
+    //     position: 'Deputy Director',
+    //     positionfilled: 2,
+    //     positionvacant: 2,
+    //   },
+    // ]
     if (this.tableData) {
       this.displayedColumns = this.tableData.columns
     }
@@ -112,6 +127,35 @@ export class StaffComponent implements OnInit, OnChanges {
     return ''
   }
 
+  getStaffDetails() {
+    this.mdoinfoSrvc.getStaffdetails(this.deptID).subscribe(
+      (res: any) => {
+        console.log('staff data', res.result.response)
+        const result = res.result.response
+        result.forEach((sres: any, index: any) => {
+          sres.srnumber = index + 1
+          if (sres.position === 'all') {
+            this.staffdata.controls['posfilled'].setValue(sres.totalPositionsFilled)
+            this.staffdata.controls['posvacant'].setValue(sres.totalPositionsVacant)
+            const totalpos = sres.totalPositionsFilled + sres.totalPositionsVacant
+            this.staffdata.controls['totalpositions'].setValue(totalpos)
+            this.overallpos = sres
+            result.splice(index, 1)
+            console.log(result)
+          }
+          this.data = result
+        })
+
+        if (this.data) {
+          this.data.forEach((sres: any, index: any) => {
+            sres.srnumber = index + 1
+          })
+          this.dataSource.data = this.data
+          this.dataSource.paginator = this.paginator
+        }
+      })
+  }
+
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length
@@ -138,65 +182,124 @@ export class StaffComponent implements OnInit, OnChanges {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`
   }
 
-  // onRowClick(e: any) {
+  onRowClick(e: any) {
+    console.log('clicked row', e)
     // this.eOnRowClick.emit(e)
-  // }
+  }
+  updateData(rowdata: any) {
+    this.onAddPosition(rowdata)
+  }
 
-  onAddPosition() {
+  onAddPosition(rowdata: any) {
     const dialogConfig = new MatDialogConfig()
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
     dialogConfig.width = '50%'
     dialogConfig.height = '52%'
     dialogConfig.maxHeight = 'auto'
-    dialogConfig.data = {
-      data: this.userInfo,
+    if (rowdata) {
+      dialogConfig.data = {
+        data: rowdata,
+      }
+    } else {
+      dialogConfig.data = {
+        data: [],
+      }
     }
 
     const dialogRef = this.dialog.open(StaffdetailspopupComponent, dialogConfig)
-
     dialogRef.afterClosed().subscribe((response: any) => {
-      if (response) {
-        console.log('response', response)
+      if (response.data) {
+        if (!response.data.id) {
+        const req = {
+          orgId: this.deptID,
+          position: response.data.designation || response.data.position,
+          totalPositionsFilled: Number(response.data.posfilled) || Number(response.data.totalPositionsFilled),
+          totalPositionsVacant: Number(response.data.posvacant) || Number(response.data.totalPositionsVacant),
+        }
+        this.mdoinfoSrvc.addStaffdetails(req).subscribe(
+          (res: any) => {
+            if (res) {
+              this.openSnackbar('Staff details updated successfully')
+              this.getStaffDetails()
+            }
+          },
+          (_err: any) => {
+          })
+      } else {
+        this.updateStaffDetails(response.data)
       }
+    }
     })
   }
 
   onSubmit(form: any) {
-    console.log('form', form.value)
-    // const newobj = {
-    //   personalDetails: {
-    //     email: form.value.email,
-    //     userName: form.value.fname,
-    //     firstName: form.value.fname,
-    //     lastName: form.value.lname,
-    //     channel: this.departmentName ? this.departmentName : null,
-    //   },
-    // }
+    if (this.overallpos.id === '') {
+      const req = {
+        orgId: this.deptID,
+        position: 'all',
+        totalPositionsFilled: Number(form.value.posfilled),
+        totalPositionsVacant: Number(form.value.posvacant),
+      }
+      this.mdoinfoSrvc.addStaffdetails(req).subscribe(
+        (res: any) => {
+          if (res) {
+            this.openSnackbar('Staff details updated successfully')
+            this.getStaffDetails()
+          }
+        },
+        (_err: any) => {
+        })
+    } else {
+      const req = {
+        id: this.overallpos.id,
+        orgId: this.deptID,
+        position: 'all',
+        totalPositionsFilled: Number(form.value.posfilled),
+        totalPositionsVacant: Number(form.value.posvacant),
+      }
+      this.mdoinfoSrvc.updateStaffdetails(req).subscribe(
+        (res: any) => {
+          if (res) {
+            this.openSnackbar('Staff details updated successfully')
+            this.getStaffDetails()
+          }
+        },
+        (_err: any) => {
+        })
+    }
+  }
 
-    // this.usersSvc.createUser(newobj).subscribe(res => {
-    //   if (res) {
-    //     const dreq = {
-    //       request: {
-    //         organisationId: this.department,
-    //         userId: res.userId,
-    //         roles: form.value.roles,
-    //       },
-    //     }
+  updateStaffDetails(form: any) {
+    const req = {
+      id: form.id,
+      orgId: this.deptID,
+      position: form.position,
+      totalPositionsFilled: Number(form.totalPositionsFilled),
+      totalPositionsVacant: Number(form.totalPositionsVacant),
+    }
+    this.mdoinfoSrvc.updateStaffdetails(req).subscribe(
+      (res: any) => {
+        if (res) {
+          this.openSnackbar('Staff details updated successfully')
+          this.getStaffDetails()
+        }
+      },
+      (_err: any) => {
+      })
+  }
 
-    //     this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
-    //       if (dres) {
-    //         this.createUserForm.reset({ fname: '', lname: '', email: '', department: this.departmentName, roles: '' })
-            this.openSnackbar('User Created Successfully')
-    //         this.router.navigate(['/app/home/users'])
-    //       }
-    //     },
-          // tslint:disable-next-line
-          // (err: any) => { this.openSnackbar(err.error || err || `Some error occurred while updateing new user's role, Please try again later!`) })
-      // }
-    // },
-      // tslint:disable-next-line
-      // (err: any) => { this.openSnackbar(err.error || err || 'Some error occurred while creating user, Please try again later!') })
+  deleteStaffDetails(form: any) {
+    console.log(form)
+    this.mdoinfoSrvc.deleteStaffdetails(form.id, this.deptID).subscribe(
+      (res: any) => {
+        if (res) {
+          this.openSnackbar('Staff details deleted successfully')
+          this.getStaffDetails()
+        }
+      },
+      (_err: any) => {
+      })
   }
 
   private openSnackbar(primaryMsg: string) {

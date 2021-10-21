@@ -11,6 +11,9 @@ const API_END_POINTS = {
     getTeamUsers: '/apis/proxies/v8/user/v1/search',
     GET_ALL_USERS: '/apis/proxies/v8/user/v1/search',
     assign_role: '/apis/proxies/v8/user/private/v1/assign/role',
+    get_staffdetails: '/apis/proxies/v8/staff/position',
+    staffdetails: '/apis/proxies/v8/staff/position',
+    delete_staffdetails: '/apis/proxies/v8/staff/position?orgId=',
 }
 
 @Injectable({
@@ -36,5 +39,21 @@ export class MdoInfoService {
 
   assignTeamRole(req: any): Observable<any> {
     return this.http.post<any>(API_END_POINTS.assign_role, req)
+  }
+
+  getStaffdetails(orgId: any): Observable<any> {
+    return this.http.get<any>(`${API_END_POINTS.get_staffdetails}/${orgId}`)
+  }
+
+  addStaffdetails(req: any): Observable<any> {
+    return this.http.post<any>(API_END_POINTS.staffdetails, req)
+  }
+
+  updateStaffdetails(req: any): Observable<any> {
+    return this.http.patch<any>(API_END_POINTS.staffdetails, req)
+  }
+
+  deleteStaffdetails(id: any, orgId: any): Observable<any> {
+    return this.http.delete<any>(`${API_END_POINTS.delete_staffdetails}${orgId}&id=${id}`)
   }
 }
