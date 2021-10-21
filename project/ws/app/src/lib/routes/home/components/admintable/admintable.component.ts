@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewChild, SimpleChanges } from '@angular/core'
+import { Component, OnInit, OnChanges, ViewChild, SimpleChanges, Input } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
 import { MatPaginator, MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material'
@@ -7,8 +7,8 @@ import { IColums, ITableData } from '../../interface/interfaces'
 import * as _ from 'lodash'
 import { AdduserpopupComponent } from '../adduserpopup/adduserpopup.component'
 import { MdoInfoService } from '../../services/mdoinfo.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
-import { ActivatedRoute } from '@angular/router'
+// import { ConfigurationsService } from '@sunbird-cb/utils'
+// import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'ws-app-admintable',
@@ -41,7 +41,7 @@ export class AdmintableComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   usersData: any = []
   usersData1: any
-  deptID: any
+  @Input() deptID: any
   // tslint:disable-next-line:max-line-length
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
@@ -49,38 +49,31 @@ export class AdmintableComponent implements OnInit, OnChanges {
     }
   }
 
-  constructor(public dialog: MatDialog, private activeRoute: ActivatedRoute, private snackBar: MatSnackBar,
-              private mdoinfoSrvc: MdoInfoService,  private configSvc: ConfigurationsService) {
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private mdoinfoSrvc: MdoInfoService) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
-    if (this.configSvc.userProfile) {
-      this.deptID = this.configSvc.userProfile.rootOrgId
-    } else {
-      if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
-        this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
-      }
-    }
+
+    // if (this.configSvc.userProfile) {
+    //   this.deptID = this.configSvc.userProfile.rootOrgId
+      // this.getUsers('MDO_ADMIN')
+    // } else if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
+        // this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
+        // this.getUsers('MDO_ADMIN')
+    // }
   }
 
   ngOnInit() {
     if (this.tableData) {
       this.displayedColumns = this.tableData.columns
     }
-    if (this.deptID) {
+    // if (this.deptID) {
       this.getUsers('MDO_ADMIN')
-      // this.getAllUsers(this.deptID)
-    }
-    // if (this.dataSource.data && this.dataSource.data.length > 0) {
-    //   this.length = this.dataSource.data.length
-    //   this.paginator.firstPage()
-    //   this.dataSource.paginator = this.paginator
-    //   this.getAllUsers(this.deptID)
     // }
   }
 
   ngOnChanges(data: SimpleChanges) {
     this.dataSource.data = _.get(data, 'data.currentValue')
-    this.length = this.dataSource.data.length
+    this.length = this.dataSource.data && this.dataSource.data.length > 0 ? this.dataSource.data.length : 0
     this.paginator.firstPage()
   }
 
@@ -95,8 +88,8 @@ export class AdmintableComponent implements OnInit, OnChanges {
     }
     this.mdoinfoSrvc.getAllUsers(filterObj).subscribe(
       (res: any) => {
-        this.usersData = res.content
-        // this.filterAllUsers(res.content)
+        // this.usersData = res.content
+        this.filterAllUsers(res.content)
     })
   }
 
@@ -128,26 +121,31 @@ export class AdmintableComponent implements OnInit, OnChanges {
       this.mdoinfoSrvc.getTeamUsers(req).subscribe(
         (res: any) => {
           this.usersData1 = res.result.response.content
+          this.data = []
           if (this.usersData1.length > 0) {
-            this.length = this.usersData1.length
-            this.paginator.firstPage()
-            this.dataSource.paginator = this.paginator
+            let pos = ''
             this.usersData1.forEach((user: any)  => {
+              if (user.profileDetails && user.profileDetails.professionalDetails && user.profileDetails.professionalDetails.length > 0) {
+                pos = user.profileDetails.professionalDetails[0].designation
+              }
               const obj = {
                 fullname: `${user.firstName} ${user.lastName}`,
                 email: user.email,
-                // tslint:disable-next-line:max-line-length
-                position: user.profileDetails && user.profileDetails.professionalDetails ?
-                user.profileDetails.professionalDetails[0].designation : '',
+                position: pos,
                 id: user.id,
               }
               this.data.push(obj)
-              this.dataSource.data.push(obj)
             })
+
+            if (this.data) {
+              this.dataSource.data = this.data
+              this.dataSource.paginator = this.paginator
+              this.getAllUsers(this.deptID)
+            }
           }
         },
         (_err: any) => {
-      })
+        })
     }
   }
 
@@ -185,8 +183,8 @@ export class AdmintableComponent implements OnInit, OnChanges {
     const dialogConfig = new MatDialogConfig()
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
-    dialogConfig.width = '77%'
-    dialogConfig.height = '75%'
+    dialogConfig.width = '76%'
+    dialogConfig.height = '72%'
     dialogConfig.maxHeight = 'auto'
     dialogConfig.data = {
       data: this.usersData,
@@ -194,7 +192,6 @@ export class AdmintableComponent implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(AdduserpopupComponent, dialogConfig)
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response && response.data && response.data.length > 0) {
-        console.log('response', response.data)
         response.data.forEach((seluser: any) => {
           this.usersData.forEach((user: any) => {
             if (seluser.id === user.id) {
@@ -207,10 +204,9 @@ export class AdmintableComponent implements OnInit, OnChanges {
   }
 
   assignRole(user: any) {
-    console.log(user)
     let nroles: any = []
     nroles = user.organisations[0].roles
-    nroles.push('MDO_LEADER')
+    nroles.push('MDO_ADMIN')
     const obj = {
       request: {
           organisationId: this.deptID,
@@ -222,8 +218,8 @@ export class AdmintableComponent implements OnInit, OnChanges {
       (res: any) => {
         console.log('assign role res', res)
         this.openSnackbar('User is added successfully!')
+        this.getUsers('MDO_ADMIN')
     })
-    this.getUsers('MDO_ADMIN')
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

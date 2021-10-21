@@ -4,7 +4,7 @@
             <div class="mat-title margin-top-s margin-bottom-m">
                 Add users 
                 <a [routerLink]="['/app/users/create-user']" [queryParams]="statedata"  [mat-dialog-close]="true"
-                mat-raised-button type="button" class="flex-auto-display margin-right-s float-right">
+                mat-button type="button" class="flex-auto-display custom-btn margin-right-s mat-accent-border float-right">
                     <span class="ws-mat-default-text" i18n>New user</span>
                 </a>
             </div>
@@ -85,7 +85,7 @@
                 <p>{{this.selection.selected.length}} profile selected</p>
             </div>
             <div class="display-inline-block float-right">
-                <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display margin-right-s">
+                <button mat-button type="button" [mat-dialog-close]="true" class="custom-btn flex-auto-display mat-accent-border margin-right-s">
                     <span class="ws-mat-default-text" i18n>Cancel</span>
                 </button>
                 <button mat-raised-button type="button" [disabled]="this.selection.selected.length === 0" class="next-btn ws-mat-primary-background flex-auto-display" (click)="addUser()">

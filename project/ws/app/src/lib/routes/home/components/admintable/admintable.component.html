@@ -21,7 +21,7 @@
         </div>
         <mat-table #table matSort [ngStyle]="{'height': bodyHeight}" [matSortActive]="tableData!.sortColumn"
         [matSortDirection]="tableData!.sortState" [dataSource]="dataSource"
-        class="example-table table1 responsiveTable" *ngIf="dataSource.filteredData.length > 0">
+        class="example-table table1 responsiveTable">
             <ng-container matColumnDef="{{col.key}}" *ngFor="let col of tableData!.columns, let i = index">
                 <mat-header-cell *matHeaderCellDef mat-sort-header class=".h-400-r-14-l color-60"> {{col.displayName}}
                 </mat-header-cell>
@@ -67,7 +67,7 @@
             <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection.toggle(row);">
             </mat-row>
         </mat-table>
-        <mat-card class="flex-1" role="none" *ngIf="dataSource.filteredData.length == 0">
+        <mat-card class="flex-1" role="none">
         <span class="mat-subtitle ws-mat-black40-text">Click on 'Add user' to add users to the admin team.</span>
         </mat-card>
     </div>

@@ -13,7 +13,7 @@
                             </mat-tab>
                             <mat-tab label="Admin team">
                                 <!-- Admins -->
-                                <ws-app-admintable></ws-app-admintable>
+                                <ws-app-admintable [deptID]="deptID" *ngIf=deptID></ws-app-admintable>
                             </mat-tab>
                         </mat-tab-group>
                     </div>

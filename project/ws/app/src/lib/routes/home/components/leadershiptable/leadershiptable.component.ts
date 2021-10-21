@@ -61,10 +61,8 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
     }
     if (this.configSvc.userProfile) {
       this.deptID = this.configSvc.userProfile.rootOrgId
-    } else {
-      if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
+    } else if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
         this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
-      }
     }
     if (this.deptID) {
       this.getUsers('MDO_LEADER')
@@ -72,9 +70,11 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(data: SimpleChanges) {
-    this.dataSource.data = _.get(data, 'data.currentValue')
+    if (data) {
+      this.dataSource.data = _.get(data, 'data.currentValue')
     this.length = this.dataSource.data.length
     this.paginator.firstPage()
+    }
   }
 
   getAllUsers(orgID: any) {
@@ -121,12 +121,17 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
       this.mdoinfoSrvc.getTeamUsers(req).subscribe(
         (res: any) => {
           this.usersData1 = res.result.response.content
+          this.data = []
           if (this.usersData1.length > 0) {
+            let pos = ''
             this.usersData1.forEach((user: any)  => {
+              if (user.profileDetails && user.profileDetails.professionalDetails && user.profileDetails.professionalDetails.length > 0) {
+                pos = user.profileDetails.professionalDetails[0].designation
+              }
               const obj = {
                 fullname: `${user.firstName} ${user.lastName}`,
                 email: user.email,
-                position: user.profileDetails ? user.profileDetails.professionalDetails[0].designation : '',
+                position: pos,
                 id: user.id,
               }
               this.data.push(obj)
@@ -178,8 +183,8 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
     const dialogConfig = new MatDialogConfig()
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
-    dialogConfig.width = '77%'
-    dialogConfig.height = '75%'
+    dialogConfig.width = '76%'
+    dialogConfig.height = '72%'
     dialogConfig.maxHeight = 'auto'
     dialogConfig.data = {
       data: this.usersData,
@@ -213,8 +218,8 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
       (res: any) => {
         console.log('assign role res', res)
         this.openSnackbar('User is added successfully!')
+        this.getUsers('MDO_LEADER')
     })
-    this.getUsers('MDO_LEADER')
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

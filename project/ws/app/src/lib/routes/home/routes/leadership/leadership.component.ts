@@ -57,10 +57,8 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
     // this.getUsers('MDO_LEADER')
     if (this.configSvc.userProfile) {
       this.deptID = this.configSvc.userProfile.rootOrgId
-    } else {
-      if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
-        this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
-      }
+    } else if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
+      this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
     }
 
     if (this.tableData) {

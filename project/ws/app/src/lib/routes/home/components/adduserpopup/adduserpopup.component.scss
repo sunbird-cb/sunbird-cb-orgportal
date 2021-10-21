@@ -10,6 +10,15 @@
 .mat-raised-button[disabled] {
     opacity: 0.6;
 }
+.custom-btn {
+    min-width: 96px;
+    width: auto;
+    border: 1px solid #0075b7;
+    border-radius: 4px;
+    margin: 0 12px 0 5px;
+    color: #0075b7!important;
+    box-shadow: none !important;
+}
 .footer {
     width: 100%;
 }
@@ -86,4 +95,8 @@ mat-header-row {
     top: 9px;
     font-size: 20px;
     left: 10px;
+}
+
+::ng-deep.mat-dialog-content{
+    max-height: 58vh !important
 }
