@@ -26,7 +26,7 @@
             <ng-container matColumnDef="{{col.key}}" *ngFor="let col of tableData!.columns, let i = index">
                 <mat-header-cell *matHeaderCellDef mat-sort-header class=".h-400-r-14-l color-60"> {{col.displayName}}
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element" (click)="onRowClick(element)">
+                <mat-cell *matCellDef="let element">
                     <!-- <span *ngIf="col.key === 'srno'">{{i}}</span> -->
                     <span *ngIf="col.isList" class="h-400-r-14-l color-87 textclass">
                         <div innerHTML="{{element[col.key]}}"></div>
@@ -68,8 +68,11 @@
             <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection.toggle(row);">
             </mat-row>
         </mat-table>
-        <mat-card class="flex-1" role="none" *ngIf="dataSource.filteredData.length == 0">
-        <span class="mat-subtitle ws-mat-black40-text">Click on 'Add user' to add users to the leadership team.</span>
+        <mat-card class="flex-1" role="none" *ngIf="dataSource.length == 0">
+            <span class="mat-subtitle ws-mat-black40-text">Click on 'Add user' to add users to the leadership team.</span>
+        </mat-card>
+        <mat-card class="flex-1" role="none"  *ngIf="dataSource.filteredData && dataSource.filteredData.length == 0">
+            <span class="mat-subtitle ws-mat-black40-text">No search reuslts found.</span>
         </mat-card>
     </div>
     <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">

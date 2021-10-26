@@ -175,9 +175,9 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
     return ''
   }
 
-  onRowClick(e: any) {
-    console.log('clicked row', e)
-  }
+  // onRowClick(e: any) {
+  //   console.log('clicked row', e)
+  // }
 
   adduser() {
     const dialogConfig = new MatDialogConfig()
@@ -215,8 +215,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
       },
     }
     this.mdoinfoSrvc.assignTeamRole(obj).subscribe(
-      (res: any) => {
-        console.log('assign role res', res)
+      () => {
         this.openSnackbar('User is added successfully!')
         this.getUsers('MDO_LEADER')
     })
@@ -226,5 +225,15 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
     this.snackBar.open(primaryMsg, 'X', {
       duration,
     })
+  }
+
+  applyFilter(filterValue: any) {
+    if (filterValue) {
+      let fValue = filterValue.trim()
+      fValue = filterValue.toLowerCase()
+      this.dataSource.filter = fValue
+    } else {
+      this.dataSource.filter = ''
+    }
   }
 }

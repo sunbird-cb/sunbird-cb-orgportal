@@ -130,8 +130,12 @@ export class StaffComponent implements OnInit, OnChanges {
   getStaffDetails() {
     this.mdoinfoSrvc.getStaffdetails(this.deptID).subscribe(
       (res: any) => {
-        console.log('staff data', res.result.response)
         const result = res.result.response
+        result.sort((a: any, b: any) => {
+          const textA = a.position.toUpperCase()
+          const textB = b.position.toUpperCase()
+          return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
+        })
         result.forEach((sres: any, index: any) => {
           sres.srnumber = index + 1
           if (sres.position === 'all') {
@@ -141,7 +145,6 @@ export class StaffComponent implements OnInit, OnChanges {
             this.staffdata.controls['totalpositions'].setValue(totalpos)
             this.overallpos = sres
             result.splice(index, 1)
-            console.log(result)
           }
           this.data = result
         })
@@ -290,7 +293,6 @@ export class StaffComponent implements OnInit, OnChanges {
   }
 
   deleteStaffDetails(form: any) {
-    console.log(form)
     this.mdoinfoSrvc.deleteStaffdetails(form.id, this.deptID).subscribe(
       (res: any) => {
         if (res) {
@@ -304,6 +306,17 @@ export class StaffComponent implements OnInit, OnChanges {
 
   private openSnackbar(primaryMsg: string) {
     this.snackBar.open(primaryMsg)
+  }
+
+  applyFilter(filterValue: any) {
+    // this.isSearched = true
+    if (filterValue) {
+      let fValue = filterValue.trim()
+      fValue = filterValue.toLowerCase()
+      this.dataSource.filter = fValue
+    } else {
+      this.dataSource.filter = ''
+    }
   }
 
 }
