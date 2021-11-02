@@ -19,7 +19,7 @@ export class AdmintableComponent implements OnInit, OnChanges {
   tableData: ITableData = {
     actions: [],
     columns: [
-      // { displayName: 'Sr. no.', key: 'srno' },
+      { displayName: 'Sr. no.', key: 'srnumber' },
       { displayName: 'Full name', key: 'fullname' },
       { displayName: 'Position', key: 'position', isList: true },
       { displayName: 'Email', key: 'email' },
@@ -55,10 +55,10 @@ export class AdmintableComponent implements OnInit, OnChanges {
 
     // if (this.configSvc.userProfile) {
     //   this.deptID = this.configSvc.userProfile.rootOrgId
-      // this.getUsers('MDO_ADMIN')
+    // this.getUsers('MDO_ADMIN')
     // } else if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
-        // this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
-        // this.getUsers('MDO_ADMIN')
+    // this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
+    // this.getUsers('MDO_ADMIN')
     // }
   }
 
@@ -67,7 +67,7 @@ export class AdmintableComponent implements OnInit, OnChanges {
       this.displayedColumns = this.tableData.columns
     }
     // if (this.deptID) {
-      this.getUsers('MDO_ADMIN')
+    this.getUsers('MDO_ADMIN')
     // }
   }
 
@@ -90,7 +90,7 @@ export class AdmintableComponent implements OnInit, OnChanges {
       (res: any) => {
         // this.usersData = res.content
         this.filterAllUsers(res.content)
-    })
+      })
   }
 
   filterAllUsers(allusers: any) {
@@ -111,24 +111,33 @@ export class AdmintableComponent implements OnInit, OnChanges {
       const req = {
         request: {
           filters: {
-              rootOrgId: this.deptID,
-              'roles.role': [
-                role,
+            rootOrgId: this.deptID,
+            'roles.role': [
+              role,
             ],
           },
         },
       }
       this.mdoinfoSrvc.getTeamUsers(req).subscribe(
         (res: any) => {
-          this.usersData1 = res.result.response.content
+          const result = res.result.response.content
+          if (result.length > 0) {
+            result.sort((a: any, b: any) => {
+              const textA = a.firstName.toUpperCase()
+              const textB = b.firstName.toUpperCase()
+              return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
+            })
+          }
+          this.usersData1 = result
           this.data = []
           if (this.usersData1.length > 0) {
             let pos = ''
-            this.usersData1.forEach((user: any)  => {
+            this.usersData1.forEach((user: any, index: any) => {
               if (user.profileDetails && user.profileDetails.professionalDetails && user.profileDetails.professionalDetails.length > 0) {
                 pos = user.profileDetails.professionalDetails[0].designation
               }
               const obj = {
+                srnumber: index + 1,
                 fullname: `${user.firstName} ${user.lastName}`,
                 email: user.email,
                 position: pos,
@@ -209,16 +218,16 @@ export class AdmintableComponent implements OnInit, OnChanges {
     nroles.push('MDO_ADMIN')
     const obj = {
       request: {
-          organisationId: this.deptID,
-          userId: user.id,
-          roles: nroles,
+        organisationId: this.deptID,
+        userId: user.id,
+        roles: nroles,
       },
     }
     this.mdoinfoSrvc.assignTeamRole(obj).subscribe(
       () => {
         this.openSnackbar('User is added successfully!')
         this.getUsers('MDO_ADMIN')
-    })
+      })
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

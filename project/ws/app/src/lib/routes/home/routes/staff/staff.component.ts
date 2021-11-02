@@ -43,7 +43,7 @@ export class StaffComponent implements OnInit, OnChanges {
   data!: { srnumber: number; position: string; positionfilled: number; positionvacant: number; }[]
   deptID: any
   overallpos: any
-  isDisabled =  true
+  isDisabled = true
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
       this.dataSource.sort = sort
@@ -59,8 +59,6 @@ export class StaffComponent implements OnInit, OnChanges {
       posvacant: new FormControl('', [Validators.required]),
     })
     this.dataSource = new MatTableDataSource<any>()
-    // this.actionsClick = new EventEmitter()
-    // this.clicked = new EventEmitter()
     this.dataSource.paginator = this.paginator
 
     if (this.configSvc.userProfile) {
@@ -185,10 +183,6 @@ export class StaffComponent implements OnInit, OnChanges {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`
   }
 
-  onRowClick(e: any) {
-    console.log('clicked row', e)
-    // this.eOnRowClick.emit(e)
-  }
   updateData(rowdata: any) {
     this.onAddPosition(rowdata)
   }
@@ -214,25 +208,25 @@ export class StaffComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         if (!response.data.id) {
-        const req = {
-          orgId: this.deptID,
-          position: response.data.designation || response.data.position,
-          totalPositionsFilled: Number(response.data.posfilled) || Number(response.data.totalPositionsFilled),
-          totalPositionsVacant: Number(response.data.posvacant) || Number(response.data.totalPositionsVacant),
+          const req = {
+            orgId: this.deptID,
+            position: response.data.designation || response.data.position,
+            totalPositionsFilled: Number(response.data.posfilled) || Number(response.data.totalPositionsFilled),
+            totalPositionsVacant: Number(response.data.posvacant) || Number(response.data.totalPositionsVacant),
+          }
+          this.mdoinfoSrvc.addStaffdetails(req).subscribe(
+            (res: any) => {
+              if (res) {
+                this.openSnackbar('Staff details updated successfully')
+                this.getStaffDetails()
+              }
+            },
+            (_err: any) => {
+            })
+        } else {
+          this.updateStaffDetails(response.data)
         }
-        this.mdoinfoSrvc.addStaffdetails(req).subscribe(
-          (res: any) => {
-            if (res) {
-              this.openSnackbar('Staff details updated successfully')
-              this.getStaffDetails()
-            }
-          },
-          (_err: any) => {
-          })
-      } else {
-        this.updateStaffDetails(response.data)
       }
-    }
     })
   }
 

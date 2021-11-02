@@ -71,9 +71,9 @@
         <mat-card class="flex-1" role="none" *ngIf="dataSource.length == 0">
             <span class="mat-subtitle ws-mat-black40-text">Click on 'Add user' to add users to the leadership team.</span>
         </mat-card>
-        <mat-card class="flex-1" role="none"  *ngIf="dataSource.filteredData && dataSource.filteredData.length == 0">
+        <!-- <mat-card class="flex-1" role="none"  *ngIf="dataSource.filteredData && dataSource.filteredData.length == 0">
             <span class="mat-subtitle ws-mat-black40-text">No search reuslts found.</span>
-        </mat-card>
+        </mat-card> -->
     </div>
     <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
     </mat-paginator>

@@ -97,7 +97,7 @@
                         <ng-container matColumnDef="{{col.key}}" *ngFor="let col of tableData!.columns">
                             <mat-header-cell *matHeaderCellDef mat-sort-header class=".h-400-r-14-l color-60"> {{col.displayName}}
                             </mat-header-cell>
-                            <mat-cell *matCellDef="let element" (click)="onRowClick(element)">
+                            <mat-cell *matCellDef="let element">
                                 <span *ngIf="col.isList" class="h-400-r-14-l color-87 textclass">
                                     <div innerHTML="{{element[col.key]}}"></div>
                                 </span>
@@ -150,25 +150,14 @@
             </div>
             <mat-menu #cardMenu="matMenu">
                 <ng-template matMenuContent let-rowData="data">
-                    <!-- <button (click)="buttonClick('showOnKarma',rowData)" mat-menu-item name="channel-analytics-button"
-                        class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
-                        <mat-icon>input</mat-icon> <span>Show on Karmayogi</span>
-                    </button>
-                    <button (click)="rowData && rowData.blocked ? buttonClick('unblock',rowData): buttonClick('block',rowData)"
-                        mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
-                        aria-label="Analytics">
-                        <mat-icon>block</mat-icon><span>{{rowData && rowData.blocked ? 'Unblock user':'Block user' }}</span>
-                    </button> -->
                     <button (click)="updateData(rowData)"
                         mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
                         aria-label="Analytics">
-                        <!-- <mat-icon>edit_attributes</mat-icon> -->
                         <span>Edit</span>
                     </button>
                     <button (click)="deleteStaffDetails(rowData)"
                         mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
                         aria-label="Analytics">
-                        <!-- <mat-icon>edit_attributes</mat-icon> -->
                         <span>Delete</span>
                     </button>
                 </ng-template>

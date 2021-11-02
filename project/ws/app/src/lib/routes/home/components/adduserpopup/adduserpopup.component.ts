@@ -86,4 +86,16 @@ export class AdduserpopupComponent implements OnInit {
   createnewuser() {
     this.router.navigate([`/app/users/create-user`, { queryParams: { page: 'MDOinfo' } }])
   }
+
+  applyFilter(filterValue: any) {
+    // this.isSearched = true
+    if (filterValue) {
+      let fValue = filterValue.trim()
+      fValue = filterValue.toLowerCase()
+      this.dataSource.filter = fValue
+    } else {
+      this.dataSource.filter = ''
+    }
+  }
+
 }

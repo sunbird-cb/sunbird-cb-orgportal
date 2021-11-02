@@ -19,7 +19,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   tableData: ITableData = {
     actions: [],
     columns: [
-      // { displayName: 'Sr. no.', key: 'srno' },
+      { displayName: 'Sr. no.', key: 'srnumber' },
       { displayName: 'Full name', key: 'fullname' },
       { displayName: 'Position', key: 'position', isList: true },
       { displayName: 'Email', key: 'email' },
@@ -50,7 +50,8 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   }
 
   constructor(public dialog: MatDialog, private activeRoute: ActivatedRoute, private snackBar: MatSnackBar,
-              private mdoinfoSrvc: MdoInfoService,  private configSvc: ConfigurationsService) {
+    // tslint:disable-next-line:align
+    private mdoinfoSrvc: MdoInfoService, private configSvc: ConfigurationsService) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
   }
@@ -62,7 +63,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
     if (this.configSvc.userProfile) {
       this.deptID = this.configSvc.userProfile.rootOrgId
     } else if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
-        this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
+      this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
     }
     if (this.deptID) {
       this.getUsers('MDO_LEADER')
@@ -72,8 +73,8 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   ngOnChanges(data: SimpleChanges) {
     if (data) {
       this.dataSource.data = _.get(data, 'data.currentValue')
-    this.length = this.dataSource.data.length
-    this.paginator.firstPage()
+      this.length = this.dataSource.data.length
+      this.paginator.firstPage()
     }
   }
 
@@ -90,7 +91,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
       (res: any) => {
         // this.usersData = res.content
         this.filterAllUsers(res.content)
-    })
+      })
   }
 
   filterAllUsers(allusers: any) {
@@ -111,24 +112,33 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
       const req = {
         request: {
           filters: {
-              rootOrgId: this.deptID,
-              'roles.role': [
-                role,
+            rootOrgId: this.deptID,
+            'roles.role': [
+              role,
             ],
           },
         },
       }
       this.mdoinfoSrvc.getTeamUsers(req).subscribe(
         (res: any) => {
-          this.usersData1 = res.result.response.content
+          const result = res.result.response.content
+          if (result.length > 0) {
+            result.sort((a: any, b: any) => {
+              const textA = a.firstName.toUpperCase()
+              const textB = b.firstName.toUpperCase()
+              return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
+            })
+          }
+          this.usersData1 = result
           this.data = []
           if (this.usersData1.length > 0) {
             let pos = ''
-            this.usersData1.forEach((user: any)  => {
+            this.usersData1.forEach((user: any, index: any) => {
               if (user.profileDetails && user.profileDetails.professionalDetails && user.profileDetails.professionalDetails.length > 0) {
                 pos = user.profileDetails.professionalDetails[0].designation
               }
               const obj = {
+                srnumber: index + 1,
                 fullname: `${user.firstName} ${user.lastName}`,
                 email: user.email,
                 position: pos,
@@ -209,16 +219,16 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
     nroles.push('MDO_LEADER')
     const obj = {
       request: {
-          organisationId: this.deptID,
-          userId: user.id,
-          roles: nroles,
+        organisationId: this.deptID,
+        userId: user.id,
+        roles: nroles,
       },
     }
     this.mdoinfoSrvc.assignTeamRole(obj).subscribe(
       () => {
         this.openSnackbar('User is added successfully!')
         this.getUsers('MDO_LEADER')
-    })
+      })
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

@@ -6,7 +6,7 @@ import { MdoInfoService } from '../../services/mdoinfo.service'
 @Component({
   selector: 'ws-app-staffdetailspopup',
   templateUrl: './staffdetailspopup.component.html',
-  styleUrls: ['./staffdetailspopup.component.scss']
+  styleUrls: ['./staffdetailspopup.component.scss'],
 })
 export class StaffdetailspopupComponent implements OnInit {
   staffform: FormGroup
@@ -14,7 +14,7 @@ export class StaffdetailspopupComponent implements OnInit {
   formInputData: any
 
   constructor(private dialogRef: MatDialogRef<StaffdetailspopupComponent>, @Inject(MAT_DIALOG_DATA) data: any,
-              private mdoinfoSrvc: MdoInfoService) {
+    private mdoinfoSrvc: MdoInfoService) {
     this.staffform = new FormGroup({
       designation: new FormControl('', [Validators.required]),
       posfilled: new FormControl('', [Validators.required]),
@@ -53,7 +53,6 @@ export class StaffdetailspopupComponent implements OnInit {
   }
 
   addstaffdetails(form: any) {
-    console.log('form value', form.value)
     if (this.formInputData) {
       this.formInputData.position = this.staffform.value.designation
       this.formInputData.totalPositionsFilled = this.staffform.value.posfilled
