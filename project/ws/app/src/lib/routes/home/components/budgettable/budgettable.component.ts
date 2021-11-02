@@ -20,6 +20,7 @@ export class BudgettableComponent implements OnInit, OnChanges {
     email: string;
   }[]
   @Input() tableData: any = []
+  // tslint:disable-next-line:no-output-on-prefix
   @Output() onUploadFilesClick = new EventEmitter<any>()
   dataSource!: any
   widgetData: any
@@ -116,6 +117,6 @@ export class BudgettableComponent implements OnInit, OnChanges {
   }
 
   // onCreateClick() {
-    // this.eOnCreateClick.emit()
+  // this.eOnCreateClick.emit()
   // }
 }

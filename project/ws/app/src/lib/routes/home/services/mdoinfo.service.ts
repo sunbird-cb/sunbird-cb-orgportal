@@ -14,6 +14,8 @@ const API_END_POINTS = {
     get_staffdetails: '/apis/proxies/v8/staff/position',
     staffdetails: '/apis/proxies/v8/staff/position',
     delete_staffdetails: '/apis/proxies/v8/staff/position?orgId=',
+    budgetdetails: '/apis/proxies/v8/budget/scheme',
+    delete_budget: '/apis/proxies/v8/budget/scheme?orgId={{orgid}}&id={{id}}',
 }
 
 @Injectable({
@@ -55,5 +57,21 @@ export class MdoInfoService {
 
   deleteStaffdetails(id: any, orgId: any): Observable<any> {
     return this.http.delete<any>(`${API_END_POINTS.delete_staffdetails}${orgId}&id=${id}`)
+  }
+
+  getBudgetdetails(orgId: any, budgetYear: any): Observable<any> {
+    return this.http.get<any>(`${API_END_POINTS.budgetdetails}/${orgId}/${budgetYear}`)
+  }
+
+  addBudgetdetails(req: any): Observable<any> {
+    return this.http.post<any>(API_END_POINTS.budgetdetails, req)
+  }
+
+  updateBudgetdetails(req: any): Observable<any> {
+    return this.http.patch<any>(API_END_POINTS.budgetdetails, req)
+  }
+
+  deleteBudgetdetails(id: any, orgId: any): Observable<any> {
+    return this.http.delete<any>(`${API_END_POINTS.delete_budget}${orgId}&id=${id}`)
   }
 }

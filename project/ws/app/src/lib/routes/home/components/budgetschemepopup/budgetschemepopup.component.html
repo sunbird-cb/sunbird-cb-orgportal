@@ -8,6 +8,27 @@
                 <form class="schemeform-form" [formGroup]="schemeform" >
                     <div class="display-block">
                         <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
+                            <label for="budgetyear" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                i18n="Financial year label|Label which explains the user to enter Financial year" i18n-aria-label
+                                aria-label="Financial year label">
+                                Financial year
+                            </label>
+                            <mat-form-field appearance="outline" class="margin-top-xs" style="margin-top: -5px !important;
+                            font-size: 14px;">
+                            <mat-label>Select year</mat-label>
+                                <mat-select formControlName="budgetyear" #budgetyear>
+                                    <mat-option *ngFor="let year of yearsList" [value]="year">
+                                        {{year}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error [hidden]="false" i18n="Budget year Error|Explains name is required" i18n-aria-label
+                                aria-label="Budget year Error|Explains name is required "
+                                *ngIf="budgetdata?.controls['budgetyear']?.touched && budgetdata?.controls['budgetyear'].errors?.required">
+                                Field is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
                             <label for="schemename" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                 i18n="Scheme name label|Label which explains the user to enter Scheme name" i18n-aria-label
                                 aria-label="Scheme name label">
@@ -27,7 +48,7 @@
                             <label for="budgetallocated" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                 i18n="Budget allocated label|Label which explains the user to enter Budget allocated" i18n-aria-label
                                 aria-label="Budget allocated label">
-                                Training/capacity building budget allocated in current FY
+                                Allocated training/capacity building budget
                             </label>
                             <mat-form-field appearance="outline" class="margin-top-xs">
                                 <input id="budgetallocated" matInput #budgetallocated formControlName="budgetallocated" i18n-placeholder placeholder="Type here"
@@ -43,7 +64,7 @@
                             <label for="budgetutilized" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                 i18n="Budget utilized label|Label which explains the user to enter Budget utilized" i18n-aria-label
                                 aria-label="Budget utilized label">
-                                Training budget utilization in current FY
+                                Proposed utilization of training budget
                             </label>
                             <mat-form-field appearance="outline" class="margin-top-xs">
                                 <input id="budgetutilized" matInput #budgetutilized formControlName="budgetutilized" i18n-placeholder placeholder="Type here"
@@ -71,7 +92,7 @@
                     <span class="ws-mat-default-text" i18n>Cancel</span>
                 </button>
                 <button mat-raised-button type="submit" [disabled]="schemeform?.invalid" class="next-btn ws-mat-primary-background flex-auto-display" 
-                (click)="addstaffdetails(schemeform)">
+                (click)="addsheme(schemeform)">
                     <span class="text-white" i18n>Add</span>
                 </button>
             </div>
