@@ -15,9 +15,9 @@ export class BudgettableComponent implements OnInit, OnChanges {
   @Input() type: any
   @Input() data!: {
     srnumber: number;
-    fullname: string;
-    position: string;
-    email: string;
+    filename: string;
+    filesize: string;
+    uploadedon: string;
   }[]
   @Input() tableData: any = []
   // tslint:disable-next-line:no-output-on-prefix
@@ -44,7 +44,6 @@ export class BudgettableComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log('type', this.type)
     if (this.tableData) {
       this.displayedColumns = this.tableData.columns
     }

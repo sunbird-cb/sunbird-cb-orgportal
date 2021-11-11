@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, SimpleChanges, OnChanges } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
-import { MatPaginator, MatSnackBar, MatDialogConfig, MatDialog } from '@angular/material'
+import { MatPaginator, MatSnackBar, MatDialogConfig, MatDialog, MatSelectChange } from '@angular/material'
 import { MatSort } from '@angular/material/sort'
 import { ITableData, IColums } from '../../interface/interfaces'
 import * as _ from 'lodash'
@@ -23,32 +23,31 @@ export class BudgetComponent implements OnInit, OnChanges {
     actions: [],
     columns: [
       { displayName: 'Sr. no.', key: 'srnumber' },
-      { displayName: 'Scheme name', key: 'schemename' },
-      { displayName: 'Allocated training/capacity building budget', key: 'budgetallocated' },
-      { displayName: 'Projected utilization of training budget', key: 'budgetutilization' },
-      { displayName: 'Financial year', key: 'budgetyear' },
+      { displayName: 'Scheme name', key: 'schemeName' },
+      { displayName: 'Allocated training/capacity building budget', key: 'trainingBudgetAllocated' },
+      { displayName: 'Projected utilization of training budget', key: 'trainingBudgetUtilization' },
+      { displayName: 'Financial year', key: 'budgetYear' },
     ],
     needCheckBox: false,
     needHash: false,
-    sortColumn: 'fullname',
+    sortColumn: 'schemename',
     sortState: 'asc',
     needUserMenus: true,
   }
-  tableData: ITableData = {
-    actions: [],
-    columns: [
-      { displayName: 'Sr. no.', key: 'srnumber' },
-      { displayName: 'File name', key: 'filename' },
-      { displayName: 'File type', key: 'filetype' },
-      { displayName: 'File size', key: 'filesize' },
-      { displayName: 'Uploaded on', key: 'uploadedon' },
-    ],
-    needCheckBox: false,
-    needHash: false,
-    sortColumn: 'fullname',
-    sortState: 'asc',
-    needUserMenus: true,
-  }
+  // tableData: ITableData = {
+  //   actions: [],
+  //   columns: [
+  //     { displayName: 'Sr. no.', key: 'srnumber' },
+  //     { displayName: 'File name', key: 'filename' },
+  //     { displayName: 'File size', key: 'filesize' },
+  //     { displayName: 'Uploaded on', key: 'uploadedon' },
+  //   ],
+  //   needCheckBox: false,
+  //   needHash: false,
+  //   sortColumn: 'filename',
+  //   sortState: 'asc',
+  //   needUserMenus: true,
+  // }
   dataSource1!: any
   dataSource!: any
   widgetData: any
@@ -59,15 +58,25 @@ export class BudgetComponent implements OnInit, OnChanges {
   displayedColumns: IColums[] | undefined
   selection = new SelectionModel<any>(true, [])
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
-  overallmdodata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
-  mdosalarydata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
-  mdotrainingdata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
-  schemewisedata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
-  scehemetableDatadata!: { srnumber: number; schemename: string; budgetallocated: number; budgetutilization: number; }[]
+  // overallmdodata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
+  // mdosalarydata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
+  // mdotrainingdata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
+  // schemewisedata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
+  scehemetableDatadata!: {
+    srnumber: number; schemeName: string; trainingBudgetAllocated: number;
+    trainingBudgetUtilization: number; budgetYear: string
+  }[]
   yearsList: any = []
+  selectedYear: any
   deptID: any
   data: any
   overallbudget: any
+  totalbudget: any = 0
+  totalbudgetpercent: any = 0
+  salarayChange: any
+  trainingChange: any
+  utilizedChange: any
+  utilizedChangeError = false
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource1.sort) {
       this.dataSource1.sort = sort
@@ -78,6 +87,7 @@ export class BudgetComponent implements OnInit, OnChanges {
   }
 
   constructor(private snackBar: MatSnackBar, public dialog: MatDialog, private configSvc: ConfigurationsService,
+    // tslint:disable-next-line:align
     private mdoinfoSrvc: MdoInfoService, private activeRoute: ActivatedRoute) {
     this.budgetdata = new FormGroup({
       budgetyear: new FormControl('', [Validators.required]),
@@ -92,49 +102,42 @@ export class BudgetComponent implements OnInit, OnChanges {
 
     if (this.configSvc.userProfile) {
       this.deptID = this.configSvc.userProfile.rootOrgId
-      this.getBudgetDetails()
+      this.getBudgetYearsList()
     } else if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
       this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
-      this.getBudgetDetails()
+      this.getBudgetYearsList()
     }
   }
   ngOnInit() {
     if (this.scehemetableData) {
       this.displayedColumns1 = this.scehemetableData.columns
     }
-    if (this.scehemetableDatadata) {
-      this.dataSource1.data = this.overallmdodata
-      this.dataSource1.paginator = this.paginator
-    }
+    // this.scehemetableDatadata = [
+    //   {
+    //     srnumber: 1,
+    //     schemename: 'Newfile',
+    //     budgetallocated: 20,
+    //     budgetutilization: 10,
+    //   },
+    // ]
 
-    this.scehemetableDatadata = [
-      {
-        srnumber: 1,
-        schemename: 'Newfile',
-        budgetallocated: 20,
-        budgetutilization: 10,
-      },
-    ]
+    // if (this.tableData) {
+    //   this.displayedColumns = this.tableData.columns
+    // }
+    // if (this.overallmdodata) {
+    //   this.dataSource.data = this.overallmdodata
+    //   this.dataSource.paginator = this.paginator
+    // }
 
-    if (this.tableData) {
-      this.displayedColumns = this.tableData.columns
-    }
-    if (this.overallmdodata) {
-      this.dataSource.data = this.overallmdodata
-      this.dataSource.paginator = this.paginator
-    }
-
-    this.overallmdodata = [
-      {
-        srnumber: 1,
-        filename: 'Newfile',
-        filetype: 'PDF',
-        filesize: '43242KB',
-        uploadedon: '22 Sep, 2021',
-      },
-    ]
-
-    this.yearsList = ['2020-2021', '2021-2022']
+    // this.overallmdodata = [
+    //   {
+    //     srnumber: 1,
+    //     filename: 'Newfile',
+    //     filetype: 'PDF',
+    //     filesize: '43242KB',
+    //     uploadedon: '22 Sep, 2021',
+    //   },
+    // ]
   }
 
   ngOnChanges(data: SimpleChanges) {
@@ -142,6 +145,28 @@ export class BudgetComponent implements OnInit, OnChanges {
     this.dataSource.data = data.currentValue ? _.get(data, 'data.currentValue') : []
     this.length = this.dataSource.data.length || this.dataSource1.data.length
     this.paginator.firstPage()
+  }
+
+  getBudgetYearsList() {
+    const currentYear = new Date().getFullYear()
+    const nextYear = new Date().getFullYear() + 1
+    const prevYear = new Date().getFullYear() - 1
+    const nextYear1 = nextYear + 1
+    const prevbudgetyear = `${prevYear}-${currentYear}`
+    this.yearsList.push(prevbudgetyear)
+    const currentbudgetyear = `${currentYear}-${nextYear}`
+    this.yearsList.push(currentbudgetyear)
+    this.selectedYear = currentbudgetyear
+    this.budgetdata.controls['budgetyear'].setValue(this.selectedYear)
+    const nextbudgetyear = `${nextYear}-${nextYear1}`
+    this.yearsList.push(nextbudgetyear)
+
+    this.getBudgetDetails(this.selectedYear)
+  }
+
+  changeBudgetYear(locale: MatSelectChange) {
+    this.selectedYear = locale.value
+    this.getBudgetDetails(this.selectedYear)
   }
 
   // buttonClick(action: string, row: any) {
@@ -154,20 +179,38 @@ export class BudgetComponent implements OnInit, OnChanges {
   // }
 
   getFinalColumns() {
-    if (this.tableData !== undefined) {
-      const columns = _.map(this.tableData.columns, c => c.key)
-      if (this.tableData.needCheckBox) {
+    if (this.scehemetableData !== undefined) {
+      const columns = _.map(this.scehemetableData.columns, c => c.key)
+      if (this.scehemetableData.needCheckBox) {
         columns.splice(0, 0, 'select')
       }
-      if (this.tableData.needHash) {
+      if (this.scehemetableData.needHash) {
         columns.splice(0, 0, 'SR')
       }
-      if (this.tableData.needUserMenus) {
+      if (this.scehemetableData.needUserMenus) {
         columns.push('Menu')
       }
       return columns
     }
     return ''
+  }
+
+  onSalarayChange(event: any) {
+    this.salarayChange = event
+  }
+  onTrainingChange(event: any) {
+    this.trainingChange = event
+    this.totalbudget = Number(this.salarayChange) + Number(this.trainingChange)
+  }
+  onUtilizedChange(event: any) {
+    this.utilizedChange = event
+    if (this.utilizedChange && this.trainingChange) {
+      if (this.utilizedChange < this.trainingChange && this.utilizedChange < this.salarayChange) {
+        this.totalbudgetpercent = ((this.utilizedChange / this.trainingChange) * 100).toFixed(2)
+      } else {
+        this.utilizedChangeError = true
+      }
+    }
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -209,11 +252,15 @@ export class BudgetComponent implements OnInit, OnChanges {
     dialogConfig.maxHeight = 'auto'
     if (rowdata) {
       dialogConfig.data = {
-        data: rowdata,
+        data: rowdata ? rowdata : [],
+        yearlist: this.yearsList,
       }
     } else {
       dialogConfig.data = {
         data: [],
+        yearlist: this.yearsList,
+        selectedYear: this.selectedYear,
+        allocatedbudget: this.budgetdata.controls['trainingbudget'].value,
       }
     }
 
@@ -226,15 +273,15 @@ export class BudgetComponent implements OnInit, OnChanges {
             orgId: this.deptID,
             budgetYear: response.data.budgetyear,
             schemeName: response.data.schemename,
-            // salaryBudgetAllocated: Number(response.data.salarybudget),
-            trainingBudgetAllocated: Number(response.data.budgetallocated),
+            salaryBudgetAllocated: this.budgetdata.controls['salarybudget'].value,
+            trainingBudgetAllocated: this.budgetdata.controls['trainingbudget'].value,
             trainingBudgetUtilization: Number(response.data.budgetutilized),
           }
           this.mdoinfoSrvc.addBudgetdetails(req).subscribe(
             (res: any) => {
               if (res) {
                 this.openSnackbar('Staff details updated successfully')
-                this.getBudgetDetails()
+                this.getBudgetDetails(this.selectedYear)
               }
             },
             (_err: any) => {
@@ -246,10 +293,9 @@ export class BudgetComponent implements OnInit, OnChanges {
     })
   }
 
-  getBudgetDetails() {
-    const currentYear = new Date().getFullYear()
-    const nextYear = new Date().getFullYear() + 1
-    const budgetyear = `${currentYear}-${nextYear}`
+  getBudgetDetails(budgetyear: any) {
+    this.dataSource.data = []
+    this.scehemetableDatadata = []
     this.mdoinfoSrvc.getBudgetdetails(this.deptID, budgetyear).subscribe(
       (res: any) => {
         const result = res.result.response
@@ -261,28 +307,34 @@ export class BudgetComponent implements OnInit, OnChanges {
         result.forEach((sres: any, index: any) => {
           sres.srnumber = index + 1
           if (sres.schemeName === 'all') {
-            this.budgetdata.controls['budgetyear'].setValue(result.budgetYear)
-            this.budgetdata.controls['salarybudget'].setValue(result.salaryBudgetAllocated)
-            this.budgetdata.controls['trainingbudget'].setValue(result.trainingBudgetAllocated)
-            this.budgetdata.controls['budgetutilized'].setValue(result.trainingBudgetUtilization)
+            this.budgetdata.controls['budgetyear'].setValue(sres.budgetYear)
+            this.budgetdata.controls['salarybudget'].setValue(sres.salaryBudgetAllocated)
+            this.budgetdata.controls['trainingbudget'].setValue(sres.trainingBudgetAllocated)
+            this.budgetdata.controls['budgetutilized'].setValue(sres.trainingBudgetUtilization)
             this.overallbudget = sres
             result.splice(index, 1)
           }
-          this.data = result
+          this.scehemetableDatadata = result
         })
 
-        if (this.data) {
-          this.data.forEach((sres: any, index: any) => {
+        if (this.scehemetableDatadata) {
+          this.scehemetableDatadata.forEach((sres: any, index: any) => {
             sres.srnumber = index + 1
+            this.dataSource.data.push(sres)
           })
-          this.dataSource.data = this.data
           this.dataSource.paginator = this.paginator
+        }
+      },
+      (error: any) => {
+        if (error && error.status === 400) {
+          this.budgetdata.reset()
+          this.totalbudgetpercent = 0
+          this.openSnackbar('No Budget Scheme found for this year')
         }
       })
   }
 
   onSubmit(form: any) {
-    console.log('form', form.value)
     if (!this.overallbudget) {
       const req = {
         orgId: this.deptID,
@@ -296,7 +348,7 @@ export class BudgetComponent implements OnInit, OnChanges {
         (res: any) => {
           if (res) {
             this.openSnackbar('Budget details updated successfully')
-            this.getBudgetDetails()
+            this.getBudgetDetails(form.value.budgetyear)
           }
         },
         (_err: any) => {
@@ -313,7 +365,7 @@ export class BudgetComponent implements OnInit, OnChanges {
         (res: any) => {
           if (res) {
             this.openSnackbar('Budget details updated successfully')
-            this.getBudgetDetails()
+            this.getBudgetDetails(form.value.budgetyear)
           }
         },
         (_err: any) => {
@@ -321,36 +373,36 @@ export class BudgetComponent implements OnInit, OnChanges {
     }
   }
 
-  updateBudgetDetails(form: any) {
+  updateBudgetDetails(data: any) {
     const req = {
-      id: form.id,
+      id: data.id,
       orgId: this.deptID,
-      budgetYear: form.budgetyear,
-      schemeName: form.schemename,
-      trainingBudgetUtilization: Number(form.value.budgetutilized),
+      budgetYear: data.budgetyear,
+      schemeName: data.schemename,
+      trainingBudgetUtilization: Number(data.trainingBudgetUtilization),
     }
-    this.mdoinfoSrvc.updateStaffdetails(req).subscribe(
+    this.mdoinfoSrvc.updateBudgetdetails(req).subscribe(
       (res: any) => {
         if (res) {
-          this.openSnackbar('Staff details updated successfully')
-          this.getBudgetDetails()
+          this.openSnackbar('Scheme details updated successfully')
+          this.getBudgetDetails(data.budgetyear)
         }
       },
       (_err: any) => {
       })
   }
 
-  deleteBudgetDetails(form: any) {
-    this.mdoinfoSrvc.deleteBudgetdetails(form.id, this.deptID).subscribe(
-      (res: any) => {
-        if (res) {
-          this.openSnackbar('Staff details deleted successfully')
-          this.getBudgetDetails()
-        }
-      },
-      (_err: any) => {
-      })
-  }
+  // deleteBudgetDetails(form: any) {
+  //   this.mdoinfoSrvc.deleteBudgetdetails(form.id, this.deptID).subscribe(
+  //     (res: any) => {
+  //       if (res) {
+  //         this.openSnackbar('Staff details deleted successfully')
+  //         this.getBudgetDetails(form.budgetyear)
+  //       }
+  //     },
+  //     (_err: any) => {
+  //     })
+  // }
 
   private openSnackbar(primaryMsg: string) {
     this.snackBar.open(primaryMsg)
@@ -382,7 +434,7 @@ export class BudgetComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response) {
-        console.log('response', response)
+        // console.log('response', response)
       }
     })
 

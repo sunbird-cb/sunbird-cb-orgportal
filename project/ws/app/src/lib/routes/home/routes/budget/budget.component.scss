@@ -1,9 +1,30 @@
 // table css
-.table1 {
+.schemetable {
     width: 100%;
     display: flex;
     // flex: 1;
     flex-direction: column;
+
+    .mat-header-cell {
+        height: 58px !important
+    }
+
+    .mat-column-srnumber {
+        flex: 0 0 6% !important;
+    }
+    .mat-column-trainingBudgetAllocated {
+        flex: 0 0 19%;
+
+    }
+    .mat-column-trainingBudgetUtilization {
+        flex: 0 0 21%;
+    }
+    .mat-column-schemeName {
+        flex: 0 0 26%;
+    }
+}
+::ng-deep.mat-sort-header-button {
+    text-align: left !important;
 }
 
 .textclass {

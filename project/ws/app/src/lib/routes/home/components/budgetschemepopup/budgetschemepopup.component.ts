@@ -10,23 +10,27 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 export class BudgetschemepopupComponent implements OnInit {
   schemeform: FormGroup
   formInputData: any
-  yearsList = ['2020-2021' , '2021-2022']
+  yearsList = []
 
   constructor(private dialogRef: MatDialogRef<BudgetschemepopupComponent>, @Inject(MAT_DIALOG_DATA) data: any) {
     this.schemeform = new FormGroup({
       budgetyear: new FormControl('', [Validators.required]),
       schemename: new FormControl('', [Validators.required]),
-      budgetallocated: new FormControl('', [Validators.required]),
+      budgetallocated: new FormControl({ value: '', disabled: true }, [Validators.required]),
       budgetutilized: new FormControl('', [Validators.required]),
     })
 
+    this.yearsList = data.yearlist
+
     if (data.data) {
       this.formInputData = data.data
-      console.log('formInputData', this.formInputData)
-      this.schemeform.controls['budgetyear'].setValue(this.formInputData.budgetyear)
-      this.schemeform.controls['schemename'].setValue(this.formInputData.schemename)
+      this.schemeform.controls['budgetyear'].setValue(this.formInputData.budgetYear)
+      this.schemeform.controls['schemename'].setValue(this.formInputData.schemeName)
       this.schemeform.controls['budgetallocated'].setValue(this.formInputData.trainingBudgetAllocated)
       this.schemeform.controls['budgetutilized'].setValue(this.formInputData.trainingBudgetUtilization)
+    } else {
+      this.schemeform.controls['budgetyear'].setValue(data.selectedYear)
+      this.schemeform.controls['budgetallocated'].setValue(data.allocatedbudget)
     }
   }
 
@@ -34,7 +38,6 @@ export class BudgetschemepopupComponent implements OnInit {
   }
 
   addsheme(form: any) {
-    console.log('form value', form.value)
     if (this.formInputData) {
       this.formInputData.budgetyear = this.schemeform.value.budgetyear
       this.formInputData.schemename = this.schemeform.value.schemename
@@ -44,7 +47,6 @@ export class BudgetschemepopupComponent implements OnInit {
     } else {
       this.dialogRef.close({ data: form.value })
     }
-    this.dialogRef.close({ data: form.value })
   }
 
 }

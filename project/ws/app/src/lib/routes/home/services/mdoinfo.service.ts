@@ -7,15 +7,15 @@ import _ from 'lodash'
 // tslint:enable
 
 const API_END_POINTS = {
-    getDesignation: '/apis/protected/v8/frac/searchNodes',
-    getTeamUsers: '/apis/proxies/v8/user/v1/search',
-    GET_ALL_USERS: '/apis/proxies/v8/user/v1/search',
-    assign_role: '/apis/proxies/v8/user/private/v1/assign/role',
-    get_staffdetails: '/apis/proxies/v8/staff/position',
-    staffdetails: '/apis/proxies/v8/staff/position',
-    delete_staffdetails: '/apis/proxies/v8/staff/position?orgId=',
-    budgetdetails: '/apis/proxies/v8/budget/scheme',
-    delete_budget: '/apis/proxies/v8/budget/scheme?orgId={{orgid}}&id={{id}}',
+  getDesignation: '/apis/protected/v8/frac/searchNodes',
+  getTeamUsers: '/apis/proxies/v8/user/v1/search',
+  GET_ALL_USERS: '/apis/proxies/v8/user/v1/search',
+  assign_role: '/apis/proxies/v8/user/private/v1/assign/role',
+  get_staffdetails: '/apis/proxies/v8/staff/position',
+  staffdetails: '/apis/proxies/v8/staff/position',
+  delete_staffdetails: '/apis/proxies/v8/staff/position?orgId=',
+  budgetdetails: '/apis/proxies/v8/budget/scheme',
+  delete_budget: '/apis/proxies/v8/budget/scheme?orgId=',
 }
 
 @Injectable({
@@ -23,10 +23,6 @@ const API_END_POINTS = {
 })
 export class MdoInfoService {
   constructor(private http: HttpClient) { }
-//   getRoles(): Observable<any> {
-//     return this.http.get<any>(`${API_END_POINTS.ROLES}`)
-//   }
-
   getAllUsers(filter: object): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, filter).pipe(map(res => _.get(res, 'result.response')))
   }

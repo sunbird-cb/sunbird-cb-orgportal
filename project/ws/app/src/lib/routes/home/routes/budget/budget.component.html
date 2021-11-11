@@ -29,7 +29,8 @@
                                                             style="    margin-top: -5px !important;
                                                     font-size: 14px;">
                                                             <mat-label>Select year</mat-label>
-                                                            <mat-select formControlName="budgetyear" #budgetyear>
+                                                            <mat-select formControlName="budgetyear" #budgetyear
+                                                                [(value)]="selectedYear" (selectionChange)="changeBudgetYear($event)">
                                                                 <mat-option *ngFor="let year of yearsList" [value]="year">
                                                                     {{year}}
                                                                 </mat-option>
@@ -52,7 +53,7 @@
                                                                 #salarybudget formControlName="salarybudget"
                                                                 i18n-placeholder placeholder="Type here"
                                                                 i18n-aria-label aria-label="Salary budget allocated input"
-                                                                class="form-input" autocomplete="off" />
+                                                                class="form-input" autocomplete="off" (ngModelChange)='onSalarayChange($event)' />
                                                             <mat-error [hidden]="false" i18n="Salary budget allocated Error|Explains name is required"
                                                                 i18n-aria-label aria-label="Salary budget allocated Error|Explains name is required "
                                                                 *ngIf="budgetdata?.controls['salarybudget']?.touched && budgetdata?.controls['salarybudget'].errors?.required">
@@ -70,7 +71,8 @@
                                                             <input id="trainingbudget" matInput #trainingbudget
                                                                 formControlName="trainingbudget" i18n-placeholder
                                                                 placeholder="Type here" i18n-aria-label aria-label="Training budget allocated input"
-                                                                class="form-input" autocomplete="off" />
+                                                                (ngModelChange)='onTrainingChange($event)' class="form-input"
+                                                                autocomplete="off" />
                                                             <mat-error [hidden]="false" i18n="Training budget allocated Error|Explains name is required"
                                                                 i18n-aria-label aria-label="Training budget allocated Error|Explains name is required "
                                                                 *ngIf="budgetdata?.controls['trainingbudget']?.touched && budgetdata?.controls['trainingbudget'].errors?.required">
@@ -88,22 +90,28 @@
                                                             <input id="budgetutilized" matInput #budgetutilized
                                                                 formControlName="budgetutilized" i18n-placeholder
                                                                 placeholder="Type here" i18n-aria-label aria-label="Training budget utilization input"
-                                                                class="form-input" autocomplete="off" />
+                                                                (ngModelChange)='onUtilizedChange($event)' class="form-input"
+                                                                autocomplete="off" />
                                                             <mat-error [hidden]="false" i18n="Training budget utilization Error|Explains name is required"
                                                                 i18n-aria-label aria-label="Training budget utilization Error|Explains name is required "
                                                                 *ngIf="budgetdata?.controls['budgetutilized']?.touched && budgetdata?.controls['budgetutilized'].errors?.required">
                                                                 Field is mandatory
+                                                            </mat-error>
+                                                            <mat-error [hidden]="false" i18n="Training budget utilization Error|Explains name is required"
+                                                                i18n-aria-label aria-label="Training budget utilization Error|Explains name is required "
+                                                                *ngIf="utilizedChangeError">
+                                                                Projected utilization should be less than allocated
                                                             </mat-error>
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
                                                 <div class="display-inline-block float-right">
                                                     <div class="margin-bottom-m avg-box" style="margin-top: 88px;">
-                                                        <p class="mat-title">0</p>
+                                                        <p class="mat-title">{{totalbudget}}</p>
                                                         <p class="mat-subheading-2">Overall budget allocated for the FY</p>
                                                     </div>
                                                     <div class="margin-bottom-m avg-box">
-                                                        <p class="mat-title">0%</p>
+                                                        <p class="mat-title">{{totalbudgetpercent}}%</p>
                                                         <p class="mat-subheading-2">Total % of training budget
                                                             utilization in the FY</p>
                                                     </div>
@@ -137,15 +145,15 @@
                                                 </div>
                                                 <div class="flex-1 right-align">
                                                     <button type="button" mat-button class="create-btn mat-subheading-2"
-                                                        (click)="onaddScehme()">
+                                                        (click)="onaddScehme('')">
                                                         Add scheme
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <mat-table #table matSort [ngStyle]="{'height': bodyHeight}" [matSortActive]="scehemetableData!.sortColumn"
+                                        <mat-table #table matSort [matSortActive]="scehemetableData!.sortColumn"
                                             [matSortDirection]="scehemetableData!.sortState" [dataSource]="dataSource"
-                                            class="example-table table1 responsiveTable">
+                                            class="schemetable responsiveTable">
                                             <ng-container matColumnDef="{{col.key}}" *ngFor="let col of scehemetableData!.columns">
                                                 <mat-header-cell *matHeaderCellDef mat-sort-header class=".h-400-r-14-l color-60">
                                                     {{col.displayName}}
@@ -213,10 +221,10 @@
                                             class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
                                             <span>Edit</span>
                                         </button>
-                                        <button (click)="deleteBudgetDetails(rowData)" mat-menu-item name="channel-analytics-button"
+                                        <!-- <button (click)="deleteBudgetDetails(rowData)" mat-menu-item name="channel-analytics-button"
                                             class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
                                             <span>Delete</span>
-                                        </button>
+                                        </button> -->
                                     </ng-template>
                                 </mat-menu>
                             </mat-tab>
@@ -231,8 +239,8 @@
                                             for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <ws-app-budgettable [type]="'overallmdo'" [tableData]="tableData" [data]="overallmdodata"
-                                            (onUploadFilesClick)="browsefiles('overallmdo')"></ws-app-budgettable>
+                                        <!-- <ws-app-budgettable [type]="'overallmdo'" [tableData]="tableData" [data]="overallmdodata"
+                                            (onUploadFilesClick)="browsefiles('overallmdo')"></ws-app-budgettable> -->
                                     </div>
                                 </div>
                                 <!-- mdosalary -->
@@ -245,8 +253,8 @@
                                             for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <ws-app-budgettable [type]="'mdosalary'" [tableData]="tableData" [data]="mdosalarydata"
-                                            (onUploadFilesClick)="browsefiles('mdosalary')"></ws-app-budgettable>
+                                        <!-- <ws-app-budgettable [type]="'mdosalary'" [tableData]="tableData" [data]="mdosalarydata"
+                                            (onUploadFilesClick)="browsefiles('mdosalary')"></ws-app-budgettable> -->
                                     </div>
                                 </div>
                                 <!-- mdotraining -->
@@ -259,8 +267,8 @@
                                             for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <ws-app-budgettable [type]="'mdotraining'" [tableData]="tableData" [data]="mdotrainingdata"
-                                            (onUploadFilesClick)="browsefiles('mdotraining')"></ws-app-budgettable>
+                                        <!-- <ws-app-budgettable [type]="'mdotraining'" [tableData]="tableData" [data]="mdotrainingdata"
+                                            (onUploadFilesClick)="browsefiles('mdotraining')"></ws-app-budgettable> -->
                                     </div>
                                 </div>
                                 <!-- schemewise -->
@@ -273,8 +281,8 @@
                                             for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <ws-app-budgettable [type]="'schemewise'" [tableData]="tableData" [data]="schemewisedata"
-                                            (onUploadFilesClick)="browsefiles('schemewise')"></ws-app-budgettable>
+                                        <!-- <ws-app-budgettable [type]="'schemewise'" [tableData]="tableData" [data]="schemewisedata"
+                                            (onUploadFilesClick)="browsefiles('schemewise')"></ws-app-budgettable> -->
                                     </div>
                                 </div>
                             </mat-tab>
