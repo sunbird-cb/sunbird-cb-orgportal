@@ -14,6 +14,7 @@ export class StaffdetailspopupComponent implements OnInit {
   formInputData: any
 
   constructor(private dialogRef: MatDialogRef<StaffdetailspopupComponent>, @Inject(MAT_DIALOG_DATA) data: any,
+    // tslint:disable-next-line:align
     private mdoinfoSrvc: MdoInfoService) {
     this.staffform = new FormGroup({
       designation: new FormControl('', [Validators.required]),

@@ -54,7 +54,7 @@ export class StaffComponent implements OnInit, OnChanges {
     // tslint:disable-next-line:align
     private configSvc: ConfigurationsService, private mdoinfoSrvc: MdoInfoService) {
     this.staffdata = new FormGroup({
-      totalpositions: new FormControl('', [Validators.required]),
+      totalpositions: new FormControl({ value: '', disabled: true }, [Validators.required]),
       posfilled: new FormControl('', [Validators.required]),
       posvacant: new FormControl('', [Validators.required]),
     })
@@ -153,6 +153,11 @@ export class StaffComponent implements OnInit, OnChanges {
           })
           this.dataSource.data = this.data
           this.dataSource.paginator = this.paginator
+        }
+      },
+      (error: any) => {
+        if (error && error.status === 400) {
+          this.openSnackbar('No staff positions found')
         }
       })
   }
