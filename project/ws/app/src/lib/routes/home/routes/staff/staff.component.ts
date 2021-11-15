@@ -54,7 +54,7 @@ export class StaffComponent implements OnInit, OnChanges {
     // tslint:disable-next-line:align
     private configSvc: ConfigurationsService, private mdoinfoSrvc: MdoInfoService) {
     this.staffdata = new FormGroup({
-      totalpositions: new FormControl({ value: '', disabled: true }, [Validators.required]),
+      totalpositions: new FormControl({ value: '', disabled: true }),
       posfilled: new FormControl('', [Validators.required]),
       posvacant: new FormControl('', [Validators.required]),
     })
@@ -236,7 +236,7 @@ export class StaffComponent implements OnInit, OnChanges {
   }
 
   onSubmit(form: any) {
-    if (this.overallpos.id === '') {
+    if (!this.overallpos) {
       const req = {
         orgId: this.deptID,
         position: 'all',
