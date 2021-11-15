@@ -15,14 +15,17 @@
                             </label>
                             <mat-form-field appearance="outline" class="margin-top-xs" style="margin-top: -5px !important;
                             font-size: 14px;">
-                                <mat-label>Select year</mat-label>
+                                <!-- <mat-label>Select year</mat-label>
                                 <mat-select formControlName="budgetyear" #budgetyear>
                                     <mat-option *ngFor="let year of yearsList" [value]="year">
                                         {{year}}
                                     </mat-option>
-                                </mat-select>
+                                </mat-select> -->
+                                <input id="budgetyear" matInput #budgetyear formControlName="budgetyear"
+                                    i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Budget year input"
+                                    class="form-input" autocomplete="off" />
                                 <mat-error [hidden]="false" i18n="Budget year Error|Explains name is required"
-                                    i18n-aria-label aria-label="Budget year Error|Explains name is required " *ngIf="budgetdata?.controls['budgetyear']?.touched && budgetdata?.controls['budgetyear'].errors?.required">
+                                    i18n-aria-label aria-label="Budget year Error|Explains name is required" *ngIf="budgetdata?.controls['budgetyear']?.touched && budgetdata?.controls['budgetyear'].errors?.required">
                                     Field is mandatory
                                 </mat-error>
                             </mat-form-field>

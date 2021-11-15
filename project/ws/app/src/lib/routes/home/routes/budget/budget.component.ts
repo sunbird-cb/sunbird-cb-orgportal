@@ -34,21 +34,21 @@ export class BudgetComponent implements OnInit, OnChanges {
     sortState: 'asc',
     needUserMenus: true,
   }
-  // tableData: ITableData = {
-  //   actions: [],
-  //   columns: [
-  //     { displayName: 'Sr. no.', key: 'srnumber' },
-  //     { displayName: 'File name', key: 'filename' },
-  //     { displayName: 'File size', key: 'filesize' },
-  //     { displayName: 'Uploaded on', key: 'uploadedon' },
-  //   ],
-  //   needCheckBox: false,
-  //   needHash: false,
-  //   sortColumn: 'filename',
-  //   sortState: 'asc',
-  //   needUserMenus: true,
-  // }
-  dataSource1!: any
+  tableData: ITableData = {
+    actions: [],
+    columns: [
+      { displayName: 'Sr. no.', key: 'srnumber' },
+      { displayName: 'File name', key: 'filename' },
+      { displayName: 'File size', key: 'filesize' },
+      { displayName: 'Uploaded on', key: 'uploadedon' },
+    ],
+    needCheckBox: false,
+    needHash: false,
+    sortColumn: 'filename',
+    sortState: 'asc',
+    needUserMenus: true,
+  }
+  // dataSource1!: any
   dataSource!: any
   widgetData: any
   length!: number
@@ -58,10 +58,10 @@ export class BudgetComponent implements OnInit, OnChanges {
   displayedColumns: IColums[] | undefined
   selection = new SelectionModel<any>(true, [])
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
-  // overallmdodata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
-  // mdosalarydata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
-  // mdotrainingdata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
-  // schemewisedata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
+  overallmdodata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
+  mdosalarydata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
+  mdotrainingdata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
+  schemewisedata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
   scehemetableDatadata!: {
     srnumber: number; schemeName: string; trainingBudgetAllocated: number;
     trainingBudgetUtilization: number; budgetYear: string
@@ -78,9 +78,9 @@ export class BudgetComponent implements OnInit, OnChanges {
   utilizedChange: any
   utilizedChangeError = false
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
-    if (!this.dataSource1.sort) {
-      this.dataSource1.sort = sort
-    }
+    // if (!this.dataSource1.sort) {
+    //   this.dataSource1.sort = sort
+    // }
     if (!this.dataSource.sort) {
       this.dataSource.sort = sort
     }
@@ -91,13 +91,13 @@ export class BudgetComponent implements OnInit, OnChanges {
     private mdoinfoSrvc: MdoInfoService, private activeRoute: ActivatedRoute) {
     this.budgetdata = new FormGroup({
       budgetyear: new FormControl('', [Validators.required]),
-      salarybudget: new FormControl('', [Validators.required]),
-      trainingbudget: new FormControl('', [Validators.required]),
-      budgetutilized: new FormControl('', [Validators.required]),
+      salarybudget: new FormControl('', [Validators.required, Validators.pattern('^[0-9]$')]),
+      trainingbudget: new FormControl('', [Validators.required, Validators.pattern('^[0-9]$')]),
+      budgetutilized: new FormControl('', [Validators.required, Validators.pattern('^[0-9]$')]),
     })
-    this.dataSource1 = new MatTableDataSource<any>()
+    // this.dataSource1 = new MatTableDataSource<any>()
     this.dataSource = new MatTableDataSource<any>()
-    this.dataSource1.paginator = this.paginator
+    // this.dataSource1.paginator = this.paginator
     this.dataSource.paginator = this.paginator
 
     if (this.configSvc.userProfile) {
@@ -141,9 +141,9 @@ export class BudgetComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(data: SimpleChanges) {
-    this.dataSource1.data = data.currentValue ? _.get(data, 'data.currentValue') : []
+    // this.dataSource1.data = data.currentValue ? _.get(data, 'data.currentValue') : []
     this.dataSource.data = data.currentValue ? _.get(data, 'data.currentValue') : []
-    this.length = this.dataSource.data.length || this.dataSource1.data.length
+    this.length = this.dataSource.data.length
     this.paginator.firstPage()
   }
 
@@ -197,6 +197,7 @@ export class BudgetComponent implements OnInit, OnChanges {
 
   onSalarayChange(event: any) {
     this.salarayChange = event
+    this.totalbudget = Number(this.salarayChange) + Number(this.trainingChange)
   }
   onTrainingChange(event: any) {
     this.trainingChange = event
@@ -214,30 +215,30 @@ export class BudgetComponent implements OnInit, OnChanges {
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length
-    const numRows = this.dataSource.data.length
-    return numSelected === numRows
-  }
+  // isAllSelected() {
+  //   const numSelected = this.selection.selected.length
+  //   const numRows = this.dataSource.data.length
+  //   return numSelected === numRows
+  // }
 
-  filterList(list: any[], key: string) {
-    return list.map(lst => lst[key])
-  }
+  // filterList(list: any[], key: string) {
+  //   return list.map(lst => lst[key])
+  // }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach((row: any) => this.selection.select(row))
-  }
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //     this.selection.clear() :
+  //     this.dataSource.data.forEach((row: any) => this.selection.select(row))
+  // }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: any): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`
-  }
+  // checkboxLabel(row?: any): string {
+  //   if (!row) {
+  //     return `${this.isAllSelected() ? 'select' : 'deselect'} all`
+  //   }
+  //   return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`
+  // }
 
   updateData(rowdata: any) {
     this.onaddScehme(rowdata)
@@ -254,6 +255,8 @@ export class BudgetComponent implements OnInit, OnChanges {
       dialogConfig.data = {
         data: rowdata ? rowdata : [],
         yearlist: this.yearsList,
+        selectedYear: this.selectedYear,
+        allocatedbudget: this.budgetdata.controls['trainingbudget'].value,
       }
     } else {
       dialogConfig.data = {
@@ -275,7 +278,7 @@ export class BudgetComponent implements OnInit, OnChanges {
             schemeName: response.data.schemename,
             salaryBudgetAllocated: this.budgetdata.controls['salarybudget'].value,
             trainingBudgetAllocated: this.budgetdata.controls['trainingbudget'].value,
-            trainingBudgetUtilization: Number(response.data.budgetutilized),
+            trainingBudgetUtilization: Number(response.data.trainingBudgetUtilization),
           }
           this.mdoinfoSrvc.addBudgetdetails(req).subscribe(
             (res: any) => {

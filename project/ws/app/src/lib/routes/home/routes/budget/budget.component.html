@@ -49,11 +49,11 @@
                                                             Allocate salary budget
                                                         </label>
                                                         <mat-form-field appearance="outline" class="margin-top-xs">
-                                                            <input type="number" id="salarybudget" matInput
-                                                                #salarybudget formControlName="salarybudget"
-                                                                i18n-placeholder placeholder="Type here"
-                                                                i18n-aria-label aria-label="Salary budget allocated input"
-                                                                class="form-input" autocomplete="off" (ngModelChange)='onSalarayChange($event)' />
+                                                            <input type="text" id="salarybudget" matInput #salarybudget
+                                                                formControlName="salarybudget" i18n-placeholder
+                                                                placeholder="Type here" i18n-aria-label aria-label="Salary budget allocated input"
+                                                                class="form-input" autocomplete="off" (ngModelChange)='onSalarayChange($event)'
+                                                                [disabled]=overallbudget />
                                                             <mat-error [hidden]="false" i18n="Salary budget allocated Error|Explains name is required"
                                                                 i18n-aria-label aria-label="Salary budget allocated Error|Explains name is required "
                                                                 *ngIf="budgetdata?.controls['salarybudget']?.touched && budgetdata?.controls['salarybudget'].errors?.required">
@@ -72,7 +72,7 @@
                                                                 formControlName="trainingbudget" i18n-placeholder
                                                                 placeholder="Type here" i18n-aria-label aria-label="Training budget allocated input"
                                                                 (ngModelChange)='onTrainingChange($event)' class="form-input"
-                                                                autocomplete="off" />
+                                                                autocomplete="off" [disabled]=overallbudget />
                                                             <mat-error [hidden]="false" i18n="Training budget allocated Error|Explains name is required"
                                                                 i18n-aria-label aria-label="Training budget allocated Error|Explains name is required "
                                                                 *ngIf="budgetdata?.controls['trainingbudget']?.touched && budgetdata?.controls['trainingbudget'].errors?.required">
@@ -228,6 +228,8 @@
                                     </ng-template>
                                 </mat-menu>
                             </mat-tab>
+
+                            <!-- upload proofs -->
                             <mat-tab label="Add/upload proofs">
                                 <!-- overallmdo -->
                                 <div class="width-100 margin-bottom-m margin-top-m proofs-box">
@@ -239,8 +241,8 @@
                                             for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <!-- <ws-app-budgettable [type]="'overallmdo'" [tableData]="tableData" [data]="overallmdodata"
-                                            (onUploadFilesClick)="browsefiles('overallmdo')"></ws-app-budgettable> -->
+                                        <ws-app-budgettable [type]="'overallmdo'" [tableData]="tableData" [data]="overallmdodata"
+                                            (onUploadFilesClick)="browsefiles('overallmdo')"></ws-app-budgettable>
                                     </div>
                                 </div>
                                 <!-- mdosalary -->
@@ -253,8 +255,8 @@
                                             for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <!-- <ws-app-budgettable [type]="'mdosalary'" [tableData]="tableData" [data]="mdosalarydata"
-                                            (onUploadFilesClick)="browsefiles('mdosalary')"></ws-app-budgettable> -->
+                                        <ws-app-budgettable [type]="'mdosalary'" [tableData]="tableData" [data]="mdosalarydata"
+                                            (onUploadFilesClick)="browsefiles('mdosalary')"></ws-app-budgettable>
                                     </div>
                                 </div>
                                 <!-- mdotraining -->
@@ -267,8 +269,8 @@
                                             for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <!-- <ws-app-budgettable [type]="'mdotraining'" [tableData]="tableData" [data]="mdotrainingdata"
-                                            (onUploadFilesClick)="browsefiles('mdotraining')"></ws-app-budgettable> -->
+                                        <ws-app-budgettable [type]="'mdotraining'" [tableData]="tableData" [data]="mdotrainingdata"
+                                            (onUploadFilesClick)="browsefiles('mdotraining')"></ws-app-budgettable>
                                     </div>
                                 </div>
                                 <!-- schemewise -->
@@ -281,8 +283,8 @@
                                             for files</button>
                                     </div>
                                     <div class="width-100">
-                                        <!-- <ws-app-budgettable [type]="'schemewise'" [tableData]="tableData" [data]="schemewisedata"
-                                            (onUploadFilesClick)="browsefiles('schemewise')"></ws-app-budgettable> -->
+                                        <ws-app-budgettable [type]="'schemewise'" [tableData]="tableData" [data]="schemewisedata"
+                                            (onUploadFilesClick)="browsefiles('schemewise')"></ws-app-budgettable>
                                     </div>
                                 </div>
                             </mat-tab>

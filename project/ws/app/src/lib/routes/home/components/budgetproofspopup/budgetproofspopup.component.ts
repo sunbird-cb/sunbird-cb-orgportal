@@ -45,7 +45,6 @@ export class BudgetproofspopupComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<BudgetproofspopupComponent>, @Inject(MAT_DIALOG_DATA) data: any,
               private uploadService: UploadService, private configSvc: ConfigurationsService) {
-    console.log('data', data)
     this.sectioname = data.data
     this.uploadform = new FormGroup({
       files: new FormControl('', [Validators.required]),
@@ -60,8 +59,8 @@ export class BudgetproofspopupComponent implements OnInit {
     // this.fileInfos = this.uploadService.getFiles()
   }
 
-   /** Whether the number of selected elements matches the total number of rows. */
-   isAllSelected() {
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
     const numSelected = this.selection.selected.length
     const numRows = this.dataSource.data.length
     return numSelected === numRows
@@ -93,12 +92,12 @@ export class BudgetproofspopupComponent implements OnInit {
     this.uploading = true
     const fileList = (<HTMLInputElement>files.target).files
     if (fileList && fileList.length > 0) {
-      console.log('fileList', fileList)
+      // console.log('fileList', fileList)
       // const file: File = fileList[0]
       // this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total)
       Array.from(fileList).forEach((file: any, index: any) => {
         this.uploadedFiles.push(file)
-        console.log('this.uploadedFiles', this.uploadedFiles)
+        // console.log('this.uploadedFiles', this.uploadedFiles)
         const currentDate = new Date()
         const tabinfo = {
           srno: index + 1,
@@ -119,8 +118,8 @@ export class BudgetproofspopupComponent implements OnInit {
 
   uploadFilesList(file: any, index: any) {
     // this.dataSource.data = this.uploadedFilesAssets
-    console.log('this.dataSource', this.dataSource)
-    console.log('index', index)
+    // console.log('this.dataSource', this.dataSource)
+    // console.log('index', index)
     const username = `${this.userData.firstName} ${this.userData.lastName}`
     const org = []
     const createdforarray: any[] = []
@@ -144,35 +143,35 @@ export class BudgetproofspopupComponent implements OnInit {
         },
       },
     }
-    console.log('req', request)
+    // console.log('req', request)
     // start the upload and save the progress map
     // this.progress = this.uploadService.crreateAsset(request).subscribe((res: any) => {
-      // if (event.type === HttpEventType.UploadProgress) {
-      //   const progress = Math.round(100 * event.loaded / event.total)
-      //   console.log(progress)
-      // } else if (event instanceof HttpResponse) {
-      // }
-      // const contentID = res.result.identifier
-      // const formData: FormData = new FormData()
-      // formData.append('data', this.uploadFiles)
+    // if (event.type === HttpEventType.UploadProgress) {
+    //   const progress = Math.round(100 * event.loaded / event.total)
+    //   console.log(progress)
+    // } else if (event instanceof HttpResponse) {
+    // }
+    // const contentID = res.result.identifier
+    // const formData: FormData = new FormData()
+    // formData.append('data', this.uploadFiles)
 
-      // this.uploadService.uploadFile(contentID, formData).subscribe((fdata: any) => {
-      //   const artifactUrl = fdata.result.artifactUrl
-      //   this.workorderData.signedPdfLink = artifactUrl
-      //   // this.workorderData.publishedPdfLink = artifactUrl
-      //   const req = this.workorderData
+    // this.uploadService.uploadFile(contentID, formData).subscribe((fdata: any) => {
+    //   const artifactUrl = fdata.result.artifactUrl
+    //   this.workorderData.signedPdfLink = artifactUrl
+    //   // this.workorderData.publishedPdfLink = artifactUrl
+    //   const req = this.workorderData
 
-      //   this.uploadService.updateWorkOrder(req).subscribe((fres: any) => {
-      //     if (fres.result.message === 'Successful') {
-      //       this.uploading = false
-      //     }
-      //   })
-      // })
+    //   this.uploadService.updateWorkOrder(req).subscribe((fres: any) => {
+    //     if (fres.result.message === 'Successful') {
+    //       this.uploading = false
+    //     }
+    //   })
+    // })
     // })
   }
 
   addSelectedFiles(form: any) {
-    console.log('form value', form.value)
+    // console.log('form value', form.value)
     this.dialogRef.close({ data: form.value })
   }
 
