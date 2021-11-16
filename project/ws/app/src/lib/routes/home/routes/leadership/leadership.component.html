@@ -1,0 +1,24 @@
+<div class="flex flex-1 margin-right-m">
+    <div class="flex-1 flex-custom">
+        <mat-card-content class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
+            <span class="mat-title flex-4 mobile-margin appr-section-heading" role="link" tabindex="0">
+            Leadership details
+            </span>
+            <div class="margin-top-xl new-mobile">
+                <div class="flex flex-wrap mobile-break">
+                    <div class="w-full profile-cols-full bg-grey">
+                        <mat-tab-group mat-align-tabs="start" vertical>
+                            <mat-tab label="Leadership team">
+                                <ws-app-leadershiptable></ws-app-leadershiptable>
+                            </mat-tab>
+                            <mat-tab label="Admin team">
+                                <!-- Admins -->
+                                <ws-app-admintable [deptID]="deptID" *ngIf=deptID></ws-app-admintable>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </div>
+</div>

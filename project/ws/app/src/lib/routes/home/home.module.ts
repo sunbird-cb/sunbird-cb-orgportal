@@ -18,6 +18,8 @@ import {
   MatProgressSpinnerModule,
   MatProgressBarModule,
   MatRadioModule,
+  MatTabsModule,
+  MatCheckboxModule,
 } from '@angular/material'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatPaginatorModule } from '@angular/material/paginator'
@@ -40,6 +42,23 @@ import { NgxPaginationModule } from 'ngx-pagination'
 import { UIAdminTableModule } from '../../head/work-allocation-table/ui-admin-table.module'
 import { WelcomeComponent } from './routes/welcome/welcome.component'
 import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
+import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
+import { LeadershipComponent } from './routes/leadership/leadership.component'
+import { StaffComponent } from './routes/staff/staff.component'
+import { BudgetComponent } from './routes/budget/budget.component'
+import { LeftMenuComponent } from './components/left-menu/left-menu.component'
+import { MatTableModule } from '@angular/material/table'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatSortModule } from '@angular/material/sort'
+import { LeadershiptableComponent } from './components/leadershiptable/leadershiptable.component'
+import { BudgettableComponent } from './components/budgettable/budgettable.component'
+import { AdduserpopupComponent } from './components/adduserpopup/adduserpopup.component'
+import { StaffdetailspopupComponent } from './components/staffdetailspopup/staffdetailspopup.component'
+import { MdoInfoService } from './services/mdoinfo.service'
+import { BudgetschemepopupComponent } from './components/budgetschemepopup/budgetschemepopup.component'
+import { BudgetproofspopupComponent } from './components/budgetproofspopup/budgetproofspopup.component'
+import { UploadService } from './services/upload.service'
+import { AdmintableComponent } from './components/admintable/admintable.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -49,6 +68,18 @@ import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
     ApprovalsComponent,
     WorkallocationComponent,
     WelcomeComponent,
+    MdoinfoComponent,
+    LeadershipComponent,
+    StaffComponent,
+    BudgetComponent,
+    LeftMenuComponent,
+    LeadershiptableComponent,
+    AdmintableComponent,
+    BudgettableComponent,
+    AdduserpopupComponent,
+    StaffdetailspopupComponent,
+    BudgetschemepopupComponent,
+    BudgetproofspopupComponent,
   ],
   imports: [
     CommonModule,
@@ -69,6 +100,7 @@ import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
     MatChipsModule,
     MatListModule,
     MatSelectModule,
+    MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
@@ -95,13 +127,23 @@ import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
     NgxPaginationModule,
     UIAdminTableModule,
     RainDashboardsModule,
+    MatTabsModule,
+    MatTableModule,
+    MatTooltipModule,
+    MatSortModule,
   ],
   entryComponents: [
+    AdduserpopupComponent,
+    StaffdetailspopupComponent,
+    BudgetschemepopupComponent,
+    BudgetproofspopupComponent,
   ],
   providers: [
     // CKEditorService,
     // LoaderService,
     InitResolver,
+    MdoInfoService,
+    UploadService,
   ],
 })
 export class HomeModule {
