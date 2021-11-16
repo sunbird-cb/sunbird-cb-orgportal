@@ -7,7 +7,7 @@ import { environment } from '../../../../../../../../../src/environments/environ
 import { ProfileV2Service } from '../../services/home.servive'
 import { dashboardEmptyData } from '../../../../../../../../../src/mdo-assets/data/data'
 /* tslint:enable */
-
+import { Router } from '@angular/router'
 @Component({
   selector: 'ws-app-welcome',
   templateUrl: './welcome.component.html',
@@ -39,7 +39,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   currentDashboard: any = []
   dashboardEmpty = dashboardEmptyData
 
-  constructor(@Inject(DOCUMENT) private document: Document, private homeResolver: ProfileV2Service) {
+  constructor(@Inject(DOCUMENT) private document: Document, private homeResolver: ProfileV2Service, private router: Router) {
   }
   filterR(type: string) {
     this.resolutionFilter = type
@@ -135,6 +135,16 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
     link.remove()
   }
   ngAfterViewInit() {
+  }
+
+  viewmdoinfo(tab: any) {
+    if (tab === 'leadership') {
+      this.router.navigate(['/app/home/mdoinfo/leadership'])
+    } else if (tab === 'staff') {
+      this.router.navigate(['/app/home/mdoinfo/staff'])
+    } else if (tab === 'budget') {
+      this.router.navigate(['/app/home/mdoinfo/budget'])
+    }
   }
 
   getDashboardId(value: string) {

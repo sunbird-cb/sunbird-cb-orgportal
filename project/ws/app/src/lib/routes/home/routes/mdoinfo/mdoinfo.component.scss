@@ -1,0 +1,78 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.container-balanced {
+    @extend %page-center;
+    height: auto;
+    // min-height: 400px;
+    min-height: calc(100vh - 160px);
+    width: 100%
+}
+
+.container-balanced-banner {
+    @extend %page-center;
+    height: auto;
+}
+
+.flex-3 {
+    flex: 3;
+}
+
+.flex-5 {
+    flex: 5;
+}
+
+.border-0 {
+    border-right: none !important;
+    background: inherit !important;
+}
+
+.flex-update {
+    flex-direction: row;
+    @include breakpoint-xs {
+        flex-direction: column;
+    }
+    @include breakpoint-s {
+        flex-direction: column;
+    }
+}
+
+.sticky {
+    position: sticky;
+    top: calc(#{$mat-toolbar-gt-xs});
+    overflow: hidden;
+}
+.mdoinfocontent .mat-drawer-side {
+    background: #ffffff !important;
+}
+.ws-active-discuss-route {
+    background-color: #eee!important;
+    font-weight: 700;
+}
+
+.change-log-wrapper{
+    border-bottom: 1px solid #ebe5e5;
+}
+
+.change-log-text{
+    display: block;
+    font: 700 14px Lato;
+}
+
+.no-request-text{
+    font: normal 14px Lato;
+    font-weight: 400;
+    color:rgba(0, 0, 0, 0.6);
+    margin-left : 16px;
+    margin-right : 16px;
+}
+
+::ng-deep.ws-active-discuss-route {
+    background: rgba(0, 0, 0, 0.04) !important;
+    font-weight: 700;
+}
+
+::ng-deep.mat-tab-label-active {
+    opacity: 1 !important;
+}

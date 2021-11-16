@@ -1,0 +1,93 @@
+<div class="custom-popup" id="adduerpopup">
+    <mat-dialog-content>
+        <div class="pdf-upload">
+            <div class="mat-title margin-top-s margin-bottom-m">
+                Add users
+                <a [routerLink]="['/app/users/create-user']" [queryParams]="statedata" [mat-dialog-close]="true"
+                    mat-button type="button" class="flex-auto-display custom-btn margin-right-s mat-accent-border float-right">
+                    <span class="ws-mat-default-text" i18n>New user</span>
+                </a>
+            </div>
+            <div class="example-container margin-top-m">
+                <div class="flex flex-1 custom">
+                    <div class="flex-3">
+                        <div class="search">
+                            <div class=rsearch>
+                                <mat-icon class="color-60 search-icon">search</mat-icon>
+                                <input class="sinput color-60 mat-body-2 margin-remove-top" type="Standard" label=""
+                                    (input)="applyFilter($event.target.value)" placeholder="Search">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="flex-1 right-align">
+                        <button type="button" mat-button class="create-btn" (click)="adduser()">
+                            Add user
+                        </button>
+                    </div> -->
+                </div>
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <!-- Position Column -->
+                    <!-- <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    </ng-container> -->
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Full name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fullname}} </td>
+                    </ng-container>
+
+                    <!-- email Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef> Email </th>
+                        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                    </ng-container>
+
+                    <!-- mobile Column -->
+                    <ng-container matColumnDef="mobile">
+                        <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                        <td mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+                    </tr>
+                </table>
+                <mat-card class="flex-1" role="none" *ngIf="dataSource.filteredData.length == 0">
+                    <span class="mat-subtitle ws-mat-black40-text">No users found.</span>
+                </mat-card>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="footer">
+            <div class="display-inline-block">
+                <p>{{this.selection.selected.length}} profile selected</p>
+            </div>
+            <div class="display-inline-block float-right">
+                <button mat-button type="button" [mat-dialog-close]="true" class="custom-btn flex-auto-display mat-accent-border margin-right-s">
+                    <span class="ws-mat-default-text" i18n>Cancel</span>
+                </button>
+                <button mat-raised-button type="button" [disabled]="this.selection.selected.length === 0" class="next-btn ws-mat-primary-background flex-auto-display"
+                    (click)="addUser()">
+                    <span class="text-white" i18n>Add user</span>
+                </button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</div>
