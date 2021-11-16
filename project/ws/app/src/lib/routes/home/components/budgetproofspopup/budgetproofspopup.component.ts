@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/mate
 import { UploadService } from '../../services/upload.service'
 // import { Observable } from 'rxjs'
 // import { HttpEventType, HttpResponse } from '@angular/common/http'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+// import { ConfigurationsService } from '@sunbird-cb/utils'
 import { SelectionModel } from '@angular/cdk/collections'
 
 // tslint:disable-next-line:interface-name
@@ -44,7 +44,7 @@ export class BudgetproofspopupComponent implements OnInit {
   selection = new SelectionModel<PeriodicElement>(true, [])
 
   constructor(private dialogRef: MatDialogRef<BudgetproofspopupComponent>, @Inject(MAT_DIALOG_DATA) data: any,
-              private uploadService: UploadService, private configSvc: ConfigurationsService) {
+              private uploadService: UploadService) {
     this.sectioname = data.data
     this.uploadform = new FormGroup({
       files: new FormControl('', [Validators.required]),
@@ -116,59 +116,59 @@ export class BudgetproofspopupComponent implements OnInit {
     }
   }
 
-  uploadFilesList(file: any, index: any) {
-    // this.dataSource.data = this.uploadedFilesAssets
-    // console.log('this.dataSource', this.dataSource)
-    // console.log('index', index)
-    const username = `${this.userData.firstName} ${this.userData.lastName}`
-    const org = []
-    const createdforarray: any[] = []
-    if (this.configSvc.userProfile) {
-      createdforarray.push(this.configSvc.userProfile.rootOrgId)
-      org.push(this.configSvc.userProfile.departmentName)
-    }
+  // uploadFilesList(file: any) {
+  //   // this.dataSource.data = this.uploadedFilesAssets
+  //   // console.log('this.dataSource', this.dataSource)
+  //   // console.log('index', index)
+  //   const username = `${this.userData.firstName} ${this.userData.lastName}`
+  //   const org = []
+  //   const createdforarray: any[] = []
+  //   if (this.configSvc.userProfile) {
+  //     createdforarray.push(this.configSvc.userProfile.rootOrgId)
+  //     org.push(this.configSvc.userProfile.departmentName)
+  //   }
 
-    const request = {
-      request: {
-        content: {
-          name: file.name,
-          creator: username,
-          createdBy: this.userData.id,
-          code: file.type,
-          mimeType: file.type,
-          contentType: 'Asset',
-          primaryCategory: 'Asset',
-          organisation: org,
-          createdFor: createdforarray,
-        },
-      },
-    }
-    // console.log('req', request)
-    // start the upload and save the progress map
-    // this.progress = this.uploadService.crreateAsset(request).subscribe((res: any) => {
-    // if (event.type === HttpEventType.UploadProgress) {
-    //   const progress = Math.round(100 * event.loaded / event.total)
-    //   console.log(progress)
-    // } else if (event instanceof HttpResponse) {
-    // }
-    // const contentID = res.result.identifier
-    // const formData: FormData = new FormData()
-    // formData.append('data', this.uploadFiles)
+  //   const request = {
+  //     request: {
+  //       content: {
+  //         name: file.name,
+  //         creator: username,
+  //         createdBy: this.userData.id,
+  //         code: file.type,
+  //         mimeType: file.type,
+  //         contentType: 'Asset',
+  //         primaryCategory: 'Asset',
+  //         organisation: org,
+  //         createdFor: createdforarray,
+  //       },
+  //     },
+  //   }
+  //   // console.log('req', request)
+  //   // start the upload and save the progress map
+  //   this.progress = this.uploadService.crreateAsset(request).subscribe((res: any) => {
+  //     if (event.type === HttpEventType.UploadProgress) {
+  //       const progress = Math.round(100 * event.loaded / event.total)
+  //       console.log(progress)
+  //     } else if (event instanceof HttpResponse) {
+  //     }
+  //     const contentID = res.result.identifier
+  //     const formData: FormData = new FormData()
+  //     formData.append('data', this.uploadFiles)
 
-    // this.uploadService.uploadFile(contentID, formData).subscribe((fdata: any) => {
-    //   const artifactUrl = fdata.result.artifactUrl
-    //   this.workorderData.signedPdfLink = artifactUrl
-    //   // this.workorderData.publishedPdfLink = artifactUrl
-    //   const req = this.workorderData
+  //     this.uploadService.uploadFile(contentID, formData).subscribe((fdata: any) => {
+  //       const artifactUrl = fdata.result.artifactUrl
+  //       this.workorderData.signedPdfLink = artifactUrl
+  //       // this.workorderData.publishedPdfLink = artifactUrl
+  //       const req = this.workorderData
 
-    //   this.uploadService.updateWorkOrder(req).subscribe((fres: any) => {
-    //     if (fres.result.message === 'Successful') {
-    //       this.uploading = false
-    //     }
-    //   })
-    // })
-    // })
-  }
+  //       this.uploadService.updateWorkOrder(req).subscribe((fres: any) => {
+  //         if (fres.result.message === 'Successful') {
+  //           this.uploading = false
+  //         }
+  //       })
+  //     })
+  //   })
+  // }
 
   addSelectedFiles(form: any) {
     // console.log('form value', form.value)

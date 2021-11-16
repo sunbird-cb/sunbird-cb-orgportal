@@ -25,7 +25,7 @@
                                     i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Budget year input"
                                     class="form-input" autocomplete="off" />
                                 <mat-error [hidden]="false" i18n="Budget year Error|Explains name is required"
-                                    i18n-aria-label aria-label="Budget year Error|Explains name is required" *ngIf="budgetdata?.controls['budgetyear']?.touched && budgetdata?.controls['budgetyear'].errors?.required">
+                                    i18n-aria-label aria-label="Budget year Error|Explains name is required" *ngIf="schemeform?.controls['budgetyear']?.touched && schemeform?.controls['budgetyear'].errors?.required">
                                     Field is mandatory
                                 </mat-error>
                             </mat-form-field>
