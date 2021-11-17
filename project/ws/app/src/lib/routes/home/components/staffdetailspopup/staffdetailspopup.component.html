@@ -37,7 +37,7 @@
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-xs">
                                     <input id="posfilled" matInput #posfilled formControlName="posfilled" i18n-placeholder placeholder="Type here"
-                                    i18n-aria-label aria-label="Total positions filled input" class="form-input" autocomplete="off" />
+                                    i18n-aria-label aria-label="Total positions filled input" class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
                                     <mat-error [hidden]="false" i18n="Total positions filled Error|Explains name is required" i18n-aria-label
                                     aria-label="Total positions filled Error|Explains name is required "
                                     *ngIf="staffform?.controls['posfilled']?.touched && staffform?.controls['posfilled'].errors?.required">
@@ -53,7 +53,7 @@
                                 </label>
                                 <mat-form-field appearance="outline" class="margin-top-xs">
                                     <input id="posvacant" matInput #posvacant formControlName="posvacant" i18n-placeholder placeholder="Type here"
-                                    i18n-aria-label aria-label="Total positions vacant input" class="form-input" autocomplete="off" />
+                                    i18n-aria-label aria-label="Total positions vacant input" class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
                                     <mat-error [hidden]="false" i18n="Total positions vacant Error|Explains name is required" i18n-aria-label
                                     aria-label="Total positions vacant Error|Explains name is required "
                                     *ngIf="staffform?.controls['posvacant']?.touched && staffform?.controls['posvacant'].errors?.required">
@@ -76,7 +76,7 @@
                     <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display margin-right-s">
                         <span class="ws-mat-default-text" i18n>Cancel</span>
                     </button>
-                    <button mat-raised-button type="submit" [disabled]="staffform?.invalid" class="next-btn ws-mat-primary-background flex-auto-display" 
+                    <button mat-raised-button type="submit" [disabled]="staffform?.invalid" class="next-btn ws-mat-primary-background flex-auto-display"
                     (click)="addstaffdetails(staffform)">
                         <span class="text-white" i18n *ngIf="!formInputData.id">Add</span>
                         <span class="text-white" i18n *ngIf="formInputData.id">Update</span>

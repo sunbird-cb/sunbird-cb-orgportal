@@ -55,7 +55,7 @@
                             <mat-form-field appearance="outline" class="margin-top-xs">
                                 <input id="budgetallocated" matInput #budgetallocated formControlName="budgetallocated"
                                     i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Budget allocated input"
-                                    class="form-input" autocomplete="off" />
+                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
                                 <mat-error [hidden]="false" i18n="Budget allocated Error|Explains name is required"
                                     i18n-aria-label aria-label="Budget allocated Error|Explains name is required "
                                     *ngIf="schemeform?.controls['budgetallocated']?.touched && schemeform?.controls['budgetallocated'].errors?.required">
@@ -72,7 +72,7 @@
                             <mat-form-field appearance="outline" class="margin-top-xs">
                                 <input id="budgetutilized" matInput #budgetutilized formControlName="budgetutilized"
                                     i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Budget utilized input"
-                                    class="form-input" autocomplete="off" />
+                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
                                 <mat-error [hidden]="false" i18n="Budget utilized Error|Explains name is required"
                                     i18n-aria-label aria-label="Budget utilized Error|Explains name is required " *ngIf="schemeform?.controls['budgetutilized']?.touched && schemeform?.controls['budgetutilized'].errors?.required">
                                     Field is mandatory

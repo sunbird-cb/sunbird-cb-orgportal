@@ -37,7 +37,7 @@
                                     <mat-form-field appearance="outline" class="margin-top-xs">
                                         <input id="posfilled" matInput #posfilled formControlName="posfilled"
                                             i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Total positions filled input"
-                                            class="form-input" autocomplete="off" />
+                                            class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
                                         <mat-error [hidden]="false" i18n="Total positions filled Error|Explains name is required"
                                             i18n-aria-label aria-label="Total positions filled Error|Explains name is required "
                                             *ngIf="staffdata?.controls['posfilled']?.touched && staffdata?.controls['posfilled'].errors?.required">
@@ -54,7 +54,7 @@
                                     <mat-form-field appearance="outline" class="margin-top-xs">
                                         <input id="posvacant" matInput #posvacant formControlName="posvacant"
                                             i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Total positions vacant input"
-                                            class="form-input" autocomplete="off" />
+                                            class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
                                         <mat-error [hidden]="false" i18n="Total positions vacant Error|Explains name is required"
                                             i18n-aria-label aria-label="Total positions vacant Error|Explains name is required "
                                             *ngIf="staffdata?.controls['posvacant']?.touched && staffdata?.controls['posvacant'].errors?.required">
