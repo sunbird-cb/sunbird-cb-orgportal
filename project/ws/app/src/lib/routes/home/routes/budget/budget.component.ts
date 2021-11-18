@@ -91,9 +91,9 @@ export class BudgetComponent implements OnInit, OnChanges {
     private mdoinfoSrvc: MdoInfoService, private activeRoute: ActivatedRoute) {
     this.budgetdata = new FormGroup({
       budgetyear: new FormControl('', [Validators.required]),
-      salarybudget: new FormControl('', [Validators.required, Validators.pattern('^[0-9]$')]),
-      trainingbudget: new FormControl('', [Validators.required, Validators.pattern('^[0-9]$')]),
-      budgetutilized: new FormControl('', [Validators.required, Validators.pattern('^[0-9]$')]),
+      salarybudget: new FormControl('', [Validators.required]),
+      trainingbudget: new FormControl('', [Validators.required]),
+      budgetutilized: new FormControl('', [Validators.required]),
     })
     // this.dataSource1 = new MatTableDataSource<any>()
     this.dataSource = new MatTableDataSource<any>()
@@ -205,9 +205,10 @@ export class BudgetComponent implements OnInit, OnChanges {
   }
   onUtilizedChange(event: any) {
     this.utilizedChange = event
-    if (this.utilizedChange && this.trainingChange) {
+    if (this.utilizedChange) {
       if (this.utilizedChange < this.trainingChange && this.utilizedChange < this.salarayChange) {
         this.totalbudgetpercent = ((this.utilizedChange / this.trainingChange) * 100).toFixed(2)
+        this.utilizedChangeError = false
       } else {
         this.utilizedChangeError = true
       }
@@ -330,7 +331,9 @@ export class BudgetComponent implements OnInit, OnChanges {
       },
       (error: any) => {
         if (error && error.status === 400) {
-          this.budgetdata.reset()
+          this.budgetdata.controls['salarybudget'].setValue('')
+          this.budgetdata.controls['trainingbudget'].setValue('')
+          this.budgetdata.controls['budgetutilized'].setValue('')
           this.totalbudgetpercent = 0
           this.openSnackbar('No Budget Scheme found for this year')
         }
@@ -451,6 +454,6 @@ export class BudgetComponent implements OnInit, OnChanges {
       event.preventDefault()
       return false
     }
-      return true
+    return true
   }
 }
