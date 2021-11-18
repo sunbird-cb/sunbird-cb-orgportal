@@ -7,7 +7,7 @@
             <div class="example-container margin-top-m">
                 <form class="schemeform-form" [formGroup]="schemeform">
                     <div class="display-block">
-                        <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
+                        <div class="width-44 display-inline-block formgroup margin-right-xl margin-bottom-s">
                             <label for="budgetyear" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                 i18n="Financial year label|Label which explains the user to enter Financial year"
                                 i18n-aria-label aria-label="Financial year label">
@@ -30,7 +30,7 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
+                        <div class="width-44 display-inline-block formgroup margin-right-xl margin-bottom-s">
                             <label for="schemename" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                 i18n="Scheme name label|Label which explains the user to enter Scheme name"
                                 i18n-aria-label aria-label="Scheme name label">
@@ -38,15 +38,15 @@
                             </label>
                             <mat-form-field appearance="outline" class="margin-top-xs">
                                 <input id="schemename" matInput #schemename formControlName="schemename"
-                                    i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Scheme name input"
-                                    class="form-input" autocomplete="off" />
+                                    i18n-placeholder placeholder="Add scheme name (min 10 characters)" i18n-aria-label
+                                    aria-label="Scheme name input" class="form-input" autocomplete="off" />
                                 <mat-error [hidden]="false" i18n="Scheme name Error|Explains name is required"
                                     i18n-aria-label aria-label="Scheme name Error|Explains name is required " *ngIf="schemeform?.controls['schemename']?.touched && schemeform?.controls['schemename'].errors?.required">
                                     Field is mandatory
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
+                        <div class="width-44 display-inline-block formgroup margin-right-xl margin-bottom-s">
                             <label for="budgetallocated" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                 i18n="Budget allocated label|Label which explains the user to enter Budget allocated"
                                 i18n-aria-label aria-label="Budget allocated label">
@@ -54,8 +54,8 @@
                             </label>
                             <mat-form-field appearance="outline" class="margin-top-xs">
                                 <input id="budgetallocated" matInput #budgetallocated formControlName="budgetallocated"
-                                    i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Budget allocated input"
-                                    class="form-input" autocomplete="off" />
+                                    i18n-placeholder placeholder="0" i18n-aria-label aria-label="Budget allocated input"
+                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
                                 <mat-error [hidden]="false" i18n="Budget allocated Error|Explains name is required"
                                     i18n-aria-label aria-label="Budget allocated Error|Explains name is required "
                                     *ngIf="schemeform?.controls['budgetallocated']?.touched && schemeform?.controls['budgetallocated'].errors?.required">
@@ -63,7 +63,7 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
+                        <div class="width-44 display-inline-block formgroup margin-right-xl margin-bottom-s">
                             <label for="budgetutilized" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                 i18n="Budget utilized label|Label which explains the user to enter Budget utilized"
                                 i18n-aria-label aria-label="Budget utilized label">
@@ -71,8 +71,8 @@
                             </label>
                             <mat-form-field appearance="outline" class="margin-top-xs">
                                 <input id="budgetutilized" matInput #budgetutilized formControlName="budgetutilized"
-                                    i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Budget utilized input"
-                                    class="form-input" autocomplete="off" />
+                                    i18n-placeholder placeholder="Add budget" i18n-aria-label aria-label="Budget utilized input"
+                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
                                 <mat-error [hidden]="false" i18n="Budget utilized Error|Explains name is required"
                                     i18n-aria-label aria-label="Budget utilized Error|Explains name is required " *ngIf="schemeform?.controls['budgetutilized']?.touched && schemeform?.controls['budgetutilized'].errors?.required">
                                     Field is mandatory
