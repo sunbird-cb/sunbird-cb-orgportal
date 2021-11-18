@@ -1,87 +1,87 @@
 <div class="custom-popup" id="adduerpopup">
-        <mat-dialog-content>
-            <div class="pdf-upload">
-                <div class="mat-title margin-top-s margin-bottom-m">
-                    Add position details
-                </div>
-                <div class="example-container margin-top-m">
-                    <form class="staffform-form" [formGroup]="staffform" >
-                        <div class="display-block">
-                            <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
-                                <label for="designation" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
-                                    i18n="Total positions label|Label which explains the user to enter total positions" i18n-aria-label
-                                    aria-label="Total positions label">
-                                    Designation
-                                </label>
-                                <mat-form-field appearance="outline" class="margin-top-xs">
-                                    <mat-select #designation formControlName="designation" i18n-placeholder placeholder="--Select--"
-                                        (selectionChange)="otherDropDownChange(designation.value, 'designation')">
-                                        <mat-option [value]="designation.name"
-                                        *ngFor="let designation of designationsMeta">
+    <mat-dialog-content>
+        <div class="pdf-upload">
+            <div class="mat-title margin-top-s margin-bottom-m">
+                Add position details
+            </div>
+            <div class="example-container margin-top-m">
+                <form class="staffform-form" [formGroup]="staffform">
+                    <div class="display-block">
+                        <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
+                            <label for="designation" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                i18n="Total positions label|Label which explains the user to enter total positions"
+                                i18n-aria-label aria-label="Total positions label">
+                                Designation
+                            </label>
+                            <mat-form-field appearance="outline" class="margin-top-xs">
+                                <mat-select #designation formControlName="designation" i18n-placeholder placeholder="--Select--"
+                                    (selectionChange)="otherDropDownChange(designation.value, 'designation')">
+                                    <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
                                         {{designation.name}}
-                                        </mat-option>
-                                        <mat-option [value]="'Other'">Other</mat-option>
-                                    </mat-select>
-                                    <mat-error [hidden]="false" i18n="Total positions Error|Explains name is required" i18n-aria-label
-                                    aria-label="Total positions Error|Explains name is required "
-                                    *ngIf="staffform?.controls['designation']?.touched && staffform?.controls['designation'].errors?.required">
+                                    </mat-option>
+                                    <mat-option [value]="'Other'">Other</mat-option>
+                                </mat-select>
+                                <mat-error [hidden]="false" i18n="Total positions Error|Explains name is required"
+                                    i18n-aria-label aria-label="Total positions Error|Explains name is required " *ngIf="staffform?.controls['designation']?.touched && staffform?.controls['designation'].errors?.required">
                                     Field is mandatory
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
-                                <label for="posfilled" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
-                                    i18n="Total positions filled label|Label which explains the user to enter total positions" i18n-aria-label
-                                    aria-label="Total positions label">
-                                    Total positions filled currently
-                                </label>
-                                <mat-form-field appearance="outline" class="margin-top-xs">
-                                    <input id="posfilled" matInput #posfilled formControlName="posfilled" i18n-placeholder placeholder="Type here"
-                                    i18n-aria-label aria-label="Total positions filled input" class="form-input" autocomplete="off" />
-                                    <mat-error [hidden]="false" i18n="Total positions filled Error|Explains name is required" i18n-aria-label
-                                    aria-label="Total positions filled Error|Explains name is required "
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
+                            <label for="posfilled" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                i18n="Total positions filled label|Label which explains the user to enter total positions"
+                                i18n-aria-label aria-label="Total positions label">
+                                Total positions filled currently
+                            </label>
+                            <mat-form-field appearance="outline" class="margin-top-xs">
+                                <input id="posfilled" matInput #posfilled formControlName="posfilled" i18n-placeholder
+                                    placeholder="Add number" i18n-aria-label aria-label="Total positions filled input"
+                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
+                                <mat-error [hidden]="false" i18n="Total positions filled Error|Explains name is required"
+                                    i18n-aria-label aria-label="Total positions filled Error|Explains name is required "
                                     *ngIf="staffform?.controls['posfilled']?.touched && staffform?.controls['posfilled'].errors?.required">
                                     Field is mandatory
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
-                                <label for="posvacant" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
-                                    i18n="Total positions vacant label|Label which explains the user to enter total positions" i18n-aria-label
-                                    aria-label="Total positions label">
-                                    Total positions vacant currently
-                                </label>
-                                <mat-form-field appearance="outline" class="margin-top-xs">
-                                    <input id="posvacant" matInput #posvacant formControlName="posvacant" i18n-placeholder placeholder="Type here"
-                                    i18n-aria-label aria-label="Total positions vacant input" class="form-input" autocomplete="off" />
-                                    <mat-error [hidden]="false" i18n="Total positions vacant Error|Explains name is required" i18n-aria-label
-                                    aria-label="Total positions vacant Error|Explains name is required "
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
+                            <label for="posvacant" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                i18n="Total positions vacant label|Label which explains the user to enter total positions"
+                                i18n-aria-label aria-label="Total positions label">
+                                Total positions vacant currently
+                            </label>
+                            <mat-form-field appearance="outline" class="margin-top-xs">
+                                <input id="posvacant" matInput #posvacant formControlName="posvacant" i18n-placeholder
+                                    placeholder="Add number" i18n-aria-label aria-label="Total positions vacant input"
+                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
+                                <mat-error [hidden]="false" i18n="Total positions vacant Error|Explains name is required"
+                                    i18n-aria-label aria-label="Total positions vacant Error|Explains name is required "
                                     *ngIf="staffform?.controls['posvacant']?.touched && staffform?.controls['posvacant'].errors?.required">
                                     Field is mandatory
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
+                                </mat-error>
+                            </mat-form-field>
                         </div>
-                        <!-- <button mat-raised-button type="submit" (click)="onSubmit(staffdata)"
+                    </div>
+                    <!-- <button mat-raised-button type="submit" (click)="onSubmit(staffdata)"
                             class="text-white btn-success btn-responsive" [disabled]="staffdata?.invalid">
                             <span class="text-white" i18n>Save</span>
                         </button> -->
-                    </form>
-                </div>
+                </form>
             </div>
-        </mat-dialog-content>
-        <mat-dialog-actions>
-            <div class="footer">
-                <div class="display-inline-block float-right">
-                    <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display margin-right-s">
-                        <span class="ws-mat-default-text" i18n>Cancel</span>
-                    </button>
-                    <button mat-raised-button type="submit" [disabled]="staffform?.invalid" class="next-btn ws-mat-primary-background flex-auto-display" 
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="footer">
+            <div class="display-inline-block float-right">
+                <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display margin-right-s">
+                    <span class="ws-mat-default-text" i18n>Cancel</span>
+                </button>
+                <button mat-raised-button type="submit" [disabled]="staffform?.invalid" class="next-btn ws-mat-primary-background flex-auto-display"
                     (click)="addstaffdetails(staffform)">
-                        <span class="text-white" i18n *ngIf="!formInputData.id">Add</span>
-                        <span class="text-white" i18n *ngIf="formInputData.id">Update</span>
-                    </button>
-                </div>
+                    <span class="text-white" i18n *ngIf="!formInputData.id">Add</span>
+                    <span class="text-white" i18n *ngIf="formInputData.id">Update</span>
+                </button>
             </div>
-        </mat-dialog-actions>
-    </div>
+        </div>
+    </mat-dialog-actions>
+</div>

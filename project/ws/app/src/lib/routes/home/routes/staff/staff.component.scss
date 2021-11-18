@@ -113,5 +113,6 @@ mat-header-row {
 
 .btn-success:disabled,
 .btn-success[disabled] {
-    opacity: 0.6;
+    // opacity: 0.6;
+    background: rgba(0, 0, 0, 0.26) !important;
 }
