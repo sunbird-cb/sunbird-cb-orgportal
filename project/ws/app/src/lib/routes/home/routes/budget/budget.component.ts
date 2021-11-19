@@ -277,14 +277,15 @@ export class BudgetComponent implements OnInit, OnChanges {
             orgId: this.deptID,
             budgetYear: response.data.budgetyear,
             schemeName: response.data.schemename,
-            salaryBudgetAllocated: this.budgetdata.controls['salarybudget'].value,
-            trainingBudgetAllocated: this.budgetdata.controls['trainingbudget'].value,
+            salaryBudgetAllocated: this.budgetdata.controls['salarybudget'].value ? this.budgetdata.controls['salarybudget'].value : 0,
+            // tslint:disable-next-line:max-line-length
+            trainingBudgetAllocated: this.budgetdata.controls['trainingbudget'].value ? this.budgetdata.controls['trainingbudget'].value : 0,
             trainingBudgetUtilization: Number(response.data.trainingBudgetUtilization),
           }
           this.mdoinfoSrvc.addBudgetdetails(req).subscribe(
             (res: any) => {
               if (res) {
-                this.openSnackbar('Staff details updated successfully')
+                this.openSnackbar('Staff details added successfully')
                 this.getBudgetDetails(this.selectedYear)
               }
             },
@@ -353,7 +354,7 @@ export class BudgetComponent implements OnInit, OnChanges {
       this.mdoinfoSrvc.addBudgetdetails(req).subscribe(
         (res: any) => {
           if (res) {
-            this.openSnackbar('Budget details updated successfully')
+            this.openSnackbar('Budget details added successfully')
             this.getBudgetDetails(form.value.budgetyear)
           }
         },

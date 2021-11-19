@@ -11,6 +11,8 @@ export class BudgetschemepopupComponent implements OnInit {
   schemeform: FormGroup
   formInputData: any
   yearsList = []
+  selectedYear: any
+  allocatedbudget: any
 
   constructor(private dialogRef: MatDialogRef<BudgetschemepopupComponent>, @Inject(MAT_DIALOG_DATA) data: any) {
     this.schemeform = new FormGroup({
@@ -21,16 +23,16 @@ export class BudgetschemepopupComponent implements OnInit {
     })
 
     this.yearsList = data.yearlist
+    this.selectedYear = data.selectedYear
+    this.allocatedbudget = data.allocatedbudget
+    this.schemeform.controls['budgetyear'].setValue(data.selectedYear)
+    this.schemeform.controls['budgetallocated'].setValue(data.allocatedbudget)
 
     if (data.data) {
       this.formInputData = data.data
-      this.schemeform.controls['budgetyear'].setValue(data.selectedYear)
       this.schemeform.controls['schemename'].setValue(this.formInputData.schemeName)
-      this.schemeform.controls['budgetallocated'].setValue(this.formInputData.trainingBudgetAllocated)
       this.schemeform.controls['budgetutilized'].setValue(this.formInputData.trainingBudgetUtilization)
     }
-    this.schemeform.controls['budgetyear'].setValue(data.selectedYear)
-    this.schemeform.controls['budgetallocated'].setValue(data.allocatedbudget)
   }
 
   ngOnInit() {
@@ -38,9 +40,9 @@ export class BudgetschemepopupComponent implements OnInit {
 
   addsheme(form: any) {
     if (this.formInputData) {
-      this.formInputData.budgetyear = this.schemeform.value.budgetyear
+      this.formInputData.budgetyear = this.selectedYear
       this.formInputData.schemename = this.schemeform.value.schemename
-      this.formInputData.trainingBudgetAllocated = this.schemeform.value.budgetallocated
+      this.formInputData.trainingBudgetAllocated = this.allocatedbudget
       this.formInputData.trainingBudgetUtilization = this.schemeform.value.budgetutilized
       this.dialogRef.close({ data: this.formInputData })
     } else {
