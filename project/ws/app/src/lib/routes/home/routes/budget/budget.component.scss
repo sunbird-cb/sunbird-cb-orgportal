@@ -127,7 +127,8 @@ mat-header-row {
 
 .btn-success:disabled,
 .btn-success[disabled] {
-    opacity: 0.6;
+    // opacity: 0.6;
+    background: rgba(0, 0, 0, 0.26) !important;
 }
 
 .avg-box {
@@ -153,4 +154,20 @@ mat-header-row {
 
 ::ng-deep.mat-form-field-label {
     margin-top: -16px !important;
+}
+
+.width-44 {
+    width: 44% !important;
+}
+
+.custom-label {
+    float: left;
+    background: #fff;
+    padding: 6px 10px;
+    border-radius: 5px 0 0 5px;
+    font-weight: 400 !important;
+}
+
+.custom-select {
+    margin-top: -5px !important;font-size: 14px;
 }
