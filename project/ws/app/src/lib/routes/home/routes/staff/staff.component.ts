@@ -202,10 +202,12 @@ export class StaffComponent implements OnInit, OnChanges {
     if (rowdata) {
       dialogConfig.data = {
         data: rowdata,
+        addedposititons: this.data,
       }
     } else {
       dialogConfig.data = {
         data: [],
+        addedposititons: this.data,
       }
     }
 
@@ -226,7 +228,10 @@ export class StaffComponent implements OnInit, OnChanges {
                 this.getStaffDetails()
               }
             },
-            (_err: any) => {
+            (error: any) => {
+              if (error && error.status === 400) {
+                this.openSnackbar('Position exists for given name')
+              }
             })
         } else {
           this.updateStaffDetails(response.data)
@@ -326,7 +331,7 @@ export class StaffComponent implements OnInit, OnChanges {
       event.preventDefault()
       return false
     }
-      return true
+    return true
   }
 
 }
