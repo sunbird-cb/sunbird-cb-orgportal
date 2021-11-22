@@ -57,9 +57,9 @@
                 <mat-header-cell *matHeaderCellDef class="clr-darkish-blue action-header">
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row" class="action-cell">
-                    <button type="button" mat-icon-button i18n-aria-label aria-label="action items" [matMenuTriggerFor]="cardMenu"
-                        [matMenuTriggerData]="{'data':row}" class="action-btn">
-                        <mat-icon>more_horiz</mat-icon>
+                    <button type="button" mat-icon-button i18n-aria-label aria-label="action items" (click)="updateData(row)"
+                        class="action-btn">
+                        <mat-icon class="ws-mat-black60-text font-22">edit</mat-icon>
                     </button>
                 </mat-cell>
             </ng-container>
@@ -88,10 +88,5 @@
             aria-label="Analytics">
             <mat-icon>block</mat-icon><span>{{rowData && rowData.blocked ? 'Unblock user':'Block user' }}</span>
         </button> -->
-        <button (click)="rowData && rowData.active ? buttonClick('deactive',rowData): buttonClick('active',rowData)"
-            mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
-            <mat-icon>edit_attributes</mat-icon>
-            <span>Edit</span>
-        </button>
     </ng-template>
 </mat-menu>

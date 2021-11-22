@@ -12,6 +12,7 @@ export class StaffdetailspopupComponent implements OnInit {
   staffform: FormGroup
   designationsMeta: any = []
   formInputData: any
+  addedposititons: any
 
   constructor(private dialogRef: MatDialogRef<StaffdetailspopupComponent>, @Inject(MAT_DIALOG_DATA) data: any,
     // tslint:disable-next-line:align
@@ -24,6 +25,7 @@ export class StaffdetailspopupComponent implements OnInit {
 
     if (data.data) {
       this.formInputData = data.data
+      this.addedposititons = data.addedposititons
       this.staffform.controls['designation'].setValue(this.formInputData.position)
       this.staffform.controls['posfilled'].setValue(this.formInputData.totalPositionsFilled)
       this.staffform.controls['posvacant'].setValue(this.formInputData.totalPositionsVacant)
@@ -47,7 +49,17 @@ export class StaffdetailspopupComponent implements OnInit {
     }
     this.mdoinfoSrvc.getDesignations(desreq).subscribe(
       (data: any) => {
+        this.designationsMeta = []
         this.designationsMeta = data.responseData
+        if (this.addedposititons && this.addedposititons.length > 0) {
+          this.addedposititons.forEach((desg: any) => {
+            this.designationsMeta.forEach((ddesg: any, index: any) => {
+              if (ddesg.name === desg.position) {
+                this.designationsMeta.splice(index, 1)
+              }
+            })
+          })
+        }
       },
       (_err: any) => {
       })
