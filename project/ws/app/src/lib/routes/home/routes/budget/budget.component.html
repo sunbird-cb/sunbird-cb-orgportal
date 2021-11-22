@@ -142,7 +142,7 @@
                                                 </div>
                                                 <div class="flex-1 right-align">
                                                     <button type="button" mat-button class="create-btn mat-subheading-2"
-                                                        (click)="onaddScehme('')">
+                                                        (click)="onaddScehme('')" *ngIf="selectedYear !== prevBudgetYear">
                                                         Add scheme
                                                     </button>
                                                 </div>
@@ -228,8 +228,13 @@
 
                             <!-- upload proofs -->
                             <mat-tab label="Add/upload proofs">
+                                <div class="text-center margin-m">
+                                    <img alt="Feature comming soon" class="block mx-auto margin-top-xl margin-bottom-l"
+                                        src="/assets/instances/eagle/app_logos/allocation_empty.svg">
+                                    <span class="block mat-subheading-2 mt-3">Feature coming soon</span>
+                                </div>
                                 <!-- overallmdo -->
-                                <div class="width-100 margin-bottom-m margin-top-m proofs-box">
+                                <!-- <div class="width-100 margin-bottom-m margin-top-m proofs-box">
                                     <div class="width-100">
                                         <p class="mat-subheading-1 float-left padding-top-xs margin-bottom-l">Upload
                                             overall MDO budget proofs</p>
@@ -241,9 +246,9 @@
                                         <ws-app-budgettable [type]="'overallmdo'" [tableData]="tableData" [data]="overallmdodata"
                                             (onUploadFilesClick)="browsefiles('overallmdo')"></ws-app-budgettable>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- mdosalary -->
-                                <div class="width-100 margin-bottom-m margin-top-m proofs-box">
+                                <!-- <div class="width-100 margin-bottom-m margin-top-m proofs-box">
                                     <div class="width-100">
                                         <p class="mat-subheading-1 float-left padding-top-xs margin-bottom-l">Upload
                                             MDO salary budget proofs</p>
@@ -255,9 +260,9 @@
                                         <ws-app-budgettable [type]="'mdosalary'" [tableData]="tableData" [data]="mdosalarydata"
                                             (onUploadFilesClick)="browsefiles('mdosalary')"></ws-app-budgettable>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- mdotraining -->
-                                <div class="width-100 margin-bottom-m margin-top-m proofs-box">
+                                <!-- <div class="width-100 margin-bottom-m margin-top-m proofs-box">
                                     <div class="width-100">
                                         <p class="mat-subheading-1 float-left padding-top-xs margin-bottom-l">Upload
                                             MDO training/capacity building budget proofs</p>
@@ -269,9 +274,9 @@
                                         <ws-app-budgettable [type]="'mdotraining'" [tableData]="tableData" [data]="mdotrainingdata"
                                             (onUploadFilesClick)="browsefiles('mdotraining')"></ws-app-budgettable>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- schemewise -->
-                                <div class="width-100 margin-bottom-m margin-top-m proofs-box">
+                                <!-- <div class="width-100 margin-bottom-m margin-top-m proofs-box">
                                     <div class="width-100">
                                         <p class="mat-subheading-1 float-left padding-top-xs margin-bottom-l">Upload
                                             scheme-wise budget proofs (if available)</p>
@@ -283,7 +288,7 @@
                                         <ws-app-budgettable [type]="'schemewise'" [tableData]="tableData" [data]="schemewisedata"
                                             (onUploadFilesClick)="browsefiles('schemewise')"></ws-app-budgettable>
                                     </div>
-                                </div>
+                                </div> -->
                             </mat-tab>
                         </mat-tab-group>
                     </div>

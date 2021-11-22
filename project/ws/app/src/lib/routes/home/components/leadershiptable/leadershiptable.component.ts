@@ -8,7 +8,7 @@ import * as _ from 'lodash'
 import { AdduserpopupComponent } from '../adduserpopup/adduserpopup.component'
 import { MdoInfoService } from '../../services/mdoinfo.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
   selector: 'ws-app-leadershiptable',
@@ -42,6 +42,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   usersData: any = []
   usersData1: any
   deptID: any
+  statedata = { param: 'MDOinfo', path: 'Leadership' }
   // tslint:disable-next-line:max-line-length
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
@@ -51,7 +52,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
 
   constructor(public dialog: MatDialog, private activeRoute: ActivatedRoute, private snackBar: MatSnackBar,
     // tslint:disable-next-line:align
-    private mdoinfoSrvc: MdoInfoService, private configSvc: ConfigurationsService) {
+    private mdoinfoSrvc: MdoInfoService, private configSvc: ConfigurationsService, private router: Router) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
   }
@@ -245,5 +246,9 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
     } else {
       this.dataSource.filter = ''
     }
+  }
+
+  updateData(rowdata: any) {
+    this.router.navigate([`/app/users/${rowdata.id}/details`], { queryParams: { param: 'MDOinfo', path: 'Leadership' } })
   }
 }
