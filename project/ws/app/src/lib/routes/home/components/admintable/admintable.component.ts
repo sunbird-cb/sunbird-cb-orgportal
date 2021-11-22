@@ -8,7 +8,7 @@ import * as _ from 'lodash'
 import { AdduserpopupComponent } from '../adduserpopup/adduserpopup.component'
 import { MdoInfoService } from '../../services/mdoinfo.service'
 // import { ConfigurationsService } from '@sunbird-cb/utils'
-// import { ActivatedRoute } from '@angular/router'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'ws-app-admintable',
@@ -49,7 +49,7 @@ export class AdmintableComponent implements OnInit, OnChanges {
     }
   }
 
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private mdoinfoSrvc: MdoInfoService) {
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private mdoinfoSrvc: MdoInfoService, private router: Router) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
 
@@ -120,15 +120,15 @@ export class AdmintableComponent implements OnInit, OnChanges {
       }
       this.mdoinfoSrvc.getTeamUsers(req).subscribe(
         (res: any) => {
-          const result = res.result.response.content
-          if (result.length > 0) {
-            result.sort((a: any, b: any) => {
+          if (res.result.response.content.length > 0) {
+            res.result.response.content.sort((a: any, b: any) => {
               const textA = a.firstName.toUpperCase()
               const textB = b.firstName.toUpperCase()
               return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
             })
+            const result = res.result.response.content
+            this.usersData1 = result
           }
-          this.usersData1 = result
           this.data = []
           if (this.usersData1.length > 0) {
             let pos = ''
@@ -244,5 +244,9 @@ export class AdmintableComponent implements OnInit, OnChanges {
     } else {
       this.dataSource.filter = ''
     }
+  }
+
+  updateData(rowdata: any) {
+    this.router.navigate([`/app/users/${rowdata.id}/details`], { queryParams: { param: 'MDOinfo', path: 'Leadership' } })
   }
 }

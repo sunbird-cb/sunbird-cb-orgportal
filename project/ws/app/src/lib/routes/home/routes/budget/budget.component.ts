@@ -77,6 +77,7 @@ export class BudgetComponent implements OnInit, OnChanges {
   trainingChange: any
   utilizedChange: any
   utilizedChangeError = false
+  prevBudgetYear: any
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     // if (!this.dataSource1.sort) {
     //   this.dataSource1.sort = sort
@@ -154,6 +155,7 @@ export class BudgetComponent implements OnInit, OnChanges {
     const nextYear1 = nextYear + 1
     const prevbudgetyear = `${prevYear}-${currentYear}`
     this.yearsList.push(prevbudgetyear)
+    this.prevBudgetYear = prevbudgetyear
     const currentbudgetyear = `${currentYear}-${nextYear}`
     this.yearsList.push(currentbudgetyear)
     this.selectedYear = currentbudgetyear
@@ -336,7 +338,7 @@ export class BudgetComponent implements OnInit, OnChanges {
           this.budgetdata.controls['trainingbudget'].setValue('')
           this.budgetdata.controls['budgetutilized'].setValue('')
           this.totalbudgetpercent = 0
-          this.openSnackbar('No Budget Scheme found for this year')
+          this.openSnackbar('No budget scheme found for this year')
         }
       })
   }
