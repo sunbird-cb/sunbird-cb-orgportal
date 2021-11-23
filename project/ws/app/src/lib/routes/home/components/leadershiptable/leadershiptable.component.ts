@@ -153,6 +153,8 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
               this.dataSource.paginator = this.paginator
               this.getAllUsers(this.deptID)
             }
+          } else {
+            this.getAllUsers(this.deptID)
           }
         },
         (_err: any) => {
