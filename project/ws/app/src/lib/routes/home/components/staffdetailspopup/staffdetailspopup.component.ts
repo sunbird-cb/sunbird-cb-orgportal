@@ -13,6 +13,7 @@ export class StaffdetailspopupComponent implements OnInit {
   designationsMeta: any = []
   formInputData: any
   addedposititons: any
+  selectedDesignation: any
 
   constructor(private dialogRef: MatDialogRef<StaffdetailspopupComponent>, @Inject(MAT_DIALOG_DATA) data: any,
     // tslint:disable-next-line:align
@@ -26,9 +27,12 @@ export class StaffdetailspopupComponent implements OnInit {
     if (data.data) {
       this.formInputData = data.data
       this.addedposititons = data.addedposititons
-      this.staffform.controls['designation'].setValue(this.formInputData.position)
-      this.staffform.controls['posfilled'].setValue(this.formInputData.totalPositionsFilled)
-      this.staffform.controls['posvacant'].setValue(this.formInputData.totalPositionsVacant)
+      this.selectedDesignation = this.formInputData.position
+      this.staffform.patchValue({
+        designation: this.formInputData.position,
+        posfilled: this.formInputData.totalPositionsFilled,
+        posvacant: this.formInputData.totalPositionsVacant,
+      })
     }
   }
 
@@ -73,12 +77,6 @@ export class StaffdetailspopupComponent implements OnInit {
       this.dialogRef.close({ data: this.formInputData })
     } else {
       this.dialogRef.close({ data: form.value })
-    }
-  }
-
-  otherDropDownChange(value: any, field: string) {
-    if (field === 'designation' && value !== 'Other') {
-      // this.staffform.controls['designation'].setValue('')
     }
   }
 
