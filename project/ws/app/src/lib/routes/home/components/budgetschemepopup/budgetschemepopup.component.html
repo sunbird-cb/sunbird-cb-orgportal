@@ -1,8 +1,11 @@
 <div class="custom-popup" id="adduerpopup">
     <mat-dialog-content>
         <div class="pdf-upload">
-            <div class="mat-title margin-top-s margin-bottom-m">
+            <div class="mat-title margin-top-s margin-bottom-m" *ngIf="!formInputData.id">
                 Add scheme wise details
+            </div>
+            <div class="mat-title margin-top-s margin-bottom-m" *ngIf="formInputData.id">
+                Edit scheme wise details
             </div>
             <div class="example-container margin-top-m">
                 <form class="schemeform-form" [formGroup]="schemeform">
