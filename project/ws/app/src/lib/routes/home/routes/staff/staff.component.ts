@@ -35,8 +35,8 @@ export class StaffComponent implements OnInit, OnChanges {
   dataSource!: any
   widgetData: any
   length!: number
-  pageSize = 5
-  pageSizeOptions = [5, 10, 20]
+  pageSize = 20
+  pageSizeOptions = [20, 40, 60, 80, 100]
   displayedColumns: IColums[] | undefined
   selection = new SelectionModel<any>(true, [])
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
