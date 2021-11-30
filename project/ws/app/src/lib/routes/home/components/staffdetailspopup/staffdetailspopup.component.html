@@ -21,16 +21,15 @@
                                     #designation formControlName="designation" i18n-placeholder placeholder="0"
                                     i18n-aria-label aria-label="designation input" class="form-input" autocomplete="off"
                                     [disabled]="selectedDesignation" style="opacity: 0.9" *ngIf="selectedDesignation" />
-
-                                <mat-select #designation formControlName="designation" i18n-placeholder placeholder="Select"
-                                    (selectionChange)="otherDropDownChange(designation.value, 'designation')" *ngIf="!selectedDesignation">
+                             <mat-select #designation formControlName="designation" i18n-placeholder placeholder="Select"
+                                    *ngIf="!selectedDesignation">
                                     <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
                                         {{designation.name}}
                                     </mat-option>
                                     <mat-option [value]="'Other'">Other</mat-option>
                                 </mat-select>
-                                <mat-error [hidden]="false" i18n="Total positions Error|Explains name is required"
-                                    i18n-aria-label aria-label="Total positions Error|Explains name is required " *ngIf="staffform?.controls['designation']?.touched && staffform?.controls['designation'].errors?.required">
+                                <mat-error [hidden]="false" i18n="Position Error|Explains name is required"
+                                    i18n-aria-label aria-label="Position Error|Explains name is required " *ngIf="staffform?.controls['designation'].errors?.required">
                                     Field is mandatory
                                 </mat-error>
                             </mat-form-field>
