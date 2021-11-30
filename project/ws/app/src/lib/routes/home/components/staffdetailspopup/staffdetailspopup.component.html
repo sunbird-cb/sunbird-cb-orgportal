@@ -22,7 +22,7 @@
                                     i18n-aria-label aria-label="designation input" class="form-input" autocomplete="off"
                                     [disabled]="selectedDesignation" style="opacity: 0.9" *ngIf="selectedDesignation" />
 
-                                <mat-select #designation formControlName="designation" i18n-placeholder placeholder="Select"
+                             <mat-select #designation formControlName="designation" i18n-placeholder placeholder="Select"
                                     *ngIf="!selectedDesignation">
                                     <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
                                         {{designation.name}}
