@@ -169,7 +169,8 @@
                                                 </label>
                                                 <mat-form-field color="accent" appearance="outline">
                                                     <input matInput [matDatepicker]="eventDate" formControlName="eventDate"
-                                                        [min]="minDate" [max]="maxDate" [(ngModel)]="todayDate">
+                                                        [min]="minDate" [max]="maxDate" [(ngModel)]="todayDate"
+                                                        (dateChange)="updateDate($event)">
                                                     <mat-datepicker-toggle matSuffix [for]="eventDate"></mat-datepicker-toggle>
                                                     <mat-datepicker #eventDate></mat-datepicker>
                                                     <mat-error [hidden]="false" i18n="eventDate Error|Explains eventDate is required"
