@@ -67,6 +67,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
       this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
     }
     if (this.deptID) {
+      this.getAllUsers(this.deptID)
       this.getUsers('MDO_LEADER')
     }
   }
@@ -151,7 +152,8 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
             if (this.data) {
               this.dataSource.data = this.data
               this.dataSource.paginator = this.paginator
-              this.getAllUsers(this.deptID)
+              // this.getAllUsers(this.deptID)
+              this.router.navigate(['/app/home/mdoinfo/leadership'])
             }
           } else {
             this.getAllUsers(this.deptID)
