@@ -287,7 +287,7 @@ export class BudgetComponent implements OnInit, OnChanges {
           this.mdoinfoSrvc.addBudgetdetails(req).subscribe(
             (res: any) => {
               if (res) {
-                this.openSnackbar('Staff details added successfully')
+                this.openSnackbar('Scheme details added successfully')
                 this.getBudgetDetails(this.selectedYear)
               }
             },
@@ -405,7 +405,7 @@ export class BudgetComponent implements OnInit, OnChanges {
   //   this.mdoinfoSrvc.deleteBudgetdetails(form.id, this.deptID).subscribe(
   //     (res: any) => {
   //       if (res) {
-  //         this.openSnackbar('Staff details deleted successfully')
+  //         this.openSnackbar('Scheme details deleted successfully')
   //         this.getBudgetDetails(form.budgetyear)
   //       }
   //     },

@@ -86,14 +86,16 @@ export class CreateEventComponent implements OnInit {
   todayTime: any
   eventimageURL: any
   departmentID: any
+  orgtimeArr!: {
+    value: string
+  }[]
+  newtimearray: any = []
 
-  constructor(private snackBar: MatSnackBar,
-              private eventsSvc: EventsService,
-              private matDialog: MatDialog,
-              private router: Router,
-              private configSvc: ConfigurationsService,
-              private changeDetectorRefs: ChangeDetectorRef,
-              private activeRoute: ActivatedRoute,
+  constructor(private snackBar: MatSnackBar, private eventsSvc: EventsService, private matDialog: MatDialog,
+    // tslint:disable-next-line:align
+    private router: Router, private configSvc: ConfigurationsService, private changeDetectorRefs: ChangeDetectorRef,
+    // tslint:disable-next-line:align
+    private activeRoute: ActivatedRoute,
   ) {
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId
@@ -167,9 +169,11 @@ export class CreateEventComponent implements OnInit {
         enabled: true,
       }]
 
+    this.orgtimeArr = this.timeArr
+
     if (this.timeArr) {
       const hr = new Date().getHours()
-      const min =  new Date().getMinutes()
+      const min = new Date().getMinutes()
 
       // tslint:disable-next-line:prefer-template
       const nhr = ('0' + hr).slice(-2)
@@ -183,7 +187,9 @@ export class CreateEventComponent implements OnInit {
           newtimearray.push(time)
         }
       })
+      this.newtimearray = newtimearray
       this.timeArr = newtimearray
+      this.todayTime = this.timeArr[0].value
     }
   }
 
@@ -330,6 +336,26 @@ export class CreateEventComponent implements OnInit {
     )
   }
 
+  updateDate(event: any) {
+    const dd = event.value.getDate()
+    const mm = event.value.getMonth() + 1
+    const yr = event.value.getFullYear()
+    const selectedDate = `${dd}-${mm}-${yr}`
+
+    const dd1 = new Date().getDate()
+    const mm1 = new Date().getMonth() + 1
+    const yr1 = new Date().getFullYear()
+    const todaysDate = `${dd1}-${mm1}-${yr1}`
+
+    if (selectedDate === todaysDate) {
+      this.timeArr = this.newtimearray
+      this.todayTime = this.timeArr[0].value
+    } else {
+      this.timeArr = this.orgtimeArr
+      this.todayTime = this.timeArr[0].value
+    }
+  }
+
   onSubmit() {
     const eventDurationMinutes = this.addMinutes(
       this.createEventForm.controls['eventDurationHours'].value,
@@ -380,9 +406,9 @@ export class CreateEventComponent implements OnInit {
         }
         const selectedStartDate = this.createEventForm.controls['eventDate'].value
         // tslint:disable-next-line:prefer-template
-        const date =  ('0' + (new Date(selectedStartDate).getDate() + 1)).slice(-2)
+        const date = ('0' + (new Date(selectedStartDate).getDate() + 1)).slice(-2)
         // tslint:disable-next-line:prefer-template
-        const month =  ('0' + (new Date(selectedStartDate).getMonth() + 1)).slice(-2)
+        const month = ('0' + (new Date(selectedStartDate).getMonth() + 1)).slice(-2)
         const year = new Date(selectedStartDate).getFullYear()
         newendDate = `${year}-${month}-${date}`
       }
@@ -434,14 +460,14 @@ export class CreateEventComponent implements OnInit {
       this.openSnackbar('Duration cannot be zero')
     } else {
       this.eventsSvc.createEvent(form).subscribe(
-      res => {
-        const identifier = res.result.identifier
-        // this.fileSubmit(identifier)
-        this.publishEvent(identifier)
-      },
-      (err: any) => {
-        this.openSnackbar(err.error.split(':')[1])
-      }
+        res => {
+          const identifier = res.result.identifier
+          // this.fileSubmit(identifier)
+          this.publishEvent(identifier)
+        },
+        (err: any) => {
+          this.openSnackbar(err.error.split(':')[1])
+        }
       )
     }
   }
