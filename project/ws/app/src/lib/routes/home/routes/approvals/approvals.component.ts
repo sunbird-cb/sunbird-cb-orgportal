@@ -7,6 +7,7 @@ import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/in
 import { MatSnackBar } from '@angular/material'
 /* tslint:disable */
 import _ from 'lodash'
+import { EventService, TelemetryService } from '@sunbird-cb/utils'
 /* tslint:enable */
 @Component({
   selector: 'ws-app-approvals',
@@ -34,12 +35,17 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     sortState: 'asc',
     needUserMenus: false,
   }
+  configSvc: any
 
   constructor(
     private router: Router,
     private apprService: ApprovalsService,
     private activeRouter: ActivatedRoute,
+    private route: ActivatedRoute,
+    private events: EventService,
+    private telemetrySvc: TelemetryService,
     private snackbar: MatSnackBar) {
+    this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService.unMappedUser.channel
     ) {
       this.departName = _.get(this.activeRouter, 'parent.snapshot.data.configService.unMappedUser.channel')
@@ -75,6 +81,15 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     if (approval && approval.userWorkflow.userInfo) {
       this.router.navigate([`/app/approvals/${approval.userWorkflow.userInfo.wid}/to-approve`])
     }
+    this.telemetrySvc.impression()
+    this.events.raiseInteractTelemetry(
+      'click',
+      'card-cardContent',
+      {
+        id: this.configSvc.userProfile.userId,
+      }
+    )
+
   }
 
   fetchApprovals() {

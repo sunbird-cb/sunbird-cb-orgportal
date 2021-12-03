@@ -8,9 +8,10 @@ import { MatPaginator } from '@angular/material'
 import { MatSort } from '@angular/material/sort'
 import * as _ from 'lodash'
 import { ITableData, IColums, IAction } from '../../interfaces/interfaces'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 import { EventThumbnailComponent } from '../event-thumbnail/event-thumbnail.component'
+import { EventService, TelemetryService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-event-list-view',
@@ -44,11 +45,16 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
   @ViewChild(MatSort, { static: true }) sort?: MatSort
   selection = new SelectionModel<any>(true, [])
   dialogRef: any
+  configSvc: any
 
   constructor(
     private router: Router,
     private matDialog: MatDialog,
-    ) {
+    private events: EventService,
+    private telemetrySvc: TelemetryService,
+    private route: ActivatedRoute,
+  ) {
+    this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     this.dataSource = new MatTableDataSource<any>()
     this.actionsClick = new EventEmitter()
     this.clicked = new EventEmitter()
@@ -79,6 +85,13 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
     } else {
       this.dataSource.filter = ''
     }
+    this.events.raiseInteractTelemetry(
+      'click',
+      'card-cardContent',
+      {
+        id: this.configSvc.userProfile.userId,
+      }
+    )
   }
 
   buttonClick(action: string, row: any) {
@@ -143,6 +156,14 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
 
   onCreateClick() {
     this.router.navigate([`/app/events/create-event`])
+    this.telemetrySvc.impression()
+    this.events.raiseInteractTelemetry(
+      'click',
+      'card-cardContent',
+      {
+        id: this.configSvc.userProfile.userId,
+      }
+    )
   }
 
   showImageDialog(img: any) {
