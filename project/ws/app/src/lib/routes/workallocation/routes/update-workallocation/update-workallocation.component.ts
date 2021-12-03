@@ -4,7 +4,7 @@ import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 import { AllocationService } from '../../services/allocation.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-update-workallocation',
@@ -68,9 +68,9 @@ export class UpdateWorkallocationComponent implements OnInit {
   constructor(
     private exportAsService: ExportAsService, private snackBar: MatSnackBar, private router: Router,
     private fb: FormBuilder, private allocateSrvc: AllocationService,
-    private activeRoute: ActivatedRoute, private configSvc: ConfigurationsService) {
+    private activeRoute: ActivatedRoute, private configSvc: ConfigurationsService,
+    private events: EventService) {
     this.allocateduserID = this.activeRoute.snapshot.params.userId
-
     this.newAllocationForm = this.fb.group({
       fname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -190,6 +190,14 @@ export class UpdateWorkallocationComponent implements OnInit {
     if (el != null) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
+    const objectid = this.activeRoute.parent && this.activeRoute.parent.snapshot.data.configService
+    this.events.raiseInteractTelemetry(
+      'click',
+      'card-cardContent',
+      {
+        id: objectid.userProfile.userId,
+      }
+    )
   }
 
   // to set roles array field

@@ -5,6 +5,7 @@ import moment from 'moment'
 // import { NeedApprovalsService } from '../../services/need-approvals.service'
 // tslint:disable
 import _ from 'lodash'
+import { EventService } from '@sunbird-cb/utils'
 // tslint:enable
 @Component({
   selector: 'ws-app-home',
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   wfHistory: any[] = []
   profileData: any[] = []
   profileDataKeys: any[] = []
+  configSvc: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -36,11 +38,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     // private configSvc: ConfigurationsService,
     private activeRoute: ActivatedRoute,
     private router: Router,
+    private events: EventService,
     // private needApprService: NeedApprovalsService
   ) {
     // this.getDepartment()
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
+        this.configSvc = this.activeRoute.parent && this.activeRoute.parent.snapshot.data.configService
         const workflowData = (this.activeRoute.snapshot.data.workflowData.data.result.data &&
           this.activeRoute.snapshot.data.workflowData.data.result.data[0]) || {}
         let wfHistoryDatas = this.activeRoute.snapshot.data.workflowHistoryData.data.result.data || {}
@@ -147,6 +151,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       // el.style.backgroundColor = '#FDECDE'
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
+    this.events.raiseInteractTelemetry(
+      'click',
+      'card-cardContent',
+      {
+        id: this.configSvc.userProfile.userId,
+      }
+    )
   }
 
   ngOnDestroy(): void { }

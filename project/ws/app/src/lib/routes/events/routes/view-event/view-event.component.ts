@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
+import { EventService } from '@sunbird-cb/utils'
 import moment from 'moment'
 
 @Component({
@@ -34,7 +35,7 @@ export class ViewEventComponent implements OnInit, AfterViewInit {
     }
   }
 
-  constructor(private activeRoute: ActivatedRoute, private router: Router) {
+  constructor(private activeRoute: ActivatedRoute, private router: Router, private events: EventService) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         const profileData = this.activeRoute.snapshot.data.profileData.data.result.UserProfile[0] || {}
@@ -133,6 +134,14 @@ export class ViewEventComponent implements OnInit, AfterViewInit {
     if (el != null) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
+    const objectid = this.activeRoute.parent && this.activeRoute.parent.snapshot.data.configService
+    this.events.raiseInteractTelemetry(
+      'click',
+      'card-cardContent',
+      {
+        id: objectid.userProfile.userId,
+      }
+    )
   }
   changeToDefaultImg($event: any) {
     $event.target.src = '/assets/instances/eagle/app_logos/default.png'

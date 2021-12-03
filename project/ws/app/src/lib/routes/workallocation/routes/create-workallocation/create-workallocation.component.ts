@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms'
 import { AllocationService } from '../../services/allocation.service'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 import { MatSnackBar, MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-confirm.component'
 import { AllocationActionsComponent } from '../../components/allocation-actions/allocation-actions.component'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 
 @Component({
   selector: 'ws-app-create-workallocation',
@@ -73,6 +73,8 @@ export class CreateWorkallocationComponent implements OnInit {
     private exportAsService: ExportAsService, private snackBar: MatSnackBar,
     private fb: FormBuilder, private allocateSrvc: AllocationService,
     private router: Router, public dialog: MatDialog,
+    private activeRoute: ActivatedRoute,
+    private events: EventService,
     private configSvc: ConfigurationsService) {
     this.selectedIndex = 0
     this.newAllocationForm = this.fb.group({
@@ -137,6 +139,14 @@ export class CreateWorkallocationComponent implements OnInit {
     if (el != null) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
+    const objectid = this.activeRoute.parent && this.activeRoute.parent.snapshot.data.configService
+    this.events.raiseInteractTelemetry(
+      'click',
+      'card-cardContent',
+      {
+        id: objectid.userProfile.userId,
+      }
+    )
   }
 
   // to set roles array field

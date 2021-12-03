@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { ParticipantsComponent } from '../../components/participants/participants.component'
 import { SuccessComponent } from '../../components/success/success.component'
 import { Router, ActivatedRoute } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import * as moment from 'moment'
 /* tslint:disable */
 import _ from 'lodash'
@@ -94,7 +94,9 @@ export class CreateEventComponent implements OnInit {
               private configSvc: ConfigurationsService,
               private changeDetectorRefs: ChangeDetectorRef,
               private activeRoute: ActivatedRoute,
+              private events: EventService,
   ) {
+
     if (this.configSvc.userProfile) {
       this.userId = this.configSvc.userProfile.userId
       this.username = this.configSvc.userProfile.userName
@@ -169,7 +171,7 @@ export class CreateEventComponent implements OnInit {
 
     if (this.timeArr) {
       const hr = new Date().getHours()
-      const min =  new Date().getMinutes()
+      const min = new Date().getMinutes()
 
       // tslint:disable-next-line:prefer-template
       const nhr = ('0' + hr).slice(-2)
@@ -193,6 +195,14 @@ export class CreateEventComponent implements OnInit {
     if (el != null) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
+    const objectid = this.activeRoute.parent && this.activeRoute.parent.snapshot.data.configService
+    this.events.raiseInteractTelemetry(
+      'click',
+      'card-cardContent',
+      {
+        id: objectid.userProfile.userId,
+      }
+    )
   }
 
   openDialog() {
@@ -380,9 +390,9 @@ export class CreateEventComponent implements OnInit {
         }
         const selectedStartDate = this.createEventForm.controls['eventDate'].value
         // tslint:disable-next-line:prefer-template
-        const date =  ('0' + (new Date(selectedStartDate).getDate() + 1)).slice(-2)
+        const date = ('0' + (new Date(selectedStartDate).getDate() + 1)).slice(-2)
         // tslint:disable-next-line:prefer-template
-        const month =  ('0' + (new Date(selectedStartDate).getMonth() + 1)).slice(-2)
+        const month = ('0' + (new Date(selectedStartDate).getMonth() + 1)).slice(-2)
         const year = new Date(selectedStartDate).getFullYear()
         newendDate = `${year}-${month}-${date}`
       }
@@ -434,14 +444,14 @@ export class CreateEventComponent implements OnInit {
       this.openSnackbar('Duration cannot be zero')
     } else {
       this.eventsSvc.createEvent(form).subscribe(
-      res => {
-        const identifier = res.result.identifier
-        // this.fileSubmit(identifier)
-        this.publishEvent(identifier)
-      },
-      (err: any) => {
-        this.openSnackbar(err.error.split(':')[1])
-      }
+        res => {
+          const identifier = res.result.identifier
+          // this.fileSubmit(identifier)
+          this.publishEvent(identifier)
+        },
+        (err: any) => {
+          this.openSnackbar(err.error.split(':')[1])
+        }
       )
     }
   }
