@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/common'
 import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
+import { EventService } from '@sunbird-cb/utils'
 // tslint:disable
 import _ from 'lodash'
 import { delay } from 'rxjs/operators'
@@ -64,6 +65,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     private route: ActivatedRoute,
     @Inject(DOCUMENT) private document: Document,
     public dialog: MatDialog,
+    private events: EventService,
   ) {
     this.route.params.subscribe(params => {
       this.workOrderId = params['workorder']
@@ -246,6 +248,13 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   filterComp($element: any, filterType: string) {
     this.selectedTab = filterType
     $element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
+    this.events.raiseInteractTelemetry(
+      'click',
+      'tab-content',
+      {
+        id: this.workOrderId,
+      }
+    )
   }
 
   get getsubPath(): string {
@@ -309,6 +318,13 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     } else {
       this.openSnackbar('Error in updating Work order, please try again!')
     }
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-content',
+      {
+        id: this.workOrderId,
+      }
+    )
   }
   updateWat(autoSave: boolean = false, reload: boolean = false, serverCall: boolean = true) {
     if (serverCall) {
@@ -338,6 +354,14 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     } else {
       // nothing required to do
     }
+
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-content',
+      {
+        id: this.workOrderId,
+      }
+    )
   }
 
   getStrcuturedReqUpdate(): any {

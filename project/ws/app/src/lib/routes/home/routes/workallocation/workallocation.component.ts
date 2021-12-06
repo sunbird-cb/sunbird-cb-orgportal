@@ -7,6 +7,8 @@ import { ExportAsService, ExportAsConfig } from 'ngx-export-as'
 import _ from 'lodash'
 import { WorkallocationService } from '../../services/workallocation.service'
 import { WorkAllocationPopUpComponent } from '../../../../head/work-allocation-table/work-order-popup/pop-up.component'
+import { EventService } from '@sunbird-cb/utils'
+import { NsContent } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-workallocation',
@@ -39,6 +41,8 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   totalusersCount: any
   p: number = 1;
   isPrint = false
+  content: NsContent.IContent = {} as NsContent.IContent
+  configSvc: any
 
 
   ngOnDestroy() {
@@ -48,8 +52,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   }
 
   constructor(private exportAsService: ExportAsService, private router: Router, private wrkAllocServ: WorkallocationService,
-    private workallocationSrvc: WorkallocationService, private activeRoute: ActivatedRoute,
+    private workallocationSrvc: WorkallocationService, private activeRoute: ActivatedRoute, private events: EventService, private route: ActivatedRoute,
     public dialog: MatDialog) {
+    this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     const paramsMap = this.activeRoute.snapshot.params.tab
     if (paramsMap === 'Published') {
       this.currentFilter = 'Published'
@@ -88,6 +93,14 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       const fileURL = URL.createObjectURL(file)
       window.open(fileURL)
     })
+
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-print',
+      {
+        id: this.selectedPDFid,
+      }
+    )
   }
 
   pdfCallbackFn(pdf: any) {
@@ -130,6 +143,14 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       this.isPrint = true
     }
 
+    this.events.raiseInteractTelemetry(
+      'click',
+      'card-cardContent',
+      {
+        id: element.id,
+      }
+    )
+
   }
 
   filter(key: string) {
@@ -166,6 +187,14 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
           break
       }
     }
+    this.events.raiseInteractTelemetry(
+      'click',
+      'tab-content',
+      {
+        id: this.content.identifier,
+      }
+    )
+
   }
   getWAT(currentStatus: string) {
     this.data = []
@@ -271,6 +300,13 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(() => {
       this.getWAT(this.currentFilter)
     })
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-new',
+      {
+        id: this.content.identifier,
+      }
+    )
   }
 
   viewAllocation(data: any) {

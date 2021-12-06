@@ -6,6 +6,7 @@ import { UsersService } from '../../services/users.service'
 import { MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { EventService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 
 @Component({
@@ -53,7 +54,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     }
   }
 
-  constructor(private activeRoute: ActivatedRoute, private router: Router,
+  constructor(private activeRoute: ActivatedRoute, private router: Router, private events: EventService,
     // tslint:disable-next-line:align
     private usersSvc: UsersService,
     // tslint:disable-next-line:align
@@ -245,6 +246,14 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     if (el != null) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
+    const objectid = this.activeRoute.parent && this.activeRoute.parent.snapshot.data.configService
+    this.events.raiseInteractTelemetry(
+      'click',
+      'card-cardContent',
+      {
+        id: objectid.userProfile.userId,
+      }
+    )
   }
   changeToDefaultImg($event: any) {
     $event.target.src = '/assets/instances/eagle/app_logos/default.png'
