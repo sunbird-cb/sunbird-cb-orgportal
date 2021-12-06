@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { EventService } from '@sunbird-cb/utils'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'ws-app-view-user',
@@ -38,6 +39,10 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   orguserRoles: any = []
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
   userStatus: any
+  routeSubscription: Subscription | null = null
+  qpParam: any
+  qpPath: any
+  breadcrumbs: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -133,6 +138,19 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         this.activeRoute.data.subscribe(data => {
           this.profileData = data.pageData.data.profileData ? data.pageData.data.profileData : []
           this.profileDataKeys = data.pageData.data.profileDataKey ? data.pageData.data.profileDataKey : []
+        })
+
+        this.routeSubscription = this.activeRoute.queryParamMap.subscribe(qParamsMap => {
+          this.qpParam = qParamsMap.get('param')
+          this.qpPath = qParamsMap.get('path')
+
+          if (this.qpParam === 'MDOinfo') {
+            // tslint:disable-next-line:max-line-length
+            this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: this.userStatus, url: 'none' }, { title: 'MDO information', url: '/app/home/mdoinfo/leadership' }, { title: this.fullname, url: 'none' }] }
+          } else {
+            // tslint:disable-next-line:max-line-length
+            this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: this.userStatus, url: 'none' }, { title: this.fullname, url: 'none' }] }
+          }
         })
 
         wfHistoryData.forEach((wfh: any) => {
@@ -259,7 +277,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         if (dres) {
           this.updateUserRoleForm.reset({ roles: '' })
           this.openSnackbar('User role updated Successfully')
-          this.router.navigate(['/app/home/users'])
+          if (this.qpParam === 'MDOinfo') {
+            this.router.navigate(['/app/home/mdoinfo/leadership'])
+          } else {
+            this.router.navigate(['/app/home/users'])
+          }
         }
       })
     } else {

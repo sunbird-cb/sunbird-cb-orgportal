@@ -1,0 +1,100 @@
+<div class="example-container margin-top-m">
+    <div class="example-loading-shade"></div>
+    <div class="example-table-container">
+        <div class="container-balanced">
+            <div class="flex flex-1 custom">
+                <div class="flex-3">
+                    <div class="search">
+                        <div class=rsearch>
+                            <mat-icon class="color-60 search-icon">search</mat-icon>
+                            <input class="sinput color-60 mat-body-2 margin-remove-top" type="Standard" label=""
+                                (input)="applyFilter($event.target.value)" placeholder="Search">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 right-align">
+                    <button type="button" mat-button class="create-btn" (click)="adduser()">
+                        Add user
+                    </button>
+                </div>
+            </div>
+        </div>
+        <mat-table #table matSort [matSortActive]="tableData!.sortColumn" [matSortDirection]="tableData!.sortState"
+            [dataSource]="dataSource" class="example-table table1 responsiveTable">
+            <ng-container matColumnDef="{{col.key}}" *ngFor="let col of tableData!.columns, let i = index">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class=".h-400-r-14-l color-60"> {{col.displayName}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <!-- <span *ngIf="col.key === 'srno'">{{i}}</span> -->
+                    <span *ngIf="col.isList" class="h-400-r-14-l color-87 textclass">
+                        <div innerHTML="{{element[col.key]}}"></div>
+                    </span>
+                    <span *ngIf="!col.isList" class="h-400-r-14-l color-87 textclass">
+                        {{element[col.key]}} {{col.isList}}
+                    </span>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Actions" *ngIf="tableData!.actions && tableData!.actions.length > 0">
+                <mat-header-cell *matHeaderCellDef class="clr-darkish-blue action-header"> Actions
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row" class="action-cell">
+                    <div *ngFor="let ac of tableData!.actions">
+                        <div *ngIf="ac.optional">
+                            <!-- <ws-widget-app-button *ngIf="row[ac.optional_key] === ac.optional_Value" [type]="ac.type"
+                            [icon]="ac.icon" [disabled]="ac.disabled || false" [label]="ac.label"
+                            (click)="buttonClick(ac.name,row)"></ws-widget-app-button> -->
+                        </div>
+                        <div *ngIf="!ac.optional">
+                            <!-- <ws-widget-app-button [type]="ac.type" [icon]="ac.icon" [label]="ac.label"
+                            [disabled]="ac.disabled || false" (click)="buttonClick(ac.name,row)">
+                        </ws-widget-app-button> -->
+                        </div>
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Menu">
+                <mat-header-cell *matHeaderCellDef class="clr-darkish-blue action-header">
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row" class="action-cell">
+                    <!-- <button type="button" mat-icon-button i18n-aria-label aria-label="action items" [matMenuTriggerFor]="cardMenu"
+                        [matMenuTriggerData]="{'data':row}" class="action-btn">
+                        <mat-icon>more_horiz</mat-icon>
+                    </button> -->
+                    <button type="button" mat-icon-button i18n-aria-label aria-label="action items" (click)="updateData(row)"
+                        class="action-btn">
+                        <mat-icon class="ws-mat-black60-text font-22">edit</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="getFinalColumns()"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection.toggle(row);">
+            </mat-row>
+        </mat-table>
+        <mat-card class="flex-1" role="none" *ngIf="!dataSource.filter && dataSource.filteredData && dataSource.filteredData.length == 0">
+            <span class="mat-subtitle ws-mat-black40-text">Click on 'Add user' to add users to the admin team.</span>
+        </mat-card>
+        <mat-card class="flex-1" role="none" *ngIf="dataSource.filter && dataSource.filteredData.length == 0">
+            <span class="mat-subtitle ws-mat-black40-text">No search reuslts found.</span>
+        </mat-card>
+    </div>
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
+    </mat-paginator>
+</div>
+<mat-menu #cardMenu="matMenu">
+    <ng-template matMenuContent let-rowData="data">
+        <!-- <button (click)="buttonClick('showOnKarma',rowData)" mat-menu-item name="channel-analytics-button"
+            class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
+            <mat-icon>input</mat-icon> <span>Show on Karmayogi</span>
+        </button>
+        <button (click)="rowData && rowData.blocked ? buttonClick('unblock',rowData): buttonClick('block',rowData)"
+            mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
+            aria-label="Analytics">
+            <mat-icon>block</mat-icon><span>{{rowData && rowData.blocked ? 'Unblock user':'Block user' }}</span>
+        </button> -->
+        <button (click)="rowData && rowData.active ? buttonClick('deactive',rowData): buttonClick('active',rowData)"
+            mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
+            <mat-icon>edit_attributes</mat-icon>
+            <span>Edit</span>
+        </button>
+    </ng-template>
+</mat-menu>

@@ -8,6 +8,24 @@
       </div>
     </div>
 
+    <div class="margin-top-l margin-bottom-m info-card">
+      <div class="mat-body">
+        <p class="mat-subheading-1 margin-remove-bottom">MDO information</p>
+        <!-- <p class="mat-body-2 ws-mat-black60-text margin-bottom-l">Last updated at 07:30 PM 12th August 2021</p>s -->
+        <div class="margin-top-xl margin-bottom-s">
+          <button type="button" mat-button class="allocation-btn mat-accent-border margin-right-s" (click)="viewmdoinfo('leadership')">
+            Leadership details
+          </button>
+          <button type="button" mat-button class="allocation-btn mat-accent-border margin-right-s" (click)="viewmdoinfo('staff')">
+            Staff details
+          </button>
+          <button type="button" mat-button class="allocation-btn mat-accent-border margin-right-s" (click)="viewmdoinfo('budget')">
+            Budget allocation details
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- <ng-container [wsResolverWidget]="sliderData1"></ng-container> -->
     <mat-card-content>
       <div class="flex flex-1 flex-column margin-top-l">
@@ -34,20 +52,10 @@
   </mat-card>
   <div class="bootstrap-rain margin-top-m" *ngIf="currentDashboard[0]">
     <div class="rain-lib-container relative">
-        <lib-rain-dashboards
-        [showFilters]="false"
-        [showMessage]="false"
-        [messageType]="currentDashboard[0].messageType"
-        [message]="currentDashboard[0].message"
-        [mapLayoutFilePath]="mapPath"
-        (libDashboardId)="getDashboardId($event)"
-        (libDateFilterPreset)="getDateFilterPreset($event)"
-        [authToken]="token"
-        [getDashboardForKM]="getDashboardForKM"
-        [getDashboardForProfile]="getDashboardForProfile"
-        [getChartV2]="getChartV2"
-        [isFrontPage]="true"
-      ></lib-rain-dashboards>
+      <lib-rain-dashboards [showFilters]="false" [showMessage]="false" [messageType]="currentDashboard[0].messageType"
+        [message]="currentDashboard[0].message" [mapLayoutFilePath]="mapPath" (libDashboardId)="getDashboardId($event)"
+        (libDateFilterPreset)="getDateFilterPreset($event)" [authToken]="token" [getDashboardForKM]="getDashboardForKM"
+        [getDashboardForProfile]="getDashboardForProfile" [getChartV2]="getChartV2" [isFrontPage]="true"></lib-rain-dashboards>
     </div>
   </div>
 </div>

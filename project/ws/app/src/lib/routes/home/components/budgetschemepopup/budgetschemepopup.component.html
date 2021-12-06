@@ -1,0 +1,108 @@
+<div class="custom-popup" id="adduerpopup">
+    <mat-dialog-content>
+        <div class="pdf-upload">
+            <div class="mat-title margin-top-s margin-bottom-m" *ngIf="!formInputData.id">
+                Add scheme wise details
+            </div>
+            <div class="mat-title margin-top-s margin-bottom-m" *ngIf="formInputData.id">
+                Edit scheme wise details
+            </div>
+            <div class="example-container margin-top-m">
+                <form class="schemeform-form" [formGroup]="schemeform">
+                    <div class="display-block">
+                        <div class="width-44 display-inline-block formgroup margin-right-xl margin-bottom-s">
+                            <label for="budgetyear" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                i18n="Financial year label|Label which explains the user to enter Financial year"
+                                i18n-aria-label aria-label="Financial year label">
+                                Financial year
+                            </label>
+                            <mat-form-field appearance="outline" class="margin-top-xs" style="margin-top: -5px !important;
+                            font-size: 14px;">
+                                <!-- <mat-label>Select year</mat-label>
+                                <mat-select formControlName="budgetyear" #budgetyear>
+                                    <mat-option *ngFor="let year of yearsList" [value]="year">
+                                        {{year}}
+                                    </mat-option>
+                                </mat-select> -->
+                                <input id="budgetyear" matInput #budgetyear formControlName="budgetyear"
+                                    i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Budget year input"
+                                    class="form-input" autocomplete="off" />
+                                <mat-error [hidden]="false" i18n="Budget year Error|Explains name is required"
+                                    i18n-aria-label aria-label="Budget year Error|Explains name is required" *ngIf="schemeform?.controls['budgetyear']?.touched && schemeform?.controls['budgetyear'].errors?.required">
+                                    Field is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="width-44 display-inline-block formgroup margin-right-xl margin-bottom-s">
+                            <label for="schemename" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                i18n="Scheme name label|Label which explains the user to enter Scheme name"
+                                i18n-aria-label aria-label="Scheme name label">
+                                Scheme name
+                            </label>
+                            <mat-form-field appearance="outline" class="margin-top-xs">
+                                <input id="schemename" matInput #schemename formControlName="schemename"
+                                    i18n-placeholder placeholder="Add scheme name (min 10 characters)" i18n-aria-label
+                                    aria-label="Scheme name input" class="form-input" autocomplete="off" />
+                                <mat-error [hidden]="false" i18n="Scheme name Error|Explains name is required"
+                                    i18n-aria-label aria-label="Scheme name Error|Explains name is required " *ngIf="schemeform?.controls['schemename']?.touched && schemeform?.controls['schemename'].errors?.required">
+                                    Field is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="width-44 display-inline-block formgroup margin-right-xl margin-bottom-s">
+                            <label for="budgetallocated" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                i18n="Budget allocated label|Label which explains the user to enter Budget allocated"
+                                i18n-aria-label aria-label="Budget allocated label">
+                                Allocated training/capacity building budget
+                            </label>
+                            <mat-form-field appearance="outline" class="margin-top-xs">
+                                <input id="budgetallocated" matInput #budgetallocated formControlName="budgetallocated"
+                                    i18n-placeholder placeholder="0" i18n-aria-label aria-label="Budget allocated input"
+                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
+                                <mat-error [hidden]="false" i18n="Budget allocated Error|Explains name is required"
+                                    i18n-aria-label aria-label="Budget allocated Error|Explains name is required "
+                                    *ngIf="schemeform?.controls['budgetallocated']?.touched && schemeform?.controls['budgetallocated'].errors?.required">
+                                    Field is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="width-44 display-inline-block formgroup margin-right-xl margin-bottom-s">
+                            <label for="budgetutilized" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                i18n="Budget utilized label|Label which explains the user to enter Budget utilized"
+                                i18n-aria-label aria-label="Budget utilized label">
+                                Proposed utilization of training budget
+                            </label>
+                            <mat-form-field appearance="outline" class="margin-top-xs">
+                                <input id="budgetutilized" matInput #budgetutilized formControlName="budgetutilized"
+                                    i18n-placeholder placeholder="Add budget" i18n-aria-label aria-label="Budget utilized input"
+                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
+                                <mat-error [hidden]="false" i18n="Budget utilized Error|Explains name is required"
+                                    i18n-aria-label aria-label="Budget utilized Error|Explains name is required " *ngIf="schemeform?.controls['budgetutilized']?.touched && schemeform?.controls['budgetutilized'].errors?.required">
+                                    Field is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- <button mat-raised-button type="submit" (click)="onSubmit(staffdata)"
+                        class="text-white btn-success btn-responsive" [disabled]="staffdata?.invalid">
+                        <span class="text-white" i18n>Save</span>
+                    </button> -->
+                </form>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="schemeform-footer">
+            <div class="display-inline-block float-right">
+                <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display margin-right-s">
+                    <span class="ws-mat-default-text" i18n>Cancel</span>
+                </button>
+                <button mat-raised-button type="submit" [disabled]="schemeform?.invalid" class="next-btn ws-mat-primary-background flex-auto-display"
+                    (click)="addsheme(schemeform)">
+                    <span class="text-white" i18n *ngIf="!formInputData.id">Add</span>
+                    <span class="text-white" i18n *ngIf="formInputData.id">Update</span>
+                </button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</div>

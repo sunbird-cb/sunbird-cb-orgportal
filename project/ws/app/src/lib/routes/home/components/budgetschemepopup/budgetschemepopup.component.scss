@@ -1,0 +1,21 @@
+.schemeform-footer {
+    width: 100%;
+    border-top: 1px solid #eee;
+    padding-top: 20px
+}
+
+::ng-deep.schemeform-form .mat-form-field-infix {
+    width: 225px !important;
+}
+
+.mat-column-srnumber, .mat-column-Menu {
+    width: 8% !important;
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 8% !important;
+    word-break: break-word;
+}
+
+.width-44 {
+    width: 44% !important;
+}

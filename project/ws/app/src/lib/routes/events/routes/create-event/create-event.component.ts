@@ -86,15 +86,16 @@ export class CreateEventComponent implements OnInit {
   todayTime: any
   eventimageURL: any
   departmentID: any
+  orgtimeArr!: {
+    value: string
+  }[]
+  newtimearray: any = []
 
-  constructor(private snackBar: MatSnackBar,
-              private eventsSvc: EventsService,
-              private matDialog: MatDialog,
-              private router: Router,
-              private configSvc: ConfigurationsService,
-              private changeDetectorRefs: ChangeDetectorRef,
-              private activeRoute: ActivatedRoute,
-              private events: EventService,
+  constructor(private snackBar: MatSnackBar, private eventsSvc: EventsService, private matDialog: MatDialog,
+    // tslint:disable-next-line:align
+    private router: Router, private configSvc: ConfigurationsService, private changeDetectorRefs: ChangeDetectorRef,
+    // tslint:disable-next-line:align
+    private activeRoute: ActivatedRoute, private events: EventService
   ) {
 
     if (this.configSvc.userProfile) {
@@ -169,6 +170,8 @@ export class CreateEventComponent implements OnInit {
         enabled: true,
       }]
 
+    this.orgtimeArr = this.timeArr
+
     if (this.timeArr) {
       const hr = new Date().getHours()
       const min = new Date().getMinutes()
@@ -185,7 +188,9 @@ export class CreateEventComponent implements OnInit {
           newtimearray.push(time)
         }
       })
+      this.newtimearray = newtimearray
       this.timeArr = newtimearray
+      this.todayTime = this.timeArr[0].value
     }
   }
 
@@ -338,6 +343,26 @@ export class CreateEventComponent implements OnInit {
         this.openSnackbar(err.error.split(':')[1])
       }
     )
+  }
+
+  updateDate(event: any) {
+    const dd = event.value.getDate()
+    const mm = event.value.getMonth() + 1
+    const yr = event.value.getFullYear()
+    const selectedDate = `${dd}-${mm}-${yr}`
+
+    const dd1 = new Date().getDate()
+    const mm1 = new Date().getMonth() + 1
+    const yr1 = new Date().getFullYear()
+    const todaysDate = `${dd1}-${mm1}-${yr1}`
+
+    if (selectedDate === todaysDate) {
+      this.timeArr = this.newtimearray
+      this.todayTime = this.timeArr[0].value
+    } else {
+      this.timeArr = this.orgtimeArr
+      this.todayTime = this.timeArr[0].value
+    }
   }
 
   onSubmit() {

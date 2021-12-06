@@ -1,0 +1,299 @@
+<div class="flex flex-1 margin-right-m">
+    <div class="flex-1 flex-custom">
+        <mat-card-content class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
+            <span class="mat-title flex-4 mobile-margin appr-section-heading" role="link" tabindex="0">
+                Budget declaration details
+            </span>
+            <div class="margin-top-xl new-mobile">
+                <div class="flex flex-wrap mobile-break">
+                    <div class="w-full profile-cols-full bg-grey">
+                        <mat-tab-group mat-align-tabs="start" vertical>
+                            <mat-tab label="Declare budget">
+                                <div class="margin-top-xl new-mobile">
+                                    <div class="flex flex-wrap mobile-break custom-box marin-bottom-xl">
+                                        <div class="w-full profile-cols-full bg-grey">
+                                            <p class="mat-subheading-1 margin-bottom-l">Declare the budget</p>
+                                            <form class="example-container" [formGroup]="budgetdata">
+                                                <div>
+                                                    <div class="margin-bottom-m">
+                                                        <label for="budgetyear" class="custom-label display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                                            i18n="Budget year label|Label which explains the user to enter Budget year"
+                                                            i18n-aria-label aria-label="Budget year label">
+                                                            Budget for financial year
+                                                        </label>
+                                                        <mat-form-field appearance="outline" class="custom-select margin-top-xs">
+                                                            <mat-label>Select year</mat-label>
+                                                            <mat-select formControlName="budgetyear" #budgetyear
+                                                                [(value)]="selectedYear" (selectionChange)="changeBudgetYear($event)">
+                                                                <mat-option *ngFor="let year of yearsList" [value]="year">
+                                                                    {{year}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                            <mat-error [hidden]="false" i18n="Budget year Error|Explains name is required"
+                                                                i18n-aria-label aria-label="Budget year Error|Explains name is required "
+                                                                *ngIf="budgetdata?.controls['budgetyear']?.touched && budgetdata?.controls['budgetyear'].errors?.required">
+                                                                Field is mandatory
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="display-inline-block margin-right-xl width-44">
+                                                    <div class="margin-bottom-m">
+                                                        <label for="salarybudget" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                                            i18n="Salary budget allocated label|Label which explains the user to enter Salary budget allocated"
+                                                            i18n-aria-label aria-label="Salary budget allocated label">
+                                                            Allocate salary budget
+                                                        </label>
+                                                        <mat-form-field appearance="outline" class="margin-top-xs">
+                                                            <input type="text" id="salarybudget" matInput #salarybudget
+                                                                formControlName="salarybudget" i18n-placeholder
+                                                                placeholder="Add budget" i18n-aria-label aria-label="Salary budget allocated input"
+                                                                class="form-input" autocomplete="off" (ngModelChange)='onSalarayChange($event)'
+                                                                [disabled]=overallbudget (keypress)="keyPressNumbers($event)" />
+                                                            <mat-error [hidden]="false" i18n="Salary budget allocated Error|Explains name is required"
+                                                                i18n-aria-label aria-label="Salary budget allocated Error|Explains name is required "
+                                                                *ngIf="budgetdata?.controls['salarybudget']?.touched && budgetdata?.controls['salarybudget'].errors?.required">
+                                                                Field is mandatory
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="margin-bottom-m">
+                                                        <label for="trainingbudget" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                                            i18n="Training budget allocated label|Label which explains the user to enter Training budget allocated"
+                                                            i18n-aria-label aria-label="Training budget allocated">
+                                                            Allocate training/capacity building budget
+                                                        </label>
+                                                        <mat-form-field appearance="outline" class="margin-top-xs">
+                                                            <input id="trainingbudget" matInput #trainingbudget
+                                                                formControlName="trainingbudget" i18n-placeholder
+                                                                placeholder="Add budget" i18n-aria-label aria-label="Training budget allocated input"
+                                                                (ngModelChange)='onTrainingChange($event)' class="form-input"
+                                                                autocomplete="off" [disabled]=overallbudget (keypress)="keyPressNumbers($event)" />
+                                                            <mat-error [hidden]="false" i18n="Training budget allocated Error|Explains name is required"
+                                                                i18n-aria-label aria-label="Training budget allocated Error|Explains name is required "
+                                                                *ngIf="budgetdata?.controls['trainingbudget']?.touched && budgetdata?.controls['trainingbudget'].errors?.required">
+                                                                Field is mandatory
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="margin-bottom-m">
+                                                        <label for="budgetutilized" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                                            i18n="Training budget utilization label|Label which explains the user to enter Training budget utilization"
+                                                            i18n-aria-label aria-label="Training budget utilization label">
+                                                            Projected utilization of training budget
+                                                        </label>
+                                                        <mat-form-field appearance="outline" class="margin-top-xs">
+                                                            <input id="budgetutilized" matInput #budgetutilized
+                                                                formControlName="budgetutilized" i18n-placeholder
+                                                                placeholder="Add budget" i18n-aria-label aria-label="Training budget utilization input"
+                                                                (ngModelChange)='onUtilizedChange($event)' class="form-input"
+                                                                autocomplete="off" (keypress)="keyPressNumbers($event)" />
+                                                            <mat-error [hidden]="false" i18n="Training budget utilization Error|Explains name is required"
+                                                                i18n-aria-label aria-label="Training budget utilization Error|Explains name is required "
+                                                                *ngIf="budgetdata?.controls['budgetutilized']?.touched && budgetdata?.controls['budgetutilized'].errors?.required">
+                                                                Field is mandatory
+                                                            </mat-error>
+                                                            <mat-error [hidden]="false" i18n="Training budget utilization Error|Explains name is required"
+                                                                i18n-aria-label aria-label="Training budget utilization Error|Explains name is required "
+                                                                *ngIf="utilizedChangeError">
+                                                                Projected utilization should be less than allocated
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="display-inline-block float-right width-44">
+                                                    <div class="margin-bottom-m avg-box">
+                                                        <p class="mat-title">{{totalbudget}}</p>
+                                                        <p class="mat-subheading-2">Overall budget allocated for the FY</p>
+                                                    </div>
+                                                    <div class="margin-bottom-m avg-box">
+                                                        <p class="mat-title">{{totalbudgetpercent}}%</p>
+                                                        <p class="mat-subheading-2">Total % of training budget
+                                                            utilization in the FY</p>
+                                                    </div>
+                                                </div>
+                                                <button mat-raised-button type="submit" (click)="onSubmit(budgetdata)"
+                                                    class="display-block text-white btn-success btn-responsive"
+                                                    [disabled]="budgetdata?.invalid">
+                                                    <span class="text-white" i18n>Save</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- table -->
+                                <div class="example-container margin-top-m">
+                                    <div class="example-loading-shade"></div>
+                                    <p class="mat-subheading-1 margin-bottom-l margin-top-l">Enter scheme wise
+                                        allocation details</p>
+                                    <div class="example-table-container">
+                                        <div class="container-balanced">
+                                            <div class="flex flex-1 custom">
+                                                <div class="flex-3">
+                                                    <div class="search">
+                                                        <div class=rsearch>
+                                                            <mat-icon class="color-60 search-icon">search</mat-icon>
+                                                            <input class="sinput color-60 mat-body-2 margin-remove-top"
+                                                                type="Standard" label="" (input)="applyFilter($event.target.value)"
+                                                                placeholder="Search">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-1 right-align">
+                                                    <button type="button" mat-button class="create-btn mat-subheading-2"
+                                                        (click)="onaddScehme('')" *ngIf="selectedYear !== prevBudgetYear">
+                                                        Add scheme
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-table #table matSort [matSortActive]="scehemetableData!.sortColumn"
+                                            [matSortDirection]="scehemetableData!.sortState" [dataSource]="dataSource"
+                                            class="schemetable responsiveTable">
+                                            <ng-container matColumnDef="{{col.key}}" *ngFor="let col of scehemetableData!.columns">
+                                                <mat-header-cell *matHeaderCellDef mat-sort-header class=".h-400-r-14-l color-60">
+                                                    {{col.displayName}}
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let element">
+                                                    <span *ngIf="col.isList" class="h-400-r-14-l color-87 textclass">
+                                                        <div innerHTML="{{element[col.key]}}"></div>
+                                                    </span>
+                                                    <span *ngIf="!col.isList" class="h-400-r-14-l color-87 textclass">
+                                                        {{element[col.key]}} {{col.isList}}
+                                                    </span>
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Actions" *ngIf="scehemetableData!.actions && scehemetableData!.actions.length > 0">
+                                                <mat-header-cell *matHeaderCellDef class="clr-darkish-blue action-header">
+                                                    Actions
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let row" class="action-cell">
+                                                    <div *ngFor="let ac of scehemetableData!.actions">
+                                                        <div *ngIf="ac.optional">
+                                                            <!-- <ws-widget-app-button *ngIf="row[ac.optional_key] === ac.optional_Value" [type]="ac.type"
+                                                                [icon]="ac.icon" [disabled]="ac.disabled || false" [label]="ac.label"
+                                                                (click)="buttonClick(ac.name,row)"></ws-widget-app-button> -->
+                                                        </div>
+                                                        <div *ngIf="!ac.optional">
+                                                            <!-- <ws-widget-app-button [type]="ac.type" [icon]="ac.icon" [label]="ac.label"
+                                                                [disabled]="ac.disabled || false" (click)="buttonClick(ac.name,row)">
+                                                            </ws-widget-app-button> -->
+                                                        </div>
+                                                    </div>
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Menu">
+                                                <mat-header-cell *matHeaderCellDef class="clr-darkish-blue action-header">
+                                                    <!-- <mat-icon>view_comfy</mat-icon> -->
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let row" class="action-cell">
+                                                    <button type="button" mat-icon-button i18n-aria-label aria-label="action items"
+                                                        [matMenuTriggerFor]="cardMenu" [matMenuTriggerData]="{'data':row}"
+                                                        class="action-btn">
+                                                        <mat-icon>more_horiz</mat-icon>
+                                                    </button>
+                                                </mat-cell>
+                                            </ng-container>
+
+                                            <mat-header-row *matHeaderRowDef="getFinalColumns()"></mat-header-row>
+
+                                            <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection.toggle(row);">
+                                            </mat-row>
+                                        </mat-table>
+                                        <mat-card class="flex-1" role="none" *ngIf="!dataSource.filter && dataSource.filteredData.length == 0">
+                                            <span class="mat-subtitle ws-mat-black40-text">Click on 'Add scheme' to
+                                                start entering data</span>
+                                        </mat-card>
+                                        <mat-card class="flex-1" role="none" *ngIf="dataSource.filter && dataSource.filteredData.length == 0">
+                                            <span class="mat-subtitle ws-mat-black40-text">No search reuslts found.</span>
+                                        </mat-card>
+                                    </div>
+                                    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
+                                    </mat-paginator>
+                                </div>
+                                <mat-menu #cardMenu="matMenu">
+                                    <ng-template matMenuContent let-rowData="data">
+                                        <button (click)="updateData(rowData)" mat-menu-item name="channel-analytics-button"
+                                            class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
+                                            <span>Edit</span>
+                                        </button>
+                                        <!-- <button (click)="deleteBudgetDetails(rowData)" mat-menu-item name="channel-analytics-button"
+                                            class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
+                                            <span>Delete</span>
+                                        </button> -->
+                                    </ng-template>
+                                </mat-menu>
+                            </mat-tab>
+
+                            <!-- upload proofs -->
+                            <mat-tab label="Add/upload proofs">
+                                <div class="text-center margin-m">
+                                    <img alt="Feature comming soon" class="block mx-auto margin-top-xl margin-bottom-l"
+                                        src="/assets/instances/eagle/app_logos/allocation_empty.svg">
+                                    <span class="block mat-subheading-2 mt-3">Feature coming soon</span>
+                                </div>
+                                <!-- overallmdo -->
+                                <!-- <div class="width-100 margin-bottom-m margin-top-m proofs-box">
+                                    <div class="width-100">
+                                        <p class="mat-subheading-1 float-left padding-top-xs margin-bottom-l">Upload
+                                            overall MDO budget proofs</p>
+                                        <button type="button" mat-button class="allocation-btn mat-accent-border float-right"
+                                            (click)="browsefiles('overallmdo')" *ngIf="overallmdodata && overallmdodata.length > 0">Browse
+                                            for files</button>
+                                    </div>
+                                    <div class="width-100">
+                                        <ws-app-budgettable [type]="'overallmdo'" [tableData]="tableData" [data]="overallmdodata"
+                                            (onUploadFilesClick)="browsefiles('overallmdo')"></ws-app-budgettable>
+                                    </div>
+                                </div> -->
+                                <!-- mdosalary -->
+                                <!-- <div class="width-100 margin-bottom-m margin-top-m proofs-box">
+                                    <div class="width-100">
+                                        <p class="mat-subheading-1 float-left padding-top-xs margin-bottom-l">Upload
+                                            MDO salary budget proofs</p>
+                                        <button type="button" mat-button class="allocation-btn mat-accent-border float-right"
+                                            (click)="browsefiles('mdosalary')" *ngIf="mdosalarydata && mdosalarydata.length > 0">Browse
+                                            for files</button>
+                                    </div>
+                                    <div class="width-100">
+                                        <ws-app-budgettable [type]="'mdosalary'" [tableData]="tableData" [data]="mdosalarydata"
+                                            (onUploadFilesClick)="browsefiles('mdosalary')"></ws-app-budgettable>
+                                    </div>
+                                </div> -->
+                                <!-- mdotraining -->
+                                <!-- <div class="width-100 margin-bottom-m margin-top-m proofs-box">
+                                    <div class="width-100">
+                                        <p class="mat-subheading-1 float-left padding-top-xs margin-bottom-l">Upload
+                                            MDO training/capacity building budget proofs</p>
+                                        <button type="button" mat-button class="allocation-btn mat-accent-border float-right"
+                                            (click)="browsefiles('mdotraining')" *ngIf="mdotrainingdata && mdotrainingdata.length > 0">Browse
+                                            for files</button>
+                                    </div>
+                                    <div class="width-100">
+                                        <ws-app-budgettable [type]="'mdotraining'" [tableData]="tableData" [data]="mdotrainingdata"
+                                            (onUploadFilesClick)="browsefiles('mdotraining')"></ws-app-budgettable>
+                                    </div>
+                                </div> -->
+                                <!-- schemewise -->
+                                <!-- <div class="width-100 margin-bottom-m margin-top-m proofs-box">
+                                    <div class="width-100">
+                                        <p class="mat-subheading-1 float-left padding-top-xs margin-bottom-l">Upload
+                                            scheme-wise budget proofs (if available)</p>
+                                        <button type="button" mat-button class="allocation-btn mat-accent-border float-right"
+                                            (click)="browsefiles('schemewise')" *ngIf="schemewisedata && schemewisedata.length > 0">Browse
+                                            for files</button>
+                                    </div>
+                                    <div class="width-100">
+                                        <ws-app-budgettable [type]="'schemewise'" [tableData]="tableData" [data]="schemewisedata"
+                                            (onUploadFilesClick)="browsefiles('schemewise')"></ws-app-budgettable>
+                                    </div>
+                                </div> -->
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </div>
+</div>

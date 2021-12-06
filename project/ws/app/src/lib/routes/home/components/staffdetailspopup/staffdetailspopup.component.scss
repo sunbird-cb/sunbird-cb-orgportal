@@ -1,0 +1,12 @@
+.footer {
+    width: 100%;
+    border-top: 1px solid #eee;
+    padding-top: 20px
+}
+
+::ng-deep.staffform-form .mat-form-field-infix {
+    width: 250px !important;
+}
+.mat-raised-button[disabled] {
+    opacity: 0.6;
+}

@@ -266,3 +266,22 @@ $banner-min-height: 243px;
     }
   }
 }
+
+// info-card
+.info-card {
+  transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
+  display: block;
+  position: relative;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
+
+  .allocation-btn {
+    min-width: 112px;
+    width: auto;
+    border: 1px solid #0075B7;
+    border-radius: 4px;
+    color: #0075B7 !important;
+  }
+}
+
