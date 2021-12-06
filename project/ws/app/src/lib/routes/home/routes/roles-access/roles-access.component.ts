@@ -37,6 +37,7 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
   onRoleClick(role: any) {
     this.router.navigate([`/app/roles/${role.role}/users`])
     this.telemetrySvc.impression()
+
   }
 
   /* API call to get all roles*/

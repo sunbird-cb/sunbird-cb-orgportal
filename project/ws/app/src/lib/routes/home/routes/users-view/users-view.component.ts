@@ -90,9 +90,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     this.currentFilter = filter
     this.events.raiseInteractTelemetry(
       'click',
-      'card-cardContent',
+      'tab-content',
       {
-        id: this.configSvc.userProfile.userId,
+        id: this.content.identifier,
       }
     )
   }
@@ -191,9 +191,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
       'click',
-      'card-cardContent',
+      'create-btn',
       {
-        id: this.configSvc.userProfile.userId,
+        id: this.content.identifier,
       }
     )
   }

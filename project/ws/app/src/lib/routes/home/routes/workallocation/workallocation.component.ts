@@ -96,9 +96,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
 
     this.events.raiseInteractTelemetry(
       'click',
-      'card-cardContent',
+      'btn-print',
       {
-        id: this.configSvc.userProfile.userId,
+        id: this.selectedPDFid,
       }
     )
   }
@@ -147,7 +147,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       'click',
       'card-cardContent',
       {
-        id: this.configSvc.userProfile.userId,
+        id: element.id,
       }
     )
 
@@ -189,9 +189,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     }
     this.events.raiseInteractTelemetry(
       'click',
-      'card-cardContent',
+      'tab-content',
       {
-        id: this.configSvc.userProfile.userId,
+        id: this.content.identifier,
       }
     )
 
@@ -288,13 +288,6 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     } else {
       this.data.filter = ''
     }
-    this.events.raiseInteractTelemetry(
-      'click',
-      'card-cardContent',
-      {
-        id: this.configSvc.userProfile.userId,
-      }
-    )
   }
 
   onNewAllocationClick() {
@@ -309,9 +302,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     })
     this.events.raiseInteractTelemetry(
       'click',
-      'card-cardContent',
+      'btn-new',
       {
-        id: this.configSvc.userProfile.userId,
+        id: this.content.identifier,
       }
     )
   }

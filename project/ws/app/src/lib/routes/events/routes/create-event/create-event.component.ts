@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { ParticipantsComponent } from '../../components/participants/participants.component'
 import { SuccessComponent } from '../../components/success/success.component'
 import { Router, ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, TelemetryService } from '@sunbird-cb/utils'
 import * as moment from 'moment'
 /* tslint:disable */
 import _ from 'lodash'
@@ -95,7 +95,7 @@ export class CreateEventComponent implements OnInit {
     // tslint:disable-next-line:align
     private router: Router, private configSvc: ConfigurationsService, private changeDetectorRefs: ChangeDetectorRef,
     // tslint:disable-next-line:align
-    private activeRoute: ActivatedRoute, private events: EventService
+    private activeRoute: ActivatedRoute, private events: EventService, private telemetrySvc: TelemetryService,
   ) {
 
     if (this.configSvc.userProfile) {
@@ -200,12 +200,12 @@ export class CreateEventComponent implements OnInit {
     if (el != null) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
-    const objectid = this.activeRoute.parent && this.activeRoute.parent.snapshot.data.configService
+
     this.events.raiseInteractTelemetry(
       'click',
-      'card-cardContent',
+      'side-nav-tab',
       {
-        id: objectid.userProfile.userId,
+        id,
       }
     )
   }
@@ -220,6 +220,13 @@ export class CreateEventComponent implements OnInit {
         this.addPresenters(response)
       }
     })
+    this.events.raiseInteractTelemetry(
+      'click',
+      'side-nav-tab',
+      {
+        id: this.widgetData.identifier,
+      }
+    )
   }
 
   addPresenters(responseObj: any) {
@@ -249,6 +256,13 @@ export class CreateEventComponent implements OnInit {
   selectCover() {
     this.pictureObj = document.getElementById('coverPicture')
     this.pictureObj.click()
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-content',
+      {
+        id: this.widgetData.identifier,
+      }
+    )
   }
 
   onFileSelect(event: any) {
@@ -421,6 +435,13 @@ export class CreateEventComponent implements OnInit {
         const year = new Date(selectedStartDate).getFullYear()
         newendDate = `${year}-${month}-${date}`
       }
+      this.events.raiseInteractTelemetry(
+        'click',
+        'btn-content',
+        {
+          id: this.widgetData.identifier,
+        }
+      )
     }
 
     const createdforarray: any[] = []
@@ -511,7 +532,15 @@ export class CreateEventComponent implements OnInit {
   }
 
   goToList() {
-    this.router.navigate([`/app/events`])
+    this.router.navigate([`/app/events`]),
+      this.telemetrySvc.impression()
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-content',
+      {
+        id: this.widgetData.identifier,
+      }
+    )
   }
 
   showSuccess(res: any) {

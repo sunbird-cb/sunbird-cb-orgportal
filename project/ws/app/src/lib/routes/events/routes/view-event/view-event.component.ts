@@ -134,12 +134,11 @@ export class ViewEventComponent implements OnInit, AfterViewInit {
     if (el != null) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
-    const objectid = this.activeRoute.parent && this.activeRoute.parent.snapshot.data.configService
     this.events.raiseInteractTelemetry(
       'click',
-      'card-cardContent',
+      'side-nav-tab',
       {
-        id: objectid.userProfile.userId,
+        id,
       }
     )
   }

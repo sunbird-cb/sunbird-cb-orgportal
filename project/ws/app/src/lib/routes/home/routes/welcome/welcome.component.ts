@@ -8,6 +8,7 @@ import { ProfileV2Service } from '../../services/home.servive'
 import { dashboardEmptyData } from '../../../../../../../../../src/mdo-assets/data/data'
 /* tslint:enable */
 import { Router } from '@angular/router'
+import { EventService } from '@sunbird-cb/utils'
 @Component({
   selector: 'ws-app-welcome',
   templateUrl: './welcome.component.html',
@@ -22,7 +23,7 @@ import { Router } from '@angular/router'
 export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // sliderData1!: any
   getDashboardForKM =
-  '/apis/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi'
+    '/apis/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi'
   getDashboardForProfile =
     '/apis/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi'
   getChartV2 =
@@ -39,7 +40,8 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   currentDashboard: any = []
   dashboardEmpty = dashboardEmptyData
 
-  constructor(@Inject(DOCUMENT) private document: Document, private homeResolver: ProfileV2Service, private router: Router) {
+  constructor(@Inject(DOCUMENT) private document: Document, private homeResolver: ProfileV2Service, private router: Router,
+    private events: EventService) {
   }
   filterR(type: string) {
     this.resolutionFilter = type
@@ -145,6 +147,13 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
     } else if (tab === 'budget') {
       this.router.navigate(['/app/home/mdoinfo/budget'])
     }
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-content',
+      {
+        id: tab,
+      }
+    )
   }
 
   getDashboardId(value: string) {

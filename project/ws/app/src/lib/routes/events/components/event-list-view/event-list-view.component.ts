@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, Output, EventEmitter, ViewChild,
-  AfterViewInit, OnChanges, SimpleChanges,
+  AfterViewInit, OnChanges, SimpleChanges, Inject,
 } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
@@ -9,9 +9,14 @@ import { MatSort } from '@angular/material/sort'
 import * as _ from 'lodash'
 import { ITableData, IColums, IAction } from '../../interfaces/interfaces'
 import { ActivatedRoute, Router } from '@angular/router'
-import { MatDialog } from '@angular/material/dialog'
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { EventThumbnailComponent } from '../event-thumbnail/event-thumbnail.component'
 import { EventService, TelemetryService } from '@sunbird-cb/utils'
+import { NsContent } from '@sunbird-cb/collection'
+
+export interface IContentShareData {
+  content: NsContent.IContent
+}
 
 @Component({
   selector: 'ws-event-list-view',
@@ -53,6 +58,7 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
     private events: EventService,
     private telemetrySvc: TelemetryService,
     private route: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public content: IContentShareData,
   ) {
     this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     this.dataSource = new MatTableDataSource<any>()
@@ -85,13 +91,6 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
     } else {
       this.dataSource.filter = ''
     }
-    this.events.raiseInteractTelemetry(
-      'click',
-      'card-cardContent',
-      {
-        id: this.configSvc.userProfile.userId,
-      }
-    )
   }
 
   buttonClick(action: string, row: any) {
@@ -159,9 +158,9 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
     this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
       'click',
-      'card-cardContent',
+      'btn-content',
       {
-        id: this.configSvc.userProfile.userId,
+        id: this.content,
       }
     )
   }

@@ -84,9 +84,9 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
       'click',
-      'card-cardContent',
+      'btn-content',
       {
-        id: this.configSvc.userProfile.userId,
+        id: approval.userWorkflow.userInfo.wid,
       }
     )
 
