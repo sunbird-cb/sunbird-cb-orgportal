@@ -9,6 +9,8 @@ import _ from 'lodash'
 import { environment } from 'src/environments/environment'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
 import { MatSnackBar } from '@angular/material'
+import { EventService, TelemetryService } from '@sunbird-cb/utils'
+import { NsContent } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-users-view',
@@ -37,6 +39,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   configSvc: any
   activeUsersData!: any[]
   inactiveUsersData!: any[]
+  content: NsContent.IContent = {} as NsContent.IContent
 
   tabledata: ITableData = {
     actions: [],
@@ -56,6 +59,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
+    private events: EventService,
+    private telemetrySvc: TelemetryService,
+    // private configSvc: ConfigurationsService,
     // private discussService: DiscussService,
     // private configSvc: ConfigurationsService,
     // private networkV2Service: NetworkV2Service,
@@ -82,6 +88,13 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
   filter(filter: string) {
     this.currentFilter = filter
+    this.events.raiseInteractTelemetry(
+      'click',
+      'tab-content',
+      {
+        id: this.content.identifier,
+      }
+    )
   }
 
   get dataForTable() {
@@ -175,10 +188,19 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
   onCreateClick() {
     this.router.navigate([`/app/users/create-user`])
+    this.telemetrySvc.impression()
+    this.events.raiseInteractTelemetry(
+      'click',
+      'create-btn',
+      {
+        id: this.content.identifier,
+      }
+    )
   }
 
   onRoleClick(user: any) {
     this.router.navigate([`/app/users/${user.userId}/details`])
+    this.telemetrySvc.impression()
   }
   menuActions($event: { action: string, row: any }) {
     // const user = { userId: _.get($event.row, 'userId') }

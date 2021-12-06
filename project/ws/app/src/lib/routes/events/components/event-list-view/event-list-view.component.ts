@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, Output, EventEmitter, ViewChild,
-  AfterViewInit, OnChanges, SimpleChanges,
+  AfterViewInit, OnChanges, SimpleChanges, Inject,
 } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
@@ -8,9 +8,15 @@ import { MatPaginator } from '@angular/material'
 import { MatSort } from '@angular/material/sort'
 import * as _ from 'lodash'
 import { ITableData, IColums, IAction } from '../../interfaces/interfaces'
-import { Router } from '@angular/router'
-import { MatDialog } from '@angular/material/dialog'
+import { ActivatedRoute, Router } from '@angular/router'
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { EventThumbnailComponent } from '../event-thumbnail/event-thumbnail.component'
+import { EventService, TelemetryService } from '@sunbird-cb/utils'
+import { NsContent } from '@sunbird-cb/collection'
+
+export interface IContentShareData {
+  content: NsContent.IContent
+}
 
 @Component({
   selector: 'ws-event-list-view',
@@ -44,11 +50,17 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
   @ViewChild(MatSort, { static: true }) sort?: MatSort
   selection = new SelectionModel<any>(true, [])
   dialogRef: any
+  configSvc: any
 
   constructor(
     private router: Router,
     private matDialog: MatDialog,
-    ) {
+    private events: EventService,
+    private telemetrySvc: TelemetryService,
+    private route: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public content: IContentShareData,
+  ) {
+    this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     this.dataSource = new MatTableDataSource<any>()
     this.actionsClick = new EventEmitter()
     this.clicked = new EventEmitter()
@@ -143,6 +155,14 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
 
   onCreateClick() {
     this.router.navigate([`/app/events/create-event`])
+    this.telemetrySvc.impression()
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-content',
+      {
+        id: this.content,
+      }
+    )
   }
 
   showImageDialog(img: any) {
