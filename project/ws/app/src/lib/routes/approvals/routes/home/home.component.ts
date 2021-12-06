@@ -155,7 +155,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       'click',
       'card-cardContent',
       {
-        id: id,
+        id,
       }
     )
   }
