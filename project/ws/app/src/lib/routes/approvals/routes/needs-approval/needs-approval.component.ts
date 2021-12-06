@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import { NSProfileDataV2 } from '../../models/profile-v2.model'
 // tslint:disable
 import _ from 'lodash'
+import { EventService } from '@sunbird-cb/utils'
 // tslint:enable
 @Component({
   selector: 'ws-app-needs-approval',
@@ -31,6 +32,7 @@ export class NeedsApprovalComponent implements OnInit {
     private needApprService: NeedApprovalsService,
     private activeRoute: ActivatedRoute,
     private router: Router,
+    private events: EventService,
     public dialog: MatDialog, private matSnackBar: MatSnackBar) {
     this.activeRoute.data.subscribe((data: any) => {
       this.profileData = data.pageData.data.profileData
@@ -103,6 +105,13 @@ export class NeedsApprovalComponent implements OnInit {
       serviceName: 'profile',
       updateFieldValues: JSON.parse(field.wf.updateFieldValues),
     }
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-content',
+      {
+        id: field.wf.applicationId,
+      }
+    )
   }
 
   onApproveOrRejectClick(req: any) {

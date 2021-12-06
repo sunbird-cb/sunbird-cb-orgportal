@@ -1,6 +1,7 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core'
 import { MatPaginator, MatDialog, MatDialogConfig } from '@angular/material'
 import { Router, ActivatedRoute } from '@angular/router'
+import { EventService } from '@sunbird-cb/utils'
 /* tslint:disable */
 import _ from 'lodash'
 import { PublishPopupComponent } from '../../components/publish-popup/publish-popup.component'
@@ -34,7 +35,7 @@ export class DraftAllocationsComponent implements OnInit {
   workorderID: any
   workorderData: any
   p: number = 1
-  constructor(private activated: ActivatedRoute, private router: Router, private uploadService: UploadFileService,
+  constructor(private activated: ActivatedRoute, private router: Router, private uploadService: UploadFileService, private events: EventService,
     public dialog: MatDialog, private allocateSrvc: AllocationService) {
     this.activated.queryParamMap.subscribe((queryParams: any) => {
       if (queryParams.has('status')) {
@@ -60,6 +61,14 @@ export class DraftAllocationsComponent implements OnInit {
       var fileURL = URL.createObjectURL(file)
       window.open(fileURL)
     })
+
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-new',
+      {
+        id: this.workorderID,
+      }
+    )
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
@@ -93,6 +102,13 @@ export class DraftAllocationsComponent implements OnInit {
 
   onNewAllocationClick() {
     this.router.navigate([`/app/workallocation/create`, this.workorderID])
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-new',
+      {
+        id: this.workorderID,
+      }
+    )
   }
 
   publishWorkOrder() {
@@ -107,6 +123,13 @@ export class DraftAllocationsComponent implements OnInit {
     }
 
     this.dialog.open(PublishPopupComponent, dialogConfig)
+    this.events.raiseInteractTelemetry(
+      'click',
+      'btn-publish',
+      {
+        id: this.workorderID,
+      }
+    )
   }
 
   get filteredData() {
@@ -129,5 +152,12 @@ export class DraftAllocationsComponent implements OnInit {
   }
   edit(id: string) {
     this.router.navigate(['/app/workallocation/update/', this.workorderID, id])
+    this.events.raiseInteractTelemetry(
+      'click',
+      'card-content',
+      {
+        id: this.workorderID,
+      }
+    )
   }
 }

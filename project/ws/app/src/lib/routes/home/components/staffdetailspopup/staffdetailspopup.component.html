@@ -11,7 +11,8 @@
                 <form class="staffform-form" [formGroup]="staffform">
                     <div class="display-block">
                         <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
-                            <label for="designation" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                            <label for="designation"
+                                class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                 i18n="Total positions label|Label which explains the user to enter total positions"
                                 i18n-aria-label aria-label="Total positions label">
                                 Position
@@ -21,21 +22,25 @@
                                     #designation formControlName="designation" i18n-placeholder placeholder="0"
                                     i18n-aria-label aria-label="designation input" class="form-input" autocomplete="off"
                                     [disabled]="selectedDesignation" style="opacity: 0.9" *ngIf="selectedDesignation" />
-                             <mat-select #designation formControlName="designation" i18n-placeholder placeholder="Select"
-                                    *ngIf="!selectedDesignation">
+                                <mat-select #designation formControlName="designation" i18n-placeholder
+                                    placeholder="Select" *ngIf="!selectedDesignation">
+
                                     <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
                                         {{designation.name}}
                                     </mat-option>
                                     <mat-option [value]="'Other'">Other</mat-option>
                                 </mat-select>
                                 <mat-error [hidden]="false" i18n="Position Error|Explains name is required"
-                                    i18n-aria-label aria-label="Position Error|Explains name is required " *ngIf="staffform?.controls['designation'].errors?.required">
-                                    Field is mandatory
+
+                                    i18n-aria-label aria-label="Position Error|Explains name is required "
+                                    *ngIf="staffform?.controls['designation'].errors?.required">
+                                     Field is mandatory
                                 </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
-                            <label for="posfilled" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                            <label for="posfilled"
+                                class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                 i18n="Total positions filled label|Label which explains the user to enter total positions"
                                 i18n-aria-label aria-label="Total positions label">
                                 Total positions filled currently
@@ -44,15 +49,17 @@
                                 <input id="posfilled" matInput #posfilled formControlName="posfilled" i18n-placeholder
                                     placeholder="Add number" i18n-aria-label aria-label="Total positions filled input"
                                     class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
-                                <mat-error [hidden]="false" i18n="Total positions filled Error|Explains name is required"
-                                    i18n-aria-label aria-label="Total positions filled Error|Explains name is required "
+                                <mat-error [hidden]="false"
+                                    i18n="Total positions filled Error|Explains name is required" i18n-aria-label
+                                    aria-label="Total positions filled Error|Explains name is required "
                                     *ngIf="staffform?.controls['posfilled']?.touched && staffform?.controls['posfilled'].errors?.required">
                                     Field is mandatory
                                 </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="display-inline-block formgroup margin-right-xl margin-bottom-s">
-                            <label for="posvacant" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                            <label for="posvacant"
+                                class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                 i18n="Total positions vacant label|Label which explains the user to enter total positions"
                                 i18n-aria-label aria-label="Total positions label">
                                 Total positions vacant currently
@@ -61,8 +68,9 @@
                                 <input id="posvacant" matInput #posvacant formControlName="posvacant" i18n-placeholder
                                     placeholder="Add number" i18n-aria-label aria-label="Total positions vacant input"
                                     class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
-                                <mat-error [hidden]="false" i18n="Total positions vacant Error|Explains name is required"
-                                    i18n-aria-label aria-label="Total positions vacant Error|Explains name is required "
+                                <mat-error [hidden]="false"
+                                    i18n="Total positions vacant Error|Explains name is required" i18n-aria-label
+                                    aria-label="Total positions vacant Error|Explains name is required "
                                     *ngIf="staffform?.controls['posvacant']?.touched && staffform?.controls['posvacant'].errors?.required">
                                     Field is mandatory
                                 </mat-error>
@@ -80,11 +88,12 @@
     <mat-dialog-actions>
         <div class="footer">
             <div class="display-inline-block float-right">
-                <button mat-raised-button type="button" [mat-dialog-close]="true" class="flex-auto-display margin-right-s">
+                <button mat-raised-button type="button" [mat-dialog-close]="true"
+                    class="flex-auto-display margin-right-s">
                     <span class="ws-mat-default-text" i18n>Cancel</span>
                 </button>
-                <button mat-raised-button type="submit" [disabled]="staffform?.invalid" class="next-btn ws-mat-primary-background flex-auto-display"
-                    (click)="addstaffdetails(staffform)">
+                <button mat-raised-button type="submit" [disabled]="staffform?.invalid"
+                    class="next-btn ws-mat-primary-background flex-auto-display" (click)="addstaffdetails(staffform)">
                     <span class="text-white" i18n *ngIf="!formInputData.id">Add</span>
                     <span class="text-white" i18n *ngIf="formInputData.id">Update</span>
                 </button>

@@ -4,12 +4,14 @@
 
 export const environment: IEnvironment = {
   production: false,
+  name: (window as { [key: string]: any })['env']['name'] || '',
   sitePath: (window as { [key: string]: any })['env']['sitePath'] || '',
   karmYogiPath: (window as { [key: string]: any })['env']['karmYogiPath'] || '',
   cbpPath: (window as { [key: string]: any })['env']['cbpPath'] || '',
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
 }
 interface IEnvironment {
+  name: null | string
   production: boolean
   sitePath: null | string
   karmYogiPath: string
