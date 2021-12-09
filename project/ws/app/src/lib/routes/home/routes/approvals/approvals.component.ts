@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material'
 /* tslint:disable */
 import _ from 'lodash'
 import { EventService, TelemetryService } from '@sunbird-cb/utils'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 /* tslint:enable */
 @Component({
   selector: 'ws-app-approvals',
@@ -75,6 +76,11 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
           break
       }
     }
+    this.events.raiseInteractTelemetry(
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
+      {}
+    )
   }
 
   onApprovalClick(approval: any) {
@@ -83,10 +89,11 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     }
     this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-content',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
       {
         id: approval.userWorkflow.userInfo.wid,
+        type: TelemetryEvents.EnumIdtype.WORK_ORDER,
       }
     )
 

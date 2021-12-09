@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild }
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import { EventService } from '@sunbird-cb/utils'
 import moment from 'moment'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 
 @Component({
   selector: 'ws-app-view-event',
@@ -135,10 +136,11 @@ export class ViewEventComponent implements OnInit, AfterViewInit {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
     this.events.raiseInteractTelemetry(
-      'click',
-      'side-nav-tab',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
       {
-        id,
+        id: this.currentTab,
+        type: TelemetryEvents.EnumIdtype.MENU,
       }
     )
   }
