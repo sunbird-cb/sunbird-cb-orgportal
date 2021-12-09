@@ -12,6 +12,7 @@ import { ConfigurationsService, EventService, TelemetryService } from '@sunbird-
 import * as moment from 'moment'
 /* tslint:disable */
 import _ from 'lodash'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 /* tslint:enable */
 @Component({
   selector: 'ws-app-create-event',
@@ -201,12 +202,12 @@ export class CreateEventComponent implements OnInit {
     if (el != null) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
-
     this.events.raiseInteractTelemetry(
-      'click',
-      'side-nav-tab',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
       {
-        id,
+        id: this.currentTab,
+        type: TelemetryEvents.EnumIdtype.MENU,
       }
     )
   }
@@ -222,11 +223,9 @@ export class CreateEventComponent implements OnInit {
       }
     })
     this.events.raiseInteractTelemetry(
-      'click',
-      'side-nav-tab',
-      {
-        id: this.widgetData.identifier,
-      }
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      {}
     )
   }
 
@@ -258,11 +257,9 @@ export class CreateEventComponent implements OnInit {
     this.pictureObj = document.getElementById('coverPicture')
     this.pictureObj.click()
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-content',
-      {
-        id: this.widgetData.identifier,
-      }
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      {}
     )
   }
 
@@ -437,11 +434,9 @@ export class CreateEventComponent implements OnInit {
         newendDate = `${year}-${month}-${date}`
       }
       this.events.raiseInteractTelemetry(
-        'click',
-        'btn-content',
-        {
-          id: this.widgetData.identifier,
-        }
+        TelemetryEvents.EnumInteractTypes.CLICK,
+        TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+        {}
       )
     }
 
@@ -536,11 +531,9 @@ export class CreateEventComponent implements OnInit {
     this.router.navigate([`/app/events`]),
       this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-content',
-      {
-        id: this.widgetData.identifier,
-      }
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      {}
     )
   }
 

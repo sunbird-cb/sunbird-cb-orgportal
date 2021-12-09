@@ -11,6 +11,7 @@ import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/in
 import { MatSnackBar } from '@angular/material'
 import { EventService, TelemetryService } from '@sunbird-cb/utils'
 import { NsContent } from '@sunbird-cb/collection'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 
 @Component({
   selector: 'ws-app-users-view',
@@ -89,11 +90,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   filter(filter: string) {
     this.currentFilter = filter
     this.events.raiseInteractTelemetry(
-      'click',
-      'tab-content',
-      {
-        id: this.content.identifier,
-      }
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
+      {}
     )
   }
 
@@ -190,17 +189,23 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     this.router.navigate([`/app/users/create-user`])
     this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
-      'click',
-      'create-btn',
-      {
-        id: this.content.identifier,
-      }
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.CREATE_BTN,
+      {}
     )
   }
 
   onRoleClick(user: any) {
     this.router.navigate([`/app/users/${user.userId}/details`])
     this.telemetrySvc.impression()
+    this.events.raiseInteractTelemetry(
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
+      {
+        id: user.userId,
+        type: TelemetryEvents.EnumIdtype.USER,
+      }
+    )
   }
   menuActions($event: { action: string, row: any }) {
     // const user = { userId: _.get($event.row, 'userId') }

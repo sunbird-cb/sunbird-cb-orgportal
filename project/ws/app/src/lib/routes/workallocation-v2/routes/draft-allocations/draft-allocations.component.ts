@@ -8,6 +8,7 @@ import { PublishPopupComponent } from '../../components/publish-popup/publish-po
 import { AllocationService } from '../../services/allocation.service'
 // import FileSaver from 'file-saver'
 import { UploadFileService } from '../../services/uploadfile.service'
+import { TelemetryEvents } from "../../../../head/_services/telemetry.event.model"
 @Component({
   selector: 'ws-app-draft-allocations',
   templateUrl: './draft-allocations.component.html',
@@ -63,10 +64,11 @@ export class DraftAllocationsComponent implements OnInit {
     })
 
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-new',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.PRINT_BTN,
       {
         id: this.workorderID,
+        type: TelemetryEvents.EnumIdtype.WORK_ORDER
       }
     )
   }
@@ -103,10 +105,11 @@ export class DraftAllocationsComponent implements OnInit {
   onNewAllocationClick() {
     this.router.navigate([`/app/workallocation/create`, this.workorderID])
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-new',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.NEW_BTN,
       {
         id: this.workorderID,
+        type: TelemetryEvents.EnumIdtype.WORK_ORDER
       }
     )
   }
@@ -124,10 +127,11 @@ export class DraftAllocationsComponent implements OnInit {
 
     this.dialog.open(PublishPopupComponent, dialogConfig)
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-publish',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
       {
         id: this.workorderID,
+        type: TelemetryEvents.EnumIdtype.WORK_ORDER
       }
     )
   }
@@ -153,10 +157,11 @@ export class DraftAllocationsComponent implements OnInit {
   edit(id: string) {
     this.router.navigate(['/app/workallocation/update/', this.workorderID, id])
     this.events.raiseInteractTelemetry(
-      'click',
-      'card-content',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
       {
         id: this.workorderID,
+        type: TelemetryEvents.EnumIdtype.WORK_ORDER
       }
     )
   }

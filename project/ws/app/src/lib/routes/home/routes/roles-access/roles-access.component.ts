@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
-import { TelemetryService } from '@sunbird-cb/utils'
+import { EventService, TelemetryService } from '@sunbird-cb/utils'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 @Component({
   selector: 'ws-app-roles-access',
   templateUrl: './roles-access.component.html',
@@ -12,7 +13,10 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
   tabledata: any = []
   data: any = []
 
-  constructor(private router: Router, private activeRouter: ActivatedRoute, private telemetrySvc: TelemetryService) { }
+  constructor(private router: Router,
+              private activeRouter: ActivatedRoute,
+              private telemetrySvc: TelemetryService,
+              private events: EventService) { }
 
   ngOnInit() {
     this.tabledata = {
@@ -37,6 +41,14 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
   onRoleClick(role: any) {
     this.router.navigate([`/app/roles/${role.role}/users`])
     this.telemetrySvc.impression()
+    this.events.raiseInteractTelemetry(
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
+      {
+        id: role.role,
+        type: TelemetryEvents.EnumIdtype.ROLES,
+      }
+    )
 
   }
 

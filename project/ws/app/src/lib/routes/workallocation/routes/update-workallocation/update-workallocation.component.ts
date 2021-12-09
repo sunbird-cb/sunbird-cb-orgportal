@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material'
 import { AllocationService } from '../../services/allocation.service'
 import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 
 @Component({
   selector: 'ws-app-update-workallocation',
@@ -190,12 +191,12 @@ export class UpdateWorkallocationComponent implements OnInit {
     if (el != null) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
-    const objectid = this.activeRoute.parent && this.activeRoute.parent.snapshot.data.configService
     this.events.raiseInteractTelemetry(
-      'click',
-      'card-cardContent',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
       {
-        id: objectid.userProfile.userId,
+        id: this.currentTab,
+        type: TelemetryEvents.EnumIdtype.MENU,
       }
     )
   }
