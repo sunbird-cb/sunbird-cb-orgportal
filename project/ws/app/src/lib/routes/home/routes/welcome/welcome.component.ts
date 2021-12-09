@@ -9,6 +9,7 @@ import { dashboardEmptyData } from '../../../../../../../../../src/mdo-assets/da
 /* tslint:enable */
 import { Router } from '@angular/router'
 import { EventService } from '@sunbird-cb/utils'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 @Component({
   selector: 'ws-app-welcome',
   templateUrl: './welcome.component.html',
@@ -148,10 +149,11 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.router.navigate(['/app/home/mdoinfo/budget'])
     }
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-content',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
       {
         id: tab,
+        type: TelemetryEvents.EnumIdtype.MENU,
       }
     )
   }

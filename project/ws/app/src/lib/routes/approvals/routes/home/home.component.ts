@@ -6,6 +6,7 @@ import moment from 'moment'
 // tslint:disable
 import _ from 'lodash'
 import { EventService } from '@sunbird-cb/utils'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 // tslint:enable
 @Component({
   selector: 'ws-app-home',
@@ -152,10 +153,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
     this.events.raiseInteractTelemetry(
-      'click',
-      'card-cardContent',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
       {
-        id,
+        id: this.currentTab,
+        type: TelemetryEvents.EnumIdtype.MENU,
+
       }
     )
   }
