@@ -6,6 +6,7 @@ import { NSProfileDataV2 } from '../../models/profile-v2.model'
 // tslint:disable
 import _ from 'lodash'
 import { EventService } from '@sunbird-cb/utils'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 // tslint:enable
 @Component({
   selector: 'ws-app-needs-approval',
@@ -106,10 +107,12 @@ export class NeedsApprovalComponent implements OnInit {
       updateFieldValues: JSON.parse(field.wf.updateFieldValues),
     }
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-content',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
       {
         id: field.wf.applicationId,
+        type: TelemetryEvents.EnumIdtype.APPLICATION,
+
       }
     )
   }

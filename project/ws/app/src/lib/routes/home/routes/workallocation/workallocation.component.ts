@@ -9,6 +9,7 @@ import { WorkallocationService } from '../../services/workallocation.service'
 import { WorkAllocationPopUpComponent } from '../../../../head/work-allocation-table/work-order-popup/pop-up.component'
 import { EventService } from '@sunbird-cb/utils'
 import { NsContent } from '@sunbird-cb/collection'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 
 @Component({
   selector: 'ws-app-workallocation',
@@ -95,10 +96,11 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     })
 
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-print',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.PRINT_BTN,
       {
         id: this.selectedPDFid,
+        type: TelemetryEvents.EnumIdtype.PDF
       }
     )
   }
@@ -144,10 +146,11 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     }
 
     this.events.raiseInteractTelemetry(
-      'click',
-      'card-cardContent',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
       {
         id: element.id,
+        type: TelemetryEvents.EnumIdtype.WORK_ORDER
       }
     )
 
@@ -188,11 +191,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       }
     }
     this.events.raiseInteractTelemetry(
-      'click',
-      'tab-content',
-      {
-        id: this.content.identifier,
-      }
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
+      {}
     )
 
   }
@@ -301,11 +302,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       this.getWAT(this.currentFilter)
     })
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-new',
-      {
-        id: this.content.identifier,
-      }
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.NEW_BTN,
+      {}
     )
   }
 

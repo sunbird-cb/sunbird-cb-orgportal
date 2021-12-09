@@ -8,6 +8,7 @@ import { EventService } from '@sunbird-cb/utils'
 import _ from 'lodash'
 import { delay } from 'rxjs/operators'
 import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 import { NSWatActivity } from '../../models/activity-wot.model'
 import { NSWatCompetency } from '../../models/competency-wat.model'
 // tslint:enable
@@ -249,10 +250,11 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     this.selectedTab = filterType
     $element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
     this.events.raiseInteractTelemetry(
-      'click',
-      'tab-content',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
       {
         id: this.workOrderId,
+        type: TelemetryEvents.EnumIdtype.WORK_ORDER,
       }
     )
   }
@@ -319,10 +321,11 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       this.openSnackbar('Error in updating Work order, please try again!')
     }
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-content',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
       {
         id: this.workOrderId,
+        type: TelemetryEvents.EnumIdtype.WORK_ORDER,
       }
     )
   }
@@ -356,10 +359,11 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     }
 
     this.events.raiseInteractTelemetry(
-      'click',
-      'btn-content',
+      TelemetryEvents.EnumInteractTypes.CLICK,
+      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
       {
         id: this.workOrderId,
+        type: TelemetryEvents.EnumIdtype.WORK_ORDER,
       }
     )
   }
