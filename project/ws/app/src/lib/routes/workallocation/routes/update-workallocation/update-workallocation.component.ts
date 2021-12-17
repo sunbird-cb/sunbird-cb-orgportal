@@ -192,12 +192,12 @@ export class UpdateWorkallocationComponent implements OnInit {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
       {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
         id: this.currentTab,
-        type: TelemetryEvents.EnumIdtype.MENU,
-      }
+      },
+      {}
     )
   }
 

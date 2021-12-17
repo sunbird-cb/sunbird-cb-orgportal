@@ -149,12 +149,12 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.router.navigate(['/app/home/mdoinfo/budget'])
     }
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
       {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
         id: tab,
-        type: TelemetryEvents.EnumIdtype.MENU,
-      }
+      },
+      {}
     )
   }
 
