@@ -158,8 +158,10 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
     this.router.navigate([`/app/events/create-event`])
     this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      },
       {}
     )
   }

@@ -250,8 +250,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     this.selectedTab = filterType
     $element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
+      },
       {
         id: this.workOrderId,
         type: TelemetryEvents.EnumIdtype.WORK_ORDER,
@@ -321,8 +323,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       this.openSnackbar('Error in updating Work order, please try again!')
     }
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      },
       {
         id: this.workOrderId,
         type: TelemetryEvents.EnumIdtype.WORK_ORDER,
@@ -359,8 +363,10 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     }
 
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      },
       {
         id: this.workOrderId,
         type: TelemetryEvents.EnumIdtype.WORK_ORDER,
@@ -566,7 +572,16 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     }))
     return unmapedActivitiesReq
   }
-
+  public tabTelemetry(label: string, index: number) {
+    const data: TelemetryEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.events.handleTabTelemetry(
+      TelemetryEvents.EnumInteractSubTypes.WORK_ALLOCATION_TAB,
+      data,
+    )
+  }
   getUnmappedCompetency() {
     const unmapedComps = _.get(_.first(this.dataStructure.compGroups), 'competincies')
     const unmapedCompsReq = _.compact((unmapedComps || []).map((uc: any) => {

@@ -42,12 +42,12 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate([`/app/roles/${role.role}/users`])
     this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
       {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
         id: role.role,
-        type: TelemetryEvents.EnumIdtype.ROLES,
-      }
+      },
+      {}
     )
 
   }

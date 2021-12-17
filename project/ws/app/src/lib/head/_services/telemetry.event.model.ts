@@ -10,6 +10,10 @@ export namespace TelemetryEvents {
     CARD_CONTENT = 'card-content',
     NEW_BTN = 'new-btn',
     PRINT_BTN = 'print-btn',
+    WORK_ALLOCATION_TAB = 'work-allocation-tab',
+    USER_TAB = 'user-tab',
+    EVENTS_TAB = 'events-tab',
+    APPROVAL_TAB = 'approval-tab',
 
   }
   export enum EnumIdtype {
@@ -19,5 +23,9 @@ export namespace TelemetryEvents {
     PDF = 'pdf',
     WORK_ORDER = 'work-order',
     APPLICATION = 'application',
+  }
+  export interface ITelemetryTabData {
+    label: string,
+    index: number,
   }
 }

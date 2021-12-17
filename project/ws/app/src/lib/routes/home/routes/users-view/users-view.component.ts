@@ -89,10 +89,22 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
   filter(filter: string) {
     this.currentFilter = filter
-    this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
-      {}
+    // this.events.raiseInteractTelemetry(
+    //   {
+    //     type: TelemetryEvents.EnumInteractTypes.CLICK,
+    //     subType: TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
+    //   }, {}
+    // )
+  }
+
+  public tabTelemetry(label: string, index: number) {
+    const data: TelemetryEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.events.handleTabTelemetry(
+      TelemetryEvents.EnumInteractSubTypes.USER_TAB,
+      data,
     )
   }
 
@@ -189,8 +201,10 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     this.router.navigate([`/app/users/create-user`])
     this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.CREATE_BTN,
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.CREATE_BTN,
+      },
       {}
     )
   }
@@ -199,8 +213,10 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     this.router.navigate([`/app/users/${user.userId}/details`])
     this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
+      },
       {
         id: user.userId,
         type: TelemetryEvents.EnumIdtype.USER,

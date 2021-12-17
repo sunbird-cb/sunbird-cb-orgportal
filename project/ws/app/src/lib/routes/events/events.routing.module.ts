@@ -26,12 +26,20 @@ const routes: Routes = [
       {
         path: ':eventId/details',
         component: ViewEventComponent,
+        data: {
+          pageId: ':eventId',
+          module: 'event',
+        },
       },
     ],
   },
   {
     path: 'create-event',
     component: CreateEventComponent,
+    data: {
+      pageId: 'create-event',
+      module: 'event',
+    },
     resolve: {
       configService: ConfigResolveService,
     },

@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { EventsService } from '../../services/events.service'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import * as moment from 'moment'
 /* tslint:disable */
 import _ from 'lodash'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 /* tslint:enable */
 @Component({
     selector: 'ws-app-list-event',
@@ -33,6 +34,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         private eventSvc: EventsService,
         private configSvc: ConfigurationsService,
         private activeRoute: ActivatedRoute,
+        private events: EventService
     ) {
         this.math = Math
         if (this.configSvc.userProfile) {
@@ -41,13 +43,13 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
             this.departmentID = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId
         } else {
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
-            this.departmentID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
+                this.departmentID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
             }
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')) {
-            this.department = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')
+                this.department = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')
             }
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')) {
-            this.currentUser = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')
+                this.currentUser = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')
             }
         }
     }
@@ -230,4 +232,15 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         const strTime = `${hours}:${minutes} ${ampm}`
         return strTime
     }
+    public tabTelemetry(label: string, index: number) {
+        const data: TelemetryEvents.ITelemetryTabData = {
+            label,
+            index,
+        }
+        this.events.handleTabTelemetry(
+            TelemetryEvents.EnumInteractSubTypes.APPROVAL_TAB,
+            data,
+        )
+    }
+
 }
