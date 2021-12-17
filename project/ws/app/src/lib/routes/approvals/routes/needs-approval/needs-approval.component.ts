@@ -107,8 +107,10 @@ export class NeedsApprovalComponent implements OnInit {
       updateFieldValues: JSON.parse(field.wf.updateFieldValues),
     }
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      },
       {
         id: field.wf.applicationId,
         type: TelemetryEvents.EnumIdtype.APPLICATION,

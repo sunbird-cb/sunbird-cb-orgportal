@@ -13,11 +13,11 @@
       <div class="flex flex-1 flex-column margin-fix">
         <div class="flex flex-1 filter max-height-60">
           <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'upcoming',
-            'ws-mat-accent-border font-medium':currentFilter !== 'upcoming'}" mat-button (click)="filter('upcoming')"
-            role="button">Upcoming</a>
+            'ws-mat-accent-border font-medium':currentFilter !== 'upcoming'}" mat-button
+            (click)="filter('upcoming'); tabTelemetry('upcoming', 1)" role="button">Upcoming</a>
           <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'past',
             'ws-mat-accent-border font-medium':currentFilter !== 'past'}" mat-button
-            (click)="filter('past')" role="button">Past</a>
+            (click)="filter('past'); tabTelemetry('past', 1)" role="button">Past</a>
         </div>
       </div>
       <ng-container>

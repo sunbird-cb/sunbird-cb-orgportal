@@ -8,10 +8,18 @@ const routes: Routes = [
   {
     path: 'create',
     component: CreateWorkallocationComponent,
+    data: {
+      pageId: 'create',
+      module: 'workallocation',
+    },
   },
   {
     path: 'details/:userId',
     component: UpdateWorkallocationComponent,
+    data: {
+      pageId: ':userId',
+      module: 'workallocation',
+    },
   },
 ]
 @NgModule({

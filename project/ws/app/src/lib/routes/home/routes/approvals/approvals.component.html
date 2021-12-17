@@ -14,7 +14,7 @@
         <div class="flex flex-1 filter max-height-60">
           <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'toapprove',
               'ws-mat-accent-border font-medium':currentFilter !== 'toapprove'}" mat-button
-            (click)="filter('toapprove')" role="button">To approve</a>
+            (click)="filter('toapprove'); tabTelemetry('toapprove', 0)" role="button">To approve</a>
           <!-- <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'userflags',
               'ws-mat-accent-border font-medium':currentFilter !== 'userflags'}" mat-button
             (click)="filter('userflags')" role="button">User flags</a> -->

@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: ':userId/details',
     component: ViewUserComponent,
+    data: {
+      pageId: ':userId',
+      module: 'user',
+    },
     resolve: {
       profileData: UserResolve,
       workflowHistoryData: WorkflowHistoryResolve,
@@ -22,6 +26,10 @@ const routes: Routes = [
   {
     path: 'create-user',
     component: CreateUserComponent,
+    data: {
+      pageId: 'create-user',
+      module: 'user',
+    },
     resolve: {
       // department: DepartmentResolve,
       // profileData: UserResolve,

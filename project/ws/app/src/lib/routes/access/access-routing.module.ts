@@ -18,10 +18,18 @@ const routes: Routes = [
       {
         path: ':role/privileges',
         component: PrivilegesComponent,
+        data: {
+          pageId: ':role',
+          module: 'roles-access',
+        },
       },
       {
         path: ':role/users',
         component: UsersComponent,
+        data: {
+          pageId: ':role',
+          module: 'roles-access',
+        },
         resolve: {
           usersList: UsersListResolve,
         },

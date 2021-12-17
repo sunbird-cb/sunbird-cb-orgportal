@@ -35,6 +35,10 @@ const routes: Routes = [
       {
         path: 'welcome',
         component: WelcomeComponent,
+        data: {
+          pageId: 'welcome',
+          module: 'home',
+        },
       },
       {
         path: 'users',
@@ -42,14 +46,26 @@ const routes: Routes = [
         resolve: {
           usersList: UsersListResolve,
         },
+        data: {
+          pageId: 'users',
+          module: 'home',
+        },
       },
       {
         path: 'about',
         component: AboutComponent,
+        data: {
+          pageId: 'about',
+          module: 'home',
+        },
       },
       {
         path: 'roles-access',
         component: RolesAccessComponent,
+        data: {
+          pageId: 'roles-access',
+          module: 'home',
+        },
         resolve: {
           usersList: UsersListResolve,
         },
@@ -57,9 +73,17 @@ const routes: Routes = [
       {
         path: 'approvals',
         component: ApprovalsComponent,
+        data: {
+          pageId: 'approvals',
+          module: 'home',
+        },
       },
       {
         path: 'workallocation',
+        data: {
+          pageId: 'workallocation',
+          module: 'home',
+        },
         component: WorkallocationComponent,
       },
     ],
@@ -67,6 +91,10 @@ const routes: Routes = [
   {
     path: 'mdoinfo',
     component: MdoinfoComponent,
+    data: {
+      pageId: 'mdoinfo',
+      module: 'home',
+    },
     resolve: {
       configService: ConfigResolveService,
     },
@@ -74,6 +102,10 @@ const routes: Routes = [
       {
         path: 'leadership',
         component: LeadershipComponent,
+        data: {
+          pageId: 'leadership',
+          module: 'home',
+        },
         resolve: {
           configService: ConfigResolveService,
         },
@@ -81,6 +113,10 @@ const routes: Routes = [
       {
         path: 'staff',
         component: StaffComponent,
+        data: {
+          pageId: 'staff',
+          module: 'home',
+        },
         resolve: {
           configService: ConfigResolveService,
         },
@@ -88,6 +124,10 @@ const routes: Routes = [
       {
         path: 'budget',
         component: BudgetComponent,
+        data: {
+          pageId: 'budget',
+          module: 'home',
+        },
         resolve: {
           configService: ConfigResolveService,
         },
