@@ -54,7 +54,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
 
   constructor(private exportAsService: ExportAsService, private router: Router, private wrkAllocServ: WorkallocationService,
     private workallocationSrvc: WorkallocationService, private activeRoute: ActivatedRoute, private events: EventService, private route: ActivatedRoute,
-    public dialog: MatDialog) {
+    public dialog: MatDialog, public eventSvc: EventService) {
     this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     const paramsMap = this.activeRoute.snapshot.params.tab
     if (paramsMap === 'Published') {
@@ -96,12 +96,13 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     })
 
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.PRINT_BTN,
       {
-        id: this.selectedPDFid,
-        type: TelemetryEvents.EnumIdtype.PDF
-      }
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.PRINT_BTN,
+      }, {
+      id: this.selectedPDFid,
+      type: TelemetryEvents.EnumIdtype.PDF
+    }
     )
   }
 
@@ -146,12 +147,11 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     }
 
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
       {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
         id: element.id,
-        type: TelemetryEvents.EnumIdtype.WORK_ORDER
-      }
+      }, {}
     )
 
   }
@@ -190,12 +190,24 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
           break
       }
     }
-    this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
-      {}
-    )
+    // this.events.raiseInteractTelemetry(
+    //   {
+    //     type: TelemetryEvents.EnumInteractTypes.CLICK,
+    //     subType: TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
+    //   }, {}
+    // )
 
+  }
+
+  public tabTelemetry(label: string, index: number) {
+    const data: TelemetryEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.eventSvc.handleTabTelemetry(
+      TelemetryEvents.EnumInteractSubTypes.WORK_ALLOCATION_TAB,
+      data,
+    )
   }
   getWAT(currentStatus: string) {
     this.data = []
@@ -302,9 +314,10 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       this.getWAT(this.currentFilter)
     })
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.NEW_BTN,
-      {}
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.NEW_BTN,
+      }, {}
     )
   }
 

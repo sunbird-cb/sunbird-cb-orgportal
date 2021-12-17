@@ -16,7 +16,7 @@
                             class="flex flex-1 flex-center filter max-height-60 flex-wrap margin-left-xs margin-right-xs">
                             <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'officer',
                                         'ws-mat-accent-border font-medium':selectedTab !== 'officer'}"
-                                (click)="filterComp(officer,'officer')" role="button">
+                                (click)="filterComp(officer,'officer'); tabTelemetry('officer', 0) " role="button">
                                 <span class="mat-body-2 in-margin"
                                     [ngClass]="{'font-bold-i' : selectedTab === 'officer'}">
                                     Officer</span>
@@ -24,20 +24,23 @@
                             <a href="javascript:void(0)" class="filter-option"
                                 [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'activities',
                                                                 'ws-mat-accent-border font-medium':selectedTab !== 'activities'}"
-                                (click)="filterComp(activities,'activities')" role="button">
+                                (click)="filterComp(activities,'activities'); tabTelemetry('activities', 1)"
+                                role="button">
                                 <span class="mat-body-2 in-margin"
                                     [ngClass]="{'font-bold-i' : selectedTab === 'activities'}">Activities</span>
                             </a>
                             <a href="javascript:void(0)" class="filter-option"
                                 [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'competencies',
                                                                         'ws-mat-accent-border font-medium':selectedTab !== 'competencies'}"
-                                (click)="filterComp(competencies,'competencies')" role="button">
+                                (click)="filterComp(competencies,'competencies'); tabTelemetry('competencies', 2)"
+                                role="button">
                                 <span class="mat-body-2 in-margin"
                                     [ngClass]="{'font-bold-i' : selectedTab === 'competencies'}">Competencies</span>
                             </a>
                             <a href="javascript:void(0)" class="filter-option"
                                 [ngClass]="{'ws-mat-accent-border-active' : selectedTab === 'competencyDetails','ws-mat-accent-border font-medium':selectedTab !== 'competencyDetails'}"
-                                (click)="filterComp(competencyDetails,'competencyDetails')" role="button">
+                                (click)="filterComp(competencyDetails,'competencyDetails'); tabTelemetry('competencyDetails', 3)"
+                                role="button">
                                 <span class="mat-body-2 in-margin"
                                     [ngClass]="{'font-bold-i' : selectedTab === 'competencyDetails'}">Competency
                                     details</span>

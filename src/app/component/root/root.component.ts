@@ -9,6 +9,8 @@ import {
   ApplicationRef,
 } from '@angular/core'
 import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
   NavigationCancel,
   NavigationEnd,
   NavigationError,
@@ -24,6 +26,7 @@ import {
   ValueService,
   // WsEvents,
   LoggerService,
+  UtilityService,
 } from '@sunbird-cb/utils'
 import { delay, first } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
@@ -58,8 +61,10 @@ export class RootComponent implements OnInit, AfterViewInit {
   isInIframe = false
   appStartRaised = false
   isSetupPage = false
+  currentRouteData: any = []
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     // public authSvc: AuthKeycloakService,
     private appRef: ApplicationRef,
     private logger: LoggerService,
@@ -72,6 +77,7 @@ export class RootComponent implements OnInit, AfterViewInit {
     private rootSvc: RootService,
     private btnBackSvc: BreadcrumbsOrgService,
     private changeDetector: ChangeDetectorRef,
+    private utilitySvc: UtilityService,
   ) {
     this.mobileAppsSvc.init()
   }
@@ -119,7 +125,26 @@ export class RootComponent implements OnInit, AfterViewInit {
       }
 
       if (event instanceof NavigationEnd) {
-        this.telemetrySvc.impression()
+        // let snapshot = this.router.routerState.firstChild(this.activatedRoute).snapshot
+        // console.log('this.route.snapshot :: ', this.route.snapshot)
+        const snapshot = this.route.snapshot
+        // console.log('root.snapshot.root.firstChild ', snapshot.root.firstChild)
+        // console.log('firstChild ', snapshot.firstChild)
+        const firstChild = snapshot.root.firstChild
+        this.getChildRouteData(snapshot, firstChild)
+        // tslint:disable-next-line: no-console
+        // console.log('Final currentDataRoute', this.currentRouteData)
+        this.utilitySvc.setRouteData(this.currentRouteData)
+        const data = this.utilitySvc.routeData
+        // console.log('data: ', data)
+        if (data.pageId && data.module) {
+          this.telemetrySvc.impression(data)
+        } else {
+          this.telemetrySvc.impression()
+        }
+        this.currentRouteData = []
+
+        // this.telemetrySvc.impression()
         // if (this.appStartRaised) {
         //   this.telemetrySvc.audit(WsEvents.WsAuditTypes.Created, 'Login', {})
         //   this.appStartRaised = false
@@ -133,6 +158,18 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.initAppUpdateCheck()
+  }
+
+  getChildRouteData(snapshot: ActivatedRouteSnapshot, firstChild: ActivatedRouteSnapshot | null) {
+    if (firstChild) {
+      if (firstChild.data) {
+        // console.log('firstChild.data', firstChild.data)
+        this.currentRouteData.push(firstChild.data)
+      }
+      if (firstChild.firstChild) {
+        this.getChildRouteData(snapshot, firstChild.firstChild)
+      }
+    }
   }
 
   initAppUpdateCheck() {

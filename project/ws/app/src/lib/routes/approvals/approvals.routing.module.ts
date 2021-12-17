@@ -10,6 +10,10 @@ const routes: Routes = [
     path: ':userId/to-approve',
     component: HomeComponent,
     runGuardsAndResolvers: 'always',
+    data: {
+      pageId: ':userId',
+      module: 'approval',
+    },
     resolve: {
       profileData: HomeResolve,
       workflowData: WorkflowResolve,

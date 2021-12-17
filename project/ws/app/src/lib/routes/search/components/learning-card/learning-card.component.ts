@@ -40,11 +40,12 @@ export class LearningCardComponent implements OnInit, OnChanges {
 
   raiseTelemetry() {
     this.events.raiseInteractTelemetry(
-      'click',
-      'cardSearch',
+      {
+        type: 'click',
+        subType: 'cardSearch',
+      },
       {
         contentId: this.content.identifier,
-
       },
     )
   }

@@ -203,12 +203,12 @@ export class CreateEventComponent implements OnInit {
       el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' })
     }
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
       {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
         id: this.currentTab,
-        type: TelemetryEvents.EnumIdtype.MENU,
-      }
+      },
+      {}
     )
   }
 
@@ -223,8 +223,10 @@ export class CreateEventComponent implements OnInit {
       }
     })
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      },
       {}
     )
   }
@@ -257,8 +259,10 @@ export class CreateEventComponent implements OnInit {
     this.pictureObj = document.getElementById('coverPicture')
     this.pictureObj.click()
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      },
       {}
     )
   }
@@ -434,8 +438,10 @@ export class CreateEventComponent implements OnInit {
         newendDate = `${year}-${month}-${date}`
       }
       this.events.raiseInteractTelemetry(
-        TelemetryEvents.EnumInteractTypes.CLICK,
-        TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+        {
+          type: TelemetryEvents.EnumInteractTypes.CLICK,
+          subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+        },
         {}
       )
     }
@@ -531,8 +537,10 @@ export class CreateEventComponent implements OnInit {
     this.router.navigate([`/app/events`]),
       this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      },
       {}
     )
   }

@@ -382,14 +382,26 @@ export class SearchServService {
       eventType: WsEvents.WsEventType.Telemetry,
       eventLogLevel: WsEvents.WsEventLogLevel.Warn,
       data: {
-        eventSubType: WsEvents.EnumTelemetrySubType.Interact,
+        edata: {
+          type: 'search',
+        },
         object: {
           query,
           filters,
           locale,
         },
-        type: 'search',
+        // context: this.getContext(context),
+        eventSubType: WsEvents.EnumTelemetrySubType.Interact,
       },
+      // data: {
+      //   eventSubType: WsEvents.EnumTelemetrySubType.Interact,
+      //   object: {
+      //     query,
+      //     filters,
+      //     locale,
+      //   },
+      //     // type: 'search',
+      // },
       from: 'search',
       to: 'telemetry',
     })

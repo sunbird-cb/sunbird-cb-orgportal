@@ -76,10 +76,22 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
           break
       }
     }
-    this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
-      {}
+    // this.events.raiseInteractTelemetry(
+    //   {
+    //     type: TelemetryEvents.EnumInteractTypes.CLICK,
+    //     subType: TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
+    //   }, {}
+    // )
+  }
+
+  public tabTelemetry(label: string, index: number) {
+    const data: TelemetryEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.events.handleTabTelemetry(
+      TelemetryEvents.EnumInteractSubTypes.APPROVAL_TAB,
+      data,
     )
   }
 
@@ -89,8 +101,10 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     }
     this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
-      TelemetryEvents.EnumInteractTypes.CLICK,
-      TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
+      },
       {
         id: approval.userWorkflow.userInfo.wid,
         type: TelemetryEvents.EnumIdtype.WORK_ORDER,
