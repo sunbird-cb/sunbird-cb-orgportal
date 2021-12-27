@@ -19,6 +19,10 @@ const routes: Routes = [
       {
         path: 'list',
         component: ListEventComponent,
+        data: {
+          pageId: 'list',
+          module: 'event',
+        },
         resolve: {
           configService: ConfigResolveService,
         },

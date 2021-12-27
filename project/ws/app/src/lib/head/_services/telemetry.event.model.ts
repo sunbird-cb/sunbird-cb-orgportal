@@ -14,6 +14,7 @@ export namespace TelemetryEvents {
     USER_TAB = 'user-tab',
     EVENTS_TAB = 'events-tab',
     APPROVAL_TAB = 'approval-tab',
+    SCROLLY_MENU = 'scrolly-menu',
 
   }
   export enum EnumIdtype {
@@ -23,6 +24,7 @@ export namespace TelemetryEvents {
     PDF = 'pdf',
     WORK_ORDER = 'work-order',
     APPLICATION = 'application',
+    OFFICER_ID = 'officer-id',
   }
   export interface ITelemetryTabData {
     label: string,

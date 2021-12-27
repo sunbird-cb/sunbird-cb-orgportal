@@ -8,6 +8,7 @@ import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-
 import { AllocationActionsComponent } from '../../components/allocation-actions/allocation-actions.component'
 import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-create-workallocation',
@@ -134,6 +135,12 @@ export class CreateWorkallocationComponent implements OnInit {
   }
 
   onSideNavTabClick(id: string) {
+    let menuName = ''
+    this.tabsData.forEach(e => {
+      if (e.key === id) {
+        menuName = e.name
+      }
+    })
     this.currentTab = id
     const el = document.getElementById(id)
     if (el != null) {
@@ -143,7 +150,7 @@ export class CreateWorkallocationComponent implements OnInit {
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
-        id: this.currentTab,
+        id: `${_.camelCase(menuName)}-scrolly-menu `,
       },
       {}
     )
