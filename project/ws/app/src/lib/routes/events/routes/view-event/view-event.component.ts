@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import { EventService } from '@sunbird-cb/utils'
+import lodash from 'lodash'
 import moment from 'moment'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 
@@ -130,6 +131,12 @@ export class ViewEventComponent implements OnInit, AfterViewInit {
   }
 
   onSideNavTabClick(id: string) {
+    let menuName = ''
+    this.tabsData.forEach(e => {
+      if (e.key === id) {
+        menuName = e.name
+      }
+    })
     this.currentTab = id
     const el = document.getElementById(id)
     if (el != null) {
@@ -139,7 +146,7 @@ export class ViewEventComponent implements OnInit, AfterViewInit {
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
-        id: this.currentTab,
+        id: `${_.camelCase(menuName)}-scrolly-menu `,
       },
       {}
     )
