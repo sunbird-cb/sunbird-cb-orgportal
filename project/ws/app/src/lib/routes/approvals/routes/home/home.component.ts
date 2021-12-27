@@ -146,6 +146,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSideNavTabClick(id: string) {
+
+    let menuName = ''
+    this.tabsData.forEach(e => {
+      if (e.key === id) {
+        menuName = e.name
+      }
+    })
+
     this.currentTab = id
     const el = document.getElementById(id)
     if (el != null) {
@@ -155,8 +163,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.events.raiseInteractTelemetry(
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
-        subType: TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
-        id: this.currentTab,
+        subType: TelemetryEvents.EnumInteractSubTypes.SCROLLY_MENU,
+        id: `${_.camelCase(menuName)}-scrolly-menu `,
       },
       {}
     )
