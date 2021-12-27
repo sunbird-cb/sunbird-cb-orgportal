@@ -1,4 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core'
+import { EventService } from '@sunbird-cb/utils'
+import _ from 'lodash'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 
 @Component({
   selector: 'ws-app-left-menu',
@@ -9,13 +12,26 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
 
   @Input()
   tabsData!: any
-  constructor() { }
+  constructor(
+    private events: EventService,
+  ) { }
 
   ngOnInit(): void {
 
   }
   ngOnDestroy() {
 
+  }
+
+  public menuClick(tab: any) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
+        id: `${_.camelCase(tab.name)}-menu`,
+      },
+      {},
+    )
   }
 
 }

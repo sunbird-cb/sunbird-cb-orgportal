@@ -52,6 +52,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private activeRoute: ActivatedRoute,
     private configService: ConfigurationsService
   ) {
+
     if (_.get(this.activeRoute, 'snapshot.data.configService.userRoles')) {
       this.myRoles = _.get(this.activeRoute, 'snapshot.data.configService.userRoles')
     }
@@ -73,6 +74,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           _.set(leftData, 'widgetData.name', this.departmentName)
           _.set(leftData, 'widgetData.userRoles', this.myRoles)
           this.widgetData = leftData
+          // this.widgetData['menuClick'] = (tabName: any) => {
+          // }
         } else {
           this.widgetData = _.get(this.activeRoute, 'snapshot.data.pageData.data.menus')
         }

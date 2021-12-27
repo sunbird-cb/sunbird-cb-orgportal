@@ -249,14 +249,28 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   filterComp($element: any, filterType: string) {
     this.selectedTab = filterType
     $element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
-    this.events.raiseInteractTelemetry(
+    // this.events.raiseInteractTelemetry(
+    //   {
+    //     type: TelemetryEvents.EnumInteractTypes.CLICK,
+    //     subType: TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
+    //   },
+    //   {
+    //     id: this.workOrderId,
+    //     type: TelemetryEvents.EnumIdtype.WORK_ORDER,
+    //   }
+    // )
+  }
+  public tabTelemetry(label: string, index: number) {
+    const data: TelemetryEvents.ITelemetryTabData = {
+      label,
+      index,
+    }
+    this.events.handleTabTelemetry(
+      TelemetryEvents.EnumInteractSubTypes.WORK_ALLOCATION_TAB,
+      data,
       {
-        type: TelemetryEvents.EnumInteractTypes.CLICK,
-        subType: TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
-      },
-      {
-        id: this.workOrderId,
-        type: TelemetryEvents.EnumIdtype.WORK_ORDER,
+        id: _.get(this.editDataStruct, 'id'),
+        type: TelemetryEvents.EnumIdtype.OFFICER_ID,
       }
     )
   }
@@ -572,16 +586,7 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     }))
     return unmapedActivitiesReq
   }
-  public tabTelemetry(label: string, index: number) {
-    const data: TelemetryEvents.ITelemetryTabData = {
-      label,
-      index,
-    }
-    this.events.handleTabTelemetry(
-      TelemetryEvents.EnumInteractSubTypes.WORK_ALLOCATION_TAB,
-      data,
-    )
-  }
+
   getUnmappedCompetency() {
     const unmapedComps = _.get(_.first(this.dataStructure.compGroups), 'competincies')
     const unmapedCompsReq = _.compact((unmapedComps || []).map((uc: any) => {
