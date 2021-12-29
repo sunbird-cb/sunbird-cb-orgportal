@@ -1,11 +1,15 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, HostListener, ViewChild } from '@angular/core'
 import { Router, Event, NavigationEnd, ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, ValueService } from '@sunbird-cb/utils'
+// import { LeftMenuService } from "@sunbird-cb/collection/lib/left-menu/left-menu.service"
 import { map } from 'rxjs/operators'
 import { NsWidgetResolver } from '@sunbird-cb/resolver'
 /* tslint:disable */
 import _ from 'lodash'
-import { ILeftMenu } from '@sunbird-cb/collection'
+import { ILeftMenu, LeftMenuService } from '@sunbird-cb/collection'
+
+import { Subscription } from 'rxjs'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 /* tslint:enable */
 
 @Component({
@@ -14,6 +18,7 @@ import { ILeftMenu } from '@sunbird-cb/collection'
   styleUrls: ['./home.component.scss'],
   /* tslint:disable */
   host: { class: 'margin-top-l' },
+  providers: [LeftMenuService]
   /* tslint:enable */
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -36,6 +41,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private defaultSideNavBarOpenedSubscription: any
   department: any = {}
   departmentName = ''
+  subscription: Subscription
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -50,8 +56,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private valueSvc: ValueService,
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private configService: ConfigurationsService
+    private configService: ConfigurationsService,
+    private leftMenuService: LeftMenuService,
+    private events: EventService,
   ) {
+    
+    this.subscription = this.leftMenuService.onMessage().subscribe(message => {
+      if (message) {
+        this.raiseTelemetry(message.text.name)
+      } else {
+        // clear messages when empty message received
+      }
+    })
+
 
     if (_.get(this.activeRoute, 'snapshot.data.configService.userRoles')) {
       this.myRoles = _.get(this.activeRoute, 'snapshot.data.configService.userRoles')
@@ -94,6 +111,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
+  }
+
+  raiseTelemetry(name: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
+        id: `${_.camelCase(name)}-menu`,
+      },
+      {},
+    )
   }
   ngAfterViewInit() {
     // this.elementPosition = this.menuElement.nativeElement.offsetTop
