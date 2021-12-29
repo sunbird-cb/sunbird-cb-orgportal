@@ -1,11 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import { EventService } from '@sunbird-cb/utils'
-<<<<<<< HEAD
 import * as _ from 'lodash'
-=======
-import _ from 'lodash'
->>>>>>> 2045a49a7dde82fad3f1412b95a107255d8258ab
 import moment from 'moment'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 

@@ -61,7 +61,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private events: EventService,
   ) {
 
-<<<<<<< HEAD
     this.subscription = this.leftMenuService.onMessage().subscribe(message => {
       if (message) {
         this.raiseTelemetry(message.text.name)
@@ -70,8 +69,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     })
 
-=======
->>>>>>> 2045a49a7dde82fad3f1412b95a107255d8258ab
     if (_.get(this.activeRoute, 'snapshot.data.configService.userRoles')) {
       this.myRoles = _.get(this.activeRoute, 'snapshot.data.configService.userRoles')
     }
