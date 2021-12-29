@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core'
 import { EventService } from '@sunbird-cb/utils'
 
+
 import * as _ from 'lodash'
+
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 
 @Component({
