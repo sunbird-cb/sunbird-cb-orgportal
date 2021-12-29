@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private leftMenuService: LeftMenuService,
     private events: EventService,
   ) {
-
+    
     this.subscription = this.leftMenuService.onMessage().subscribe(message => {
       if (message) {
         this.raiseTelemetry(message.text.name)
@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         // clear messages when empty message received
       }
     })
+
 
     if (_.get(this.activeRoute, 'snapshot.data.configService.userRoles')) {
       this.myRoles = _.get(this.activeRoute, 'snapshot.data.configService.userRoles')
