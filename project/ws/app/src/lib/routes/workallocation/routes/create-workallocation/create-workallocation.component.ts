@@ -8,8 +8,6 @@ import { DialogConfirmComponent } from 'src/app/component/dialog-confirm/dialog-
 import { AllocationActionsComponent } from '../../components/allocation-actions/allocation-actions.component'
 import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
-import _ from 'lodash'
-
 import * as _ from 'lodash'
 
 
