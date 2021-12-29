@@ -42,7 +42,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   dashboardEmpty = dashboardEmptyData
 
   constructor(@Inject(DOCUMENT) private document: Document, private homeResolver: ProfileV2Service, private router: Router,
-              private events: EventService) {
+    private events: EventService) {
   }
   filterR(type: string) {
     this.resolutionFilter = type
@@ -153,6 +153,16 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
         id: tab,
+      },
+      {}
+    )
+  }
+
+  dashboardClick() {
+    this.events.raiseInteractTelemetry(
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
       },
       {}
     )
