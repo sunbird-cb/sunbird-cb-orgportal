@@ -158,6 +158,16 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
     )
   }
 
+  dashboardClick() {
+    this.events.raiseInteractTelemetry(
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      },
+      {}
+    )
+  }
+
   getDashboardId(value: string) {
     if (value && value !== null) {
       this.selectedDashboardId = value

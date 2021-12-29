@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material'
 import { AllocationService } from '../../services/allocation.service'
 import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 @Component({
   selector: 'ws-app-update-workallocation',
