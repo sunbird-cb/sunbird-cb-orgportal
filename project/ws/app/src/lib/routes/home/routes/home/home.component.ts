@@ -60,6 +60,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private leftMenuService: LeftMenuService,
     private events: EventService,
   ) {
+    this.subscription = this.leftMenuService.onMessage().subscribe(message => {
+      if (message) {
+        this.raiseTelemetry(message.text.name)
+      } else {
+        // clear messages when empty message received
+      }
+    })
 
     this.subscription = this.leftMenuService.onMessage().subscribe(message => {
       if (message) {

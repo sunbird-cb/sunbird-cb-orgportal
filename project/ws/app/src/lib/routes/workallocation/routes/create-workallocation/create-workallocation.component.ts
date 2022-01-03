@@ -9,7 +9,6 @@ import { AllocationActionsComponent } from '../../components/allocation-actions/
 import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 import * as _ from 'lodash'
-
 @Component({
   selector: 'ws-app-create-workallocation',
   templateUrl: './create-workallocation.component.html',

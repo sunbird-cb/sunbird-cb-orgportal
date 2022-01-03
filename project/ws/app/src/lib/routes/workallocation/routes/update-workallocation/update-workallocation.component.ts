@@ -7,7 +7,6 @@ import { AllocationService } from '../../services/allocation.service'
 import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 import * as _ from 'lodash'
-
 @Component({
   selector: 'ws-app-update-workallocation',
   templateUrl: './update-workallocation.component.html',
