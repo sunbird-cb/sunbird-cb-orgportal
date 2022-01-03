@@ -68,13 +68,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     })
 
-    this.subscription = this.leftMenuService.onMessage().subscribe(message => {
-      if (message) {
-        this.raiseTelemetry(message.text.name)
-      } else {
-        // clear messages when empty message received
-      }
-    })
 
     if (_.get(this.activeRoute, 'snapshot.data.configService.userRoles')) {
       this.myRoles = _.get(this.activeRoute, 'snapshot.data.configService.userRoles')
