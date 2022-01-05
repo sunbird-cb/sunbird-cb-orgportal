@@ -385,7 +385,6 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       // nothing required to do
     }
 
-
   }
 
   getStrcuturedReqUpdate(): any {

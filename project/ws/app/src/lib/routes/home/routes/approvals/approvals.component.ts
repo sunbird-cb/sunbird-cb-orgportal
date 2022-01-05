@@ -104,7 +104,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
-        id: TelemetryEvents.EnumIdtype.APPROVAL_ROW
+        id: TelemetryEvents.EnumIdtype.APPROVAL_ROW,
       },
       {
         id: approval.userWorkflow.userInfo.wid,

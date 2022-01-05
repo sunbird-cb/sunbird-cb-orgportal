@@ -97,7 +97,7 @@ export class CreateEventComponent implements OnInit {
     private router: Router, private configSvc: ConfigurationsService, private changeDetectorRefs: ChangeDetectorRef,
     // tslint:disable-next-line:align
 
-    private activeRoute: ActivatedRoute, private events: EventService,
+              private activeRoute: ActivatedRoute, private events: EventService,
   ) {
 
     if (this.configSvc.userProfile) {
@@ -555,7 +555,7 @@ export class CreateEventComponent implements OnInit {
       width: '612px',
       height: '471px',
       data: res,
-      panelClass: 'remove-overflow'
+      panelClass: 'remove-overflow',
     })
     this.dialogRef.afterClosed().subscribe(() => {
       this.router.navigate([`/app/events`])

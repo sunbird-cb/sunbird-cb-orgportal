@@ -214,7 +214,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
-        id: TelemetryEvents.EnumIdtype.USER_ROW
+        id: TelemetryEvents.EnumIdtype.USER_ROW,
       },
       {
         id: user.userId,
