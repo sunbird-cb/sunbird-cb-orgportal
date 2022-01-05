@@ -9,7 +9,7 @@ import _ from 'lodash'
 import { environment } from 'src/environments/environment'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
 import { MatSnackBar } from '@angular/material'
-import { EventService, TelemetryService } from '@sunbird-cb/utils'
+import { EventService } from '@sunbird-cb/utils'
 import { NsContent } from '@sunbird-cb/collection'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 
@@ -61,7 +61,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     private router: Router,
     private snackBar: MatSnackBar,
     private events: EventService,
-    private telemetrySvc: TelemetryService,
+    // private telemetrySvc: TelemetryService,
     // private configSvc: ConfigurationsService,
     // private discussService: DiscussService,
     // private configSvc: ConfigurationsService,
@@ -199,7 +199,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
   onCreateClick() {
     this.router.navigate([`/app/users/create-user`])
-    this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
@@ -211,11 +210,11 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
   onRoleClick(user: any) {
     this.router.navigate([`/app/users/${user.userId}/details`])
-    this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
+        id: TelemetryEvents.EnumIdtype.USER_ROW,
       },
       {
         id: user.userId,

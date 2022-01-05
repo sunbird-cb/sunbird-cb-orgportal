@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { ParticipantsComponent } from '../../components/participants/participants.component'
 import { SuccessComponent } from '../../components/success/success.component'
 import { Router, ActivatedRoute } from '@angular/router'
-import { ConfigurationsService, EventService, TelemetryService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import * as moment from 'moment'
 /* tslint:disable */
 import _ from 'lodash'
@@ -97,7 +97,7 @@ export class CreateEventComponent implements OnInit {
     private router: Router, private configSvc: ConfigurationsService, private changeDetectorRefs: ChangeDetectorRef,
     // tslint:disable-next-line:align
 
-              private activeRoute: ActivatedRoute, private events: EventService, private telemetrySvc: TelemetryService,
+              private activeRoute: ActivatedRoute, private events: EventService,
   ) {
 
     if (this.configSvc.userProfile) {
@@ -541,21 +541,21 @@ export class CreateEventComponent implements OnInit {
 
   goToList() {
     this.router.navigate([`/app/events`]),
-      this.telemetrySvc.impression()
-    this.events.raiseInteractTelemetry(
-      {
-        type: TelemetryEvents.EnumInteractTypes.CLICK,
-        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
-      },
-      {}
-    )
+      // this.telemetrySvc.impression()
+      this.events.raiseInteractTelemetry(
+        {
+          type: TelemetryEvents.EnumInteractTypes.CLICK,
+          subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+        },
+        {}
+      )
   }
-
   showSuccess(res: any) {
     this.dialogRef = this.matDialog.open(SuccessComponent, {
       width: '612px',
       height: '471px',
       data: res,
+      panelClass: 'remove-overflow',
     })
     this.dialogRef.afterClosed().subscribe(() => {
       this.router.navigate([`/app/events`])

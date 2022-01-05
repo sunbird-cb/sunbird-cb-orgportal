@@ -163,9 +163,10 @@ export class DraftAllocationsComponent implements OnInit {
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
+        id: TelemetryEvents.EnumIdtype.WORK_ORDER_ROW
       }, {
-      id: this.workorderID,
-      type: TelemetryEvents.EnumIdtype.WORK_ORDER
+      id: id,
+      type: TelemetryEvents.EnumIdtype.OFFICER_ID_WORK
     }
     )
   }

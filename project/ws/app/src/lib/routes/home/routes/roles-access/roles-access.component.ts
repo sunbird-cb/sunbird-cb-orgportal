@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
-import { EventService, TelemetryService } from '@sunbird-cb/utils'
+import { EventService } from '@sunbird-cb/utils'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
@@ -15,7 +15,7 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private router: Router,
               private activeRouter: ActivatedRoute,
-              private telemetrySvc: TelemetryService,
+    // private telemetrySvc: TelemetryService,
               private events: EventService) { }
 
   ngOnInit() {
@@ -40,14 +40,17 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
   /* Click event to navigate to a particular role */
   onRoleClick(role: any) {
     this.router.navigate([`/app/roles/${role.role}/users`])
-    this.telemetrySvc.impression()
+    // this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
-        id: role.role,
+        id: TelemetryEvents.EnumIdtype.ROLES_ROW,
       },
-      {}
+      {
+        id: role.role,
+        type: TelemetryEvents.EnumIdtype.ROLES,
+      }
     )
 
   }

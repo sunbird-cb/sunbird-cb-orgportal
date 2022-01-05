@@ -150,8 +150,12 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
-        id: element.id,
-      }, {}
+        id: TelemetryEvents.EnumIdtype.WORK_ORDER_ROW
+        ,
+      }, {
+      id: element.id,
+      type: TelemetryEvents.EnumIdtype.WORK_ORDER
+    }
     )
 
   }
