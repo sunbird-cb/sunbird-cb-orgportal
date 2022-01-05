@@ -25,6 +25,13 @@ export namespace TelemetryEvents {
     WORK_ORDER = 'work-order',
     APPLICATION = 'application',
     OFFICER_ID = 'officer-id',
+    OFFICER_ID_WORK = 'work-oder-officer-id',
+    WORK_ORDER_ROW = 'work-order-row',
+    USER_ROW = 'user-row',
+    ROLES_ROW = 'roles-row',
+    APPROVAL_ROW = 'approval-row',
+    EVENTS_ROW = 'events-row',
+
   }
   export interface ITelemetryTabData {
     label: string,

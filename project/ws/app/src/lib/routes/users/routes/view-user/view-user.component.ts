@@ -144,7 +144,6 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         this.routeSubscription = this.activeRoute.queryParamMap.subscribe(qParamsMap => {
           this.qpParam = qParamsMap.get('param')
           this.qpPath = qParamsMap.get('path')
-
           if (this.qpParam === 'MDOinfo') {
             // tslint:disable-next-line:max-line-length
             this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: this.userStatus, url: 'none' }, { title: 'MDO information', url: '/app/home/mdoinfo/leadership' }, { title: this.fullname, url: 'none' }] }

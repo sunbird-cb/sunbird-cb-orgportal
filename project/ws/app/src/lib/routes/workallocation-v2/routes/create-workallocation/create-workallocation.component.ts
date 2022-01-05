@@ -313,7 +313,6 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       this.dataStructure.currentProgress = data
     })
   }
-
   saveWAT(autoSave: boolean = false, reload: boolean = false) {
     if (this.getWorkOrderId) {
       const req = this.getStrcuturedReq()
@@ -369,6 +368,16 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
             }
           })
         }
+        this.events.raiseInteractTelemetry(
+          {
+            type: TelemetryEvents.EnumInteractTypes.CLICK,
+            subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+          },
+          {
+            id: this.workOrderId,
+            type: TelemetryEvents.EnumIdtype.WORK_ORDER,
+          }
+        )
       } else {
         this.openSnackbar('Error! Work order not found, please try again!')
       }
@@ -376,16 +385,6 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
       // nothing required to do
     }
 
-    this.events.raiseInteractTelemetry(
-      {
-        type: TelemetryEvents.EnumInteractTypes.CLICK,
-        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
-      },
-      {
-        id: this.workOrderId,
-        type: TelemetryEvents.EnumIdtype.WORK_ORDER,
-      }
-    )
   }
 
   getStrcuturedReqUpdate(): any {

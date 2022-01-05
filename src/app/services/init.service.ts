@@ -25,6 +25,7 @@ import { map } from 'rxjs/operators'
 import { environment } from '../../environments/environment'
 /* tslint:disable*/
 import _ from 'lodash'
+import { v4 as uuid } from 'uuid'
 /* tslint:enable*/
 // interface IDetailsResponse {
 //   tncStatus: boolean
@@ -247,6 +248,10 @@ export class InitService {
           .toPromise()
         if (completeProdata && completeProdata.roles && completeProdata.roles.length > 0 &&
           this.hasRole(completeProdata.roles)) {
+          if (localStorage.getItem('telemetrySessionId')) {
+            localStorage.removeItem('telemetrySessionId')
+          }
+          localStorage.setItem('telemetrySessionId', uuid())
           this.configSvc.unMappedUser = completeProdata
           const profileV2 = _.get(completeProdata, 'profileDetails')
           this.configSvc.userProfile = {

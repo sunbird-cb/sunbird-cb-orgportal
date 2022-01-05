@@ -68,7 +68,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     })
 
-
     if (_.get(this.activeRoute, 'snapshot.data.configService.userRoles')) {
       this.myRoles = _.get(this.activeRoute, 'snapshot.data.configService.userRoles')
     }
