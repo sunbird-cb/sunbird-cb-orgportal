@@ -21,7 +21,7 @@ const routes: Routes = [
         component: ListEventComponent,
         data: {
           pageId: 'list',
-          module: 'event',
+          module: 'events',
         },
         resolve: {
           configService: ConfigResolveService,
@@ -32,7 +32,7 @@ const routes: Routes = [
         component: ViewEventComponent,
         data: {
           pageId: ':eventId',
-          module: 'event',
+          module: 'events',
         },
       },
     ],
@@ -42,7 +42,7 @@ const routes: Routes = [
     component: CreateEventComponent,
     data: {
       pageId: 'create-event',
-      module: 'event',
+      module: 'events',
     },
     resolve: {
       configService: ConfigResolveService,

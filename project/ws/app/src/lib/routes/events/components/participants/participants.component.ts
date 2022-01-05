@@ -42,10 +42,26 @@ export class ParticipantsComponent implements OnInit {
         return numSelected === numRows
     }
 
-    masterToggle() {
-        this.isAllSelected() ?
-            this.selection.clear() :
-            this.dataSource.data.forEach((row: any) => this.selection.select(row))
+    masterToggle(ref: any) {
+        // this.isAllSelected() ?
+        //     this.selection.clear() :
+        // this.dataSource.data.forEach((row: any) => this.selection.select(row))
+
+        if (this.isSomeSelected()) {
+
+            this.selection.clear()
+            ref.checked = false
+
+        } else {
+            this.isAllSelected() ?
+                this.selection.clear() :
+                this.dataSource.data.forEach((row: any) => this.selection.select(row))
+        }
+    }
+
+    isSomeSelected() {
+
+        return this.selection.selected.length > 0
     }
 
     ngOnInit() {

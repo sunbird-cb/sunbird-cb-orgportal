@@ -11,7 +11,7 @@ import { ITableData, IColums, IAction } from '../../interfaces/interfaces'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { EventThumbnailComponent } from '../event-thumbnail/event-thumbnail.component'
-import { EventService, TelemetryService } from '@sunbird-cb/utils'
+import { EventService } from '@sunbird-cb/utils'
 import { NsContent } from '@sunbird-cb/collection'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 
@@ -57,7 +57,7 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
     private router: Router,
     private matDialog: MatDialog,
     private events: EventService,
-    private telemetrySvc: TelemetryService,
+    // private telemetrySvc: TelemetryService,
     private route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public content: IContentShareData,
   ) {
@@ -156,7 +156,7 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
 
   onCreateClick() {
     this.router.navigate([`/app/events/create-event`])
-    this.telemetrySvc.impression()
+    // this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,

@@ -7,7 +7,7 @@ import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/in
 import { MatSnackBar } from '@angular/material'
 /* tslint:disable */
 import _ from 'lodash'
-import { EventService, TelemetryService } from '@sunbird-cb/utils'
+import { EventService } from '@sunbird-cb/utils'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 /* tslint:enable */
 @Component({
@@ -44,7 +44,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     private activeRouter: ActivatedRoute,
     private route: ActivatedRoute,
     private events: EventService,
-    private telemetrySvc: TelemetryService,
+    // private telemetrySvc: TelemetryService,
     private snackbar: MatSnackBar) {
     this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService.unMappedUser.channel
@@ -99,11 +99,12 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     if (approval && approval.userWorkflow.userInfo) {
       this.router.navigate([`/app/approvals/${approval.userWorkflow.userInfo.wid}/to-approve`])
     }
-    this.telemetrySvc.impression()
+    // this.telemetrySvc.impression()
     this.events.raiseInteractTelemetry(
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.CARD_CONTENT,
+        id: TelemetryEvents.EnumIdtype.APPROVAL_ROW
       },
       {
         id: approval.userWorkflow.userInfo.wid,
@@ -124,6 +125,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
       }
       this.apprService.getApprovals(req).subscribe(res => {
         let currentdate: Date
+        // console.log("result ", res)
         res.result.data.forEach((approval: any) => {
           let keys = ''
           approval.wfInfo.forEach((wf: any) => {
@@ -157,6 +159,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   }
 
   get getTableData() {
+    // console.log("table data", this.data)
     return this.data
   }
 
