@@ -96,8 +96,7 @@ export class CreateEventComponent implements OnInit {
     // tslint:disable-next-line:align
     private router: Router, private configSvc: ConfigurationsService, private changeDetectorRefs: ChangeDetectorRef,
     // tslint:disable-next-line:align
-
-              private activeRoute: ActivatedRoute, private events: EventService,
+    private activeRoute: ActivatedRoute, private events: EventService,
   ) {
 
     if (this.configSvc.userProfile) {

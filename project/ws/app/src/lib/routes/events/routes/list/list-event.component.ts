@@ -126,7 +126,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
                     const str = creatordata && creatordata.length > 0 ? creatordata.replace(/\\/g, '') : []
                     const creatorDetails = str && str.length > 0 ? JSON.parse(str) : creatordata
                     const eventDataObj = {
-                        eventName: obj.name.substring(0, 25),
+                        eventName: obj.name.substring(0, 100),
                         eventStartDate: this.customDateFormat(obj.startDate, obj.startTime),
                         eventCreatedOn: this.allEventDateFormat(obj.createdOn),
                         eventDuration: duration,
