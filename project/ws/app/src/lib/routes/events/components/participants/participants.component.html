@@ -16,17 +16,10 @@
         </mat-autocomplete>
     </mat-form-field>
     <div class="dialog-btn-items" *ngIf="participants.length > 0">
-        <pre>
-        selection.selected.length: {{selection.selected.length}}
-        selection.hasValue(): {{selection.hasValue()}}
-        isAllSelected(): {{isAllSelected()}}
-        isSomeSelected(): {{isSomeSelected()}}
-        checked: {{selection.hasValue() && isAllSelected()}}
-        </pre>
-        <table mat-table [dataSource]="participants">
+        <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="select">
                 <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox #ref (change)="$event ? masterToggle(ref) : null"
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
                         [checked]="selection.hasValue() && isAllSelected()"
                         [indeterminate]="selection.hasValue() && !isAllSelected()">
                     </mat-checkbox>
@@ -36,12 +29,11 @@
                         (change)="$event ? selection.toggle(row) : null;isSomeSelected()"
                         [checked]="selection.isSelected(row)">
                     </mat-checkbox>
-
                 </td>
             </ng-container>
             <ng-container matColumnDef="fullname">
                 <th mat-header-cell *matHeaderCellDef> Full name </th>
-                <td mat-cell *matCellDef="let element"> {{element.firstname}} {{element.lastname}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}} </td>
             </ng-container>
             <ng-container matColumnDef="email">
                 <th mat-header-cell *matHeaderCellDef> Email </th>
