@@ -42,26 +42,39 @@ export class ParticipantsComponent implements OnInit {
         return numSelected === numRows
     }
 
-    masterToggle(ref: any) {
-        // this.isAllSelected() ?
-        //     this.selection.clear() :
-        // this.dataSource.data.forEach((row: any) => this.selection.select(row))
+    masterToggle() {
+        this.isAllSelected() ?
+            this.selection.clear() :
+            this.dataSource.data.forEach((row: any) => this.selection.select(row))
 
-        if (this.isSomeSelected()) {
+        // if (this.isSomeSelected()) {
 
-            this.selection.clear()
-            ref.checked = false
+        //     this.selection.clear()
+        //     ref.checked = false
 
-        } else {
-            this.isAllSelected() ?
-                this.selection.clear() :
-                this.dataSource.data.forEach((row: any) => this.selection.select(row))
-        }
+        // } else {
+        //     this.isAllSelected() ?
+        //        this.selection.clear() :
+        //         this.dataSource.data.forEach((row: any) => {
+        //             this.selection.toggle(row)
+        //             this.selection.isSelected(row)
+        //             this.selection.select(row)
+
+        //         })
+        // }
     }
 
     isSomeSelected() {
 
         return this.selection.selected.length > 0
+    }
+
+    /** The label for the checkbox on the passed row */
+    checkboxLabel(row?: IParticipantElement): string {
+        if (!row) {
+            return `${this.isAllSelected() ? 'deselect' : 'select'} all`
+        }
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`
     }
 
     ngOnInit() {
