@@ -120,7 +120,7 @@ export class InitService {
       // ========================================THIS: need to enable=================================================================
       // const userPrefPromise = await this.userPreference.fetchUserPreference() // pref: depends on rootOrg
       // this.configSvc.userPreference = userPrefPromise
-      // this.reloadAccordingToLocale()
+       this.reloadAccordingToLocale()
       // if (this.configSvc.userPreference.pinnedApps) {
       //   const pinnedApps = this.configSvc.userPreference.pinnedApps.split(',')
       //   this.configSvc.pinnedApps.next(new Set(pinnedApps))
