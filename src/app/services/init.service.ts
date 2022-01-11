@@ -23,6 +23,7 @@ import { environment } from '../../environments/environment'
 /* tslint:disable */
 import _ from 'lodash'
 import { map } from 'rxjs/operators'
+import { of } from 'rxjs';
 // import { Router } from '@angular/router'
 /* tslint:enable */
 // interface IDetailsResponse {
@@ -94,130 +95,138 @@ export class InitService {
 
   async init() {
     // this.logger.removeConsoleAccess()
-    await this.fetchDefaultConfig()
-    // const authenticated = await this.authSvc.initAuth()
-    // if (!authenticated) {
-    //   this.settingsSvc.initializePrefChanges(environment.production)
-    //   this.updateNavConfig()
-    //   this.logger.info('Not Authenticated')
-    //   return false
-    // }
-    // Invalid User
-    try {
-      await this.fetchStartUpDetails() // detail: depends only on userID
-    } catch (e) {
-      this.settingsSvc.initializePrefChanges(environment.production)
-      this.updateNavConfig()
-      this.logger.info('Not Authenticated')
-      // window.location.reload() // can do this
-      return false
+    return this.fetchDefaultConfig().then(async () => {
+      // const authenticated = await this.authSvc.initAuth()
+      // if (!authenticated) {
+      //   this.settingsSvc.initializePrefChanges(environment.production)
+      //   this.updateNavConfig()
+      //   this.logger.info('Not Authenticated')
+      //   return false
+      // }
+      // Invalid User
+      try {
+        await this.fetchStartUpDetails() // detail: depends only on userID
+      } catch (e) {
+        this.settingsSvc.initializePrefChanges(environment.production)
+        this.updateNavConfig()
+        this.logger.info('Not Authenticated')
+        // window.location.reload() // can do this
+        return of(false)
 
-    }
-    try {
-      // this.logger.info('User Authenticated', authenticated)
-      const userPrefPromise = await this.userPreference.fetchUserPreference() // pref: depends on rootOrg
-      this.configSvc.userPreference = userPrefPromise
-      this.reloadAccordingToLocale()
-      if (this.configSvc.userPreference.pinnedApps) {
-        const pinnedApps = this.configSvc.userPreference.pinnedApps.split(',')
-        this.configSvc.pinnedApps.next(new Set(pinnedApps))
       }
-      if (this.configSvc.userPreference.profileSettings) {
-        this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
-      }
-      const appsConfigPromise = this.fetchAppsConfig()
-      const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
-      const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
-      await this.fetchFeaturesStatus() // feature: depends only on details
+      try {
+        // this.logger.info('User Authenticated', authenticated)
+        // const userPrefPromise = await this.userPreference.fetchUserPreference() // pref: depends on rootOrg
+        // this.configSvc.userPreference = userPrefPromise
+        // this.reloadAccordingToLocale()
+        // if (this.configSvc.userPreference.pinnedApps) {
+        //   const pinnedApps = this.configSvc.userPreference.pinnedApps.split(',')
+        //   this.configSvc.pinnedApps.next(new Set(pinnedApps))
+        // }
+        // if (this.configSvc.userPreference.profileSettings) {
+        //   this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
+        // }
+        const appsConfigPromise = this.fetchAppsConfig()
+        const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
+        const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
+        await this.fetchFeaturesStatus() // feature: depends only on details
 
-      /**
-       * Wait for the widgets and get the list of restricted widgets
-       */
-      const widgetConfig = await widgetStatusPromise
-      this.processWidgetStatus(widgetConfig)
-      this.widgetResolverService.initialize(
-        this.configSvc.restrictedWidgets,
-        this.configSvc.userRoles,
-        this.configSvc.userGroups,
-        this.configSvc.restrictedFeatures,
-      )
-      /**
-       * Wait for the instance config and after that
-       */
-      await instanceConfigPromise
-      /*
-       * Wait for the apps config and after that
-       */
-      const appsConfig = await appsConfigPromise
-      this.configSvc.appsConfig = this.processAppsConfig(appsConfig)
-      if (this.configSvc.instanceConfig) {
-        this.configSvc.instanceConfig.featuredApps = this.configSvc.instanceConfig.featuredApps.filter(
-          id => appsConfig.features[id],
+        /**
+         * Wait for the widgets and get the list of restricted widgets
+         */
+        const widgetConfig = await widgetStatusPromise
+        this.processWidgetStatus(widgetConfig)
+        this.widgetResolverService.initialize(
+          this.configSvc.restrictedWidgets,
+          this.configSvc.userRoles,
+          this.configSvc.userGroups,
+          this.configSvc.restrictedFeatures,
         )
-      }
-
-      // Apply the settings using settingsService
-      this.settingsSvc.initializePrefChanges(environment.production)
-      this.userPreference.initialize()
-    } catch (e) {
-      this.logger.warn(
-        'Initialization process encountered some error. Application may not work as expected',
-        e,
-      )
-      this.settingsSvc.initializePrefChanges(environment.production)
-    }
-    this.updateNavConfig()
-    // await this.widgetContentSvc
-    //   .setS3ImageCookie()
-    //   .toPromise()
-    //   .catch(() => {
-    //     // throw new DataResponseError('COOKIE_SET_FAILURE')
-    //   })
-    return true
-  }
-
-  private reloadAccordingToLocale() {
-    if (window.location.origin.indexOf('http://localhost:') > -1) {
-      return
-    }
-    let pathName = window.location.href.replace(window.location.origin, '')
-    const runningAppLang = this.locale
-    if (pathName.startsWith(`//${runningAppLang}//`)) {
-      pathName = pathName.replace(`//${runningAppLang}//`, '/')
-    }
-    const instanceLocales = this.configSvc.instanceConfig && this.configSvc.instanceConfig.locals
-    if (Array.isArray(instanceLocales) && instanceLocales.length) {
-      const foundInLocales = instanceLocales.some(locale => {
-        return locale.path !== runningAppLang
-      })
-      if (foundInLocales) {
-        if (
-          this.configSvc.userPreference &&
-          this.configSvc.userPreference.selectedLocale &&
-          runningAppLang !== this.configSvc.userPreference.selectedLocale
-        ) {
-          let languageToLoad = this.configSvc.userPreference.selectedLocale
-          languageToLoad = `\\${languageToLoad}`
-          if (this.configSvc.userPreference.selectedLocale === 'en') {
-            languageToLoad = ''
-          }
-          location.assign(`${location.origin}${languageToLoad}${pathName}`)
+        /**
+         * Wait for the instance config and after that
+         */
+        await instanceConfigPromise
+        /*
+         * Wait for the apps config and after that
+         */
+        const appsConfig = await appsConfigPromise
+        this.configSvc.appsConfig = this.processAppsConfig(appsConfig)
+        if (this.configSvc.instanceConfig) {
+          this.configSvc.instanceConfig.featuredApps = this.configSvc.instanceConfig.featuredApps.filter(
+            id => appsConfig.features[id],
+          )
         }
+
+        // Apply the settings using settingsService
+        this.settingsSvc.initializePrefChanges(environment.production)
+        this.userPreference.initialize()
+      } catch (e) {
+        this.logger.warn(
+          'Initialization process encountered some error. Application may not work as expected',
+          e,
+        )
+        this.settingsSvc.initializePrefChanges(environment.production)
+        return of(false)
       }
-    }
+      this.updateNavConfig()
+      // await this.widgetContentSvc
+      //   .setS3ImageCookie()
+      //   .toPromise()
+      //   .catch(() => {
+      //     // throw new DataResponseError('COOKIE_SET_FAILURE')
+      //   })
+      // })
+      return of(true)
+    })
   }
 
-  private async fetchDefaultConfig(): Promise<NsInstanceConfig.IConfig> {
-    const publicConfig: NsInstanceConfig.IConfig = await this.http
+  // private reloadAccordingToLocale() {
+  //   if (window.location.origin.indexOf('http://localhost:') > -1) {
+  //     return
+  //   }
+  //   let pathName = window.location.href.replace(window.location.origin, '')
+  //   const runningAppLang = this.locale
+  //   if (pathName.startsWith(`//${runningAppLang}//`)) {
+  //     pathName = pathName.replace(`//${runningAppLang}//`, '/')
+  //   }
+  //   const instanceLocales = this.configSvc.instanceConfig && this.configSvc.instanceConfig.locals
+  //   if (Array.isArray(instanceLocales) && instanceLocales.length) {
+  //     const foundInLocales = instanceLocales.some(locale => {
+  //       return locale.path !== runningAppLang
+  //     })
+  //     if (foundInLocales) {
+  //       if (
+  //         this.configSvc.userPreference &&
+  //         this.configSvc.userPreference.selectedLocale &&
+  //         runningAppLang !== this.configSvc.userPreference.selectedLocale
+  //       ) {
+  //         let languageToLoad = this.configSvc.userPreference.selectedLocale
+  //         languageToLoad = `\\${languageToLoad}`
+  //         if (this.configSvc.userPreference.selectedLocale === 'en') {
+  //           languageToLoad = ''
+  //         }
+  //         location.assign(`${location.origin}${languageToLoad}${pathName}`)
+  //       }
+  //     }
+  //   }
+  // }
+
+  private async fetchDefaultConfig() {
+    return await this.http
       .get<NsInstanceConfig.IConfig>(`${this.baseUrl}/host.config.json`)
-      .toPromise()
-    this.configSvc.instanceConfig = publicConfig
-    this.configSvc.rootOrg = publicConfig.rootOrg
-    this.configSvc.org = publicConfig.org
-    // TODO: set one org as default org :: use user preference
-    this.configSvc.activeOrg = publicConfig.org[0]
-    this.configSvc.appSetup = publicConfig.appSetup
-    return publicConfig
+      .toPromise().then((publicConfig: NsInstanceConfig.IConfig) => {
+        this.configSvc.instanceConfig = publicConfig
+        this.configSvc.rootOrg = publicConfig.rootOrg
+        this.configSvc.org = publicConfig.org
+        // TODO: set one org as default org :: use user preference
+        this.configSvc.activeOrg = publicConfig.org[0]
+        this.configSvc.appSetup = publicConfig.appSetup
+        return publicConfig
+      }).catch(err => {
+        // tslint:disable-next-line
+        console.log('Error', err)
+        return null
+      })
   }
 
   get locale(): string {
@@ -233,72 +242,77 @@ export class InitService {
     return appsConfig
   }
 
-  private async fetchStartUpDetails(): Promise<any> {
+  private async fetchStartUpDetails() {
     // const userRoles: string[] = []
     if (this.configSvc.instanceConfig && !Boolean(this.configSvc.instanceConfig.disablePidCheck)) {
-      let completeProdata: any | null = null
       try {
-        completeProdata = await this.http
+        await this.http
           .get<any>(endpoint.profilePid)
           .pipe(map((res: any) => res.result.response))
           .toPromise()
-        if (
-          completeProdata && completeProdata.roles && completeProdata.roles.length > 0 &&
-          this.hasRole(completeProdata.roles)
-        ) {
-          this.configSvc.unMappedUser = completeProdata
-          const profileV2 = _.get(completeProdata, 'profileDetails')
-          this.configSvc.userProfile = {
-            country: (profileV2) ? _.get(profileV2, 'personalDetails.countryCode') : null,
-            email: (profileV2) ? _.get(profileV2, 'profileDetails.officialEmail') : completeProdata.email,
-            givenName: completeProdata.firstName,
-            userId: completeProdata.userId,
-            firstName: completeProdata.firstName,
-            lastName: completeProdata.lastName,
+          .then((completeProdata: any) => {
+            if (
+              completeProdata && completeProdata.roles && completeProdata.roles.length > 0 &&
+              this.hasRole(completeProdata.roles)
+            ) {
+              this.configSvc.unMappedUser = completeProdata
+              const profileV2 = _.get(completeProdata, 'profileDetails')
+              this.configSvc.userProfile = {
+                country: (profileV2) ? _.get(profileV2, 'personalDetails.countryCode') : null,
+                email: (profileV2) ? _.get(profileV2, 'profileDetails.officialEmail') : completeProdata.email,
+                givenName: completeProdata.firstName,
+                userId: completeProdata.userId,
+                firstName: completeProdata.firstName,
+                lastName: completeProdata.lastName,
 
-            // tslint:disable-next-line: max-line-length
-            userName: `${completeProdata.firstName ? completeProdata.firstName : ' '} ${completeProdata.lastName ? completeProdata.lastName : ' '}`,
-            profileImage: (completeProdata.thumbnail) ? completeProdata.thumbnail : (profileV2) ? _.get(profileV2, 'photo') : null,
-            dealerCode: null,
-            isManager: false,
-            departmentName: (completeProdata.rootOrg) ? completeProdata.rootOrg.orgName : '',
-            rootOrgId: (completeProdata.rootOrg) ? completeProdata.rootOrg.rootOrgId : '',
-          }
-          this.configSvc.userProfileV2 = {
-            userId: (profileV2) ? _.get(profileV2, 'userId') : completeProdata.userId,
-            email: (profileV2) ? _.get(profileV2, 'personalDetails.officialEmail') : completeProdata.email,
-            firstName: (profileV2) ? _.get(profileV2, 'personalDetails.firstname') : completeProdata.firstName,
-            surName: (profileV2) ? _.get(profileV2, 'personalDetails.surname') : completeProdata.lastName,
-            middleName: (profileV2) ? _.get(profileV2, 'personalDetails.middlename') : '',
-            departmentName: (profileV2) ? _.get(profileV2, 'employmentDetails.departmentName') : completeProdata.channel,
-            givenName: (profileV2) ? _.get(completeProdata, 'userName') : '',
-            // tslint:disable-next-line: max-line-length
-            userName: (profileV2) ? `${_.get(profileV2, 'personalDetails.firstname') ? _.get(profileV2, 'personalDetails.firstname') : ''}${_.get(profileV2, 'personalDetails.surname') ? _.get(profileV2, 'personalDetails.surname') : ''}` : '',
-            profileImage: (profileV2) ? _.get(profileV2, 'photo') : completeProdata.thumbnail,
-            dealerCode: null,
-            isManager: false,
-          }
-        } else {
-          // this.router.navigate(['error-access-forbidden'])
-          this.authSvc.logout()
-        }
-        const details = {
-          group: [],
-          profileDetailsStatus: !!_.get(completeProdata, 'profileDetails.mandatoryFieldsExists'),
-          roles: (completeProdata.roles || []).map((v: { toLowerCase: () => void }) => v.toLowerCase()),
-          tncStatus: !completeProdata.promptTnC,
-          isActive: !!!completeProdata.isDeleted,
-        }
-        this.configSvc.hasAcceptedTnc = details.tncStatus
-        this.configSvc.profileDetailsStatus = details.profileDetailsStatus
-        // const roledetails: IDetailsResponse = await this.http
-        //   .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
-        //   .toPromise()
+                // tslint:disable-next-line: max-line-length
+                userName: `${completeProdata.firstName ? completeProdata.firstName : ' '} ${completeProdata.lastName ? completeProdata.lastName : ' '}`,
+                profileImage: (completeProdata.thumbnail) ? completeProdata.thumbnail : (profileV2) ? _.get(profileV2, 'photo') : null,
+                dealerCode: null,
+                isManager: false,
+                departmentName: (completeProdata.rootOrg) ? completeProdata.rootOrg.orgName : '',
+                rootOrgId: (completeProdata.rootOrg) ? completeProdata.rootOrg.rootOrgId : '',
+              }
+              this.configSvc.userProfileV2 = {
+                userId: (profileV2) ? _.get(profileV2, 'userId') : completeProdata.userId,
+                email: (profileV2) ? _.get(profileV2, 'personalDetails.officialEmail') : completeProdata.email,
+                firstName: (profileV2) ? _.get(profileV2, 'personalDetails.firstname') : completeProdata.firstName,
+                surName: (profileV2) ? _.get(profileV2, 'personalDetails.surname') : completeProdata.lastName,
+                middleName: (profileV2) ? _.get(profileV2, 'personalDetails.middlename') : '',
+                departmentName: (profileV2) ? _.get(profileV2, 'employmentDetails.departmentName') : completeProdata.channel,
+                givenName: (profileV2) ? _.get(completeProdata, 'userName') : '',
+                // tslint:disable-next-line: max-line-length
+                userName: (profileV2) ? `${_.get(profileV2, 'personalDetails.firstname') ? _.get(profileV2, 'personalDetails.firstname') : ''}${_.get(profileV2, 'personalDetails.surname') ? _.get(profileV2, 'personalDetails.surname') : ''}` : '',
+                profileImage: (profileV2) ? _.get(profileV2, 'photo') : completeProdata.thumbnail,
+                dealerCode: null,
+                isManager: false,
+              }
+            } else {
+              // this.router.navigate(['error-access-forbidden'])
+              this.authSvc.logout()
+            }
+            const details = {
+              group: [],
+              profileDetailsStatus: !!_.get(completeProdata, 'profileDetails.mandatoryFieldsExists'),
+              roles: (completeProdata.roles || []).map((v: { toLowerCase: () => void }) => v.toLowerCase()),
+              tncStatus: !completeProdata.promptTnC,
+              isActive: !!!completeProdata.isDeleted,
+            }
+            this.configSvc.hasAcceptedTnc = details.tncStatus
+            this.configSvc.profileDetailsStatus = details.profileDetailsStatus
+            // const roledetails: IDetailsResponse = await this.http
+            //   .get<IDetailsResponse>(endpoint.details).pipe(retry(3))
+            //   .toPromise()
 
-        this.configSvc.userGroups = new Set(details.group)
-        this.configSvc.userRoles = new Set((details.roles || []).map((v: any) => v.toLowerCase()))
-        this.configSvc.isActive = details.isActive
-        return details
+            this.configSvc.userGroups = new Set(details.group)
+            this.configSvc.userRoles = new Set((details.roles || []).map((v: any) => v.toLowerCase()))
+            this.configSvc.isActive = details.isActive
+            return details
+          })
+          .catch(err => {
+            // tslint:disable-next-line
+            console.log('Error', err)
+          })
       } catch (e) {
         this.configSvc.userProfile = null
         throw new Error('Invalid user')
