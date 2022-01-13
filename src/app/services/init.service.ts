@@ -146,7 +146,13 @@ export class InitService {
       /**
        * Wait for the instance config and after that
        */
-      await instanceConfigPromise
+      await instanceConfigPromise.then(re => {
+        this.configSvc.instanceConfig = re.publicConfig
+        this.configSvc.rootOrg = re.publicConfig.rootOrg
+        this.configSvc.org = re.publicConfig.org
+        this.configSvc.activeOrg = re.publicConfig.org[0]
+        this.updateAppIndexMeta()
+      })
       /*
        * Wait for the apps config and after that
        */
@@ -386,11 +392,6 @@ export class InitService {
     const publicConfig = await this.http
       .get<NsInstanceConfig.IConfig>(`${this.configSvc.sitePath}/site.config.json`)
       .toPromise()
-    this.configSvc.instanceConfig = publicConfig
-    this.configSvc.rootOrg = publicConfig.rootOrg
-    this.configSvc.org = publicConfig.org
-    this.configSvc.activeOrg = publicConfig.org[0]
-    this.updateAppIndexMeta()
     return publicConfig
   }
 
