@@ -77,6 +77,7 @@
 </mat-toolbar>
 
 <ng-template #navbarSide let-item="item">
+  <h6>Button</h6>
   <ng-container *ngIf="item.type === 'widgetButton'" [wsResolverWidget]="item.config"></ng-container>
   <ws-widget-btn-feature *ngIf="item.type === 'featureButton' && item.config.actionBtnId !== 'feature_notification'"
     [id]="item.config.actionBtnId" [widgetData]="item.config" [showFixedLength]="true"></ws-widget-btn-feature>
