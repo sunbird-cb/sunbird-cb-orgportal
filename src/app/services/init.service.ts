@@ -127,8 +127,9 @@ export class InitService {
         this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
       }
       // await this.fetchUserProfileV2()
-      const appsConfigPromise = this.fetchAppsConfig()
+
       const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
+      const appsConfigPromise = this.fetchAppsConfig()
       const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
       await this.fetchFeaturesStatus() // feature: depends only on details
 
@@ -146,27 +147,28 @@ export class InitService {
       /**
        * Wait for the instance config and after that
        */
-      await instanceConfigPromise.then(re => {
-        this.configSvc.instanceConfig = re.publicConfig
-        this.configSvc.rootOrg = re.publicConfig.rootOrg
-        this.configSvc.org = re.publicConfig.org
-        this.configSvc.activeOrg = re.publicConfig.org[0]
+      await instanceConfigPromise.then(async (re: any) => {
+        this.configSvc.instanceConfig = re
+        this.configSvc.rootOrg = re.rootOrg
+        this.configSvc.org = re.org
+        this.configSvc.activeOrg = re.org[0]
         this.updateAppIndexMeta()
-      })
-      /*
+        /*
        * Wait for the apps config and after that
        */
-      const appsConfig = await appsConfigPromise
-      this.configSvc.appsConfig = this.processAppsConfig(appsConfig)
-      if (this.configSvc.instanceConfig) {
-        this.configSvc.instanceConfig.featuredApps = this.configSvc.instanceConfig.featuredApps.filter(
-          id => appsConfig.features[id],
-        )
-      }
+        const appsConfig = await appsConfigPromise
+        this.configSvc.appsConfig = this.processAppsConfig(appsConfig)
+        if (this.configSvc.instanceConfig) {
+          this.configSvc.instanceConfig.featuredApps = this.configSvc.instanceConfig.featuredApps.filter(
+            id => appsConfig.features[id],
+          )
+        }
 
-      // Apply the settings using settingsService
-      this.settingsSvc.initializePrefChanges(environment.production)
-      this.userPreference.initialize()
+        // Apply the settings using settingsService
+        this.settingsSvc.initializePrefChanges(environment.production)
+        this.userPreference.initialize()
+      })
+
     } catch (e) {
       this.logger.warn(
         'Initialization process encountered some error. Application may not work as expected',
