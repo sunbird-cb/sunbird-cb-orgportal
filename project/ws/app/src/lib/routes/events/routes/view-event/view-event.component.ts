@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import { EventService } from '@sunbird-cb/utils'
-import lodash from 'lodash'
 import moment from 'moment'
+// tslint:disable-next-line
+import _ from 'lodash'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 
 @Component({
