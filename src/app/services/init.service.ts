@@ -128,15 +128,15 @@ export class InitService {
         this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
       }
       // await this.fetchUserProfileV2()
-      const appsConfigPromise = this.fetchAppsConfig()
-      const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
-      const widgetStatusPromise = this.fetchWidgetStatus() // widget: depends only on details & feature
+      const appsConfigPromise = await this.fetchAppsConfig()
+      const instanceConfigPromise = await this.fetchInstanceConfig() // config: depends only on details
+      const widgetStatusPromise = await this.fetchWidgetStatus() // widget: depends only on details & feature
       await this.fetchFeaturesStatus() // feature: depends only on details
 
       /**
        * Wait for the widgets and get the list of restricted widgets
        */
-      const widgetConfig = await widgetStatusPromise
+      const widgetConfig = widgetStatusPromise
       this.processWidgetStatus(widgetConfig)
       this.widgetResolverService.initialize(
         this.configSvc.restrictedWidgets,
@@ -151,7 +151,7 @@ export class InitService {
       /*
        * Wait for the apps config and after that
        */
-      const appsConfig = await appsConfigPromise
+      const appsConfig = appsConfigPromise
       this.configSvc.appsConfig = this.processAppsConfig(appsConfig)
       if (this.configSvc.instanceConfig) {
         this.configSvc.instanceConfig.featuredApps = this.configSvc.instanceConfig.featuredApps.filter(
