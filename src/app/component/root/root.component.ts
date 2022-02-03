@@ -27,6 +27,8 @@ import {
   // WsEvents,
   LoggerService,
   UtilityService,
+  EventService,
+  WsEvents,
 } from '@sunbird-cb/utils'
 import { delay, first } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
@@ -43,7 +45,7 @@ import { MatDialog } from '@angular/material'
   selector: 'ws-root',
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
-  providers: [SwUpdate],
+  providers: [SwUpdate, TelemetryService],
 })
 export class RootComponent implements OnInit, AfterViewInit {
   @ViewChild('previewContainer', { read: ViewContainerRef, static: true })
@@ -78,6 +80,7 @@ export class RootComponent implements OnInit, AfterViewInit {
     private btnBackSvc: BreadcrumbsOrgService,
     private changeDetector: ChangeDetectorRef,
     private utilitySvc: UtilityService,
+    private eventSvc: EventService,
   ) {
     this.mobileAppsSvc.init()
   }
@@ -90,12 +93,14 @@ export class RootComponent implements OnInit, AfterViewInit {
     }
 
     this.btnBackSvc.initialize()
+
+
+
+
     // Application start telemetry
-    this.telemetrySvc.start('app', 'view', '')
-    this.appStartRaised = true
     // if (this.authSvc.isAuthenticated) {
-    //   this.telemetrySvc.start('app', 'view', '')
-    //   this.appStartRaised = true
+    // this.telemetrySvc.start('app', 'view', '')
+    // this.appStartRaised = true
 
     // }
     this.router.events.subscribe((event: any) => {
@@ -139,12 +144,13 @@ export class RootComponent implements OnInit, AfterViewInit {
         const data = {
           pageContext,
         }
-        // console.log('data: ', data)
+        this.raiseAppStartTelemetry()
         if (data.pageContext.pageId && data.pageContext.module) {
           this.telemetrySvc.impression(data)
         } else {
           this.telemetrySvc.impression()
         }
+
         this.currentRouteData = []
 
         // this.telemetrySvc.impression()
@@ -157,6 +163,27 @@ export class RootComponent implements OnInit, AfterViewInit {
     this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
       this.showNavbar = display
     })
+  }
+
+  raiseAppStartTelemetry() {
+    if (!this.appStartRaised) {
+      const event = {
+        eventType: WsEvents.WsEventType.Telemetry,
+        eventLogLevel: WsEvents.WsEventLogLevel.Info,
+        data: {
+          edata: { type: '' },
+          object: {},
+          state: WsEvents.EnumTelemetrySubType.Loaded,
+          eventSubType: WsEvents.EnumTelemetrySubType.Loaded,
+          type: 'app',
+          mode: 'view',
+        },
+        from: '',
+        to: 'Telemetry',
+      }
+      this.eventSvc.dispatchEvent<WsEvents.IWsEventTelemetryInteract>(event)
+      this.appStartRaised = true
+    }
   }
 
   ngAfterViewInit() {
