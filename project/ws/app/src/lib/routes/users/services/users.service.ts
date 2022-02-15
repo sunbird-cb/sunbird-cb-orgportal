@@ -21,6 +21,9 @@ const API_END_POINTS = {
   USER_BDD: '/apis/protected/v8/portal/mdo/deptAction/userrole',
   ACTIVE_USER: 'apis/proxies/v8/user/v1/unblock',
   DE_ACTIVE_USER: 'apis/proxies/v8/user/v1/block',
+  NEW_USER_BLOCK_API: '/apis/proxies/v8/user/v1/block',
+  NEW_USER_UN_BLOCK_API: '/apis/proxies/v8/user/v1/unblock'
+
   // GET_BULKUPLOAD_DATA: '/apis/protected/v8/admin/userRegistration/bulkUploadData',
 }
 
@@ -84,4 +87,34 @@ export class UsersService {
   // getBulkUploadData(): Observable<any> {
   //   return this.http.get<any>(`${API_END_POINTS.GET_BULKUPLOAD_DATA}`)
   // }
+
+  newBlockUser(loggedInUser: string, userId: string): Observable<any> {
+    const org = {
+      request: {
+        userId,
+        requestedBy: loggedInUser,
+      },
+    }
+    return this.http.post<any>(`${API_END_POINTS.NEW_USER_BLOCK_API}`, org)
+  }
+  newUnBlockUser(loggedInUser: string, userId: string): Observable<any> {
+    const org = {
+      request: {
+        userId,
+        requestedBy: loggedInUser,
+      },
+    }
+    return this.http.post<any>(`${API_END_POINTS.NEW_USER_UN_BLOCK_API}`, org)
+  }
+
+  getAllKongUsers(depId: string): Observable<any> {
+    const reqBody = {
+      request: {
+        filters: {
+          rootOrgId: depId,
+        },
+      },
+    }
+    return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody)
+  }
 }
