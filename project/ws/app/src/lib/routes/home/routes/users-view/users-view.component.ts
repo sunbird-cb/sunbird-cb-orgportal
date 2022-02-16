@@ -12,11 +12,13 @@ import { MatSnackBar } from '@angular/material'
 import { EventService } from '@sunbird-cb/utils'
 import { NsContent } from '@sunbird-cb/collection'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import { LoaderService } from '../../../../../../../../../src/app/services/loader.service'
 
 @Component({
   selector: 'ws-app-users-view',
   templateUrl: './users-view.component.html',
   styleUrls: ['./users-view.component.scss'],
+  providers: [LoaderService],
   /* tslint:disable */
   host: { class: 'flex flex-1 margin-top-l' },
   /* tslint:enable */
@@ -61,6 +63,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     private router: Router,
     private snackBar: MatSnackBar,
     private events: EventService,
+    private loaderService: LoaderService,
     // private telemetrySvc: TelemetryService,
     // private configSvc: ConfigurationsService,
     // private discussService: DiscussService,
@@ -72,8 +75,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     this.Math = Math
     this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
-    this.usersData = _.get(this.route, 'snapshot.data.usersList.data') || {}
-    this.filterData()
+    // console.log(_.get(this.route, 'snapshot.data.usersList.data'))
+    // this.usersData = _.get(this.route, 'snapshot.data.usersList.data') || {}
+    // this.filterData()
   }
 
   // decideAPICall() {
@@ -84,7 +88,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
-
+    this.getAllUsers()
   }
 
   filter(filter: string) {
@@ -109,6 +113,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
 
   get dataForTable() {
+
     switch (this.currentFilter) {
       case 'active':
         return this.activeUsersData
@@ -126,6 +131,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     this.inactiveUsersData = this.inActiveUsers
   }
   get activeUsers() {
+    this.loaderService.changeLoad.next(true)
     const activeUsersData: any[] = []
     if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
       _.filter(this.usersData.content, { isDeleted: false }).forEach((user: any) => {
@@ -145,6 +151,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     return activeUsersData
   }
   get inActiveUsers() {
+    this.loaderService.changeLoad.next(true)
     const inactiveUsersData: any[] = []
     if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
       _.filter(this.usersData.content, { isDeleted: true }).forEach((user: any) => {
@@ -183,16 +190,23 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
 
   getAllUsers() {
-    const filterObj = {
-      request: {
-        query: '',
-        filters: {
-          rootOrgId: this.configSvc,
-        },
-      },
-    }
-    this.usersService.getAllUsers(filterObj).subscribe(data => {
-      this.usersData = data
+    this.loaderService.changeLoad.next(true)
+    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+    // const filterObj = {
+    //   request: {
+    //     query: '',
+    //     filters: {
+    //       rootOrgId: this.configSvc,
+    //     },
+    //   },
+    // }
+    // this.usersService.getAllUsers(filterObj).subscribe(data => {
+    //   console.log(data)
+    //   this.usersData = data
+    //   this.filterData()
+    // })
+    this.usersService.getAllKongUsers(rootOrgId).subscribe(data => {
+      this.usersData = data.result.response
       this.filterData()
     })
   }
@@ -223,6 +237,8 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     )
   }
   menuActions($event: { action: string, row: any }) {
+    this.loaderService.changeLoad.next(true)
+    const loggedInUserId = _.get(this.route, 'snapshot.parent.data.configService.userProfile.userId')
     // const user = { userId: _.get($event.row, 'userId') }
     // _.set(user, 'deptId', _.get(_.first(_.filter(this.usersData.content, { id: user.userId })), 'rootOrgId'))
     // _.set(user, 'isBlocked', _.get($event.row, 'blocked'))
@@ -246,7 +262,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         this.usersService.blockUser(user).subscribe(response => {
           if (response) {
             this.getAllUsers()
-            this.snackBar.open('Updated successfully !')
+            this.snackBar.open(response.result.response)
           }
         })
         break
@@ -263,10 +279,19 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       case 'deactive':
         // _.set(user, 'isDeleted', true)
         // _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i))
-        this.usersService.deActiveUser(user).subscribe(response => {
-          if (response) {
-            this.getAllUsers()
-            this.snackBar.open('Updated successfully !')
+        // this.usersService.deActiveUser(user).subscribe(response => {
+        this.usersService.newBlockUser(loggedInUserId, user.request.userId).subscribe(response => {
+          if (response.params.status === 'success') {
+            setTimeout(() => {
+              this.getAllUsers()
+
+              this.snackBar.open('Deactivated successfully!')
+            }, 1500)
+            // this.changeDetectorRefs.detectChanges()
+          }
+          else {
+            this.loaderService.changeLoad.next(false)
+            this.snackBar.open('Update unsuccess!')
           }
         },
           // tslint:disable-next-line:align
@@ -283,10 +308,17 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           _.set(user, 'isDeleted', false)
         }
         _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i))
-        this.usersService.deActiveUser(user).subscribe(response => {
-          if (response) {
-            this.getAllUsers()
-            this.snackBar.open('Updated successfully !')
+        // this.usersService.deActiveUser(user).subscribe(response => {
+        this.usersService.newUnBlockUser(loggedInUserId, user.request.userId).subscribe(response => {
+          if (response.params.status === 'success') {
+            setTimeout(() => {
+              this.getAllUsers()
+              this.snackBar.open('Activated successfully!')
+
+            }, 1500)
+          } else {
+            this.loaderService.changeLoad.next(false)
+            this.snackBar.open('Update unsuccess!')
           }
         })
         break
