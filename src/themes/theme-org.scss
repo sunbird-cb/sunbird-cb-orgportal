@@ -79,7 +79,7 @@ $theme-warn: mat-palette($mat-red);
 $background-color: mat-palette($mat-blue);
 $theme-background: mat-palette($mat-blue);
 
-.theme-igot {
+.theme-org {
     &.day-mode {
         $theme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
         // -or- Can set colour by hex value too

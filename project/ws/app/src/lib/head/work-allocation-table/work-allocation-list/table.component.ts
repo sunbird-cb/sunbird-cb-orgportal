@@ -11,8 +11,9 @@ import * as _ from 'lodash'
 import { ITableData, IColums } from '../interface/interfaces'
 import { Router, ActivatedRoute } from '@angular/router'
 import { UserPopupComponent } from '../user-popup/user-popup'
-import { CreateMDOService } from '../create-mdo.services'
+import { CreateDepartmentService } from '../create-dep.services'
 import { ExportAsConfig } from 'ngx-export-as'
+import { environment } from '../../../../../../../../src/environments/environment'
 
 @Component({
   selector: 'ws-work-allocation-table',
@@ -53,7 +54,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
   constructor(
     private router: Router, public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private createMDOService: CreateMDOService,
+    private depService: CreateDepartmentService,
     private snackBar: MatSnackBar, private wrkAllocServ: WorkallocationService) {
     this.dataSource = new MatTableDataSource<any>()
     this.actionsClick = new EventEmitter()
@@ -176,8 +177,8 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe((response: any) => {
       response.data.forEach((user: { userId: string }) => {
         if (this.departmentId) {
-          const role = `MDO_ADMIN`
-          this.createMDOService.assignAdminToDepartment(user.userId, this.departmentId, role).subscribe(res => {
+          const role = environment.AdminRole
+          this.depService.assignAdminToDepartment(user.userId, this.departmentId, role).subscribe(res => {
             if (res) {
               this.snackBar.open('Admin assigned Successfully')
               this.router.navigate(['/app/home/directory', { department: this.departmentRole }])

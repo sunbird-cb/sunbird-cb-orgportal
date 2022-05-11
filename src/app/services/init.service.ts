@@ -70,27 +70,27 @@ export class InitService {
     // Usage: <mat-icon svgIcon="pin"></mat-icon>
     iconRegistry.addSvgIcon(
       'pin',
-      domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/pin.svg'),
+      domSanitizer.bypassSecurityTrustResourceUrl('org-assets/icons/pin.svg'),
     )
     iconRegistry.addSvgIcon(
       'facebook',
-      domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/facebook.svg'),
+      domSanitizer.bypassSecurityTrustResourceUrl('org-assets/icons/facebook.svg'),
     )
     iconRegistry.addSvgIcon(
       'linked-in',
-      domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/linked-in.svg'),
+      domSanitizer.bypassSecurityTrustResourceUrl('org-assets/icons/linked-in.svg'),
     )
     iconRegistry.addSvgIcon(
       'twitter',
-      domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/twitter.svg'),
+      domSanitizer.bypassSecurityTrustResourceUrl('org-assets/icons/twitter.svg'),
     )
     iconRegistry.addSvgIcon(
       'goi',
-      domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/emblem-dark.png'),
+      domSanitizer.bypassSecurityTrustResourceUrl('org-assets/icons/emblem-dark.png'),
     )
     iconRegistry.addSvgIcon(
       'hubs',
-      domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/hubs.svg'),
+      domSanitizer.bypassSecurityTrustResourceUrl('org-assets/icons/hubs.svg'),
     )
   }
 

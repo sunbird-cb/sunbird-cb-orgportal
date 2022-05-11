@@ -5,7 +5,7 @@ import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewEncapsulation 
 import _ from 'lodash'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { ProfileV2Service } from '../../services/home.servive'
-import { dashboardEmptyData } from '../../../../../../../../../src/mdo-assets/data/data'
+import { dashboardEmptyData } from '../../../../data/data'
 /* tslint:enable */
 import { Router } from '@angular/router'
 import { EventService } from '@sunbird-cb/utils'
@@ -41,8 +41,12 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   currentDashboard: any = []
   dashboardEmpty = dashboardEmptyData
 
-  constructor(@Inject(DOCUMENT) private document: Document, private homeResolver: ProfileV2Service, private router: Router,
-              private events: EventService) {
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private homeResolver: ProfileV2Service,
+    private router: Router,
+    private events: EventService,
+  ) {
   }
   filterR(type: string) {
     this.resolutionFilter = type

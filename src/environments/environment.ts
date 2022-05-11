@@ -8,6 +8,7 @@ export const environment: IEnvironment = {
   sitePath: (window as { [key: string]: any })['env']['sitePath'] || '',
   karmYogiPath: (window as { [key: string]: any })['env']['karmYogiPath'] || '',
   cbpPath: (window as { [key: string]: any })['env']['cbpPath'] || '',
+  AdminRole: (window as { [key: string]: any })['env']['AdminRole'] || 'MDO_ADMIN',
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
 }
 interface IEnvironment {
@@ -16,6 +17,7 @@ interface IEnvironment {
   sitePath: null | string
   karmYogiPath: string
   cbpPath: string
+  AdminRole: string
   portalRoles: string[]
 }
 

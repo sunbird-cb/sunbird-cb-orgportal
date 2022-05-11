@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core'
 import { Router } from '@angular/router'
 import { ConfigurationsService, NsPage } from '@sunbird-cb/utils'
-import { mapFilePath, dashboardEmptyData } from '../../../../../../../../../src/mdo-assets/data/data'
+import { mapFilePath, dashboardEmptyData } from '../../../../data/data'
 
 @Component({
   selector: 'ws-app-my-dashboard-home',
@@ -17,11 +17,11 @@ export class MyDashboardHomeComponent implements OnInit {
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
 
   getDashboardForKM =
-      '/apis/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi'
-    getDashboardForProfile =
-      '/apis/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi'
-    getChartV2 =
-      '/apis/proxies/v8/dashboard/analytics/getChartV2/Karmayogi'
+    '/apis/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi'
+  getDashboardForProfile =
+    '/apis/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi'
+  getChartV2 =
+    '/apis/proxies/v8/dashboard/analytics/getChartV2/Karmayogi'
 
   selectedDashboardId = ''
 

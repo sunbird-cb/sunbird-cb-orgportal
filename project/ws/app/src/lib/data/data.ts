@@ -1,6 +1,6 @@
 // Map file path
-export const mapFilePath =
-  '../../mdo-assets/json/IndiaDistrict_Updated_21_05_2020.json'
+export const mapFilePath = '/assets/map/IndiaDistrict_Updated_21_05_2020.json'
+// '../../../../../src/org-assets/json/IndiaDistrict_Updated_21_05_2020.json'
 
 // Dashboard empty data
 export const dashboardEmptyData: any = {

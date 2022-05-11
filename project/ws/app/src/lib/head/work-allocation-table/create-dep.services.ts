@@ -15,7 +15,7 @@ const DEPARTMENT_NAME = 'igot'
 @Injectable({
   providedIn: 'root',
 })
-export class CreateMDOService {
+export class CreateDepartmentService {
   constructor(private http: HttpClient) { }
   getAllSubDepartments(deptName: string): Observable<any> {
     return this.http.get<any>(`${API_END_POINTS.GET_ALL_DEPARTMENTS}${deptName}`)

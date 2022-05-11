@@ -17,7 +17,7 @@ td, th {
   border-left: 1px solid #d3d3d3;
 }
 .page_title_flex {
-  display:flex; 
+  display:flex;
   justify-content: right;
 }
 
@@ -74,7 +74,7 @@ mat-card.highlight {
 
 mat-card.event_types {
   width:230px;
-  box-shadow: none; 
+  box-shadow: none;
   margin-right:20px;
 }
 
@@ -91,7 +91,7 @@ mat-card.event_types {
 }
 
 label.event_types {
-  vertical-align: text-bottom; 
+  vertical-align: text-bottom;
   line-height: 20px;
   font-size: 14px;
   font-weight: 400;
@@ -165,7 +165,7 @@ th.mat-header-cell {
   border-right: none !important;
 }
 
-.theme-igot.day-mode .mat-drawer-side {
+.theme-org.day-mode .mat-drawer-side {
   background: white !important;
 }
 
@@ -179,7 +179,7 @@ th.mat-header-cell {
   line-height: normal !important;
 }
 
-::ng-deep .theme-igot.day-mode .mat-form-field.mat-focused .mat-form-field-label {
+::ng-deep .theme-org.day-mode .mat-form-field.mat-focused .mat-form-field-label {
   color: #333232 !important;
 }
 
@@ -710,7 +710,7 @@ input.mat-input-element {
 }
 
 .image-box {
-  display:flex; 
+  display:flex;
   justify-content: right;
   .mat-card {
     width: 200px;
@@ -720,7 +720,7 @@ input.mat-input-element {
   .imgicon {
     width: 35px;
     margin: 0 auto;
-  }  
+  }
 
   #blah {
     width: 200px;
@@ -732,6 +732,6 @@ input.mat-input-element {
 .padding-left-xl {
   padding-left: 32px !important;
 }
-::ng-deep.theme-igot.day-mode .mat-stroked-button:not([disabled]) {
+::ng-deep.theme-org.day-mode .mat-stroked-button:not([disabled]) {
   border-color: #0074b6;
 }

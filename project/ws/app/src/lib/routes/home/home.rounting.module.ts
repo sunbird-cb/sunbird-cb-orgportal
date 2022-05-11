@@ -26,10 +26,15 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    data: {
+      pageType: 'feature',
+      pageKey: 'IndiaDistrict_Updated_21_05_2020',
+    },
     resolve: {
       // department: DepartmentResolve,
       configService: ConfigResolveService,
       tabs: HomeResolve,
+      // mapJson: PageResolve,
     },
     children: [
       {
