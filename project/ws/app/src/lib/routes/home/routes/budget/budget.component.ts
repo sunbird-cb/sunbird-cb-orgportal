@@ -8,7 +8,7 @@ import * as _ from 'lodash'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { BudgetschemepopupComponent } from '../../components/budgetschemepopup/budgetschemepopup.component'
 import { BudgetproofspopupComponent } from '../../components/budgetproofspopup/budgetproofspopup.component'
-import { MdoInfoService } from '../../services/mdoinfo.service'
+import { DepartmentInfoService } from '../../services/departmentinfo.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
 
@@ -89,7 +89,7 @@ export class BudgetComponent implements OnInit, OnChanges {
 
   constructor(private snackBar: MatSnackBar, public dialog: MatDialog, private configSvc: ConfigurationsService,
     // tslint:disable-next-line:align
-    private mdoinfoSrvc: MdoInfoService, private activeRoute: ActivatedRoute) {
+    private mdoinfoSrvc: DepartmentInfoService, private activeRoute: ActivatedRoute) {
     this.budgetdata = new FormGroup({
       budgetyear: new FormControl('', [Validators.required]),
       salarybudget: new FormControl('', [Validators.required]),

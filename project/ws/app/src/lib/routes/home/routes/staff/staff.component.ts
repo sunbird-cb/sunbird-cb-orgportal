@@ -8,7 +8,7 @@ import * as _ from 'lodash'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { StaffdetailspopupComponent } from '../../components/staffdetailspopup/staffdetailspopup.component'
 import { ActivatedRoute } from '@angular/router'
-import { MdoInfoService } from '../../services/mdoinfo.service'
+import { DepartmentInfoService } from '../../services/departmentinfo.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 
 @Component({
@@ -52,7 +52,7 @@ export class StaffComponent implements OnInit, OnChanges {
 
   constructor(private snackBar: MatSnackBar, public dialog: MatDialog, private activeRoute: ActivatedRoute,
     // tslint:disable-next-line:align
-    private configSvc: ConfigurationsService, private mdoinfoSrvc: MdoInfoService) {
+    private configSvc: ConfigurationsService, private mdoinfoSrvc: DepartmentInfoService) {
     this.staffdata = new FormGroup({
       totalpositions: new FormControl({ value: '', disabled: true }),
       posfilled: new FormControl('', [Validators.required]),

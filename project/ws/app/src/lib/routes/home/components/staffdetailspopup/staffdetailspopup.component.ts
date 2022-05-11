@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { MdoInfoService } from '../../services/mdoinfo.service'
+import { DepartmentInfoService } from '../../services/departmentinfo.service'
 
 @Component({
   selector: 'ws-app-staffdetailspopup',
@@ -17,7 +17,7 @@ export class StaffdetailspopupComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<StaffdetailspopupComponent>, @Inject(MAT_DIALOG_DATA) data: any,
     // tslint:disable-next-line:align
-    private mdoinfoSrvc: MdoInfoService) {
+    private mdoinfoSrvc: DepartmentInfoService) {
     this.staffform = new FormGroup({
       designation: new FormControl('', [Validators.required]),
       posfilled: new FormControl('', [Validators.required]),

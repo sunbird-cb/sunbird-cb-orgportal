@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort'
 import { IColums, ITableData } from '../../interface/interfaces'
 import * as _ from 'lodash'
 import { AdduserpopupComponent } from '../adduserpopup/adduserpopup.component'
-import { MdoInfoService } from '../../services/mdoinfo.service'
+import { DepartmentInfoService } from '../../services/departmentinfo.service'
 // import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Router } from '@angular/router'
 
@@ -49,7 +49,7 @@ export class AdmintableComponent implements OnInit, OnChanges {
     }
   }
 
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private mdoinfoSrvc: MdoInfoService, private router: Router) {
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private mdoinfoSrvc: DepartmentInfoService, private router: Router) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
 

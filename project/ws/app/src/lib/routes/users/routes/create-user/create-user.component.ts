@@ -107,7 +107,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
 
       if (this.qpParam === 'MDOinfo') {
         // tslint:disable-next-line:max-line-length
-        this.breadcrumbs = { titles: [{ title: 'Home', url: '/app/home' }, { title: 'MDO information', url: '/app/home/mdoinfo/leadership' }, { title: 'New User', url: 'none' }] }
+        this.breadcrumbs = { titles: [{ title: 'Home', url: '/app/home' }, { title: 'Department information', url: '/app/home/mdoinfo/leadership' }, { title: 'New User', url: 'none' }] }
       } else {
         // tslint:disable-next-line:max-line-length
         this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: 'Active', url: 'none' }, { title: 'New User', url: 'none' }] }

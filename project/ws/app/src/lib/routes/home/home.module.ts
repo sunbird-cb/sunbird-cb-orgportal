@@ -54,7 +54,7 @@ import { LeadershiptableComponent } from './components/leadershiptable/leadershi
 import { BudgettableComponent } from './components/budgettable/budgettable.component'
 import { AdduserpopupComponent } from './components/adduserpopup/adduserpopup.component'
 import { StaffdetailspopupComponent } from './components/staffdetailspopup/staffdetailspopup.component'
-import { MdoInfoService } from './services/mdoinfo.service'
+import { DepartmentInfoService } from './services/departmentinfo.service'
 import { BudgetschemepopupComponent } from './components/budgetschemepopup/budgetschemepopup.component'
 import { BudgetproofspopupComponent } from './components/budgetproofspopup/budgetproofspopup.component'
 import { UploadService } from './services/upload.service'
@@ -142,7 +142,7 @@ import { AdmintableComponent } from './components/admintable/admintable.componen
     // CKEditorService,
     // LoaderService,
     InitResolver,
-    MdoInfoService,
+    DepartmentInfoService,
     UploadService,
   ],
 })

@@ -21,7 +21,7 @@ const API_END_POINTS = {
 @Injectable({
   providedIn: 'root',
 })
-export class MdoInfoService {
+export class DepartmentInfoService {
   constructor(private http: HttpClient) { }
   getAllUsers(filter: object): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, filter).pipe(map(res => _.get(res, 'result.response')))

@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort'
 import { IColums, ITableData } from '../../interface/interfaces'
 import * as _ from 'lodash'
 import { AdduserpopupComponent } from '../adduserpopup/adduserpopup.component'
-import { MdoInfoService } from '../../services/mdoinfo.service'
+import { DepartmentInfoService } from '../../services/departmentinfo.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute, Router } from '@angular/router'
 
@@ -52,7 +52,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
 
   constructor(public dialog: MatDialog, private activeRoute: ActivatedRoute, private snackBar: MatSnackBar,
     // tslint:disable-next-line:align
-    private mdoinfoSrvc: MdoInfoService, private configSvc: ConfigurationsService, private router: Router) {
+    private mdoinfoSrvc: DepartmentInfoService, private configSvc: ConfigurationsService, private router: Router) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
   }
