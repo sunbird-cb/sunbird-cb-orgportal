@@ -42,7 +42,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   usersData: any = []
   usersData1: any
   deptID: any
-  statedata = { param: 'MDOinfo', path: 'Leadership' }
+  statedata = { param: 'DPTinfo', path: 'Leadership' }
   // tslint:disable-next-line:max-line-length
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
@@ -52,7 +52,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
 
   constructor(public dialog: MatDialog, private activeRoute: ActivatedRoute, private snackBar: MatSnackBar,
     // tslint:disable-next-line:align
-    private mdoinfoSrvc: DepartmentInfoService, private configSvc: ConfigurationsService, private router: Router) {
+    private dptinfoSrvc: DepartmentInfoService, private configSvc: ConfigurationsService, private router: Router) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
   }
@@ -89,7 +89,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
         },
       },
     }
-    this.mdoinfoSrvc.getAllUsers(filterObj).subscribe(
+    this.dptinfoSrvc.getAllUsers(filterObj).subscribe(
       (res: any) => {
         // this.usersData = res.content
         this.filterAllUsers(res.content)
@@ -121,7 +121,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
           },
         },
       }
-      this.mdoinfoSrvc.getTeamUsers(req).subscribe(
+      this.dptinfoSrvc.getTeamUsers(req).subscribe(
         (res: any) => {
           const result = res.result.response.content
           if (result.length > 0) {
@@ -153,7 +153,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
               this.dataSource.data = this.data
               this.dataSource.paginator = this.paginator
               // this.getAllUsers(this.deptID)
-              this.router.navigate(['/app/home/mdoinfo/leadership'])
+              this.router.navigate(['/app/home/dptinfo/leadership'])
             }
           } else {
             this.getAllUsers(this.deptID)
@@ -229,7 +229,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
         roles: nroles,
       },
     }
-    this.mdoinfoSrvc.assignTeamRole(obj).subscribe(
+    this.dptinfoSrvc.assignTeamRole(obj).subscribe(
       () => {
         this.openSnackbar('User is added successfully!')
         this.getUsers('MDO_LEADER')
@@ -253,6 +253,6 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   }
 
   updateData(rowdata: any) {
-    this.router.navigate([`/app/users/${rowdata.id}/details`], { queryParams: { param: 'MDOinfo', path: 'Leadership' } })
+    this.router.navigate([`/app/users/${rowdata.id}/details`], { queryParams: { param: 'DPTinfo', path: 'Leadership' } })
   }
 }

@@ -51,7 +51,7 @@ export class AdduserpopupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.statedata = { param: 'MDOinfo', path: 'Leadership' }
+    this.statedata = { param: 'DPTinfo', path: 'Leadership' }
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -84,7 +84,7 @@ export class AdduserpopupComponent implements OnInit {
   }
 
   createnewuser() {
-    this.router.navigate([`/app/users/create-user`, { queryParams: { page: 'MDOinfo' } }])
+    this.router.navigate([`/app/users/create-user`, { queryParams: { page: 'DPTinfo' } }])
   }
 
   applyFilter(filterValue: any) {

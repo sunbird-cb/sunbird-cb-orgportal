@@ -144,13 +144,13 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
   }
 
-  viewmdoinfo(tab: any) {
+  viewdptinfo(tab: any) {
     if (tab === 'leadership') {
-      this.router.navigate(['/app/home/mdoinfo/leadership'])
+      this.router.navigate(['/app/home/dptinfo/leadership'])
     } else if (tab === 'staff') {
-      this.router.navigate(['/app/home/mdoinfo/staff'])
+      this.router.navigate(['/app/home/dptinfo/staff'])
     } else if (tab === 'budget') {
-      this.router.navigate(['/app/home/mdoinfo/budget'])
+      this.router.navigate(['/app/home/dptinfo/budget'])
     }
     this.events.raiseInteractTelemetry(
       {

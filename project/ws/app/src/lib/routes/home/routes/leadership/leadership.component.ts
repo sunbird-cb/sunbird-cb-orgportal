@@ -48,7 +48,7 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
   deptID: any
   tabData = 'MDO_LEADER'
 
-  constructor(private activeRoute: ActivatedRoute, private configSvc: ConfigurationsService, private mdoinfoSrvc: DepartmentInfoService) {
+  constructor(private activeRoute: ActivatedRoute, private configSvc: ConfigurationsService, private dptinfoSrvc: DepartmentInfoService) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
   }
@@ -131,7 +131,7 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
         },
       },
     }
-    this.mdoinfoSrvc.getTeamUsers(req).subscribe(
+    this.dptinfoSrvc.getTeamUsers(req).subscribe(
       (res: any) => {
         this.usersData = res.result.response.content
         if (this.usersData.length > 0) {

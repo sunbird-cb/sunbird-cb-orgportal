@@ -1,18 +1,18 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core'
 import { ValueService, ConfigurationsService, WidgetContentService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
-import { ActivatedRoute, Router, Event, NavigationEnd  } from '@angular/router'
-import { MDOinfo } from '../../models/mdoinfo.model'
+import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
+import { Departmentinfo } from '../../models/dptinfo.model'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */
 
 @Component({
-  selector: 'ws-app-mdoinfo',
-  templateUrl: './mdoinfo.component.html',
-  styleUrls: ['./mdoinfo.component.scss'],
+  selector: 'ws-app-dptinfo',
+  templateUrl: './dptinfo.component.html',
+  styleUrls: ['./dptinfo.component.scss'],
 })
-export class MdoinfoComponent implements OnInit, OnDestroy {
+export class DPtinfoComponent implements OnInit, OnDestroy {
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
   sticky = false
   elementPosition: any
@@ -25,7 +25,7 @@ export class MdoinfoComponent implements OnInit, OnDestroy {
   isLtMedium$ = this.valueSvc.isLtMedium$
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   tabs: any
-  tabsData: MDOinfo.IProfileTab[] | undefined
+  tabsData: Departmentinfo.IProfileTab[] | undefined
   private defaultSideNavBarOpenedSubscription: any
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -43,17 +43,17 @@ export class MdoinfoComponent implements OnInit, OnDestroy {
     private valueSvc: ValueService,
     private configSvc: ConfigurationsService,
     private widgetContentSvc: WidgetContentService) {
-      this.router.events.subscribe((event: Event) => {
-        if (event instanceof NavigationEnd) {
-          this.bindUrl(event.urlAfterRedirects.replace('/app/home/mdoinfo/', '/app/home/mdoinfo/leadership'))
-        }
-      })
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.bindUrl(event.urlAfterRedirects.replace('/app/home/dptinfo/', '/app/home/dptinfo/leadership'))
+      }
+    })
 
   }
 
   ngOnInit() {
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
-    this.getMDOInfoConfig()
+    this.getDPTInfoConfig()
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
@@ -66,8 +66,8 @@ export class MdoinfoComponent implements OnInit, OnDestroy {
     }
   }
 
-  getMDOInfoConfig() {
-    const url = `${this.configSvc.sitePath}/feature/mdoinfo.json`
+  getDPTInfoConfig() {
+    const url = `${this.configSvc.sitePath}/feature/dptinfo.json`
     this.widgetContentSvc.fetchConfig(url).subscribe(
       config => {
         this.tabsData = config.tabs

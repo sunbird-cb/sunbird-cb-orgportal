@@ -15,7 +15,7 @@ import { UsersListResolve } from './resolvers/users-list-resolve.service'
 import { LeadershipComponent } from './routes/leadership/leadership.component'
 import { StaffComponent } from './routes/staff/staff.component'
 import { BudgetComponent } from './routes/budget/budget.component'
-import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
+import { DPtinfoComponent } from './routes/dptinfo/dptinfo.component'
 
 const routes: Routes = [
   {
@@ -94,10 +94,10 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'mdoinfo',
-    component: MdoinfoComponent,
+    path: 'dptinfo',
+    component: DPtinfoComponent,
     data: {
-      pageId: 'mdoinfo',
+      pageId: 'dptinfo',
       module: 'home',
     },
     resolve: {

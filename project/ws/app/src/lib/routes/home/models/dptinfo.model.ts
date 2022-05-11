@@ -1,4 +1,4 @@
-export namespace MDOinfo {
+export namespace Departmentinfo {
     export interface IProfileJsonData {
         tabs: IProfileTab[]
     }

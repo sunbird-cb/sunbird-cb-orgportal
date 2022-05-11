@@ -89,7 +89,7 @@ export class BudgetComponent implements OnInit, OnChanges {
 
   constructor(private snackBar: MatSnackBar, public dialog: MatDialog, private configSvc: ConfigurationsService,
     // tslint:disable-next-line:align
-    private mdoinfoSrvc: DepartmentInfoService, private activeRoute: ActivatedRoute) {
+    private dptinfoSrvc: DepartmentInfoService, private activeRoute: ActivatedRoute) {
     this.budgetdata = new FormGroup({
       budgetyear: new FormControl('', [Validators.required]),
       salarybudget: new FormControl('', [Validators.required]),
@@ -284,7 +284,7 @@ export class BudgetComponent implements OnInit, OnChanges {
             trainingBudgetAllocated: this.budgetdata.controls['trainingbudget'].value ? this.budgetdata.controls['trainingbudget'].value : 0,
             trainingBudgetUtilization: Number(response.data.trainingBudgetUtilization),
           }
-          this.mdoinfoSrvc.addBudgetdetails(req).subscribe(
+          this.dptinfoSrvc.addBudgetdetails(req).subscribe(
             (res: any) => {
               if (res) {
                 this.openSnackbar('Scheme details added successfully')
@@ -303,7 +303,7 @@ export class BudgetComponent implements OnInit, OnChanges {
   getBudgetDetails(budgetyear: any) {
     this.dataSource.data = []
     this.scehemetableDatadata = []
-    this.mdoinfoSrvc.getBudgetdetails(this.deptID, budgetyear).subscribe(
+    this.dptinfoSrvc.getBudgetdetails(this.deptID, budgetyear).subscribe(
       (res: any) => {
         const result = res.result.response
         result.sort((a: any, b: any) => {
@@ -353,7 +353,7 @@ export class BudgetComponent implements OnInit, OnChanges {
         trainingBudgetAllocated: Number(form.value.trainingbudget),
         trainingBudgetUtilization: Number(form.value.budgetutilized),
       }
-      this.mdoinfoSrvc.addBudgetdetails(req).subscribe(
+      this.dptinfoSrvc.addBudgetdetails(req).subscribe(
         (res: any) => {
           if (res) {
             this.openSnackbar('Budget details added successfully')
@@ -370,7 +370,7 @@ export class BudgetComponent implements OnInit, OnChanges {
         schemeName: 'all',
         trainingBudgetUtilization: Number(form.value.budgetutilized),
       }
-      this.mdoinfoSrvc.updateBudgetdetails(req).subscribe(
+      this.dptinfoSrvc.updateBudgetdetails(req).subscribe(
         (res: any) => {
           if (res) {
             this.openSnackbar('Budget details updated successfully')
@@ -390,7 +390,7 @@ export class BudgetComponent implements OnInit, OnChanges {
       schemeName: data.schemename,
       trainingBudgetUtilization: Number(data.trainingBudgetUtilization),
     }
-    this.mdoinfoSrvc.updateBudgetdetails(req).subscribe(
+    this.dptinfoSrvc.updateBudgetdetails(req).subscribe(
       (res: any) => {
         if (res) {
           this.openSnackbar('Scheme details updated successfully')
@@ -402,7 +402,7 @@ export class BudgetComponent implements OnInit, OnChanges {
   }
 
   // deleteBudgetDetails(form: any) {
-  //   this.mdoinfoSrvc.deleteBudgetdetails(form.id, this.deptID).subscribe(
+  //   this.dptinfoSrvc.deleteBudgetdetails(form.id, this.deptID).subscribe(
   //     (res: any) => {
   //       if (res) {
   //         this.openSnackbar('Scheme details deleted successfully')

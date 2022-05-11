@@ -42,7 +42,7 @@ import { NgxPaginationModule } from 'ngx-pagination'
 import { UIAdminTableModule } from '../../head/work-allocation-table/ui-admin-table.module'
 import { WelcomeComponent } from './routes/welcome/welcome.component'
 import { RainDashboardsModule } from '@sunbird-cb/rain-dashboards'
-import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
+import { DPtinfoComponent } from './routes/dptinfo/dptinfo.component'
 import { LeadershipComponent } from './routes/leadership/leadership.component'
 import { StaffComponent } from './routes/staff/staff.component'
 import { BudgetComponent } from './routes/budget/budget.component'
@@ -68,7 +68,7 @@ import { AdmintableComponent } from './components/admintable/admintable.componen
     ApprovalsComponent,
     WorkallocationComponent,
     WelcomeComponent,
-    MdoinfoComponent,
+    DPtinfoComponent,
     LeadershipComponent,
     StaffComponent,
     BudgetComponent,

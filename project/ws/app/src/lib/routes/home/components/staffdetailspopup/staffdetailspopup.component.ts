@@ -17,7 +17,7 @@ export class StaffdetailspopupComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<StaffdetailspopupComponent>, @Inject(MAT_DIALOG_DATA) data: any,
     // tslint:disable-next-line:align
-    private mdoinfoSrvc: DepartmentInfoService) {
+    private dptinfoSrvc: DepartmentInfoService) {
     this.staffform = new FormGroup({
       designation: new FormControl('', [Validators.required]),
       posfilled: new FormControl('', [Validators.required]),
@@ -51,7 +51,7 @@ export class StaffdetailspopupComponent implements OnInit {
         },
       ],
     }
-    this.mdoinfoSrvc.getDesignations(desreq).subscribe(
+    this.dptinfoSrvc.getDesignations(desreq).subscribe(
       (data: any) => {
         this.designationsMeta = []
         this.designationsMeta = data.responseData

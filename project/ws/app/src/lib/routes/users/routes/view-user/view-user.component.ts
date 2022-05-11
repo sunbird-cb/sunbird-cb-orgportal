@@ -144,9 +144,9 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         this.routeSubscription = this.activeRoute.queryParamMap.subscribe(qParamsMap => {
           this.qpParam = qParamsMap.get('param')
           this.qpPath = qParamsMap.get('path')
-          if (this.qpParam === 'MDOinfo') {
+          if (this.qpParam === 'dptinfo') {
             // tslint:disable-next-line:max-line-length
-            this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: this.userStatus, url: 'none' }, { title: 'Department information', url: '/app/home/mdoinfo/leadership' }, { title: this.fullname, url: 'none' }] }
+            this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: this.userStatus, url: 'none' }, { title: 'Department information', url: '/app/home/dptinfo/leadership' }, { title: this.fullname, url: 'none' }] }
           } else {
             // tslint:disable-next-line:max-line-length
             this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: this.userStatus, url: 'none' }, { title: this.fullname, url: 'none' }] }
@@ -283,8 +283,8 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         if (dres) {
           this.updateUserRoleForm.reset({ roles: '' })
           this.openSnackbar('User role updated Successfully')
-          if (this.qpParam === 'MDOinfo') {
-            this.router.navigate(['/app/home/mdoinfo/leadership'])
+          if (this.qpParam === 'DPTinfo') {
+            this.router.navigate(['/app/home/dptinfo/leadership'])
           } else {
             this.router.navigate(['/app/home/users'])
           }

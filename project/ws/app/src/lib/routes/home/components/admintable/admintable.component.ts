@@ -49,7 +49,7 @@ export class AdmintableComponent implements OnInit, OnChanges {
     }
   }
 
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private mdoinfoSrvc: DepartmentInfoService, private router: Router) {
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private dptinfoSrvc: DepartmentInfoService, private router: Router) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
 
@@ -86,7 +86,7 @@ export class AdmintableComponent implements OnInit, OnChanges {
         },
       },
     }
-    this.mdoinfoSrvc.getAllUsers(filterObj).subscribe(
+    this.dptinfoSrvc.getAllUsers(filterObj).subscribe(
       (res: any) => {
         // this.usersData = res.content
         this.filterAllUsers(res.content)
@@ -118,7 +118,7 @@ export class AdmintableComponent implements OnInit, OnChanges {
           },
         },
       }
-      this.mdoinfoSrvc.getTeamUsers(req).subscribe(
+      this.dptinfoSrvc.getTeamUsers(req).subscribe(
         (res: any) => {
           if (res.result.response.content.length > 0) {
             res.result.response.content.sort((a: any, b: any) => {
@@ -225,7 +225,7 @@ export class AdmintableComponent implements OnInit, OnChanges {
         roles: nroles,
       },
     }
-    this.mdoinfoSrvc.assignTeamRole(obj).subscribe(
+    this.dptinfoSrvc.assignTeamRole(obj).subscribe(
       () => {
         this.openSnackbar('User is added successfully!')
         this.getUsers('MDO_ADMIN')
@@ -249,6 +249,6 @@ export class AdmintableComponent implements OnInit, OnChanges {
   }
 
   updateData(rowdata: any) {
-    this.router.navigate([`/app/users/${rowdata.id}/details`], { queryParams: { param: 'MDOinfo', path: 'Leadership' } })
+    this.router.navigate([`/app/users/${rowdata.id}/details`], { queryParams: { param: 'DPTinfo', path: 'Leadership' } })
   }
 }

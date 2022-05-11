@@ -105,9 +105,9 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       this.qpParam = qParamsMap.get('param')
       this.qpPath = qParamsMap.get('path')
 
-      if (this.qpParam === 'MDOinfo') {
+      if (this.qpParam === 'DPTinfo') {
         // tslint:disable-next-line:max-line-length
-        this.breadcrumbs = { titles: [{ title: 'Home', url: '/app/home' }, { title: 'Department information', url: '/app/home/mdoinfo/leadership' }, { title: 'New User', url: 'none' }] }
+        this.breadcrumbs = { titles: [{ title: 'Home', url: '/app/home' }, { title: 'Department information', url: '/app/home/dptinfo/leadership' }, { title: 'New User', url: 'none' }] }
       } else {
         // tslint:disable-next-line:max-line-length
         this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: 'Active', url: 'none' }, { title: 'New User', url: 'none' }] }
@@ -154,8 +154,8 @@ export class CreateUserComponent implements OnInit, OnDestroy {
           if (dres) {
             this.createUserForm.reset({ fname: '', lname: '', email: '', department: this.departmentName, roles: '' })
             this.openSnackbar('User Created Successfully')
-            if (this.qpParam === 'MDOinfo') {
-              this.router.navigate(['/app/home/mdoinfo/leadership'])
+            if (this.qpParam === 'DPTinfo') {
+              this.router.navigate(['/app/home/dptinfo/leadership'])
             } else {
               this.router.navigate(['/app/home/users'])
             }

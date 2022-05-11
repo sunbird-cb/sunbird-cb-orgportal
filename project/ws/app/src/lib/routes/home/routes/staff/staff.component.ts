@@ -52,7 +52,7 @@ export class StaffComponent implements OnInit, OnChanges {
 
   constructor(private snackBar: MatSnackBar, public dialog: MatDialog, private activeRoute: ActivatedRoute,
     // tslint:disable-next-line:align
-    private configSvc: ConfigurationsService, private mdoinfoSrvc: DepartmentInfoService) {
+    private configSvc: ConfigurationsService, private dptinfoSrvc: DepartmentInfoService) {
     this.staffdata = new FormGroup({
       totalpositions: new FormControl({ value: '', disabled: true }),
       posfilled: new FormControl('', [Validators.required]),
@@ -126,7 +126,7 @@ export class StaffComponent implements OnInit, OnChanges {
   }
 
   getStaffDetails() {
-    this.mdoinfoSrvc.getStaffdetails(this.deptID).subscribe(
+    this.dptinfoSrvc.getStaffdetails(this.deptID).subscribe(
       (res: any) => {
         const result = res.result.response
         result.sort((a: any, b: any) => {
@@ -221,7 +221,7 @@ export class StaffComponent implements OnInit, OnChanges {
             totalPositionsFilled: Number(response.data.posfilled) || Number(response.data.totalPositionsFilled),
             totalPositionsVacant: Number(response.data.posvacant) || Number(response.data.totalPositionsVacant),
           }
-          this.mdoinfoSrvc.addStaffdetails(req).subscribe(
+          this.dptinfoSrvc.addStaffdetails(req).subscribe(
             (res: any) => {
               if (res) {
                 this.openSnackbar('Staff details updated successfully')
@@ -248,7 +248,7 @@ export class StaffComponent implements OnInit, OnChanges {
         totalPositionsFilled: Number(form.value.posfilled),
         totalPositionsVacant: Number(form.value.posvacant),
       }
-      this.mdoinfoSrvc.addStaffdetails(req).subscribe(
+      this.dptinfoSrvc.addStaffdetails(req).subscribe(
         (res: any) => {
           if (res) {
             this.openSnackbar('Staff details updated successfully')
@@ -265,7 +265,7 @@ export class StaffComponent implements OnInit, OnChanges {
         totalPositionsFilled: Number(form.value.posfilled),
         totalPositionsVacant: Number(form.value.posvacant),
       }
-      this.mdoinfoSrvc.updateStaffdetails(req).subscribe(
+      this.dptinfoSrvc.updateStaffdetails(req).subscribe(
         (res: any) => {
           if (res) {
             this.openSnackbar('Staff details updated successfully')
@@ -285,7 +285,7 @@ export class StaffComponent implements OnInit, OnChanges {
       totalPositionsFilled: Number(form.totalPositionsFilled),
       totalPositionsVacant: Number(form.totalPositionsVacant),
     }
-    this.mdoinfoSrvc.updateStaffdetails(req).subscribe(
+    this.dptinfoSrvc.updateStaffdetails(req).subscribe(
       (res: any) => {
         if (res) {
           this.openSnackbar('Staff details updated successfully')
@@ -297,7 +297,7 @@ export class StaffComponent implements OnInit, OnChanges {
   }
 
   deleteStaffDetails(form: any) {
-    this.mdoinfoSrvc.deleteStaffdetails(form.id, this.deptID).subscribe(
+    this.dptinfoSrvc.deleteStaffdetails(form.id, this.deptID).subscribe(
       (res: any) => {
         if (res) {
           this.openSnackbar('Staff details deleted successfully')
