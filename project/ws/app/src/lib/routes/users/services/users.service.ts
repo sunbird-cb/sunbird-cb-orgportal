@@ -22,7 +22,7 @@ const API_END_POINTS = {
   ACTIVE_USER: 'apis/proxies/v8/user/v1/unblock',
   DE_ACTIVE_USER: 'apis/proxies/v8/user/v1/block',
   NEW_USER_BLOCK_API: '/apis/proxies/v8/user/v1/block',
-  NEW_USER_UN_BLOCK_API: '/apis/proxies/v8/user/v1/unblock'
+  NEW_USER_UN_BLOCK_API: '/apis/proxies/v8/user/v1/unblock',
 
   // GET_BULKUPLOAD_DATA: '/apis/protected/v8/admin/userRegistration/bulkUploadData',
 }
