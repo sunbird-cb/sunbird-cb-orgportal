@@ -8,8 +8,7 @@ const API_END_POINTS = {
   GET_MY_DEPARTMENT: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=true',
   CREATE_USER: 'apis/protected/v8/admin/userRegistration/create-user',
   // PROFILE_REGISTRY: 'apis/protected/v8/user/profileRegistry/getUserRegistryByUser/',
-  PROFILE_REGISTRY_V1: '/apis/proxies/v8/user/v1/read/',
-  PROFILE_REGISTRY_V2: '/apis/proxies/v8/api/user/v2/read',
+  PROFILE_REGISTRY: '/apis/proxies/v8/api/user/v5/read/',
   ADD_USER_TO_DEPARTMENT: 'apis/protected/v8/portal/deptAction',
   WF_HISTORY_BY_APPID: 'apis/protected/v8/workflowhandler/historyByApplicationId/',
   SEARCH_USER: 'apis/protected/v8/user/autocomplete/department',
@@ -33,10 +32,10 @@ export class UsersService {
   }
 
   getUserById(userid: string): Observable<any> {
-    if (userid) {
-      return this.http.get<any>(API_END_POINTS.PROFILE_REGISTRY_V1 + userid).pipe(map(resp => resp.profiledetails))
-    }
-    return this.http.get<any>(API_END_POINTS.PROFILE_REGISTRY_V2).pipe(map(resp => resp.profiledetails))
+    // if (userid) {
+    return this.http.get<any>(API_END_POINTS.PROFILE_REGISTRY + userid).pipe(map(resp => resp.profiledetails))
+    // }
+    // return this.http.get<any>(API_END_POINTS.PROFILE_REGISTRY).pipe(map(resp => resp.profiledetails))
   }
 
   addUserToDepartment(req: any): Observable<any> {
