@@ -315,7 +315,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.getAllUsers()
               this.snackBar.open('Activated successfully!')
-
               // tslint:disable-next-line: align
             }, 1500)
           } else {
