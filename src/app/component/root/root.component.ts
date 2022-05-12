@@ -7,6 +7,7 @@ import {
   ViewChild,
   ViewContainerRef,
   ApplicationRef,
+  HostListener,
 } from '@angular/core'
 import {
   ActivatedRoute,
@@ -29,6 +30,7 @@ import {
   UtilityService,
   EventService,
   WsEvents,
+  AuthKeycloakService,
 } from '@sunbird-cb/utils'
 import { delay, first } from 'rxjs/operators'
 import { MobileAppsService } from '../../services/mobile-apps.service'
@@ -81,22 +83,32 @@ export class RootComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
     private utilitySvc: UtilityService,
     private eventSvc: EventService,
+    public authSvc: AuthKeycloakService,
   ) {
     this.mobileAppsSvc.init()
   }
-
+  private get defaultRedirectUrl(): string {
+    try {
+      const baseUrl = document.baseURI
+      return baseUrl || location.origin
+    } catch (error) {
+      return location.origin
+    }
+  }
+  @HostListener('window:unload', ['$event'])
+  unloadHandler(event: any) {
+    if (event && event.type === 'unload') {
+      this.authSvc.logout()
+      window.location.href = `${this.defaultRedirectUrl}apis/reset`
+    }
+  }
   ngOnInit() {
     try {
       this.isInIframe = window.self !== window.top
     } catch (_ex) {
       this.isInIframe = false
     }
-
     this.btnBackSvc.initialize()
-
-
-
-
     // Application start telemetry
     // if (this.authSvc.isAuthenticated) {
     // this.telemetrySvc.start('app', 'view', '')

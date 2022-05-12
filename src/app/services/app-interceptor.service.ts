@@ -1,8 +1,9 @@
 import { Injectable, LOCALE_ID, Inject } from '@angular/core'
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ConfigurationsService, AuthKeycloakService } from '@sunbird-cb/utils'
 import { catchError } from 'rxjs/operators'
+import { MatSnackBar } from '@angular/material'
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,8 @@ import { catchError } from 'rxjs/operators'
 export class AppInterceptorService implements HttpInterceptor {
   constructor(
     private configSvc: ConfigurationsService,
+    private snackBar: MatSnackBar,
+    private authSvc: AuthKeycloakService,
     @Inject(LOCALE_ID) private locale: string,
   ) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -41,16 +44,29 @@ export class AppInterceptorService implements HttpInterceptor {
       return next.handle(modifiedReq).pipe(
         catchError(error => {
           if (error instanceof HttpErrorResponse) {
+            const localUrl = location.origin
+            const pagePath = location.href || `${localUrl}/app/home/welcome`
+            const pageName = (location.href || '').replace(localUrl, '')
             switch (error.status) {
+              case 0:
+                if (localUrl.includes('localhost')) {
+                  this.snackBar.open('Please login Again and Apply new TOKEN', undefined, { duration: 100 * 3 })
+                }
+                this.authSvc.logout()
+                break
+              case 200:
+                if (!error.ok && error.url) {
+                  window.location.href = error.url
+                }
+                break
               case 419:      // login
-                const localUrl = location.origin
-                const pageName = '/app/home/welcome'
+
                 if (localStorage.getItem('telemetrySessionId')) {
                   localStorage.removeItem('telemetrySessionId')
                 }
                 if (localUrl.includes('localhost')) {
                   // tslint:disable-next-line: prefer-template
-                  window.location.href = error.error.redirectUrl + `?q=${localUrl}${pageName}`
+                  window.location.href = error.error.redirectUrl + `?q=${pagePath}`
                 } else {
                   // tslint:disable-next-line: prefer-template
                   window.location.href = error.error.redirectUrl + `?q=${pageName}`
