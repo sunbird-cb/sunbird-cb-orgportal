@@ -315,11 +315,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.getAllUsers()
               this.snackBar.open('Activated successfully!')
-<<<<<<< HEAD
-
-=======
               // tslint:disable-next-line: align
->>>>>>> a16776505526933a998aa12a6a3925402bf43675
             }, 1500)
           } else {
             this.loaderService.changeLoad.next(false)
@@ -332,5 +328,16 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       //     this.usersSvc.deleteUser(user)
       //     break
     }
+  }
+
+  onEnterkySearch(enterValue: any) {
+    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+
+    this.usersService.searchUserByenter(enterValue, rootOrgId).subscribe(data => {
+        this.usersData = data.result.response
+        this.filterData()
+      }
+    )
+
   }
 }
