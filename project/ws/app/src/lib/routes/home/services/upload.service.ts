@@ -19,9 +19,9 @@ export class UploadService {
   // }
   constructor(private http: HttpClient) { }
 
-  // getProfile(): Observable<any> {
-  //   return this.http.get<any>(`${API_END_POINTS.GETPRFOILEDATA}`)
-  // }
+  getProfile(): Observable<any> {
+    return this.http.get<any>(`${API_END_POINTS.GETPRFOILEDATA}`)
+  }
 
   crreateAsset(req: any): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.CREATE_ASSET}`, req)
