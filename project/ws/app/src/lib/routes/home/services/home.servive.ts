@@ -11,7 +11,7 @@ const API_END_POINTS = {
   PROFILE_DETAIL: `${PROTECTED_SLAG_V8}/social/post/timeline`,
   SOCIAL_VIEW_CONVERSATION: `${PROTECTED_SLAG_V8}/social/post/viewConversation`,
   // getUserdetailsV2FromRegistry: '/apis/protected/v8/user/profileRegistry/getUserRegistryByUser',
-  READ_PROFILE: '/apis/proxies/v8/api/user/v2/read',
+  READ_PROFILE: '/apis/proxies/v8/api/user/v5/read',
   CHECK_ISADMIN: '/apis/protected/v8/portal/isAdmin/mdo',
   // GET_MY_DEPARTMENT: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
   GET_MY_DEPARTMENT_ALL: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=true',

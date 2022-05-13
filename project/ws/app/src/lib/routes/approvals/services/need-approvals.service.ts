@@ -5,7 +5,7 @@ import { Observable } from 'rxjs'
 const API_END_POINTS = {
   WORKFLOW_TO_APPROVE: '/apis/protected/v8/workflowhandler/applicationsSearch',
   // PROFILE_REGISTRY: 'apis/protected/v8/user/profileRegistry/getUserRegistryByUser/',
-  PROFILE_REGISTRY: 'apis/proxies/v8/api/user/v2/read/',
+  PROFILE_REGISTRY: 'apis/proxies/v8/api/user/v5/read/',
   WORKFLOW_HANDLER: 'apis/protected/v8/workflowhandler/transition',
   WF_HISTORY_BY_APPID: 'apis/protected/v8/workflowhandler/historyByApplicationId/',
   // GET_MY_DEPARTMENT: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=false',
