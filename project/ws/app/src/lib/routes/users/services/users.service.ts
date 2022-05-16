@@ -12,8 +12,8 @@ const API_END_POINTS = {
   // CREATE_USER: 'apis/protected/v8/admin/userRegistration/create-user',
   CREATE_USER: 'apis/protected/v8/user/profileDetails/createUser',
   // PROFILE_REGISTRY: 'apis/protected/v8/user/profileRegistry/getUserRegistryByUser/',
-  PROFILE_REGISTRY_V1: '/apis/proxies/v8/api/user/v2/read/',
-  PROFILE_REGISTRY_V2: '/apis/proxies/v8/api/user/v2/read',
+  PROFILE_REGISTRY_V1: '/apis/proxies/v8/api/user/v5/read/',
+  PROFILE_REGISTRY_V2: '/apis/proxies/v8/api/user/v5/read',
   CREATE_PROFILE_REGISTRY: '/apis/protected/v8/user/profileRegistry/createUserRegistryV2',
   ADD_USER_TO_DEPARTMENT: '/apis/proxies/v8/user/private/v1/assign/role',
   WF_HISTORY_BY_APPID: 'apis/protected/v8/workflowhandler/historyByApplicationId/',
@@ -23,6 +23,7 @@ const API_END_POINTS = {
   DE_ACTIVE_USER: 'apis/proxies/v8/user/v1/block',
   NEW_USER_BLOCK_API: '/apis/proxies/v8/user/v1/block',
   NEW_USER_UN_BLOCK_API: '/apis/proxies/v8/user/v1/unblock',
+  SEARCH_USER_TABLE: '/apis/proxies/v8/user/v1/search',
 
   // GET_BULKUPLOAD_DATA: '/apis/protected/v8/admin/userRegistration/bulkUploadData',
 }
@@ -116,5 +117,18 @@ export class UsersService {
       },
     }
     return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody)
+  }
+
+  searchUserByenter(value: string, rootOrgId: string) {
+    const reqBody = {
+      request: {
+        query: value,
+        filters: {
+          rootOrgId,
+        },
+      },
+    }
+
+    return this.http.post<any>(`${API_END_POINTS.SEARCH_USER_TABLE}`, reqBody)
   }
 }
