@@ -328,4 +328,16 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       //     break
     }
   }
+
+  onEnterkySearch(enterValue: any) {
+    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+
+    this.usersService.searchUserByenter(enterValue, rootOrgId).subscribe(data => {
+      // console.log(data.result.response)
+      this.usersData = data.result.response
+      this.filterData()
+    }
+    )
+
+  }
 }
