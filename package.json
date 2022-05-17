@@ -42,7 +42,7 @@
     "@angular/router": "~8.2.1",
     "@angular/service-worker": "~8.2.1",
     "@project-sunbird/telemetry-sdk": "0.0.26",
-    "@sunbird-cb/collection": "^1.0.8",
+    "@sunbird-cb/collection": "1.0.11",
     "@sunbird-cb/design-system": "0.0.1",
     "@sunbird-cb/rain-dashboards": "^0.2.0",
     "@sunbird-cb/resolver": "^1.0.0",
