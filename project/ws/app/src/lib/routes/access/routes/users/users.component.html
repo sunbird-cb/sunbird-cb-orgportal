@@ -2,7 +2,8 @@
   <mat-card class="flex-custom ws-mat-accent-border">
     <mat-card-content>
       <ng-container>
-        <ws-widget-org-user-table [tableData]="tabledata" [data]="data" (actionsClick)="menuActions($event)">
+        <ws-widget-org-user-table [tableData]="tabledata" [data]="data" (actionsClick)="menuActions($event)"
+          (searchByEnterKey)="onEnterkySearch($event)">
         </ws-widget-org-user-table>
       </ng-container>
     </mat-card-content>
