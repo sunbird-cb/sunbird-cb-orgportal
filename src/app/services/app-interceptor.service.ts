@@ -45,14 +45,14 @@ export class AppInterceptorService implements HttpInterceptor {
         catchError(error => {
           if (error instanceof HttpErrorResponse) {
             const localUrl = location.origin
-            const pagePath = location.href || `${localUrl}/app/home/welcome`
-            const pageName = (location.href || '').replace(localUrl, '')
+            // const pagePath = location.href || `${localUrl}/app/home/welcome`
+            // const pageName = (location.href || '').replace(localUrl, '')
             switch (error.status) {
               case 0:
                 if (localUrl.includes('localhost')) {
                   this.snackBar.open('Please login Again and Apply new TOKEN', undefined, { duration: 100 * 3 })
                 }
-                this.authSvc.logout()
+                this.authSvc.force_logout()
                 break
               case 200:
                 if (!error.ok && error.url) {
@@ -63,13 +63,14 @@ export class AppInterceptorService implements HttpInterceptor {
                 if (localStorage.getItem('telemetrySessionId')) {
                   localStorage.removeItem('telemetrySessionId')
                 }
-                if (localUrl.includes('localhost')) {
-                  // tslint:disable-next-line: prefer-template
-                  window.location.href = error.error.redirectUrl + `?q=${pagePath}`
-                } else {
-                  // tslint:disable-next-line: prefer-template
-                  window.location.href = error.error.redirectUrl + `?q=${pageName}`
-                }
+                // if (localUrl.includes('localhost')) {
+                //   // tslint:disable-next-line: prefer-template
+                //   window.location.href = error.error.redirectUrl + `?q=${pagePath}`
+                // } else {
+                //   // tslint:disable-next-line: prefer-template
+                //   window.location.href = error.error.redirectUrl + `?q=${pageName}`
+                // }
+                this.authSvc.force_logout()
                 break
             }
           }
