@@ -39,7 +39,7 @@ interface IFeaturePermissionConfigs {
 }
 
 const endpoint = {
-  profilePid: '/apis/proxies/v8/api/user/v5/read',
+  profilePid: '/apis/proxies/v8/api/user/v2/read',
   // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
 }
@@ -245,8 +245,8 @@ export class InitService {
         completeProdata = await this.http
           .get<any>(endpoint.profilePid)
           .pipe(map((res: any) => {
-            const roles = _.map(_.get(res, 'result.response.roles'), 'role')
-            _.set(res, 'result.response.roles', roles)
+            // const roles = _.map(_.get(res, 'result.response.roles'), 'role')
+            // _.set(res, 'result.response.roles', roles)
             return _.get(res, 'result.response')
           }))
           .toPromise()

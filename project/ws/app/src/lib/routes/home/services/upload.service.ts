@@ -3,7 +3,7 @@ import { Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 
 const API_END_POINTS = {
-  GETPRFOILEDATA: 'apis/proxies/v8/api/user/v5/read',
+  GETPRFOILEDATA: 'apis/proxies/v8/api/user/v2/read',
   CREATE_ASSET: 'apis/proxies/v8/action/content/v3/create',
 }
 
@@ -19,9 +19,9 @@ export class UploadService {
   // }
   constructor(private http: HttpClient) { }
 
-  // getProfile(): Observable<any> {
-  //   return this.http.get<any>(`${API_END_POINTS.GETPRFOILEDATA}`)
-  // }
+  getProfile(): Observable<any> {
+    return this.http.get<any>(`${API_END_POINTS.GETPRFOILEDATA}`)
+  }
 
   crreateAsset(req: any): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.CREATE_ASSET}`, req)

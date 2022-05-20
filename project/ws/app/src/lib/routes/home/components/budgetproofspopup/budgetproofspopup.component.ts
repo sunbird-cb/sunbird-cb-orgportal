@@ -43,8 +43,11 @@ export class BudgetproofspopupComponent implements OnInit {
   dataSource = new MatTableDataSource<PeriodicElement>(this.uploadedFilesAssets)
   selection = new SelectionModel<PeriodicElement>(true, [])
 
-  constructor(private dialogRef: MatDialogRef<BudgetproofspopupComponent>, @Inject(MAT_DIALOG_DATA) data: any,
-              private uploadService: UploadService) {
+  constructor(
+    private dialogRef: MatDialogRef<BudgetproofspopupComponent>,
+    @Inject(MAT_DIALOG_DATA) data: any,
+    private uploadService: UploadService,
+  ) {
     this.sectioname = data.data
     this.uploadform = new FormGroup({
       files: new FormControl('', [Validators.required]),
