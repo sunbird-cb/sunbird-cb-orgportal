@@ -121,16 +121,16 @@ export class InitService {
     }
     try {
       // this.logger.info('User Authenticated', authenticated)
-      const userPrefPromise = await this.userPreference.fetchUserPreference() // pref: depends on rootOrg
-      this.configSvc.userPreference = userPrefPromise
-      this.reloadAccordingToLocale()
-      if (this.configSvc.userPreference.pinnedApps) {
-        const pinnedApps = this.configSvc.userPreference.pinnedApps.split(',')
-        this.configSvc.pinnedApps.next(new Set(pinnedApps))
-      }
-      if (this.configSvc.userPreference.profileSettings) {
-        this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
-      }
+      // const userPrefPromise = await this.userPreference.fetchUserPreference() // pref: depends on rootOrg
+      // this.configSvc.userPreference = userPrefPromise
+      // this.reloadAccordingToLocale()
+      // if (this.configSvc.userPreference.pinnedApps) {
+      // const pinnedApps = this.configSvc.userPreference.pinnedApps.split(',')
+      // this.configSvc.pinnedApps.next(new Set(pinnedApps))
+      // }
+      // if (this.configSvc.userPreference.profileSettings) {
+      // this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
+      // }
       // await this.fetchUserProfileV2()
       const appsConfigPromise = this.fetchAppsConfig()
       const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
