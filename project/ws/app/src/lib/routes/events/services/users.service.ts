@@ -8,7 +8,7 @@ const API_END_POINTS = {
   GET_MY_DEPARTMENT: '/apis/protected/v8/portal/mdo/mydepartment?allUsers=true',
   CREATE_USER: 'apis/protected/v8/admin/userRegistration/create-user',
   // PROFILE_REGISTRY: 'apis/protected/v8/user/profileRegistry/getUserRegistryByUser/',
-  PROFILE_REGISTRY: '/apis/proxies/v8/api/user/v5/read/',
+  PROFILE_REGISTRY: '/apis/proxies/v8/api/user/v2/read/',
   ADD_USER_TO_DEPARTMENT: 'apis/protected/v8/portal/deptAction',
   WF_HISTORY_BY_APPID: 'apis/protected/v8/workflowhandler/historyByApplicationId/',
   SEARCH_USER: 'apis/protected/v8/user/autocomplete/department',

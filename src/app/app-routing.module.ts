@@ -19,6 +19,7 @@ import { PublicFaqComponent } from './routes/public/public-faq/public-faq.compon
 import { TncComponent } from './routes/tnc/tnc.component'
 import { TncAppResolverService } from './services/tnc-app-resolver.service'
 import { TncPublicResolverService } from './services/tnc-public-resolver.service'
+import { PublicLogoutComponent } from './routes/public/public-logout/public-logout.component'
 // import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/app-toc-resolver.service'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
@@ -306,6 +307,10 @@ const routes: Routes = [
     resolve: {
       pageData: PageResolve,
     },
+  },
+  {
+    path: 'public/logout',
+    component: PublicLogoutComponent,
   },
   {
     path: 'public/mobile-app',
