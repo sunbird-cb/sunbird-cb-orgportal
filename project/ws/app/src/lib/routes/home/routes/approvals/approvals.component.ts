@@ -134,7 +134,12 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
               const fields = JSON.parse(wf.updateFieldValues)
               if (fields.length > 0) {
                 fields.forEach((field: any) => {
-                  keys += `${_.first(Object.keys(field.fromValue))}, `
+                  if (Object.keys(field.fromValue).length > 0) {
+
+                    keys += `${_.first(Object.keys(field.fromValue))}, `
+                  } else {
+                    keys += `${_.first(Object.keys(field.toValue))}, `
+                  }
                 })
               }
             }
