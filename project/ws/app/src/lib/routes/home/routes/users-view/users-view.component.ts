@@ -286,10 +286,11 @@ export class UsersViewComponent implements OnInit, OnDestroy {
               this.getAllUsers()
 
               this.snackBar.open('Deactivated successfully!')
-            }, 1500)
+            },
+              // tslint:disable-next-line: align
+              1500)
             // this.changeDetectorRefs.detectChanges()
-          }
-          else {
+          } else {
             this.loaderService.changeLoad.next(false)
             this.snackBar.open('Update unsuccess!')
           }
@@ -314,7 +315,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.getAllUsers()
               this.snackBar.open('Activated successfully!')
-
+              // tslint:disable-next-line: align
             }, 1500)
           } else {
             this.loaderService.changeLoad.next(false)
@@ -333,7 +334,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
 
     this.usersService.searchUserByenter(enterValue, rootOrgId).subscribe(data => {
-      // console.log(data.result.response)
       this.usersData = data.result.response
       this.filterData()
     }
