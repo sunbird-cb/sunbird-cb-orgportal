@@ -7,6 +7,7 @@ const API_END_POINTS = {
   USER_BDD: '/apis/protected/v8/portal/mdo/deptAction/userrole',
   ACTIVE_USER: 'apis/proxies/v8/user/v1/unblock',
   DE_ACTIVE_USER: 'apis/proxies/v8/user/v1/block',
+  SEARCH_USER_TABLE: '/apis/proxies/v8/user/v1/search',
 }
 
 @Injectable({
@@ -28,5 +29,17 @@ export class UsersService {
   }
   deleteUser(user: object): Observable<any> {
     return this.http.patch<any>(`${API_END_POINTS.USER_BDD}/`, user)
+  }
+  searchUserByenter(value: string, rootOrgId: string) {
+    const reqBody = {
+      request: {
+        query: value,
+        filters: {
+          rootOrgId,
+        },
+      },
+    }
+
+    return this.http.post<any>(`${API_END_POINTS.SEARCH_USER_TABLE}`, reqBody)
   }
 }
