@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
 const API_END_POINTS = {
-  GETPRFOILEDATA: 'apis/proxies/v8/api/user/v5/read',
+  GETPRFOILEDATA: 'apis/proxies/v8/api/user/v2/read',
   CREATE_ASSET: 'apis/proxies/v8/action/content/v3/create',
   UPLOAD_FILE: 'apis/proxies/v8/upload/action/content/v3/upload',
   UPDATE_WORKORDER: 'apis/protected/v8/workallocation/update/workorder',
