@@ -27,7 +27,7 @@
         </div>
       </div>
       <ng-container *ngIf="usersData">
-        <ws-widget-org-user-table [tableData]="tabledata" [data]="dataForTable" isUpload=fasle isCreate=true
+        <ws-widget-org-user-table [tableData]="tabledata" [data]="dataForTable" [isUpload]=fasle [isCreate]=true
           (eOnCreateClick)="onCreateClick()" (eOnRowClick)="onRoleClick($event)" (actionsClick)="menuActions($event)"
           (searchByEnterKey)="onEnterkySearch($event)">
         </ws-widget-org-user-table>

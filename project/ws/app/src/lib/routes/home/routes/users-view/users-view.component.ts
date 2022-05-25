@@ -336,8 +336,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     this.usersService.searchUserByenter(enterValue, rootOrgId).subscribe(data => {
       this.usersData = data.result.response
       this.filterData()
-    }
-    )
-
+    })
   }
 }

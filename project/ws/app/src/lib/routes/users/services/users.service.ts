@@ -118,6 +118,7 @@ export class UsersService {
     }
     return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody)
   }
+
   searchUserByenter(value: string, rootOrgId: string) {
     const reqBody = {
       request: {
