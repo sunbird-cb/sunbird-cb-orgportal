@@ -180,6 +180,7 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   raiseAppStartTelemetry() {
     if (!this.appStartRaised) {
+      this.logger.log(WsEvents.WsEventLogLevel.Info)
       const event = {
         eventType: WsEvents.WsEventType.Telemetry,
         eventLogLevel: WsEvents.WsEventLogLevel.Info,

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { EventsService } from '../../services/events.service'
-import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService, LoggerService } from '@sunbird-cb/utils'
 import * as moment from 'moment'
 /* tslint:disable */
 import _ from 'lodash'
@@ -34,16 +34,19 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         private eventSvc: EventsService,
         private configSvc: ConfigurationsService,
         private activeRoute: ActivatedRoute,
-        private events: EventService
+        private events: EventService,
+        private logger: LoggerService,
     ) {
         this.math = Math
         if (this.configSvc.userProfile) {
             this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
             this.department = this.configSvc.userProfile && this.configSvc.userProfile.departmentName
             this.departmentID = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId
+            this.logger.log(this.departmentID)
         } else {
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
                 this.departmentID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
+                this.logger.log(this.departmentID)
             }
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')) {
                 this.department = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')
@@ -103,6 +106,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         this.eventSvc.getEventsList(requestObj).subscribe((events: any) => {
+            this.logger.log(events)
             this.setEventListData(events)
         })
     }
@@ -121,7 +125,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
                     const minutes = obj.duration % 60
                     const duration = (hours === 0) ? ((minutes === 0) ? '---' : `${minutes} minutes`) : (minutes === 0) ? (hours === 1) ?
                         `${hours} hour` : `${hours} hours` : (hours === 1) ? `${hours} hour ${minutes} minutes` :
-                        `${hours} hours ${minutes} minutes`
+                            `${hours} hours ${minutes} minutes`
                     const creatordata = obj.creatorDetails !== undefined ? obj.creatorDetails : []
                     const str = creatordata && creatordata.length > 0 ? creatordata.replace(/\\/g, '') : []
                     const creatorDetails = str && str.length > 0 ? JSON.parse(str) : creatordata
@@ -137,6 +141,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
                     const isPast = this.compareDate(expiryDateFormat);
                     (isPast) ? this.eventData['pastEvents'].push(eventDataObj) : this.eventData['upcomingEvents'].push(eventDataObj)
+                    this.logger.log(eventDataObj)
                 }
             })
             this.filter('upcoming')
@@ -159,6 +164,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     filter(key: string | 'timestamp' | 'best' | 'saved') {
         const upcomingEventsData: any[] = []
         const pastEventsData: any[] = []
+        this.logger.log(this.eventData)
         if (this.eventData['pastEvents'] && this.eventData['pastEvents'].length > 0) {
             this.eventData['pastEvents'].forEach((event: any) => {
                 pastEventsData.push(event)
@@ -176,12 +182,15 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
             switch (key) {
                 case 'upcoming':
                     this.data = upcomingEventsData
+                    this.logger.log(this.data)
                     break
                 case 'past':
                     this.data = pastEventsData
+                    this.logger.log(this.data)
                     break
                 default:
                     this.data = upcomingEventsData
+                    this.logger.log(this.data)
                     break
             }
         }
