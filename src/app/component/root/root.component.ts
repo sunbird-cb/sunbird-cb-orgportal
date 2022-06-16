@@ -180,7 +180,8 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   raiseAppStartTelemetry() {
     if (!this.appStartRaised) {
-      this.logger.log(WsEvents.WsEventLogLevel.Info)
+      // tslint:disable-next-line:no-console
+      console.log('WsEvents.WsEventLogLevel', WsEvents.WsEventLogLevel)
       const event = {
         eventType: WsEvents.WsEventType.Telemetry,
         eventLogLevel: WsEvents.WsEventLogLevel.Info,

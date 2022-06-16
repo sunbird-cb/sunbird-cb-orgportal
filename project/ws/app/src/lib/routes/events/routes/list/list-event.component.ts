@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { EventsService } from '../../services/events.service'
-import { ConfigurationsService, EventService, LoggerService } from '@sunbird-cb/utils'
+import { ConfigurationsService, EventService } from '@sunbird-cb/utils'
 import * as moment from 'moment'
 /* tslint:disable */
 import _ from 'lodash'
@@ -34,19 +34,20 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         private eventSvc: EventsService,
         private configSvc: ConfigurationsService,
         private activeRoute: ActivatedRoute,
-        private events: EventService,
-        private logger: LoggerService,
+        private events: EventService
     ) {
         this.math = Math
         if (this.configSvc.userProfile) {
             this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
             this.department = this.configSvc.userProfile && this.configSvc.userProfile.departmentName
             this.departmentID = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId
-            this.logger.log(this.departmentID)
+            // tslint:disable-next-line:no-console
+            console.log('departmentID', this.departmentID)
         } else {
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
                 this.departmentID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
-                this.logger.log(this.departmentID)
+                // tslint:disable-next-line:no-console
+                console.log('departmentID', this.departmentID)
             }
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')) {
                 this.department = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')
@@ -106,7 +107,8 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         this.eventSvc.getEventsList(requestObj).subscribe((events: any) => {
-            this.logger.log(events)
+            // tslint:disable-next-line:no-console
+            console.log('events', events)
             this.setEventListData(events)
         })
     }
@@ -141,7 +143,8 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
                     const isPast = this.compareDate(expiryDateFormat);
                     (isPast) ? this.eventData['pastEvents'].push(eventDataObj) : this.eventData['upcomingEvents'].push(eventDataObj)
-                    this.logger.log(eventDataObj)
+                    // tslint:disable-next-line:no-console
+                    console.log('eventDataObj', eventDataObj)
                 }
             })
             this.filter('upcoming')
@@ -164,7 +167,8 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     filter(key: string | 'timestamp' | 'best' | 'saved') {
         const upcomingEventsData: any[] = []
         const pastEventsData: any[] = []
-        this.logger.log(this.eventData)
+        // tslint:disable-next-line:no-console
+        console.log('eventData', this.eventData)
         if (this.eventData['pastEvents'] && this.eventData['pastEvents'].length > 0) {
             this.eventData['pastEvents'].forEach((event: any) => {
                 pastEventsData.push(event)
@@ -182,15 +186,18 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
             switch (key) {
                 case 'upcoming':
                     this.data = upcomingEventsData
-                    this.logger.log(this.data)
+                    // tslint:disable-next-line:no-console
+                    console.log('data', this.data)
                     break
                 case 'past':
                     this.data = pastEventsData
-                    this.logger.log(this.data)
+                    // tslint:disable-next-line:no-console
+                    console.log('data', this.data)
                     break
                 default:
                     this.data = upcomingEventsData
-                    this.logger.log(this.data)
+                    // tslint:disable-next-line:no-console
+                    console.log('data', this.data)
                     break
             }
         }
