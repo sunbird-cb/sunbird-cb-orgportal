@@ -109,6 +109,12 @@ export class GeneralGuard implements CanActivate {
       // }
       // return this.router.parseUrl(`/app/tnc`)
     }
+    if (this.configSvc.userProfileV2
+      && _.get(this.configSvc.unMappedUser, 'userRoles')
+      && _.findIndex(_.get(this.configSvc.unMappedUser, 'userRoles'), 'STATE_ADMIN') !== -1
+    ) { // need to check the State Profile just after Login
+      return this.router.parseUrl(`/app/setup`)
+    }
     if (_.get(this.configSvc, 'unMappedUser.isDeleted')) {
       this.router.navigateByUrl('/error-access-forbidden')
       this.authSvc.logout()
@@ -132,7 +138,7 @@ export class GeneralGuard implements CanActivate {
       )
 
       if (!requiredRolePreset) {
-        return this.router.parseUrl('/page/home')
+        return this.router.parseUrl('/app/home')
       }
     }
 
