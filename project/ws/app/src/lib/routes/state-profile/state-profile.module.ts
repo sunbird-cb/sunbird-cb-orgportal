@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSnackBarModule } from '@angular/material'
+import { MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSnackBarModule } from '@angular/material'
 import { MatListModule } from '@angular/material/list'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { RouterModule } from '@angular/router'
@@ -25,6 +25,7 @@ import { InstituteProfileComponent } from './routes/institute-profile/institute-
 import { ResearchComponent } from './routes/research/research.component'
 import { RolesAndFunctionsComponent } from './routes/roles-and-functions/roles-and-functions.component'
 import { TrainingRogramsComponent } from './routes/training-rograms/training-rograms.component'
+import { MatRadioModule } from '@angular/material/radio'
 
 @NgModule({
   declarations: [
@@ -62,6 +63,8 @@ import { TrainingRogramsComponent } from './routes/training-rograms/training-rog
     MatFormFieldModule,
     ReactiveFormsModule,
     MatChipsModule,
+    MatSelectModule,
+    MatRadioModule,
   ],
   providers: [
     TopicService,
