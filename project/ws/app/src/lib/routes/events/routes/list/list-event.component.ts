@@ -121,7 +121,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
                     const minutes = obj.duration % 60
                     const duration = (hours === 0) ? ((minutes === 0) ? '---' : `${minutes} minutes`) : (minutes === 0) ? (hours === 1) ?
                         `${hours} hour` : `${hours} hours` : (hours === 1) ? `${hours} hour ${minutes} minutes` :
-                        `${hours} hours ${minutes} minutes`
+                            `${hours} hours ${minutes} minutes`
                     const creatordata = obj.creatorDetails !== undefined ? obj.creatorDetails : []
                     const str = creatordata && creatordata.length > 0 ? creatordata.replace(/\\/g, '') : []
                     const creatorDetails = str && str.length > 0 ? JSON.parse(str) : creatordata
