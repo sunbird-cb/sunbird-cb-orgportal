@@ -41,13 +41,9 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
             this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
             this.department = this.configSvc.userProfile && this.configSvc.userProfile.departmentName
             this.departmentID = this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId
-            // tslint:disable-next-line:no-console
-            console.log('departmentID', this.departmentID)
         } else {
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
                 this.departmentID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
-                // tslint:disable-next-line:no-console
-                console.log('departmentID', this.departmentID)
             }
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')) {
                 this.department = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')
@@ -107,8 +103,6 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         this.eventSvc.getEventsList(requestObj).subscribe((events: any) => {
-            // tslint:disable-next-line:no-console
-            console.log('events', events)
             this.setEventListData(events)
         })
     }
@@ -143,8 +137,6 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
                     const isPast = this.compareDate(expiryDateFormat);
                     (isPast) ? this.eventData['pastEvents'].push(eventDataObj) : this.eventData['upcomingEvents'].push(eventDataObj)
-                    // tslint:disable-next-line:no-console
-                    console.log('eventDataObj', eventDataObj)
                 }
             })
             this.filter('upcoming')
@@ -167,8 +159,6 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     filter(key: string | 'timestamp' | 'best' | 'saved') {
         const upcomingEventsData: any[] = []
         const pastEventsData: any[] = []
-        // tslint:disable-next-line:no-console
-        console.log('eventData', this.eventData)
         if (this.eventData['pastEvents'] && this.eventData['pastEvents'].length > 0) {
             this.eventData['pastEvents'].forEach((event: any) => {
                 pastEventsData.push(event)
@@ -186,18 +176,12 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
             switch (key) {
                 case 'upcoming':
                     this.data = upcomingEventsData
-                    // tslint:disable-next-line:no-console
-                    console.log('data', this.data)
                     break
                 case 'past':
                     this.data = pastEventsData
-                    // tslint:disable-next-line:no-console
-                    console.log('data', this.data)
                     break
                 default:
                     this.data = upcomingEventsData
-                    // tslint:disable-next-line:no-console
-                    console.log('data', this.data)
                     break
             }
         }
