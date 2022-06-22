@@ -5,7 +5,7 @@
             <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
                 <div class="flex flex-col">
                     <div class="flex flex-col">
-                        <label for="fullAddress" class=" margin-remove-bottom form-label flex mat-subheading-2"
+                        <label class=" margin-remove-bottom form-label flex mat-subheading-2 required"
                             i18n="Full address label|Label which explains the user to enter Full address"
                             i18n-aria-label aria-label="Full address label">
                             Roles and functions of the institute/training centre
@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="flex flex-col margin-left-l">
-                            <mat-radio-group #trainingResearch formControlName="trainingresearch" i18n-aria-label
+                            <mat-radio-group #trainingResearch formControlName="trainingResearch" i18n-aria-label
                                 aria-label="Training research input">
                                 <mat-radio-button class="mat-radio-button radio-unselect"
                                     (click)="buttonSelect($event)">
@@ -57,7 +57,7 @@
 
                     <div class="flex flex-row">
                         <div class="flex flex-col">
-                            <mat-radio-group #researchPublication formControlName="researchpublication" i18n-aria-label
+                            <mat-radio-group #researchPublication formControlName="researchPublication" i18n-aria-label
                                 aria-label="Research and Publication input">
                                 <mat-radio-button class="mat-radio-button radio-unselect"
                                     (click)="buttonSelect($event)">
@@ -67,7 +67,7 @@
                         </div>
 
                         <div class="flex flex-col margin-left-l">
-                            <mat-radio-group #trainingConsultancy formControlName="trainingconsultancy" i18n-aria-label
+                            <mat-radio-group #trainingConsultancy formControlName="trainingConsultancy" i18n-aria-label
                                 aria-label="Training and consultancy input">
                                 <mat-radio-button class="mat-radio-button radio-unselect"
                                     (click)="buttonSelect($event)">
@@ -79,9 +79,8 @@
 
                     <div class="flex flex-row">
                         <div class="flex flex-col">
-                            <mat-radio-group #trainingConsultancyResearchPublication
-                                formControlName="trainingconsultancyresearchpublication" i18n-aria-label
-                                aria-label="Attached center input">
+                            <mat-radio-group #trainConsulResPublication formControlName="trainConsulResPublication"
+                                i18n-aria-label aria-label="Attached center input">
                                 <mat-radio-button class="mat-radio-button radio-unselect"
                                     (click)="buttonSelect($event)">
                                     Training , Consultancy, Research and Publication

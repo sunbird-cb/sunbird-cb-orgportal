@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { FormControl, FormGroup } from '@angular/forms'
 
 @Component({
     selector: 'ws-app-training-rograms',
@@ -9,7 +10,15 @@ import { Component, OnInit } from '@angular/core'
     /* tslint:enable */
 })
 export class TrainingRogramsComponent implements OnInit {
-    constructor() { }
+    trainingProgramForm!: FormGroup
+    constructor() {
+        this.trainingProgramForm = new FormGroup({
+            subjectname: new FormControl('', []),
+            digitalprograms: new FormControl('', []),
+            videocount: new FormControl('', []),
+            pptcount: new FormControl('', []),
+        })
+    }
 
     ngOnInit() {
     }
