@@ -21,8 +21,8 @@ export class InstituteProfileComponent implements OnInit {
     yearPattern = '(^[0-9]{4}$)'
     namePatern = `^[a-zA-Z\\s\\']{1,32}$`
 
-    countryCodeList = ["+91", "+92", "+93", "+94", "+95"]
-    stateNameList = ["Delhi", "Uttaranchal", "Hariyana", "Karnatak", "Uttar Pradesh"]
+    countryCodeList = ['+91', '+92', '+93', '+94', '+95']
+    stateNameList = ['Delhi', 'Uttaranchal', 'Hariyana', 'Karnatak', 'Uttar Pradesh']
 
     constructor(
         private configSvc: ConfigurationsService
