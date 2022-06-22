@@ -1,7 +1,7 @@
 <div class="flex flex-wrap flex-col margin-right-m margin-top-l role-card">
     <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
         <h2>Infrastructure</h2>
-        <form>
+        <form [formGroup]="infrastructureForm">
             <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
                 <div class="flex flex-col">
                     <div class="flex flex-col">
@@ -17,8 +17,8 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Built up area (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" id="subject" #subject name="subject"
-                                    placeholder=" in acres" class="flex flex-1" />
+                                <input matInput autocomplete="off" #builtupArea placeholder="in acres"
+                                    class="flex flex-1" formControlName="builtuparea" />
                             </mat-form-field>
                         </div>
 
@@ -26,26 +26,26 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Area for academic purpose (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" id="subject" #subject name="subject"
-                                    placeholder="Type here" class="flex flex-1" />
+                                <input matInput autocomplete="off" #academicArea name="subject" placeholder="Type here"
+                                    class="flex flex-1" formControlName="academicarea" />
                             </mat-form-field>
                         </div>
 
-                        <div class="flex flex-row infra_box">
+                        <!-- <div class="flex flex-row infra_box">
                             <p class="mat-subheading-2 ws-mat-black60-text">Area for Hostels (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" id="subject" #subject name="subject"
-                                    placeholder=" in acres" class="flex flex-1" />
+                                <input matInput autocomplete="off" #hostelArea placeholder=" in acres"
+                                    class="flex flex-1" formControlName="hostelarea" />
                             </mat-form-field>
-                        </div>
+                        </div> -->
 
                         <div class="flex flex-row infra_box">
                             <p class="mat-subheading-2 ws-mat-black60-text">Area for hostels (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" id="subject" #subject name="subject"
-                                    placeholder="Type here" class="flex flex-1" />
+                                <input matInput autocomplete="off" #hostelArea placeholder="Type here"
+                                    class="flex flex-1" formControlName="hostelarea" />
                             </mat-form-field>
                         </div>
 
@@ -53,8 +53,8 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Area for computer labs (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" id="subject" #subject name="subject"
-                                    placeholder=" in acres" class="flex flex-1" />
+                                <input matInput autocomplete="off" #computerLabArea placeholder=" in acres"
+                                    class="flex flex-1" formControlName="computerlabarea" />
                             </mat-form-field>
                         </div>
 
@@ -62,8 +62,8 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Number of computer systems</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" id="subject" #subject name="subject"
-                                    placeholder="Type here" class="flex flex-1" />
+                                <input matInput autocomplete="off" #computerSystemCount placeholder="Type here"
+                                    class="flex flex-1" formControlName="computersystemcount" />
                             </mat-form-field>
                         </div>
                     </div>
@@ -72,13 +72,13 @@
                     <div class="flex flex-col">
                         <h2>Library</h2>
                     </div>
-                    <div class="flex flex-col margin-top-m margin-bottom-l">
+                    <div class="flex flex-col margin-top-m">
                         <div class="flex flex-row infra_box">
                             <p class="mat-subheading-2 ws-mat-black60-text">Total collection</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" id="subject" #subject name="subject"
-                                    placeholder="Number" class="flex flex-1" />
+                                <input matInput autocomplete="off" #totalCollection placeholder="Number"
+                                    formControlName="totalcollection" class="flex flex-1" />
                             </mat-form-field>
                         </div>
 
@@ -86,8 +86,8 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Periodicals subscribed</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" id="subject" #subject name="subject"
-                                    placeholder="Number" class="flex flex-1" />
+                                <input matInput autocomplete="off" #periodicalsSubscribed placeholder="Number"
+                                    formControlName="periodicalsubscribed" class="flex flex-1" />
                             </mat-form-field>
                         </div>
 
@@ -101,8 +101,8 @@
                             <div class="input-wrapper margin-top-s flex flex-col flex-1">
                                 <mat-form-field appearance="outline"
                                     class="margin-top-xs form_field flex flex-1 full-width text-area-field">
-                                    <textarea matInput autocomplete="off" id="fullAddress" #fullAddress
-                                        name="fullAddress" placeholder="Enter project details "
+                                    <textarea matInput autocomplete="off" #latitudeLongitude
+                                        formControlName="latitudelongitude" placeholder="Type here "
                                         class="flex flex-1"></textarea>
                                 </mat-form-field>
                             </div>
@@ -114,7 +114,7 @@
         </form>
     </mat-card>
 
-    <div class="bottom_btn_box flex flex-1 flex-row justify-between">
+    <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
         <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>
         <a class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
 
