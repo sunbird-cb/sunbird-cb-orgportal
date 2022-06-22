@@ -15,7 +15,7 @@
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
-                        <input matInput autocomplete="off" #instituteName formControlName="institutename"
+                        <input matInput autocomplete="off" #instituteName formControlName="instituteName"
                             placeholder="Enter institute name" class="flex flex-1" i18n-aria-label
                             aria-label="institute Name input" />
                     </mat-form-field>
@@ -31,7 +31,7 @@
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
-                        <input matInput autocomplete="off" id="fullAddress" #fullAddress formControlName="fulladdress"
+                        <input matInput autocomplete="off" id="fullAddress" #fullAddress formControlName="fullAddress"
                             placeholder="Enter your full address" class="flex flex-1" i18n-aria-label
                             aria-label="Full Address input" />
                     </mat-form-field>
@@ -51,7 +51,7 @@
                                 <mat-form-field class="margin-top-xs form_field flex flex-1 full-width"
                                     appearance="outline">
                                     <input matInput placeholder="Enter Building number" #buildingNo
-                                        formControlName="buildingno" i18n-aria-label aria-label="Building No input" />
+                                        formControlName="buildingNo" i18n-aria-label aria-label="Building No input" />
                                 </mat-form-field>
                             </td>
                             <td class="col-3">
@@ -66,7 +66,7 @@
                                 <mat-form-field appearance="outline"
                                     class="margin-top-xs form_field flex flex-1 full-width">
                                     <mat-select placeholder="Select state" i18n-aria-label aria-label="State input"
-                                        #stateName formControlName="statename" i18n-aria-label
+                                        #stateName formControlName="stateName" i18n-aria-label
                                         aria-label="State Name input">
                                         <mat-option value="one">First option</mat-option>
                                         <mat-option value="two">Second option</mat-option>
@@ -180,7 +180,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <input matInput autocomplete="off" id="trainingInstitute" #trainingInstitute
                             name="trainingInstitute" placeholder="Type here" class="flex flex-1"
-                            formControlName="traininginstitute" i18n-aria-label aria-label="Training institute input" />
+                            formControlName="trainingInstitute" i18n-aria-label aria-label="Training institute input" />
                     </mat-form-field>
                 </div>
                 <div class="input-wrapper flex flex-col flex-1">
@@ -190,7 +190,7 @@
                                 <div>
                                     <!-- <span class=" mat-line" mat-line > -->
                                     <mat-radio-group #attachedTrainingInstitute
-                                        formControlName="attachedtraininginstitute" i18n-aria-label
+                                        formControlName="attachedTrainingInstitute" i18n-aria-label
                                         aria-label="Attached training institute input">
                                         <mat-radio-button class="mat-radio-button radio-unselect"
                                             (click)="buttonSelect($event)"
@@ -206,7 +206,7 @@
 
                             <td class="margin-left-s">
                                 <div>
-                                    <mat-radio-group #attachedCenter formControlName="attachedcenter" i18n-aria-label
+                                    <mat-radio-group #attachedCenter formControlName="attachedCenter" i18n-aria-label
                                         aria-label="Attached center input">
                                         <mat-radio-button class="mat-radio-button radio-select"
                                             (click)="buttonSelect()">
@@ -222,7 +222,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <textarea matInput autocomplete="off" id="fullAddress" #fullAddress name="fullAddress"
                             #trainingInstituteDetail placeholder="Enter Attached training Institute details"
-                            class="flex flex-1" formControlName="traininginstitutedetail" i18n-aria-label
+                            class="flex flex-1" formControlName="trainingInstituteDetail" i18n-aria-label
                             aria-label=" Attached training Institute input"></textarea>
                     </mat-form-field>
                 </div>
