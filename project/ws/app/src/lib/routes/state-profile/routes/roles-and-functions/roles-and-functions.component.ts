@@ -11,6 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class RolesAndFunctionsComponent implements OnInit {
     roleActivityForm!: FormGroup
+    instituteOtherRoleField: any = false
     constructor() {
         this.roleActivityForm = new FormGroup({
             training: new FormControl('', [Validators.required]),
@@ -21,9 +22,14 @@ export class RolesAndFunctionsComponent implements OnInit {
             trainingConsultancy: new FormControl('', []),
             trainConsulResPublication: new FormControl(false, []),
             other: new FormControl('', []),
+            instituteOtherRole: new FormControl(false, []),
         })
     }
 
     ngOnInit() {
+    }
+
+    otherButtonSelect() {
+        this.instituteOtherRoleField = true
     }
 }

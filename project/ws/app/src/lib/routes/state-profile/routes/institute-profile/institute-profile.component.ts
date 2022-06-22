@@ -14,21 +14,32 @@ import _ from 'lodash'
 export class InstituteProfileComponent implements OnInit {
     instituteProfileForm!: FormGroup
     isButtonActive: any
+    public countryCodes: string[] = []
+    public stateNames: string[] = []
+    phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
+    pincodePattern = '(^[0-9]{6}$)'
+    yearPattern = '(^[0-9]{4}$)'
+    namePatern = `^[a-zA-Z\\s\\']{1,32}$`
+
+    countryCodeList = ["+91", "+92", "+93", "+94", "+95"]
+    stateNameList = ["Delhi", "Uttaranchal", "Hariyana", "Karnatak", "Uttar Pradesh"]
+
     constructor(
         private configSvc: ConfigurationsService
     ) {
         this.instituteProfileForm = new FormGroup({
-            instituteName: new FormControl('', [Validators.required]),
-            fullAddress: new FormControl('', []),
+            instituteName: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+            fullAddress: new FormControl('', [Validators.required]),
             buildingNo: new FormControl('', []),
-            stateName: new FormControl('', []),
-            pincode: new FormControl('', []),
-            mobile: new FormControl('', []),
+            stateName: new FormControl('', [Validators.required]),
+            pincode: new FormControl('', [Validators.required, Validators.pattern(this.pincodePattern)]),
+            countryCode: new FormControl('', [Validators.required]),
+            mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
             email: new FormControl('', [Validators.email]),
-            website: new FormControl('', []),
-            trainingInstitute: new FormControl(false, []),
-            attachedTrainingInstitute: new FormControl('', []),
-            attachedCenter: new FormControl('', []),
+            website: new FormControl('', [Validators.required]),
+            trainingInstitute: new FormControl(false, [Validators.required]),
+            attachedTrainingInstitute: new FormControl('', [Validators.required]),
+            attachedCenter: new FormControl('', [Validators.required]),
             trainingInstituteDetail: new FormControl('', []),
         })
 
@@ -52,6 +63,9 @@ export class InstituteProfileComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        this.countryCodes = this.countryCodeList
+        this.stateNames = this.stateNameList
     }
 
     buttonSelect(event: any) {

@@ -90,13 +90,27 @@
 
                         <div class="flex flex-col margin-left-l">
                             <mat-radio-group #other formControlName="other" i18n-aria-label aria-label="Other input">
-                                <mat-radio-button class="mat-radio-button radio-unselect"
-                                    (click)="buttonSelect($event)">
+                                <mat-radio-button class="mat-radio-button radio-unselect" (click)="otherButtonSelect()">
                                     Other
                                 </mat-radio-button>
                             </mat-radio-group>
+
                         </div>
+
                     </div>
+                </div>
+
+                <div class="input-wrapper flex flex-col flex-1" *ngIf="instituteOtherRoleField">
+                    <mat-form-field appearance="outline" class="margin-top-xs other_form_field flex flex-1 full-width">
+                        <input matInput autocomplete="off" #instituteOtherRole formControlName="instituteOtherRole"
+                            placeholder="Enter institute role " class="flex flex-1" i18n-aria-label
+                            aria-label="Institute role input" />
+                        <mat-error [hidden]="false" i18n="Institute Role Error|Explains Role is required"
+                            i18n-aria-label aria-label="Institute Role Error|Explains Role is required "
+                            *ngIf="instituteProfileForm?.controls['instituteOtherRole'].errors?.required">
+                            Institute role is mandatory
+                        </mat-error>
+                    </mat-form-field>
                 </div>
             </div>
 
