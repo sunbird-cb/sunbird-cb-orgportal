@@ -1,19 +1,144 @@
+<div class="flex flex-wrap flex-col margin-right-m margin-top-l role-card">
+    <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+        <h2>Training Programs</h2>
+        <form>
+            <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
+                <!-- <div class="flex flex-1">
+                    <label for="fullAddress" class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                        i18n="Full address label|Label which explains the user to enter Full address" i18n-aria-label
+                        aria-label="Full address label">
+                        Subjects on which the institute imparts training
+                    </label>
+                </div>
+
+                <div class="flex">
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <input matInput autocomplete="off" id="subject" #subject name="subject"
+                            placeholder="Enter subject" class="flex flex-1" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline"
+                        class="margin-top-xs form_field flex flex-1 full-width margin-left-s">
+                        <input matInput autocomplete="off" id="subject" #subject name="subject"
+                            placeholder="Enter subject" class="flex flex-1" />
+                    </mat-form-field>
+                    <button></button>
+                </div> -->
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label for="fullAddress" class=" margin-remove-bottom form-label flex mat-subheading-2"
+                            i18n="Full address label|Label which explains the user to enter Full address"
+                            i18n-aria-label aria-label="Full address label">
+                            Subjects on which the institute imparts training
+                        </label>
+                    </div>
+                    <div class="flex flex-row">
+                        <div class="flex flex-col">
+
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                    placeholder="Enter subject" class="flex flex-1" />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col">
+
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width margin-left-s">
+                                <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                    placeholder="Enter subject" class="flex flex-1" />
+                            </mat-form-field>
+                        </div>
+
+                        <div>
+                            <a class="add-link flex items-center margin-top-s margin-left-s justify-center">
+                                <mat-icon class="mat-icon">add</mat-icon>
+                            </a>
+                        </div>
+                    </div>
 
 
-<div class="flex flex-1 flex-row margin-top-xl">
-    <div class="flex flex-col margin-right-m">
-        <h2>Welcome to iGOT</h2>
-        <p class="mat-body-2">
-            Let us take you through a quick guided onboarding to understand your interests at work. Knowing you better helps us give you a more personalized experience on the platform.
-             This way you discover relevant and useful learning content in the easiest way possible. And don’t worry, you can always update your interests later!
-        </p>
+                </div>
 
-        <a routerLink="/app/setup/roles" class="margin-top-xl text-white custom-button">Let's go</a>
+            </div>
+
+            <div class="input-wrapper flex flex-col flex-1 margin-bottom-xl ">
+                <label class=" margin-remove-m form-label flex mat-subheading-2" i18n="" i18n-aria-label aria-label="">
+                    Whether the Institute conducts Digital Programs
+                </label>
+                <table class="d-block">
+                    <tr>
+                        <td class=" button_box">
+                            <div>
+                                <!-- <span class=" mat-line" mat-line > -->
+                                <mat-radio-button class="mat-radio-button radio-unselect" (click)="buttonSelect($event)"
+                                    [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'">
+                                    <!-- <label class="mat-radio-label" for="mat-radio-2-input">
+                                                </label> -->
+                                    Yes
+                                </mat-radio-button>
+
+                                <!-- </span> -->
+                            </div>
+                        </td>
+
+                        <td class="flex button_box margin-left-m">
+                            <div>
+                                <!-- <span class="mat-line" mat-line> -->
+                                <mat-radio-button class="mat-radio-button radio-select" (click)="buttonSelect()">
+                                    No
+                                </mat-radio-button>
+                                <!-- </span> -->
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                <h2>Whether the Institute prepares Digital content</h2>
+                <div class="flex flex-row">
+                    <div class="flex flex-col">
+                        <div class="flex flex-1">
+                            <label for="fullAddress" class=" margin-remove-bottom form-label flex mat-subheading-2"
+                                i18n="Full address label|Label which explains the user to enter Full address"
+                                i18n-aria-label aria-label="Full address label">
+                                Number of videos
+                            </label>
+                        </div>
+                        <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                            <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                placeholder="Enter subject" class="flex flex-1" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="flex flex-col margin-left-s">
+                        <div class="flex flex-1">
+                            <label for="fullAddress" class=" margin-remove-bottom form-label flex mat-subheading-2"
+                                i18n="Full address label|Label which explains the user to enter Full address"
+                                i18n-aria-label aria-label="Full address label">
+                                Number of PPTs
+                            </label>
+                        </div>
+                        <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                            <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                placeholder="Enter subject" class="flex flex-1" />
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+            </div>
+            <a class="add_link">Add</a>
+        </form>
+    </mat-card>
+
+
+    <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
+        <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>
+        <a class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
+
     </div>
-    <div class="img_box margin-left-xl">
-        <img src="assets/instances/eagle/background/WC_Graphic.svg" class="welcome_img" />
-    </div>
-    <div>
 
-    </div>
+
 </div>

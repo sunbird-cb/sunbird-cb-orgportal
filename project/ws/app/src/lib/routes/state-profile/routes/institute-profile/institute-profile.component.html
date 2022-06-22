@@ -3,7 +3,7 @@
         <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
             <h2>Institute details</h2>
             <form>
-                <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
+                <div class="input-wrapper flex flex-col flex-1">
                     <div class="flex flex-1">
                         <label for="instituteName"
                             class=" margin-remove-bottom form-label required flex mat-subheading-2"
@@ -19,7 +19,7 @@
                     </mat-form-field>
                 </div>
 
-                <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
+                <div class="input-wrapper flex flex-col flex-1">
                     <div class="flex flex-1">
                         <label for="fullAddress" class=" margin-remove-bottom form-label required flex mat-subheading-2"
                             i18n="Full address label|Label which explains the user to enter Full address"
@@ -33,10 +33,10 @@
                             placeholder="Enter your full address" class="flex flex-1" />
                     </mat-form-field>
                 </div>
-                <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
-                    <table class="example-full-width">
-                        <tr>
-                            <td>
+                <div class="input-wrapper flex flex-col flex-1">
+                    <table class="flex btn-table justify-between">
+                        <tr class="flex w-full btn-table-row justify-between">
+                            <td class="col-3">
                                 <div class="flex flex-1">
                                     <label for="fullAddress"
                                         class=" margin-remove-bottom form-label required flex mat-subheading-2"
@@ -51,7 +51,7 @@
                                     <input matInput placeholder="Enter Building number">
                                 </mat-form-field>
                             </td>
-                            <td>
+                            <td class="col-3">
                                 <div class="flex flex-1">
                                     <label for="fullAddress"
                                         class=" margin-remove-bottom form-label required flex mat-subheading-2"
@@ -68,7 +68,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </td>
-                            <td>
+                            <td class="col-3">
                                 <div class="flex flex-1">
                                     <label for="fullAddress"
                                         class=" margin-remove-bottom form-label required flex mat-subheading-2"
@@ -86,6 +86,7 @@
                         </tr>
                     </table>
                 </div>
+
             </form>
         </mat-card>
     </div>
@@ -94,10 +95,10 @@
         <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
             <h2>Contact & website details</h2>
             <form>
-                <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
-                    <table class="example-full-width">
-                        <tr>
-                            <td>
+                <div class="input-wrapper flex flex-col flex-1">
+                    <table class="flex w-full btn-table justify-between">
+                        <tr class="flex w-full btn-table-row justify-between">
+                            <td class="col-2">
                                 <div class="flex flex-1">
                                     <label for="fullAddress"
                                         class=" margin-remove-bottom form-label required flex mat-subheading-2"
@@ -113,7 +114,7 @@
                                 </mat-form-field>
                             </td>
 
-                            <td>
+                            <td class="col-2">
                                 <div class="flex flex-1">
                                     <label for="fullAddress"
                                         class=" margin-remove-bottom form-label required flex mat-subheading-2"
@@ -132,7 +133,7 @@
                     </table>
                 </div>
 
-                <div class="input-wrapper margin-top-s flex flex-col w-50 margin-bottom-xl">
+                <div class="input-wrapper flex flex-col col-2">
                     <div class="flex flex-1">
                         <label for="fullAddress"
                             class=" margin-remove-bottom form-label required flex mat-subheading-2 w-full"
@@ -155,7 +156,7 @@
         <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
             <h2>Organization, Department and Ministry details</h2>
             <form>
-                <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
+                <div class="input-wrapper flex flex-col flex-1">
                     <div class="flex flex-1">
                         <label for="fullAddress" class=" margin-remove-bottom form-label required flex mat-subheading-2"
                             i18n="Full address label|Label which explains the user to enter Full address"
@@ -169,11 +170,11 @@
                             placeholder="Type here" class="flex flex-1" />
                     </mat-form-field>
                 </div>
-                <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
+                <div class="input-wrapper flex flex-col flex-1">
                     <table class="flex">
-                        <tr>
+                        <tr class="flex justify-between items-center">
                             <td>
-                                <div class="mt-10">
+                                <div>
                                     <!-- <span class=" mat-line" mat-line > -->
                                     <mat-radio-button class="mat-radio-button radio-unselect"
                                         (click)="buttonSelect($event)"
@@ -187,8 +188,8 @@
                                 </div>
                             </td>
 
-                            <td>
-                                <div class="mt-10">
+                            <td class="margin-left-s">
+                                <div>
                                     <!-- <span class="mat-line" mat-line> -->
                                     <mat-radio-button class="mat-radio-button radio-select" (click)="buttonSelect()">
                                         Attached center
@@ -199,7 +200,7 @@
                         </tr>
                     </table>
                 </div>
-                <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-xl">
+                <div class="input-wrapper flex flex-col flex-1">
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <textarea matInput autocomplete="off" id="fullAddress" #fullAddress name="fullAddress"
                             placeholder="Enter Attached training Institute details" class="flex flex-1"></textarea>
@@ -208,6 +209,5 @@
                 <a class="add_link">Add</a>
             </form>
         </mat-card>
-
     </div>
     <div>

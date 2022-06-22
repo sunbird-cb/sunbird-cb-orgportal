@@ -1,19 +1,123 @@
+<div class="flex flex-wrap flex-col margin-right-m margin-top-l role-card">
+    <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+        <h2>Infrastructure</h2>
+        <form>
+            <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label for="fullAddress" class=" margin-remove-bottom form-label flex mat-subheading-2"
+                            i18n="Full address label|Label which explains the user to enter Full address"
+                            i18n-aria-label aria-label="Full address label">
+                            Enter the infrastructure details here. If you do not have the exact numbers, it is ok to
+                            fill in approximate numbers.
+                        </label>
+                    </div>
+                    <div class="flex flex-col margin-top-m margin-bottom-l">
+                        <div class="flex flex-row infra_box">
+                            <p class="mat-subheading-2 ws-mat-black60-text">Built up area (in acres)</p>
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                    placeholder=" in acres" class="flex flex-1" />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-row infra_box">
+                            <p class="mat-subheading-2 ws-mat-black60-text">Area for academic purpose (in acres)</p>
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                    placeholder="Type here" class="flex flex-1" />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-row infra_box">
+                            <p class="mat-subheading-2 ws-mat-black60-text">Area for Hostels (in acres)</p>
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                    placeholder=" in acres" class="flex flex-1" />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-row infra_box">
+                            <p class="mat-subheading-2 ws-mat-black60-text">Area for hostels (in acres)</p>
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                    placeholder="Type here" class="flex flex-1" />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-row infra_box">
+                            <p class="mat-subheading-2 ws-mat-black60-text">Area for computer labs (in acres)</p>
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                    placeholder=" in acres" class="flex flex-1" />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-row infra_box">
+                            <p class="mat-subheading-2 ws-mat-black60-text">Number of computer systems</p>
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                    placeholder="Type here" class="flex flex-1" />
+                            </mat-form-field>
+                        </div>
+                    </div>
 
 
-<div class="flex flex-1 flex-row margin-top-xl">
-    <div class="flex flex-col margin-right-m">
-        <h2>Welcome to iGOT</h2>
-        <p class="mat-body-2">
-            Let us take you through a quick guided onboarding to understand your interests at work. Knowing you better helps us give you a more personalized experience on the platform.
-             This way you discover relevant and useful learning content in the easiest way possible. And don’t worry, you can always update your interests later!
-        </p>
+                    <div class="flex flex-col">
+                        <h2>Library</h2>
+                    </div>
+                    <div class="flex flex-col margin-top-m margin-bottom-l">
+                        <div class="flex flex-row infra_box">
+                            <p class="mat-subheading-2 ws-mat-black60-text">Total collection</p>
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                    placeholder="Number" class="flex flex-1" />
+                            </mat-form-field>
+                        </div>
 
-        <a routerLink="/app/setup/roles" class="margin-top-xl text-white custom-button">Let's go</a>
+                        <div class="flex flex-row infra_box">
+                            <p class="mat-subheading-2 ws-mat-black60-text">Periodicals subscribed</p>
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" id="subject" #subject name="subject"
+                                    placeholder="Number" class="flex flex-1" />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="fullAddress"
+                                class=" margin-remove-bottom form-label flex mat-subheading-2 ws-mat-black60-text"
+                                i18n="Full address label|Label which explains the user to enter Full address"
+                                i18n-aria-label aria-label="Full address label">
+                                Latitude and longitude GPS coordinates
+                            </label>
+                            <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                                <mat-form-field appearance="outline"
+                                    class="margin-top-xs form_field flex flex-1 full-width text-area-field">
+                                    <textarea matInput autocomplete="off" id="fullAddress" #fullAddress
+                                        name="fullAddress" placeholder="Enter project details "
+                                        class="flex flex-1"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </mat-card>
+
+    <div class="bottom_btn_box flex flex-1 flex-row justify-between">
+        <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>
+        <a class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
+
     </div>
-    <div class="img_box margin-left-xl">
-        <img src="assets/instances/eagle/background/WC_Graphic.svg" class="welcome_img" />
-    </div>
-    <div>
 
-    </div>
 </div>

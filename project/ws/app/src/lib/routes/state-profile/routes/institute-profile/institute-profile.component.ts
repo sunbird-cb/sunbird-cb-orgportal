@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core'
     templateUrl: './institute-profile.component.html',
     styleUrls: ['./institute-profile.component.scss'],
     /* tslint:disable */
-    host: { class: 'w-100 role-card flex flex-1' },
+    host: { class: 'w-full role-card flex flex-1' },
     /* tslint:enable */
 })
 export class InstituteProfileComponent implements OnInit {

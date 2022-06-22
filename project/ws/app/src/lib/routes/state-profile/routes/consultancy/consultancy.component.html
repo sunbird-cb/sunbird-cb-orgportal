@@ -1,19 +1,124 @@
+<div class="flex flex-1 flex-col">
+    <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+        <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+            <h2>Consultancy</h2>
+            <form>
+                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                    <div class="flex flex-1">
+                        <label for="fullAddress" class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Full address label|Label which explains the user to enter Full address"
+                            i18n-aria-label aria-label="Full address label">
+                            Consultancy
+                        </label>
+                    </div>
 
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <input matInput autocomplete="off" id="fullAddress" #fullAddress name="fullAddress"
+                            placeholder="Enter project name" class="flex flex-1" />
+                    </mat-form-field>
+                </div>
 
-<div class="flex flex-1 flex-row margin-top-xl">
-    <div class="flex flex-col margin-right-m">
-        <h2>Welcome to iGOT</h2>
-        <p class="mat-body-2">
-            Let us take you through a quick guided onboarding to understand your interests at work. Knowing you better helps us give you a more personalized experience on the platform.
-             This way you discover relevant and useful learning content in the easiest way possible. And don’t worry, you can always update your interests later!
-        </p>
-
-        <a routerLink="/app/setup/roles" class="margin-top-xl text-white custom-button">Let's go</a>
+                <div class="input-wrapperflex flex-col flex-1">
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <textarea matInput autocomplete="off" id="fullAddress" #fullAddress name="fullAddress"
+                            placeholder="Enter project details " class="flex flex-1"></textarea>
+                    </mat-form-field>
+                </div>
+                <a class="add_link margin-top-m">Add new project</a>
+            </form>
+        </mat-card>
     </div>
-    <div class="img_box margin-left-xl">
-        <img src="assets/instances/eagle/background/WC_Graphic.svg" class="welcome_img" />
+
+    <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+        <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+            <form>
+                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                    <div class="flex flex-1">
+                        <label for="fullAddress" class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Full address label|Label which explains the user to enter Full address"
+                            i18n-aria-label aria-label="Full address label">
+                            Industry sponsored
+                        </label>
+                    </div>
+
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <input matInput autocomplete="off" id="fullAddress" #fullAddress name="fullAddress"
+                            placeholder="Sponsore name" class="flex flex-1" />
+                    </mat-form-field>
+                </div>
+
+                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <textarea matInput autocomplete="off" id="fullAddress" #fullAddress name="fullAddress"
+                            placeholder="Enter sponsore details" class="flex flex-1"></textarea>
+                    </mat-form-field>
+                </div>
+                <a class="add_link margin-top-m">Add new sponsore</a>
+            </form>
+        </mat-card>
     </div>
-    <div>
+
+    <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+        <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+            <form>
+                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                    <div class="flex flex-1">
+                        <label for="fullAddress" class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Full address label|Label which explains the user to enter Full address"
+                            i18n-aria-label aria-label="Full address label">
+                            Government Sponsored
+                        </label>
+                    </div>
+
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <input matInput autocomplete="off" id="fullAddress" #fullAddress name="fullAddress"
+                            placeholder="Sponsore name" class="flex flex-1" />
+                    </mat-form-field>
+                </div>
+
+                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <textarea matInput autocomplete="off" id="fullAddress" #fullAddress name="fullAddress"
+                            placeholder="Enter sponsore details" class="flex flex-1"></textarea>
+                    </mat-form-field>
+                </div>
+                <a class="add_link margin-top-m">Add new sponsore</a>
+            </form>
+        </mat-card>
+    </div>
+
+    <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+        <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+            <form>
+                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                    <div class="flex flex-1">
+                        <label for="fullAddress" class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Full address label|Label which explains the user to enter Full address"
+                            i18n-aria-label aria-label="Full address label">
+                            Ongoing projects
+                        </label>
+                    </div>
+
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <input matInput autocomplete="off" id="fullAddress" #fullAddress name="fullAddress"
+                            placeholder="Enter project name" class="flex flex-1" />
+                    </mat-form-field>
+                </div>
+
+                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <textarea matInput autocomplete="off" id="fullAddress" #fullAddress name="fullAddress"
+                            placeholder="Enter project details " class="flex flex-1"></textarea>
+                    </mat-form-field>
+                </div>
+                <a class="add_link margin-top-m">Add new project</a>
+            </form>
+        </mat-card>
+    </div>
+
+    <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
+        <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>
+        <a class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
 
     </div>
 </div>
