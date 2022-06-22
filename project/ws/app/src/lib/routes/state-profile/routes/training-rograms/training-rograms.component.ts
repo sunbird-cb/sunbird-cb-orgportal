@@ -13,10 +13,10 @@ export class TrainingRogramsComponent implements OnInit {
     trainingProgramForm!: FormGroup
     constructor() {
         this.trainingProgramForm = new FormGroup({
-            subjectname: new FormControl('', []),
-            digitalprograms: new FormControl('', []),
-            videocount: new FormControl('', []),
-            pptcount: new FormControl('', []),
+            subjectName: new FormControl('', []),
+            digitalPrograms: new FormControl('', []),
+            videoCount: new FormControl('', []),
+            pptCount: new FormControl('', []),
         })
     }
 

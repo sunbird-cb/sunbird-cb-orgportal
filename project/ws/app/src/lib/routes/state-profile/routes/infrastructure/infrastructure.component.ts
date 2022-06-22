@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { FormControl, FormGroup } from '@angular/forms'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
 
 @Component({
     selector: 'ws-app-infrastructure',
@@ -13,14 +13,14 @@ export class InfrastructureComponent implements OnInit {
     infrastructureForm!: FormGroup
     constructor() {
         this.infrastructureForm = new FormGroup({
-            builtuparea: new FormControl('', []),
-            academicarea: new FormControl('', []),
-            hostelarea: new FormControl('', []),
-            computerlabarea: new FormControl('', []),
-            computersystemcount: new FormControl('', []),
-            totalcollection: new FormControl('', []),
-            periodicalsubscribed: new FormControl(false, []),
-            latitudelongitude: new FormControl('', []),
+            builtupArea: new FormControl('', [Validators.required]),
+            academicArea: new FormControl('', [Validators.required]),
+            hostelarea: new FormControl('', [Validators.required]),
+            computerLabArea: new FormControl('', [Validators.required]),
+            computerSystemCount: new FormControl('', [Validators.required]),
+            totalCollection: new FormControl('', [Validators.required]),
+            periodicalsSubscribed: new FormControl(false, [Validators.required]),
+            latitudeLongitude: new FormControl('', [Validators.required]),
         })
     }
 

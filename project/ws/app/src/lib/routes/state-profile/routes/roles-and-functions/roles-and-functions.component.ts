@@ -15,14 +15,14 @@ export class RolesAndFunctionsComponent implements OnInit {
     constructor() {
         this.roleActivityForm = new FormGroup({
             training: new FormControl('', [Validators.required]),
-            research: new FormControl('', []),
-            consultancy: new FormControl('', []),
-            trainingResearch: new FormControl('', []),
-            researchPublication: new FormControl('', []),
-            trainingConsultancy: new FormControl('', []),
-            trainConsulResPublication: new FormControl(false, []),
-            other: new FormControl('', []),
-            instituteOtherRole: new FormControl(false, []),
+            research: new FormControl('', [Validators.required]),
+            consultancy: new FormControl('', [Validators.required]),
+            trainingResearch: new FormControl('', [Validators.required]),
+            researchPublication: new FormControl('', [Validators.required]),
+            trainingConsultancy: new FormControl('', [Validators.required]),
+            trainConsulResPublication: new FormControl(false, [Validators.required]),
+            other: new FormControl('', [Validators.required]),
+            instituteOtherRole: new FormControl(false, [Validators.required]),
         })
     }
 

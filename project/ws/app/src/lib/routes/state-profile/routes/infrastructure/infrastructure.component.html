@@ -5,9 +5,9 @@
             <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
                 <div class="flex flex-col">
                     <div class="flex flex-col">
-                        <label for="fullAddress" class=" margin-remove-bottom form-label flex mat-subheading-2"
-                            i18n="Full address label|Label which explains the user to enter Full address"
-                            i18n-aria-label aria-label="Full address label">
+                        <label class=" margin-remove-bottom form-label flex mat-subheading-2 required"
+                            i18n="Infrastructure details label|Label which explains the user to enter Infrastructure details"
+                            i18n-aria-label aria-label="Infrastructure details label">
                             Enter the infrastructure details here. If you do not have the exact numbers, it is ok to
                             fill in approximate numbers.
                         </label>
@@ -18,7 +18,13 @@
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
                                 <input matInput autocomplete="off" #builtupArea placeholder="in acres"
-                                    class="flex flex-1" formControlName="builtuparea" />
+                                    class="flex flex-1" formControlName="builtupArea" />
+                                <mat-error [hidden]="false"
+                                    i18n="Built up area Error|Explains Built up area is required" i18n-aria-label
+                                    aria-label="Built up area Error|Explains Built up area is required "
+                                    *ngIf="instituteProfileForm?.controls['builtupArea'].errors?.required">
+                                    Built up area is mandatory
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
@@ -26,8 +32,15 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Area for academic purpose (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #academicArea name="subject" placeholder="Type here"
-                                    class="flex flex-1" formControlName="academicarea" />
+                                <input matInput autocomplete="off" #academicArea placeholder="Type here"
+                                    class="flex flex-1" formControlName="academicArea" />
+                                <mat-error [hidden]="false"
+                                    i18n="Academic perpose area  Error|Explains Academic perpose area is required"
+                                    i18n-aria-label
+                                    aria-label="Academic perpose area Error|Explains Academic perpose area is required "
+                                    *ngIf="instituteProfileForm?.controls['academicArea'].errors?.required">
+                                    Academic perpose area is mandatory
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
@@ -45,7 +58,12 @@
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
                                 <input matInput autocomplete="off" #hostelArea placeholder="Type here"
-                                    class="flex flex-1" formControlName="hostelarea" />
+                                    class="flex flex-1" formControlName="hostelArea" />
+                                <mat-error [hidden]="false" i18n="Hostel area Error|Explains Hostel area is required"
+                                    i18n-aria-label aria-label="Hostel area Error|Explains Hostel area is required "
+                                    *ngIf="instituteProfileForm?.controls['hostelArea'].errors?.required">
+                                    Hostel area is mandatory
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
@@ -54,7 +72,14 @@
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
                                 <input matInput autocomplete="off" #computerLabArea placeholder=" in acres"
-                                    class="flex flex-1" formControlName="computerlabarea" />
+                                    class="flex flex-1" formControlName="computerLabArea" />
+                                <mat-error [hidden]="false"
+                                    i18n="Computer lab area Error|Explains Computer lab area is required"
+                                    i18n-aria-label
+                                    aria-label="Computer lab area Error|Explains Computer lab area is required "
+                                    *ngIf="instituteProfileForm?.controls['computerLabArea'].errors?.required">
+                                    Computer lab area is mandatory
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
@@ -63,7 +88,14 @@
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
                                 <input matInput autocomplete="off" #computerSystemCount placeholder="Type here"
-                                    class="flex flex-1" formControlName="computersystemcount" />
+                                    class="flex flex-1" formControlName="computerSystemCount" />
+                                <mat-error [hidden]="false"
+                                    i18n="Computer systems count Error|Explains Computer systems count is required"
+                                    i18n-aria-label
+                                    aria-label="Computer systems count Error|Explains Computer systems count is required "
+                                    *ngIf="instituteProfileForm?.controls['computerSystemCount'].errors?.required">
+                                    Computer systems count is mandatory
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -78,7 +110,13 @@
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
                                 <input matInput autocomplete="off" #totalCollection placeholder="Number"
-                                    formControlName="totalcollection" class="flex flex-1" />
+                                    formControlName="totalCollection" class="flex flex-1" />
+                                <mat-error [hidden]="false"
+                                    i18n="Total collection Error|Explains Total collection is required" i18n-aria-label
+                                    aria-label="Total collection Error|Explains Total collection is required "
+                                    *ngIf="instituteProfileForm?.controls['totalCollection'].errors?.required">
+                                    Total collection is mandatory
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
@@ -87,23 +125,37 @@
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
                                 <input matInput autocomplete="off" #periodicalsSubscribed placeholder="Number"
-                                    formControlName="periodicalsubscribed" class="flex flex-1" />
+                                    formControlName="periodicalsSubscribed" class="flex flex-1" />
+                                <mat-error [hidden]="false"
+                                    i18n="Periodicals subscribed Error|Explains Periodicals subscribed is required"
+                                    i18n-aria-label
+                                    aria-label="Periodicals subscribed Error|Explains Periodicals subscribed is required "
+                                    *ngIf="instituteProfileForm?.controls['periodicalsSubscribed'].errors?.required">
+                                    Periodicals subscribed is mandatory
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
                         <div class="flex flex-col">
-                            <label for="fullAddress"
-                                class=" margin-remove-bottom form-label flex mat-subheading-2 ws-mat-black60-text"
-                                i18n="Full address label|Label which explains the user to enter Full address"
-                                i18n-aria-label aria-label="Full address label">
+                            <label
+                                class=" margin-remove-bottom form-label flex mat-subheading-2 ws-mat-black60-text required"
+                                i18n="GPS coordinates label|Label which explains the user to enter GPS coordinates"
+                                i18n-aria-label aria-label="GPS coordinates label">
                                 Latitude and longitude GPS coordinates
                             </label>
                             <div class="input-wrapper margin-top-s flex flex-col flex-1">
                                 <mat-form-field appearance="outline"
                                     class="margin-top-xs form_field flex flex-1 full-width text-area-field">
                                     <textarea matInput autocomplete="off" #latitudeLongitude
-                                        formControlName="latitudelongitude" placeholder="Type here "
+                                        formControlName="latitudeLongitude" placeholder="Type here"
                                         class="flex flex-1"></textarea>
+                                    <mat-error [hidden]="false"
+                                        i18n="Latitude and longitude GPS coordinates Error|Explains Latitude and longitude GPS coordinates is required"
+                                        i18n-aria-label
+                                        aria-label="Latitude and longitude GPS coordinates Error|Explains Latitude and longitude GPS coordinates is required "
+                                        *ngIf="instituteProfileForm?.controls['latitudeLongitude'].errors?.required">
+                                        Latitude and longitude GPS coordinates is mandatory
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
                         </div>

@@ -6,7 +6,7 @@
             <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
                 <div class="flex flex-col">
                     <div class="flex flex-col">
-                        <label for="fullAddress" class=" margin-remove-bottom form-label flex mat-subheading-2"
+                        <label class=" margin-remove-bottom form-label flex mat-subheading-2"
                             i18n="Subjects on which the institute imparts training Label" i18n-aria-label
                             aria-label="Subjects label">
                             Subjects on which the institute imparts training
@@ -17,9 +17,14 @@
 
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" id="subjectname" #subjectName
-                                    formControlName="subjectname" i18n-aria-label aria-label="Subjects input"
-                                    placeholder="Enter subject" class="flex flex-1" />
+                                <input matInput autocomplete="off" #subjectName formControlName="subjectName"
+                                    i18n-aria-label aria-label="Subjects input" placeholder="Enter subject"
+                                    class="flex flex-1" />
+                                <mat-error [hidden]="false" i18n="Subject is required" i18n-aria-label
+                                    aria-label="Subject is required "
+                                    *ngIf="instituteProfileForm?.controls['subjectName'].errors?.required">
+                                    Subject is mandatory
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
@@ -27,9 +32,14 @@
 
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width margin-left-s">
-                                <input matInput autocomplete="off" id="subjectname" #subjectName
-                                    formControlName="subjectname" i18n-aria-label aria-label="Subjects input"
-                                    placeholder="Enter subject" class="flex flex-1" />
+                                <input matInput autocomplete="off" #subjectName formControlName="subjectName"
+                                    i18n-aria-label aria-label="Subjects input" placeholder="Enter subject"
+                                    class="flex flex-1" />
+                                <mat-error [hidden]="false" i18n="Subject is required" i18n-aria-label
+                                    aria-label="Subject is required "
+                                    *ngIf="instituteProfileForm?.controls['subjectName'].errors?.required">
+                                    Subject is mandatory
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
@@ -53,7 +63,7 @@
                     <tr>
                         <td class=" button_box">
                             <div>
-                                <mat-radio-group #digitalPrograms formControlName="digitalprograms" i18n-aria-label
+                                <mat-radio-group #digitalPrograms formControlName="digitalPrograms" i18n-aria-label
                                     aria-label="digitalPrograms input">
                                     <mat-radio-button class="mat-radio-button radio-unselect"
                                         (click)="buttonSelect($event)"
@@ -66,7 +76,7 @@
 
                         <td class="flex button_box margin-left-m">
                             <div>
-                                <mat-radio-group #digitalPrograms formControlName="digitalprograms" i18n-aria-label
+                                <mat-radio-group #digitalPrograms formControlName="digitalPrograms" i18n-aria-label
                                     aria-label="digitalPrograms input">
                                     <mat-radio-button class="mat-radio-button radio-select" (click)="buttonSelect()">
                                         No
@@ -91,8 +101,13 @@
                             </label>
                         </div>
                         <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
-                            <input matInput autocomplete="off" #videoCount name="videocount" placeholder="Enter number"
-                                formControlName="videocount" class="flex flex-1" />
+                            <input matInput autocomplete="off" #videoCount placeholder="Enter number"
+                                formControlName="videoCount" class="flex flex-1" />
+                            <mat-error [hidden]="false" i18n="Number of videos is required" i18n-aria-label
+                                aria-label="Number of videos is required "
+                                *ngIf="instituteProfileForm?.controls['videoCount'].errors?.required">
+                                Number of videos is mandatory
+                            </mat-error>
                         </mat-form-field>
                     </div>
 
@@ -105,8 +120,13 @@
                             </label>
                         </div>
                         <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
-                            <input matInput autocomplete="off" #pptCount name="pptcount" placeholder="Enter number"
-                                formControlName="pptcount" class="flex flex-1" />
+                            <input matInput autocomplete="off" #pptCount placeholder="Enter number"
+                                formControlName="pptCount" class="flex flex-1" />
+                            <mat-error [hidden]="false" i18n="Number of PPTs is required" i18n-aria-label
+                                aria-label="Number of PPTs is required "
+                                *ngIf="instituteProfileForm?.controls['pptCount'].errors?.required">
+                                Number of PPTs is mandatory
+                            </mat-error>
                         </mat-form-field>
                     </div>
 
