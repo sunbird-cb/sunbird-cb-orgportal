@@ -1,8 +1,9 @@
 <div class="flex flex-1 flex-col margin-top-xl">
-    <div class="flex flex-wrap flex-col margin-right-m">
-        <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo institue-profile-box">
-            <h2>Institute details</h2>
-            <form [formGroup]="instituteProfileForm">
+    <form [formGroup]="instituteProfileForm">
+        <div class="flex flex-wrap flex-col margin-right-m">
+            <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo institue-profile-box">
+                <h2>Institute details</h2>
+
                 <div class="input-wrapper flex flex-col flex-1">
                     <div class="flex flex-1">
                         <label for="instituteName"
@@ -91,15 +92,13 @@
                         </tr>
                     </table>
                 </div>
+            </mat-card>
+        </div>
 
-            </form>
-        </mat-card>
-    </div>
+        <div class="flex flex-wrap flex-col margin-right-m margin-top-l">
+            <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+                <h2>Contact & website details</h2>
 
-    <div class="flex flex-wrap flex-col margin-right-m margin-top-l">
-        <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
-            <h2>Contact & website details</h2>
-            <form>
                 <div class="input-wrapper flex flex-col flex-1">
                     <table class="flex w-full btn-table justify-between">
                         <tr class="flex w-full btn-table-row justify-between">
@@ -160,14 +159,14 @@
                             formControlName="website" i18n-aria-label aria-label="Website input" />
                     </mat-form-field>
                 </div>
-            </form>
-        </mat-card>
-    </div>
 
-    <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
-        <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
-            <h2>Organization, Department and Ministry details</h2>
-            <form>
+            </mat-card>
+        </div>
+
+        <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+            <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+                <h2>Organization, Department and Ministry details</h2>
+
                 <div class="input-wrapper flex flex-col flex-1">
                     <div class="flex flex-1">
                         <label for="trainingInstitute"
@@ -227,7 +226,7 @@
                     </mat-form-field>
                 </div>
                 <a class="add_link">Add</a>
-            </form>
-        </mat-card>
-    </div>
+            </mat-card>
+        </div>
+    </form>
     <div>
