@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
 
 @Component({
     selector: 'ws-app-institute-profile',
@@ -9,8 +10,24 @@ import { Component, OnInit } from '@angular/core'
     /* tslint:enable */
 })
 export class InstituteProfileComponent implements OnInit {
+    instituteProfileForm!: FormGroup
     isButtonActive: any
-    constructor() { }
+    constructor() {
+        this.instituteProfileForm = new FormGroup({
+            institutename: new FormControl('', []),
+            fulladdress: new FormControl('', []),
+            buildingno: new FormControl('', []),
+            statename: new FormControl('', []),
+            pincode: new FormControl('', []),
+            mobile: new FormControl(false, []),
+            email: new FormControl('', [Validators.required, Validators.email]),
+            website: new FormControl('', []),
+            traininginstitute: new FormControl(false, []),
+            attachedtraininginstitute: new FormControl('', []),
+            attachedcenter: new FormControl('', []),
+            traininginstitutedetail: new FormControl('', []),
+        })
+    }
 
     ngOnInit() {
     }
