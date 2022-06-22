@@ -189,29 +189,30 @@
                             <td>
                                 <div>
                                     <!-- <span class=" mat-line" mat-line > -->
-                                    <mat-radio-button class="mat-radio-button radio-unselect"
-                                        (click)="buttonSelect($event)"
-                                        [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'"
-                                        #attachedTrainingInstitute formControlName="attachedtraininginstitute"
-                                        i18n-aria-label aria-label="Attached training institute input">
-                                        <!-- <label class="mat-radio-label" for="mat-radio-2-input">
+                                    <mat-radio-group #attachedTrainingInstitute
+                                        formControlName="attachedtraininginstitute" i18n-aria-label
+                                        aria-label="Attached training institute input">
+                                        <mat-radio-button class="mat-radio-button radio-unselect"
+                                            (click)="buttonSelect($event)"
+                                            [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'">
+                                            <!-- <label class="mat-radio-label" for="mat-radio-2-input">
                                                 </label> -->
-                                        Attached training Institute
-                                    </mat-radio-button>
-
+                                            Attached training Institute
+                                        </mat-radio-button>
+                                    </mat-radio-group>
                                     <!-- </span> -->
                                 </div>
                             </td>
 
                             <td class="margin-left-s">
                                 <div>
-                                    <!-- <span class="mat-line" mat-line> -->
-                                    <mat-radio-button class="mat-radio-button radio-select" (click)="buttonSelect()"
-                                        #attachedCenter formControlName="attachedcenter" i18n-aria-label
+                                    <mat-radio-group #attachedCenter formControlName="attachedcenter" i18n-aria-label
                                         aria-label="Attached center input">
-                                        Attached center
-                                    </mat-radio-button>
-                                    <!-- </span> -->
+                                        <mat-radio-button class="mat-radio-button radio-select"
+                                            (click)="buttonSelect()">
+                                            Attached center
+                                        </mat-radio-button>
+                                    </mat-radio-group>
                                 </div>
                             </td>
                         </tr>
