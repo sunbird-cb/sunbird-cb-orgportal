@@ -18,7 +18,7 @@ export class InstituteProfileComponent implements OnInit {
         private configSvc: ConfigurationsService
     ) {
         this.instituteProfileForm = new FormGroup({
-            instituteName: new FormControl('', []),
+            instituteName: new FormControl('', [Validators.required]),
             fullAddress: new FormControl('', []),
             buildingNo: new FormControl('', []),
             stateName: new FormControl('', []),
