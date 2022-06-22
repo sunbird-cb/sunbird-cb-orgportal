@@ -109,9 +109,19 @@ export class GeneralGuard implements CanActivate {
       // }
       // return this.router.parseUrl(`/app/tnc`)
     }
+    const orgProfile = _.get(this.configSvc.unMappedUser, 'orgProfile')
     if (this.configSvc.userProfileV2
-      && _.get(this.configSvc.unMappedUser, 'userRoles')
-      && _.findIndex(_.get(this.configSvc.unMappedUser, 'userRoles'), 'STATE_ADMIN') !== -1
+      && _.get(this.configSvc.unMappedUser, 'rootOrg')
+      && _.get(this.configSvc.unMappedUser, 'rootOrg.orgType') === null /// <Make it orgType>
+      && orgProfile
+      && JSON.stringify(_.get(orgProfile, 'consultancy') || {}) === '{}'
+      && JSON.stringify(_.get(orgProfile, 'faculty') || {}) === '{}'
+      && JSON.stringify(_.get(orgProfile, 'infrastructure') || {}) === '{}'
+      && JSON.stringify(_.get(orgProfile, 'instituteProfile') || {}) === '{}'
+      && JSON.stringify(_.get(orgProfile, 'platformWalkthrough') || {}) === '{}'
+      && JSON.stringify(_.get(orgProfile, 'research') || {}) === '{}'
+      && JSON.stringify(_.get(orgProfile, 'rolesAndFunctions') || {}) === '{}'
+      && JSON.stringify(_.get(orgProfile, 'trainingPrograms') || {}) === '{}'
     ) { // need to check the State Profile just after Login
       return this.router.parseUrl(`/app/setup`)
     }
