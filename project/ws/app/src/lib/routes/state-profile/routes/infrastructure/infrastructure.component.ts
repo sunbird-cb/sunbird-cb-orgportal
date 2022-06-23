@@ -15,7 +15,7 @@ export class InfrastructureComponent implements OnInit {
         this.infrastructureForm = new FormGroup({
             builtupArea: new FormControl('', [Validators.required]),
             academicArea: new FormControl('', [Validators.required]),
-            hostelarea: new FormControl('', [Validators.required]),
+            hostelArea: new FormControl('', [Validators.required]),
             computerLabArea: new FormControl('', [Validators.required]),
             computerSystemCount: new FormControl('', [Validators.required]),
             totalCollection: new FormControl('', [Validators.required]),

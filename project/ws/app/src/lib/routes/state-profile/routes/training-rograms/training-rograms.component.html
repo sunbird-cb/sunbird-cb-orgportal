@@ -59,7 +59,7 @@
                 <label class=" margin-remove-m form-label flex mat-subheading-2" i18n="" i18n-aria-label aria-label="">
                     Whether the Institute conducts Digital Programs
                 </label>
-                <table class="d-block">
+                <!-- <table class="d-block">
                     <tr>
                         <td class=" button_box">
                             <div>
@@ -72,21 +72,25 @@
                                     </mat-radio-button>
                                 </mat-radio-group>
                             </div>
-                        </td>
+                        </td> -->
 
-                        <td class="flex button_box margin-left-m">
-                            <div>
-                                <mat-radio-group #digitalPrograms formControlName="digitalPrograms" i18n-aria-label
-                                    aria-label="digitalPrograms input">
-                                    <mat-radio-button class="mat-radio-button radio-select" (click)="buttonSelect()">
-                                        No
-                                    </mat-radio-button>
-                                </mat-radio-group>
+                <!-- <td class="flex button_box margin-left-m"> -->
+                <div class="flex button_box flex-row">
+                    <mat-radio-group #digitalPrograms formControlName="digitalPrograms" i18n-aria-label
+                        aria-label="digitalPrograms input" class="flex button_box flex-row">
+                        <mat-radio-button class="mat-radio-button radio-unselect" (click)="buttonSelect($event)"
+                            [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'">
+                            Yes
+                        </mat-radio-button>
+                        <mat-radio-button class="mat-radio-button radio-select  margin-left-m" (click)="buttonSelect()">
+                            No
+                        </mat-radio-button>
+                    </mat-radio-group>
 
-                            </div>
-                        </td>
+                </div>
+                <!-- </td>
                     </tr>
-                </table>
+                </table> -->
             </div>
 
             <div class="input-wrapper margin-top-s flex flex-col flex-1">

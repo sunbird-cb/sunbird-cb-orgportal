@@ -15,7 +15,7 @@
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <input matInput autocomplete="off" #CompletedResearchprojectName
-                            formControlName="compresearchprodname" i18n-aria-label
+                            formControlName="CompletedResearchprojectName" i18n-aria-label
                             aria-label="Completed research project name input" placeholder="Enter project name"
                             class="flex flex-1" />
                     </mat-form-field>
@@ -24,7 +24,7 @@
                 <div class="input-wrapper margin-top-s flex flex-col flex-1">
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <textarea matInput autocomplete="off" #CompletedResearchprojectDetail
-                            formControlName="compresearchprodetail" i18n-aria-label
+                            formControlName="CompletedResearchprojectDetail" i18n-aria-label
                             aria-label="Completed research projects input" placeholder="Enter project details "
                             class="flex flex-1"></textarea>
                     </mat-form-field>
@@ -46,7 +46,7 @@
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
-                        <input matInput autocomplete="off" #industrySponsoreName formControlName="industrysponsorename"
+                        <input matInput autocomplete="off" #industrySponsoreName formControlName="industrySponsoreName"
                             i18n-aria-label aria-label=" Industry sponsore name input" placeholder="Sponsore name"
                             class="flex flex-1" />
                     </mat-form-field>
@@ -54,10 +54,10 @@
 
                 <div class="input-wrapper margin-top-s flex flex-col flex-1">
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
-                        <textarea matInput autocomplete="off" id="industrySponsoreDetail" #industrySponsoreDetail
-                            formControlName="industrysponsoredetail" i18n-aria-label
-                            aria-label="Industry sponsore detail input" name="industrySponsoreDetail"
-                            placeholder="Enter sponsore details" class="flex flex-1"></textarea>
+                        <textarea matInput autocomplete="off" #industrySponsoreDetail
+                            formControlName="industrySponsoreDetail" i18n-aria-label
+                            aria-label="Industry sponsore detail input" placeholder="Enter sponsore details"
+                            class="flex flex-1"></textarea>
                     </mat-form-field>
                 </div>
                 <a class="add_link margin-top-m">Add new sponsore</a>
@@ -77,7 +77,7 @@
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <input matInput autocomplete="off" #governmentSponsoreName
-                            formControlName="governmentsponsorename" i18n-aria-label
+                            formControlName="governmentSponsoreName" i18n-aria-label
                             aria-label="Government sponsore name input" placeholder="Enter sponsore name"
                             class="flex flex-1" />
                     </mat-form-field>
@@ -86,7 +86,7 @@
                 <div class="input-wrapper margin-top-s flex flex-col flex-1">
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <textarea matInput autocomplete="off" #governmentSponsoreDetail
-                            formControlName="governmentsponsoredetail" i18n-aria-label
+                            formControlName="governmentSponsoreDetail" i18n-aria-label
                             aria-label="Government sponsore detail input" placeholder="Enter sponsore details"
                             class="flex flex-1"></textarea>
                     </mat-form-field>
@@ -107,7 +107,7 @@
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
-                        <input matInput autocomplete="off" #ongoingProjectName formControlName="ongoingprojectname"
+                        <input matInput autocomplete="off" #ongoingProjectName formControlName="ongoingProjectName"
                             i18n-aria-label aria-label="Ongoing Research project name input"
                             placeholder="Enter project name" class="flex flex-1" />
                     </mat-form-field>
@@ -116,7 +116,7 @@
                 <div class="input-wrapper margin-top-s flex flex-col flex-1">
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <textarea matInput autocomplete="off" #ongoingProjectDetail
-                            formControlName="ongoingprojectdetail" i18n-aria-label
+                            formControlName="ongoingProjectDetail" i18n-aria-label
                             aria-label="Ongoing Research project detail input" placeholder="Enter project details "
                             class="flex flex-1"></textarea>
                     </mat-form-field>
@@ -138,13 +138,19 @@
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
-                        <input matInput autocomplete="off" #fullAddress placeholder="Enter faculty name"
-                            class="flex flex-1" />
+                        <input matInput autocomplete="off" #facultyName formControlName="facultyName" i18n-aria-label
+                            aria-label="faculty name input" placeholder="Enter faculty name" class="flex flex-1" />
                     </mat-form-field>
                 </div>
 
-                <input formControlName="uploadpaper" type="file" required />
-                <a class="add_link margin-top-m">Browse and Upload papers</a>
+                <div class="upload-btn-wrapper margin-top-s">
+                    <button class="btn">Upload a file</button>
+                    <input type="file" name="myfile" formControlName="uploadPaper" />
+                </div>
+
+                <!-- <input formControlName="uploadpaper" type="file" id="upload-papers" required hidden />
+                <label for="upload-papers">Browse and Upload papers</label> -->
+                <!-- <a class="add_link margin-top-m">Browse and Upload papers</a> -->
                 <!-- <button class="add_link margin-top-m">
                     Browse and Upload papers</button> -->
 

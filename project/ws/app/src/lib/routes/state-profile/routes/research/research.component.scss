@@ -52,7 +52,11 @@
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
+    width: 250px;
 }
+// .upload_link {
+
+// }
 .mat-radio-button {
     padding: 15px 20px;
     border-radius: 5px;
@@ -97,6 +101,31 @@ a.next_link {
 
 .role-card {
     width: 100%;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+
+  .btn {
+  border: 1px solid #0074b6;
+  color: #0074b6;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
 }
 
 
