@@ -42,7 +42,7 @@ const endpoint = {
   profilePid: '/apis/proxies/v8/api/user/v2/read',
   // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
-  orgProfile: (orgId: string) => `/apis/proxies/v8/org/v1/profile/read/${orgId}`,
+  orgProfile: (orgId: string) => `/apis/proxies/v8/org/v1/profile/read?orgId=${orgId}`,
 }
 
 @Injectable({
@@ -308,16 +308,21 @@ export class InitService {
             dealerCode: null,
             isManager: false,
           }
-          try {
-            const orgProfile = await this.http
-              .get<any>(endpoint.orgProfile(completeProdata.rootOrgId))
-              .pipe(map((res: any) => {
-                return _.get(res, 'result.response')
-              }))
-              .toPromise()
-            this.configSvc.unMappedUser.orgProfile = orgProfile
-          } catch {
-            this.configSvc.unMappedUser.orgProfile = null
+          if (completeProdata.rootOrg && completeProdata.rootOrg.isInstitute) {
+            console.log('inside is institute ---- calling org profile')
+            try {
+              const orgProfile = await this.http
+                .get<any>(endpoint.orgProfile(completeProdata.rootOrgId))
+                .pipe(map((res: any) => {
+                  return _.get(res, 'result.result')
+                }))
+                .toPromise()
+              this.configSvc.unMappedUser.orgProfile = orgProfile
+            } catch {
+              this.configSvc.unMappedUser.orgProfile = null
+            }
+          } else {
+            console.log('outside is institute ---- NOTT calling org profile')
           }
 
         } else {

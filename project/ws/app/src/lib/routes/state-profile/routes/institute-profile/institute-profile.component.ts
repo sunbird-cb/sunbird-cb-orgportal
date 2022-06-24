@@ -66,7 +66,7 @@ export class InstituteProfileComponent implements OnInit {
 
         this.countryCodes = this.countryCodeList
         this.stateNames = this.stateNameList
-        console.log(JSON.stringify(this.instituteProfileForm) + '=============+++++')
+        console.log(this.instituteProfileForm)
     }
 
     buttonSelect(event: any) {

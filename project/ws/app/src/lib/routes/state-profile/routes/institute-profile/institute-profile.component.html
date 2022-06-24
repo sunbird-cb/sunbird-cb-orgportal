@@ -270,12 +270,16 @@
                                                 </label> -->
                                             Attached training Institute
                                         </mat-radio-button>
+                                        <mat-radio-button class="mat-radio-button radio-select margin-left-s"
+                                            (click)="buttonSelect()">
+                                            Attached center
+                                        </mat-radio-button>
                                     </mat-radio-group>
                                     <!-- </span> -->
                                 </div>
                             </td>
 
-                            <td class="margin-left-s">
+                            <!-- <td class="margin-left-s">
                                 <div>
                                     <mat-radio-group #attachedCenter formControlName="attachedCenter" i18n-aria-label
                                         aria-label="Attached center input">
@@ -285,7 +289,7 @@
                                         </mat-radio-button>
                                     </mat-radio-group>
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                     </table>
                 </div>

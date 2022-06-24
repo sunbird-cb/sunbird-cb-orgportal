@@ -26,6 +26,7 @@ import { ResearchComponent } from './routes/research/research.component'
 import { RolesAndFunctionsComponent } from './routes/roles-and-functions/roles-and-functions.component'
 import { TrainingRogramsComponent } from './routes/training-rograms/training-rograms.component'
 import { MatRadioModule } from '@angular/material/radio'
+import { OrgProfileService } from './services/org-profile.service'
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { MatRadioModule } from '@angular/material/radio'
     TopicService,
     RolesAndActivityService,
     CompLocalService,
+    OrgProfileService,
   ],
   entryComponents: [
     DialogBoxComponent,
