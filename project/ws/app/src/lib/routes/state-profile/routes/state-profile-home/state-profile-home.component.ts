@@ -130,6 +130,8 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
     if (!this.isNextStepAllowed) { return }
     const nextStep = _.first(_.filter(this.tabs, { step: this.currentStep + 1 }))
     if (nextStep) {
+      console.log(JSON.stringify(this.currentStep) + '+++++ current step====')
+      console.log(JSON.stringify(nextStep) + '------next step ----')
       return nextStep
     }
     return 'done'
