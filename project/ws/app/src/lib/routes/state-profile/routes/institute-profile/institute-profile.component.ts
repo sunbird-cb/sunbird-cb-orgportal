@@ -44,6 +44,7 @@ export class InstituteProfileComponent implements OnInit {
 
         if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.orgProfile) {
             const instituteProfile = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.instituteProfile')
+            console.log(JSON.stringify(instituteProfile) + '--------')
             this.instituteProfileForm.patchValue({
                 instituteName: _.get(instituteProfile, 'instituteName'),
                 fullAddress: _.get(instituteProfile, 'fullAddress'),
@@ -65,6 +66,7 @@ export class InstituteProfileComponent implements OnInit {
 
         this.countryCodes = this.countryCodeList
         this.stateNames = this.stateNameList
+        console.log(JSON.stringify(this.instituteProfileForm) + '=============+++++')
     }
 
     buttonSelect(event: any) {
