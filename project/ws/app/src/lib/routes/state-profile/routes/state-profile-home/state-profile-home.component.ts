@@ -110,6 +110,15 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+  updateOrgProfile() {
+    this.tabs.forEach(s => {
+      if (s.step === this.currentStep) {
+        console.log('in updateOrgProfile', s)
+      }
+    })
+  }
+
   ngOnInit() {
     this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
       this.sideNavBarOpened = !isLtMedium
@@ -169,11 +178,11 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
       if (s.step === this.currentStep) {
         if (s.key.indexOf('welcome') !== -1) {
           isAllowed = true
-        } else if (s.key.indexOf('instituteprofile') !== -1) {
+        } else if (s.key.indexOf('instituteProfile') !== -1) {
           if (this.stepService.currentStep.value.allowSkip) {
             isAllowed = true
           }
-        } else if (s.key.indexOf('rolesandfunctions') !== -1) {
+        } else if (s.key.indexOf('rolesAndFunctions') !== -1) {
           if (this.stepService.currentStep.value.allowSkip) {
             isAllowed = true
           }
@@ -181,7 +190,7 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
           if (this.stepService.currentStep.value.allowSkip) {
             isAllowed = true
           }
-        } else if (s.key.indexOf('trainingprograms') !== -1) {
+        } else if (s.key.indexOf('trainingPrograms') !== -1) {
           if (this.stepService.currentStep.value.allowSkip) {
             isAllowed = true
           }
