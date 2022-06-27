@@ -13,6 +13,7 @@ import _ from 'lodash'
 })
 export class InstituteProfileComponent implements OnInit {
     instituteProfileForm!: FormGroup
+    addInstituteForm!: FormGroup
     isButtonActive: any
     public countryCodes: string[] = []
     public stateNames: string[] = []
@@ -40,6 +41,12 @@ export class InstituteProfileComponent implements OnInit {
             attachedTrainingInstitute: new FormControl('', [Validators.required]),
             attachedCenter: new FormControl('', [Validators.required]),
             trainingInstituteDetail: new FormControl('', []),
+        })
+
+        this.addInstituteForm = new FormGroup({
+            newInstituteName: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
+            newInstituteDetail: new FormControl('', [Validators.required]),
+
         })
 
         if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.orgProfile) {
