@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
 
 @Component({
     selector: 'ws-app-faculty',
@@ -9,7 +10,13 @@ import { Component, OnInit } from '@angular/core'
     /* tslint:enable */
 })
 export class FacultyComponent implements OnInit {
-    constructor() { }
+    facultyForm!: FormGroup
+    constructor() {
+        this.facultyForm = new FormGroup({
+            noOfFaculty: new FormControl('', [Validators.required]),
+            digitalPrograms: new FormControl('', [Validators.required]),
+        })
+    }
 
     ngOnInit() {
     }
