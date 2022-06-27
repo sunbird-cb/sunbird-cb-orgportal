@@ -1,14 +1,14 @@
 <div class="flex flex-wrap flex-col margin-right-m margin-top-l role-card">
     <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
         <h2>Faculty</h2>
-        <form>
+        <form [formGroup]="facultyForm">
             <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
 
                 <div class="flex flex-col">
                     <div class="flex flex-col">
-                        <label for="fullAddress" class=" margin-remove-bottom form-label flex mat-subheading-2"
-                            i18n="Full address label|Label which explains the user to enter Full address"
-                            i18n-aria-label aria-label="Full address label">
+                        <label class=" margin-remove-bottom form-label flex mat-subheading-2"
+                            i18n="Number of Faculties label|Label which explains the user to enter Number of Faculties"
+                            i18n-aria-label aria-label="Number of Faculties label">
                             Number of Faculties
                         </label>
                     </div>
@@ -17,8 +17,16 @@
 
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" id="subject" #subject name="subject"
-                                    placeholder="Number of Faculties" class="flex flex-1" />
+                                <input matInput autocomplete="off" #noOfFaculty placeholder="Number of Faculties"
+                                    formControlName="noOfFaculty" class="flex flex-1" i18n-aria-label
+                                    aria-label="Number of Faculties input" />
+                                <mat-error [hidden]="false"
+                                    i18n=" Number of Faculties Error|Explains  Number of Faculties is required"
+                                    i18n-aria-label
+                                    aria-label=" Number of Faculties Error|Explains  Number of Faculties is required "
+                                    *ngIf="consultancyForm?.controls['noOfFaculty'].errors?.required">
+                                    Number of Faculties is mandatory
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -31,52 +39,47 @@
                     aria-label="">
                     Whether the Institute conducts Digital Programs
                 </label>
-                <table class="d-block">
-                    <tr>
-                        <td class="button_box">
-                            <div>
-                                <mat-radio-button class="mat-radio-button radio-unselect" (click)="buttonSelect($event)"
-                                    [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'">
-                                    Regular
-                                </mat-radio-button>
-                            </div>
-                        </td>
 
-                        <td class="button_box margin-left-m">
-                            <div>
-                                <mat-radio-button class="mat-radio-button radio-select" (click)="buttonSelect()">
-                                    Adhoc
-                                </mat-radio-button>
-                            </div>
-                        </td>
+                <div class="flex button_box flex-row">
+                    <mat-radio-group #digitalPrograms formControlName="digitalPrograms" i18n-aria-label
+                        aria-label="digitalPrograms input" class="flex button_box flex-row">
+                        <mat-radio-button class="mat-radio-button radio-unselect" (click)="buttonSelect($event)"
+                            [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'">
+                            Regular
+                        </mat-radio-button>
+                        <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m"
+                            (click)="buttonSelect()">
+                            Adhoc
+                        </mat-radio-button>
+                        <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m"
+                            (click)="buttonSelect()">
+                            Guest
+                        </mat-radio-button>
+                        <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m"
+                            (click)="buttonSelect()">
+                            Others
+                        </mat-radio-button>
+                        <mat-error [hidden]="false"
+                            i18n="Whether the Institute conducts Digital Program Error|Explains Whether the Institute conducts Digital Program is required"
+                            i18n-aria-label
+                            aria-label="Whether the Institute conducts Digital Program Error|Explains Whether the Institute conducts Digital Program is required "
+                            *ngIf="consultancyForm?.controls['digitalPrograms'].errors?.required">
+                            This field is mandatory
+                        </mat-error>
+                    </mat-radio-group>
 
-                        <td class="button_box margin-left-m">
-                            <div>
-                                <mat-radio-button class="mat-radio-button radio-select" (click)="buttonSelect()">
-                                    Guest
-                                </mat-radio-button>
-                            </div>
-                        </td>
+                </div>
 
-                        <td class="button_box margin-left-m">
-                            <div>
-                                <mat-radio-button class="mat-radio-button radio-select" (click)="buttonSelect()">
-                                    Others
-                                </mat-radio-button>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
             </div>
         </form>
     </mat-card>
 
 
-    <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
+    <!-- <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
         <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>
         <a class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
 
-    </div>
+    </div> -->
 
 
 </div>

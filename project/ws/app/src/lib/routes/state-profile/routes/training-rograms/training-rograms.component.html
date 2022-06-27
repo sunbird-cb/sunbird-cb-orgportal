@@ -82,7 +82,8 @@
                             [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'">
                             Yes
                         </mat-radio-button>
-                        <mat-radio-button class="mat-radio-button radio-select  margin-left-m" (click)="buttonSelect()">
+                        <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m"
+                            (click)="buttonSelect()">
                             No
                         </mat-radio-button>
                     </mat-radio-group>
@@ -141,11 +142,11 @@
         </form>
     </mat-card>
 
-    <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
+    <!-- <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
         <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>
         <a class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
 
-    </div>
+    </div> -->
 
 
 </div>

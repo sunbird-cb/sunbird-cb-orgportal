@@ -39,7 +39,7 @@ export class InstituteProfileComponent implements OnInit {
             pincode: new FormControl('', [Validators.required, Validators.pattern(this.pincodePattern)]),
             countryCode: new FormControl('', [Validators.required]),
             mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
-            email: new FormControl('', [Validators.email]),
+            email: new FormControl('', [Validators.required, Validators.email]),
             website: new FormControl('', [Validators.required]),
             trainingInstitute: new FormControl(false, [Validators.required]),
             attachedTrainingInstitute: new FormControl('', [Validators.required]),
@@ -83,7 +83,7 @@ export class InstituteProfileComponent implements OnInit {
 
         this.countryCodes = this.countryCodeList
         this.stateNames = this.stateNameList
-        console.log(this.instituteProfileForm)
+        console.log(this.instituteProfileForm + '=============+++++')
     }
 
     buttonSelect(event: any) {
