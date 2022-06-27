@@ -10,10 +10,23 @@ const API_END_POINTS = {
   UPDATE_ORG_PROFILE: '/apis/proxies/v8/org/v1/profile/patch',
 }
 
+interface IATIOnbaording {
+  instituteProfile: any
+  rolesAndFunctions: any
+  infrastructure: any
+  trainingPrograms: any
+  research: any
+  consultancy: any
+  faculty: any
+  platformWalkthrough: any
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class OrgProfileService {
+  public formValues: IATIOnbaording = new Object()
+
   private instituteProfile = new BehaviorSubject<any>({})
   constructor(private http: HttpClient) { }
 
@@ -21,8 +34,12 @@ export class OrgProfileService {
     return this.http.post<any>(API_END_POINTS.UPDATE_ORG_PROFILE, data)
   }
 
-  updateInstituteProfile(value: any) {
-    this.instituteProfile.next(value)
+  updateLocalFormValue(keyName: keyof IATIOnbaording, value: any) {
+    this.formValues[keyName] = value
+  }
+
+  getLocalFormValue(keyName: keyof IATIOnbaording) {
+    return this.formValues[keyName]
   }
 
 }

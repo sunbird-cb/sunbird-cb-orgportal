@@ -3,6 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 /* tslint:disable*/
 import _ from 'lodash'
+import { Subject } from 'rxjs'
+import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
+import { OrgProfileService } from '../../services/org-profile.service'
 @Component({
     selector: 'ws-app-institute-profile',
     templateUrl: './institute-profile.component.html',
@@ -13,6 +16,7 @@ import _ from 'lodash'
 })
 export class InstituteProfileComponent implements OnInit {
     instituteProfileForm!: FormGroup
+    private unsubscribe = new Subject<void>()
     isButtonActive: any
     public countryCodes: string[] = []
     public stateNames: string[] = []
@@ -24,7 +28,8 @@ export class InstituteProfileComponent implements OnInit {
     stateNameList = ['Delhi', 'Uttaranchal', 'Hariyana', 'Karnataka', 'Uttar Pradesh']
 
     constructor(
-        private configSvc: ConfigurationsService
+        private configSvc: ConfigurationsService,
+        private orgSvc: OrgProfileService
     ) {
         this.instituteProfileForm = new FormGroup({
             instituteName: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -42,6 +47,7 @@ export class InstituteProfileComponent implements OnInit {
             trainingInstituteDetail: new FormControl('', []),
         })
 
+        // pre poluate form fields when data is available (edit mode)
         if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.orgProfile) {
             const instituteProfile = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.instituteProfile')
             console.log(JSON.stringify(instituteProfile) + '--------')
@@ -60,6 +66,17 @@ export class InstituteProfileComponent implements OnInit {
                 trainingInstituteDetail: _.get(instituteProfile, 'trainingInstituteDetail'),
             })
         }
+
+        this.instituteProfileForm.valueChanges
+            .pipe(
+                debounceTime(500),
+                switchMap(async formValue => {
+                    if (formValue) {
+                        this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
+                    }
+                }),
+                takeUntil(this.unsubscribe)
+            ).subscribe()
     }
 
     ngOnInit() {

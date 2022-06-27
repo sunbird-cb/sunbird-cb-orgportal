@@ -119,7 +119,7 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
         console.log('in updateOrgProfile', s)
         const request = {
           profileDetails: {
-            [s.key]: 'add the data here...from respective form',
+            [s.key]: _.get(this.orgSvc.formValues, s.key),
           },
           orgId: _.get(this.configSvc.unMappedUser, 'rootOrgId'),
         }
