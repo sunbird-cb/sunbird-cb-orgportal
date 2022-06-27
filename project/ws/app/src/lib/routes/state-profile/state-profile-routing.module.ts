@@ -45,10 +45,10 @@ const routes: Routes = [
         },
       },
       {
-        path: 'roles-and-functions',
+        path: 'roles',
         component: RolesAndFunctionsComponent,
         data: {
-          pageId: 'state-profile/roles-and-functions',
+          pageId: 'state-profile/roles',
           module: 'state-profile',
         },
       },
@@ -92,17 +92,7 @@ const routes: Routes = [
           module: 'state-profile',
         },
       },
-      {
-        path: 'platform-walkthrough',
-        component: PlatformWalkthroughComponent,
-        data: {
-          pageId: 'state-profile/platform-walkthrough',
-          module: 'state-profile',
-        },
-        // resolve: {
-        //   topics: TopicResolverService,
-        // },
-      },
+
     ],
   },
 ]
