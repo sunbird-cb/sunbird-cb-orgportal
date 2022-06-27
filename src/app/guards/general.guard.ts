@@ -112,16 +112,17 @@ export class GeneralGuard implements CanActivate {
     const orgProfile = _.get(this.configSvc.unMappedUser, 'orgProfile')
     if (this.configSvc.userProfileV2
       && _.get(this.configSvc.unMappedUser, 'rootOrg')
-      && _.get(this.configSvc.unMappedUser, 'rootOrg.orgType') === null /// <Make it orgType>
+      // && _.get(this.configSvc.unMappedUser, 'rootOrg.orgType') === null /// <Make it orgType>
+      && _.get(this.configSvc.unMappedUser, 'rootOrg.isInstitute')
       && orgProfile
-      && JSON.stringify(_.get(orgProfile, 'consultancy') || {}) === '{}'
-      && JSON.stringify(_.get(orgProfile, 'faculty') || {}) === '{}'
-      && JSON.stringify(_.get(orgProfile, 'infrastructure') || {}) === '{}'
-      && JSON.stringify(_.get(orgProfile, 'instituteProfile') || {}) === '{}'
-      && JSON.stringify(_.get(orgProfile, 'platformWalkthrough') || {}) === '{}'
-      && JSON.stringify(_.get(orgProfile, 'research') || {}) === '{}'
-      && JSON.stringify(_.get(orgProfile, 'rolesAndFunctions') || {}) === '{}'
-      && JSON.stringify(_.get(orgProfile, 'trainingPrograms') || {}) === '{}'
+      && (JSON.stringify(_.get(orgProfile, 'profileDetails.consultancy') || {}) === '{}'
+        || JSON.stringify(_.get(orgProfile, 'profileDetails.faculty') || {}) === '{}'
+        || JSON.stringify(_.get(orgProfile, 'profileDetails.infrastructure') || {}) === '{}'
+        || JSON.stringify(_.get(orgProfile, 'profileDetails.instituteProfile') || {}) === '{}'
+        || JSON.stringify(_.get(orgProfile, 'profileDetails.platformWalkthrough') || {}) === '{}'
+        || JSON.stringify(_.get(orgProfile, 'profileDetails.research') || {}) === '{}'
+        || JSON.stringify(_.get(orgProfile, 'profileDetails.rolesAndFunctions') || {}) === '{}'
+        || JSON.stringify(_.get(orgProfile, 'profileDetails.trainingPrograms') || {}) === '{}')
     ) { // need to check the State Profile just after Login
       return this.router.parseUrl(`/app/setup`)
     }
