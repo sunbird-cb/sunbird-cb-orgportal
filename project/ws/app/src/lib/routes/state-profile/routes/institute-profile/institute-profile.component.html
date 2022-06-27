@@ -265,13 +265,14 @@
                                         aria-label="Attached training institute input">
                                         <mat-radio-button class="mat-radio-button radio-unselect"
                                             (click)="buttonSelect($event)"
-                                            [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'">
+                                            [ngClass]="attachedTrainingInstitute? 'radio-select': 'radio-unselect'">
                                             <!-- <label class="mat-radio-label" for="mat-radio-2-input">
                                                 </label> -->
                                             Attached training Institute
                                         </mat-radio-button>
                                         <mat-radio-button class="mat-radio-button radio-select margin-left-s"
-                                            (click)="buttonSelect()">
+                                            (click)="buttonSelect()"
+                                            [ngClass]="attachedTrainingInstitute? 'radio-select': 'radio-unselect'">
                                             Attached center
                                         </mat-radio-button>
                                     </mat-radio-group>
@@ -301,7 +302,7 @@
                             aria-label=" Attached training Institute input"></textarea>
                     </mat-form-field>
                 </div>
-                <a class="add_link margin-top-m">Add</a>
+                <a class="add_link margin-top-m" (click)="addOrg()">Add</a>
             </mat-card>
         </div>
     </form>

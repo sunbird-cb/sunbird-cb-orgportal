@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { PlatformWalkthroughComponent } from './routes/platform-walkthrough/platform-walkthrough.component'
 import { StateProfileHomeComponent } from './routes/state-profile-home/state-profile-home.component'
 import { WelcomeOnboardComponent } from './routes/welcome-onboard/welcome-onboard.component'
 import { InstituteProfileComponent } from './routes/institute-profile/institute-profile.component'

@@ -8,9 +8,7 @@ import { NSProfileDataV3 } from '../../models/state-profile.models'
 import _ from 'lodash'
 import { Subscription } from 'rxjs'
 import { StepService } from '../../services/step.service'
-import { CompLocalService } from '../../services/comp.service'
 // import { ProfileV3Service } from '../../services/profile_v3.service'
-import { OrgProfileService } from '../../services/org-profile.service'
 @Component({
   selector: 'ws-app-state-profile-home',
   templateUrl: './state-profile-home.component.html',
@@ -157,8 +155,6 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
     if (!this.isNextStepAllowed) { return }
     const nextStep = _.first(_.filter(this.tabs, { step: this.currentStep + 1 }))
     if (nextStep) {
-      console.log(JSON.stringify(this.currentStep) + '+++++ current step====')
-      console.log(JSON.stringify(nextStep) + '------next step ----')
       return nextStep
     }
     return 'done'

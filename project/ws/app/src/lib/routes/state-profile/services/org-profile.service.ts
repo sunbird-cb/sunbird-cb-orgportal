@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { BehaviorSubject, Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
 // tslint:disable
 import _ from 'lodash'
 // tslint:enable
@@ -11,14 +9,14 @@ const API_END_POINTS = {
 }
 
 interface IATIOnbaording {
-  instituteProfile: any
-  rolesAndFunctions: any
-  infrastructure: any
-  trainingPrograms: any
-  research: any
-  consultancy: any
-  faculty: any
-  platformWalkthrough: any
+  instituteProfile?: any
+  rolesAndFunctions?: any
+  infrastructure?: any
+  trainingPrograms?: any
+  research?: any
+  consultancy?: any
+  faculty?: any
+  platformWalkthrough?: any
 }
 
 @Injectable({
@@ -27,7 +25,6 @@ interface IATIOnbaording {
 export class OrgProfileService {
   public formValues: IATIOnbaording = new Object()
 
-  private instituteProfile = new BehaviorSubject<any>({})
   constructor(private http: HttpClient) { }
 
   updateOrgProfileDetails(data: any) {

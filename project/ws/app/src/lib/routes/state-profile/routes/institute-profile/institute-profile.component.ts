@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 /* tslint:disable*/
 import _ from 'lodash'
@@ -26,10 +27,12 @@ export class InstituteProfileComponent implements OnInit {
     namePatern = `^[a-zA-Z\\s\\']{1,32}$`
     countryCodeList = ['+91', '+92', '+93', '+94', '+95']
     stateNameList = ['Delhi', 'Uttaranchal', 'Hariyana', 'Karnataka', 'Uttar Pradesh']
-
+    editOrg: any
+    addedOrgs: any[] = []
     constructor(
         private configSvc: ConfigurationsService,
-        private orgSvc: OrgProfileService
+        private orgSvc: OrgProfileService,
+        private snackBar: MatSnackBar,
     ) {
         this.instituteProfileForm = new FormGroup({
             instituteName: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -41,9 +44,8 @@ export class InstituteProfileComponent implements OnInit {
             mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
             email: new FormControl('', [Validators.required, Validators.email]),
             website: new FormControl('', [Validators.required]),
-            trainingInstitute: new FormControl(false, [Validators.required]),
-            attachedTrainingInstitute: new FormControl('', [Validators.required]),
-            attachedCenter: new FormControl('', [Validators.required]),
+            trainingInstitute: new FormControl('', []),
+            attachedTrainingInstitute: new FormControl(true, [Validators.required]),
             trainingInstituteDetail: new FormControl('', []),
         })
 
@@ -72,6 +74,7 @@ export class InstituteProfileComponent implements OnInit {
                 debounceTime(500),
                 switchMap(async formValue => {
                     if (formValue) {
+                        formValue.addedOrgs = this.addedOrgs
                         this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
                     }
                 }),
@@ -90,5 +93,25 @@ export class InstituteProfileComponent implements OnInit {
         console.log(event.params + '=')
 
         this.isButtonActive = !this.isButtonActive
+    }
+
+    addOrg() {
+        if (!this.editOrg) {
+            // tslint:disable-next-line: no-non-null-assertion
+            if (this.instituteProfileForm!.get('trainingInstitute')!.value) {
+                const org = {
+                    // tslint:disable-next-line: no-non-null-assertion
+                    name: this.instituteProfileForm!.get('trainingInstitute')!.value || '',
+                    // tslint:disable-next-line: no-non-null-assertion
+                    isAttachedInstitute: this.instituteProfileForm!.get('trainingInstitute')!.value || true,
+                    // tslint:disable-next-line: no-non-null-assertion
+                    trainingInstituteDetail: this.instituteProfileForm!.get('trainingInstituteDetail')!.value || '',
+                }
+                this.addedOrgs.push(org)
+                this.orgSvc.updateLocalFormValue('instituteProfile', this.instituteProfileForm.value)
+            } else {
+                this.snackBar.open('Attached training institute or center name is required')
+            }
+        }
     }
 }
