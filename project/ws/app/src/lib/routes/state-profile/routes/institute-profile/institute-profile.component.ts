@@ -86,12 +86,9 @@ export class InstituteProfileComponent implements OnInit {
 
         this.countryCodes = this.countryCodeList
         this.stateNames = this.stateNameList
-        console.log(this.instituteProfileForm + '=============+++++')
     }
 
     buttonSelect(event: any) {
-        console.log(event.params + '=')
-
         this.isButtonActive = !this.isButtonActive
     }
 

@@ -8,6 +8,7 @@ import { NSProfileDataV3 } from '../../models/state-profile.models'
 import _ from 'lodash'
 import { Subscription } from 'rxjs'
 import { StepService } from '../../services/step.service'
+import { OrgProfileService } from '../../services/org-profile.service'
 // import { ProfileV3Service } from '../../services/profile_v3.service'
 @Component({
   selector: 'ws-app-state-profile-home',
@@ -39,7 +40,7 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
     private configSvc: ConfigurationsService,
     // private compLocalService: CompLocalService,
     // private profileSvc: ProfileV3Service,
-    // private orgSvc: OrgProfileService,
+    private orgSvc: OrgProfileService,
   ) {
     this.tabs = _.orderBy(this.tabsData, 'step')
     this.stepService.allSteps.next(this.tabs.length)

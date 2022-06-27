@@ -254,20 +254,17 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="input-wrapper flex flex-col flex-1">
+                <!-- <div class="input-wrapper flex flex-col flex-1">
                     <table class="flex">
                         <tr class="flex justify-between items-center">
                             <td>
                                 <div>
-                                    <!-- <span class=" mat-line" mat-line > -->
                                     <mat-radio-group #attachedTrainingInstitute
                                         formControlName="attachedTrainingInstitute" i18n-aria-label
                                         aria-label="Attached training institute input">
                                         <mat-radio-button class="mat-radio-button radio-unselect"
                                             (click)="buttonSelect($event)"
                                             [ngClass]="attachedTrainingInstitute? 'radio-select': 'radio-unselect'">
-                                            <!-- <label class="mat-radio-label" for="mat-radio-2-input">
-                                                </label> -->
                                             Attached training Institute
                                         </mat-radio-button>
                                         <mat-radio-button class="mat-radio-button radio-select margin-left-s"
@@ -276,12 +273,11 @@
                                             Attached center
                                         </mat-radio-button>
                                     </mat-radio-group>
-                                    <!-- </span> -->
                                 </div>
                             </td>
                         </tr>
                     </table>
-                </div>
+                </div> -->
                 <div class="input-wrapper flex flex-col flex-1">
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <textarea matInput autocomplete="off" #trainingInstituteDetail
@@ -298,7 +294,7 @@
 
 
 
-        <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+        <!-- <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
             <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
                 <h2>Organization, Department and Ministry details</h2>
                 <form [formGroup]="addInstituteForm">
@@ -339,7 +335,7 @@
                     <a class="add_link margin-top-m">Add</a>
                 </form>
             </mat-card>
-        </div>
+        </div> -->
 
         <div class="flex flex-1 flex-column margin-top-xs">
             <mat-card class="flex flex-1 flex-column margin-bottom-s mat-card-mdo">
@@ -354,10 +350,10 @@
                             </mat-icon>
                             Edit
                         </a>
-                        <!-- <a class="cursor-pointer flex">
+                        <a class="cursor-pointer flex">
                             <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
                                 delete</mat-icon> Delete
-                        </a> -->
+                        </a>
 
                     </div>
                 </div>

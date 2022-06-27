@@ -23,7 +23,16 @@ interface IATIOnbaording {
   providedIn: 'root',
 })
 export class OrgProfileService {
-  public formValues: IATIOnbaording = new Object()
+  public formValues: IATIOnbaording = {
+    instituteProfile: {},
+    rolesAndFunctions: {},
+    infrastructure: {},
+    trainingPrograms: {},
+    research: {},
+    consultancy: {},
+    faculty: {},
+    platformWalkthrough: {},
+  }
 
   constructor(private http: HttpClient) { }
 
