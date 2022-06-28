@@ -14,6 +14,12 @@
                     <div class="flex flex-row">
                         <div class="flex flex-col flex-1">
                             <mat-form-field appearance="outline" class="margin-top-xs flex flex-1 full-width">
+                                <mat-chip-list #chipListHobies>
+                                    <mat-chip>
+                                        name 1
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
                                 <input matInput autocomplete="off" #subjectName formControlName="subjectName"
                                     i18n-aria-label aria-label="Subjects input"
                                     placeholder="Enter subject and press enter" class="flex flex-1" />
