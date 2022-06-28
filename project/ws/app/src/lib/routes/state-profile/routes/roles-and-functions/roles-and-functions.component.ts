@@ -64,11 +64,6 @@ export class RolesAndFunctionsComponent implements OnInit {
                 takeUntil(this.unsubscribe)
             ).subscribe()
 
-<<<<<<< HEAD
-    ngOnInit() {
-        // console.log(this.roleActivityForm.value + '--------')
-=======
->>>>>>> 1f8492e7db20fb3f40a746203d896531123d0420
     }
 
     ngOnInit() {
