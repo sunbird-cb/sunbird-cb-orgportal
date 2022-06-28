@@ -36,8 +36,8 @@ export class InfrastructureComponent implements OnInit {
                 debounceTime(500),
                 switchMap(async formValue => {
                     if (formValue) {
-                        formValue.addedOrgs = this.addedOrgs
                         this.orgSvc.updateLocalFormValue('infrastructure', formValue)
+                        this.orgSvc.updateFormStatus('infrastructure', this.infrastructureForm.valid)
                     }
                 }),
                 takeUntil(this.unsubscribe)

@@ -19,7 +19,7 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Built up area (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #builtupArea placeholder="in acres"
+                                <input matInput autocomplete="off" type="number" #builtupArea placeholder="in acres"
                                     class="flex flex-1" formControlName="builtupArea" />
                                 <mat-error [hidden]="false"
                                     i18n="Built up area Error|Explains Built up area is required" i18n-aria-label
@@ -34,7 +34,7 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Area for academic purpose (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #academicArea placeholder="Type here"
+                                <input matInput autocomplete="off" type="number" #academicArea placeholder="Type here"
                                     class="flex flex-1" formControlName="academicArea" />
                                 <mat-error [hidden]="false"
                                     i18n="Academic perpose area  Error|Explains Academic perpose area is required"
@@ -59,7 +59,7 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Area for hostels (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #hostelArea placeholder="Type here"
+                                <input matInput autocomplete="off" type="number" #hostelArea placeholder="Type here"
                                     class="flex flex-1" formControlName="hostelArea" />
                                 <mat-error [hidden]="false" i18n="Hostel area Error|Explains Hostel area is required"
                                     i18n-aria-label aria-label="Hostel area Error|Explains Hostel area is required "
@@ -73,8 +73,8 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Area for computer labs (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #computerLabArea placeholder=" in acres"
-                                    class="flex flex-1" formControlName="computerLabArea" />
+                                <input matInput autocomplete="off" type="number" #computerLabArea
+                                    placeholder=" in acres" class="flex flex-1" formControlName="computerLabArea" />
                                 <mat-error [hidden]="false"
                                     i18n="Computer lab area Error|Explains Computer lab area is required"
                                     i18n-aria-label
@@ -89,8 +89,8 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Number of computer systems</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #computerSystemCount placeholder="Type here"
-                                    class="flex flex-1" formControlName="computerSystemCount" />
+                                <input matInput autocomplete="off" type="number" #computerSystemCount
+                                    placeholder="Type here" class="flex flex-1" formControlName="computerSystemCount" />
                                 <mat-error [hidden]="false"
                                     i18n="Computer systems count Error|Explains Computer systems count is required"
                                     i18n-aria-label
@@ -111,8 +111,8 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Total collection (number of books)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #totalCollection placeholder="Number"
-                                    formControlName="totalCollection" class="flex flex-1" />
+                                <input matInput autocomplete="off" type="number" min="0" step="1" #totalCollection
+                                    placeholder="Number" formControlName="totalCollection" class="flex flex-1" />
                                 <mat-error [hidden]="false"
                                     i18n="Total collection Error|Explains Total collection is required" i18n-aria-label
                                     aria-label="Total collection Error|Explains Total collection is required "
@@ -126,8 +126,8 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Periodicals subscribed</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #periodicalsSubscribed placeholder="Number"
-                                    formControlName="periodicalsSubscribed" class="flex flex-1" />
+                                <input matInput autocomplete="off" type="number" min="0" step="1" #periodicalsSubscribed
+                                    placeholder="Number" formControlName="periodicalsSubscribed" class="flex flex-1" />
                                 <mat-error [hidden]="false"
                                     i18n="Periodicals subscribed Error|Explains Periodicals subscribed is required"
                                     i18n-aria-label
@@ -155,8 +155,8 @@
                     <div class="input-wrapper margin-top-s flex flex-col flex-1">
                         <mat-form-field appearance="outline"
                             class="margin-top-xs form_field flex flex-1 full-width text-area-field">
-                            <textarea matInput autocomplete="off" #latitudeLongitude formControlName="latitudeLongitude"
-                                placeholder="Type here" class="flex flex-1"></textarea>
+                            <input matInput autocomplete="off" #latitudeLongitude placeholder="Type here"
+                                formControlName="latitudeLongitude" class="flex flex-1" />
                             <mat-error [hidden]="false"
                                 i18n="Latitude and longitude GPS coordinates Error|Explains Latitude and longitude GPS coordinates is required"
                                 i18n-aria-label
