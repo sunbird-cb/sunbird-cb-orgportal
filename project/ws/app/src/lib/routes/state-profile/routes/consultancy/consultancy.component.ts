@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
+import { OrgProfileService } from '../../services/org-profile.service'
+import { Subject } from 'rxjs'
 
 @Component({
     selector: 'ws-app-consultancy',
@@ -11,7 +14,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class ConsultancyComponent implements OnInit {
     consultancyForm!: FormGroup
-    constructor() {
+    private unsubscribe = new Subject<void>()
+
+    constructor(
+        private orgSvc: OrgProfileService,
+    ) {
         this.consultancyForm = new FormGroup({
             projectName: new FormControl('', [Validators.required]),
             projectDetail: new FormControl('', [Validators.required]),
@@ -22,6 +29,17 @@ export class ConsultancyComponent implements OnInit {
             ongoingProjectName: new FormControl('', [Validators.required]),
             ongoingProjectDetail: new FormControl('', [Validators.required])
         })
+
+        this.consultancyForm.valueChanges
+            .pipe(
+                debounceTime(500),
+                switchMap(async formValue => {
+                    if (formValue) {
+                        this.orgSvc.updateLocalFormValue('consultancy', formValue)
+                    }
+                }),
+                takeUntil(this.unsubscribe)
+            ).subscribe()
     }
 
     ngOnInit() {

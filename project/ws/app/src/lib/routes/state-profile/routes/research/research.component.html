@@ -18,6 +18,12 @@
                             formControlName="CompletedResearchprojectName" i18n-aria-label
                             aria-label="Completed research project name input" placeholder="Enter project name"
                             class="flex flex-1" />
+                        <mat-error [hidden]="false"
+                            i18n="Completed research project name Error|Explains Completed research project name is required"
+                            *ngIf="researchProgramForm?.controls['CompletedResearchprojectName'].errors?.required"
+                            i18n-aria-label aria-label="Completed research project name is mandatory">
+                            Completed research project name is mandatory
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -27,6 +33,12 @@
                             formControlName="CompletedResearchprojectDetail" i18n-aria-label
                             aria-label="Completed research projects input" placeholder="Enter project details "
                             class="flex flex-1"></textarea>
+                        <mat-error [hidden]="false"
+                            i18n="Completed research project detail Error|Explains Completed research project detail is required"
+                            *ngIf="researchProgramForm?.controls['CompletedResearchprojectDetail'].errors?.required"
+                            i18n-aria-label aria-label="Completed research project detail is mandatory">
+                            Completed research project detail is mandatory
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <a class="add_link margin-top-m">Add new project</a>
@@ -49,6 +61,12 @@
                         <input matInput autocomplete="off" #industrySponsoreName formControlName="industrySponsoreName"
                             i18n-aria-label aria-label=" Industry sponsore name input" placeholder="Sponsore name"
                             class="flex flex-1" />
+                        <mat-error [hidden]="false"
+                            i18n="Industry sponsore name Error|Explains Industry sponsore name is required"
+                            *ngIf="researchProgramForm?.controls['industrySponsoreName'].errors?.required"
+                            i18n-aria-label aria-label="Industry sponsore name is mandatory">
+                            Industry sponsore name is mandatory
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -58,6 +76,12 @@
                             formControlName="industrySponsoreDetail" i18n-aria-label
                             aria-label="Industry sponsore detail input" placeholder="Enter sponsore details"
                             class="flex flex-1"></textarea>
+                        <mat-error [hidden]="false"
+                            i18n="Industry sponsore detail Error|Explains Industry sponsore detail is required"
+                            *ngIf="researchProgramForm?.controls['industrySponsoreDetail'].errors?.required"
+                            i18n-aria-label aria-label="Industry sponsore detail is mandatory">
+                            Industry sponsore detail is mandatory
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <a class="add_link margin-top-m">Add new sponsore</a>
@@ -80,6 +104,12 @@
                             formControlName="governmentSponsoreName" i18n-aria-label
                             aria-label="Government sponsore name input" placeholder="Enter sponsore name"
                             class="flex flex-1" />
+                        <mat-error [hidden]="false"
+                            i18n="Government sponsore name Error|Explains Government sponsore name is required"
+                            *ngIf="researchProgramForm?.controls['governmentSponsoreName'].errors?.required"
+                            i18n-aria-label aria-label="Government sponsore name is mandatory">
+                            Government sponsore name is mandatory
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -89,6 +119,12 @@
                             formControlName="governmentSponsoreDetail" i18n-aria-label
                             aria-label="Government sponsore detail input" placeholder="Enter sponsore details"
                             class="flex flex-1"></textarea>
+                        <mat-error [hidden]="false"
+                            i18n="Government sponsore detail Error|Explains Government sponsore detail is required"
+                            *ngIf="researchProgramForm?.controls['governmentSponsoreDetail'].errors?.required"
+                            i18n-aria-label aria-label="Government sponsore detail is mandatory">
+                            Government sponsore detail is mandatory
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <a class="add_link margin-top-m">Add new sponsore</a>
@@ -110,6 +146,12 @@
                         <input matInput autocomplete="off" #ongoingProjectName formControlName="ongoingProjectName"
                             i18n-aria-label aria-label="Ongoing Research project name input"
                             placeholder="Enter project name" class="flex flex-1" />
+                        <mat-error [hidden]="false"
+                            i18n="Ongoing Research project name Error|Explains Ongoing Research project name is required"
+                            *ngIf="researchProgramForm?.controls['ongoingProjectName'].errors?.required" i18n-aria-label
+                            aria-label="Ongoing Research project name is mandatory">
+                            Ongoing Research project name is mandatory
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -119,6 +161,12 @@
                             formControlName="ongoingProjectDetail" i18n-aria-label
                             aria-label="Ongoing Research project detail input" placeholder="Enter project details "
                             class="flex flex-1"></textarea>
+                        <mat-error [hidden]="false"
+                            i18n="Ongoing Research project detail Error|Explains Ongoing Research project detail is required"
+                            *ngIf="researchProgramForm?.controls['ongoingProjectDetail'].errors?.required"
+                            i18n-aria-label aria-label="Ongoing Research project detail is mandatory">
+                            Ongoing Research project detail is mandatory
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <a class="add_link margin-top-m">Add new project</a>
@@ -139,12 +187,17 @@
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <input matInput autocomplete="off" #facultyName formControlName="facultyName" i18n-aria-label
-                            aria-label="faculty name input" placeholder="Enter faculty name" class="flex flex-1" />
+                            aria-label="Faculty name input" placeholder="Enter faculty name" class="flex flex-1" />
+                        <mat-error [hidden]="false" i18n="Faculty name Error|Explains Faculty name is required"
+                            *ngIf="researchProgramForm?.controls['facultyName'].errors?.required" i18n-aria-label
+                            aria-label="Faculty name is mandatory">
+                            Faculty name is mandatory
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
                 <div class="upload-btn-wrapper margin-top-s">
-                    <button class="btn">Upload a file</button>
+                    <button class="btn">Browse and Upload papers</button>
                     <input type="file" name="myfile" formControlName="uploadPaper" />
                 </div>
 

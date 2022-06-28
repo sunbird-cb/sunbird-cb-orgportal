@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { Subject } from 'rxjs'
+import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
+import { OrgProfileService } from '../../services/org-profile.service'
 
 @Component({
     selector: 'ws-app-infrastructure',
@@ -11,7 +14,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class InfrastructureComponent implements OnInit {
     infrastructureForm!: FormGroup
-    constructor() {
+    addedOrgs: any[] = []
+    private unsubscribe = new Subject<void>()
+
+    constructor(
+        private orgSvc: OrgProfileService,
+    ) {
         this.infrastructureForm = new FormGroup({
             builtupArea: new FormControl('', [Validators.required]),
             academicArea: new FormControl('', [Validators.required]),
@@ -22,8 +30,21 @@ export class InfrastructureComponent implements OnInit {
             periodicalsSubscribed: new FormControl(false, [Validators.required]),
             latitudeLongitude: new FormControl('', [Validators.required]),
         })
+
+        this.infrastructureForm.valueChanges
+            .pipe(
+                debounceTime(500),
+                switchMap(async formValue => {
+                    if (formValue) {
+                        formValue.addedOrgs = this.addedOrgs
+                        this.orgSvc.updateLocalFormValue('infrastructure', formValue)
+                    }
+                }),
+                takeUntil(this.unsubscribe)
+            ).subscribe()
     }
 
     ngOnInit() {
+        console.log(JSON.stringify(this.infrastructureForm) + ' infra form value')
     }
 }

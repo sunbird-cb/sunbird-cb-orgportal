@@ -52,8 +52,8 @@
 
   </ng-container>
 
-
-  <p class="mat-body-2 margin-remove-bottom margin-top-xs footer_text">Your selections are automatically saved.</p>
+  <!--
+  <p class="mat-body-2 margin-remove-bottom margin-top-xs footer_text">Your selections are automatically saved.</p> -->
 
 
   <ng-container *ngIf="next && next !== 'done'">
@@ -65,7 +65,7 @@
   </ng-container>
   <ng-container *ngIf="next && next === 'done'">
 
-    <a (click)="updateProfile()" class="next_link mat-body-2 margin-remove-bottom">Done</a>
+    <a (click)="updateProfile()" class="next_link mat-body-2 margin-remove-bottom">Submit</a>
 
   </ng-container>
 </div>

@@ -12,124 +12,89 @@
                         </label>
                     </div>
                     <div class="flex flex-row margin-top-m">
-                        <div class="flex flex-col">
-                            <mat-radio-group #training formControlName="training" i18n-aria-label
-                                aria-label="Training input">
-                                <mat-radio-button class="mat-radio-button radio-unselect"
-                                    (click)="buttonSelect($event)">
-                                    Training
-                                </mat-radio-button>
-                            </mat-radio-group>
+                        <div class="flex flex-1">
+                            <mat-checkbox (click)="buttonSelect($event)" #training formControlName="training"
+                                i18n-aria-label aria-label="Training input">
+                                Training
+                            </mat-checkbox>
                         </div>
 
-                        <div class="flex flex-col margin-left-l">
-                            <mat-radio-group #research formControlName="research" i18n-aria-label
-                                aria-label="Research input">
-                                <mat-radio-button class="mat-radio-button radio-unselect"
-                                    (click)="buttonSelect($event)">
-                                    Research
-                                </mat-radio-button>
-                            </mat-radio-group>
+                        <div class="flex flex-1 margin-left-l">
+                            <mat-checkbox (click)="buttonSelect($event)" #research formControlName="research"
+                                i18n-aria-label aria-label="Research input">
+                                Research
+                            </mat-checkbox>
                         </div>
                     </div>
 
-                    <div class="flex flex-row">
-                        <div class="flex flex-col">
-                            <mat-radio-group #consultancy formControlName="consultancy" i18n-aria-label
-                                aria-label="Consultancy input">
-                                <mat-radio-button class="mat-radio-button radio-unselect"
-                                    (click)="buttonSelect($event)">
-                                    Consultancy
-                                </mat-radio-button>
-                            </mat-radio-group>
+                    <div class="flex flex-row margin-top-m">
+                        <div class="flex flex-1">
+                            <mat-checkbox (click)="buttonSelect($event)" #consultancy formControlName="consultancy"
+                                i18n-aria-label aria-label="Consultancy input">
+                                Consultancy
+                            </mat-checkbox>
                         </div>
 
-                        <div class="flex flex-col margin-left-l">
-                            <mat-radio-group #trainingResearch formControlName="trainingResearch" i18n-aria-label
-                                aria-label="Training research input">
-                                <mat-radio-button class="mat-radio-button radio-unselect"
-                                    (click)="buttonSelect($event)">
-                                    Training & Research
-                                </mat-radio-button>
-                            </mat-radio-group>
+                        <div class="flex flex-1 margin-left-l">
+                            <mat-checkbox (click)="buttonSelect($event)" #trainingResearch
+                                formControlName="trainingResearch" i18n-aria-label aria-label="Training research input">
+                                Training & Research
+                            </mat-checkbox>
                         </div>
                     </div>
 
-                    <div class="flex flex-row">
-                        <div class="flex flex-col">
-                            <mat-radio-group #researchPublication formControlName="researchPublication" i18n-aria-label
+                    <div class="flex flex-row margin-top-m">
+                        <div class="flex flex-1">
+                            <mat-checkbox (click)="buttonSelect($event)" #researchPublication
+                                formControlName="researchPublication" i18n-aria-label
                                 aria-label="Research and Publication input">
-                                <mat-radio-button class="mat-radio-button radio-unselect"
-                                    (click)="buttonSelect($event)">
-                                    Research and Publication
-                                </mat-radio-button>
-                            </mat-radio-group>
+                                Research and Publication
+                            </mat-checkbox>
                         </div>
 
-                        <div class="flex flex-col margin-left-l">
-                            <mat-radio-group #trainingConsultancy formControlName="trainingConsultancy" i18n-aria-label
+                        <div class="flex flex-1 margin-left-l">
+                            <mat-checkbox (click)="buttonSelect($event)" #trainingConsultancy
+                                formControlName="trainingConsultancy" i18n-aria-label
                                 aria-label="Training and consultancy input">
-                                <mat-radio-button class="mat-radio-button radio-unselect"
-                                    (click)="buttonSelect($event)">
-                                    Training and consultancy
-                                </mat-radio-button>
-                            </mat-radio-group>
+                                Training and consultancy
+                            </mat-checkbox>
                         </div>
                     </div>
 
-                    <div class="flex flex-row">
-                        <div class="flex flex-col">
-                            <mat-radio-group #trainConsulResPublication formControlName="trainConsulResPublication"
-                                i18n-aria-label aria-label="Attached center input">
-                                <mat-radio-button class="mat-radio-button radio-unselect"
-                                    (click)="buttonSelect($event)">
-                                    Training , Consultancy, Research and Publication
-                                </mat-radio-button>
-                            </mat-radio-group>
+                    <div class="flex flex-row margin-top-m">
+                        <div class="flex flex-1">
+                            <mat-checkbox (click)="buttonSelect($event)" #trainConsulResPublication
+                                formControlName="trainConsulResPublication" i18n-aria-label
+                                aria-label="Attached center input">
+                                Training , Consultancy, Research and Publication
+                            </mat-checkbox>
                         </div>
 
-                        <div class="flex flex-col margin-left-l">
-                            <mat-radio-group #other formControlName="other" i18n-aria-label aria-label="Other input">
-                                <mat-radio-button class="mat-radio-button radio-unselect" (click)="otherButtonSelect()">
-                                    Other
-                                </mat-radio-button>
-                            </mat-radio-group>
+                        <div class="flex flex-1 margin-left-l">
+                            <mat-checkbox (click)="otherButtonSelect()" #other formControlName="other" i18n-aria-label
+                                aria-label="Other input">
+                                Other
+                            </mat-checkbox>
 
                         </div>
-
                     </div>
-                </div>
-
-                <div class="input-wrapper flex flex-col flex-1">
-                    <!-- <mat-form-field appearance="outline" class="margin-top-xs other_form_field flex flex-1 full-width"> -->
-                    <!-- <input matInput autocomplete="off" #instituteOtherRole formControlName="instituteOtherRole"
-                            placeholder="Enter institute role " class="flex flex-1" i18n-aria-label
-                            aria-label="Institute role input" /> -->
-                    <mat-checkbox aria-label="I confirm that the above provided information are accurate."
-                        formControlName="instituteOtherRole" id="confirm" i18n-aria-label
-                        aria-label="I confirm that the above provided information are accurate. checkbox" required>
-                        <label class="margin-remove-bottom mat-body-2 ws-mat-black60-text" i18n-aria-label
-                            aria-label="I confirm that the above provided information are accurate. checkbox label">
-                            I confirm that the above provided information is accurate.
-                        </label>
-                    </mat-checkbox>
-
-                    <mat-error [hidden]="false" i18n="Institute Role Error|Explains Role is required" i18n-aria-label
-                        aria-label="Institute Role Error|Explains Role is required "
-                        *ngIf="instituteProfileForm?.controls['instituteOtherRole'].errors?.required">
-                        Institute role is mandatory
-                    </mat-error>
-                    <!-- </mat-form-field> -->
+                    <ng-container *ngIf="instituteOtherRoleField" class="margin-top-m">
+                        <mat-form-field appearance="outline"
+                            class="margin-top-xs other_form_field flex flex-1 full-width">
+                            <input matInput autocomplete="off" #instituteOtherRole formControlName="instituteOtherRole"
+                                placeholder="Enter institute role " class="flex flex-1" i18n-aria-label
+                                aria-label="Institute role input" />
+                            <mat-error [hidden]="false" i18n="Institute Role Error|Explains Role is required"
+                                i18n-aria-label aria-label="Institute Role Error|Explains Role is required "
+                                *ngIf="instituteProfileForm?.controls['instituteOtherRole'].errors?.required">
+                                Institute role is mandatory
+                            </mat-error>
+                        </mat-form-field>
+                    </ng-container>
                 </div>
             </div>
 
         </form>
     </mat-card>
-
-    <!-- <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
-        <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>
-        <a class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
-
-    </div> -->
 
 </div>

@@ -244,9 +244,9 @@
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
-                        <input matInput autocomplete="off" #trainingInstitute placeholder="Type here"
-                            class="flex flex-1" formControlName="trainingInstitute" i18n-aria-label
-                            aria-label="Training institute input" />
+                        <input matInput autocomplete="off" #trainingInstitute
+                            placeholder="Name of the training institute or center" class="flex flex-1"
+                            formControlName="trainingInstitute" i18n-aria-label aria-label="Training institute input" />
                         <mat-error [hidden]="false" i18n="Website address Error|Explains website address is required"
                             *ngIf="instituteProfileForm?.controls['trainingInstitute'].errors?.required" i18n-aria-label
                             aria-label="Website address is mandatory">
@@ -337,7 +337,7 @@
             </mat-card>
         </div> -->
 
-        <div class="flex flex-1 flex-column margin-top-xs">
+        <div class="flex flex-1 flex-column margin-top-xs margin-right-m">
             <mat-card class="flex flex-1 flex-column margin-bottom-s mat-card-mdo">
                 <div class="flex flex-row">
 

@@ -7,6 +7,7 @@ import _ from 'lodash'
 import { Subject } from 'rxjs'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { OrgProfileService } from '../../services/org-profile.service'
+
 @Component({
     selector: 'ws-app-institute-profile',
     templateUrl: './institute-profile.component.html',
@@ -88,7 +89,7 @@ export class InstituteProfileComponent implements OnInit {
         this.stateNames = this.stateNameList
     }
 
-    buttonSelect(event: any) {
+    buttonSelect() {
         this.isButtonActive = !this.isButtonActive
     }
 
