@@ -14,21 +14,24 @@ import { Subject } from 'rxjs'
 })
 export class ResearchComponent implements OnInit {
     researchProgramForm!: FormGroup
+    researchPaperForm!: FormGroup
+
     private unsubscribe = new Subject<void>()
     constructor(
         private orgSvc: OrgProfileService,
     ) {
         this.researchProgramForm = new FormGroup({
-            CompletedResearchprojectName: new FormControl('', [Validators.required]),
-            CompletedResearchprojectDetail: new FormControl('', [Validators.required]),
-            industrySponsoreName: new FormControl('', [Validators.required]),
-            industrySponsoreDetail: new FormControl('', [Validators.required]),
-            governmentSponsoreName: new FormControl('', [Validators.required]),
-            governmentSponsoreDetail: new FormControl('', [Validators.required]),
-            ongoingProjectName: new FormControl('', [Validators.required]),
-            ongoingProjectDetail: new FormControl('', [Validators.required]),
-            facultyName: new FormControl('', [Validators.required]),
-            uploadPaper: new FormControl('', [Validators.required]),
+            projectName: new FormControl('', [Validators.required]),
+            programeStatus: new FormControl('', [Validators.required]),
+            industrySponsored: new FormControl('', [Validators.required]),
+            govtSponsored: new FormControl('', [Validators.required]),
+            otherSponsored: new FormControl('', [Validators.required]),
+            projectDetail: new FormControl('', [Validators.required]),
+        })
+
+        this.researchPaperForm = new FormGroup({
+            researchPaperName: new FormControl('', [Validators.required]),
+            researchPaperDetail: new FormControl('', [Validators.required]),
         })
 
         this.researchProgramForm.valueChanges
