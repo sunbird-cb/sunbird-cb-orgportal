@@ -234,7 +234,7 @@
             <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
                 <h2>Organization, Department and Ministry details</h2>
 
-                <div class="input-wrapper flex flex-col flex-1">
+                <div id="maindiv" class="input-wrapper flex flex-col flex-1">
                     <div class="flex flex-1">
                         <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                             i18n="Training institute label|Label which explains the user to enter Training institute"
@@ -243,8 +243,9 @@
                         </label>
                     </div>
 
-                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
-                        <input matInput autocomplete="off" #trainingInstitute placeholder="Type here"
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-"
+                        [ngClass]="{ 'mat-focused': textBoxActive}">
+                        <input matInput autocomplete="off" #trainingInstitute placehowidthlder="Type here"
                             class="flex flex-1" formControlName="trainingInstitute" i18n-aria-label
                             aria-label="Training institute input" />
                         <mat-error [hidden]="false" i18n="Website address Error|Explains website address is required"
@@ -338,35 +339,40 @@
         </div> -->
 
         <div class="flex flex-1 flex-column margin-top-xs">
-            <mat-card class="flex flex-1 flex-column margin-bottom-s mat-card-mdo">
-                <div class="flex flex-row">
+            <ng-container *ngFor="let org of addedOrgs">
+                <mat-card class="flex flex-1 flex-column margin-bottom-s mat-card-mdo">
+                    <div class="flex flex-row">
 
-                    <div class="flex flex-1">
-                        <p class="mat-subheading-1 margin-bottom-m">Institute name </p>
-                    </div>
-                    <div class="flex flex-row justify-between">
-                        <a class="cursor-pointer flex margin-right-xs">
-                            <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit
-                            </mat-icon>
-                            Edit
-                        </a>
-                        <a class="cursor-pointer flex">
-                            <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
-                                delete</mat-icon> Delete
-                        </a>
+                        <div class="flex flex-1">
+                            <p class="mat-subheading-1 margin-bottom-m">{{org.name}} </p>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                            <a class="cursor-pointer flex margin-right-xs" (click)="editOrg(org)">
+                                <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit
+                                </mat-icon>
+                                Edit
+                            </a>
+                            <a class="cursor-pointer flex" (click)="deleteOrg(org)">
+                                <mat-icon
+                                    class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
+                                    delete</mat-icon> Delete
+                            </a>
 
-                    </div>
-                </div>
-                <mat-card-content class="flex flex-1">
-                    <div class="flex flex-1 flex-col">
-                        <div class="flex flex-wrap">
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna
-                                aliqua. Ut enim ad…</p>
                         </div>
                     </div>
+                    <mat-card-content class="flex flex-1">
+                        <div class="flex flex-1 flex-col">
+                            <div class="flex flex-wrap">
 
-                </mat-card-content>
-            </mat-card>
+                                <p>{{org.trainingInstituteDetail}}</p>
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+                </mat-card>
+            </ng-container>
         </div>
+
+        <input #deleteTitleRef type="hidden" i18n-value value="Organization/Department/Ministry delete!" />
+        <input #deleteBodyRef type="hidden" i18n-value
+            value="Do you want to delete this organization/department/ministry " />

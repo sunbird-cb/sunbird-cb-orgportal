@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { MatSnackBar } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
+import { Router } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 /* tslint:disable*/
 import _ from 'lodash'
 import { Subject } from 'rxjs'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
+import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
 import { OrgProfileService } from '../../services/org-profile.service'
 @Component({
     selector: 'ws-app-institute-profile',
@@ -27,12 +29,19 @@ export class InstituteProfileComponent implements OnInit {
     namePatern = `^[a-zA-Z\\s\\']{1,32}$`
     countryCodeList = ['+91', '+92', '+93', '+94', '+95']
     stateNameList = ['Delhi', 'Uttaranchal', 'Hariyana', 'Karnataka', 'Uttar Pradesh']
-    editOrg: any
+    editOrgValue: any
     addedOrgs: any[] = []
+    @ViewChild('deleteTitleRef', { static: true })
+    deleteTitleRef: ElementRef | null = null
+    @ViewChild('deleteBodyRef', { static: true })
+    deleteBodyRef: ElementRef | null = null
+    textBoxActive = false
     constructor(
         private configSvc: ConfigurationsService,
         private orgSvc: OrgProfileService,
         private snackBar: MatSnackBar,
+        private router: Router,
+        private dialog: MatDialog,
     ) {
         this.instituteProfileForm = new FormGroup({
             instituteName: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -52,7 +61,6 @@ export class InstituteProfileComponent implements OnInit {
         // pre poluate form fields when data is available (edit mode)
         if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.orgProfile) {
             const instituteProfile = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.instituteProfile')
-            console.log(JSON.stringify(instituteProfile) + '--------')
             this.instituteProfileForm.patchValue({
                 instituteName: _.get(instituteProfile, 'instituteName'),
                 fullAddress: _.get(instituteProfile, 'fullAddress'),
@@ -67,6 +75,7 @@ export class InstituteProfileComponent implements OnInit {
                 attachedCenter: _.get(instituteProfile, 'attachedCenter'),
                 trainingInstituteDetail: _.get(instituteProfile, 'trainingInstituteDetail'),
             })
+            this.addedOrgs = _.get(instituteProfile, 'attachedOrgs')
         }
 
         this.instituteProfileForm.valueChanges
@@ -74,8 +83,9 @@ export class InstituteProfileComponent implements OnInit {
                 debounceTime(500),
                 switchMap(async formValue => {
                     if (formValue) {
-                        formValue.addedOrgs = this.addedOrgs
+                        formValue.attachedOrgs = this.addedOrgs
                         this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
+                        this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
                     }
                 }),
                 takeUntil(this.unsubscribe)
@@ -88,27 +98,93 @@ export class InstituteProfileComponent implements OnInit {
         this.stateNames = this.stateNameList
     }
 
-    buttonSelect(event: any) {
+    buttonSelect(_event: any) {
         this.isButtonActive = !this.isButtonActive
     }
 
     addOrg() {
-        if (!this.editOrg) {
+        if (!this.editOrgValue) {
             // tslint:disable-next-line: no-non-null-assertion
             if (this.instituteProfileForm!.get('trainingInstitute')!.value) {
                 const org = {
                     // tslint:disable-next-line: no-non-null-assertion
                     name: this.instituteProfileForm!.get('trainingInstitute')!.value || '',
                     // tslint:disable-next-line: no-non-null-assertion
-                    isAttachedInstitute: this.instituteProfileForm!.get('trainingInstitute')!.value || true,
+                    // isAttachedInstitute: this.instituteProfileForm!.get('trainingInstitute')!.value || true,
                     // tslint:disable-next-line: no-non-null-assertion
                     trainingInstituteDetail: this.instituteProfileForm!.get('trainingInstituteDetail')!.value || '',
                 }
                 this.addedOrgs.push(org)
-                this.orgSvc.updateLocalFormValue('instituteProfile', this.instituteProfileForm.value)
+
+                // update local store data
+                const formValue = this.instituteProfileForm.value
+                formValue.attachedOrgs = this.addedOrgs
+                this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
+                this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
             } else {
                 this.snackBar.open('Attached training institute or center name is required')
             }
+        } else {
+            if (this.configSvc.userProfile && this.configSvc.unMappedUser.profileDetails) {
+                _.each(this.addedOrgs, r => {
+                    if (r.name === this.editOrgValue.name) {
+                        // tslint:disable-next-line
+                        r.name = this.instituteProfileForm.get('trainingInstitute')!.value,
+                            // tslint:disable-next-line: no-non-null-assertion
+                            // r.isAttachedInstitute = this.instituteProfileForm!.get('trainingInstitute')!.value || true,
+                            // tslint:disable-next-line: no-non-null-assertion
+                            r.trainingInstituteDetail = this.instituteProfileForm!.get('trainingInstituteDetail')!.value || ''
+                    }
+                })
+                // update local store data
+                const formValue = this.instituteProfileForm.value
+                formValue.attachedOrgs = this.addedOrgs
+                this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
+                this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
+            }
+        }
+    }
+
+    editOrg(org: any) {
+        if (org) {
+            this.editOrgValue = org
+            this.instituteProfileForm.patchValue({
+                trainingInstitute: org.name,
+                // attachedTrainingInstitute: org.attachedTrainingInstitute,
+                trainingInstituteDetail: org.trainingInstituteDetail,
+            })
+            this.instituteProfileForm.updateValueAndValidity()
+            this.textBoxActive = true
+            this.router.navigate(['app', 'setup', 'institute-profile'], { fragment: 'maindiv' })
+
+            // update local store data
+            const formValue = this.instituteProfileForm.value
+            formValue.attachedOrgs = this.addedOrgs
+            this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
+            this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
+        }
+    }
+
+    deleteOrg(org: any) {
+        if (org) {
+            const dialogRef = this.dialog.open(DialogConfirmComponent, {
+                data: {
+                    title: (this.deleteTitleRef && this.deleteTitleRef.nativeElement.value) || '',
+                    body: (this.deleteBodyRef && this.deleteBodyRef.nativeElement.value) || '',
+                },
+            })
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    const delIdx = _.findIndex(this.addedOrgs, { name: org.name })
+                    this.addedOrgs.splice(delIdx, 1)
+
+                    // update local store data
+                    const formValue = this.instituteProfileForm.value
+                    formValue.attachedOrgs = this.addedOrgs
+                    this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
+                    this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
+                }
+            })
         }
     }
 }
