@@ -8,7 +8,7 @@ const API_END_POINTS = {
   UPDATE_ORG_PROFILE: '/apis/proxies/v8/org/v1/profile/patch',
 }
 
-interface IATIOnbaording {
+export interface IATIOnbaording {
   instituteProfile?: any
   rolesAndFunctions?: any
   infrastructure?: any
@@ -34,6 +34,17 @@ export class OrgProfileService {
     platformWalkthrough: {},
   }
 
+  public formStatus: IATIOnbaording = {
+    instituteProfile: false,
+    rolesAndFunctions: false,
+    infrastructure: false,
+    trainingPrograms: false,
+    research: false,
+    consultancy: false,
+    faculty: false,
+    platformWalkthrough: false,
+  }
+
   constructor(private http: HttpClient) { }
 
   updateOrgProfileDetails(data: any) {
@@ -46,6 +57,15 @@ export class OrgProfileService {
 
   getLocalFormValue(keyName: keyof IATIOnbaording) {
     return this.formValues[keyName]
+  }
+
+  updateFormStatus(keyName: keyof IATIOnbaording, value: boolean) {
+    console.log('updateFormStatus: ', value)
+    this.formStatus[keyName] = value
+  }
+
+  getFormStatus(keyName: keyof IATIOnbaording) {
+    return this.formStatus[keyName]
   }
 
 }

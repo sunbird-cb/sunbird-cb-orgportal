@@ -8,8 +8,7 @@ import { NSProfileDataV3 } from '../../models/state-profile.models'
 import _ from 'lodash'
 import { Subscription } from 'rxjs'
 import { StepService } from '../../services/step.service'
-import { OrgProfileService } from '../../services/org-profile.service'
-// import { ProfileV3Service } from '../../services/profile_v3.service'
+import { IATIOnbaording, OrgProfileService } from '../../services/org-profile.service'
 @Component({
   selector: 'ws-app-state-profile-home',
   templateUrl: './state-profile-home.component.html',
@@ -154,6 +153,7 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
   }
   get next() {
     if (!this.isNextStepAllowed) { return }
+    if (!this.isFormValid) { return }
     const nextStep = _.first(_.filter(this.tabs, { step: this.currentStep + 1 }))
     if (nextStep) {
       return nextStep
@@ -229,5 +229,15 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
       }
     })
     return isAllowed
+  }
+
+  get isFormValid(): boolean {
+    let isValid = false
+    if (this.current) {
+      if (this.orgSvc.getFormStatus(this.current.key as keyof IATIOnbaording)) {
+        isValid = true
+      }
+    }
+    return isValid
   }
 }
