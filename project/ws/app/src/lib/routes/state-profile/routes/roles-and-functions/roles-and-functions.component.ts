@@ -46,7 +46,7 @@ export class RolesAndFunctionsComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.roleActivityForm + '--------')
+        // console.log(this.roleActivityForm.value + '--------')
     }
 
     otherButtonSelect() {

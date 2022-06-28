@@ -132,6 +132,35 @@
                         </tr>
                     </table>
                 </div>
+
+                <div class="input-wrapper flex flex-col flex-1">
+                    <table class="flex btn-table justify-between">
+                        <tr class="flex w-full btn-table-row justify-between">
+                            <td class="col-3">
+                                <div class="flex flex-1">
+                                    <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                        i18n="Year of establishment label|Label which explains the user to enter Year of establishment"
+                                        i18n-aria-label aria-label="Year of establishment label">
+                                        Year of establishment of the training institute
+                                    </label>
+                                </div>
+
+                                <mat-form-field appearance="outline"
+                                    class="margin-top-xs form_field flex flex-1 full-width">
+                                    <input matInput autocomplete="off" id="fullAddress" #establishmentYear
+                                        formControlName="establishmentYear" placeholder="Add year" class="flex flex-1"
+                                        i18n-aria-label aria-label="Year of establishment input" />
+                                    <mat-error [hidden]="false"
+                                        i18n="Year of establishment Error|Explains address is required" i18n-aria-label
+                                        aria-label="Year of establishment Error|Explains address is required "
+                                        *ngIf="instituteProfileForm?.controls['establishmentYear'].errors?.required">
+                                        Year of establishment of the training institute is mandatory
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </mat-card>
         </div>
 
@@ -140,8 +169,42 @@
                 <h2>Contact & website details</h2>
 
                 <div class="input-wrapper flex flex-col flex-1">
-                    <table class="flex w-full btn-table justify-between">
+                    <table class="flex w-full btn-table justify-between flex-col">
                         <tr class="flex w-full btn-table-row justify-between">
+                            <td class="col-2">
+                                <div class="flex flex-1">
+                                    <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                        i18n="Telephone number label|Label which explains the user to enter Telephone number"
+                                        i18n-aria-label aria-label="Telephone number label">
+                                        Telephone number
+                                    </label>
+                                </div>
+                                <div class="flex flex-align combined-field">
+                                    <mat-form-field appearance="outline" class="margin-top-xs country_code_box">
+                                        <mat-select formControlName="stdCode" #stdCode i18n-placeholder
+                                            placeholder="STD Code" i18n-aria-label aria-label="Telephone Number label">
+                                            <!-- <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}
+                                            </mat-option> -->
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-form-field class="margin-top-xs form_field flex flex-1 full-width"
+                                        appearance="outline">
+
+                                        <input matInput placeholder="Type here" #telephoneNo
+                                            formControlName="telephoneNo" i18n-aria-label
+                                            aria-label="Telephone No input" />
+
+                                        <mat-error [hidden]="false"
+                                            i18n="Telephone Number Error|Explains name is required"
+                                            *ngIf="instituteProfileForm?.controls['telephoneNo'].errors?.required"
+                                            i18n-aria-label aria-label="Telephone Number is mandatory">
+                                            Telephone Number is mandatory
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                            </td>
+
                             <td class="col-2">
                                 <div class="flex flex-1">
                                     <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
@@ -177,7 +240,9 @@
                                     </mat-form-field>
                                 </div>
                             </td>
+                        </tr>
 
+                        <tr class="flex w-full btn-table-row justify-between">
                             <td class="col-2">
                                 <div class="flex flex-1">
                                     <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
@@ -203,30 +268,39 @@
                                     </mat-error>
                                 </mat-form-field>
                             </td>
+
+                            <td class="col-2">
+                                <div class="flex flex-1">
+                                    <label
+                                        class=" margin-remove-bottom form-label required flex mat-subheading-2 w-full"
+                                        i18n="Website address label|Label which explains the user to enter Website address"
+                                        i18n-aria-label aria-label="Website address label">
+                                        Website address
+                                    </label>
+                                </div>
+
+                                <mat-form-field appearance="outline"
+                                    class="margin-top-xs form_field flex flex-1 full-width">
+                                    <input matInput autocomplete="off" #websiteAddress placeholder="Type here"
+                                        class="flex flex-1" formControlName="website" i18n-aria-label
+                                        aria-label="Website input" />
+                                    <mat-error [hidden]="false"
+                                        i18n="Website address Error|Explains website address is required"
+                                        *ngIf="instituteProfileForm?.controls['website'].errors?.required"
+                                        i18n-aria-label aria-label="Website address is mandatory">
+                                        Website address is mandatory
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>
                         </tr>
                     </table>
                 </div>
 
-                <div class="input-wrapper flex flex-col col-2">
-                    <div class="flex flex-1">
-                        <label class=" margin-remove-bottom form-label required flex mat-subheading-2 w-full"
-                            i18n="Website address label|Label which explains the user to enter Website address"
-                            i18n-aria-label aria-label="Website address label">
-                            Website address
-                        </label>
-                    </div>
+                <!-- <div class="input-wrapper flex flex-col col-2">
+                    <table class="flex w-full btn-table justify-between">
 
-                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
-                        <input matInput autocomplete="off" #websiteAddress placeholder="Type here" class="flex flex-1"
-                            formControlName="website" i18n-aria-label aria-label="Website input" />
-                        <mat-error [hidden]="false" i18n="Website address Error|Explains website address is required"
-                            *ngIf="instituteProfileForm?.controls['website'].errors?.required" i18n-aria-label
-                            aria-label="Website address is mandatory">
-                            Website address is mandatory
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
+                    </table>
+                </div> -->
             </mat-card>
         </div>
     </form>
@@ -247,9 +321,9 @@
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-"
                         [ngClass]="{ 'mat-focused': textBoxActive}">
-                        <input matInput autocomplete="off" #trainingInstitute placehowidthlder="Type here"
-                            class="flex flex-1" formControlName="trainingInstitute" i18n-aria-label
-                            aria-label="Training institute input" />
+                        <input matInput autocomplete="off" #trainingInstitute
+                            placehowidthlder="Name of the training institute or center" class="flex flex-1"
+                            formControlName="trainingInstitute" i18n-aria-label aria-label="Training institute input" />
                         <mat-error [hidden]="false" i18n="Website address Error|Explains website address is required"
                             *ngIf="attachedOrgForm?.controls['trainingInstitute'].errors?.required" i18n-aria-label
                             aria-label="Website address is mandatory">
@@ -257,7 +331,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <!-- <div class="input-wrapper flex flex-col flex-1">
+                <div class="input-wrapper flex flex-col flex-1">
                     <table class="flex">
                         <tr class="flex justify-between items-center">
                             <td>
@@ -280,8 +354,8 @@
                             </td>
                         </tr>
                     </table>
-                </div> -->
-                <div class="input-wrapper flex flex-col flex-1">
+                </div>
+                <div class="input-wrapper flex flex-col flex-1 margin-top-m">
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <textarea matInput autocomplete="off" #trainingInstituteDetail
                             placeholder="Enter Attached training Institute details" class="flex flex-1"
