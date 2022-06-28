@@ -45,6 +45,5 @@ export class InfrastructureComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(JSON.stringify(this.infrastructureForm) + ' infra form value')
     }
 }

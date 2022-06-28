@@ -153,7 +153,10 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
   }
   get next() {
     if (!this.isNextStepAllowed) { return }
-    if (!this.isFormValid) { return }
+
+    // for checking the form validation
+    // if (!this.isFormValid) { return }
+
     const nextStep = _.first(_.filter(this.tabs, { step: this.currentStep + 1 }))
     if (nextStep) {
       return nextStep
