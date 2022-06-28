@@ -19,6 +19,7 @@ import { OrgProfileService } from '../../services/org-profile.service'
 })
 export class InstituteProfileComponent implements OnInit {
     instituteProfileForm!: FormGroup
+    attachedOrgForm!: FormGroup
     private unsubscribe = new Subject<void>()
     isButtonActive: any
     public countryCodes: string[] = []
@@ -53,6 +54,9 @@ export class InstituteProfileComponent implements OnInit {
             mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
             email: new FormControl('', [Validators.required, Validators.email]),
             website: new FormControl('', [Validators.required]),
+        })
+
+        this.attachedOrgForm = new FormGroup({
             trainingInstitute: new FormControl('', []),
             attachedTrainingInstitute: new FormControl(true, [Validators.required]),
             trainingInstituteDetail: new FormControl('', []),
@@ -71,9 +75,6 @@ export class InstituteProfileComponent implements OnInit {
                 email: _.get(instituteProfile, 'email'),
                 website: _.get(instituteProfile, 'website'),
                 trainingInstitute: _.get(instituteProfile, 'trainingInstitute'),
-                attachedTrainingInstitute: _.get(instituteProfile, 'attachedTrainingInstitute'),
-                attachedCenter: _.get(instituteProfile, 'attachedCenter'),
-                trainingInstituteDetail: _.get(instituteProfile, 'trainingInstituteDetail'),
             })
             this.addedOrgs = _.get(instituteProfile, 'attachedOrgs')
         }
@@ -105,17 +106,17 @@ export class InstituteProfileComponent implements OnInit {
     addOrg() {
         if (!this.editOrgValue) {
             // tslint:disable-next-line: no-non-null-assertion
-            if (this.instituteProfileForm!.get('trainingInstitute')!.value) {
+            if (this.attachedOrgForm!.get('trainingInstitute')!.value) {
                 const org = {
                     // tslint:disable-next-line: no-non-null-assertion
-                    name: this.instituteProfileForm!.get('trainingInstitute')!.value || '',
+                    name: this.attachedOrgForm!.get('trainingInstitute')!.value || '',
                     // tslint:disable-next-line: no-non-null-assertion
-                    // isAttachedInstitute: this.instituteProfileForm!.get('trainingInstitute')!.value || true,
+                    // isAttachedInstitute: this.attachedOrgForm!.get('trainingInstitute')!.value || true,
                     // tslint:disable-next-line: no-non-null-assertion
-                    trainingInstituteDetail: this.instituteProfileForm!.get('trainingInstituteDetail')!.value || '',
+                    trainingInstituteDetail: this.attachedOrgForm!.get('trainingInstituteDetail')!.value || '',
                 }
                 this.addedOrgs.push(org)
-
+                this.attachedOrgForm.reset()
                 // update local store data
                 const formValue = this.instituteProfileForm.value
                 formValue.attachedOrgs = this.addedOrgs
@@ -129,13 +130,14 @@ export class InstituteProfileComponent implements OnInit {
                 _.each(this.addedOrgs, r => {
                     if (r.name === this.editOrgValue.name) {
                         // tslint:disable-next-line
-                        r.name = this.instituteProfileForm.get('trainingInstitute')!.value,
+                        r.name = this.attachedOrgForm.get('trainingInstitute')!.value,
                             // tslint:disable-next-line: no-non-null-assertion
-                            // r.isAttachedInstitute = this.instituteProfileForm!.get('trainingInstitute')!.value || true,
+                            // r.isAttachedInstitute = this.attachedOrgForm!.get('trainingInstitute')!.value || true,
                             // tslint:disable-next-line: no-non-null-assertion
-                            r.trainingInstituteDetail = this.instituteProfileForm!.get('trainingInstituteDetail')!.value || ''
+                            r.trainingInstituteDetail = this.attachedOrgForm!.get('trainingInstituteDetail')!.value || ''
                     }
                 })
+                this.attachedOrgForm.reset()
                 // update local store data
                 const formValue = this.instituteProfileForm.value
                 formValue.attachedOrgs = this.addedOrgs
@@ -148,12 +150,12 @@ export class InstituteProfileComponent implements OnInit {
     editOrg(org: any) {
         if (org) {
             this.editOrgValue = org
-            this.instituteProfileForm.patchValue({
+            this.attachedOrgForm.patchValue({
                 trainingInstitute: org.name,
                 // attachedTrainingInstitute: org.attachedTrainingInstitute,
                 trainingInstituteDetail: org.trainingInstituteDetail,
             })
-            this.instituteProfileForm.updateValueAndValidity()
+            this.attachedOrgForm.updateValueAndValidity()
             this.textBoxActive = true
             this.router.navigate(['app', 'setup', 'institute-profile'], { fragment: 'maindiv' })
 

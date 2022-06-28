@@ -229,7 +229,9 @@
 
             </mat-card>
         </div>
+    </form>
 
+    <form [formGroup]="attachedOrgForm">
         <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
             <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
                 <h2>Organization, Department and Ministry details</h2>
@@ -249,7 +251,7 @@
                             class="flex flex-1" formControlName="trainingInstitute" i18n-aria-label
                             aria-label="Training institute input" />
                         <mat-error [hidden]="false" i18n="Website address Error|Explains website address is required"
-                            *ngIf="instituteProfileForm?.controls['trainingInstitute'].errors?.required" i18n-aria-label
+                            *ngIf="attachedOrgForm?.controls['trainingInstitute'].errors?.required" i18n-aria-label
                             aria-label="Website address is mandatory">
                             Training institute name is mandatory
                         </mat-error>
