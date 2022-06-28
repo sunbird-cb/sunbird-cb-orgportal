@@ -1,7 +1,9 @@
 <div class="flex flex-wrap flex-col margin-right-m margin-top-l role-card">
-    <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
-        <h2>Infrastructure</h2>
-        <form [formGroup]="infrastructureForm">
+
+    <form [formGroup]="infrastructureForm">
+
+        <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+            <h2>Infrastructure</h2>
             <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
                 <div class="flex flex-col">
                     <div class="flex flex-col">
@@ -106,7 +108,7 @@
                     </div>
                     <div class="flex flex-col margin-top-m">
                         <div class="flex flex-row infra_box">
-                            <p class="mat-subheading-2 ws-mat-black60-text">Total collection</p>
+                            <p class="mat-subheading-2 ws-mat-black60-text">Total collection (number of books)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
                                 <input matInput autocomplete="off" #totalCollection placeholder="Number"
@@ -136,35 +138,39 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="flex flex-col">
-                            <label
-                                class=" margin-remove-bottom form-label flex mat-subheading-2 ws-mat-black60-text required"
-                                i18n="GPS coordinates label|Label which explains the user to enter GPS coordinates"
-                                i18n-aria-label aria-label="GPS coordinates label">
-                                Latitude and longitude GPS coordinates
-                            </label>
-                            <div class="input-wrapper margin-top-s flex flex-col flex-1">
-                                <mat-form-field appearance="outline"
-                                    class="margin-top-xs form_field flex flex-1 full-width text-area-field">
-                                    <textarea matInput autocomplete="off" #latitudeLongitude
-                                        formControlName="latitudeLongitude" placeholder="Type here"
-                                        class="flex flex-1"></textarea>
-                                    <mat-error [hidden]="false"
-                                        i18n="Latitude and longitude GPS coordinates Error|Explains Latitude and longitude GPS coordinates is required"
-                                        i18n-aria-label
-                                        aria-label="Latitude and longitude GPS coordinates Error|Explains Latitude and longitude GPS coordinates is required "
-                                        *ngIf="instituteProfileForm?.controls['latitudeLongitude'].errors?.required">
-                                        Latitude and longitude GPS coordinates is mandatory
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
+        </mat-card>
 
-        </form>
-    </mat-card>
+        <mat-card class="mat-card role-card flex flex-col mat-card-mdo margin-top-m">
+            <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
+                <div class="flex flex-col">
+                    <label class=" margin-remove-bottom form-label flex mat-subheading-2 ws-mat-black60-text required"
+                        i18n="GPS coordinates label|Label which explains the user to enter GPS coordinates"
+                        i18n-aria-label aria-label="GPS coordinates label">
+                        Latitude and longitude GPS coordinates
+                    </label>
+                    <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                        <mat-form-field appearance="outline"
+                            class="margin-top-xs form_field flex flex-1 full-width text-area-field">
+                            <textarea matInput autocomplete="off" #latitudeLongitude formControlName="latitudeLongitude"
+                                placeholder="Type here" class="flex flex-1"></textarea>
+                            <mat-error [hidden]="false"
+                                i18n="Latitude and longitude GPS coordinates Error|Explains Latitude and longitude GPS coordinates is required"
+                                i18n-aria-label
+                                aria-label="Latitude and longitude GPS coordinates Error|Explains Latitude and longitude GPS coordinates is required "
+                                *ngIf="instituteProfileForm?.controls['latitudeLongitude'].errors?.required">
+                                Latitude and longitude GPS coordinates is mandatory
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </form>
+
 
     <!-- <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
         <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>

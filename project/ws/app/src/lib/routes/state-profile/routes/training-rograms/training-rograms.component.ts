@@ -20,9 +20,12 @@ export class TrainingRogramsComponent implements OnInit {
     ) {
         this.trainingProgramForm = new FormGroup({
             subjectName: new FormControl('', [Validators.required]),
-            digitalPrograms: new FormControl('', [Validators.required]),
+            conductDigitalPrograms: new FormControl(false, [Validators.required]),
+            prepareDigitalContent: new FormControl(false, [Validators.required]),
             videoCount: new FormControl('', [Validators.required]),
             pptCount: new FormControl('', [Validators.required]),
+            otherMaterialCount: new FormControl('', [Validators.required]),
+            otherInfo: new FormControl('', [Validators.required]),
         })
 
         this.trainingProgramForm.valueChanges
