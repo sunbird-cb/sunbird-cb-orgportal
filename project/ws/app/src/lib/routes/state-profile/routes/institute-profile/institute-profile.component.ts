@@ -128,11 +128,7 @@ export class InstituteProfileComponent implements OnInit {
                     attachedTrainingInstitute: 'Attached training Institute',
                 })
                 this.instituteProfileForm.updateValueAndValidity()
-                // update local store data
-                const formValue = this.instituteProfileForm.value
-                formValue.attachedOrgs = this.addedOrgs
-                this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
-                this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
+                this.updateLocalStoreData()
             } else {
                 this.snackBar.open('Attached training institute or center name is required')
             }
@@ -153,11 +149,7 @@ export class InstituteProfileComponent implements OnInit {
                     attachedTrainingInstitute: 'Attached training Institute',
                 })
                 this.instituteProfileForm.updateValueAndValidity()
-                // update local store data
-                const formValue = this.instituteProfileForm.value
-                formValue.attachedOrgs = this.addedOrgs
-                this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
-                this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
+                this.updateLocalStoreData()
             }
         }
     }
@@ -174,11 +166,7 @@ export class InstituteProfileComponent implements OnInit {
             this.textBoxActive = true
             this.router.navigate(['app', 'setup', 'institute-profile'], { fragment: 'maindiv' })
 
-            // update local store data
-            const formValue = this.instituteProfileForm.value
-            formValue.attachedOrgs = this.addedOrgs
-            this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
-            this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
+            this.updateLocalStoreData()
         }
     }
 
@@ -194,14 +182,17 @@ export class InstituteProfileComponent implements OnInit {
                 if (result) {
                     const delIdx = _.findIndex(this.addedOrgs, { name: org.name })
                     this.addedOrgs.splice(delIdx, 1)
-
-                    // update local store data
-                    const formValue = this.instituteProfileForm.value
-                    formValue.attachedOrgs = this.addedOrgs
-                    this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
-                    this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
+                    this.updateLocalStoreData()
                 }
             })
         }
+    }
+
+    updateLocalStoreData() {
+        // update local store data
+        const formValue = this.instituteProfileForm.value
+        formValue.attachedOrgs = this.addedOrgs
+        this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
+        this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
     }
 }

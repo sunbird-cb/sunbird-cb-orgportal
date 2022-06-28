@@ -5,7 +5,7 @@
             <form [formGroup]="researchProgramForm">
                 <h2>Research</h2>
 
-                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                <div id="maindiv" class="input-wrapper margin-top-s flex flex-col flex-1">
                     <div class="flex flex-1">
                         <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                             i18n="Project name label|Label which explains the user to enter Project name count"
@@ -15,14 +15,9 @@
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs flex flex-1 full-width">
-                        <mat-chip-list #chipListHobies>
-                            <mat-chip>
-                                name 1
-                                <mat-icon matChipRemove>cancel</mat-icon>
-                            </mat-chip>
-                        </mat-chip-list>
                         <input matInput autocomplete="off" #projectName formControlName="projectName" i18n-aria-label
-                            aria-label="Project name input" placeholder="Enter project name" class="flex flex-1" />
+                            aria-label="Project name input" placeholder="Enter project name" class="flex flex-1"
+                            [ngClass]="{ 'mat-focused': textBoxActive}" />
                         <mat-error [hidden]="false" i18n="Project name Error|Explains Project name is required"
                             *ngIf="researchProgramForm?.controls['projectName'].errors?.required" i18n-aria-label
                             aria-label="Project name is mandatory">
@@ -43,12 +38,12 @@
                         <div class="flex flex-1 margin-top-m">
                             <mat-radio-group #programeStatus formControlName="programeStatus" i18n-aria-label
                                 aria-label="Programe status input" class="flex button_box flex-row">
-                                <mat-radio-button class="mat-radio-button radio-unselect" (click)="buttonSelect($event)"
-                                    [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'">
+                                <mat-radio-button class="mat-radio-button radio-unselect"
+                                    [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'" [value]="'Ongoing'">
                                     Ongoing
                                 </mat-radio-button>
                                 <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m"
-                                    (click)="buttonSelect()">
+                                    [value]="'Completed'">
                                     Completed
                                 </mat-radio-button>
                                 <mat-error [hidden]="false" i18n="Programe status is required" i18n-aria-label
@@ -105,52 +100,52 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <a class="add_link margin-top-m">Add</a>
+                <button type="submit" class="add_link margin-top-m" (click)="addProgram()">Add</button>
             </form>
 
-            <div class="flex flex-1 flex-column mat-card-mdo margin-top-l edit-mat-card">
-                <div class="flex flex-row">
-                    <div class="flex flex-1">
-                        <h2>Project ABCD</h2>
-                    </div>
-                    <div class="flex flex-row justify-between">
-                        <a class="cursor-pointer flex margin-right-xs">
-                            <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit</mat-icon>
-                            Edit
-                        </a>
-                        <a class="cursor-pointer flex">
-                            <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
-                                delete</mat-icon> Delete
-                        </a>
-                    </div>
-                </div>
-                <div class="flex flex-1 margin-top-s">
-                    <div class="flex">
-                        <span class="mat-caption">Completed</span>
-                    </div>
-                    <div class="flex flex-row margin-left-l">
-                        <span class="mat-caption">Industry sponsored &nbsp; | &nbsp;</span>
-                        <span class="mat-caption">Government sponsored</span>
-                    </div>
-                </div>
-                <mat-card-content class="flex flex-1 margin-remove-bottom">
-                    <div class="flex flex-wrap">
+            <ng-container *ngFor="let program of addedPrograms">
 
-                        <p class="mat-subtitle-1 margin-remove-bottom">Let us take you through a quick guided onboarding
-                            to understand your
-                            interests at work.
-                            Knowing you better helps us give
-                            you a more personalised experience on the platform. This way you discover relevant and
-                            useful learning content in the
-                            easiest</p>
+                <div class="flex flex-1 flex-column mat-card-mdo margin-top-l edit-mat-card">
+                    <div class="flex flex-row">
+                        <div class="flex flex-1">
+                            <h2>{{program.projectName}}</h2>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                            <a class="cursor-pointer flex margin-right-xs" (click)="editProgram(program)">
+                                <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit</mat-icon>
+                                Edit
+                            </a>
+                            <a class="cursor-pointer flex" (click)="deleteProgram(program)">
+                                <mat-icon
+                                    class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
+                                    delete</mat-icon> Delete
+                            </a>
+                        </div>
                     </div>
-                </mat-card-content>
-            </div>
+                    <div class="flex flex-1 margin-top-s">
+                        <div class="flex">
+                            <span class="mat-caption">{{program.programeStatus}}</span>
+                        </div>
+                        <div class="flex flex-row margin-left-l">
+                            <span class="mat-caption" *ngIf="program.industrySponsored">Industry sponsored &nbsp;</span>
+                            <span class="mat-caption" *ngIf="program.govtSponsored">|&nbsp; Government sponsored
+                                &nbsp;</span>
+                            <span class="mat-caption" *ngIf="program.otherSponsored">| &nbsp;Others</span>
+                        </div>
+                    </div>
+                    <mat-card-content class="flex flex-1 margin-remove-bottom">
+                        <div class="flex flex-wrap">
+
+                            <p class="mat-subtitle-1 margin-remove-bottom">{{program.projectDetail}}</p>
+                        </div>
+                    </mat-card-content>
+                </div>
+            </ng-container>
         </mat-card>
     </div>
 
 
-    <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+    <div id="maindiv1" class="flex flex-wrap flex-col margin-right-m  margin-top-l">
         <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
             <form [formGroup]="researchPaperForm">
                 <div class="input-wrapper margin-top-s flex flex-col flex-1">
@@ -165,7 +160,8 @@
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <input matInput autocomplete="off" #researchPaperName formControlName="researchPaperName"
                             i18n-aria-label aria-label="Research paper name input"
-                            placeholder="Name of the research paper" class="flex flex-1" />
+                            placeholder="Name of the research paper" class="flex flex-1"
+                            [ngClass]="{ 'mat-focused': textBoxActive1}" />
                         <mat-error [hidden]="false"
                             i18n="Research paper name Error|Explains Research paper name is required"
                             *ngIf="researchPaperForm?.controls['researchPaperName'].errors?.required" i18n-aria-label
@@ -188,39 +184,41 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <a class="add_link margin-top-m">Add</a>
+                <button class="add_link margin-top-m" (click)="addPaper()">Add</button>
             </form>
 
-            <div class="flex flex-1 flex-column mat-card-mdo margin-top-l edit-mat-card">
-                <div class="flex flex-row">
-                    <div class="flex flex-1">
-                        <h2>Project ABCD</h2>
+            <ng-container *ngFor="let paper of addedPapers">
+                <div class="flex flex-1 flex-column mat-card-mdo margin-top-l edit-mat-card">
+                    <div class="flex flex-row">
+                        <div class="flex flex-1">
+                            <h2>{{paper.researchPaperName}}</h2>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                            <a class="cursor-pointer flex margin-right-xs" (click)="editPaper(paper)">
+                                <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit</mat-icon>
+                                Edit
+                            </a>
+                            <a class="cursor-pointer flex" (click)="deletePaper(paper)">
+                                <mat-icon
+                                    class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
+                                    delete</mat-icon> Delete
+                            </a>
+                        </div>
                     </div>
-                    <div class="flex flex-row justify-between">
-                        <a class="cursor-pointer flex margin-right-xs">
-                            <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit</mat-icon>
-                            Edit
-                        </a>
-                        <a class="cursor-pointer flex">
-                            <mat-icon class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
-                                delete</mat-icon> Delete
-                        </a>
-                    </div>
-                </div>
-                <mat-card-content class="flex flex-1 margin-remove-bottom">
-                    <div class="flex flex-wrap">
+                    <mat-card-content class="flex flex-1 margin-remove-bottom">
+                        <div class="flex flex-wrap">
 
-                        <p class="mat-subtitle-1 margin-remove-bottom">Let us take you through a quick guided onboarding
-                            to understand your
-                            interests at work.
-                            Knowing you better helps us give
-                            you a more personalised experience on the platform. This way you discover relevant and
-                            useful learning content in the
-                            easiest</p>
-                    </div>
-                </mat-card-content>
-            </div>
+                            <p class="mat-subtitle-1 margin-remove-bottom">{{paper.researchPaperDetail}}</p>
+                        </div>
+                    </mat-card-content>
+                </div>
+            </ng-container>
 
         </mat-card>
     </div>
 </div>
+
+<input #deleteProgramTitleRef type="hidden" i18n-value value="Research program delete!" />
+<input #deleteProgramBodyRef type="hidden" i18n-value value="Do you want to delete this research program" />
+<input #deletePaperTitleRef type="hidden" i18n-value value="Research Paper delete!" />
+<input #deletePaperBodyRef type="hidden" i18n-value value="Do you want to delete this research paper" />
