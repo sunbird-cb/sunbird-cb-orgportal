@@ -92,7 +92,9 @@
                             <textarea matInput autocomplete="off" #instituteOtherRole
                                 placeholder="Please specify other roles and functions" class="flex flex-1"
                                 formControlName="instituteOtherRole" i18n-aria-label
-                                aria-label="Please specify other roles and functions"></textarea>
+                                aria-label="Please specify other roles and functions" [matTextareaAutosize]="true"
+                                [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3" maxlength="200"></textarea>
+                            <mat-hint align="end">{{ instituteOtherRole?.value.length }} /200 characters</mat-hint>
                             <mat-error [hidden]="false" i18n="Institute Role Error|Explains Role is required"
                                 i18n-aria-label aria-label="Institute Role Error|Explains Role is required "
                                 *ngIf="instituteProfileForm?.controls['instituteOtherRole'].errors?.required">

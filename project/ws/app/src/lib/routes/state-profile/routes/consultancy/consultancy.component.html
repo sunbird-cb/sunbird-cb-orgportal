@@ -97,7 +97,9 @@
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <textarea matInput autocomplete="off" #projectDetail formControlName="projectDetail"
                             i18n-aria-label aria-label="Project detail input" placeholder="Enter project details "
-                            class="flex flex-1"></textarea>
+                            class="flex flex-1" [matTextareaAutosize]="true" [matAutosizeMaxRows]="10"
+                            [matAutosizeMinRows]="3" maxlength="200"></textarea>
+                        <mat-hint align="end">{{ projectDetail.value.length }} /200 characters</mat-hint>
                         <mat-error [hidden]="false" i18n="Project detail Error|Explains Project detail is required"
                             i18n-aria-label aria-label="Project detail Error|Explains Project detail is required "
                             *ngIf="consultancyForm?.controls['projectDetail'].errors?.required">

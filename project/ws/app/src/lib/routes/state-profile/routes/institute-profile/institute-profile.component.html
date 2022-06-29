@@ -368,7 +368,9 @@
                         <textarea matInput autocomplete="off" #trainingInstituteDetail
                             placeholder="Enter Attached training Institute details" class="flex flex-1"
                             formControlName="trainingInstituteDetail" i18n-aria-label
-                            aria-label=" Attached training Institute input"></textarea>
+                            aria-label=" Attached training Institute input" [matTextareaAutosize]="true"
+                            [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3" maxlength="200"></textarea>
+                        <mat-hint align="end">{{ trainingInstituteDetail.value.length }} /200 characters</mat-hint>
                     </mat-form-field>
                 </div>
                 <a class="add_link margin-top-m" (click)="addOrg()">Add</a>

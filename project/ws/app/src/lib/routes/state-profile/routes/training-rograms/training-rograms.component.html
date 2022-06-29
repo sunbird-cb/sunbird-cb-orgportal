@@ -171,8 +171,10 @@
                         </div>
                         <mat-form-field appearance="outline" class="margin-top-xs flex flex-1 full-width">
                             <textarea matInput autocomplete="off" #otherInfo placeholder="Type here" class="flex flex-1"
-                                formControlName="otherInfo" i18n-aria-label
-                                aria-label="Other information input"></textarea>
+                                formControlName="otherInfo" i18n-aria-label aria-label="Other information input"
+                                [matTextareaAutosize]="true" [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3"
+                                maxlength="200"></textarea>
+                            <mat-hint align="end">{{ otherInfo.value.length }} /200 characters</mat-hint>
 
                             <!-- <mat-error [hidden]="false" i18n="Number of PPTs is required" i18n-aria-label
                                 aria-label="Number of PPTs is required "
