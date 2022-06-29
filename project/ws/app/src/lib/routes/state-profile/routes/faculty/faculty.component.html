@@ -17,9 +17,9 @@
 
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #regularFacultyCount placeholder="Enter number"
-                                    formControlName="regularFacultyCount" class="flex flex-1" i18n-aria-label
-                                    aria-label="Number of Regular Faculties input" />
+                                <input matInput autocomplete="off" type="number" #regularFacultyCount
+                                    placeholder="Enter number" formControlName="regularFacultyCount" class="flex flex-1"
+                                    i18n-aria-label aria-label="Number of Regular Faculties input" />
                                 <mat-error [hidden]="false"
                                     i18n=" Number of Regular Faculties Error|Explains  Number of Regular Faculties is required"
                                     i18n-aria-label
@@ -45,9 +45,9 @@
 
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #adhocFacultyCount placeholder="Enter number"
-                                    formControlName="adhocFacultyCount" class="flex flex-1" i18n-aria-label
-                                    aria-label="Number of Adhoc Faculties input" />
+                                <input matInput autocomplete="off" type="number" #adhocFacultyCount
+                                    placeholder="Enter number" formControlName="adhocFacultyCount" class="flex flex-1"
+                                    i18n-aria-label aria-label="Number of Adhoc Faculties input" />
                                 <mat-error [hidden]="false"
                                     i18n=" Number of Adhoc Faculties Error|Explains  Number of Adhoc Faculties is required"
                                     i18n-aria-label
@@ -73,9 +73,9 @@
 
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #guestFacultyCount placeholder="Enter number"
-                                    formControlName="guestFacultyCount" class="flex flex-1" i18n-aria-label
-                                    aria-label="Number of Guest Faculties input" />
+                                <input matInput autocomplete="off" type="number" #guestFacultyCount
+                                    placeholder="Enter number" formControlName="guestFacultyCount" class="flex flex-1"
+                                    i18n-aria-label aria-label="Number of Guest Faculties input" />
                                 <mat-error [hidden]="false"
                                     i18n=" Number of Guest Faculties Error|Explains Number of Guest Faculties is required"
                                     i18n-aria-label
@@ -101,7 +101,7 @@
 
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #otherCount placeholder="Enter number"
+                                <input matInput autocomplete="off" type="number" #otherCount placeholder="Enter number"
                                     formControlName="otherCount" class="flex flex-1" i18n-aria-label
                                     aria-label="Number of other Faculties input" />
                                 <mat-error [hidden]="false"

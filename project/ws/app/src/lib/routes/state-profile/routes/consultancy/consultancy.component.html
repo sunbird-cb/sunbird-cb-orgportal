@@ -99,43 +99,45 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <a class="add_link margin-top-m">Add new project</a>
+                <a class="add_link margin-top-m" (click)="addProject()">Add</a>
 
-                <ng-container>
+                <ng-container *ngFor="let project of addedconsultancies">
 
                     <div class="flex flex-1 flex-column mat-card-mdo margin-top-l edit-mat-card">
                         <div class="flex flex-row">
                             <div class="flex flex-1">
-                                <h2>ABCD title</h2>
+                                <h2>{{project.projectName}}</h2>
                             </div>
                             <div class="flex flex-row justify-between">
                                 <a class="cursor-pointer flex margin-right-xs">
-                                    <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit</mat-icon>
+                                    <mat-icon class="flex  ws-mat-black60-text margin-right-xs"
+                                        (click)="editProject(project)">edit</mat-icon>
                                     Edit
                                 </a>
                                 <a class="cursor-pointer flex">
                                     <mat-icon
-                                        class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
+                                        class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs"
+                                        (click)="deleteProject(project)">
                                         delete</mat-icon> Delete
                                 </a>
                             </div>
                         </div>
                         <div class="flex flex-1">
                             <div class="flex">
-                                <span class="mat-caption">Completed</span>
+                                <span class="mat-caption">{{project.programeStatus}}</span>
                             </div>
                             <div class="flex flex-row margin-left-l">
-                                <span class="mat-caption">Industry sponsored
+                                <span class="mat-caption" *ngIf="project.industrySponsored">Industry sponsored
                                     &nbsp;</span>
-                                <span class="mat-caption">|&nbsp; Government sponsored
+                                <span class="mat-caption" *ngIf="project.govtSponsored">|&nbsp; Government sponsored
                                     &nbsp;</span>
-                                <span class="mat-caption">| &nbsp;Others</span>
+                                <span class="mat-caption" *ngIf="project.otherSponsored">| &nbsp;Others</span>
                             </div>
                         </div>
                         <mat-card-content class="flex flex-1 margin-remove-bottom margin-top-m">
                             <div class="flex flex-wrap">
 
-                                <p class="mat-subtitle-1 margin-remove-bottom">test data</p>
+                                <p class="mat-subtitle-1 margin-remove-bottom">{{project.projectDetail}}</p>
                             </div>
                         </mat-card-content>
                     </div>
@@ -163,5 +165,5 @@
     </form>
 </div>
 
-<input #deleteTitleRef type="hidden" i18n-value value="Consultancy delete!" />
-<input #deleteBodyRef type="hidden" i18n-value value="Do you want to delete this consultancy" />
+<input #deleteTitleRef type="hidden" i18n-value value="Project delete!" />
+<input #deleteBodyRef type="hidden" i18n-value value="Do you want to delete this consultancy project" />

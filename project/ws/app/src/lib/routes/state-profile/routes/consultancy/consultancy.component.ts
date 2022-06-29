@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { OrgProfileService } from '../../services/org-profile.service'
-import { Subject } from 'rxjs'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 /* tslint:disable*/
 import _ from 'lodash'
@@ -26,7 +25,6 @@ export class ConsultancyComponent implements OnInit {
     deleteBodyRef: ElementRef | null = null
     editValue: any
     textBoxActive = false
-    private unsubscribe = new Subject<void>()
 
     constructor(
         private orgSvc: OrgProfileService,

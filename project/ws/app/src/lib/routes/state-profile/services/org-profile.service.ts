@@ -48,7 +48,7 @@ export class OrgProfileService {
   constructor(private http: HttpClient) { }
 
   updateOrgProfileDetails(data: any) {
-    return this.http.post<any>(API_END_POINTS.UPDATE_ORG_PROFILE, data)
+    return this.http.patch<any>(API_END_POINTS.UPDATE_ORG_PROFILE, { request: data })
   }
 
   updateLocalFormValue(keyName: keyof IATIOnbaording, value: any) {
