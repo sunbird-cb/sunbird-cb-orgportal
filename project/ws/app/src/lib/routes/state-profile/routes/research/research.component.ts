@@ -60,6 +60,8 @@ export class ResearchComponent implements OnInit {
             const researchData = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.research')
             this.addedPapers = _.get(researchData, 'researchPapers') || []
             this.addedPrograms = _.get(researchData, 'researchPrograms') || []
+            this.updateValuesToStore()
+            this.orgSvc.updateFormStatus('research', (this.addedPapers.length > 0 && this.addedPrograms.length > 0))
         }
     }
 

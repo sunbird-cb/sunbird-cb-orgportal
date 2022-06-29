@@ -82,12 +82,16 @@ export class InstituteProfileComponent implements OnInit {
                 establishmentYear: _.get(instituteProfile, 'establishmentYear'),
                 stdCode: _.get(instituteProfile, 'stdCode'),
                 telephoneNo: _.get(instituteProfile, 'telephoneNo'),
+                countryCode: _.get(instituteProfile, 'countryCode'),
                 mobile: _.get(instituteProfile, 'mobile'),
                 email: _.get(instituteProfile, 'email'),
                 website: _.get(instituteProfile, 'website'),
                 trainingInstitute: _.get(instituteProfile, 'trainingInstitute'),
             })
             this.addedOrgs = _.get(instituteProfile, 'attachedOrgs') || []
+            this.instituteProfileForm.updateValueAndValidity()
+            this.orgSvc.updateLocalFormValue('instituteProfile', this.instituteProfileForm.value)
+            this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
         }
 
         this.instituteProfileForm.valueChanges
@@ -111,6 +115,12 @@ export class InstituteProfileComponent implements OnInit {
                 this.countryCodes = data.pageData.data.countryCode
                 this.stateNames = data.pageData.data.states
                 this.stdCodes = data.pageData.data.stdCode
+                if (this.countryCodes.length && this.stdCodes.length) {
+                    this.instituteProfileForm.patchValue({
+                        stdCode: this.stdCodes[0],
+                        countryCode: this.countryCodes[0],
+                    })
+                }
             }
         })
 

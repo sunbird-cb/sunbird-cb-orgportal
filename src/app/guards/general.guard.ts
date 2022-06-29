@@ -119,7 +119,6 @@ export class GeneralGuard implements CanActivate {
         || JSON.stringify(_.get(orgProfile, 'profileDetails.faculty') || {}) === '{}'
         || JSON.stringify(_.get(orgProfile, 'profileDetails.infrastructure') || {}) === '{}'
         || JSON.stringify(_.get(orgProfile, 'profileDetails.instituteProfile') || {}) === '{}'
-        || JSON.stringify(_.get(orgProfile, 'profileDetails.platformWalkthrough') || {}) === '{}'
         || JSON.stringify(_.get(orgProfile, 'profileDetails.research') || {}) === '{}'
         || JSON.stringify(_.get(orgProfile, 'profileDetails.rolesAndFunctions') || {}) === '{}'
         || JSON.stringify(_.get(orgProfile, 'profileDetails.trainingPrograms') || {}) === '{}')
