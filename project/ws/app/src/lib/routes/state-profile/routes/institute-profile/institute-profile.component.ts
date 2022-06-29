@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog, MatSnackBar } from '@angular/material'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 /* tslint:disable*/
 import _ from 'lodash'
@@ -25,12 +25,13 @@ export class InstituteProfileComponent implements OnInit {
     isButtonActive: any
     public countryCodes: string[] = []
     public stateNames: string[] = []
+    public stdCode: string[] = []
     phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
     pincodePattern = '(^[0-9]{6}$)'
     yearPattern = '(^[0-9]{4}$)'
     namePatern = `^[a-zA-Z\\s\\']{1,32}$`
-    countryCodeList = ['+91', '+92', '+93', '+94', '+95']
-    stateNameList = ['Delhi', 'Uttaranchal', 'Hariyana', 'Karnataka', 'Uttar Pradesh']
+    countryCodeList = []
+    stateNameList = []
     editOrgValue: any
     addedOrgs: any[] = []
     @ViewChild('deleteTitleRef', { static: true })
@@ -38,12 +39,15 @@ export class InstituteProfileComponent implements OnInit {
     @ViewChild('deleteBodyRef', { static: true })
     deleteBodyRef: ElementRef | null = null
     textBoxActive = false
+    codeSubscription: any
+
     constructor(
         private configSvc: ConfigurationsService,
         private orgSvc: OrgProfileService,
         private snackBar: MatSnackBar,
         private router: Router,
         private dialog: MatDialog,
+        private route: ActivatedRoute
     ) {
         this.instituteProfileForm = new FormGroup({
             instituteName: new FormControl('', [Validators.required, Validators.pattern(this.namePatern)]),
@@ -102,8 +106,22 @@ export class InstituteProfileComponent implements OnInit {
 
     ngOnInit() {
 
-        this.countryCodes = this.countryCodeList
-        this.stateNames = this.stateNameList
+        this.codeSubscription = this.route.data.subscribe(data => {
+            if (data && data.pageData) {
+                this.countryCodes = data.pageData.data.countryCode
+                this.stateNames = data.pageData.data.states
+                this.stdCode = data.pageData.data.stdCode
+            }
+            console.log(JSON.stringify(data.pageData) + '-- page data -')
+            console.log(JSON.stringify(this.countryCodes) + '-- this.countryCodes -')
+            console.log(JSON.stringify(this.stateNames) + '-- this.stateNames -')
+        })
+
+        // this.countryCodes = this.countryCodeList
+        // this.stateNames = this.stateNameList
+
+
+        // subscribe
     }
 
     buttonSelect(_event: any) {

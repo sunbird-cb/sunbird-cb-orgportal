@@ -9,6 +9,7 @@ import { TrainingRogramsComponent } from './routes/training-rograms/training-rog
 import { ResearchComponent } from './routes/research/research.component'
 import { ConsultancyComponent } from './routes/consultancy/consultancy.component'
 import { FacultyComponent } from './routes/faculty/faculty.component'
+import { PageResolve } from '@sunbird-cb/utils'
 
 const routes: Routes = [
   {
@@ -41,6 +42,11 @@ const routes: Routes = [
         data: {
           pageId: 'state-profile/institute-profile',
           module: 'state-profile',
+          pageType: 'feature',
+          pageKey: 'institute-profile',
+        },
+        resolve: {
+          pageData: PageResolve,
         },
       },
       {
