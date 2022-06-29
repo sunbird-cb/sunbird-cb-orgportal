@@ -28,8 +28,8 @@ export class TrainingRogramsComponent implements OnInit {
     ) {
         this.trainingProgramForm = new FormGroup({
             subjectName: new FormControl('', []),
-            conductDigitalPrograms: new FormControl(false, [Validators.required]),
-            prepareDigitalContent: new FormControl(false, [Validators.required]),
+            conductDigitalPrograms: new FormControl('Yes', [Validators.required]),
+            prepareDigitalContent: new FormControl('Yes', [Validators.required]),
             videoCount: new FormControl('', [Validators.required]),
             pptCount: new FormControl('', [Validators.required]),
             otherMaterialCount: new FormControl('', [Validators.required]),
@@ -63,7 +63,7 @@ export class TrainingRogramsComponent implements OnInit {
                 otherMaterialCount: _.get(trainingProgramsData, 'otherMaterialCount'),
                 otherInfo: _.get(trainingProgramsData, 'otherInfo'),
             })
-            this.selectedSubjects = _.get(trainingProgramsData, 'selectedSubjects')
+            this.selectedSubjects = _.get(trainingProgramsData, 'selectedSubjects') || []
             const formValue = this.trainingProgramForm.value
             formValue.selectedSubjects = this.selectedSubjects
             this.trainingProgramForm.updateValueAndValidity()
