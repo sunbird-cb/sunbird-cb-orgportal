@@ -79,7 +79,7 @@
 
                         </div>
                     </div>
-                    <ng-container *ngIf="roleActivityForm.get('other').value" class="margin-top-m">
+                    <ng-container *ngIf="roleActivityForm?.get('other')?.value" class="margin-top-m">
                         <mat-form-field appearance="outline"
                             class="margin-top-xs other_form_field flex flex-1 full-width">
                             <!-- <input matInput autocomplete="off" #instituteOtherRole formControlName="instituteOtherRole"
@@ -88,7 +88,9 @@
                             <textarea matInput autocomplete="off" #instituteOtherRole
                                 placeholder="Please specify other roles and functions" class="flex flex-1"
                                 formControlName="instituteOtherRole" i18n-aria-label
-                                aria-label="Please specify other roles and functions" rows="8"></textarea>
+                                aria-label="Please specify other roles and functions" [matTextareaAutosize]="true"
+                                [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3" maxlength="200"></textarea>
+                            <mat-hint align="end">{{ instituteOtherRole?.value.length }} /200 characters</mat-hint>
                             <mat-error [hidden]="false" i18n="Institute Role Error|Explains Role is required"
                                 i18n-aria-label aria-label="Institute Role Error|Explains Role is required "
                                 *ngIf="instituteProfileForm?.controls['instituteOtherRole'].errors?.required">

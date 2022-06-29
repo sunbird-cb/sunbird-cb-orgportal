@@ -160,6 +160,10 @@
                                         *ngIf="instituteProfileForm?.controls['establishmentYear'].errors?.required">
                                         Year of establishment of the training institute is mandatory
                                     </mat-error>
+                                    <mat-error [hidden]="false"
+                                        *ngIf="instituteProfileForm?.controls['establishmentYear'].errors?.pattern">
+                                        Please enter a valid 4 digit year
+                                    </mat-error>
                                 </mat-form-field>
                             </td>
                         </tr>
@@ -367,7 +371,7 @@
                                             Attached training Institute
                                         </mat-radio-button>
                                         <mat-radio-button class="mat-radio-button radio-select margin-left-s"
-                                            (click)="buttonSelect()" [value]="'Attached center'"
+                                            [value]="'Attached center'"
                                             [ngClass]="attachedTrainingInstitute? 'radio-select': 'radio-unselect'">
                                             Attached center
                                         </mat-radio-button>
@@ -383,7 +387,9 @@
                         <textarea matInput autocomplete="off" #trainingInstituteDetail
                             placeholder="Enter Attached training Institute details" class="flex flex-1"
                             formControlName="trainingInstituteDetail" i18n-aria-label
-                            aria-label=" Attached training Institute input" rows="8"></textarea>
+                            aria-label=" Attached training Institute input" [matTextareaAutosize]="true"
+                            [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3" maxlength="200"></textarea>
+                        <mat-hint align="end">{{ trainingInstituteDetail.value.length }} /200 characters</mat-hint>
                     </mat-form-field>
                 </div>
                 <a class="add_link" (click)="addOrg()">Add</a>

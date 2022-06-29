@@ -56,7 +56,7 @@ export class InstituteProfileComponent implements OnInit {
             buildingNo: new FormControl('', []),
             stateName: new FormControl('', [Validators.required]),
             pincode: new FormControl('', [Validators.required, Validators.pattern(this.pincodePattern)]),
-            establishmentYear: new FormControl('', [Validators.required]),
+            establishmentYear: new FormControl('', [Validators.required, Validators.pattern(this.yearPattern)]),
             stdCode: new FormControl('', [Validators.required]),
             telephoneNo: new FormControl('', [Validators.required]),
             countryCode: new FormControl('', [Validators.required]),
