@@ -25,7 +25,7 @@ export class InstituteProfileComponent implements OnInit {
     isButtonActive: any
     public countryCodes: string[] = []
     public stateNames: string[] = []
-    public stdCode: string[] = []
+    public stdCodes: string[] = []
     phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
     pincodePattern = '(^[0-9]{6}$)'
     yearPattern = '(^[0-9]{4}$)'
@@ -110,16 +110,12 @@ export class InstituteProfileComponent implements OnInit {
             if (data && data.pageData) {
                 this.countryCodes = data.pageData.data.countryCode
                 this.stateNames = data.pageData.data.states
-                this.stdCode = data.pageData.data.stdCode
+                this.stdCodes = data.pageData.data.stdCode
             }
-            console.log(JSON.stringify(data.pageData) + '-- page data -')
-            console.log(JSON.stringify(this.countryCodes) + '-- this.countryCodes -')
-            console.log(JSON.stringify(this.stateNames) + '-- this.stateNames -')
         })
 
         // this.countryCodes = this.countryCodeList
         // this.stateNames = this.stateNameList
-
 
         // subscribe
     }
