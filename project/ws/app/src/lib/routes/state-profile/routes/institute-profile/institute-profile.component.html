@@ -309,7 +309,15 @@
     <form [formGroup]="attachedOrgForm">
         <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
             <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
-                <h2>Organization, Department and Ministry details</h2>
+                <div class="flex flex-row justify-between">
+                    <h2>Attached training institutes/centres</h2>
+                    <a _ngcontent-tfc-c20="" class="mat-subheading-2 hint_span margin-remove-bottom">
+                        <mat-icon _ngcontent-tfc-c20=""
+                            class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color" role="img"
+                            aria-hidden="true">info_outlined</mat-icon>
+                    </a>
+                </div>
+
 
                 <div id="maindiv" class="input-wrapper flex flex-col flex-1">
                     <div class="flex flex-1">
@@ -323,7 +331,7 @@
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-"
                         [ngClass]="{ 'mat-focused': textBoxActive}">
                         <input matInput autocomplete="off" #trainingInstitute
-                            placehowidthlder="Name of the training institute or center" class="flex flex-1"
+                            placeholder="Name of the training institute or center" class="flex flex-1"
                             formControlName="trainingInstitute" i18n-aria-label aria-label="Training institute input" />
                         <mat-error [hidden]="false" i18n="Website address Error|Explains website address is required"
                             *ngIf="attachedOrgForm?.controls['trainingInstitute'].errors?.required" i18n-aria-label
