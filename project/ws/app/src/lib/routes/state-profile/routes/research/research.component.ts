@@ -54,6 +54,8 @@ export class ResearchComponent implements OnInit {
             researchPaperName: new FormControl('', []),
             researchPaperDetail: new FormControl('', []),
         })
+        // setting this to true so that form validation is not required based on number added projects or papers
+        this.orgSvc.updateFormStatus('research', true)
 
         // pre poluate form fields when data is available (edit mode)
         if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.orgProfile) {
@@ -61,7 +63,8 @@ export class ResearchComponent implements OnInit {
             this.addedPapers = _.get(researchData, 'researchPapers') || []
             this.addedPrograms = _.get(researchData, 'researchPrograms') || []
             this.updateValuesToStore()
-            this.orgSvc.updateFormStatus('research', (this.addedPapers.length > 0 && this.addedPrograms.length > 0))
+            // this.orgSvc.updateFormStatus('research', (this.addedPapers.length > 0 && this.addedPrograms.length > 0))
+            this.orgSvc.updateFormStatus('research', true)
         }
     }
 
@@ -230,6 +233,7 @@ export class ResearchComponent implements OnInit {
             researchPapers: this.addedPapers,
         }
         this.orgSvc.updateLocalFormValue('research', localData)
-        this.orgSvc.updateFormStatus('research', (this.addedPapers.length > 0 && this.addedPrograms.length > 0))
+        this.orgSvc.updateFormStatus('research', true)
+        // this.orgSvc.updateFormStatus('research', (this.addedPapers.length > 0 && this.addedPrograms.length > 0))
     }
 }

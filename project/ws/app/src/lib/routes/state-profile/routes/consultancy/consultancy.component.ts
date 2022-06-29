@@ -42,10 +42,14 @@ export class ConsultancyComponent implements OnInit {
             projectDetail: new FormControl('', [Validators.required]),
         })
 
+        // If projects are added then only validation is required, so by default validation is true, so that user can go to next tab
+        this.orgSvc.updateFormStatus('consultancy', true)
+
         // pre poluate form fields when data is available (edit mode)
         if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.orgProfile) {
             const consultancyData = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.consultancy')
             this.addedconsultancies = _.get(consultancyData, 'projects') || []
+            this.orgSvc.updateFormStatus('consultancy', true)
         }
     }
 
@@ -135,7 +139,8 @@ export class ConsultancyComponent implements OnInit {
             projects: this.addedconsultancies,
         }
         this.orgSvc.updateLocalFormValue('consultancy', localData)
-        this.orgSvc.updateFormStatus('consultancy', (this.addedconsultancies.length > 0))
+        // this.orgSvc.updateFormStatus('consultancy', (this.addedconsultancies.length > 0))
+        this.orgSvc.updateFormStatus('consultancy', true)
     }
 
     resetConsultancyForm() {
