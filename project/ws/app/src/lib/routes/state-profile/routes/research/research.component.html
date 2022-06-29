@@ -3,8 +3,14 @@
     <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
         <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
             <form [formGroup]="researchProgramForm">
-                <h2>Research</h2>
 
+                <div class="flex flex-row justify-between">
+                    <h2>Research</h2>
+                    <a class="mat-subheading-2 hint_span margin-remove-bottom">
+                        <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color"
+                            role="img" aria-hidden="true">info_outlined</mat-icon>
+                    </a>
+                </div>
                 <div id="maindiv" class="input-wrapper margin-top-s flex flex-col flex-1">
                     <div class="flex flex-1">
                         <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
@@ -104,7 +110,6 @@
             </form>
 
             <ng-container *ngFor="let program of addedPrograms">
-
                 <div class="flex flex-1 flex-column mat-card-mdo margin-top-l edit-mat-card">
                     <div class="flex flex-row">
                         <div class="flex flex-1">
@@ -149,12 +154,17 @@
         <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
             <form [formGroup]="researchPaperForm">
                 <div class="input-wrapper margin-top-s flex flex-col flex-1">
-                    <div class="flex flex-1">
+                    <div class="flex flex-1 flex-row justify-between">
                         <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                             i18n="Research papers published by faculty label|Label which explains the user to enter Research papers published by faculty"
                             i18n-aria-label aria-label="Research papers published by faculty label">
                             Research papers published by faculty
                         </label>
+
+                        <a class="mat-subheading-2 hint_span margin-remove-bottom">
+                            <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color"
+                                role="img" aria-hidden="true">info_outlined</mat-icon>
+                        </a>
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">

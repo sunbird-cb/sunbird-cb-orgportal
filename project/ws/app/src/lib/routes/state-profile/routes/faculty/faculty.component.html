@@ -1,6 +1,13 @@
 <div class="flex flex-wrap flex-col margin-right-m margin-top-l role-card">
     <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
-        <h2>Enter the number of faculty members in your institute</h2>
+
+        <div class="flex flex-row justify-between">
+            <h2>Enter the number of faculty members in your institute</h2>
+            <a class="mat-subheading-2 hint_span margin-remove-bottom">
+                <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color" role="img"
+                    aria-hidden="true">info_outlined</mat-icon>
+            </a>
+        </div>
         <form [formGroup]="facultyForm">
             <div class="input-wrapper margin-top-s flex flex-row flex-1 justify-between">
 
