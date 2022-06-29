@@ -25,14 +25,14 @@ export class RolesAndFunctionsComponent implements OnInit {
         private configSvc: ConfigurationsService,
     ) {
         this.roleActivityForm = new FormGroup({
-            training: new FormControl(false, [Validators.required]),
-            research: new FormControl(false, [Validators.required]),
-            consultancy: new FormControl(false, [Validators.required]),
+            training: new FormControl(false, []),
+            research: new FormControl(false, []),
+            consultancy: new FormControl(false, []),
             // trainingResearch: new FormControl(false, [Validators.required]),
-            researchPublication: new FormControl(false, [Validators.required]),
+            researchPublication: new FormControl(false, []),
             // trainingConsultancy: new FormControl(false, [Validators.required]),
             // trainConsulResPublication: new FormControl(false, [Validators.required]),
-            other: new FormControl(false, [Validators.required]),
+            other: new FormControl(false, []),
             instituteOtherRole: new FormControl('', []),
         })
 
@@ -81,6 +81,9 @@ export class RolesAndFunctionsComponent implements OnInit {
                 other: _.get(rolesAndFunctions, 'other'),
                 instituteOtherRole: _.get(rolesAndFunctions, 'instituteOtherRole'),
             })
+            this.roleActivityForm.updateValueAndValidity()
+            this.orgSvc.updateLocalFormValue('rolesAndFunctions', this.roleActivityForm.value)
+            this.orgSvc.updateFormStatus('rolesAndFunctions', this.roleActivityForm.valid)
         }
     }
 }

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Subject } from 'rxjs'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { OrgProfileService } from '../../services/org-profile.service'
+/* tslint:disable*/
+import _ from 'lodash'
 
 @Component({
     selector: 'ws-app-infrastructure',
@@ -19,6 +22,7 @@ export class InfrastructureComponent implements OnInit {
 
     constructor(
         private orgSvc: OrgProfileService,
+        private configSvc: ConfigurationsService,
     ) {
         this.infrastructureForm = new FormGroup({
             builtupArea: new FormControl('', [Validators.required]),
@@ -30,6 +34,24 @@ export class InfrastructureComponent implements OnInit {
             periodicalsSubscribed: new FormControl(false, [Validators.required]),
             latitudeLongitude: new FormControl('', [Validators.required]),
         })
+
+        // pre poluate form fields when data is available (edit mode)
+        if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.orgProfile) {
+            const infradata = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.infrastructure')
+            this.infrastructureForm.patchValue({
+                builtupArea: _.get(infradata, 'builtupArea'),
+                academicArea: _.get(infradata, 'academicArea'),
+                hostelArea: _.get(infradata, 'hostelArea'),
+                computerLabArea: _.get(infradata, 'computerLabArea'),
+                computerSystemCount: _.get(infradata, 'computerSystemCount'),
+                totalCollection: _.get(infradata, 'totalCollection'),
+                periodicalsSubscribed: _.get(infradata, 'periodicalsSubscribed'),
+                latitudeLongitude: _.get(infradata, 'latitudeLongitude'),
+            })
+            this.infrastructureForm.updateValueAndValidity()
+            this.orgSvc.updateLocalFormValue('infrastructure', this.infrastructureForm.value)
+            this.orgSvc.updateFormStatus('infrastructure', this.infrastructureForm.valid)
+        }
 
         this.infrastructureForm.valueChanges
             .pipe(

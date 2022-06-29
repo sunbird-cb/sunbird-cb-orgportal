@@ -3,6 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { OrgProfileService } from '../../services/org-profile.service'
 import { Subject } from 'rxjs'
+import { ConfigurationsService } from '@sunbird-cb/utils'
+/* tslint:disable*/
+import _ from 'lodash'
+
 
 @Component({
     selector: 'ws-app-faculty',
@@ -18,6 +22,7 @@ export class FacultyComponent implements OnInit {
 
     constructor(
         private orgSvc: OrgProfileService,
+        private configSvc: ConfigurationsService
     ) {
         this.facultyForm = new FormGroup({
             regularFacultyCount: new FormControl('', [Validators.required]),
@@ -25,6 +30,20 @@ export class FacultyComponent implements OnInit {
             guestFacultyCount: new FormControl('', [Validators.required]),
             otherCount: new FormControl('', []),
         })
+
+        // pre poluate form fields when data is available (edit mode)
+        if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.orgProfile) {
+            const facultydata = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.faculty')
+            this.facultyForm.patchValue({
+                regularFacultyCount: _.get(facultydata, 'regularFacultyCount'),
+                adhocFacultyCount: _.get(facultydata, 'adhocFacultyCount'),
+                guestFacultyCount: _.get(facultydata, 'guestFacultyCount'),
+                otherCount: _.get(facultydata, 'otherCount'),
+            })
+            this.facultyForm.updateValueAndValidity()
+            this.orgSvc.updateLocalFormValue('infrastructure', this.facultyForm.value)
+            this.orgSvc.updateFormStatus('infrastructure', this.facultyForm.valid)
+        }
 
         this.facultyForm.valueChanges
             .pipe(
