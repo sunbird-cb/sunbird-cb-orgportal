@@ -309,7 +309,7 @@ export class InitService {
             isManager: false,
           }
           if (completeProdata.rootOrg && completeProdata.rootOrg.isInstitute) {
-            console.log('inside is institute ---- calling org profile')
+            // console.log('inside is institute ---- calling org profile')
             try {
               const orgProfile = await this.http
                 .get<any>(endpoint.orgProfile(completeProdata.rootOrgId))
@@ -322,7 +322,8 @@ export class InitService {
               this.configSvc.unMappedUser.orgProfile = null
             }
           } else {
-            console.log('outside is institute ---- NOTT calling org profile')
+            // console.log('outside is institute ---- NOT calling org profile')
+            this.configSvc.unMappedUser.orgProfile = null
           }
 
         } else {
