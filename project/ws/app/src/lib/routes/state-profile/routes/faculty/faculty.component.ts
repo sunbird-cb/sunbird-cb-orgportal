@@ -32,6 +32,7 @@ export class FacultyComponent implements OnInit {
                 switchMap(async formValue => {
                     if (formValue) {
                         this.orgSvc.updateLocalFormValue('faculty', formValue)
+                        this.orgSvc.updateFormStatus('faculty', this.facultyForm.valid)
                     }
                 }),
                 takeUntil(this.unsubscribe)

@@ -9,6 +9,7 @@ import _ from 'lodash'
 import { Subscription } from 'rxjs'
 import { StepService } from '../../services/step.service'
 import { IATIOnbaording, OrgProfileService } from '../../services/org-profile.service'
+import { MatSnackBar } from '@angular/material'
 @Component({
   selector: 'ws-app-state-profile-home',
   templateUrl: './state-profile-home.component.html',
@@ -37,8 +38,7 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private stepService: StepService,
     private configSvc: ConfigurationsService,
-    // private compLocalService: CompLocalService,
-    // private profileSvc: ProfileV3Service,
+    private snackBar: MatSnackBar,
     private orgSvc: OrgProfileService,
   ) {
     this.tabs = _.orderBy(this.tabsData, 'step')
@@ -111,26 +111,34 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
   //   })
   // }
 
-  updateOrgProfile() {
+  updateOrgProfile(isSumbit?: boolean) {
     this.tabs.forEach(s => {
       if (s.step === this.currentStep) {
-        console.log('in updateOrgProfile', s)
         const request = {
           profileDetails: {
             [s.key]: _.get(this.orgSvc.formValues, s.key),
           },
           orgId: _.get(this.configSvc.unMappedUser, 'rootOrgId'),
         }
+        // tslint:disable-next-line: no-console
         console.log('request: ', request)
 
         // Call API to update org profile
 
-        // this.orgSvc.updateOrgProfileDetails(request).subscribe(res => {
-        //   if (res && res.responseCode === 'OK') {
-        //     // this.compLocalService.autoSaveDesired.next(false)
-        //     // this.configSvc.updateGlobalProfile(true)
-        //   }
-        // })
+        this.orgSvc.updateOrgProfileDetails(request).subscribe(
+          res => {
+            const orgProfile = _.get(res, 'result.result')
+            if (orgProfile) {
+              this.configSvc.unMappedUser.orgProfile = orgProfile
+              if (isSumbit) {
+                this.router.navigate(['/page/home'])
+              }
+            }
+          },
+          err => {
+            this.openSnackbar(err.error.split(':')[1])
+          }
+        )
       }
     })
   }
@@ -155,7 +163,7 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
     if (!this.isNextStepAllowed) { return }
 
     // for checking the form validation
-    // if (!this.isFormValid) { return }
+    if (!this.isFormValid) { return }
 
     const nextStep = _.first(_.filter(this.tabs, { step: this.currentStep + 1 }))
     if (nextStep) {
@@ -242,5 +250,11 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
       }
     }
     return isValid
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 }
