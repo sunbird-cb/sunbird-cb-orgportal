@@ -156,6 +156,10 @@
                                         *ngIf="instituteProfileForm?.controls['establishmentYear'].errors?.required">
                                         Year of establishment of the training institute is mandatory
                                     </mat-error>
+                                    <mat-error [hidden]="false"
+                                        *ngIf="instituteProfileForm?.controls['establishmentYear'].errors?.pattern">
+                                        Please enter a valid 4 digit year
+                                    </mat-error>
                                 </mat-form-field>
                             </td>
                         </tr>
