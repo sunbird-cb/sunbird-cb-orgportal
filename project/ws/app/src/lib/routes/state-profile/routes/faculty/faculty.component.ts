@@ -20,8 +20,10 @@ export class FacultyComponent implements OnInit {
         private orgSvc: OrgProfileService,
     ) {
         this.facultyForm = new FormGroup({
-            noOfFaculty: new FormControl('', [Validators.required]),
-            digitalPrograms: new FormControl('', [Validators.required]),
+            regularFacultyCount: new FormControl('', [Validators.required]),
+            adhocFacultyCount: new FormControl('', [Validators.required]),
+            guestFacultyCount: new FormControl('', [Validators.required]),
+            otherCount: new FormControl('', []),
         })
 
         this.facultyForm.valueChanges

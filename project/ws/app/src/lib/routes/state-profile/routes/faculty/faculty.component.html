@@ -1,15 +1,15 @@
 <div class="flex flex-wrap flex-col margin-right-m margin-top-l role-card">
     <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
-        <h2>Faculty</h2>
+        <h2>Enter the number of faculty members in your institute</h2>
         <form [formGroup]="facultyForm">
-            <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
+            <div class="input-wrapper margin-top-s flex flex-row flex-1 justify-between">
 
                 <div class="flex flex-col">
                     <div class="flex flex-col">
                         <label class=" margin-remove-bottom form-label flex mat-subheading-2"
-                            i18n="Number of Faculties label|Label which explains the user to enter Number of Faculties"
+                            i18n="Number of Regular Faculties label|Label which explains the user to enter Number of Regular Faculties"
                             i18n-aria-label aria-label="Number of Faculties label">
-                            Number of Faculties
+                            Regular
                         </label>
                     </div>
                     <div class="flex flex-row">
@@ -17,14 +17,98 @@
 
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" #noOfFaculty placeholder="Number of Faculties"
-                                    formControlName="noOfFaculty" class="flex flex-1" i18n-aria-label
-                                    aria-label="Number of Faculties input" />
+                                <input matInput autocomplete="off" #regularFacultyCount placeholder="Enter number"
+                                    formControlName="regularFacultyCount" class="flex flex-1" i18n-aria-label
+                                    aria-label="Number of Regular Faculties input" />
                                 <mat-error [hidden]="false"
-                                    i18n=" Number of Faculties Error|Explains  Number of Faculties is required"
+                                    i18n=" Number of Regular Faculties Error|Explains  Number of Regular Faculties is required"
                                     i18n-aria-label
-                                    aria-label=" Number of Faculties Error|Explains  Number of Faculties is required "
-                                    *ngIf="consultancyForm?.controls['noOfFaculty'].errors?.required">
+                                    aria-label=" Number of Regular Faculties Error|Explains  Number of Regular Faculties is required "
+                                    *ngIf="consultancyForm?.controls['regularFacultyCount'].errors?.required">
+                                    Number of Regular Faculties is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label class=" margin-remove-bottom form-label flex mat-subheading-2"
+                            i18n="Number of Adhoc Faculties label|Label which explains the user to enter Number of Adhoc Faculties"
+                            i18n-aria-label aria-label="Number of Adhoc Faculties label">
+                            Adhoc
+                        </label>
+                    </div>
+                    <div class="flex flex-row">
+                        <div class="flex flex-col">
+
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" #adhocFacultyCount placeholder="Enter number"
+                                    formControlName="adhocFacultyCount" class="flex flex-1" i18n-aria-label
+                                    aria-label="Number of Adhoc Faculties input" />
+                                <mat-error [hidden]="false"
+                                    i18n=" Number of Adhoc Faculties Error|Explains  Number of Adhoc Faculties is required"
+                                    i18n-aria-label
+                                    aria-label=" Number of Adhoc Faculties Error|Explains  Number of Adhoc Faculties is required "
+                                    *ngIf="consultancyForm?.controls['adhocFacultyCount'].errors?.required">
+                                    Number of Adhoc Faculties is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label class=" margin-remove-bottom form-label flex mat-subheading-2"
+                            i18n="Number of Guest Faculties label|Label which explains the user to enter Number of Guest Faculties"
+                            i18n-aria-label aria-label="Number of Guest Faculties label">
+                            Guest
+                        </label>
+                    </div>
+                    <div class="flex flex-row">
+                        <div class="flex flex-col">
+
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" #guestFacultyCount placeholder="Enter number"
+                                    formControlName="guestFacultyCount" class="flex flex-1" i18n-aria-label
+                                    aria-label="Number of Guest Faculties input" />
+                                <mat-error [hidden]="false"
+                                    i18n=" Number of Guest Faculties Error|Explains Number of Guest Faculties is required"
+                                    i18n-aria-label
+                                    aria-label=" Number of Guest Faculties Error|Explains  Number of Guest Faculties is required "
+                                    *ngIf="consultancyForm?.controls['guestFacultyCount'].errors?.required">
+                                    Number of Faculties is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label class=" margin-remove-bottom form-label flex mat-subheading-2"
+                            i18n="Number of Faculties label|Label which explains the user to enter Number of Faculties"
+                            i18n-aria-label aria-label="Number of Faculties label">
+                            Others (research staff etc)
+                        </label>
+                    </div>
+                    <div class="flex flex-row">
+                        <div class="flex flex-col">
+
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" #otherCount placeholder="Enter number"
+                                    formControlName="otherCount" class="flex flex-1" i18n-aria-label
+                                    aria-label="Number of other Faculties input" />
+                                <mat-error [hidden]="false"
+                                    i18n="Number of other Faculties Error|Explains Number of other Faculties is required"
+                                    i18n-aria-label
+                                    aria-label="Number of Faculties Error|Explains  Number of other Faculties is required "
+                                    *ngIf="consultancyForm?.controls['otherCount'].errors?.required">
                                     Number of Faculties is mandatory
                                 </mat-error>
                             </mat-form-field>
@@ -34,43 +118,6 @@
 
             </div>
 
-            <div class="input-wrapper flex flex-col flex-1 margin-top-m">
-                <!-- <label class=" margin-remove-bottom form-label flex mat-subheading-2" i18n="" i18n-aria-label
-                    aria-label="">
-                    Whether the Institute conducts Digital Programs
-                </label> -->
-
-                <div class="flex button_box flex-row">
-                    <mat-radio-group #digitalPrograms formControlName="digitalPrograms" i18n-aria-label
-                        aria-label="digitalPrograms input" class="flex button_box flex-row">
-                        <mat-radio-button class="mat-radio-button radio-unselect" (click)="buttonSelect($event)"
-                            [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'">
-                            Regular
-                        </mat-radio-button>
-                        <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m"
-                            (click)="buttonSelect()">
-                            Adhoc
-                        </mat-radio-button>
-                        <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m"
-                            (click)="buttonSelect()">
-                            Guest
-                        </mat-radio-button>
-                        <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m"
-                            (click)="buttonSelect()">
-                            Others
-                        </mat-radio-button>
-                        <mat-error [hidden]="false"
-                            i18n="Whether the Institute conducts Digital Program Error|Explains Whether the Institute conducts Digital Program is required"
-                            i18n-aria-label
-                            aria-label="Whether the Institute conducts Digital Program Error|Explains Whether the Institute conducts Digital Program is required "
-                            *ngIf="consultancyForm?.controls['digitalPrograms'].errors?.required">
-                            This field is mandatory
-                        </mat-error>
-                    </mat-radio-group>
-
-                </div>
-
-            </div>
         </form>
     </mat-card>
 
