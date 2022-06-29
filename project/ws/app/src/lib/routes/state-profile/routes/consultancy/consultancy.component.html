@@ -37,12 +37,12 @@
                         <div class="flex flex-1 margin-top-m">
                             <mat-radio-group #programeStatus formControlName="programeStatus" i18n-aria-label
                                 aria-label="Programe status input" class="flex button_box flex-row">
-                                <mat-radio-button class="mat-radio-button radio-unselect" (click)="buttonSelect($event)"
-                                    [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'">
+                                <mat-radio-button class="mat-radio-button radio-unselect"
+                                    [ngClass]="isButtonActive? 'radio-select': 'radio-unselect'" [value]="'Ongoing'">
                                     Ongoing
                                 </mat-radio-button>
                                 <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m"
-                                    (click)="buttonSelect()">
+                                    [value]="'Completed'">
                                     Completed
                                 </mat-radio-button>
                                 <mat-error [hidden]="false" i18n="Programe status is required" i18n-aria-label
