@@ -35,7 +35,7 @@
 .mat-radio-button {
     padding: 15px 20px;
     border-radius: 5px;
-    width: 100px;
+    width: auto;
     text-align: center;
     box-sizing: border-box;
 }
@@ -48,7 +48,15 @@
     background: #fff;
 }
 .button_box {
-    width: 100px;
+    width: 320px;
+}
+.checkbox_btn {
+    padding: 15px 20px;
+    border-radius: 5px;
+    width: auto;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.16);
 }
 a.skip_link {
   border:1px solid rgba($color: #000000, $alpha: 0.16);

@@ -15,12 +15,6 @@
                     </div>
 
                     <mat-form-field appearance="outline" class="margin-top-xs flex flex-1 full-width">
-                        <mat-chip-list #chipListHobies>
-                            <mat-chip>
-                                name 1
-                                <mat-icon matChipRemove>cancel</mat-icon>
-                            </mat-chip>
-                        </mat-chip-list>
                         <input matInput autocomplete="off" #projectName formControlName="projectName" i18n-aria-label
                             aria-label="Project name input" placeholder="Enter project name" class="flex flex-1" />
                         <mat-error [hidden]="false" i18n="Project name Error|Explains Project name is required"
@@ -124,7 +118,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="flex flex-1 margin-top-s">
+                <div class="flex flex-1">
                     <div class="flex">
                         <span class="mat-caption">Completed</span>
                     </div>
@@ -133,7 +127,7 @@
                         <span class="mat-caption">Government sponsored</span>
                     </div>
                 </div>
-                <mat-card-content class="flex flex-1 margin-remove-bottom">
+                <mat-card-content class="flex flex-1 margin-remove-bottom  margin-top-m">
                     <div class="flex flex-wrap">
 
                         <p class="mat-subtitle-1 margin-remove-bottom">Let us take you through a quick guided onboarding

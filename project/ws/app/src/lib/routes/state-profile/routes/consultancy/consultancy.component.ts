@@ -21,13 +21,16 @@ export class ConsultancyComponent implements OnInit {
     ) {
         this.consultancyForm = new FormGroup({
             projectName: new FormControl('', [Validators.required]),
+            programeStatus: new FormControl('', [Validators.required]),
+            industrySponsored: new FormControl('', [Validators.required]),
+            govtSponsored: new FormControl('', [Validators.required]),
             projectDetail: new FormControl('', [Validators.required]),
-            industrySponsoreName: new FormControl('', [Validators.required]),
-            industrySponsoreDetail: new FormControl('', [Validators.required]),
-            govSponsoreName: new FormControl('', [Validators.required]),
-            govSponsoreDetail: new FormControl('', [Validators.required]),
-            ongoingProjectName: new FormControl('', [Validators.required]),
-            ongoingProjectDetail: new FormControl('', [Validators.required])
+            // industrySponsoreName: new FormControl('', [Validators.required]),
+            // industrySponsoreDetail: new FormControl('', [Validators.required]),
+            // govSponsoreName: new FormControl('', [Validators.required]),
+            // govSponsoreDetail: new FormControl('', [Validators.required]),
+            // ongoingProjectName: new FormControl('', [Validators.required]),
+            // ongoingProjectDetail: new FormControl('', [Validators.required])
         })
 
         this.consultancyForm.valueChanges
