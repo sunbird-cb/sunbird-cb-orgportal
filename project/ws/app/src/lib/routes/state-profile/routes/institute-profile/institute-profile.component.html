@@ -183,9 +183,10 @@
                                     <mat-form-field appearance="outline" class="margin-top-xs country_code_box">
                                         <mat-select formControlName="stdCode" #stdCode i18n-placeholder
                                             placeholder="STD Code" i18n-aria-label aria-label="Telephone Number label">
-                                            <!-- <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}
-                                            </mat-option> -->
+                                            <mat-option [value]="scode" *ngFor="let scode of stdCode">{{scode}}
+                                            </mat-option>
                                         </mat-select>
+
                                     </mat-form-field>
                                     <mat-form-field class="margin-top-xs form_field flex flex-1 full-width"
                                         appearance="outline">

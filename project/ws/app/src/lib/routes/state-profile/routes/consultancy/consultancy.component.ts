@@ -1,12 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { OrgProfileService } from '../../services/org-profile.service'
-import { Subject } from 'rxjs'
+// import { OrgProfileService } from '../../services/org-profile.service'
+// import { Subject } from 'rxjs'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 /* tslint:disable*/
 import _ from 'lodash'
-import { Router } from '@angular/router'
-import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
+// import { Router } from '@angular/router'
+// import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
 
 @Component({
     selector: 'ws-app-consultancy',
@@ -25,10 +25,10 @@ export class ConsultancyComponent implements OnInit {
     deleteBodyRef: ElementRef | null = null
     editProgramValue: any
     textBoxActive = false
-    private unsubscribe = new Subject<void>()
+    // private unsubscribe = new Subject<void>()
 
     constructor(
-        private orgSvc: OrgProfileService,
+        // private orgSvc: OrgProfileService,
         private configSvc: ConfigurationsService,
 
     ) {
