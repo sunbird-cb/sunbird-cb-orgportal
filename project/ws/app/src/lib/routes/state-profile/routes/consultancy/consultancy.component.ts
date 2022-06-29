@@ -7,6 +7,7 @@ import _ from 'lodash'
 import { Router } from '@angular/router'
 import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
 import { MatDialog, MatSnackBar } from '@angular/material'
+import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
 
 @Component({
     selector: 'ws-app-consultancy',
@@ -153,5 +154,19 @@ export class ConsultancyComponent implements OnInit {
             otherSponsored: false,
         })
         this.consultancyForm.updateValueAndValidity()
+    }
+
+    openActivityDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'consultancy',
+            },
+            hasBackdrop: false,
+            width: '550px',
+
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+
+        })
     }
 }

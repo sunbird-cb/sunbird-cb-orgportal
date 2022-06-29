@@ -40,7 +40,7 @@
     width: 50%;
 }
 .add_link {
-    border: 1px solid #0074b6;
+    border: 2px solid #0074b6;
     background-color: #fff;
     color: #0074b6;
     border-radius: 4px 4px;
@@ -117,4 +117,8 @@
 .hint_span {
   position: relative;
     cursor: pointer;
+}
+.mat-input-element {
+    font-size: 14px!important;
+    margin-top: 8px;
 }

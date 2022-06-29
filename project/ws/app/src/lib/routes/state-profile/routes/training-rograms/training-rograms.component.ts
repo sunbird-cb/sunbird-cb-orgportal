@@ -103,7 +103,7 @@ export class TrainingRogramsComponent implements OnInit {
     openActivityDialog() {
         const dialogRef = this.dialog.open(DialogBoxComponent, {
             data: {
-                view: 'ccomp',
+                view: 'training',
             },
             hasBackdrop: false,
             width: '550px',

@@ -225,7 +225,7 @@ export class InstituteProfileComponent implements OnInit {
     openActivityDialog() {
         const dialogRef = this.dialog.open(DialogBoxComponent, {
             data: {
-                view: 'ccomp',
+                view: 'insp',
             },
             hasBackdrop: false,
             width: '550px',

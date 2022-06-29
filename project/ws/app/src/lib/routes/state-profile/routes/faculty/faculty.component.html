@@ -3,15 +3,10 @@
 
         <div class="flex flex-row justify-between">
             <h2>Enter the number of faculty members in your institute</h2>
-            <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" wsCompTooltipDirective tabindex="0"
-                role="button">
+            <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" tabindex="0"
+                (click)="openActivityDialog()" role="button">
                 <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color" role="img"
                     aria-hidden="true">info_outlined</mat-icon>
-                <ng-template #tooltipTemplate>
-                    <div class="tooltip">
-                        <ws-app-level-info></ws-app-level-info>
-                    </div>
-                </ng-template>
             </a>
         </div>
         <form [formGroup]="facultyForm">

@@ -1,7 +1,5 @@
 @import 'profile-form';
 
-
-
 .mat-card {
     box-sizing: border-box;
 }
@@ -92,5 +90,10 @@
     border: 2px solid #0074b6;
     background: #f2f8fb!important;
 }
-
+.mat-input-element {
+    font-size: 14px!important;
+}
+.hint_span {
+    cursor: pointer;
+}
 

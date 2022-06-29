@@ -75,7 +75,21 @@ export class InfrastructureComponent implements OnInit {
     openActivityDialog() {
         const dialogRef = this.dialog.open(DialogBoxComponent, {
             data: {
-                view: 'ccomp',
+                view: 'infra',
+            },
+            hasBackdrop: false,
+            width: '550px',
+
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+
+        })
+    }
+
+    openLongitudeDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'longitude',
             },
             hasBackdrop: false,
             width: '550px',

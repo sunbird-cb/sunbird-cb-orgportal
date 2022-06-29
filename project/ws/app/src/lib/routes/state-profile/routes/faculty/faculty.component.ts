@@ -6,6 +6,8 @@ import { Subject } from 'rxjs'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 /* tslint:disable*/
 import _ from 'lodash'
+import { MatDialog } from '@angular/material'
+import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
 
 
 @Component({
@@ -22,7 +24,8 @@ export class FacultyComponent implements OnInit {
 
     constructor(
         private orgSvc: OrgProfileService,
-        private configSvc: ConfigurationsService
+        private configSvc: ConfigurationsService,
+        private dialog: MatDialog
     ) {
         this.facultyForm = new FormGroup({
             regularFacultyCount: new FormControl('', [Validators.required]),
@@ -59,5 +62,19 @@ export class FacultyComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    openActivityDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'faculty',
+            },
+            hasBackdrop: false,
+            width: '550px',
+
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+
+        })
     }
 }

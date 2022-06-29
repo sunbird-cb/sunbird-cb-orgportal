@@ -241,7 +241,7 @@ export class ResearchComponent implements OnInit {
     openActivityDialog() {
         const dialogRef = this.dialog.open(DialogBoxComponent, {
             data: {
-                view: 'ccomp',
+                view: 'research',
             },
             hasBackdrop: false,
             width: '550px',

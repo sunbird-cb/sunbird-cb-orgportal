@@ -5,15 +5,11 @@
 
                 <div class="flex flex-row justify-between">
                     <h2>Consultancy</h2>
-                    <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" wsCompTooltipDirective
-                        tabindex="0" role="button">
+                    <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button"
+                        (click)="openActivityDialog()" tabindex="0" role="button">
                         <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color"
                             role="img" aria-hidden="true">info_outlined</mat-icon>
-                        <ng-template #tooltipTemplate>
-                            <div class="tooltip">
-                                <ws-app-level-info></ws-app-level-info>
-                            </div>
-                        </ng-template>
+
                     </a>
                 </div>
                 <div class="input-wrapper margin-top-s flex flex-col flex-1">
@@ -99,12 +95,13 @@
                 </div>
 
                 <div class="input-wrapperflex flex-col flex-1">
-                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                    <mat-form-field appearance="outline" class="margin-top-m form_field flex flex-1 full-width">
                         <textarea matInput autocomplete="off" #projectDetail formControlName="projectDetail"
                             i18n-aria-label aria-label="Project detail input" placeholder="Enter project details "
                             class="flex flex-1" [matTextareaAutosize]="true" [matAutosizeMaxRows]="10"
                             [matAutosizeMinRows]="3" maxlength="200"></textarea>
-                        <mat-hint align="end">{{ projectDetail.value.length }} /200 characters</mat-hint>
+                        <mat-hint align="end" class="margin-top-l">{{ projectDetail.value.length }} /200 characters
+                        </mat-hint>
                         <mat-error [hidden]="false" i18n="Project detail Error|Explains Project detail is required"
                             i18n-aria-label aria-label="Project detail Error|Explains Project detail is required "
                             *ngIf="consultancyForm?.controls['projectDetail'].errors?.required">

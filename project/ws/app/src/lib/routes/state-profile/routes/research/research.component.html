@@ -10,11 +10,7 @@
                         (click)="openActivityDialog()" tabindex="0" role="button">
                         <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color"
                             role="img" aria-hidden="true">info_outlined</mat-icon>
-                        <ng-template #tooltipTemplate>
-                            <div class="tooltip">
-                                <ws-app-level-info></ws-app-level-info>
-                            </div>
-                        </ng-template>
+
                     </a>
                 </div>
                 <div id="maindiv" class="input-wrapper margin-top-s flex flex-col flex-1">
@@ -99,13 +95,14 @@
 
                 </div>
 
-                <div class="input-wrapper margin-top-s flex flex-col flex-1">
-                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                <div class="input-wrapper margin-top-m flex flex-col flex-1">
+                    <mat-form-field appearance="outline" class="form_field flex flex-1 full-width">
                         <textarea matInput autocomplete="off" #projectDetail formControlName="projectDetail"
                             i18n-aria-label aria-label="Project detail input" placeholder="Enter project details "
                             class="flex flex-1" row="5" [matTextareaAutosize]="true" [matAutosizeMaxRows]="10"
                             [matAutosizeMinRows]="3" maxlength="200"></textarea>
-                        <mat-hint align="end">{{ projectDetail.value.length }} /200 characters</mat-hint>
+                        <mat-hint align="end" class="margin-top-l">{{ projectDetail.value.length }} /200 characters
+                        </mat-hint>
                         <mat-error [hidden]="false" i18n="Project detail Error|Explains Project detail is required"
                             *ngIf="researchProgramForm?.controls['projectDetail'].errors?.required" i18n-aria-label
                             aria-label="Project detail is mandatory">
@@ -193,13 +190,11 @@
                 <div class="input-wrapper margin-top-s flex flex-col flex-1">
                     <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
                         <textarea matInput autocomplete="off" #researchPaperDetail formControlName="researchPaperDetail"
-                            i18n-aria-label aria-label="Research paper detail input" <<<<<<< HEAD
-                            placeholder="Enter Research paper details " class="flex flex-1" rows="8"></textarea>
-                        =======
-                        placeholder="Enter Research paper details " class="flex flex-1" [matTextareaAutosize]="true"
-                        [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3" maxlength="200"></textarea>
-                        <mat-hint align="end">{{ researchPaperDetail.value.length }} /200 characters</mat-hint>
-                        >>>>>>> 0d11694b10115c1bfcf277ba1b81717dec541618
+                            i18n-aria-label aria-label="Research paper detail input"
+                            placeholder="Enter Research paper details " class="flex flex-1" [matTextareaAutosize]="true"
+                            [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3" maxlength="200" rows="5"></textarea>
+                        <mat-hint align="end" class="margin-top-l">{{ researchPaperDetail.value.length }} /200
+                            characters</mat-hint>
                         <mat-error [hidden]="false"
                             i18n="Research paper detail Error|Explains Research paper detail is required"
                             *ngIf="researchPaperForm?.controls['researchPaperDetail'].errors?.required" i18n-aria-label
