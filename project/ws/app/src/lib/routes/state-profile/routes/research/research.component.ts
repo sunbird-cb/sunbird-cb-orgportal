@@ -17,12 +17,6 @@ import { DialogConfirmComponent } from '../../../../../../../../../src/app/compo
     /* tslint:enable */
 })
 export class ResearchComponent implements OnInit {
-    researchProgramForm!: FormGroup
-    researchPaperForm!: FormGroup
-    addedPrograms: any[] = []
-    addedPapers: any[] = []
-    editProgramValue: any
-    editPaperValue: any
     @ViewChild('deleteProgramTitleRef', { static: true })
     deleteProgramTitleRef: ElementRef | null = null
     @ViewChild('deleteProgramBodyRef', { static: true })
@@ -31,6 +25,12 @@ export class ResearchComponent implements OnInit {
     deletePaperTitleRef: ElementRef | null = null
     @ViewChild('deletePaperBodyRef', { static: true })
     deletePaperBodyRef: ElementRef | null = null
+    researchProgramForm!: FormGroup
+    researchPaperForm!: FormGroup
+    addedPrograms: any[] = []
+    addedPapers: any[] = []
+    editProgramValue: any
+    editPaperValue: any
     textBoxActive = false
     textBoxActive1 = false
 
@@ -58,8 +58,8 @@ export class ResearchComponent implements OnInit {
         // pre poluate form fields when data is available (edit mode)
         if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.orgProfile) {
             const researchData = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.research')
-            this.addedPapers = _.get(researchData, 'researchPapers')
-            this.addedPrograms = _.get(researchData, 'researchPrograms')
+            this.addedPapers = _.get(researchData, 'researchPapers') || []
+            this.addedPrograms = _.get(researchData, 'researchPrograms') || []
         }
     }
 

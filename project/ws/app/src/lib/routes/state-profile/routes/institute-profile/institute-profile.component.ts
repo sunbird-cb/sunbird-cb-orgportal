@@ -83,7 +83,7 @@ export class InstituteProfileComponent implements OnInit {
                 website: _.get(instituteProfile, 'website'),
                 trainingInstitute: _.get(instituteProfile, 'trainingInstitute'),
             })
-            this.addedOrgs = _.get(instituteProfile, 'attachedOrgs')
+            this.addedOrgs = _.get(instituteProfile, 'attachedOrgs') || []
         }
 
         this.instituteProfileForm.valueChanges
