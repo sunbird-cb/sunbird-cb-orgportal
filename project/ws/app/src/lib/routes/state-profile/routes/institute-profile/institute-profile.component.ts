@@ -221,7 +221,6 @@ export class InstituteProfileComponent implements OnInit {
         this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
     }
 
-
     openActivityDialog() {
         const dialogRef = this.dialog.open(DialogBoxComponent, {
             data: {
