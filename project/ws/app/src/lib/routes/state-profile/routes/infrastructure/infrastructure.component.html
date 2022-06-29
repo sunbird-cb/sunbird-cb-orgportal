@@ -1,11 +1,13 @@
-<div class="flex flex-wrap flex-col margin-right-m margin-top-l role-card">
+<div class="flex flex-wrap flex-col margin-right-xs margin-top-l role-card">
     <form [formGroup]="infrastructureForm">
         <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
             <div class="flex flex-row justify-between">
                 <h2>Infrastructure</h2>
-                <a class="mat-subheading-2 hint_span margin-remove-bottom">
+                <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" tabindex="0" role="button"
+                    (click)="openActivityDialog()">
                     <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color" role="img"
                         aria-hidden="true">info_outlined</mat-icon>
+
                 </a>
             </div>
             <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
@@ -38,7 +40,7 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Area for academic purpose (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" type="number" #academicArea placeholder="Type here"
+                                <input matInput autocomplete="off" type="number" #academicArea placeholder="in acres"
                                     class="flex flex-1" formControlName="academicArea" />
                                 <mat-error [hidden]="false"
                                     i18n="Academic perpose area  Error|Explains Academic perpose area is required"
@@ -63,7 +65,7 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Area for hostels (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" type="number" #hostelArea placeholder="Type here"
+                                <input matInput autocomplete="off" type="number" #hostelArea placeholder="in acres"
                                     class="flex flex-1" formControlName="hostelArea" />
                                 <mat-error [hidden]="false" i18n="Hostel area Error|Explains Hostel area is required"
                                     i18n-aria-label aria-label="Hostel area Error|Explains Hostel area is required "
@@ -77,8 +79,8 @@
                             <p class="mat-subheading-2 ws-mat-black60-text">Area for computer labs (in acres)</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
-                                <input matInput autocomplete="off" type="number" #computerLabArea
-                                    placeholder=" in acres" class="flex flex-1" formControlName="computerLabArea" />
+                                <input matInput autocomplete="off" type="number" #computerLabArea placeholder="in acres"
+                                    class="flex flex-1" formControlName="computerLabArea" />
                                 <mat-error [hidden]="false"
                                     i18n="Computer lab area Error|Explains Computer lab area is required"
                                     i18n-aria-label
@@ -94,7 +96,8 @@
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
                                 <input matInput autocomplete="off" type="number" #computerSystemCount
-                                    placeholder="Type here" class="flex flex-1" formControlName="computerSystemCount" />
+                                    placeholder="Enter number" class="flex flex-1"
+                                    formControlName="computerSystemCount" />
                                 <mat-error [hidden]="false"
                                     i18n="Computer systems count Error|Explains Computer systems count is required"
                                     i18n-aria-label
@@ -116,7 +119,7 @@
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
                                 <input matInput autocomplete="off" type="number" min="0" step="1" #totalCollection
-                                    placeholder="Number" formControlName="totalCollection" class="flex flex-1" />
+                                    placeholder="Enter number" formControlName="totalCollection" class="flex flex-1" />
                                 <mat-error [hidden]="false"
                                     i18n="Total collection Error|Explains Total collection is required" i18n-aria-label
                                     aria-label="Total collection Error|Explains Total collection is required "
@@ -131,7 +134,8 @@
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
                                 <input matInput autocomplete="off" type="number" min="0" step="1" #periodicalsSubscribed
-                                    placeholder="Number" formControlName="periodicalsSubscribed" class="flex flex-1" />
+                                    placeholder="Enter number" formControlName="periodicalsSubscribed"
+                                    class="flex flex-1" />
                                 <mat-error [hidden]="false"
                                     i18n="Periodicals subscribed Error|Explains Periodicals subscribed is required"
                                     i18n-aria-label
@@ -150,27 +154,33 @@
 
         <mat-card class="mat-card role-card flex flex-col mat-card-mdo margin-top-m">
             <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
-                <div class="flex flex-col">
+                <div class="flex flex-row justify-between">
                     <label class=" margin-remove-bottom form-label flex mat-subheading-2 ws-mat-black60-text required"
                         i18n="GPS coordinates label|Label which explains the user to enter GPS coordinates"
                         i18n-aria-label aria-label="GPS coordinates label">
                         Latitude and longitude GPS coordinates
                     </label>
-                    <div class="input-wrapper margin-top-s flex flex-col flex-1">
-                        <mat-form-field appearance="outline"
-                            class="margin-top-xs form_field flex flex-1 full-width text-area-field">
-                            <input matInput autocomplete="off" #latitudeLongitude placeholder="Type here"
-                                formControlName="latitudeLongitude" class="flex flex-1" />
-                            <mat-error [hidden]="false"
-                                i18n="Latitude and longitude GPS coordinates Error|Explains Latitude and longitude GPS coordinates is required"
-                                i18n-aria-label
-                                aria-label="Latitude and longitude GPS coordinates Error|Explains Latitude and longitude GPS coordinates is required "
-                                *ngIf="instituteProfileForm?.controls['latitudeLongitude'].errors?.required">
-                                Latitude and longitude GPS coordinates is mandatory
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
+                    <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" tabindex="0" role="button"
+                        (click)="openActivityDialog()">
+                        <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color"
+                            role="img" aria-hidden="true">info_outlined</mat-icon>
+                    </a>
                 </div>
+                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                    <mat-form-field appearance="outline"
+                        class="margin-top-xs form_field flex flex-1 full-width text-area-field">
+                        <input matInput autocomplete="off" #latitudeLongitude placeholder="Type here"
+                            formControlName="latitudeLongitude" class="flex flex-1" />
+                        <mat-error [hidden]="false"
+                            i18n="Latitude and longitude GPS coordinates Error|Explains Latitude and longitude GPS coordinates is required"
+                            i18n-aria-label
+                            aria-label="Latitude and longitude GPS coordinates Error|Explains Latitude and longitude GPS coordinates is required "
+                            *ngIf="instituteProfileForm?.controls['latitudeLongitude'].errors?.required">
+                            Latitude and longitude GPS coordinates is mandatory
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
             </div>
         </mat-card>
     </form>

@@ -6,6 +6,8 @@ import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { OrgProfileService } from '../../services/org-profile.service'
 /* tslint:disable*/
 import _ from 'lodash'
+import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
+import { MatDialog } from '@angular/material'
 
 @Component({
     selector: 'ws-app-infrastructure',
@@ -23,6 +25,7 @@ export class InfrastructureComponent implements OnInit {
     constructor(
         private orgSvc: OrgProfileService,
         private configSvc: ConfigurationsService,
+        private dialog: MatDialog,
     ) {
         this.infrastructureForm = new FormGroup({
             builtupArea: new FormControl('', [Validators.required]),
@@ -67,5 +70,19 @@ export class InfrastructureComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    openActivityDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'ccomp',
+            },
+            hasBackdrop: false,
+            width: '550px',
+
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+
+        })
     }
 }

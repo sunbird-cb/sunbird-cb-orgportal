@@ -3,11 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { OrgProfileService } from '../../services/org-profile.service'
 import { Subject } from 'rxjs'
-import { MatChipInputEvent } from '@angular/material'
+import { MatChipInputEvent, MatDialog } from '@angular/material'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 /* tslint:disable*/
 import _ from 'lodash'
+import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
 
 @Component({
     selector: 'ws-app-training-rograms',
@@ -25,6 +26,7 @@ export class TrainingRogramsComponent implements OnInit {
     constructor(
         private orgSvc: OrgProfileService,
         private configSvc: ConfigurationsService,
+        private dialog: MatDialog,
     ) {
         this.trainingProgramForm = new FormGroup({
             subjectName: new FormControl('', []),
@@ -97,4 +99,19 @@ export class TrainingRogramsComponent implements OnInit {
             this.selectedSubjects.splice(index, 1)
         }
     }
+
+    openActivityDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'ccomp',
+            },
+            hasBackdrop: false,
+            width: '550px',
+
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+
+        })
+    }
+
 }

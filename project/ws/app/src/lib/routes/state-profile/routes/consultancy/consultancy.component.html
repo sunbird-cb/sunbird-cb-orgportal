@@ -5,9 +5,15 @@
 
                 <div class="flex flex-row justify-between">
                     <h2>Consultancy</h2>
-                    <a class="mat-subheading-2 hint_span margin-remove-bottom">
+                    <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" wsCompTooltipDirective
+                        tabindex="0" role="button">
                         <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color"
                             role="img" aria-hidden="true">info_outlined</mat-icon>
+                        <ng-template #tooltipTemplate>
+                            <div class="tooltip">
+                                <ws-app-level-info></ws-app-level-info>
+                            </div>
+                        </ng-template>
                     </a>
                 </div>
                 <div class="input-wrapper margin-top-s flex flex-col flex-1">
@@ -60,7 +66,7 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-2 flex-col">
+                    <div class="flex flex-2 flex-col margin-left-l">
                         <div class="flex">
                             <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                                 i18n="Type of sponsorship label|Label which explains the user to enter Type of sponsorship count"
@@ -76,14 +82,14 @@
                                 </mat-checkbox>
                             </div>
 
-                            <div class="flex flex-1 margin-left-s">
+                            <div class="flex flex-1 margin-left-m">
                                 <mat-checkbox #govtSponsored formControlName="govtSponsored" i18n-aria-label
                                     aria-label="Government sponsored input" class="checkbox_btn">
                                     Government sponsored
                                 </mat-checkbox>
                             </div>
 
-                            <div class="flex flex-1 margin-left-s">
+                            <div class="flex flex-1 margin-left-m">
                                 <mat-checkbox #otherSponsored formControlName="otherSponsored" i18n-aria-label
                                     aria-label="Others input" class="checkbox_btn">
                                     Others

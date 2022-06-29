@@ -6,6 +6,8 @@ import { Subject } from 'rxjs'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 /* tslint:disable*/
 import _ from 'lodash'
+import { MatDialog } from '@angular/material'
+import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
 
 @Component({
     selector: 'ws-app-roles-and-functions',
@@ -23,6 +25,7 @@ export class RolesAndFunctionsComponent implements OnInit {
     constructor(
         private orgSvc: OrgProfileService,
         private configSvc: ConfigurationsService,
+        private dialog: MatDialog,
     ) {
         this.roleActivityForm = new FormGroup({
             training: new FormControl(false, []),
@@ -86,4 +89,19 @@ export class RolesAndFunctionsComponent implements OnInit {
             this.orgSvc.updateFormStatus('rolesAndFunctions', this.roleActivityForm.valid)
         }
     }
+
+    // openActivityDialog() {
+    //     const dialogRef = this.dialog.open(DialogBoxComponent, {
+    //         data: {
+    //             view: 'ccomp',
+    //         },
+    //         hasBackdrop: false,
+    //         width: '550px',
+
+    //     })
+    //     dialogRef.afterClosed().subscribe(_result => {
+
+    //     })
+    // }
+
 }

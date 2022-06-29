@@ -8,6 +8,7 @@ import _ from 'lodash'
 import { Subject } from 'rxjs'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
+import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
 import { OrgProfileService } from '../../services/org-profile.service'
 
 @Component({
@@ -218,5 +219,20 @@ export class InstituteProfileComponent implements OnInit {
         formValue.attachedOrgs = this.addedOrgs
         this.orgSvc.updateLocalFormValue('instituteProfile', formValue)
         this.orgSvc.updateFormStatus('instituteProfile', this.instituteProfileForm.valid)
+    }
+
+
+    openActivityDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'ccomp',
+            },
+            hasBackdrop: false,
+            width: '550px',
+
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+
+        })
     }
 }

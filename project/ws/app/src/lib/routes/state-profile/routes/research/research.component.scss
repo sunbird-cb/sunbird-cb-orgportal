@@ -1,28 +1,7 @@
+@import 'profile-form';
 
 
 
-
-
-.welcome_img {
-    width: 350px;
-}
-.custom-button {
-    border: 1px solid #0074b6;
-    background-color: #0074b6;
-    color: #fff;
-    border-radius: 4px 4px;
-    text-align: center;
-    padding: 8px 12px;
-    height: 40px;
-    line-height: 20px;
-    width: 90px;
-    box-sizing: border-box;
-    cursor: pointer;
-}
-
-.role-card {
-    width: 100%;
-}
 .mat-card {
     box-sizing: border-box;
 }
@@ -47,7 +26,7 @@
     width: 50%;
 }
 .add_link {
-    border: 1px solid #0074b6;
+    border: 2px solid #0074b6;
     background-color: #fff;
     color: #0074b6;
     border-radius: 4px 4px;
@@ -57,89 +36,61 @@
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
-    width: 250px;
+    width: 100px;
 }
-// .upload_link {
 
-// }
-.mat-radio-button {
-    padding: 15px 20px;
-    border-radius: 5px;
-    width: auto;
-    text-align: center;
-    box-sizing: border-box;
-}
-.radio-select {
-    border: 2px solid #0174b6;
-    background: #f2f8fb;
-}
-.radio-unselect {
-    border: 2px solid rgba($color: #000000, $alpha: 0.16);
-    background: #fff;
-}
 .button_box {
     width: 320px;
 }
-a.skip_link {
-  border:1px solid rgba($color: #000000, $alpha: 0.16);
-  border-radius: 4px 4px;
-  text-align: center;
-  padding:8px 12px;
-  height: 40px;
-  box-sizing: border-box;
-  cursor: pointer;
-
-}
-
-a.next_link {
-  border:1px solid #0074b6;
-  background-color: #0074b6;
-  color: #fff;
-  border-radius: 4px 4px;
-  text-align: center;
-  padding:8px 12px;
-  height: 40px;
-  box-sizing: border-box;
-  cursor: pointer;
-
-}
-
 .role-card {
     width: 100%;
+    position: relative;
 }
 
-.upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
+// .upload-btn-wrapper {
+//   position: relative;
+//   overflow: hidden;
+//   display: inline-block;
 
-  .btn {
-  border: 1px solid #0074b6;
-  color: #0074b6;
-  background-color: white;
-  padding: 8px 20px;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 14px;
+//   .btn {
+//   border: 1px solid #0074b6;
+//   color: #0074b6;
+//   background-color: white;
+//   padding: 8px 20px;
+//   border-radius: 4px;
+//   box-sizing: border-box;
+//   font-size: 14px;
+// }
+
+// }
+
+
+.mat-radio-button {
+    padding: 10px 10px;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.16);
+    background: #fff;
+    width: 160px;
+}
+.mat-radio-button.mat-radio-checked {
+    border: 2px solid #0174b6;
+    background: #f2f8fb!important;
 }
 
-}
 
-.checkbox_btn {
-    padding: 15px 20px;
+.checkbox_btn{
+    padding: 12px 10px;
     border-radius: 5px;
     width: auto;
-    text-align: center;
+    text-align: left;
     box-sizing: border-box;
-    border:1px solid rgba($color: #000000, $alpha: 0.16);
+    border: 2px solid rgba(0, 0, 0, 0.16);
+    max-width: 225px;
+    width: auto;
 }
-
-.upload-btn-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
+.checkbox_btn.mat-checkbox-checked {
+    border: 2px solid #0074b6;
+    background: #f2f8fb!important;
 }
 
 

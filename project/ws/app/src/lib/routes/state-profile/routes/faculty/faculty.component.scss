@@ -20,9 +20,6 @@
     cursor: pointer;
 }
 
-.role-card {
-    width: 100%;
-}
 .mat-card {
     box-sizing: border-box;
 }
@@ -107,6 +104,20 @@ a.next_link {
 
 .role-card {
     width: 100%;
+    position: relative;
 }
+.tooltip {
+  position: absolute;
+  opacity: 1;
+  z-index: 999;
+  padding: 5px;
+  top: 35px;
+  right: 10px;
+}
+.hint_span {
+  position: relative;
+    cursor: pointer;
+}
+
 
 

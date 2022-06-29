@@ -1,52 +1,55 @@
 <div class="flex flex-wrap flex-col margin-right-m margin-top-l role-card">
     <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
-        <h2>Select the roles and functions of the training institute</h2>
+
+        <div class="flex flex-row justify-between">
+            <h2 class="margin-remove-bottom">Select the roles and functions of the training institute</h2>
+            <!-- <a class="mat-subheading-2 hint_span margin-remove-bottom" (click)="openActivityDialog()" role="button">
+                <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color" role="img"
+                    aria-hidden="true">info_outlined</mat-icon>
+            </a> -->
+        </div>
         <form [formGroup]="roleActivityForm">
-            <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
+            <div class="input-wrapper margin-top-l flex flex-col flex-1">
                 <div class="flex flex-col">
                     <div class="flex flex-col">
                         <label class=" margin-remove-bottom form-label flex mat-subheading-2 required"
                             i18n="Full address label|Label which explains the user to enter Full address"
                             i18n-aria-label aria-label="Full address label">
-                            Roles and functions of the institute/training centre
+                            Select the roles and functions of the training institute (you can select more than one
+                            option)
                         </label>
                     </div>
                     <div class="flex flex-row margin-top-m">
-                        <div class="flex flex-1">
+                        <div class="flex">
                             <mat-checkbox #training formControlName="training" i18n-aria-label
-                                aria-label="Training input">
+                                aria-label="Training input" class="checkbox_btn">
                                 Training
                             </mat-checkbox>
                         </div>
 
-                        <div class="flex flex-1 ">
+                        <div class="flex margin-left-l">
                             <mat-checkbox #research formControlName="research" i18n-aria-label
-                                aria-label="Research input">
+                                aria-label="Research input" class="checkbox_btn">
                                 Research
                             </mat-checkbox>
                         </div>
                     </div>
 
-                    <div class="flex flex-row margin-top-m">
-                        <div class="flex flex-1">
+                    <div class="flex flex-row margin-top-l">
+                        <div class="flex">
                             <mat-checkbox #consultancy formControlName="consultancy" i18n-aria-label
-                                aria-label="Consultancy input">
+                                aria-label="Consultancy input" class="checkbox_btn">
                                 Consultancy
                             </mat-checkbox>
                         </div>
-                        <div class="flex flex-1">
+                        <div class="flex  margin-left-l">
                             <mat-checkbox #researchPublication formControlName="researchPublication" i18n-aria-label
-                                aria-label="Publication input">
+                                aria-label="Publication input" class="checkbox_btn">
                                 Publication
                             </mat-checkbox>
                         </div>
 
-                        <!-- <div class="flex flex-1 margin-left-l">
-                            <mat-checkbox (click)="buttonSelect($event)" #trainingResearch
-                                formControlName="trainingResearch" i18n-aria-label aria-label="Training research input">
-                                Training & Research
-                            </mat-checkbox>
-                        </div> -->
+
                     </div>
 
                     <!-- <div class="flex flex-row margin-top-m">
@@ -67,17 +70,10 @@
                         </div>
                     </div> -->
 
-                    <div class="flex flex-row margin-top-m">
-                        <!-- <div class="flex flex-1">
-                            <mat-checkbox (click)="buttonSelect($event)" #trainConsulResPublication
-                                formControlName="trainConsulResPublication" i18n-aria-label
-                                aria-label="Attached center input">
-                                Training , Consultancy, Research and Publication
-                            </mat-checkbox>
-                        </div> -->
-
-                        <div class="flex flex-1">
-                            <mat-checkbox #other formControlName="other" i18n-aria-label aria-label="Other input">
+                    <div class="flex flex-row margin-top-l">
+                        <div class="flex">
+                            <mat-checkbox #other formControlName="other" i18n-aria-label aria-label="Other input"
+                                class="checkbox_btn">
                                 Other
                             </mat-checkbox>
 
@@ -92,7 +88,7 @@
                             <textarea matInput autocomplete="off" #instituteOtherRole
                                 placeholder="Please specify other roles and functions" class="flex flex-1"
                                 formControlName="instituteOtherRole" i18n-aria-label
-                                aria-label="Please specify other roles and functions"></textarea>
+                                aria-label="Please specify other roles and functions" rows="8"></textarea>
                             <mat-error [hidden]="false" i18n="Institute Role Error|Explains Role is required"
                                 i18n-aria-label aria-label="Institute Role Error|Explains Role is required "
                                 *ngIf="instituteProfileForm?.controls['instituteOtherRole'].errors?.required">

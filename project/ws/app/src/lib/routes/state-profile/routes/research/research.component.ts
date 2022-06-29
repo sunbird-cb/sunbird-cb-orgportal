@@ -7,6 +7,7 @@ import _ from 'lodash'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Router } from '@angular/router'
 import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
+import { DialogBoxComponent } from '../../components/dialog-box/dialog-box.component'
 
 @Component({
     selector: 'ws-app-research',
@@ -231,5 +232,19 @@ export class ResearchComponent implements OnInit {
         }
         this.orgSvc.updateLocalFormValue('research', localData)
         this.orgSvc.updateFormStatus('research', (this.addedPapers.length > 0 && this.addedPrograms.length > 0))
+    }
+
+    openActivityDialog() {
+        const dialogRef = this.dialog.open(DialogBoxComponent, {
+            data: {
+                view: 'ccomp',
+            },
+            hasBackdrop: false,
+            width: '550px',
+
+        })
+        dialogRef.afterClosed().subscribe(_result => {
+
+        })
     }
 }
