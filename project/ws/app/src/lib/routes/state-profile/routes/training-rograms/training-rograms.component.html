@@ -24,7 +24,7 @@
                             <mat-form-field appearance="outline" class="margin-top-m flex flex-1 full-width">
                                 <mat-chip-list #chipListHobies>
                                     <mat-chip *ngFor="let sub of selectedSubjects" [selectable]="true"
-                                        [removable]="true" (removed)="removeSubject(sub)">
+                                        [removable]="true" (removed)="removeSubject(sub)" class="margin-top-m">
                                         {{sub}}
                                         <mat-icon matChipRemove>cancel</mat-icon>
                                     </mat-chip>
