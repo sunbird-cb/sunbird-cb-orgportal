@@ -1,5 +1,7 @@
 a.close_btn {
     cursor: pointer;
+    position: absolute;
+    right: 0;
 }
 
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
@@ -7,4 +9,8 @@ a.close_btn {
 }
 .link_box {
     width: 75%;
+}
+
+.dialoge-inner {
+    position: relative;
 }

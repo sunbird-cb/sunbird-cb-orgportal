@@ -58,8 +58,8 @@ export class TrainingRogramsComponent implements OnInit {
             const trainingProgramsData = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.trainingPrograms')
             this.trainingProgramForm.patchValue({
                 subjectName: _.get(trainingProgramsData, 'subjectName'),
-                conductDigitalPrograms: _.get(trainingProgramsData, 'conductDigitalPrograms'),
-                prepareDigitalContent: _.get(trainingProgramsData, 'prepareDigitalContent'),
+                conductDigitalPrograms: _.get(trainingProgramsData, 'conductDigitalPrograms') || 'Yes',
+                prepareDigitalContent: _.get(trainingProgramsData, 'prepareDigitalContent') || 'Yes',
                 videoCount: _.get(trainingProgramsData, 'videoCount'),
                 pptCount: _.get(trainingProgramsData, 'pptCount'),
                 otherMaterialCount: _.get(trainingProgramsData, 'otherMaterialCount'),

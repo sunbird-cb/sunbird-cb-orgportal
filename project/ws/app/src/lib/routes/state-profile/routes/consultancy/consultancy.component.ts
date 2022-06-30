@@ -37,7 +37,7 @@ export class ConsultancyComponent implements OnInit {
         this.consultancyForm = new FormGroup({
             projectName: new FormControl('', [Validators.required]),
             programeStatus: new FormControl('Ongoing', [Validators.required]),
-            industrySponsored: new FormControl('', [Validators.required]),
+            industrySponsored: new FormControl(true, [Validators.required]),
             govtSponsored: new FormControl('', [Validators.required]),
             otherSponsored: new FormControl('', [Validators.required]),
             projectDetail: new FormControl('', [Validators.required]),

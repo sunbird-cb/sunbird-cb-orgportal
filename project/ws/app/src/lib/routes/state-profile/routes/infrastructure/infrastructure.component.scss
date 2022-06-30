@@ -40,13 +40,14 @@
 
 .infra_box {
     width: 550px;
+    margin-bottom: 4px;
 }
 .infra_box p {
-    width: 400px;
+    width: 430px;
     margin-top: 28px;
 }
 .mat-form-field {
-    width: 125px;
+    width: 105px;
 }
 .mat-form-field.text-area-field {
     width: 100%!important;
@@ -67,3 +68,7 @@ textarea.mat-input-element {
   position: relative;
     cursor: pointer;
 }
+
+  ::ng-deep .mat-form-field-wrapper{
+      padding-bottom: 0!important;
+    }

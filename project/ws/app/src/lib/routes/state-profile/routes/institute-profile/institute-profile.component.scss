@@ -31,7 +31,7 @@
     box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)!important;
 }
 .edit-mat-card {
-     background-color: RGBA(0, 0, 0, 0.04);
+     background-color: RGBA(0, 0, 0, 0.04)!important;
     border-radius: 8px 8px;
     padding:24px 24px;
 }
@@ -63,23 +63,9 @@
     border: 2px solid #0174b6;
     background: #f2f8fb!important;
 }
-// .mat-radio-button.mat-radio-checked .mat-radio-container .mat-radio-inner-circle{
-//     background-color:#0174b6!important;
-// }
 
- ::ng-deep .mat-radio-button.mat-radio-checked   {
-    //   background-color: transparent !important;
 
-      .mat-radio-container {
-        .mat-radio-inner-circle {
-          background-color: #0174b6 !important;
-        }
 
-        .mat-radio-outer-circle {
-          border-color: #0174b6 !important;
-        }
-      }
-    }
 
 
 .btn-table tr td.col-3  {

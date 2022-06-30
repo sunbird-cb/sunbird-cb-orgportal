@@ -1,7 +1,7 @@
 <div class="flex flex-1 flex-col margin-top-xl">
     <form [formGroup]="instituteProfileForm">
         <div class="flex flex-wrap flex-col margin-right-m">
-            <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo institue-profile-box">
+            <mat-card class="mat-card role-card flex flex-col mat-card-mdo institue-profile-box">
                 <div class="flex flex-row justify-between">
                     <h2 class="margin-remove-bottom">Institute details</h2>
                     <!-- <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" wsCompTooltipDirective
@@ -173,7 +173,7 @@
         </div>
 
         <div class="flex flex-wrap flex-col margin-right-m margin-top-l">
-            <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+            <mat-card class="mat-card  role-card flex flex-col mat-card-mdo">
                 <div class="flex flex-row justify-between">
                     <h2 class="margin-remove-bottom">Contact & website details</h2>
 
@@ -319,7 +319,7 @@
 
     <form [formGroup]="attachedOrgForm">
         <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
-            <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+            <mat-card class="mat-card  role-card flex flex-col mat-card-mdo">
                 <div class="flex flex-row justify-between">
                     <h2 class="margin-remove-bottom">Attached training institutes/centres</h2>
                     <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" tabindex="0" role="button"
@@ -388,11 +388,50 @@
                             placeholder="Enter Attached training Institute details" class="flex flex-1"
                             formControlName="trainingInstituteDetail" i18n-aria-label
                             aria-label=" Attached training Institute input" [matTextareaAutosize]="true"
-                            [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3" maxlength="200" rows="5"></textarea>
+                            [matAutosizeMaxRows]="10" [matAutosizeMinRows]="5" maxlength="200" rows="5"></textarea>
                         <mat-hint align="end">{{ trainingInstituteDetail.value.length }} /200 characters</mat-hint>
                     </mat-form-field>
                 </div>
                 <a class="add_link" (click)="addOrg()">Add</a>
+
+                <div class="flex flex-1 flex-column margin-top-l">
+                    <ng-container *ngFor="let org of addedOrgs">
+                        <mat-card class="flex flex-1 flex-column margin-bottom-s mat-card-mdo edit-mat-card">
+                            <div class="flex flex-row">
+
+                                <div class="flex flex-1">
+                                    <h2 class="margin-bottom-xs">{{org.name}} </h2>
+                                </div>
+                                <div class="flex flex-row justify-between">
+                                    <a class="cursor-pointer flex margin-right-xs mat-subheading-2"
+                                        (click)="editOrg(org)">
+                                        <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit
+                                        </mat-icon>
+                                        Edit
+                                    </a>
+                                    <a class="cursor-pointer flex mat-subheading-2" (click)="deleteOrg(org)">
+                                        <mat-icon
+                                            class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
+                                            delete</mat-icon> Delete
+                                    </a>
+
+                                </div>
+                            </div>
+                            <div class="flex flex-1">
+                                <p class="ws-mat-black60-text mat-subheading-2">{{org.isAttachedInstitute}}</p>
+                            </div>
+                            <mat-card-content class="flex flex-1">
+                                <div class="flex flex-1 flex-col">
+                                    <div class="flex flex-wrap">
+
+                                        <p class="mat-body-2 margin-remove-bottom">{{org.trainingInstituteDetail}}</p>
+                                    </div>
+                                </div>
+
+                            </mat-card-content>
+                        </mat-card>
+                    </ng-container>
+                </div>
             </mat-card>
         </div>
     </form>
@@ -443,43 +482,7 @@
             </mat-card>
         </div> -->
 
-        <div class="flex flex-1 flex-column margin-top-xs">
-            <ng-container *ngFor="let org of addedOrgs">
-                <mat-card class="flex flex-1 flex-column margin-bottom-s mat-card-mdo edit-mat-card">
-                    <div class="flex flex-row">
 
-                        <div class="flex flex-1">
-                            <p class="mat-subheading-1 margin-bottom-m">{{org.name}} </p>
-                        </div>
-                        <div class="flex flex-row justify-between">
-                            <a class="cursor-pointer flex margin-right-xs" (click)="editOrg(org)">
-                                <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit
-                                </mat-icon>
-                                Edit
-                            </a>
-                            <a class="cursor-pointer flex" (click)="deleteOrg(org)">
-                                <mat-icon
-                                    class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
-                                    delete</mat-icon> Delete
-                            </a>
-
-                        </div>
-                    </div>
-                    <div class="flex flex-1">
-                        <p>{{org.isAttachedInstitute}}</p>
-                    </div>
-                    <mat-card-content class="flex flex-1">
-                        <div class="flex flex-1 flex-col">
-                            <div class="flex flex-wrap">
-
-                                <p>{{org.trainingInstituteDetail}}</p>
-                            </div>
-                        </div>
-
-                    </mat-card-content>
-                </mat-card>
-            </ng-container>
-        </div>
 
         <input #deleteTitleRef type="hidden" i18n-value value="Organization/Department/Ministry delete!" />
         <input #deleteBodyRef type="hidden" i18n-value
