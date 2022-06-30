@@ -161,4 +161,38 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       //     break
     }
   }
+
+  onEnterkySearch(enterValue: any) {
+    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+    this.usersSvc.searchUserByenter(enterValue, rootOrgId).subscribe(data => {
+      this.usersData = data.result.response
+
+      let users: any[] = []
+      if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
+        users = _.map(_.compact(_.map(this.usersData.content, i => {
+          let consider = false
+          if (!i.isDeleted && i.organisations && i.organisations.length > 0) {
+            _.each(i.organisations, o => {
+              if (!o.isDeleted && (o.roles || []).indexOf(this.roleName) >= 0) {
+                consider = true
+              }
+            })
+          }
+          return consider ? i : null
+        })),
+          // tslint:disable-next-line
+          user => {
+            return {
+              fullName: `${user.firstName} ${user.lastName}`,
+              email: _.get(user, 'profileDetails.personalDetails.primaryEmail') || user.email,
+              position: user.department_name,
+              role: this.getRoleList(user),
+              wid: user.userId,
+            }
+          })
+      }
+      this.data = users
+    }
+    )
+  }
 }

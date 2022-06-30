@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
+import { environment } from '../../../../../../../../src/environments/environment'
+
 const API_END_POINTS = {
   // OLD API
   // CREATE_EVENT: '/apis/authApi/action/content/create?rootOrg=igot&org=dopt',
@@ -80,5 +82,10 @@ export class EventsService {
 
   getEventDetails(eventID: any): Observable<any> {
     return this.http.get<any>(`${API_END_POINTS.EVENT_DETAILS}/${eventID}`)
+  }
+
+  getPublicUrl(url: string): string {
+    const mainUrl = url.split('/content').pop() || ''
+    return `${environment.contentHost}/${environment.contentBucket}/content${mainUrl}`
   }
 }
