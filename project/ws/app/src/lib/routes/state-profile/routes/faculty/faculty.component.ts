@@ -44,8 +44,8 @@ export class FacultyComponent implements OnInit {
                 otherCount: _.get(facultydata, 'otherCount'),
             })
             this.facultyForm.updateValueAndValidity()
-            this.orgSvc.updateLocalFormValue('infrastructure', this.facultyForm.value)
-            this.orgSvc.updateFormStatus('infrastructure', this.facultyForm.valid)
+            this.orgSvc.updateLocalFormValue('faculty', this.facultyForm.value)
+            this.orgSvc.updateFormStatus('faculty', this.facultyForm.valid)
         }
 
         this.facultyForm.valueChanges
