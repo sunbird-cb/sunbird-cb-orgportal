@@ -130,7 +130,7 @@
                         </div>
 
                         <div class="flex flex-row infra_box">
-                            <p class="mat-subheading-2 ws-mat-black60-text">Periodicals subscribed</p>
+                            <p class="mat-subheading-2 ws-mat-black60-text">Number of periodicals subscribed</p>
                             <mat-form-field appearance="outline"
                                 class="margin-top-xs form_field flex flex-1 full-width">
                                 <input matInput autocomplete="off" type="number" min="0" step="1" #periodicalsSubscribed
@@ -141,7 +141,7 @@
                                     i18n-aria-label
                                     aria-label="Periodicals subscribed Error|Explains Periodicals subscribed is required "
                                     *ngIf="infrastructureForm?.controls['periodicalsSubscribed'].errors?.required">
-                                    Periodicals subscribed is mandatory
+                                    Number of periodicals subscribed is mandatory
                                 </mat-error>
                             </mat-form-field>
                         </div>
