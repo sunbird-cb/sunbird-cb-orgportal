@@ -42,6 +42,7 @@ const endpoint = {
   profilePid: '/apis/proxies/v8/api/user/v2/read',
   // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
+  orgProfile: (orgId: string) => `/apis/proxies/v8/org/v1/profile/read?orgId=${orgId}`,
 }
 
 @Injectable({
@@ -110,7 +111,6 @@ export class InitService {
       if (!path.startsWith('/public')) {
         await this.fetchStartUpDetails()
       }// detail: depends only on userID
-      // detail: depends only on userID
     } catch (e) {
       this.settingsSvc.initializePrefChanges(environment.production)
       this.updateNavConfig()
@@ -307,6 +307,23 @@ export class InitService {
             profileImage: _.get(profileV2, 'photo') || completeProdata.thumbnail,
             dealerCode: null,
             isManager: false,
+          }
+          if (completeProdata.rootOrg && completeProdata.rootOrg.isInstitute) {
+            // console.log('inside is institute ---- calling org profile')
+            try {
+              const orgProfile = await this.http
+                .get<any>(endpoint.orgProfile(completeProdata.rootOrgId))
+                .pipe(map((res: any) => {
+                  return _.get(res, 'result.result')
+                }))
+                .toPromise()
+              this.configSvc.unMappedUser.orgProfile = orgProfile
+            } catch {
+              this.configSvc.unMappedUser.orgProfile = null
+            }
+          } else {
+            // console.log('outside is institute ---- NOT calling org profile')
+            this.configSvc.unMappedUser.orgProfile = null
           }
 
         } else {

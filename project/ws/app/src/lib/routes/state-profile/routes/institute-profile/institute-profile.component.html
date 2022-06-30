@@ -1,0 +1,486 @@
+<div class="flex flex-1 flex-col margin-top-xl">
+    <form [formGroup]="instituteProfileForm">
+        <div class="flex flex-wrap flex-col margin-right-m">
+            <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo institue-profile-box">
+                <div class="flex flex-row justify-between">
+                    <h2 class="margin-remove-bottom">Institute details</h2>
+                    <!-- <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" wsCompTooltipDirective
+                        tabindex="0" role="button">
+                        <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color"
+                            role="img" aria-hidden="true">info_outlined</mat-icon>
+                    </a> -->
+                </div>
+
+                <div class="input-wrapper flex flex-col flex-1 margin-top-l">
+                    <div class="flex flex-1">
+                        <label for="instituteName"
+                            class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Institute Name label|Label which explains the user to enter Institute Name"
+                            i18n-aria-label aria-label="Institute Name label">
+                            Name of the institute
+                        </label>
+                    </div>
+                    <mat-form-field appearance="outline" class="margin-top-s form_field flex flex-1 full-width">
+                        <input matInput autocomplete="off" #instituteName formControlName="instituteName"
+                            placeholder="Enter institute name" class="flex flex-1" i18n-aria-label
+                            aria-label="institute Name input" />
+                        <mat-error [hidden]="false" i18n="Institute Name Error|Explains name is required"
+                            i18n-aria-label aria-label="Institute Name Error|Explains name is required "
+                            *ngIf="instituteProfileForm?.controls['instituteName'].errors?.required">
+                            Institute name is mandatory
+                        </mat-error>
+                        <mat-error [hidden]="false"
+                            *ngIf="instituteProfileForm?.controls['instituteName'].errors?.pattern" i18n-aria-label
+                            aria-label="Institute Name Error|Name fields cannot contain numbers and special characters except ">
+                            Name fields cannot contain numbers and special characters except '
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="input-wrapper flex flex-col flex-1 margin-top-xs">
+                    <div class="flex flex-1">
+                        <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Full address label|Label which explains the user to enter Full address"
+                            i18n-aria-label aria-label="Full address label">
+                            Full address
+                        </label>
+                    </div>
+                    <mat-form-field appearance="outline" class="margin-top-s form_field flex flex-1 full-width">
+                        <input matInput autocomplete="off" id="fullAddress" #fullAddress formControlName="fullAddress"
+                            placeholder="Enter your full address" class="flex flex-1" i18n-aria-label
+                            aria-label="Full Address input" />
+                        <mat-error [hidden]="false" i18n="Full address Error|Explains address is required"
+                            i18n-aria-label aria-label="Full address Error|Explains address is required "
+                            *ngIf="instituteProfileForm?.controls['fullAddress'].errors?.required">
+                            Full address is mandatory
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="input-wrapper flex flex-col flex-1 margin-top-xs">
+                    <table class="flex btn-table justify-between">
+                        <tr class="flex w-full btn-table-row justify-between">
+                            <td class="col-3">
+                                <div class="flex flex-1">
+                                    <label class=" margin-remove-bottom form-label flex mat-subheading-2"
+                                        i18n="Building number label|Label which explains the user to enter Building number"
+                                        i18n-aria-label aria-label="Building number label">
+                                        Building number
+                                    </label>
+                                </div>
+                                <mat-form-field class="margin-top-s form_field flex flex-1 full-width"
+                                    appearance="outline">
+                                    <input matInput placeholder="Enter Building number" #buildingNo
+                                        formControlName="buildingNo" i18n-aria-label aria-label="Building No input" />
+                                </mat-form-field>
+                            </td>
+                            <td class="col-3">
+                                <div class="flex flex-1">
+                                    <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                        i18n="Full address label|Label which explains the user to enter Full address"
+                                        i18n-aria-label aria-label="Full address label">
+                                        State
+                                    </label>
+                                </div>
+                                <!-- <mat-form-field appearance="outline"
+                                    class="margin-top-xs form_field flex flex-1 full-width">
+                                    <mat-select placeholder="Select state" i18n-aria-label aria-label="State input"
+                                        #stateName formControlName="stateName" i18n-aria-label
+                                        aria-label="State Name input">
+                                        <mat-option value="one">First option</mat-option>
+                                        <mat-option value="two">Second option</mat-option>
+                                    </mat-select>
+                                </mat-form-field> -->
+
+
+                                <mat-form-field appearance="outline"
+                                    class="margin-top-s form_field flex flex-1 full-width">
+                                    <mat-select formControlName="stateName" i18n-placeholder placeholder="Select state"
+                                        i18n-aria-label aria-label="State input label">
+                                        <mat-option [value]="sname" *ngFor="let sname of stateNames">{{sname}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error [hidden]="false" i18n="State Error|Explains State is required"
+                                        i18n-aria-label aria-label="State Error|Explains State is required "
+                                        *ngIf="instituteProfileForm?.controls['stateName'].errors?.required">
+                                        State is mandatory
+                                    </mat-error>
+                                </mat-form-field>
+
+                            </td>
+                            <td class="col-3">
+                                <div class="flex flex-1">
+                                    <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                        i18n="Full address label|Label which explains the user to enter Full address"
+                                        i18n-aria-label aria-label="Full address label">
+                                        Pincode
+                                    </label>
+                                </div>
+                                <mat-form-field class="margin-top-s form_field flex flex-1 full-width"
+                                    appearance="outline">
+                                    <input matInput #pinCode maxlength="6" placeholder="Enter your pincode"
+                                        formControlName="pincode" i18n-aria-label aria-label="Pincode input" />
+                                    <mat-error [hidden]="false" i18n="Pin Code Error|Explains pincode is required"
+                                        *ngIf="instituteProfileForm?.controls['pincode'].errors?.required"
+                                        i18n-aria-label aria-label="Pin Code Error|Explains pincode is required">
+                                        Pin code is mandatory
+                                    </mat-error>
+                                    <mat-error [hidden]="false"
+                                        *ngIf="instituteProfileForm?.controls['pincode'].errors?.pattern"
+                                        i18n-aria-label
+                                        aria-label="Pin Code Error|Please enter a valid 6 digit pincode">
+                                        Please enter a valid 6 digit pincode
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="input-wrapper flex flex-col flex-1 margin-top-xs">
+                    <table class="flex btn-table justify-between">
+                        <tr class="flex w-full btn-table-row justify-between">
+                            <td class="col-3">
+                                <div class="flex flex-1">
+                                    <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                        i18n="Year of establishment label|Label which explains the user to enter Year of establishment"
+                                        i18n-aria-label aria-label="Year of establishment label">
+                                        Year of establishment of the training institute
+                                    </label>
+                                </div>
+
+                                <mat-form-field appearance="outline"
+                                    class="margin-top-s form_field flex flex-1 full-width">
+                                    <input matInput autocomplete="off" id="fullAddress" #establishmentYear
+                                        formControlName="establishmentYear" placeholder="Add year" class="flex flex-1"
+                                        i18n-aria-label aria-label="Year of establishment input" />
+                                    <mat-error [hidden]="false"
+                                        i18n="Year of establishment Error|Explains address is required" i18n-aria-label
+                                        aria-label="Year of establishment Error|Explains address is required "
+                                        *ngIf="instituteProfileForm?.controls['establishmentYear'].errors?.required">
+                                        Year of establishment of the training institute is mandatory
+                                    </mat-error>
+                                    <mat-error [hidden]="false"
+                                        *ngIf="instituteProfileForm?.controls['establishmentYear'].errors?.pattern">
+                                        Please enter a valid 4 digit year
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </mat-card>
+        </div>
+
+        <div class="flex flex-wrap flex-col margin-right-m margin-top-l">
+            <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+                <div class="flex flex-row justify-between">
+                    <h2 class="margin-remove-bottom">Contact & website details</h2>
+
+                </div>
+
+                <div class="input-wrapper flex flex-col flex-1 margin-top-l">
+                    <table class="flex w-full btn-table justify-between flex-col">
+                        <tr class="flex w-full btn-table-row justify-between">
+                            <td class="col-2">
+                                <div class="flex flex-1">
+                                    <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                        i18n="Telephone number label|Label which explains the user to enter Telephone number"
+                                        i18n-aria-label aria-label="Telephone number label">
+                                        Telephone number
+                                    </label>
+                                </div>
+                                <div class="flex flex-align combined-field">
+                                    <mat-form-field appearance="outline" class="margin-top-s country_code_box">
+                                        <mat-select formControlName="stdCode" #stdCode i18n-placeholder
+                                            placeholder="STD Code" i18n-aria-label aria-label="Telephone Number label">
+                                            <mat-option [value]="scode" *ngFor="let scode of stdCodes">{{scode}}
+                                            </mat-option>
+                                        </mat-select>
+
+                                    </mat-form-field>
+                                    <mat-form-field class="margin-top-s form_field flex flex-1 full-width"
+                                        appearance="outline">
+
+                                        <input matInput placeholder="Type here" #telephoneNo
+                                            formControlName="telephoneNo" i18n-aria-label
+                                            aria-label="Telephone No input" />
+
+                                        <mat-error [hidden]="false"
+                                            i18n="Telephone Number Error|Explains name is required"
+                                            *ngIf="instituteProfileForm?.controls['telephoneNo'].errors?.required"
+                                            i18n-aria-label aria-label="Telephone Number is mandatory">
+                                            Telephone Number is mandatory
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                            </td>
+
+                            <td class="col-2">
+                                <div class="flex flex-1">
+                                    <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                        i18n="Mobile number label|Label which explains the user to enter Mobile number"
+                                        i18n-aria-label aria-label="Mobile number label">
+                                        Add Mobile number.
+                                    </label>
+                                </div>
+                                <div class="flex flex-align combined-field">
+                                    <mat-form-field appearance="outline" class="margin-top-s country_code_box">
+                                        <mat-select formControlName="countryCode" i18n-placeholder
+                                            placeholder="--Select--" i18n-aria-label aria-label="Mobile Number label">
+                                            <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-form-field class="margin-top-s form_field flex flex-1 full-width"
+                                        appearance="outline">
+
+                                        <input matInput placeholder="Type here" #MobileNo formControlName="mobile"
+                                            i18n-aria-label aria-label="Email input" />
+
+                                        <mat-error [hidden]="false" i18n="Mobile Number Error|Explains name is required"
+                                            *ngIf="instituteProfileForm?.controls['mobile'].errors?.required"
+                                            i18n-aria-label aria-label="Mobile Number is mandatory">
+                                            Mobile Number is mandatory
+                                        </mat-error>
+                                        <mat-error [hidden]="false"
+                                            *ngIf="instituteProfileForm?.controls['mobile'].errors?.pattern"
+                                            i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
+                                            Please enter a valid 10 digit mobile number
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="flex w-full btn-table-row justify-between">
+                            <td class="col-2">
+                                <div class="flex flex-1">
+                                    <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                        i18n="Email label|Label which explains the user to enter Email" i18n-aria-label
+                                        aria-label="Email label">
+                                        Email address
+                                    </label>
+                                </div>
+                                <mat-form-field class="margin-top-s form_field flex flex-1 full-width"
+                                    appearance="outline">
+
+                                    <input matInput #emailAddress placeholder="Enter mail ID" formControlName="email"
+                                        i18n-aria-label aria-label="Email input" />
+                                    <mat-error [hidden]="false" i18n="Email address Error|Explains name is required"
+                                        *ngIf="instituteProfileForm?.controls['email'].errors?.required" i18n-aria-label
+                                        aria-label="Email address is mandatory">
+                                        Email address is mandatory
+                                    </mat-error>
+                                    <mat-error [hidden]="false"
+                                        *ngIf="instituteProfileForm?.controls['email'].errors?.pattern" i18n-aria-label
+                                        aria-label="Name fields cannot contain numbers and special characters except '">
+                                        Email id is not valid
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>
+
+                            <td class="col-2">
+                                <div class="flex flex-1">
+                                    <label
+                                        class=" margin-remove-bottom form-label required flex mat-subheading-2 w-full"
+                                        i18n="Website address label|Label which explains the user to enter Website address"
+                                        i18n-aria-label aria-label="Website address label">
+                                        Website address
+                                    </label>
+                                </div>
+
+                                <mat-form-field appearance="outline"
+                                    class="margin-top-s form_field flex flex-1 full-width">
+                                    <input matInput autocomplete="off" #websiteAddress placeholder="Type here"
+                                        class="flex flex-1" formControlName="website" i18n-aria-label
+                                        aria-label="Website input" />
+                                    <mat-error [hidden]="false"
+                                        i18n="Website address Error|Explains website address is required"
+                                        *ngIf="instituteProfileForm?.controls['website'].errors?.required"
+                                        i18n-aria-label aria-label="Website address is mandatory">
+                                        Website address is mandatory
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- <div class="input-wrapper flex flex-col col-2">
+                    <table class="flex w-full btn-table justify-between">
+
+                    </table>
+                </div> -->
+            </mat-card>
+        </div>
+    </form>
+
+    <form [formGroup]="attachedOrgForm">
+        <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+            <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+                <div class="flex flex-row justify-between">
+                    <h2 class="margin-remove-bottom">Attached training institutes/centres</h2>
+                    <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" tabindex="0" role="button"
+                        (click)="openActivityDialog()">
+                        <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color"
+                            role="img" aria-hidden="true">info_outlined</mat-icon>
+                        <!-- <ng-template #tooltipTemplate>
+                            <div class="tooltip">
+                                <ws-app-level-info></ws-app-level-info>
+                            </div>
+                        </ng-template> -->
+                    </a>
+                </div>
+
+
+                <div id="maindiv" class="input-wrapper flex flex-col flex-1 margin-top-l">
+                    <div class="flex flex-1">
+                        <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Training institute label|Label which explains the user to enter Training institute"
+                            i18n-aria-label aria-label="Training institute label">
+                            Add attached training institutes or centers
+                        </label>
+                    </div>
+
+                    <mat-form-field appearance="outline" class="margin-top-s form_field flex flex-1 full-"
+                        [ngClass]="{ 'mat-focused': textBoxActive}">
+                        <input matInput autocomplete="off" #trainingInstitute
+                            placeholder="Name of the training institute or center" class="flex flex-1"
+                            formControlName="trainingInstitute" i18n-aria-label aria-label="Training institute input" />
+                        <mat-error [hidden]="false" i18n="Website address Error|Explains website address is required"
+                            *ngIf="attachedOrgForm?.controls['trainingInstitute'].errors?.required" i18n-aria-label
+                            aria-label="Website address is mandatory">
+                            Training institute name is mandatory
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="input-wrapper flex flex-col flex-1">
+                    <table class="flex">
+                        <tr class="flex justify-between items-center">
+                            <td>
+                                <div>
+                                    <mat-radio-group #attachedTrainingInstitute
+                                        formControlName="attachedTrainingInstitute" i18n-aria-label
+                                        aria-label="Attached training institute input">
+                                        <mat-radio-button class="mat-radio-button radio-unselect"
+                                            (click)="buttonSelect($event)" [value]="'Attached training Institute'"
+                                            [ngClass]="attachedTrainingInstitute? 'radio-select': 'radio-unselect'">
+                                            Attached training Institute
+                                        </mat-radio-button>
+                                        <mat-radio-button class="mat-radio-button radio-select margin-left-s"
+                                            [value]="'Attached center'"
+                                            [ngClass]="attachedTrainingInstitute? 'radio-select': 'radio-unselect'">
+                                            Attached center
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="input-wrapper flex flex-col flex-1 margin-top-m">
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <textarea matInput autocomplete="off" #trainingInstituteDetail
+                            placeholder="Enter Attached training Institute details" class="flex flex-1"
+                            formControlName="trainingInstituteDetail" i18n-aria-label
+                            aria-label=" Attached training Institute input" [matTextareaAutosize]="true"
+                            [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3" maxlength="200" rows="5"></textarea>
+                        <mat-hint align="end">{{ trainingInstituteDetail.value.length }} /200 characters</mat-hint>
+                    </mat-form-field>
+                </div>
+                <a class="add_link" (click)="addOrg()">Add</a>
+            </mat-card>
+        </div>
+    </form>
+    <div>
+
+
+
+        <!-- <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+            <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+                <h2>Organization, Department and Ministry details</h2>
+                <form [formGroup]="addInstituteForm">
+                    <div class="input-wrapper flex flex-col flex-1">
+                        <div class="flex flex-1">
+                            <label class="margin-remove-bottom form-label required flex mat-subheading-2"
+                                i18n="New institute label|Label which explains the user to enter New institute"
+                                i18n-aria-label aria-label="New institute label">
+                                Add new institute
+                            </label>
+                        </div>
+
+                        <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                            <input matInput autocomplete="off" #newInstituteName placeholder="institute"
+                                class="flex flex-1" formControlName="newInstituteName" i18n-aria-label
+                                aria-label="New institute input" />
+                            <mat-error [hidden]="false" i18n="Institute name Error|Explains Institute name is required"
+                                *ngIf="addInstituteForm?.controls['newInstituteName'].errors?.required" i18n-aria-label
+                                aria-label="Institute name is mandatory">
+                                Institute name is mandatory
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-wrapper flex flex-col flex-1">
+                        <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                            <textarea matInput autocomplete="off" #newInstituteDetail
+                                placeholder="Enter institute details " class="flex flex-1"
+                                formControlName="newInstituteDetail" i18n-aria-label
+                                aria-label="institute details"></textarea>
+                            <mat-error [hidden]="false"
+                                i18n="Institute detail Error|Explains Institute detail is required"
+                                *ngIf="addInstituteForm?.controls['newInstituteDetail'].errors?.required"
+                                i18n-aria-label aria-label="Institute detail is mandatory">
+                                Institute detail is mandatory
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <a class="add_link margin-top-m">Add</a>
+                </form>
+            </mat-card>
+        </div> -->
+
+        <div class="flex flex-1 flex-column margin-top-xs">
+            <ng-container *ngFor="let org of addedOrgs">
+                <mat-card class="flex flex-1 flex-column margin-bottom-s mat-card-mdo edit-mat-card">
+                    <div class="flex flex-row">
+
+                        <div class="flex flex-1">
+                            <p class="mat-subheading-1 margin-bottom-m">{{org.name}} </p>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                            <a class="cursor-pointer flex margin-right-xs" (click)="editOrg(org)">
+                                <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit
+                                </mat-icon>
+                                Edit
+                            </a>
+                            <a class="cursor-pointer flex" (click)="deleteOrg(org)">
+                                <mat-icon
+                                    class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
+                                    delete</mat-icon> Delete
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="flex flex-1">
+                        <p>{{org.isAttachedInstitute}}</p>
+                    </div>
+                    <mat-card-content class="flex flex-1">
+                        <div class="flex flex-1 flex-col">
+                            <div class="flex flex-wrap">
+
+                                <p>{{org.trainingInstituteDetail}}</p>
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+                </mat-card>
+            </ng-container>
+        </div>
+
+        <input #deleteTitleRef type="hidden" i18n-value value="Organization/Department/Ministry delete!" />
+        <input #deleteBodyRef type="hidden" i18n-value
+            value="Do you want to delete this organization/department/ministry " />

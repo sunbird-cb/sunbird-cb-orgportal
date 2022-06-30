@@ -32,9 +32,9 @@
   $footerTextColor: #dedfe0;
   $colorWhite: #ffffff;
   $colorBlack: rgba(0, 0, 0, 0.87);
-  $colorBlack60: rgba(0, 0, 0, 0.60);
-  $colorBlack40: rgba(0, 0, 0, 0.40);
-  $colorBlack040: rgba(0, 0, 0, 0.040);
+  $colorBlack60: rgba(0, 0, 0, 0.6);
+  $colorBlack40: rgba(0, 0, 0, 0.4);
+  $colorBlack040: rgba(0, 0, 0, 0.04);
   $colorLighterGrey: #bbbcbc;
 
   outline-color: mat-color($accent, lighter);
@@ -202,7 +202,6 @@
       color: $colorAccentDark;
     }
 
-
     .ws-mat-primary-lite-background-important {
       background-color: $colorPrimaryDark !important;
     }
@@ -214,7 +213,19 @@
     .ws-mat-primary-tags-list {
       background: rgba(mat-color($primary, default), 0.1);
     }
+    .ws-active-discuss-route {
+      background: rgba(mat-color($primary, default), 0.1);
+      font-weight: bold;
 
+      &:before {
+        content: "";
+        position: absolute;
+        border-color: $colorAccentDark;
+        border-style: solid;
+        border-width: 0 0 0 2px;
+        height: inherit;
+      }
+    }
     .mat-drawer-side {
       background: rgb(240, 243, 244);
     }
@@ -224,7 +235,7 @@
       font-weight: 700;
 
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         border-color: $colorAccentDark;
         border-style: solid;
@@ -249,9 +260,7 @@
       background-color: black !important;
       color: #ededed;
     }
-  }
-
-  @else {
+  } @else {
     .mat-radio-button {
       background-color: transparent !important;
 
@@ -366,14 +375,27 @@
     .mat-drawer-side {
       background: rgb(240, 243, 244);
     }
+    .ws-active-discuss-route {
+      background-color: #eeeeee !important;
+      // font-weight: 700;
+      font-weight: bold;
 
+      &:before {
+        content: "";
+        position: absolute;
+        border-color: #347bb6;
+        border-style: solid;
+        border-width: 0 0 0 4px;
+        height: inherit;
+      }
+    }
     .ws-active-route-menu {
       background-color: $colorBlack040 !important;
       font-weight: 700;
       font: bold 14px Lato !important;
 
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         border-color: #347bb6;
         border-style: solid;
@@ -403,24 +425,20 @@
   }
 
   @if $is-dark {
-
-    a[href^='/'][target='_self'],
-    a[href^='http'],
-    a[href^='mailto'],
-    a[target='_blank'] {
+    a[href^="/"][target="_self"],
+    a[href^="http"],
+    a[href^="mailto"],
+    a[target="_blank"] {
       // color: $colorPrimaryLight;
       color: $colorPrimaryDark !important;
       background-color: $colorPrimaryDark !important;
       // background-color: red !important;
     }
-  }
-
-  @else {
-
-    a[href^='/'][target='_self'],
-    a[href^='http'],
-    a[href^='mailto'],
-    a[target='_blank'] {
+  } @else {
+    a[href^="/"][target="_self"],
+    a[href^="http"],
+    a[href^="mailto"],
+    a[target="_blank"] {
       color: $colorAccent;
       background-color: $colorPrimaryLight;
     }
@@ -540,7 +558,6 @@
       color: $colorDarkRed !important;
     }
 
-
     .ws-mat-primary-border {
       border: 1px solid $colorPrimary;
     }
@@ -583,9 +600,7 @@
 
     .ws-mat-text-block-fade-gradient {
       position: relative;
-      background: linear-gradient(to bottom,
-          rgba(mat-color($background, card), 0),
-          mat-color($background, card) 100%);
+      background: linear-gradient(to bottom, rgba(mat-color($background, card), 0), mat-color($background, card) 100%);
 
       &::after,
       &::before {
@@ -615,9 +630,7 @@
       position: absolute;
       width: 90%;
       margin-top: 24%;
-      background: linear-gradient(to bottom,
-          rgba(mat-color($background, card), 0),
-          mat-color($background, card) 100%);
+      background: linear-gradient(to bottom, rgba(mat-color($background, card), 0), mat-color($background, card) 100%);
     }
 
     .mat-button-toggle-checked {
@@ -655,7 +668,7 @@
     .required {
       &::after {
         color: $colorWarnDark;
-        content: ' *';
+        content: " *";
       }
     }
 
