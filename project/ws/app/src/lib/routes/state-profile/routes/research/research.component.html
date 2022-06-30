@@ -100,7 +100,7 @@
                         <textarea matInput autocomplete="off" #projectDetail formControlName="projectDetail"
                             i18n-aria-label aria-label="Project detail input" placeholder="Enter project details "
                             class="flex flex-1" row="5" [matTextareaAutosize]="true" [matAutosizeMaxRows]="10"
-                            [matAutosizeMinRows]="3" maxlength="200"></textarea>
+                            [matAutosizeMinRows]="5" maxlength="200"></textarea>
                         <mat-hint align="end" class="margin-top-l">{{ projectDetail.value.length }} /200 characters
                         </mat-hint>
                         <mat-error [hidden]="false" i18n="Project detail Error|Explains Project detail is required"
@@ -117,7 +117,7 @@
                 <div class="flex flex-1 flex-column mat-card-mdo margin-top-l edit-mat-card">
                     <div class="flex flex-row">
                         <div class="flex flex-1">
-                            <h2>{{program.projectName}}</h2>
+                            <h2 class="margin-remove-bottom">{{program.projectName}}</h2>
                         </div>
                         <div class="flex flex-row justify-between">
                             <a class="cursor-pointer flex margin-right-xs" (click)="editProgram(program)">
@@ -133,7 +133,7 @@
                     </div>
                     <div class="flex flex-1 margin-top-s">
                         <div class="flex">
-                            <span class="mat-caption">{{program.programeStatus}}</span>
+                            <span class="mat-caption status_txt">{{program.programeStatus}}</span>
                         </div>
                         <div class="flex flex-row margin-left-l">
                             <span class="mat-caption" *ngIf="program.industrySponsored">Industry sponsored &nbsp;</span>
@@ -142,7 +142,7 @@
                             <span class="mat-caption" *ngIf="program.otherSponsored">| &nbsp;Others</span>
                         </div>
                     </div>
-                    <mat-card-content class="flex flex-1 margin-remove-bottom">
+                    <mat-card-content class="flex flex-1 margin-remove-bottom margin-top-s">
                         <div class="flex flex-wrap">
 
                             <p class="mat-subtitle-1 margin-remove-bottom">{{program.projectDetail}}</p>
@@ -192,7 +192,7 @@
                         <textarea matInput autocomplete="off" #researchPaperDetail formControlName="researchPaperDetail"
                             i18n-aria-label aria-label="Research paper detail input"
                             placeholder="Enter Research paper details " class="flex flex-1" [matTextareaAutosize]="true"
-                            [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3" maxlength="200" rows="5"></textarea>
+                            [matAutosizeMaxRows]="10" [matAutosizeMinRows]="5" maxlength="200" rows="5"></textarea>
                         <mat-hint align="end" class="margin-top-l">{{ researchPaperDetail.value.length }} /200
                             characters</mat-hint>
                         <mat-error [hidden]="false"
@@ -210,7 +210,7 @@
                 <div class="flex flex-1 flex-column mat-card-mdo margin-top-l edit-mat-card">
                     <div class="flex flex-row">
                         <div class="flex flex-1">
-                            <h2>{{paper.researchPaperName}}</h2>
+                            <h2 class="margin-remove-bottom">{{paper.researchPaperName}}</h2>
                         </div>
                         <div class="flex flex-row justify-between">
                             <a class="cursor-pointer flex margin-right-xs" (click)="editPaper(paper)">
@@ -224,7 +224,7 @@
                             </a>
                         </div>
                     </div>
-                    <mat-card-content class="flex flex-1 margin-remove-bottom">
+                    <mat-card-content class="flex flex-1 margin-remove-bottom margin-top-s">
                         <div class="flex flex-wrap">
 
                             <p class="mat-subtitle-1 margin-remove-bottom">{{paper.researchPaperDetail}}</p>

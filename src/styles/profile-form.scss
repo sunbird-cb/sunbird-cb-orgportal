@@ -63,6 +63,7 @@
 
     ::ng-deep .mat-form-field-wrapper{
       width: 100%!important;
+
     }
 
   input.mat-input-element {
@@ -209,4 +210,32 @@
       min-height: 40px;
       align-items: center!important;
     }
+
+
+ ::ng-deep .theme-igot.day-mode .mat-radio-button.mat-radio-checked   {
+    //   background-color: transparent !important;
+
+      .mat-radio-container {
+        .mat-radio-inner-circle {
+          background-color: #0174b6 !important;
+        }
+
+        .mat-radio-outer-circle {
+          border-color: #0174b6 !important;
+        }
+      }
+    }
+
+.theme-igot.day-mode .mat-radio-button.mat-radio-checked .mat-radio-container .mat-radio-inner-circle{
+    background-color:#0174b6!important;
+}
+
+
+.theme-igot.day-mode .mat-radio-button.mat-radio-checked .mat-radio-container .mat-radio-outer-circle {
+    border-color:#0174b6!important;
+}
+
+.mat-form-field-wrapper {
+    padding-bottom: 0!important;
+}
 

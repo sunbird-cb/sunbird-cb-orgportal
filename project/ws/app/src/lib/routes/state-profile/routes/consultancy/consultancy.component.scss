@@ -39,6 +39,7 @@
     border: 2px solid rgba(0, 0, 0, 0.16);
     background: #fff;
     width: 160px;
+    font-size: 14px!important;
 }
 .mat-radio-button.mat-radio-checked {
     border: 2px solid #0174b6;
@@ -53,6 +54,7 @@
     border: 2px solid rgba(0, 0, 0, 0.16);
     max-width: 225px;
     width: auto;
+    font-size: 14px!important;
 }
 .checkbox_btn.mat-checkbox-checked {
     border: 2px solid #0074b6;
@@ -62,6 +64,10 @@
     font-size: 14px!important;
 }
 
+.status_txt {
+    color: green!important;
+    font-weight: bold;
+}
 
 .button_box {
     width: 320px;

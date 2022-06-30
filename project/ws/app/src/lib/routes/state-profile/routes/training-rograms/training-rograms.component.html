@@ -172,7 +172,7 @@
                         <mat-form-field appearance="outline" class="margin-top-m flex flex-1 full-width">
                             <textarea matInput autocomplete="off" #otherInfo placeholder="Type here" class="flex flex-1"
                                 formControlName="otherInfo" i18n-aria-label aria-label="Other information input"
-                                [matTextareaAutosize]="true" [matAutosizeMaxRows]="10" [matAutosizeMinRows]="3"
+                                [matTextareaAutosize]="true" [matAutosizeMaxRows]="10" [matAutosizeMinRows]="5"
                                 maxlength="200"></textarea>
                             <mat-hint align="end">{{ otherInfo.value.length }} /200 characters</mat-hint>
 
@@ -187,12 +187,4 @@
             </div>
         </form>
     </mat-card>
-
-    <!-- <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
-        <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>
-        <a class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
-
-    </div> -->
-
-
 </div>

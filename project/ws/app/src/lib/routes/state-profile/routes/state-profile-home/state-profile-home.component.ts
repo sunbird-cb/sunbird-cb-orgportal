@@ -66,7 +66,7 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
   }
   updateProfile() {
     // need to update profile
-    this.router.navigate(['/page/home'])
+    this.router.navigate(['/app/home/welcome'])
   }
   // updateCompentency() {
   //   this.tabs.forEach(s => {
@@ -131,7 +131,7 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
             if (orgProfile) {
               this.configSvc.unMappedUser.orgProfile = orgProfile
               if (isSumbit) {
-                this.router.navigate(['/page/home'])
+                this.router.navigate(['/app/home/welcome'])
               }
             }
           },
