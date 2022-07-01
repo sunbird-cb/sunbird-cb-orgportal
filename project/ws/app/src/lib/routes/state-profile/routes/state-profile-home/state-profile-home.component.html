@@ -35,7 +35,7 @@
 </mat-sidenav-container>
 
 
-<div class="footer_box flex flex-row justify-between">
+<div class="footer_box flex flex-row justify-between" *ngIf="router.url!='/app/setup/welcome'">
   <!-- <a class="skip_link mat-body-2 margin-remove-bottom">Cancel</a> -->
 
   <ng-container *ngIf="previous && previous !== 'first'">

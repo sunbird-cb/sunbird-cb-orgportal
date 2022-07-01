@@ -199,3 +199,7 @@ background-color: #F0F3F4!important;
 .theme-igot.day-mode .mat-drawer-container {
   background-color: #f0f3f4!important;
 }
+
+::ng-deep ws-app-footer {
+  display: none!important;
+}
