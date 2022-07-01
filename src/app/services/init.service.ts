@@ -347,6 +347,13 @@ export class InitService {
 
         this.configSvc.userGroups = new Set(details.group)
         this.configSvc.userRoles = new Set((details.roles || []).map((v: string) => v.toLowerCase()))
+
+        // This is for showing side menu based on loggged in user's root org
+        // since we dont have new role for such users, we'll add a role 'isInstuteOrg'
+        // so that this role check can be used to show side menu items based on this condition
+        if (completeProdata.rootOrg && completeProdata.rootOrg.isInstitute) {
+          this.configSvc.userRoles.add('isInstuteOrg')
+        }
         return details
       } catch (e) {
         this.configSvc.userProfile = null
