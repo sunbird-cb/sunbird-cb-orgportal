@@ -35,7 +35,7 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
   constructor(
     private valueSvc: ValueService,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     private stepService: StepService,
     private configSvc: ConfigurationsService,
     private snackBar: MatSnackBar,
