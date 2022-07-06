@@ -38,6 +38,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   qpParam: any
   qpPath: any
   breadcrumbs: any
+  disableCreateButton = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -130,6 +131,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: any) {
+    this.disableCreateButton = true
     const newobj = {
       personalDetails: {
         email: form.value.email,
@@ -154,6 +156,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
           if (dres) {
             this.createUserForm.reset({ fname: '', lname: '', email: '', department: this.departmentName, roles: '' })
             this.openSnackbar('User Created Successfully')
+            this.disableCreateButton = false
             if (this.qpParam === 'MDOinfo') {
               this.router.navigate(['/app/home/mdoinfo/leadership'])
             } else {
