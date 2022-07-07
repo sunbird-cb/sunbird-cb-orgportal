@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms'
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators'
 import { OrgProfileService } from '../../services/org-profile.service'
 import { Subject } from 'rxjs'
@@ -22,6 +22,7 @@ export class TrainingRogramsComponent implements OnInit {
     trainingProgramForm!: FormGroup
     selectedSubjects: any[] = []
     separatorKeysCodes: number[] = [ENTER, COMMA]
+    isTraining = false
     private unsubscribe = new Subject<void>()
     constructor(
         private orgSvc: OrgProfileService,
@@ -45,7 +46,12 @@ export class TrainingRogramsComponent implements OnInit {
                     if (formValue) {
                         formValue.selectedSubjects = this.selectedSubjects
                         this.orgSvc.updateLocalFormValue('trainingPrograms', formValue)
-                        this.orgSvc.updateFormStatus('trainingPrograms', this.trainingProgramForm.valid && this.selectedSubjects.length > 0)
+                        if (this.isTraining) {
+                            this.orgSvc.updateFormStatus('trainingPrograms', true)
+                        } else {
+                            // tslint:disable-next-line: max-line-length
+                            this.orgSvc.updateFormStatus('trainingPrograms', this.trainingProgramForm.valid && this.selectedSubjects.length > 0)
+                        }
                     }
                 }),
                 takeUntil(this.unsubscribe)
@@ -73,6 +79,29 @@ export class TrainingRogramsComponent implements OnInit {
             this.orgSvc.updateFormStatus('trainingPrograms', this.trainingProgramForm.valid)
         }
 
+        // if Roles and functions tab has "training" checked then only make this form valid else remove validation
+        let rolesAndFunctions: any
+        if (JSON.stringify(this.orgSvc.formValues.rolesAndFunctions) === '{}') {
+            rolesAndFunctions = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.rolesAndFunctions')
+        } else {
+            rolesAndFunctions = _.get(this.orgSvc.formValues, 'rolesAndFunctions')
+        }
+        if (!rolesAndFunctions.training) {
+            this.isTraining = true
+            this.removeValidators()
+            this.orgSvc.updateFormStatus('trainingPrograms', true)
+        }
+    }
+
+    public removeValidators() {
+        for (const key in this.trainingProgramForm.controls) {
+            if (key) {
+                // tslint:disable-next-line: no-non-null-assertion
+                this.trainingProgramForm!.get(key)!.clearValidators()
+                // tslint:disable-next-line: no-non-null-assertion
+                this.trainingProgramForm!.get(key)!.updateValueAndValidity()
+            }
+        }
     }
 
     addSubject(event: MatChipInputEvent) {
@@ -98,6 +127,10 @@ export class TrainingRogramsComponent implements OnInit {
         if (index >= 0) {
             this.selectedSubjects.splice(index, 1)
         }
+        if (this.trainingProgramForm.get('subjectName')) {
+            // tslint:disable-next-line: no-non-null-assertion
+            this.trainingProgramForm.get('subjectName')!.setValue(null)
+        }
     }
 
     openActivityDialog() {
@@ -112,6 +145,24 @@ export class TrainingRogramsComponent implements OnInit {
         dialogRef.afterClosed().subscribe(_result => {
 
         })
+    }
+
+    // isRequired(name: string): boolean {
+
+    //     // tslint:disable-next-line: no-non-null-assertion
+    //     return this.trainingProgramForm.get(name)!.validator(Validators.required) ?? false
+    //     // return !!this.trainingProgramForm.controls[name]!.validator(validator)!.hasOwnProperty(validator)
+    // }
+
+    hasRequiredField(name: string): boolean {
+        const abstractControl = this.trainingProgramForm.get(name)
+        if (abstractControl && abstractControl.validator) {
+            const validator = abstractControl.validator({} as AbstractControl)
+            if (validator && validator.required) {
+                return true
+            }
+        }
+        return false
     }
 
 }

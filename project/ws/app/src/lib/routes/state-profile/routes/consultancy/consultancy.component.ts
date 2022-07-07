@@ -26,6 +26,7 @@ export class ConsultancyComponent implements OnInit {
     deleteBodyRef: ElementRef | null = null
     editValue: any
     textBoxActive = false
+    isConsultancy = false
 
     constructor(
         private orgSvc: OrgProfileService,
@@ -46,15 +47,28 @@ export class ConsultancyComponent implements OnInit {
         // If projects are added then only validation is required, so by default validation is true, so that user can go to next tab
         this.orgSvc.updateFormStatus('consultancy', true)
 
+    }
+
+    ngOnInit() {
         // pre poluate form fields when data is available (edit mode)
         if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.orgProfile) {
             const consultancyData = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.consultancy')
             this.addedconsultancies = _.get(consultancyData, 'projects') || []
             this.orgSvc.updateFormStatus('consultancy', true)
         }
-    }
 
-    ngOnInit() {
+        // if Roles and functions tab has "Research" checked then check for atleast 1 prject
+        let rolesAndFunctions: any
+        if (JSON.stringify(this.orgSvc.formValues.rolesAndFunctions) === '{}') {
+            rolesAndFunctions = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.rolesAndFunctions')
+        } else {
+            rolesAndFunctions = _.get(this.orgSvc.formValues, 'rolesAndFunctions')
+        }
+        if (rolesAndFunctions.consultancy) {
+            this.isConsultancy = true
+            // this.removeValidators()
+            this.orgSvc.updateFormStatus('consultancy', (this.addedconsultancies.length > 0))
+        }
     }
 
     addProject() {
@@ -141,7 +155,12 @@ export class ConsultancyComponent implements OnInit {
         }
         this.orgSvc.updateLocalFormValue('consultancy', localData)
         // this.orgSvc.updateFormStatus('consultancy', (this.addedconsultancies.length > 0))
-        this.orgSvc.updateFormStatus('consultancy', true)
+        if (this.isConsultancy) {
+            // tslint:disable-next-line: max-line-length
+            this.orgSvc.updateFormStatus('consultancy', (this.addedconsultancies.length > 0))
+        } else {
+            this.orgSvc.updateFormStatus('consultancy', true)
+        }
     }
 
     resetConsultancyForm() {

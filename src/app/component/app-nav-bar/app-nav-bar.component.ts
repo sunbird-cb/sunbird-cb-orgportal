@@ -32,6 +32,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
   isTourGuideAvailable = false
   isTourGuideClosed = false
   showAppNavBar = false
+  isSetUpPage = false
   popupTour: any
   constructor(
     private domSanitizer: DomSanitizer,
@@ -47,6 +48,7 @@ export class AppNavBarComponent implements OnInit, OnChanges {
       if (event instanceof NavigationStart) {
         this.cancelTour()
       } else if (event instanceof NavigationEnd) {
+        this.routeSubs(event)
         this.cancelTour()
       }
     })
@@ -91,6 +93,16 @@ export class AppNavBarComponent implements OnInit, OnChanges {
         this.popupTour = this.tourService.createPopupTour()
       }
     })
+  }
+
+  routeSubs(e: NavigationEnd) {
+    // this.router.events.subscribe((e: Event) => {
+    //   if (e instanceof NavigationEnd) {
+    if (e.url.includes('/app/setup')) {
+      this.isSetUpPage = true
+    } else {
+      this.isSetUpPage = false
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {

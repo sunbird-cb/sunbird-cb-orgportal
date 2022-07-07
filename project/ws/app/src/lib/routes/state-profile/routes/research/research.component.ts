@@ -34,6 +34,7 @@ export class ResearchComponent implements OnInit {
     editPaperValue: any
     textBoxActive = false
     textBoxActive1 = false
+    isResearch = false
 
     constructor(
         private orgSvc: OrgProfileService,
@@ -58,6 +59,9 @@ export class ResearchComponent implements OnInit {
         // setting this to true so that form validation is not required based on number added projects or papers
         this.orgSvc.updateFormStatus('research', true)
 
+    }
+
+    ngOnInit() {
         // pre poluate form fields when data is available (edit mode)
         if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.orgProfile) {
             const researchData = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.research')
@@ -67,9 +71,19 @@ export class ResearchComponent implements OnInit {
             // this.orgSvc.updateFormStatus('research', (this.addedPapers.length > 0 && this.addedPrograms.length > 0))
             this.orgSvc.updateFormStatus('research', true)
         }
-    }
 
-    ngOnInit() {
+        // if Roles and functions tab has "Research" checked then check for atleast 1 prject
+        let rolesAndFunctions: any
+        if (JSON.stringify(this.orgSvc.formValues.rolesAndFunctions) === '{}') {
+            rolesAndFunctions = _.get(this.configSvc.unMappedUser.orgProfile, 'profileDetails.rolesAndFunctions')
+        } else {
+            rolesAndFunctions = _.get(this.orgSvc.formValues, 'rolesAndFunctions')
+        }
+        if (rolesAndFunctions.research) {
+            this.isResearch = true
+            // this.removeValidators()
+            this.orgSvc.updateFormStatus('research', (this.addedPrograms.length > 0))
+        }
     }
 
     addProgram() {
@@ -234,7 +248,13 @@ export class ResearchComponent implements OnInit {
             researchPapers: this.addedPapers,
         }
         this.orgSvc.updateLocalFormValue('research', localData)
-        this.orgSvc.updateFormStatus('research', true)
+        if (this.isResearch) {
+            // tslint:disable-next-line: max-line-length
+            this.orgSvc.updateFormStatus('research', (this.addedPrograms.length > 0))
+        } else {
+            this.orgSvc.updateFormStatus('research', true)
+        }
+
         // this.orgSvc.updateFormStatus('research', (this.addedPapers.length > 0 && this.addedPrograms.length > 0))
     }
 
