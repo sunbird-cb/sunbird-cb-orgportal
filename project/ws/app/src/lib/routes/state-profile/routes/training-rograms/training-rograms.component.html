@@ -13,9 +13,9 @@
             <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
                 <div class="flex flex-col">
                     <div class="flex flex-col">
-                        <label class="margin-remove-bottom form-label flex mat-subheading-2 required"
+                        <label class="margin-remove-bottom form-label flex mat-subheading-2 "
                             i18n="Subjects on which the institute imparts training Label" i18n-aria-label
-                            aria-label="Subjects label">
+                            aria-label="Subjects label" [ngClass]="{'required': hasRequiredField('subjectName')}">
                             Add the subjects on which the institute imparts training
                         </label>
                     </div>
@@ -51,8 +51,8 @@
             </div>
 
             <div class="input-wrapper flex flex-col flex-1 margin-bottom-xl">
-                <label class=" form-label flex mat-subheading-2 required margin-remove-bottom" i18n="" i18n-aria-label
-                    aria-label="">
+                <label class=" form-label flex mat-subheading-2  margin-remove-bottom" i18n="" i18n-aria-label
+                    aria-label="" [ngClass]="{'required': hasRequiredField('conductDigitalPrograms')}">
                     Does the institute conduct Digital Programs?
                 </label>
                 <div class="flex button_box flex-row margin-top-m">
@@ -75,7 +75,7 @@
 
             <div class="input-wrapper flex flex-col flex-1 margin-bottom-xl ">
                 <label class="margin-remove-bottom form-label flex mat-subheading-2 required" i18n="" i18n-aria-label
-                    aria-label="">
+                    aria-label="" [ngClass]="{'required': hasRequiredField('prepareDigitalContent')}">
                     Does the institute prepare digital content?
                 </label>
                 <div class="flex button_box flex-row margin-top-m">
@@ -101,9 +101,10 @@
                 <div class="flex flex-col">
                     <div class="flex flex-col">
                         <div class="flex flex-1">
-                            <label class=" margin-remove-bottom form-label flex mat-subheading-2 required"
+                            <label class=" margin-remove-bottom form-label flex mat-subheading-2"
                                 i18n="Number of videos label|Label which explains the user to Number of videos"
-                                i18n-aria-label aria-label="Number of videos label">
+                                i18n-aria-label aria-label="Number of videos label"
+                                [ngClass]="{'required': hasRequiredField('videoCount')}">
                                 Number of videos
                             </label>
                         </div>
@@ -121,9 +122,10 @@
 
                     <div class="flex flex-col">
                         <div class="flex flex-1">
-                            <label class=" margin-remove-bottom form-label flex mat-subheading-2 required"
+                            <label class=" margin-remove-bottom form-label flex mat-subheading-2"
                                 i18n="Number of slide decks label|Label which explains the user to enter Number of slide decks"
-                                i18n-aria-label aria-label="Number of slide decks label">
+                                i18n-aria-label aria-label="Number of slide decks label"
+                                [ngClass]="{'required': hasRequiredField('pptCount')}">
                                 Number of slide decks (like Powerpoints or ppts)
                             </label>
                         </div>
@@ -141,9 +143,10 @@
 
                     <div class="flex flex-col">
                         <div class="flex flex-1">
-                            <label class=" margin-remove-bottom form-label flex mat-subheading-2 required required"
+                            <label class=" margin-remove-bottom form-label flex mat-subheading-2"
                                 i18n="Number of online reading materials label|Label which explains the user to enter Number of online reading materials"
-                                i18n-aria-label aria-label="Number of online reading materials label">
+                                i18n-aria-label aria-label="Number of online reading materials label"
+                                [ngClass]="{'required': hasRequiredField('otherMaterialCount')}">
                                 Number of online reading materials (like case studies, pdfs etc.)
                             </label>
                         </div>
@@ -164,7 +167,8 @@
                         <div class="flex flex-1">
                             <label class=" margin-remove-bottom form-label flex mat-subheading-2"
                                 i18n="Other information label|Label which explains the user to enter Other information"
-                                i18n-aria-label aria-label="Other information label">
+                                i18n-aria-label aria-label="Other information label"
+                                [ngClass]="{'required': hasRequiredField('otherInfo')}">
                                 Others (Add information on any other types of digital content that the institute
                                 prepares)
                             </label>
