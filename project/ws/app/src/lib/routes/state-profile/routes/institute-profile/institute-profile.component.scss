@@ -1,3 +1,6 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
 @import 'profile-form';
 
 .custom-button {
@@ -68,7 +71,7 @@
 
 
 
-.btn-table tr td.col-3  {
+.btn-table .col-3  {
     width: 285px;
 }
 .col-2  {
@@ -107,4 +110,34 @@
 .mat-input-element {
     font-size: 14px!important;
     margin-top: 8px;
+}
+
+
+
+@include breakpoint-xs {
+    .btn-table-row {
+        flex-direction: column;
+    }
+    .btn-table .col-3  {
+    width: 100%;
+}
+    .col-2  {
+        width: 100%;
+    }
+    .center_btn {
+        margin-left: 0!important;
+        margin-top: 24px!important;
+    }
+    .form_inner_box {
+        margin-right: 0;
+    }
+}
+
+@include breakpoint-s {
+    .btn-table .col-3  {
+    width:32%;
+}
+    .col-2  {
+        width:49%;
+    }
 }

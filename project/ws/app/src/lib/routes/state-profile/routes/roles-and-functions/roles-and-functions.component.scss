@@ -1,3 +1,6 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
 @import 'profile-form';
 
 .role-card {
@@ -64,4 +67,41 @@
 
 .checkbox_btn .mat-checkbox-layout {
   font-size: 14px!important;
+}
+
+
+.inline_box  {
+    justify-content: space-between;
+}
+.inline_box div  {
+    width: 49%;
+     .checkbox_btn {
+        width: 100%;
+    }
+}
+
+
+@include breakpoint-xs {
+.inline_box {
+    flex-direction: column!important;
+}
+.inline_box div  {
+    width: 100%;
+     .checkbox_btn {
+        width: 100%;
+    }
+}
+.right_inline_box {
+    margin-left: 0!important;
+    margin-top: 24px!important;
+}
+.role-card {
+    margin-right: 0!important;
+}
+}
+
+@include breakpoint-s{
+.role-card {
+    margin-right: 0!important;
+}
 }

@@ -1,3 +1,6 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
 @import 'profile-form';
 
 .mat-card {
@@ -102,6 +105,32 @@
 .status_txt {
     color: green!important;
     font-weight: bold;
+}
+
+
+@include breakpoint-xs {
+    .radio_btn_main, .radio_left, .button_box {
+        flex-direction: column;
+    }
+
+    .complete_btn {
+        margin-top: 16px;
+        margin-left: 0!important;
+    }
+    .radio_right {
+        margin-left: 0!important;
+        margin-top: 16px;
+    }
+}
+
+@include breakpoint-s {
+    .radio_btn_main{
+        flex-direction: column;
+    }
+    .radio_right {
+        margin-left: 0!important;
+        margin-top: 16px;
+    }
 }
 
 

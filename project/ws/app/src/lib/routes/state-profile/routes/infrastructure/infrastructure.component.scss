@@ -1,3 +1,6 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
 @import 'profile-form';
 
 .role-card {
@@ -75,3 +78,23 @@ textarea.mat-input-element {
 //   ::ng-deep .mat-form-field-wrapper{
 //       padding-bottom: 0!important;
 //     }
+
+
+@include breakpoint-xs {
+.infra_box {
+    width: 100%;
+    margin-bottom: 4px;
+    flex-direction: column!important;
+}
+.infra_box p {
+    width: 100%;
+    margin-top: 0px;
+    display: block;
+}
+.mat-form-field {
+    width: 100%;
+}
+.role-card {
+    margin-right: 0!important;
+}
+}

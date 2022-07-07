@@ -2,8 +2,11 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
+
+$page-center: 1230px;
+
 .container-balanced {
-  @extend %page-center;
+  max-width: $page-center;
   height: auto;
    margin-left: auto !important;
   margin-right: auto !important;
@@ -22,7 +25,7 @@
 }
 
 .container-balanced-banner {
-  @extend %page-center;
+  max-width: $page-center;
   height: auto;
    margin-left: auto !important;
   margin-right: auto !important;
@@ -64,10 +67,10 @@ a.next_link {
   height: 40px;
   box-sizing: border-box;
   cursor: pointer;
-  // @include breakpoint-xs {
-  //   margin-top: 0.5rem;
-  //   margin-bottom: 0.5rem;
-  // }
+
+  @include breakpoint-xs {
+    margin-top: 0.5rem;
+  }
 }
 
 .footer_box {
