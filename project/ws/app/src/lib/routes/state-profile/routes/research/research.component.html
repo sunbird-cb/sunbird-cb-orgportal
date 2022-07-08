@@ -24,7 +24,7 @@
 
                     <mat-form-field appearance="outline" class="margin-top-xs flex flex-1 full-width">
                         <input matInput autocomplete="off" #projectName formControlName="projectName" i18n-aria-label
-                            aria-label="Project name input" placeholder="Enter project name" class="flex flex-1"
+                            aria-label="Project name input" placeholder="Name of the project" class="flex flex-1"
                             [ngClass]="{ 'mat-focused': textBoxActive}" />
                         <mat-error [hidden]="false" i18n="Project name Error|Explains Project name is required"
                             *ngIf="researchProgramForm?.controls['projectName'].errors?.required" i18n-aria-label
@@ -34,7 +34,7 @@
                     </mat-form-field>
                 </div>
 
-                <div class="input-wrapper margin-top-s flex flex-row flex-1">
+                <div class="input-wrapper margin-top-s flex flex-row flex-1 radio_btn_main">
                     <div class="flex flex-2 flex-col">
                         <div class="flex flex-1">
                             <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
@@ -49,7 +49,7 @@
                                 <mat-radio-button class="mat-radio-button radio-unselect" [value]="'Ongoing'">
                                     Ongoing
                                 </mat-radio-button>
-                                <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m"
+                                <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m complete_btn"
                                     [value]="'Completed'">
                                     Completed
                                 </mat-radio-button>
@@ -62,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-1 flex-col margin-left-l">
+                    <div class="flex flex-1 flex-col margin-left-l radio_right">
                         <div class="flex">
                             <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                                 i18n="Type of sponsorship label|Label which explains the user to enter Type of sponsorship count"
@@ -70,7 +70,7 @@
                                 Type of sponsorship
                             </label>
                         </div>
-                        <div class="flex flex-row margin-top-m">
+                        <div class="flex flex-row margin-top-m radio_left">
                             <div class="flex flex-1">
                                 <mat-checkbox #industrySponsored formControlName="industrySponsored" i18n-aria-label
                                     aria-label=" Industry sponsored input" class="checkbox_btn">
@@ -78,13 +78,13 @@
                                 </mat-checkbox>
                             </div>
 
-                            <div class="flex flex-1 margin-left-m">
+                            <div class="flex flex-1 margin-left-m complete_btn">
                                 <mat-checkbox #govtSponsored formControlName="govtSponsored" i18n-aria-label
                                     aria-label="Government sponsored input" class="checkbox_btn">
                                     Government sponsored
                                 </mat-checkbox>
                             </div>
-                            <div class="flex flex-1 margin-left-m">
+                            <div class="flex flex-1 margin-left-m complete_btn">
                                 <mat-checkbox #otherSponsored formControlName="otherSponsored" i18n-aria-label
                                     aria-label="Others input" class="checkbox_btn">
                                     Others
@@ -110,7 +110,8 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <button type="submit" class="add_link margin-top-m" (click)="addProgram()">Add</button>
+                <button type="submit" class="add_link margin-top-m flex items-center justify-center"
+                    (click)="addProgram()">Add</button>
             </form>
 
             <ng-container *ngFor="let program of addedPrograms">
@@ -203,7 +204,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <button class="add_link margin-top-m" (click)="addPaper()">Add</button>
+                <button class="add_link margin-top-m flex items-center justify-center" (click)="addPaper()">Add</button>
             </form>
 
             <ng-container *ngFor="let paper of addedPapers">

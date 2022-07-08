@@ -31,6 +31,8 @@ export class InstituteProfileComponent implements OnInit {
     pincodePattern = '(^[0-9]{6}$)'
     yearPattern = '(^[0-9]{4}$)'
     namePatern = `^[a-zA-Z\\s\\']{1,32}$`
+    websitePattern = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?'
+    emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
     countryCodeList = []
     stateNameList = []
     editOrgValue: any
@@ -58,11 +60,11 @@ export class InstituteProfileComponent implements OnInit {
             pincode: new FormControl('', [Validators.required, Validators.pattern(this.pincodePattern)]),
             establishmentYear: new FormControl('', [Validators.required, Validators.pattern(this.yearPattern)]),
             stdCode: new FormControl('', [Validators.required]),
-            telephoneNo: new FormControl('', [Validators.required]),
+            telephoneNo: new FormControl('', [Validators.required, Validators.maxLength(10)]),
             countryCode: new FormControl('', [Validators.required]),
-            mobile: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern)]),
-            email: new FormControl('', [Validators.required, Validators.email]),
-            website: new FormControl('', [Validators.required]),
+            mobile: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(this.phoneNumberPattern)]),
+            email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]),
+            website: new FormControl('', [Validators.required, Validators.pattern(this.websitePattern)]),
         })
 
         this.attachedOrgForm = new FormGroup({

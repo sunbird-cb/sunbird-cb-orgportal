@@ -33,7 +33,7 @@
                     </mat-form-field>
                 </div>
 
-                <div class="input-wrapper margin-top-s flex flex-row flex-1">
+                <div class="input-wrapper margin-top-s flex flex-row flex-1 radio_btn_main">
                     <div class="flex flex-2 flex-col">
                         <div class="flex flex-1">
                             <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
@@ -48,7 +48,7 @@
                                 <mat-radio-button class="mat-radio-button radio-unselect" [value]="'Ongoing'">
                                     Ongoing
                                 </mat-radio-button>
-                                <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m"
+                                <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m complete_btn"
                                     [value]="'Completed'">
                                     Completed
                                 </mat-radio-button>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-2 flex-col margin-left-l">
+                    <div class="flex flex-2 flex-col margin-left-l radio_right">
                         <div class="flex">
                             <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                                 i18n="Type of sponsorship label|Label which explains the user to enter Type of sponsorship count"
@@ -69,7 +69,7 @@
                                 Type of sponsorship
                             </label>
                         </div>
-                        <div class="flex flex-row margin-top-m justify-start">
+                        <div class="flex flex-row margin-top-m justify-start radio_left">
                             <div class="flex flex-1">
                                 <mat-checkbox #industrySponsored formControlName="industrySponsored" i18n-aria-label
                                     aria-label=" Industry sponsored input" class="checkbox_btn">
@@ -77,14 +77,14 @@
                                 </mat-checkbox>
                             </div>
 
-                            <div class="flex flex-1 margin-left-m">
+                            <div class="flex flex-1 margin-left-m complete_btn">
                                 <mat-checkbox #govtSponsored formControlName="govtSponsored" i18n-aria-label
                                     aria-label="Government sponsored input" class="checkbox_btn">
                                     Government sponsored
                                 </mat-checkbox>
                             </div>
 
-                            <div class="flex flex-1 margin-left-m">
+                            <div class="flex flex-1 margin-left-m complete_btn">
                                 <mat-checkbox #otherSponsored formControlName="otherSponsored" i18n-aria-label
                                     aria-label="Others input" class="checkbox_btn">
                                     Others
@@ -109,7 +109,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <a class="add_link margin-top-m" (click)="addProject()">Add</a>
+                <a class="add_link margin-top-m flex items-center justify-center" (click)="addProject()">Add</a>
 
                 <ng-container *ngFor="let project of addedconsultancies">
 

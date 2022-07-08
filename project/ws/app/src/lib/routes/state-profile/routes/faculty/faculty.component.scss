@@ -1,3 +1,6 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
 @import 'profile-form';
 
 .mat-card {
@@ -62,4 +65,14 @@
 }
 
 
+@include breakpoint-xs {
+    .role-card {
+        margin-right: 0!important;
+    }
+}
+@include breakpoint-s {
+    .role-card {
+        margin-right: 0!important;
+    }
+}
 

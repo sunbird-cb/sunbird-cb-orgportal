@@ -40,7 +40,7 @@
 
   <ng-container *ngIf="previous && previous !== 'first'">
 
-    <a [routerLink]="previous.routerLink" class="skip_link mat-body-2 margin-remove-bottom">Previous: {{previous.step}}.
+    <a [routerLink]="previous.routerLink" class="skip_link mat-body-2 margin-remove-bottom">Back to
       {{previous.name}}</a>
 
   </ng-container>
@@ -58,9 +58,11 @@
 
   <ng-container *ngIf="next && next !== 'done'">
 
-    <a [routerLink]="next.routerLink" (click)="updateOrgProfile()"
+    <!-- <a [routerLink]="next.routerLink" (click)="updateOrgProfile()"
       class="next_link mat-body-2 margin-remove-bottom">Next: {{next.step}}.
-      {{next.name}}</a>
+      {{next.name}}</a> Save and continue -->
+    <a [routerLink]="next.routerLink" (click)="updateOrgProfile()"
+      class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
 
   </ng-container>
   <ng-container *ngIf="next && next === 'done'">

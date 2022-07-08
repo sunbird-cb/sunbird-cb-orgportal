@@ -1,6 +1,6 @@
 <div class="flex flex-1 flex-col margin-top-xl">
     <form [formGroup]="instituteProfileForm">
-        <div class="flex flex-wrap flex-col margin-right-m">
+        <div class="flex flex-wrap flex-col margin-right-m form_inner_box">
             <mat-card class="mat-card role-card flex flex-col mat-card-mdo institue-profile-box">
                 <div class="flex flex-row justify-between">
                     <h2 class="margin-remove-bottom">Institute details</h2>
@@ -58,9 +58,9 @@
                 </div>
 
                 <div class="input-wrapper flex flex-col flex-1 margin-top-xs">
-                    <table class="flex btn-table justify-between">
-                        <tr class="flex w-full btn-table-row justify-between">
-                            <td class="col-3">
+                    <div class="flex btn-table justify-between">
+                        <div class="flex w-full btn-table-row justify-between">
+                            <div class="col-3">
                                 <div class="flex flex-1">
                                     <label class=" margin-remove-bottom form-label flex mat-subheading-2"
                                         i18n="Building number label|Label which explains the user to enter Building number"
@@ -73,8 +73,8 @@
                                     <input matInput placeholder="Enter Building number" #buildingNo
                                         formControlName="buildingNo" i18n-aria-label aria-label="Building No input" />
                                 </mat-form-field>
-                            </td>
-                            <td class="col-3">
+                            </div>
+                            <div class="col-3">
                                 <div class="flex flex-1">
                                     <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                                         i18n="Full address label|Label which explains the user to enter Full address"
@@ -107,8 +107,8 @@
                                     </mat-error>
                                 </mat-form-field>
 
-                            </td>
-                            <td class="col-3">
+                            </div>
+                            <div class="col-3">
                                 <div class="flex flex-1">
                                     <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                                         i18n="Full address label|Label which explains the user to enter Full address"
@@ -132,15 +132,15 @@
                                         Please enter a valid 6 digit pincode
                                     </mat-error>
                                 </mat-form-field>
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="input-wrapper flex flex-col flex-1 margin-top-xs">
-                    <table class="flex btn-table justify-between">
-                        <tr class="flex w-full btn-table-row justify-between">
-                            <td class="col-3">
+                    <div class="flex btn-table justify-between">
+                        <div class="flex w-full btn-table-row justify-between">
+                            <div class="col-3">
                                 <div class="flex flex-1">
                                     <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                                         i18n="Year of establishment label|Label which explains the user to enter Year of establishment"
@@ -153,7 +153,8 @@
                                     class="margin-top-s form_field flex flex-1 full-width">
                                     <input matInput autocomplete="off" id="fullAddress" #establishmentYear
                                         formControlName="establishmentYear" placeholder="Add year" class="flex flex-1"
-                                        i18n-aria-label aria-label="Year of establishment input" />
+                                        i18n-aria-label aria-label="Year of establishment input" type="number"
+                                        minlength="4" maxlength="4" />
                                     <mat-error [hidden]="false"
                                         i18n="Year of establishment Error|Explains address is required" i18n-aria-label
                                         aria-label="Year of establishment Error|Explains address is required "
@@ -165,9 +166,9 @@
                                         Please enter a valid 4 digit year
                                     </mat-error>
                                 </mat-form-field>
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </mat-card>
         </div>
@@ -180,9 +181,9 @@
                 </div>
 
                 <div class="input-wrapper flex flex-col flex-1 margin-top-l">
-                    <table class="flex w-full btn-table justify-between flex-col">
-                        <tr class="flex w-full btn-table-row justify-between">
-                            <td class="col-2">
+                    <div class="flex w-full btn-table justify-between flex-col">
+                        <div class="flex w-full btn-table-row justify-between">
+                            <div class="col-2">
                                 <div class="flex flex-1">
                                     <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                                         i18n="Telephone number label|Label which explains the user to enter Telephone number"
@@ -202,9 +203,9 @@
                                     <mat-form-field class="margin-top-s form_field flex flex-1 full-width"
                                         appearance="outline">
 
-                                        <input matInput placeholder="Type here" #telephoneNo
+                                        <input matInput placeholder="Enter Telephone number" #telephoneNo
                                             formControlName="telephoneNo" i18n-aria-label
-                                            aria-label="Telephone No input" />
+                                            aria-label="Telephone No input" type="number" maxlength="10" />
 
                                         <mat-error [hidden]="false"
                                             i18n="Telephone Number Error|Explains name is required"
@@ -215,14 +216,14 @@
 
                                     </mat-form-field>
                                 </div>
-                            </td>
+                            </div>
 
-                            <td class="col-2">
+                            <div class="col-2">
                                 <div class="flex flex-1">
                                     <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                                         i18n="Mobile number label|Label which explains the user to enter Mobile number"
                                         i18n-aria-label aria-label="Mobile number label">
-                                        Add Mobile number.
+                                        Mobile number.
                                     </label>
                                 </div>
                                 <div class="flex flex-align combined-field">
@@ -236,8 +237,9 @@
                                     <mat-form-field class="margin-top-s form_field flex flex-1 full-width"
                                         appearance="outline">
 
-                                        <input matInput placeholder="Type here" #MobileNo formControlName="mobile"
-                                            i18n-aria-label aria-label="Email input" />
+                                        <input matInput placeholder="Enter Mobile number" #MobileNo
+                                            formControlName="mobile" i18n-aria-label aria-label="Mobile Number input"
+                                            type="number" minlength="10" maxlength="10" />
 
                                         <mat-error [hidden]="false" i18n="Mobile Number Error|Explains name is required"
                                             *ngIf="instituteProfileForm?.controls['mobile'].errors?.required"
@@ -251,11 +253,11 @@
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
 
-                        <tr class="flex w-full btn-table-row justify-between">
-                            <td class="col-2">
+                        <div class="flex w-full btn-table-row justify-between">
+                            <div class="col-2">
                                 <div class="flex flex-1">
                                     <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
                                         i18n="Email label|Label which explains the user to enter Email" i18n-aria-label
@@ -266,8 +268,8 @@
                                 <mat-form-field class="margin-top-s form_field flex flex-1 full-width"
                                     appearance="outline">
 
-                                    <input matInput #emailAddress placeholder="Enter mail ID" formControlName="email"
-                                        i18n-aria-label aria-label="Email input" />
+                                    <input matInput #emailAddress placeholder="Enter Email address"
+                                        formControlName="email" i18n-aria-label aria-label="Email input" type="email" />
                                     <mat-error [hidden]="false" i18n="Email address Error|Explains name is required"
                                         *ngIf="instituteProfileForm?.controls['email'].errors?.required" i18n-aria-label
                                         aria-label="Email address is mandatory">
@@ -279,9 +281,9 @@
                                         Email id is not valid
                                     </mat-error>
                                 </mat-form-field>
-                            </td>
+                            </div>
 
-                            <td class="col-2">
+                            <div class="col-2">
                                 <div class="flex flex-1">
                                     <label
                                         class=" margin-remove-bottom form-label required flex mat-subheading-2 w-full"
@@ -293,19 +295,25 @@
 
                                 <mat-form-field appearance="outline"
                                     class="margin-top-s form_field flex flex-1 full-width">
-                                    <input matInput autocomplete="off" #websiteAddress placeholder="Type here"
-                                        class="flex flex-1" formControlName="website" i18n-aria-label
-                                        aria-label="Website input" />
+                                    <input matInput autocomplete="off" #websiteAddress
+                                        placeholder="Enter Website address" class="flex flex-1"
+                                        formControlName="website" i18n-aria-label aria-label="Website input" />
                                     <mat-error [hidden]="false"
                                         i18n="Website address Error|Explains website address is required"
                                         *ngIf="instituteProfileForm?.controls['website'].errors?.required"
                                         i18n-aria-label aria-label="Website address is mandatory">
                                         Website address is mandatory
                                     </mat-error>
+                                    <mat-error [hidden]="false"
+                                        *ngIf="instituteProfileForm?.controls['website'].errors?.pattern"
+                                        i18n-aria-label
+                                        aria-label="website fields cannot contain numbers and special characters except '">
+                                        website address is not valid
+                                    </mat-error>
                                 </mat-form-field>
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- <div class="input-wrapper flex flex-col col-2">
@@ -358,9 +366,9 @@
                 </div>
 
                 <div class="input-wrapper flex flex-col flex-1">
-                    <table class="flex">
-                        <tr class="flex justify-between items-center">
-                            <td>
+                    <div class="flex">
+                        <div class="flex justify-between items-center">
+                            <div>
                                 <div>
                                     <mat-radio-group #attachedTrainingInstitute
                                         formControlName="attachedTrainingInstitute" i18n-aria-label
@@ -370,16 +378,16 @@
                                             [ngClass]="attachedTrainingInstitute? 'radio-select': 'radio-unselect'">
                                             Attached training Institute
                                         </mat-radio-button>
-                                        <mat-radio-button class="mat-radio-button radio-select margin-left-s"
+                                        <mat-radio-button class="mat-radio-button radio-select margin-left-s center_btn"
                                             [value]="'Attached center'"
                                             [ngClass]="attachedTrainingInstitute? 'radio-select': 'radio-unselect'">
                                             Attached center
                                         </mat-radio-button>
                                     </mat-radio-group>
                                 </div>
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="input-wrapper flex flex-col flex-1 margin-top-m">
@@ -392,7 +400,7 @@
                         <mat-hint align="end">{{ trainingInstituteDetail.value.length }} /200 characters</mat-hint>
                     </mat-form-field>
                 </div>
-                <a class="add_link" (click)="addOrg()">Add</a>
+                <a class="add_link flex items-center justify-center" (click)="addOrg()">Add</a>
 
                 <div class="flex flex-1 flex-column margin-top-l">
                     <ng-container *ngFor="let org of addedOrgs">
