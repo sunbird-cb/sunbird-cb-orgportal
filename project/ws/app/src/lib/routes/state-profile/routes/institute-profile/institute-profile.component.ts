@@ -62,6 +62,7 @@ export class InstituteProfileComponent implements OnInit {
             stdCode: new FormControl('', [Validators.required]),
             telephoneNo: new FormControl('', [Validators.required, Validators.maxLength(10)]),
             countryCode: new FormControl('', [Validators.required]),
+            // tslint:disable-next-line: max-line-length
             mobile: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(this.phoneNumberPattern)]),
             email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]),
             website: new FormControl('', [Validators.required, Validators.pattern(this.websitePattern)]),
