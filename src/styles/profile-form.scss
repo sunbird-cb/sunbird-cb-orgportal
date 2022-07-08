@@ -19,6 +19,11 @@
       padding: 10px 0;
     }
 
+  .mat-radio-button {
+    font-size: 14px;
+  }
+
+
     .radio-toolbar label {
       display: inline-block;
       padding: 7px 21px;
@@ -67,7 +72,7 @@
     }
 
   input.mat-input-element {
-    color: #5f5f5f!important;
+    color: rgba(0,0,0,.87)!important;
     margin-top: 0.5rem!important;
     font-size: 14px;
       font-weight: 400;
@@ -79,7 +84,7 @@
   //     font-family: Lato;
   // }
   .mat-select {
-    color: #5f5f5f!important;
+    color: rgba(0,0,0,.87)!important;
     margin-top: 0.25rem!important
   }
   ::ng-deep .mat-select-value {
@@ -96,7 +101,6 @@
     }
 
     .button {
-      font-family: 'Poppins', sans-serif;
       color: #F9F9F9;
       font-size: 14px;
       line-height: 19px;
@@ -245,4 +249,11 @@
 
 .theme-igot.day-mode .mat-drawer-container {
   background-color: #f0f3f4!important;
+}
+
+::ng-deep .mat-radio-label-content {
+  padding-left: 12px!important;
+}
+::ng-deep .mat-checkbox-inner-container {
+  margin-right: 12px!important;
 }

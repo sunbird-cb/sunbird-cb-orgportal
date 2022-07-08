@@ -39,10 +39,11 @@
 .mat-radio-button {
     padding: 10px 10px;
     border-radius: 5px;
-    border: 2px solid rgba(0, 0, 0, 0.16);
+    border: 1px solid rgba(0, 0, 0, 0.16);
     background: #fff;
     width: 160px;
     font-size: 14px!important;
+    text-align: center!important;
 }
 .mat-radio-button.mat-radio-checked {
     border: 2px solid #0174b6;
@@ -52,9 +53,9 @@
     padding: 12px 10px;
     border-radius: 5px;
     width: auto;
-    text-align: left;
+    text-align: center!important;
     box-sizing: border-box;
-    border: 2px solid rgba(0, 0, 0, 0.16);
+    border: 1px solid rgba(0, 0, 0, 0.16);
     max-width: 225px;
     width: auto;
     font-size: 14px!important;

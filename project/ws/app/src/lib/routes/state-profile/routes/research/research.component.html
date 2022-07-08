@@ -24,7 +24,7 @@
 
                     <mat-form-field appearance="outline" class="margin-top-xs flex flex-1 full-width">
                         <input matInput autocomplete="off" #projectName formControlName="projectName" i18n-aria-label
-                            aria-label="Project name input" placeholder="Enter project name" class="flex flex-1"
+                            aria-label="Project name input" placeholder="Name of the project" class="flex flex-1"
                             [ngClass]="{ 'mat-focused': textBoxActive}" />
                         <mat-error [hidden]="false" i18n="Project name Error|Explains Project name is required"
                             *ngIf="researchProgramForm?.controls['projectName'].errors?.required" i18n-aria-label
@@ -110,7 +110,8 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <button type="submit" class="add_link margin-top-m" (click)="addProgram()">Add</button>
+                <button type="submit" class="add_link margin-top-m flex items-center justify-center"
+                    (click)="addProgram()">Add</button>
             </form>
 
             <ng-container *ngFor="let program of addedPrograms">
@@ -203,7 +204,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <button class="add_link margin-top-m" (click)="addPaper()">Add</button>
+                <button class="add_link margin-top-m flex items-center justify-center" (click)="addPaper()">Add</button>
             </form>
 
             <ng-container *ngFor="let paper of addedPapers">
