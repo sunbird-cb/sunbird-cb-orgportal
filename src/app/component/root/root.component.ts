@@ -67,7 +67,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   isSetupPage = false
   currentRouteData: any = []
   constructor(
-    private router: Router,
+    public router: Router,
     private route: ActivatedRoute,
     // public authSvc: AuthKeycloakService,
     private appRef: ApplicationRef,
