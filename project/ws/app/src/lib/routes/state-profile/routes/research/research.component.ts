@@ -44,7 +44,7 @@ export class ResearchComponent implements OnInit {
         private dialog: MatDialog,
     ) {
         this.researchProgramForm = new FormGroup({
-            projectName: new FormControl('', []),
+            projectName: new FormControl('', [Validators.required]),
             programeStatus: new FormControl('Ongoing', [Validators.required]),
             industrySponsored: new FormControl(true, [Validators.required]),
             govtSponsored: new FormControl(false, [Validators.required]),
@@ -79,7 +79,7 @@ export class ResearchComponent implements OnInit {
         } else {
             rolesAndFunctions = _.get(this.orgSvc.formValues, 'rolesAndFunctions')
         }
-        if (rolesAndFunctions.research) {
+        if (rolesAndFunctions && rolesAndFunctions.research) {
             this.isResearch = true
             // this.removeValidators()
             this.orgSvc.updateFormStatus('research', (this.addedPrograms.length > 0))

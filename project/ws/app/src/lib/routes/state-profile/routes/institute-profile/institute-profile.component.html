@@ -200,7 +200,8 @@
                                         </mat-select>
 
                                     </mat-form-field>
-                                    <mat-form-field class="margin-top-s form_field flex flex-1 full-width"
+                                    <mat-form-field
+                                        class="margin-top-s form_field flex flex-1 full-width margin-left-xs"
                                         appearance="outline">
 
                                         <input matInput placeholder="Enter Telephone number" #telephoneNo
@@ -212,6 +213,11 @@
                                             *ngIf="instituteProfileForm?.controls['telephoneNo'].errors?.required"
                                             i18n-aria-label aria-label="Telephone Number is mandatory">
                                             Telephone Number is mandatory
+                                        </mat-error>
+                                        <mat-error [hidden]="false"
+                                            *ngIf="instituteProfileForm?.controls['telephoneNo'].errors?.pattern"
+                                            i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
+                                            Please enter a valid phone number
                                         </mat-error>
 
                                     </mat-form-field>
@@ -234,12 +240,13 @@
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
-                                    <mat-form-field class="margin-top-s form_field flex flex-1 full-width"
+                                    <mat-form-field
+                                        class="margin-top-s form_field flex flex-1 full-width margin-left-xs"
                                         appearance="outline">
 
                                         <input matInput placeholder="Enter Mobile number" #MobileNo
                                             formControlName="mobile" i18n-aria-label aria-label="Mobile Number input"
-                                            type="number" minlength="10" maxlength="10" />
+                                            type="number" />
 
                                         <mat-error [hidden]="false" i18n="Mobile Number Error|Explains name is required"
                                             *ngIf="instituteProfileForm?.controls['mobile'].errors?.required"
