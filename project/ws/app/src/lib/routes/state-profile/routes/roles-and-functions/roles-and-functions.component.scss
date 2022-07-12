@@ -1,0 +1,109 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+@import 'profile-form';
+
+.role-card {
+    width: 100%;
+    position: relative;
+}
+.mat-card {
+    box-sizing: border-box;
+}
+.form_field {
+    width: 225px;
+}
+.form_field .mat-form-field-wrapper {
+    width: 100%!important;
+}
+::ng-deep.mat-form-field-wrapper {
+    width: 100%!important;
+}
+.mat-card.mat-card-mdo{
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)!important;
+}
+
+.w-50 {
+    width: 50%;
+}
+.other_form_field {
+    width: 100%;
+}
+.add_link {
+    border: 1px solid #0074b6;
+    background-color: #fff;
+    color: #0074b6;
+    border-radius: 4px 4px;
+    text-align: center;
+    padding: 8px 12px;
+    height: 40px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.mat-radio-button {
+    padding: 10px 10px;
+    border-radius: 5px;
+    width: 435px;
+    text-align: center;
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    font-size: 14px!important;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    background: #fff;
+}
+
+.checkbox_btn{
+    padding: 12px 10px;
+    border-radius: 5px;
+    width: auto;
+    text-align: left;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    width: 380px;
+    font-size: 14px!important;
+}
+.checkbox_btn.mat-checkbox-checked {
+    border: 2px solid #0074b6;
+    background: #f2f8fb!important;
+}
+
+.checkbox_btn .mat-checkbox-layout {
+  font-size: 14px!important;
+}
+
+
+.inline_box  {
+    justify-content: space-between;
+}
+.inline_box div  {
+    width: 49%;
+     .checkbox_btn {
+        width: 100%;
+    }
+}
+
+
+@include breakpoint-xs {
+.inline_box {
+    flex-direction: column!important;
+}
+.inline_box div  {
+    width: 100%;
+     .checkbox_btn {
+        width: 100%;
+    }
+}
+.right_inline_box {
+    margin-left: 0!important;
+    margin-top: 24px!important;
+}
+.role-card {
+    margin-right: 0!important;
+}
+}
+
+@include breakpoint-s{
+.role-card {
+    margin-right: 0!important;
+}
+}

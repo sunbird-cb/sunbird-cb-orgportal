@@ -16,19 +16,20 @@
               'ws-mat-accent-border font-medium':currentFilter !== 'underreview'}" mat-button
             (click)="filter('underreview')" role="button">Under review</a> -->
           <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'active',
-              'ws-mat-accent-border font-medium':currentFilter !== 'active'}" mat-button
-            (click)="filter('active'); tabTelemetry('active', 0)" role="button">Active</a>
+              'ws-mat-accent-border font-medium':currentFilter !== 'active'}"
+            mat-button (click)="filter('active'); tabTelemetry('active', 0)" role="button">Active</a>
           <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'inactive',
-                          'ws-mat-accent-border font-medium':currentFilter !== 'inactive'}" mat-button
-            (click)="filter('inactive'); tabTelemetry('inactive', 1)" role="button">Inactive</a>
+                          'ws-mat-accent-border font-medium':currentFilter !== 'inactive'}"
+            mat-button (click)="filter('inactive'); tabTelemetry('inactive', 1)" role="button">Inactive</a>
           <!-- <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'blocked',
                           'ws-mat-accent-border font-medium':currentFilter !== 'blocked'}" mat-button
             (click)="filter('blocked')" role="button">Blocked</a> -->
         </div>
       </div>
       <ng-container *ngIf="usersData">
-        <ws-widget-org-user-table [tableData]="tabledata" [data]="dataForTable" isUpload=true isCreate=true
-          (eOnCreateClick)="onCreateClick()" (eOnRowClick)="onRoleClick($event)" (actionsClick)="menuActions($event)">
+        <ws-widget-org-user-table [tableData]="tabledata" [data]="dataForTable" [isUpload]=fasle [isCreate]=true
+          (eOnCreateClick)="onCreateClick()" (eOnRowClick)="onRoleClick($event)" (actionsClick)="menuActions($event)"
+          (searchByEnterKey)="onEnterkySearch($event)">
         </ws-widget-org-user-table>
       </ng-container>
     </mat-card-content>

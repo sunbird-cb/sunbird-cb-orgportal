@@ -1,0 +1,78 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+@import 'profile-form';
+
+.mat-card {
+    box-sizing: border-box;
+}
+
+.form_field .mat-form-field-wrapper {
+    width: 100%!important;
+}
+::ng-deep.mat-form-field-wrapper {
+    width: 100%!important;
+}
+.mat-card.mat-card-mdo{
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)!important;
+}
+
+.w-50 {
+    width: 50%;
+}
+.add_link {
+    border: 2px solid #0074b6;
+    background-color: #fff;
+    color: #0074b6;
+    border-radius: 4px 4px;
+    text-align: center;
+    padding: 8px 12px;
+    height: 40px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+
+.button_box {
+    display: inline-block;
+}
+
+
+
+.role-card {
+    width: 100%;
+    position: relative;
+}
+.hint_span {
+    cursor: pointer;
+}
+
+// .mat-form-field-wrapper {
+//     padding-bottom: 0!important;
+// }
+
+// .theme-igot.day-mode .mat-drawer, .theme-igot.day-mode .mat-drawer-container {
+//   background-color: #f0f3f4!important;
+// }
+
+
+.mat-drawer{
+  background-color: #f0f3f4!important;
+}
+
+.mat-drawer-container {
+  background-color: #f0f3f4!important;
+}
+
+
+@include breakpoint-xs {
+    .role-card {
+        margin-right: 0!important;
+    }
+}
+@include breakpoint-s {
+    .role-card {
+        margin-right: 0!important;
+    }
+}
+

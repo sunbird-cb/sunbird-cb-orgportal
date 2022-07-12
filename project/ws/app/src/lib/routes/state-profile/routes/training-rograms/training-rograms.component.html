@@ -1,0 +1,202 @@
+<div class="flex flex-wrap flex-col margin-right-m margin-top-l role-card">
+    <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+        <form [formGroup]="trainingProgramForm">
+            <div class="flex flex-row justify-between">
+                <h2>Training Programs</h2>
+                <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" (click)="openActivityDialog()"
+                    tabindex="0" role="button">
+                    <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color" role="img"
+                        aria-hidden="true">info_outlined</mat-icon>
+
+                </a>
+            </div>
+            <div class="input-wrapper margin-top-s flex flex-col flex-1 margin-bottom-m">
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label class="margin-remove-bottom form-label flex mat-subheading-2 "
+                            i18n="Subjects on which the institute imparts training Label" i18n-aria-label
+                            aria-label="Subjects label" [ngClass]="{'required': hasRequiredField('subjectName')}">
+                            Add the subjects on which the institute imparts training
+                        </label>
+                    </div>
+                    <div class="flex flex-row">
+                        <div class="flex flex-col flex-1">
+                            <mat-form-field appearance="outline" class="margin-top-m flex flex-1 full-width">
+                                <mat-chip-list #chipListHobies>
+                                    <mat-chip *ngFor="let sub of selectedSubjects" [selectable]="true"
+                                        [removable]="true" (removed)="removeSubject(sub)" class="margin-top-m">
+                                        {{sub}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <!-- <input matInput autocomplete="off" #subjectName formControlName="subjectName"
+                                    i18n-aria-label aria-label="Subjects input"
+                                    placeholder="Enter subject and press enter" class="flex flex-1" /> -->
+                                <input #subjectName matInput i18n-placeholder="Enter subject and press enter" rows="5"
+                                    class="flex flex-1 w-full-imp text_box" placeholder="Enter subject and press Enter"
+                                    formControlName="subjectName" i18n-aria-label aria-label="Subjects input"
+                                    [matChipInputFor]="chipListHobies"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addSubject($event)" />
+                                <mat-hint align="end"> Type the subject name and click on 'Enter' to add</mat-hint>
+                                <mat-error [hidden]="false" i18n="Subject is required" i18n-aria-label
+                                    aria-label="Subject is required "
+                                    *ngIf="trainingProgramForm?.controls['subjectName'].errors?.required">
+                                    Subject is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-wrapper flex flex-col flex-1 margin-bottom-xl">
+                <label class=" form-label flex mat-subheading-2  margin-remove-bottom" i18n="" i18n-aria-label
+                    aria-label="" [ngClass]="{'required': hasRequiredField('conductDigitalPrograms')}">
+                    Does the institute conduct Digital Programs?
+                </label>
+                <div class="flex button_box flex-row margin-top-m">
+                    <mat-radio-group #conductDigitalPrograms formControlName="conductDigitalPrograms" i18n-aria-label
+                        aria-label="digitalPrograms input" class="flex button_box flex-row">
+                        <mat-radio-button class="mat-radio-button radio-unselect" [value]="'Yes'">
+                            Yes
+                        </mat-radio-button>
+                        <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m" [value]="'No'">
+                            No
+                        </mat-radio-button>
+                        <mat-error [hidden]="false" i18n="Subject is required" i18n-aria-label
+                            aria-label="Subject is required "
+                            *ngIf="trainingProgramForm?.controls['conductDigitalPrograms'].errors?.required">
+                            This field is mandatory
+                        </mat-error>
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <div class="input-wrapper flex flex-col flex-1 margin-bottom-xl ">
+                <label class="margin-remove-bottom form-label flex mat-subheading-2 required" i18n="" i18n-aria-label
+                    aria-label="" [ngClass]="{'required': hasRequiredField('prepareDigitalContent')}">
+                    Does the institute prepare digital content?
+                </label>
+                <div class="flex button_box flex-row margin-top-m">
+                    <mat-radio-group #prepareDigitalContent formControlName="prepareDigitalContent" i18n-aria-label
+                        aria-label="digitalPrograms input" class="flex button_box flex-row">
+                        <mat-radio-button class="mat-radio-button radio-unselect" [value]="'Yes'">
+                            Yes
+                        </mat-radio-button>
+                        <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m" [value]="'No'">
+                            No
+                        </mat-radio-button>
+                        <mat-error [hidden]="false" i18n="Subject is required" i18n-aria-label
+                            aria-label="Subject is required "
+                            *ngIf="trainingProgramForm?.controls['prepareDigitalContent'].errors?.required">
+                            This field is mandatory
+                        </mat-error>
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                <!-- <h2>Whether the Institute prepares Digital content</h2> -->
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <div class="flex flex-1">
+                            <label class=" margin-remove-bottom form-label flex mat-subheading-2"
+                                i18n="Number of videos label|Label which explains the user to Number of videos"
+                                i18n-aria-label aria-label="Number of videos label"
+                                [ngClass]="{'required': hasRequiredField('videoCount')}">
+                                Number of videos
+                            </label>
+                        </div>
+                        <mat-form-field appearance="outline" class="margin-top-m form_field flex flex-1 full-width">
+                            <input matInput autocomplete="off" type="number" step="1" min="0" #videoCount
+                                placeholder="Enter approximate number" formControlName="videoCount"
+                                class="flex flex-1" />
+                            <mat-error [hidden]="false" i18n="Number of videos is required" i18n-aria-label
+                                aria-label="Number of videos is required "
+                                *ngIf="trainingProgramForm?.controls['videoCount'].errors?.required">
+                                Number of videos is mandatory
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-1">
+                            <label class=" margin-remove-bottom form-label flex mat-subheading-2"
+                                i18n="Number of slide decks label|Label which explains the user to enter Number of slide decks"
+                                i18n-aria-label aria-label="Number of slide decks label"
+                                [ngClass]="{'required': hasRequiredField('pptCount')}">
+                                Number of slide decks (like Powerpoints or ppts)
+                            </label>
+                        </div>
+                        <mat-form-field appearance="outline" class="margin-top-m form_field flex flex-1 full-width">
+                            <input matInput autocomplete="off" type="number" step="1" min="0" #pptCount
+                                placeholder="Enter approximate number" formControlName="pptCount" class="flex flex-1" />
+                            <mat-error [hidden]="false" i18n="Number of slide decks is required" i18n-aria-label
+                                aria-label="Number of slide decks is required "
+                                *ngIf="trainingProgramForm?.controls['pptCount'].errors?.required">
+                                Number of slide decks is mandatory
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-1">
+                            <label class=" margin-remove-bottom form-label flex mat-subheading-2"
+                                i18n="Number of online reading materials label|Label which explains the user to enter Number of online reading materials"
+                                i18n-aria-label aria-label="Number of online reading materials label"
+                                [ngClass]="{'required': hasRequiredField('otherMaterialCount')}">
+                                Number of online reading materials (like case studies, pdfs etc.)
+                            </label>
+                        </div>
+                        <mat-form-field appearance="outline" class="margin-top-m form_field flex flex-1 full-width">
+                            <input matInput autocomplete="off" type="number" step="1" min="0" #otherMaterialCount
+                                placeholder="Enter approximate number" formControlName="otherMaterialCount"
+                                class="flex flex-1" />
+                            <mat-error [hidden]="false" i18n="Number of online reading materials is required"
+                                i18n-aria-label aria-label="Number of online reading materials is required "
+                                *ngIf="trainingProgramForm?.controls['otherMaterialCount'].errors?.required">
+                                Number of online reading materials is mandatory
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-1">
+                            <label class=" margin-remove-bottom form-label flex mat-subheading-2"
+                                i18n="Other information label|Label which explains the user to enter Other information"
+                                i18n-aria-label aria-label="Other information label"
+                                [ngClass]="{'required': hasRequiredField('otherInfo')}">
+                                Others (Add information on any other types of digital content that the institute
+                                prepares)
+                            </label>
+                        </div>
+                        <mat-form-field appearance="outline" class="margin-top-m flex flex-1 full-width">
+                            <textarea matInput autocomplete="off" #otherInfo placeholder="Type here" class="flex flex-1"
+                                formControlName="otherInfo" i18n-aria-label aria-label="Other information input"
+                                [matTextareaAutosize]="true" [matAutosizeMaxRows]="10" [matAutosizeMinRows]="5"
+                                maxlength="200"></textarea>
+                            <mat-hint align="end">{{ otherInfo.value.length }} /200 characters</mat-hint>
+
+                            <!-- <mat-error [hidden]="false" i18n="Number of PPTs is required" i18n-aria-label
+                                aria-label="Number of PPTs is required "
+                                *ngIf="trainingProgramForm?.controls['pptCount'].errors?.required">
+                                Number of online reading materials is mandatory
+                            </mat-error> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+
+    <!-- <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
+        <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>
+        <a class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
+
+    </div> -->
+
+
+</div>

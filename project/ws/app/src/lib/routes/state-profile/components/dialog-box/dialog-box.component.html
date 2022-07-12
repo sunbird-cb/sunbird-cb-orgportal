@@ -1,0 +1,110 @@
+<div class="dialoge-inner">
+
+
+    <a class="close_btn flex flex-end" (click)="dialogClose()">
+        <mat-icon>close</mat-icon>
+    </a>
+    <ng-container [ngTemplateOutlet]="insp" *ngIf="data.view === 'insp'">
+
+    </ng-container>
+    <ng-container [ngTemplateOutlet]="infra" *ngIf="data.view === 'infra'">
+
+    </ng-container>
+    <ng-container [ngTemplateOutlet]="longitude" *ngIf="data.view === 'longitude'">
+
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="training" *ngIf="data.view === 'training'">
+
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="research" *ngIf="data.view === 'research'">
+
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="consultancy" *ngIf="data.view === 'consultancy'">
+
+    </ng-container>
+
+    <ng-container [ngTemplateOutlet]="faculty" *ngIf="data.view === 'faculty'">
+
+    </ng-container>
+
+
+    <ng-template #insp>
+        <p class="mat-subheading-1 margin-bottom-xs">Why am I being asked this?</p>
+        <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">Add all the attached or sub-ordinate training
+            institutes and centres under your institute one by one. After adding each
+            institute, click on the “Add” button to add it.</p>
+
+    </ng-template>
+
+    <ng-template #infra>
+        <p class="mat-subheading-1 margin-bottom-xs">Why am I being asked this?</p>
+        <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">As we expand into the space of hybrid and digital
+            programs, knowing your institute infrastructure helps us discover
+            better opportunities to collaborate on such in-person and hybrid programs</p>
+
+    </ng-template>
+
+
+    <ng-template #longitude>
+        <p class="mat-subheading-1 margin-bottom-xs">How do I locate the GPS latitude and
+            longitude?</p>
+        <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">Refer the links below for Google Maps' help.</p>
+        <div class="flex justify-between flex-row margin-top-l link_box">
+            <a class="ws-mat-default-text mat-subheading-2 margin-remove-bottom"
+                href="https://support.google.com/maps/answer/18539?hl=en&co=GENIE.Platform%3DDesktop&oco=1"
+                target="_blank">On
+                computer</a>
+            <a class="ws-mat-default-text mat-subheading-2 margin-remove-bottom"
+                href="https://support.google.com/maps/answer/18539?hl=en&co=GENIE.Platform%3DAndroid&oco=1"
+                target="_blank">Android</a>
+            <a class="ws-mat-default-text mat-subheading-2 margin-remove-bottom"
+                href="https://support.google.com/maps/answer/18539?hl=en&co=GENIE.Platform%3DiOS&oco=1"
+                target="_blank">iPhone &
+                iPad</a>
+        </div>
+    </ng-template>
+
+
+
+    <ng-template #training>
+        <p class="mat-subheading-1 margin-bottom-xs">Why am I being asked this?</p>
+        <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">As the demand for diverse needs of the civil
+            service
+            officials increases, knowing the digital programs you already have,
+            helps us discover and generate greater demand for them in the future.</p>
+    </ng-template>
+
+
+    <ng-template #research>
+        <p class="mat-subheading-1 margin-bottom-xs">Why am I being asked this?</p>
+        <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">As the demand for diverse needs of the civil
+            service
+            officials increases, knowing the research projects already running
+            at your institute helps us discover opportunities for the institute based on future needs within the civil
+            services.</p>
+    </ng-template>
+
+
+    <ng-template #consultancy>
+        <p class="mat-subheading-1 margin-bottom-xs">Why am I being asked this?</p>
+        <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">As the demand for diverse needs of the civil
+            service
+            officials increases, knowing the consultancy projects already running
+            at your institute helps us discover opportunities for the institute based on future needs within the civil
+            services.</p>
+    </ng-template>
+
+
+    <ng-template #faculty>
+        <p class="mat-subheading-1 margin-bottom-xs">Why am I being asked this?</p>
+        <p class="mat-body-2 ws-mat-black60-text margin-remove-bottom">As the demand for diverse needs of the civil
+            service
+            officials increases, knowing the faculty members at your institute
+            helps us discover opportunities for the institute based on future learning needs within the civil services.
+        </p>
+    </ng-template>
+
+</div>

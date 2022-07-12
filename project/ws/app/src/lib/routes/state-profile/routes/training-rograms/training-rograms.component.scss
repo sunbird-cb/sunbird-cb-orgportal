@@ -1,0 +1,94 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+@import 'profile-form';
+
+.role-card {
+    width: 100%;
+    position: relative;
+}
+.mat-card {
+    box-sizing: border-box;
+}
+.form_field {
+    width: 210px;
+}
+.form_field .mat-form-field-wrapper {
+    width: 100%!important;
+}
+::ng-deep.mat-form-field-wrapper {
+    width: 100%!important;
+}
+.mat-card.mat-card-mdo{
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)!important;
+}
+
+.w-50 {
+    width: 50%;
+}
+.add_link {
+    border: 1px solid #0074b6;
+    background-color: #fff;
+    color: #0074b6;
+    border-radius: 4px 4px;
+    text-align: center;
+    padding: 8px 12px;
+    height: 40px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    width: 100px;
+}
+
+.button_box {
+    width: 225px;
+}
+
+// a.add-link {
+//     border:1px solid #0074b6;
+//     background-color: #0074b6;
+//     color: #fff;
+//     border-radius: 4px 4px;
+//     text-align: center;
+//     padding: 0;
+//     height: 65px;
+//     box-sizing: border-box;
+//     cursor: pointer;
+//     width: 45px;
+// }
+
+.hint_span {
+  position: relative;
+    cursor: pointer;
+}
+.mat-radio-button {
+    padding: 10px 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    background: #fff;
+    width: 100px;
+    font-size: 14px!important;
+}
+.mat-radio-button.mat-radio-checked {
+    border: 2px solid #0174b6;
+    background: #f2f8fb!important;
+}
+input.mat-input-element.text_box {
+    margin-top: 1rem!important;
+}
+
+
+
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+        @include breakpoint-xs {
+        padding: 0!important;
+        }
+    }
+
+
+ ::ng-deep .mat-form-field-hint-spacer {
+    @include breakpoint-xs {
+        display: none!important;
+    }
+ }

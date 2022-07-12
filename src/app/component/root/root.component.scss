@@ -38,9 +38,18 @@ ws-app-nav-bar {
 .height-adjust {
   min-height: calc(100vh - (56px + 52px));
 
+  // background-color: #fff;
+
   @include breakpoint-xs {
     min-height: calc(100vh - (60px + 77px));
   }
+}
+
+.bg-white {
+  background-color: #fff;
+}
+.bg-gray {
+  background-color: #F0F3F4;
 }
 
 .new-width {

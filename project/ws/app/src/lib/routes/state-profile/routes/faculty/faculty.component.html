@@ -1,0 +1,140 @@
+<div class="flex flex-wrap flex-col margin-right-m margin-top-l role-card">
+    <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+
+        <div class="flex flex-row justify-between">
+            <h2>Enter the number of faculty members in your institute</h2>
+            <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button" tabindex="0"
+                (click)="openActivityDialog()" role="button">
+                <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color" role="img"
+                    aria-hidden="true">info_outlined</mat-icon>
+            </a>
+        </div>
+        <form [formGroup]="facultyForm">
+            <div class="input-wrapper margin-top-s flex flex-row flex-1 justify-between flex-wrap">
+
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label class=" margin-remove-bottom form-label flex mat-subheading-2 required"
+                            i18n="Number of Regular Faculties label|Label which explains the user to enter Number of Regular Faculties"
+                            i18n-aria-label aria-label="Number of Faculties label">
+                            Regular
+                        </label>
+                    </div>
+                    <div class="flex flex-row">
+                        <div class="flex flex-col">
+
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" type="number" #regularFacultyCount
+                                    placeholder="Enter number" formControlName="regularFacultyCount" class="flex flex-1"
+                                    i18n-aria-label aria-label="Number of Regular Faculties input" />
+                                <mat-error [hidden]="false"
+                                    i18n=" Number of Regular Faculties Error|Explains  Number of Regular Faculties is required"
+                                    i18n-aria-label
+                                    aria-label=" Number of Regular Faculties Error|Explains  Number of Regular Faculties is required "
+                                    *ngIf="facultyForm?.controls['regularFacultyCount'].errors?.required">
+                                    Number of Regular Faculties is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label class=" margin-remove-bottom form-label flex mat-subheading-2 required"
+                            i18n="Number of Adhoc Faculties label|Label which explains the user to enter Number of Adhoc Faculties"
+                            i18n-aria-label aria-label="Number of Adhoc Faculties label">
+                            Adhoc
+                        </label>
+                    </div>
+                    <div class="flex flex-row">
+                        <div class="flex flex-col">
+
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" type="number" #adhocFacultyCount
+                                    placeholder="Enter number" formControlName="adhocFacultyCount" class="flex flex-1"
+                                    i18n-aria-label aria-label="Number of Adhoc Faculties input" />
+                                <mat-error [hidden]="false"
+                                    i18n=" Number of Adhoc Faculties Error|Explains  Number of Adhoc Faculties is required"
+                                    i18n-aria-label
+                                    aria-label=" Number of Adhoc Faculties Error|Explains  Number of Adhoc Faculties is required "
+                                    *ngIf="facultyForm?.controls['adhocFacultyCount'].errors?.required">
+                                    Number of Adhoc Faculties is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label class=" margin-remove-bottom form-label flex mat-subheading-2 required"
+                            i18n="Number of Guest Faculties label|Label which explains the user to enter Number of Guest Faculties"
+                            i18n-aria-label aria-label="Number of Guest Faculties label">
+                            Guest
+                        </label>
+                    </div>
+                    <div class="flex flex-row">
+                        <div class="flex flex-col">
+
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" type="number" #guestFacultyCount
+                                    placeholder="Enter number" formControlName="guestFacultyCount" class="flex flex-1"
+                                    i18n-aria-label aria-label="Number of Guest Faculties input" />
+                                <mat-error [hidden]="false"
+                                    i18n=" Number of Guest Faculties Error|Explains Number of Guest Faculties is required"
+                                    i18n-aria-label
+                                    aria-label=" Number of Guest Faculties Error|Explains  Number of Guest Faculties is required "
+                                    *ngIf="facultyForm?.controls['guestFacultyCount'].errors?.required">
+                                    Number of Faculties is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="flex flex-col">
+                        <label class=" margin-remove-bottom form-label flex mat-subheading-2"
+                            i18n="Number of Faculties label|Label which explains the user to enter Number of Faculties"
+                            i18n-aria-label aria-label="Number of Faculties label">
+                            Others (research staff etc)
+                        </label>
+                    </div>
+                    <div class="flex flex-row">
+                        <div class="flex flex-col">
+
+                            <mat-form-field appearance="outline"
+                                class="margin-top-xs form_field flex flex-1 full-width">
+                                <input matInput autocomplete="off" type="number" #otherCount placeholder="Enter number"
+                                    formControlName="otherCount" class="flex flex-1" i18n-aria-label
+                                    aria-label="Number of other Faculties input" />
+                                <mat-error [hidden]="false"
+                                    i18n="Number of other Faculties Error|Explains Number of other Faculties is required"
+                                    i18n-aria-label
+                                    aria-label="Number of Faculties Error|Explains  Number of other Faculties is required "
+                                    *ngIf="facultyForm?.controls['otherCount'].errors?.required">
+                                    Number of Faculties is mandatory
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+    </mat-card>
+
+
+    <!-- <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
+        <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>
+        <a class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
+
+    </div> -->
+
+
+</div>

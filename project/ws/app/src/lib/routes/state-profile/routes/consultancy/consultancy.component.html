@@ -1,0 +1,179 @@
+<div class="flex flex-1 flex-col">
+    <form [formGroup]="consultancyForm">
+        <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+            <mat-card class="mat-card margin-bottom-s role-card flex flex-col mat-card-mdo">
+
+                <div class="flex flex-row justify-between">
+                    <h2>Consultancy</h2>
+                    <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button"
+                        (click)="openActivityDialog()" tabindex="0" role="button">
+                        <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color"
+                            role="img" aria-hidden="true">info_outlined</mat-icon>
+
+                    </a>
+                </div>
+                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                    <div class="flex flex-1">
+                        <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Consultancy project label|Label which explains the user to enter Consultancy project"
+                            i18n-aria-label aria-label="Consultancy project label">
+                            Add project name
+                        </label>
+                    </div>
+
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <input matInput autocomplete="off" #projectName formControlName="projectName"
+                            placeholder="Enter project name" class="flex flex-1" i18n-aria-label
+                            aria-label="institute Name input" />
+                        <mat-error [hidden]="false" i18n="Project Name Error|Explains Project name is required"
+                            i18n-aria-label aria-label="Project Name Error|Explains Project name is required "
+                            *ngIf="consultancyForm?.controls['projectName'].errors?.required">
+                            Project name is mandatory
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="input-wrapper margin-top-s flex flex-row flex-1 radio_btn_main">
+                    <div class="flex flex-2 flex-col">
+                        <div class="flex flex-1">
+                            <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                i18n="Programe status label|Label which explains the user to enter Programe status"
+                                i18n-aria-label aria-label="Programe status label">
+                                Status
+                            </label>
+                        </div>
+                        <div class="flex flex-1 margin-top-m">
+                            <mat-radio-group #programeStatus formControlName="programeStatus" i18n-aria-label
+                                aria-label="Programe status input" class="flex button_box flex-row">
+                                <mat-radio-button class="mat-radio-button radio-unselect" [value]="'Ongoing'">
+                                    Ongoing
+                                </mat-radio-button>
+                                <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m complete_btn"
+                                    [value]="'Completed'">
+                                    Completed
+                                </mat-radio-button>
+                                <mat-error [hidden]="false" i18n="Programe status is required" i18n-aria-label
+                                    aria-label="Programe status is required "
+                                    *ngIf="consultancyForm?.controls['programeStatus'].errors?.required">
+                                    Programe status is mandatory
+                                </mat-error>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-2 flex-col margin-left-l radio_right">
+                        <div class="flex">
+                            <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                i18n="Type of sponsorship label|Label which explains the user to enter Type of sponsorship count"
+                                i18n-aria-label aria-label="Type of sponsorship label">
+                                Type of sponsorship
+                            </label>
+                        </div>
+                        <div class="flex flex-row margin-top-m justify-start radio_left">
+                            <div class="flex flex-1">
+                                <mat-checkbox #industrySponsored formControlName="industrySponsored" i18n-aria-label
+                                    aria-label=" Industry sponsored input" class="checkbox_btn">
+                                    Industry sponsored
+                                </mat-checkbox>
+                            </div>
+
+                            <div class="flex flex-1 margin-left-m complete_btn">
+                                <mat-checkbox #govtSponsored formControlName="govtSponsored" i18n-aria-label
+                                    aria-label="Government sponsored input" class="checkbox_btn">
+                                    Government sponsored
+                                </mat-checkbox>
+                            </div>
+
+                            <div class="flex flex-1 margin-left-m complete_btn">
+                                <mat-checkbox #otherSponsored formControlName="otherSponsored" i18n-aria-label
+                                    aria-label="Others input" class="checkbox_btn">
+                                    Others
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-wrapper flex flex-col flex-1">
+                    <mat-form-field appearance="outline" class="margin-top-l form_field flex flex-1 full-width">
+                        <textarea matInput autocomplete="off" #projectDetail formControlName="projectDetail"
+                            i18n-aria-label aria-label="Project detail input" placeholder="Enter project details "
+                            class="flex flex-1" [matTextareaAutosize]="true" [matAutosizeMaxRows]="10"
+                            [matAutosizeMinRows]="5" maxlength="200"></textarea>
+                        <mat-hint align="end" class="margin-top-l">{{ projectDetail.value.length }} /200 characters
+                        </mat-hint>
+                        <mat-error [hidden]="false" i18n="Project detail Error|Explains Project detail is required"
+                            i18n-aria-label aria-label="Project detail Error|Explains Project detail is required "
+                            *ngIf="consultancyForm?.controls['projectDetail'].errors?.required">
+                            Project detail is mandatory
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <a class="add_link margin-top-m flex items-center justify-center" (click)="addProject()">Add</a>
+
+                <ng-container *ngFor="let project of addedconsultancies">
+
+                    <div class="flex flex-1 flex-column mat-card-mdo margin-top-l edit-mat-card">
+                        <div class="flex flex-row">
+                            <div class="flex flex-1">
+                                <h2 class="margin-remove-bottom">{{project.projectName}}</h2>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <a class="cursor-pointer flex margin-right-xs">
+                                    <mat-icon class="flex  ws-mat-black60-text margin-right-xs"
+                                        (click)="editProject(project)">edit</mat-icon>
+                                    Edit
+                                </a>
+                                <a class="cursor-pointer flex">
+                                    <mat-icon
+                                        class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs"
+                                        (click)="deleteProject(project)">
+                                        delete</mat-icon> Delete
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex flex-1 margin-top-s">
+                            <div class="flex">
+                                <span class="mat-caption status_txt">{{project.programeStatus}}</span>
+                            </div>
+                            <div class="flex flex-row margin-left-l">
+                                <span class="mat-caption" *ngIf="project.industrySponsored">Industry sponsored
+                                    &nbsp;</span>
+                                <span class="mat-caption" *ngIf="project.govtSponsored">|&nbsp; Government sponsored
+                                    &nbsp;</span>
+                                <span class="mat-caption" *ngIf="project.otherSponsored">| &nbsp;Others</span>
+                            </div>
+                        </div>
+                        <mat-card-content class="flex flex-1 margin-remove-bottom margin-top-s">
+                            <div class="flex flex-wrap">
+
+                                <p class="mat-subtitle-1 margin-remove-bottom">{{project.projectDetail}}</p>
+                            </div>
+                        </mat-card-content>
+                    </div>
+                </ng-container>
+
+            </mat-card>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- <div class="bottom_btn_box flex flex-1 flex-row justify-between margin-top-m">
+            <a class="skip_link mat-body-2 margin-remove-bottom">Go back to previous</a>
+            <a class="next_link mat-body-2 margin-remove-bottom">Save and continue</a>
+
+        </div> -->
+    </form>
+</div>
+
+<input #deleteTitleRef type="hidden" i18n-value value="Project delete!" />
+<input #deleteBodyRef type="hidden" i18n-value value="Do you want to delete this consultancy project" />

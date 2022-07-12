@@ -1,0 +1,36 @@
+
+
+.welcome_img {
+    width: 350px;
+}
+.custom-button {
+    border: 1px solid #0074b6;
+    background-color: #0074b6;
+    color: #fff;
+    border-radius: 4px 4px;
+    text-align: center;
+    padding: 8px 12px;
+    height: 40px;
+    line-height: 20px;
+    width: 175px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.banner-box {
+    background: url('/assets/instances/eagle/background/Banner-organisation-info.jpg');
+    background-position: center;
+    background-size: cover;
+    padding:84px 48px;
+    color: #fff;
+}
+.welcome_text_box {
+    width: 95%;
+    box-sizing: border-box;
+}
+.welcome-mat-card {
+    padding:48px 48px!important;
+}
+.footer_box {
+    display: none!important;
+}

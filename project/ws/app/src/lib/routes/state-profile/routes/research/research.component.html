@@ -1,0 +1,243 @@
+<div class="flex flex-1 flex-col">
+
+    <div class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+        <mat-card class="mat-card role-card flex flex-col mat-card-mdo">
+            <form [formGroup]="researchProgramForm">
+
+                <div class="flex flex-row justify-between">
+                    <h2>Research</h2>
+                    <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button"
+                        (click)="openActivityDialog()" tabindex="0" role="button">
+                        <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color"
+                            role="img" aria-hidden="true">info_outlined</mat-icon>
+
+                    </a>
+                </div>
+                <div id="maindiv" class="input-wrapper margin-top-s flex flex-col flex-1">
+                    <div class="flex flex-1">
+                        <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Project name label|Label which explains the user to enter Project name count"
+                            i18n-aria-label aria-label="Project name label">
+                            Add project name
+                        </label>
+                    </div>
+
+                    <mat-form-field appearance="outline" class="margin-top-xs flex flex-1 full-width">
+                        <input matInput autocomplete="off" #projectName formControlName="projectName" i18n-aria-label
+                            aria-label="Project name input" placeholder="Name of the project" class="flex flex-1"
+                            [ngClass]="{ 'mat-focused': textBoxActive}" />
+                        <mat-error [hidden]="false" i18n="Project name Error|Explains Project name is required"
+                            *ngIf="researchProgramForm?.controls['projectName'].errors?.required" i18n-aria-label
+                            aria-label="Project name is mandatory">
+                            Project name is mandatory
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="input-wrapper margin-top-s flex flex-row flex-1 radio_btn_main">
+                    <div class="flex flex-2 flex-col">
+                        <div class="flex flex-1">
+                            <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                i18n="Programe status label|Label which explains the user to enter Programe status"
+                                i18n-aria-label aria-label="Programe status label">
+                                Status
+                            </label>
+                        </div>
+                        <div class="flex flex-1 margin-top-m">
+                            <mat-radio-group #programeStatus formControlName="programeStatus" i18n-aria-label
+                                aria-label="Programe status input" class="flex button_box flex-row">
+                                <mat-radio-button class="mat-radio-button radio-unselect" [value]="'Ongoing'">
+                                    Ongoing
+                                </mat-radio-button>
+                                <mat-radio-button class="mat-radio-button radio-unselect  margin-left-m complete_btn"
+                                    [value]="'Completed'">
+                                    Completed
+                                </mat-radio-button>
+                                <mat-error [hidden]="false" i18n="Programe status is required" i18n-aria-label
+                                    aria-label="Programe status is required "
+                                    *ngIf="researchProgramForm?.controls['programeStatus'].errors?.required">
+                                    Programe status is mandatory
+                                </mat-error>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-1 flex-col margin-left-l radio_right">
+                        <div class="flex">
+                            <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                                i18n="Type of sponsorship label|Label which explains the user to enter Type of sponsorship count"
+                                i18n-aria-label aria-label="Type of sponsorship label">
+                                Type of sponsorship
+                            </label>
+                        </div>
+                        <div class="flex flex-row margin-top-m radio_left">
+                            <div class="flex flex-1">
+                                <mat-checkbox #industrySponsored formControlName="industrySponsored" i18n-aria-label
+                                    aria-label=" Industry sponsored input" class="checkbox_btn">
+                                    Industry sponsored
+                                </mat-checkbox>
+                            </div>
+
+                            <div class="flex flex-1 margin-left-m complete_btn">
+                                <mat-checkbox #govtSponsored formControlName="govtSponsored" i18n-aria-label
+                                    aria-label="Government sponsored input" class="checkbox_btn">
+                                    Government sponsored
+                                </mat-checkbox>
+                            </div>
+                            <div class="flex flex-1 margin-left-m complete_btn">
+                                <mat-checkbox #otherSponsored formControlName="otherSponsored" i18n-aria-label
+                                    aria-label="Others input" class="checkbox_btn">
+                                    Others
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="input-wrapper margin-top-l flex flex-col flex-1">
+                    <mat-form-field appearance="outline" class="form_field flex flex-1 full-width">
+                        <textarea matInput autocomplete="off" #projectDetail formControlName="projectDetail"
+                            i18n-aria-label aria-label="Project detail input" placeholder="Enter project details "
+                            class="flex flex-1" row="5" [matTextareaAutosize]="true" [matAutosizeMaxRows]="10"
+                            [matAutosizeMinRows]="5" maxlength="200"></textarea>
+                        <mat-hint align="end" class="margin-top-l">{{ projectDetail.value.length }} /200 characters
+                        </mat-hint>
+                        <mat-error [hidden]="false" i18n="Project detail Error|Explains Project detail is required"
+                            *ngIf="researchProgramForm?.controls['projectDetail'].errors?.required" i18n-aria-label
+                            aria-label="Project detail is mandatory">
+                            Project detail is mandatory
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <button type="submit" class="add_link margin-top-m flex items-center justify-center"
+                    (click)="addProgram()">Add</button>
+            </form>
+
+            <ng-container *ngFor="let program of addedPrograms">
+                <div class="flex flex-1 flex-column mat-card-mdo margin-top-l edit-mat-card">
+                    <div class="flex flex-row">
+                        <div class="flex flex-1">
+                            <h2 class="margin-remove-bottom">{{program.projectName}}</h2>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                            <a class="cursor-pointer flex margin-right-xs" (click)="editProgram(program)">
+                                <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit</mat-icon>
+                                Edit
+                            </a>
+                            <a class="cursor-pointer flex" (click)="deleteProgram(program)">
+                                <mat-icon
+                                    class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
+                                    delete</mat-icon> Delete
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex flex-1 margin-top-s">
+                        <div class="flex">
+                            <span class="mat-caption status_txt">{{program.programeStatus}}</span>
+                        </div>
+                        <div class="flex flex-row margin-left-l">
+                            <span class="mat-caption" *ngIf="program.industrySponsored">Industry sponsored &nbsp;</span>
+                            <span class="mat-caption" *ngIf="program.govtSponsored">|&nbsp; Government sponsored
+                                &nbsp;</span>
+                            <span class="mat-caption" *ngIf="program.otherSponsored">| &nbsp;Others</span>
+                        </div>
+                    </div>
+                    <mat-card-content class="flex flex-1 margin-remove-bottom margin-top-s">
+                        <div class="flex flex-wrap">
+
+                            <p class="mat-subtitle-1 margin-remove-bottom">{{program.projectDetail}}</p>
+                        </div>
+                    </mat-card-content>
+                </div>
+            </ng-container>
+        </mat-card>
+    </div>
+
+
+    <div id="maindiv1" class="flex flex-wrap flex-col margin-right-m  margin-top-l">
+        <mat-card class="mat-card role-card flex flex-col mat-card-mdo">
+            <form [formGroup]="researchPaperForm">
+                <div class="input-wrapper margin-top-s flex flex-col flex-1">
+                    <div class="flex flex-1 flex-row justify-between">
+                        <label class=" margin-remove-bottom form-label required flex mat-subheading-2"
+                            i18n="Research papers published by faculty label|Label which explains the user to enter Research papers published by faculty"
+                            i18n-aria-label aria-label="Research papers published by faculty label">
+                            Research papers published by faculty
+                        </label>
+
+                        <a class="mat-subheading-2 hint_span margin-remove-bottom" type="button"
+                            (click)="openActivityDialog()" tabindex="0" role="button">
+                            <mat-icon class="mat-icon margin-right-xs notranslate material-icons mat-icon-no-color"
+                                role="img" aria-hidden="true">info_outlined</mat-icon>
+
+                        </a>
+                    </div>
+
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <input matInput autocomplete="off" #researchPaperName formControlName="researchPaperName"
+                            i18n-aria-label aria-label="Research paper name input"
+                            placeholder="Name of the research paper" class="flex flex-1"
+                            [ngClass]="{ 'mat-focused': textBoxActive1}" />
+                        <mat-error [hidden]="false"
+                            i18n="Research paper name Error|Explains Research paper name is required"
+                            *ngIf="researchPaperForm?.controls['researchPaperName'].errors?.required" i18n-aria-label
+                            aria-label="Research paper name is mandatory">
+                            Research paper name is mandatory
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="input-wrapper flex flex-col flex-1">
+                    <mat-form-field appearance="outline" class="margin-top-xs form_field flex flex-1 full-width">
+                        <textarea matInput autocomplete="off" #researchPaperDetail formControlName="researchPaperDetail"
+                            i18n-aria-label aria-label="Research paper detail input"
+                            placeholder="Enter Research paper details " class="flex flex-1" [matTextareaAutosize]="true"
+                            [matAutosizeMaxRows]="10" [matAutosizeMinRows]="5" maxlength="200" rows="5"></textarea>
+                        <mat-hint align="end" class="margin-top-l">{{ researchPaperDetail.value.length }} /200
+                            characters</mat-hint>
+                        <mat-error [hidden]="false"
+                            i18n="Research paper detail Error|Explains Research paper detail is required"
+                            *ngIf="researchPaperForm?.controls['researchPaperDetail'].errors?.required" i18n-aria-label
+                            aria-label="Research paper detail is mandatory">
+                            Research paper detail is mandatory
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <button class="add_link margin-top-m flex items-center justify-center" (click)="addPaper()">Add</button>
+            </form>
+
+            <ng-container *ngFor="let paper of addedPapers">
+                <div class="flex flex-1 flex-column mat-card-mdo margin-top-l edit-mat-card">
+                    <div class="flex flex-row">
+                        <div class="flex flex-1">
+                            <h2 class="margin-remove-bottom">{{paper.researchPaperName}}</h2>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                            <a class="cursor-pointer flex margin-right-xs" (click)="editPaper(paper)">
+                                <mat-icon class="flex  ws-mat-black60-text margin-right-xs">edit</mat-icon>
+                                Edit
+                            </a>
+                            <a class="cursor-pointer flex" (click)="deletePaper(paper)">
+                                <mat-icon
+                                    class="flex cursor-pointer ws-mat-black60-text margin-left-xs margin-right-xs">
+                                    delete</mat-icon> Delete
+                            </a>
+                        </div>
+                    </div>
+                    <mat-card-content class="flex flex-1 margin-remove-bottom margin-top-s">
+                        <div class="flex flex-wrap">
+
+                            <p class="mat-subtitle-1 margin-remove-bottom">{{paper.researchPaperDetail}}</p>
+                        </div>
+                    </mat-card-content>
+                </div>
+            </ng-container>
+        </mat-card>
+    </div>
+</div>
+
+<input #deleteProgramTitleRef type="hidden" i18n-value value="Research program delete!" />
+<input #deleteProgramBodyRef type="hidden" i18n-value value="Do you want to delete this research program" />
+<input #deletePaperTitleRef type="hidden" i18n-value value="Research Paper delete!" />
+<input #deletePaperBodyRef type="hidden" i18n-value value="Do you want to delete this research paper" />

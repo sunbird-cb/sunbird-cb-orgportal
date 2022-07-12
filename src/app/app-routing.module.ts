@@ -19,6 +19,7 @@ import { PublicFaqComponent } from './routes/public/public-faq/public-faq.compon
 import { TncComponent } from './routes/tnc/tnc.component'
 import { TncAppResolverService } from './services/tnc-app-resolver.service'
 import { TncPublicResolverService } from './services/tnc-public-resolver.service'
+import { PublicLogoutComponent } from './routes/public/public-logout/public-logout.component'
 // import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/app-toc-resolver.service'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
@@ -103,10 +104,10 @@ const routes: Routes = [
     loadChildren: () => import('./routes/route-frac.module').then(u => u.RouteFracModule),
     canActivate: [GeneralGuard],
   },
-  {
-    path: 'app/setup',
-    loadChildren: () => import('./routes/route-app-setup.module').then(u => u.RouteAppSetupModule),
-  },
+  // {
+  //   path: 'app/setup',
+  //   loadChildren: () => import('./routes/route-app-setup.module').then(u => u.RouteAppSetupModule),
+  // },
   {
     path: 'app/features',
     component: FeaturesComponent,
@@ -308,6 +309,10 @@ const routes: Routes = [
     },
   },
   {
+    path: 'public/logout',
+    component: PublicLogoutComponent,
+  },
+  {
     path: 'public/mobile-app',
     component: MobileAppHomeComponent,
     data: {
@@ -340,6 +345,21 @@ const routes: Routes = [
       requiredRoles: [],
       pageType: 'feature',
       pageKey: 'workallocation',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
+    path: 'app/setup',
+    loadChildren: () =>
+      import('./routes/route-state-profile.module').then(u => u.RouteStateProfileModule),
+    // canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'state-profile',
+      pageId: 'app/state-profile',
+      module: 'state-profile',
     },
     resolve: {
       pageData: PageResolve,

@@ -67,7 +67,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   isSetupPage = false
   currentRouteData: any = []
   constructor(
-    private router: Router,
+    public router: Router,
     private route: ActivatedRoute,
     // public authSvc: AuthKeycloakService,
     private appRef: ApplicationRef,
@@ -87,19 +87,19 @@ export class RootComponent implements OnInit, AfterViewInit {
   ) {
     this.mobileAppsSvc.init()
   }
-  private get defaultRedirectUrl(): string {
-    try {
-      const baseUrl = document.baseURI
-      return baseUrl || location.origin
-    } catch (error) {
-      return location.origin
-    }
-  }
+  // private get defaultRedirectUrl(): string {
+  //   try {
+  //     const baseUrl = document.baseURI
+  //     return baseUrl || location.origin
+  //   } catch (error) {
+  //     return location.origin
+  //   }
+  // }
   @HostListener('window:unload', ['$event'])
   unloadHandler(event: any) {
     if (event && event.type === 'unload') {
-      this.authSvc.logout()
-      window.location.href = `${this.defaultRedirectUrl}apis/reset`
+      // this.authSvc.logout()
+      // window.location.href = `${this.defaultRedirectUrl}apis/reset`
     }
   }
   ngOnInit() {

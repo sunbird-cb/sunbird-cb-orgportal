@@ -14,7 +14,10 @@
     'height-on-top':
       (isXSmall$ | async) === false &&
       showNavbar &&
-      isNavBarRequired
+      isNavBarRequired,
+    'bg-white': !(router.url.startsWith('/app/setup')),
+    'bg-gray': (router.url.startsWith('/app/setup'))
+
   }">
   <router-outlet></router-outlet>
 </div>

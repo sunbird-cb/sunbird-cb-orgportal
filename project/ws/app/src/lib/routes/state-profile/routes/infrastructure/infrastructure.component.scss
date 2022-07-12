@@ -1,0 +1,100 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+@import 'profile-form';
+
+.role-card {
+    width: 100%;
+    position: relative;
+}
+.mat-card {
+    box-sizing: border-box;
+}
+// .form_field {
+//     width: 225px;
+// }
+// .form_field .mat-form-field-wrapper {
+//     width: 100%!important;
+// }
+// ::ng-deep.mat-form-field-wrapper {
+//     width: 100%!important;
+// }
+.mat-card.mat-card-mdo{
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)!important;
+}
+
+.w-50 {
+    width: 50%;
+}
+.add_link {
+    border: 1px solid #0074b6;
+    background-color: #fff;
+    color: #0074b6;
+    border-radius: 4px 4px;
+    text-align: center;
+    padding: 8px 12px;
+    height: 40px;
+    box-sizing: border-box;
+    cursor: pointer;
+    width: 100%;
+    display: inline-block;
+}
+
+
+.infra_box {
+    width: 580px;
+    margin-bottom: 4px;
+}
+.infra_box p {
+    width: 430px;
+    margin-top: 28px;
+}
+.mat-form-field {
+    width: 135px;
+}
+.mat-form-field.text-area-field {
+    width: 100%!important;
+}
+textarea.mat-input-element {
+    height: 150px;
+}
+
+.tooltip {
+  position: absolute;
+  opacity: 1;
+  z-index: 999;
+  padding: 5px;
+  top: 35px;
+  right: 10px;
+}
+.hint_span {
+  position: relative;
+    cursor: pointer;
+}
+ .mat-form-field-flex {
+    width: 100px!important;
+}
+
+//   ::ng-deep .mat-form-field-wrapper{
+//       padding-bottom: 0!important;
+//     }
+
+
+@include breakpoint-xs {
+.infra_box {
+    width: 100%;
+    margin-bottom: 4px;
+    flex-direction: column!important;
+}
+.infra_box p {
+    width: 100%;
+    margin-top: 0px;
+    display: block;
+}
+.mat-form-field {
+    width: 100%;
+}
+.role-card {
+    margin-right: 0!important;
+}
+}

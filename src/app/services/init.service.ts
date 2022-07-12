@@ -42,6 +42,7 @@ const endpoint = {
   profilePid: '/apis/proxies/v8/api/user/v2/read',
   // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
+  orgProfile: (orgId: string) => `/apis/proxies/v8/org/v1/profile/read?orgId=${orgId}`,
 }
 
 @Injectable({
@@ -106,7 +107,10 @@ export class InitService {
     // }
     // Invalid User
     try {
-      await this.fetchStartUpDetails() // detail: depends only on userID
+      const path = window.location.pathname
+      if (!path.startsWith('/public')) {
+        await this.fetchStartUpDetails()
+      }// detail: depends only on userID
     } catch (e) {
       this.settingsSvc.initializePrefChanges(environment.production)
       this.updateNavConfig()
@@ -117,16 +121,16 @@ export class InitService {
     }
     try {
       // this.logger.info('User Authenticated', authenticated)
-      const userPrefPromise = await this.userPreference.fetchUserPreference() // pref: depends on rootOrg
-      this.configSvc.userPreference = userPrefPromise
-      this.reloadAccordingToLocale()
-      if (this.configSvc.userPreference.pinnedApps) {
-        const pinnedApps = this.configSvc.userPreference.pinnedApps.split(',')
-        this.configSvc.pinnedApps.next(new Set(pinnedApps))
-      }
-      if (this.configSvc.userPreference.profileSettings) {
-        this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
-      }
+      // const userPrefPromise = await this.userPreference.fetchUserPreference() // pref: depends on rootOrg
+      // this.configSvc.userPreference = userPrefPromise
+      // this.reloadAccordingToLocale()
+      // if (this.configSvc.userPreference.pinnedApps) {
+      // const pinnedApps = this.configSvc.userPreference.pinnedApps.split(',')
+      // this.configSvc.pinnedApps.next(new Set(pinnedApps))
+      // }
+      // if (this.configSvc.userPreference.profileSettings) {
+      // this.configSvc.profileSettings = this.configSvc.userPreference.profileSettings
+      // }
       // await this.fetchUserProfileV2()
       const appsConfigPromise = this.fetchAppsConfig()
       const instanceConfigPromise = this.fetchInstanceConfig() // config: depends only on details
@@ -179,36 +183,36 @@ export class InitService {
     return true
   }
 
-  private reloadAccordingToLocale() {
-    if (window.location.origin.indexOf('http://localhost:') > -1) {
-      return
-    }
-    let pathName = window.location.href.replace(window.location.origin, '')
-    const runningAppLang = this.locale
-    if (pathName.startsWith(`//${runningAppLang}//`)) {
-      pathName = pathName.replace(`//${runningAppLang}//`, '/')
-    }
-    const instanceLocales = this.configSvc.instanceConfig && this.configSvc.instanceConfig.locals
-    if (Array.isArray(instanceLocales) && instanceLocales.length) {
-      const foundInLocales = instanceLocales.some(locale => {
-        return locale.path !== runningAppLang
-      })
-      if (foundInLocales) {
-        if (
-          this.configSvc.userPreference &&
-          this.configSvc.userPreference.selectedLocale &&
-          runningAppLang !== this.configSvc.userPreference.selectedLocale
-        ) {
-          let languageToLoad = this.configSvc.userPreference.selectedLocale
-          languageToLoad = `\\${languageToLoad}`
-          if (this.configSvc.userPreference.selectedLocale === 'en') {
-            languageToLoad = ''
-          }
-          location.assign(`${location.origin}${languageToLoad}${pathName}`)
-        }
-      }
-    }
-  }
+  // private reloadAccordingToLocale() {
+  //   if (window.location.origin.indexOf('http://localhost:') > -1) {
+  //     return
+  //   }
+  //   let pathName = window.location.href.replace(window.location.origin, '')
+  //   const runningAppLang = this.locale
+  //   if (pathName.startsWith(`//${runningAppLang}//`)) {
+  //     pathName = pathName.replace(`//${runningAppLang}//`, '/')
+  //   }
+  //   const instanceLocales = this.configSvc.instanceConfig && this.configSvc.instanceConfig.locals
+  //   if (Array.isArray(instanceLocales) && instanceLocales.length) {
+  //     const foundInLocales = instanceLocales.some(locale => {
+  //       return locale.path !== runningAppLang
+  //     })
+  //     if (foundInLocales) {
+  //       if (
+  //         this.configSvc.userPreference &&
+  //         this.configSvc.userPreference.selectedLocale &&
+  //         runningAppLang !== this.configSvc.userPreference.selectedLocale
+  //       ) {
+  //         let languageToLoad = this.configSvc.userPreference.selectedLocale
+  //         languageToLoad = `\\${languageToLoad}`
+  //         if (this.configSvc.userPreference.selectedLocale === 'en') {
+  //           languageToLoad = ''
+  //         }
+  //         location.assign(`${location.origin}${languageToLoad}${pathName}`)
+  //       }
+  //     }
+  //   }
+  // }
 
   private async fetchDefaultConfig(): Promise<NsInstanceConfig.IConfig> {
     const publicConfig: NsInstanceConfig.IConfig = await this.http
@@ -244,7 +248,11 @@ export class InitService {
       try {
         completeProdata = await this.http
           .get<any>(endpoint.profilePid)
-          .pipe(map((res: any) => res.result.response))
+          .pipe(map((res: any) => {
+            // const roles = _.map(_.get(res, 'result.response.roles'), 'role')
+            // _.set(res, 'result.response.roles', roles)
+            return _.get(res, 'result.response')
+          }))
           .toPromise()
         if (completeProdata && completeProdata.roles && completeProdata.roles.length > 0 &&
           this.hasRole(completeProdata.roles)) {
@@ -300,9 +308,26 @@ export class InitService {
             dealerCode: null,
             isManager: false,
           }
+          if (completeProdata.rootOrg && completeProdata.rootOrg.isInstitute) {
+            // console.log('inside is institute ---- calling org profile')
+            try {
+              const orgProfile = await this.http
+                .get<any>(endpoint.orgProfile(completeProdata.rootOrgId))
+                .pipe(map((res: any) => {
+                  return _.get(res, 'result.result')
+                }))
+                .toPromise()
+              this.configSvc.unMappedUser.orgProfile = orgProfile
+            } catch {
+              this.configSvc.unMappedUser.orgProfile = null
+            }
+          } else {
+            // console.log('outside is institute ---- NOT calling org profile')
+            this.configSvc.unMappedUser.orgProfile = null
+          }
 
         } else {
-          this.authSvc.logout()
+          this.authSvc.force_logout()
         }
         const details = {
           group: [],
@@ -322,6 +347,13 @@ export class InitService {
 
         this.configSvc.userGroups = new Set(details.group)
         this.configSvc.userRoles = new Set((details.roles || []).map((v: string) => v.toLowerCase()))
+
+        // This is for showing side menu based on loggged in user's root org
+        // since we dont have new role for such users, we'll add a role 'isInstuteOrg'
+        // so that this role check can be used to show side menu items based on this condition
+        if (completeProdata.rootOrg && completeProdata.rootOrg.isInstitute) {
+          this.configSvc.userRoles.add('isInstuteOrg')
+        }
         return details
       } catch (e) {
         this.configSvc.userProfile = null

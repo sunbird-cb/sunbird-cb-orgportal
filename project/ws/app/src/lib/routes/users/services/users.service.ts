@@ -23,6 +23,7 @@ const API_END_POINTS = {
   DE_ACTIVE_USER: 'apis/proxies/v8/user/v1/block',
   NEW_USER_BLOCK_API: '/apis/proxies/v8/user/v1/block',
   NEW_USER_UN_BLOCK_API: '/apis/proxies/v8/user/v1/unblock',
+  SEARCH_USER_TABLE: '/apis/proxies/v8/user/v1/search',
 
   // GET_BULKUPLOAD_DATA: '/apis/protected/v8/admin/userRegistration/bulkUploadData',
 }
@@ -116,5 +117,18 @@ export class UsersService {
       },
     }
     return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody)
+  }
+
+  searchUserByenter(value: string, rootOrgId: string) {
+    const reqBody = {
+      request: {
+        query: value,
+        filters: {
+          rootOrgId,
+        },
+      },
+    }
+
+    return this.http.post<any>(`${API_END_POINTS.SEARCH_USER_TABLE}`, reqBody)
   }
 }
