@@ -172,6 +172,8 @@ export class InstituteProfileComponent implements OnInit {
                             r.trainingInstituteDetail = this.attachedOrgForm!.get('trainingInstituteDetail')!.value || ''
                     }
                 })
+                this.snackBar.open('Updated successfully')
+                this.editOrgValue = undefined
                 this.attachedOrgForm.reset()
                 this.attachedOrgForm.patchValue({
                     attachedTrainingInstitute: 'Attached training Institute',

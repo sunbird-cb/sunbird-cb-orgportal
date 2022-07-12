@@ -44,7 +44,7 @@ export class ResearchComponent implements OnInit {
         private dialog: MatDialog,
     ) {
         this.researchProgramForm = new FormGroup({
-            projectName: new FormControl('', [Validators.required]),
+            projectName: new FormControl('', []),
             programeStatus: new FormControl('Ongoing', [Validators.required]),
             industrySponsored: new FormControl(true, [Validators.required]),
             govtSponsored: new FormControl(false, [Validators.required]),
@@ -122,6 +122,8 @@ export class ResearchComponent implements OnInit {
                     }
                 })
                 this.resetProgramForm()
+                this.snackBar.open('Updated successfully')
+                this.editProgramValue = undefined
                 this.updateValuesToStore()
             }
         }
@@ -187,6 +189,8 @@ export class ResearchComponent implements OnInit {
                     }
                 })
                 this.resetPaperForm()
+                this.snackBar.open('Updated successfully')
+                this.editPaperValue = undefined
                 this.updateValuesToStore()
             }
         }
