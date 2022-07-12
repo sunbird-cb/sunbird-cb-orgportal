@@ -86,7 +86,7 @@ export class TrainingRogramsComponent implements OnInit {
         } else {
             rolesAndFunctions = _.get(this.orgSvc.formValues, 'rolesAndFunctions')
         }
-        if (!rolesAndFunctions.training) {
+        if (rolesAndFunctions && !rolesAndFunctions.training) {
             this.isTraining = true
             this.removeValidators()
             this.orgSvc.updateFormStatus('trainingPrograms', true)

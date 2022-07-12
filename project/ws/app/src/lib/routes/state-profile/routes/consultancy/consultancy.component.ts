@@ -64,7 +64,7 @@ export class ConsultancyComponent implements OnInit {
         } else {
             rolesAndFunctions = _.get(this.orgSvc.formValues, 'rolesAndFunctions')
         }
-        if (rolesAndFunctions.consultancy) {
+        if (rolesAndFunctions && rolesAndFunctions.consultancy) {
             this.isConsultancy = true
             // this.removeValidators()
             this.orgSvc.updateFormStatus('consultancy', (this.addedconsultancies.length > 0))
