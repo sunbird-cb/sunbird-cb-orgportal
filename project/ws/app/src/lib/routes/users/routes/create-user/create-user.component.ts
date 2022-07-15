@@ -39,6 +39,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   qpPath: any
   breadcrumbs: any
   disableCreateButton = false
+  displayLoader = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -132,6 +133,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
 
   onSubmit(form: any) {
     this.disableCreateButton = true
+    this.displayLoader = true
     const newobj = {
       personalDetails: {
         email: form.value.email,
@@ -144,6 +146,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
 
     this.usersSvc.createUser(newobj).subscribe(res => {
       if (res) {
+        this.displayLoader = false
         const dreq = {
           request: {
             organisationId: this.department,
@@ -165,11 +168,17 @@ export class CreateUserComponent implements OnInit, OnDestroy {
           }
         },
           // tslint:disable-next-line
-          (err: any) => { this.openSnackbar(err.error || err || `Some error occurred while updateing new user's role, Please try again later!`) })
+          (err: any) => {
+            this.displayLoader = false
+            this.openSnackbar(err.error || err || `Some error occurred while updateing new user's role, Please try again later!`)
+          })
       }
     },
       // tslint:disable-next-line
-      (err: any) => { this.openSnackbar(err.error || err || 'Some error occurred while creating user, Please try again later!') })
+      (err: any) => {
+        this.displayLoader = false
+        this.openSnackbar(err.error || err || 'Some error occurred while creating user, Please try again later!')
+      })
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

@@ -57,3 +57,8 @@
     flex-direction: column;
   }
 }
+
+
+::ng-deep .mat-drawer-content {
+  overflow-x: hidden!important;
+}

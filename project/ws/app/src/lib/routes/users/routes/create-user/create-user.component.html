@@ -1,6 +1,5 @@
 <div>
-  <ws-widget-breadcrumbs-org
-    [widgetData]="breadcrumbs">
+  <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs">
   </ws-widget-breadcrumbs-org>
 
   <mat-sidenav-container class="sticky" autosize name="discuss-menu">
@@ -111,11 +110,15 @@
                 </div>
               </div>
               <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)"
-                class="text-white btn-success btn-responsive" [disabled]="createUserForm?.invalid || disableCreateButton">
+                class="text-white btn-success btn-responsive"
+                [disabled]="createUserForm?.invalid || disableCreateButton">
                 <span class="text-white" i18n>
                   Create user
                 </span>
               </button>
+              <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
+                <mat-spinner [diameter]="30"></mat-spinner>
+              </div>
             </form>
           </div>
         </div>
