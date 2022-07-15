@@ -107,6 +107,8 @@ export class ConsultancyComponent implements OnInit {
                     }
                 })
                 this.resetConsultancyForm()
+                this.snackBar.open('Updated successfully')
+                this.editValue = undefined
                 this.updateValuesToStore()
             }
         }
