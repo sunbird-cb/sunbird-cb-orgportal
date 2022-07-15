@@ -91,6 +91,8 @@ export class CreateEventComponent implements OnInit {
     value: string
   }[]
   newtimearray: any = []
+  disableCreateButton = false
+  displayLoader = false
 
   constructor(private snackBar: MatSnackBar, private eventsSvc: EventsService, private matDialog: MatDialog,
     // tslint:disable-next-line:align
@@ -387,6 +389,8 @@ export class CreateEventComponent implements OnInit {
   }
 
   onSubmit() {
+    this.disableCreateButton = true
+    this.displayLoader = true
     const eventDurationMinutes = this.addMinutes(
       this.createEventForm.controls['eventDurationHours'].value,
       this.createEventForm.controls['eventDurationMinutes'].value
@@ -494,15 +498,21 @@ export class CreateEventComponent implements OnInit {
     }
     // const formJson = this.encodeToBase64(form)
     if (eventDurationMinutes === 0) {
+      this.displayLoader = false
+      this.disableCreateButton = false
       this.openSnackbar('Duration cannot be zero')
     } else {
       this.eventsSvc.createEvent(form).subscribe(
         res => {
+          this.displayLoader = false
+          this.disableCreateButton = false
           const identifier = res.result.identifier
           // this.fileSubmit(identifier)
           this.publishEvent(identifier)
         },
         (err: any) => {
+          this.displayLoader = false
+          this.disableCreateButton = false
           this.openSnackbar(err.error.split(':')[1])
         }
       )

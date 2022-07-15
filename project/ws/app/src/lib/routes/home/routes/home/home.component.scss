@@ -20,6 +20,8 @@
 
 .left-nav {
   min-width: 240px;
+  overflow: hidden;
+  box-sizing: border-box;
   // max-width: 240px;
 
   // ::ng-deep.mat-drawer-inner-container {
@@ -79,8 +81,8 @@
   // margin-bottom: 32px;
 }
 
-.mat-drawer-content {
-  overflow: hidden !important;
+:ng-deep .mat-drawer-content {
+  overflow-x: hidden !important;
 }
 
 .nav-container {
