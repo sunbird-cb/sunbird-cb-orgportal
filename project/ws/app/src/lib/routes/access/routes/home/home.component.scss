@@ -67,3 +67,12 @@
 ::ng-deep .mat-drawer-content {
   overflow-x: hidden!important;
 }
+
+::ng-deep.mat-progress-spinner {
+    display: block;
+    position: absolute!important;
+    top: 0;
+    margin-top: 30%;
+    left: 0;
+    margin-left: 45%;
+}
