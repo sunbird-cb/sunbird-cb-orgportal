@@ -17,7 +17,7 @@ td, th {
   border-left: 1px solid #d3d3d3;
 }
 .page_title_flex {
-  display:flex; 
+  display:flex;
   justify-content: right;
 }
 
@@ -74,7 +74,7 @@ mat-card.highlight {
 
 mat-card.event_types {
   width:230px;
-  box-shadow: none; 
+  box-shadow: none;
   margin-right:20px;
 }
 
@@ -91,7 +91,7 @@ mat-card.event_types {
 }
 
 label.event_types {
-  vertical-align: text-bottom; 
+  vertical-align: text-bottom;
   line-height: 20px;
   font-size: 14px;
   font-weight: 400;
@@ -710,7 +710,7 @@ input.mat-input-element {
 }
 
 .image-box {
-  display:flex; 
+  display:flex;
   justify-content: right;
   .mat-card {
     width: 200px;
@@ -720,7 +720,7 @@ input.mat-input-element {
   .imgicon {
     width: 35px;
     margin: 0 auto;
-  }  
+  }
 
   #blah {
     width: 200px;
@@ -734,4 +734,14 @@ input.mat-input-element {
 }
 ::ng-deep.theme-igot.day-mode .mat-stroked-button:not([disabled]) {
   border-color: #0074b6;
+}
+
+::ng-deep.mat-progress-spinner {
+    display: block;
+    position: absolute!important;
+    top: 0;
+    margin-top: 30%;
+    left: 0;
+    margin-left: 45%;
+    z-index: 1;
 }
