@@ -28,20 +28,20 @@
 
 .left-nav {
   min-width: 240px;
+  overflow: hidden!important;
   // max-width: 240px;
   // background:none !important;
   // border-right:0 !important;
 
 
-  // ::ng-deep.mat-drawer-inner-container {
-  //   overflow: visible;
-  // }
+
 
   @include breakpoint-xs {
     min-width: 100%;
     max-width: none;
   }
 }
+
 
 .flex-3 {
   flex: 3;
@@ -68,6 +68,10 @@
   overflow-x: hidden!important;
   overflow-y: hidden!important;
 }
+
+ ::ng-deep .mat-drawer-inner-container {
+    overflow: hidden;
+  }
 
 ::ng-deep.mat-progress-spinner {
     display: block;
