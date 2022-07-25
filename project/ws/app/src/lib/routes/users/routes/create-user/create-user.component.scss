@@ -552,7 +552,7 @@ input.mat-input-element {
 }
 ::ng-deep.mat-progress-spinner {
     display: block;
-    position: absolute!important;
+    position: fixed!important;
     top: 0;
     margin-top: 30%;
     left: 0;
