@@ -1,0 +1,23 @@
+<div class="assesment_home flex flex-col">
+  <div class="flex justify-between items-center">
+    <h1>Create {{(assessmentPrimaryCategory === allPrimaryCategory.ASSESSMENT) ? 'practice' :
+      (assessmentPrimaryCategory === allPrimaryCategory.FINALASSESSMENT) ? 'final' : ''}} assessment</h1>
+    <a class="cursor-pointer" (click)="selectedData = 'start'" *ngIf="!selectedDataIdentifier">
+      <span>
+        <mat-icon class="mat-icon ws-mat-black60-text" (click)="closeModel.emit('start')">close</mat-icon>
+      </span>
+    </a>
+  </div>
+  <div class="flex flex-col">
+    <mat-tab-group animationDuration="0ms" #tabgroup (selectedTabChange)="selectedTab()">
+      <mat-tab label="Basic Information" class="assets_tab">
+        <ws-auth-assessment-basic-info [selectedData]="typeOfSelectedData" (nextTab)="takeAction($event)"
+          (assessmentData)="takeActionOnData($event)">
+        </ws-auth-assessment-basic-info>
+      </mat-tab>
+      <mat-tab label="Add Questions" class="assets_tab" [disabled]="!selectedDataIdentifier">
+        <ws-auth-assessment-add-question [selectedData]="typeOfSelectedData"></ws-auth-assessment-add-question>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

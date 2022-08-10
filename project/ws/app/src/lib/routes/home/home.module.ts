@@ -59,6 +59,10 @@ import { BudgetschemepopupComponent } from './components/budgetschemepopup/budge
 import { BudgetproofspopupComponent } from './components/budgetproofspopup/budgetproofspopup.component'
 import { UploadService } from './services/upload.service'
 import { AdmintableComponent } from './components/admintable/admintable.component'
+import { CompetencyListViewComponent } from './routes/competency/competency-list-view/competency-list-view.component'
+import { CompetencyHomeComponent } from './routes/competency/competency-home/competency-home.component'
+import { CompetencyDetailsComponent } from './routes/competency/competency-details/competency-details.component'
+import { CompetencyManageAssessmentComponent } from './routes/competency/competency-manage-assessment/competency-manage-assessment.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -80,6 +84,10 @@ import { AdmintableComponent } from './components/admintable/admintable.componen
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
+    CompetencyListViewComponent,
+    CompetencyHomeComponent,
+    CompetencyDetailsComponent,
+    CompetencyManageAssessmentComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,104 @@
+@import 'ws-mixins';
+@import 'ws-vars';
+@import 'ws-common';
+
+.basic_info_main {
+  box-sizing: border-box;
+}
+.w-full {
+  width: 100%;
+}
+.point_box {
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 4px 4px;
+  box-sizing: border-box;
+}
+.point_heading_box {
+  width: 225px;
+  box-sizing: border-box;
+}
+.point_detail_box {
+  width: calc(100% - 235px);
+  box-sizing: border-box;
+}
+.bg_white {
+  background-color: #fff;
+}
+.cut_off_box {
+  width: 250px;
+  box-sizing: border-box;
+}
+.detail_inner {
+  padding: 12px 16px;
+  box-sizing: border-box;
+  border-radius: 4px 4px;
+  p {
+    margin-bottom: 0;
+  }
+}
+.cut_off_box_01 {
+  margin-left: 2px;
+}
+
+.mat-button {
+  padding: 8px 16px;
+  box-sizing: border-box;
+}
+.save_btn {
+  border: 1px solid #0074b6!important;
+  color:#0074b6!important;
+}
+.mat-icon.arrow_right {
+  color: #fff;
+}
+.margin-bottom-none {
+  margin-bottom: 0!important;
+}
+.sub_text {
+  font: 400 12px/16px 'Lato';
+}
+
+.disable {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: none;
+}
+
+.duration-time {
+  display: flex;
+  flex: 1;
+
+  .duration-d {
+    display: flex;
+    // flex: 1;
+  }
+
+  @include breakpoint-xs {
+    flex-wrap: wrap;
+  }
+
+  @include breakpoint-s {
+    flex-wrap: wrap;
+  }
+
+  @include breakpoint-m {
+    flex-wrap: wrap;
+    flex: auto;
+  }
+}
+
+.duration-width {
+  max-width: 60px;
+
+  @include breakpoint-s {
+    max-width: 60px;
+  }
+
+  @include breakpoint-xs {
+    max-width: 50px;
+  }
+
+  @include breakpoint-m {
+    max-width: 70px;
+  }
+}

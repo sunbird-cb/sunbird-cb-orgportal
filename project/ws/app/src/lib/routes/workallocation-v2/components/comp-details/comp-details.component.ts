@@ -66,7 +66,6 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
         const lst = _.map(_.get(this.dataStructure[index], 'levelList') || [], r => {
           return { alias: r.alias, level: r.level }
         })
-        // debugger
         const fg = this.formBuilder.group({
           localId: this.dataStructure[index].localId,
           compId: this.dataStructure[index].compId,

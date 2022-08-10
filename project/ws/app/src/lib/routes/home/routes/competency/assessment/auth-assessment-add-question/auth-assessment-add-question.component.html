@@ -1,0 +1,13 @@
+<div *ngFor="let item of listOfSection">
+  <mat-card class="mat-elevation-z2  main_info_card margin-xs">
+    <ws-auth-assessment-add-question-form-meta [selectedData]="selectedData" [sectionData]="item"
+      (deleteSectionNode)="takeDeleteAction($event)" (savedSectionId)="takeSectionSaveAction($event)">
+    </ws-auth-assessment-add-question-form-meta>
+  </mat-card>
+</div>
+<div class="flex flex-row margin-top-xl"
+  *ngIf="contentData && contentData.scoreCutoffType === 'SectionLevel' && isEditEnabled">
+  <button mat-button class="mat-button mat-button-base save_btn" type="button" (click)="addSectionContent()">
+    <span class="mat-button-wrapper"> Add section</span>
+  </button>
+</div>

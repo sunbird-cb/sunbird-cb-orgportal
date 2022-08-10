@@ -97,7 +97,6 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
         if (!(this.groupcompetencyList && this.groupcompetencyList.value)) {
           this.addNewGroup(false, grp)
         }
-        // debugger
         const complist = _.map(_.get(grpData[i], 'competencyDetails'), (numa: any) => {
           return {
             localId: this.watStore.getID,

@@ -1,0 +1,136 @@
+<mat-card class="mat-elevation-z2  main_info_card margin-xs">
+  <div class="flex flex-col margin-top-l basic_info_main" [ngClass]="{'disable': !isEditEnabled}">
+    <form [formGroup]="contentForm" (ngSubmit)="!contentForm.invalid ? submitToSave(): null">
+      <div class="flex flex-row">
+        <div class="flex flex-col flex-1 w-full">
+          <p class="mat-h3 margin-bottom-xs" [ngClass]="{ required: true }">Title</p>
+          <mat-form-field appearance="outline" class="w-full">
+            <input matInput formControlName="name" maxlength="50">
+            <mat-hint class="w-full text-right">{{cf.name.value.length}}/50</mat-hint>
+            <mat-error *ngIf="cf.name.hasError('required')" i18n="Title Error|Explains Title is required">
+              Title is mandatory
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="flex flex-col flex-1 w-full margin-left-l">
+          <p class="mat-h3  margin-bottom-xs" [ngClass]="{ required: true }">Subtitle</p>
+          <mat-form-field appearance="outline" class="w-full">
+            <input matInput formControlName="purpose" maxlength="50">
+            <mat-hint class="w-full text-right">{{cf.purpose.value.length}}/50</mat-hint>
+            <mat-error *ngIf="cf.purpose.hasError('required')" i18n="Title Error|Explains Title is required">
+              Subtitle is mandatory
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="flex flex-row">
+        <div class="flex flex-col flex-1 w-full">
+          <mat-checkbox class="padding-bottom-m" [checked]="cf.showTimer.value" (change)="checkTimerAction()">
+            <b>Show timer</b>
+          </mat-checkbox>
+        </div>
+        <div class="flex flex-col flex-1 w-full margin-left-l" *ngIf="cf.showTimer.value">
+          <div class="form_item">
+            <p class="margin-remove-bottom">
+              <span class="mat-subheading-2 margin-0" i18n>Duration</span>
+              <small i18n>(hh:mm:ss)</small>
+            </p>
+            <div class="duration-time">
+              <div class="duration-d">
+                <mat-form-field appearance="outline" class="duration-width margin-right-s">
+                  <input matInput class="numberInput" [(ngModel)]="hours" (ngModelChange)="timeToSeconds()"
+                    [ngModelOptions]="{ standalone: true }" (keyup)="timeToSeconds()" type="number" placeholder="00"
+                    min="0" step="1" />
+                </mat-form-field>
+                <div class="margin-top-s padding-small">:</div>
+              </div>
+              <div class="duration-d">
+                <mat-form-field appearance="outline" class="duration-width  margin-right-s  margin-left-s">
+                  <input matInput class="numberInput" [(ngModel)]="minutes" (ngModelChange)="timeToSeconds()"
+                    [ngModelOptions]="{ standalone: true }" (keyup)="timeToSeconds()" type="number" placeholder="00"
+                    min="0" max="59" step="1" />
+                </mat-form-field>
+                <div class="margin-top-s padding-small">:</div>
+              </div>
+              <div class="duration-d">
+                <mat-form-field appearance="outline" class="duration-width  margin-left-s">
+                  <input matInput class="numberInput" [(ngModel)]="seconds" (ngModelChange)="timeToSeconds()"
+                    [ngModelOptions]="{ standalone: true }" (keyup)="timeToSeconds()" type="number" placeholder="00"
+                    min="0" max="59" step="1" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col margin-top-xs">
+        <p class="mat-h3  margin-bottom-xs" [ngClass]="{ required: true }">Description</p>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <textarea matInput rows="3" formControlName="description" maxlength="600"></textarea>
+          <mat-hint>{{cf.description.value.length}}/600</mat-hint>
+          <mat-error *ngIf="cf.description.hasError('required')" i18n="Title Error|Explains Title is required">
+            Description is mandatory
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="flex flex-col margin-top-l"
+        *ngIf="selectedData && selectedData.primaryCategory !== 'Practice Question Set'">
+        <p class="mat-h3  margin-bottom-xs" [ngClass]="{ required: true }">Type of score cutoffs</p>
+        <div class="flex flex-row">
+          <mat-radio-group class="flex flex-row" formControlName="scoreCutoffType">
+            <mat-radio-button class="mat-elevation-z2 mat-card cut_off_box margin-right-m"
+              *ngFor="let item of radioButtonData" [value]="item.id">
+              <span class="mat-body-2 flex flex-row margin-bottom-xs"><b>{{item.name}}</b></span>
+              <p class="flex flex-row white-space-break sub_text ws-mat-black60-text margin-remove">
+                {{item.description}}
+              </p>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+
+      <div class="flex flex-row point_box p-6 margin-top-xl">
+        <div class="flex flex-col point_heading_box">
+          <p class="mat-title">Point to note</p>
+          <p class="mat-body-1">To gauge our learners knowledge of the subject matter, this will be the
+            type of assessment.
+          </p>
+        </div>
+        <div class="flex flex-col point_detail_box margin-left-xs">
+          <div class="bg_white w-full detail_inner margin-bottom-xs">
+            <p class="mat-body-2">Assessment will have no time duration.</p>
+          </div>
+          <div class="bg_white w-full detail_inner  margin-bottom-xs">
+            <p class="mat-body-2">Unlimited retakes are allowed.</p>
+          </div>
+          <div class="bg_white w-full detail_inner  margin-bottom-xs">
+            <p class="mat-body-2">There will be no negative marking.</p>
+          </div>
+          <div class="bg_white w-full detail_inner margin-bottom-none">
+            <p class="mat-body-2">There will be no negative marking.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-row margin-top-xl">
+        <button mat-button class="mat-button mat-button-base save_btn" type="submit"
+          *ngIf="!contentCreated && isEditEnabled">
+          <span class="mat-button-wrapper">Save</span>
+        </button>
+        <button mat-button class="mat-button mat-button-base save_btn" type="button" (click)="updateContent()"
+          *ngIf="contentCreated && isEditEnabled">
+          <span class="mat-button-wrapper">Update</span>
+        </button>
+        <button mat-button class="text-white ws-mat-primary-background mat-button mat-button-base margin-left-m"
+          type="button" (click)="nextTabNaV()" *ngIf="isEditEnabled">
+          <span class="mat-button-wrapper text-white">Next
+            <mat-icon class="mat-icon text-white arrow_right">arrow_right_alt</mat-icon>
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</mat-card>

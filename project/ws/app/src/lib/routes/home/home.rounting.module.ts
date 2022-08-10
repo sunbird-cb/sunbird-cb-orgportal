@@ -16,6 +16,10 @@ import { LeadershipComponent } from './routes/leadership/leadership.component'
 import { StaffComponent } from './routes/staff/staff.component'
 import { BudgetComponent } from './routes/budget/budget.component'
 import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
+import { CompetencyListViewComponent } from './routes/competency/competency-list-view/competency-list-view.component'
+import { CompetencyHomeComponent } from './routes/competency/competency-home/competency-home.component'
+import { CompetencyDetailsComponent } from './routes/competency/competency-details/competency-details.component'
+import { CompetencyManageAssessmentComponent } from './routes/competency/competency-manage-assessment/competency-manage-assessment.component'
 
 const routes: Routes = [
   {
@@ -86,6 +90,14 @@ const routes: Routes = [
         },
         component: WorkallocationComponent,
       },
+      {
+        path: 'competencyList',
+        data: {
+          pageId: 'comptencyList',
+          module: 'home',
+        },
+        component: CompetencyListViewComponent,
+      },
     ],
   },
   {
@@ -134,6 +146,37 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'competencyHome',
+    component: CompetencyHomeComponent,
+    data: {
+      pageId: 'competencyHome',
+      module: 'home',
+    },
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'competencyDetails'
+      },
+      {
+        path: 'competencyDetails',
+        component: CompetencyDetailsComponent,
+        data: {
+          pageId: 'competencyDetails',
+          module: 'home',
+        },
+      },
+      {
+        path: 'manageAssessment',
+        component: CompetencyManageAssessmentComponent,
+        data: {
+          pageId: 'manageAssessment',
+          module: 'home',
+        },
+      }
+    ]
+  }
 ]
 
 @NgModule({

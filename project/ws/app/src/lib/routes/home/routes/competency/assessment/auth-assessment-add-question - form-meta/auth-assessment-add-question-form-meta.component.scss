@@ -1,0 +1,132 @@
+
+.basic_info_main {
+  box-sizing: border-box;
+}
+.w-full {
+  width: 100%;
+}
+.point_box {
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 4px 4px;
+  box-sizing: border-box;
+}
+.point_heading_box {
+  width: 250px;
+  box-sizing: border-box;
+}
+.point_detail_box {
+  width: calc(100% - 245px);
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 3px 3px;
+  padding: 1rem;
+}
+.bg_white {
+  background-color: #fff;
+}
+.desc_textarea {
+  height: 170px;
+}
+.cut_off_box {
+  width: 215px;
+  box-sizing: border-box;
+}
+.detail_inner {
+  padding: 12px 16px;
+  box-sizing: border-box;
+  border-radius: 4px 4px;
+  p {
+    margin-bottom: 0;
+  }
+}
+.cut_off_box_01 {
+  margin-left: 2px;
+}
+
+.mat-button {
+  padding: 8px 16px;
+  box-sizing: border-box;
+}
+.save_btn {
+  border: 1px solid #0074b6!important;
+  color:#0074b6!important;
+}
+.add_ques_btn {
+  padding: 4px 12px;
+}
+.mat-icon.arrow_right {
+  color: #fff;
+}
+.margin-bottom-none {
+  margin-bottom: 0!important;
+}
+.sub_text {
+  font: 400 12px/16px 'Lato';
+}
+.w-50 {
+  width: 50%;
+}
+.add_question_top_box {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.search-border {
+    border-color: #cecece;
+}
+
+.question_box {
+  min-height: 250px;
+  height: 100%;
+}
+.select_box {
+  width: 225px;
+}
+
+.listOfQuestions{
+  position: relative;
+  .moreOptions {
+    position: absolute;
+    right: 0px;
+  }
+  ::ng-deep .mat-list-item-content {
+   padding: 0 !important;
+  }
+}
+
+.questionlistCss {
+  padding: 5px;
+  border: 1px solid #f2f2f2;
+  border-left: 5px solid #666666 !important;
+  width: 100%;
+  &.mat-radio-checked {
+    border-left: 5px solid #ea9f35 !important;
+  }
+  ::ng-deep .mat-radio-container {
+    display: none !important;
+  }
+  ::ng-deep .mat-radio-label-content{
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0;
+  }
+}
+
+.disable {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: none;
+}
+
+.input-div {
+  position: relative;
+  .input-text {
+    width: 75%;
+  }
+  .center {
+    position: absolute;
+    top: 40%;
+    transform: translate(0, -50%);
+    right: 0;
+  }
+}

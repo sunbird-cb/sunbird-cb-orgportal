@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core'
 import { ValueService, ConfigurationsService, WidgetContentService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
-import { ActivatedRoute, Router, Event, NavigationEnd  } from '@angular/router'
+import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import { MDOinfo } from '../../models/mdoinfo.model'
 /* tslint:disable */
 import _ from 'lodash'
@@ -43,11 +43,11 @@ export class MdoinfoComponent implements OnInit, OnDestroy {
     private valueSvc: ValueService,
     private configSvc: ConfigurationsService,
     private widgetContentSvc: WidgetContentService) {
-      this.router.events.subscribe((event: Event) => {
-        if (event instanceof NavigationEnd) {
-          this.bindUrl(event.urlAfterRedirects.replace('/app/home/mdoinfo/', '/app/home/mdoinfo/leadership'))
-        }
-      })
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.bindUrl(event.urlAfterRedirects.replace('app/home/mdoinfo/', 'app/home/mdoinfo/leadership'))
+      }
+    })
 
   }
 

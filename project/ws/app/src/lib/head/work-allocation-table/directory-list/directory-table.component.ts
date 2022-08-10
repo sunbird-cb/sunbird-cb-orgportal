@@ -56,7 +56,7 @@ export class UIDirectoryTableComponent implements OnInit, AfterViewInit, OnChang
   }
 
   ngOnChanges(data: SimpleChanges) {
-    this.tableData =  null
+    this.tableData = null
     this.tableData = _.get(data, 'tableData.currentValue')
     this.dataSource.data = _.get(data, 'data.currentValue')
     this.length = this.dataSource.data.length

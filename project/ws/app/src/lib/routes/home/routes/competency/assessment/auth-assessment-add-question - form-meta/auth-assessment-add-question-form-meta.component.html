@@ -1,0 +1,177 @@
+<div class="flex flex-col margin-top-l basic_info_main">
+  <div class="add_question_top_box padding-bottom-m" [ngClass]="{'disable': !isEditEnabled}">
+    <form [formGroup]="questionContentForm">
+      <p class="mat-title "
+        *ngIf="contentData && contentData.scoreCutoffType && contentData.scoreCutoffType === 'SectionLevel'">
+        {{qcf.name.value}}</p>
+      <div class="flex flex-row"
+        *ngIf="contentData && contentData.scoreCutoffType && contentData.scoreCutoffType === 'SectionLevel'">
+        <div class="flex flex-col flex-1 w-full">
+          <p class="mat-h3 margin-bottom-xs" [ngClass]="{ required: true }">Title</p>
+          <mat-form-field appearance="outline" class="w-full">
+            <input matInput formControlName="name" placeholder="Section title">
+            <mat-error *ngIf="qcf.name.hasError('required')" i18n="Title Error|Explains Title is required">
+              Title is mandatory
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="flex flex-row">
+        <div class="flex flex-col flex-1 w-full">
+          <p class="mat-h3 margin-bottom-xs" [ngClass]="{ required: true }">What is the number of questions you will be
+            adding?</p>
+          <mat-form-field appearance="outline" class="w-full">
+            <input matInput formControlName="totalQuestions" placeholder="Number of questions" type="number" max="100">
+            <mat-error *ngIf="qcf.totalQuestions.hasError('required')" i18n="Title Error|Explains Title is required">
+              Number of questions added is mandatory
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="flex flex-col flex-1 w-full margin-left-l">
+          <p class="mat-h3  margin-bottom-xs" [ngClass]="{ required: true }">What is the number of questions to be
+            displayed for the assessment?</p>
+          <mat-form-field appearance="outline" class="w-full">
+            <input matInput formControlName="maxQuestions" placeholder="Number of question to be displayed"
+              type="number">
+            <mat-error *ngIf="qcf.maxQuestions.hasError('required')" i18n="Title Error|Explains Title is required">
+              Number of questions to be displayed is mandatory
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="flex flex-row" *ngIf="selectedData && selectedData.primaryCategory !== 'Practice Question Set'">
+        <div class="flex flex-col w-50">
+          <p class="mat-h3 margin-bottom-xs" [ngClass]="{ required: true }">Minimum percentage (%) to pass this
+            assessment?</p>
+          <mat-form-field appearance="outline" class="w-full">
+            <input matInput formControlName="minimumPassPercentage" placeholder="Example: 50%" type="number">
+            <mat-error *ngIf="qcf.minimumPassPercentage.hasError('required')"
+              i18n="Title Error|Explains Title is required">
+              Minimum pass percentage is mandatory
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="flex flex-col">
+        <p class="mat-h3  margin-bottom-xs" [ngClass]="{ required: true }">Instructions</p>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <textarea matInput rows="3" formControlName="additionalInstructions" maxlength="600"
+            placeholder="Write the instructions for the assessment. Please use fewer than 600 characters."></textarea>
+          <mat-hint>{{qcf.additionalInstructions.value.length}}/600</mat-hint>
+          <mat-error *ngIf="qcf.additionalInstructions.hasError('required')"
+            i18n="Title Error|Explains Title is required">
+            Instructions is mandatory
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="flex flex-row margin-top-m flex-between">
+        <button mat-button class="mat-button mat-button-base save_btn" type="submit" (click)="saveSection()" *ngIf="
+        ((contentData && !contentData.childNodes) ||
+        (contentData && contentData.childNodes && !contentData.childNodes.includes(sectionData)))
+        && isEditEnabled">
+          <span class="mat-button-wrapper">Save</span>
+        </button>
+        <button mat-button class="mat-button mat-button-base save_btn" type="button" (click)="updateSection()"
+          *ngIf="contentData && contentData.childNodes && contentData.childNodes.includes(sectionData) && isEditEnabled">
+          <span class="mat-button-wrapper">Update</span>
+        </button>
+        <button mat-button class="padding-xs" (click)="removeAssessment('deleteSection')"
+          *ngIf="isEditEnabled && contentData && contentData.children && contentData.children.length > 1">
+          <span class="mat-button-wrapper">
+            <mat-icon class="mat-icon">delete</mat-icon>
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="flex flex-row margin-top-xl justify-between"
+    *ngIf="contentData && contentData.childNodes && contentData.childNodes.includes(sectionData) && contentData.childNodes.length > 0">
+    <div class="flex flex-col point_heading_box">
+      <p class="mat-title ">Add questions</p>
+      <p class="sub_text margin-bottom-xs ws-mat-primary-text ">Question list
+      </p>
+      <button mat-button class="mat-button mat-button-base save_btn add_ques_btn" type="button"
+        (click)="addQuestionList()" *ngIf="isEditEnabled">
+        <span class="mat-button-wrapper">Add Question</span>
+      </button>
+      <mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let item of questionList; let i = index" class="listOfQuestions">
+          <mat-radio-button [value]="item.identifier" class="questionlistCss" (change)="questionSelected($event)"
+            [checked]="item.identifier === selectedQuestionNode">
+            {{i + 1}}. {{item.name}}
+          </mat-radio-button>
+          <button mat-icon-button class="moreOptions">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <div class="flex flex-col point_detail_box margin-left-xs" *ngIf="selectedQuestionNode"
+      [ngClass]="{'disable': !isEditEnabled}">
+      <div class="flex flex-1 flex-row">
+        <div class="select_box">
+          <mat-form-field appearance="outline">
+            <mat-select [(ngModel)]="questionType" placeholder="Question Type"
+              (selectionChange)="selectedQuestionType($event)">
+              <mat-option value="mcq-sca" i18n="MCQ| acronym for multiple choice question">MCQ single correct answer
+              </mat-option>
+              <mat-option value="mcq-mca" i18n="MCQ| acronym for multiple choice question">MCQ multiple correct answer
+              </mat-option>
+              <mat-option value="fitb" i18n>Fill in the Blanks</mat-option>
+              <mat-option value="mtf" i18n>Match the Following</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="margin-left-m w-full pl-2 input-div">
+          <mat-form-field appearance="outline" class="w-full">
+            <input matInput placeholder="Type your question here" [(ngModel)]="questionText" [disabled]="!questionType"
+              class="input-text" (keyup)="keyUpEvent($event)">
+            <mat-hint class="w-full text-right" *ngIf="questionType === 'fitb'">No.of blanks added = {{fitbCount}}
+            </mat-hint>
+            <button mat-button class="center" *ngIf="questionType === 'fitb'" (click)="addBlanktoText()">Add
+              Blank</button>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="question_box">
+        <div class="flex flex-col ">
+          <ws-auth-multiple-choice-question *ngIf="questionType === 'mcq-sca' || questionType === 'mcq-mca'"
+            [currentId]="selectedQuestionNode" [showHint]="false" [submitPressed]="false"
+            (value)="updateSelectedQuiz($event)">
+          </ws-auth-multiple-choice-question>
+          <ws-auth-fill-ups-editor *ngIf="questionType === 'fitb'" [currentId]="selectedQuestionNode" [showHint]="false"
+            [submitPressed]="false" (value)="updateSelectedQuiz($event)">
+          </ws-auth-fill-ups-editor>
+          <ws-auth-match-the-following *ngIf="questionType === 'mtf'" [currentId]="selectedQuestionNode"
+            [showHint]="false" [submitPressed]="false" (value)="updateSelectedQuiz($event)">
+          </ws-auth-match-the-following>
+        </div>
+      </div>
+
+      <div class="bg_white w-full question_footer margin-bottom-none flex flex-row justify-between content-end">
+        <div class="flex">
+          <button class="mat-button mat-button-base save_btn" type="button" (click)="saveQuestion()"
+            *ngIf="isEditEnabled">
+            <span class="mat-button-wrapper">Save</span>
+          </button>
+        </div>
+        <div class="flex flex-row items-center">
+          <!-- <span class="mat-button-wrapper">
+            <mat-icon class="mat-icon">content_copy</mat-icon>
+          </span> -->
+          <button mat-button class="padding-xs" (click)="removeAssessment('deleteQuestion')" *ngIf="isEditEnabled">
+            <span class="mat-button-wrapper">
+              <mat-icon class="mat-icon">delete</mat-icon>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
