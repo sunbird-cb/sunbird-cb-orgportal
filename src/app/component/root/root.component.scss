@@ -19,6 +19,10 @@ ws-app-nav-bar {
   box-sizing: border-box;
 }
 
+::ng-deep .mat-drawer-content {
+  overflow-x: hidden!important;
+}
+
 .height-on-top {
   padding-top: 56px;
 }

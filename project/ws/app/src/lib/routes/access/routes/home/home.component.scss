@@ -6,8 +6,9 @@
   @extend %page-center;
   height: auto;
   min-height: 75vh;
-  padding: 12px;
-  width: 99%!important;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%!important;
   margin-left: auto!important;
   margin-right: auto!important;
 }
@@ -16,6 +17,10 @@
   position: relative;
 }
 
+.container-balanced-inner {
+  padding: 24px!important;
+  box-sizing: border-box
+}
 .container-balanced-banner {
   @extend %page-center;
   height: auto;
@@ -23,20 +28,20 @@
 
 .left-nav {
   min-width: 240px;
+  overflow: hidden!important;
   // max-width: 240px;
   // background:none !important;
   // border-right:0 !important;
 
 
-  // ::ng-deep.mat-drawer-inner-container {
-  //   overflow: visible;
-  // }
+
 
   @include breakpoint-xs {
     min-width: 100%;
     max-width: none;
   }
 }
+
 
 .flex-3 {
   flex: 3;
@@ -56,4 +61,23 @@
   @include breakpoint-s {
     flex-direction: column;
   }
+}
+
+
+::ng-deep .mat-drawer-content {
+  overflow-x: hidden!important;
+  overflow-y: hidden!important;
+}
+
+ ::ng-deep .mat-drawer-inner-container {
+    overflow: hidden;
+  }
+
+::ng-deep.mat-progress-spinner {
+    display: block;
+    position: fixed!important;
+    top: 0;
+    margin-top: 30%;
+    left: 0;
+    margin-left: 45%;
 }

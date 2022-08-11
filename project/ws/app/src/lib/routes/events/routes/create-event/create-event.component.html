@@ -9,16 +9,22 @@
                 </div>
                 <span class="spacer"></span>
                 <div class="flex flex-3 custom button-row-inline margin-top-xs">
-                    <button mat-stroked-button color="accent" type="button" class="mat-accent-border flex-auto-display"
-                        (click)="goToList()">
-                        <span i18n>Cancel</span>
-                    </button>
-                    <button mat-button class="create-btn" type="button" (click)="onSubmit()"
-                        [disabled]="!createEventForm.valid">
-                        <span i18n>Save and Publish</span>
-                    </button>
+                    <div>
+                        <button mat-stroked-button color="accent" type="button"
+                            class="mat-accent-border flex-auto-display" (click)="goToList()">
+                            <span i18n>Cancel</span>
+                        </button>
+                        <button mat-button class="create-btn btn-success" type="button" (click)="onSubmit()"
+                            [disabled]="!createEventForm.valid || disableCreateButton">
+                            <span i18n>Save and Publish</span>
+                        </button>
+                    </div>
+                    <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
+                        <mat-spinner [diameter]="30"></mat-spinner>
+                    </div>
 
                 </div>
+
             </div>
             <div class="flex flex-4 flex-column">
                 <div class="flex flex-1 custom">
