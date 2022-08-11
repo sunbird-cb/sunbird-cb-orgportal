@@ -1,11 +1,28 @@
-<div class="flex flex-4 flex-column margin-left-l">
-  <mat-card class="flex-custom ws-mat-accent-border">
+<div class="flex flex-1 flex-column margin-left-l">
+  <mat-card class="flex-custom ws-mat-accent-border comp-mat-card">
     <mat-card-header class="flex-custom-m">
       <div class="flex-1" role="link" tabindex="0">
         <div class="flex flex-1">
           <mat-card-title class="flex-4 mobile-margin text-capitalize margin-remove">
             <span class="h-600-s-20-m color-87">Choose level to create assessment</span>
           </mat-card-title>
+        </div>
+        <div class="flex flex-1 flex-col">
+          <div class="card_box flex flex-1 flex-row items-center justify-between margin-top-m">
+            <h2 class="margin-remove-bottom">Level 1</h2>
+            <button mat-raised-button type="button" class="text-primary  margin-right-l edit-btn">
+              <b class="ws-mat-default-text" i18n>Edit</b>
+            </button>
+          </div>
+
+          <!--======= second card ============-->
+          <div class="card_box flex flex-1 flex-row items-center justify-between margin-top-m">
+            <h2 class="margin-remove-bottom">Level 2</h2>
+            <button mat-raised-button type="button"
+              class="text-white ws-mat-primary-background text-white margin-right-m custom-btn">
+              <b class="text-white" i18n>Create</b>
+            </button>
+          </div>
         </div>
       </div>
     </mat-card-header>
