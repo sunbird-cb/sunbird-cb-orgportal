@@ -5,7 +5,7 @@
         <div class="flex flex-col flex-1 w-full">
           <p class="mat-h3 margin-bottom-xs" [ngClass]="{ required: true }">Title</p>
           <mat-form-field appearance="outline" class="w-full">
-            <input matInput formControlName="name" maxlength="50">
+            <input matInput formControlName="name" maxlength="50" placeholder="Assessment title">
             <mat-hint class="w-full text-right">{{cf.name.value.length}}/50</mat-hint>
             <mat-error *ngIf="cf.name.hasError('required')" i18n="Title Error|Explains Title is required">
               Title is mandatory
@@ -15,7 +15,7 @@
         <div class="flex flex-col flex-1 w-full margin-left-l">
           <p class="mat-h3  margin-bottom-xs" [ngClass]="{ required: true }">Subtitle</p>
           <mat-form-field appearance="outline" class="w-full">
-            <input matInput formControlName="purpose" maxlength="50">
+            <input matInput formControlName="purpose" maxlength="50" placeholder="Assessment subtitle">
             <mat-hint class="w-full text-right">{{cf.purpose.value.length}}/50</mat-hint>
             <mat-error *ngIf="cf.purpose.hasError('required')" i18n="Title Error|Explains Title is required">
               Subtitle is mandatory
@@ -67,7 +67,8 @@
       <div class="flex flex-col margin-top-xs">
         <p class="mat-h3  margin-bottom-xs" [ngClass]="{ required: true }">Description</p>
         <mat-form-field class="example-full-width" appearance="outline">
-          <textarea matInput rows="3" formControlName="description" maxlength="600"></textarea>
+          <textarea matInput rows="5" formControlName="description" maxlength="600"
+            placeholder="Describe the assessment to the learner. please use fewer than 600 characters"></textarea>
           <mat-hint>{{cf.description.value.length}}/600</mat-hint>
           <mat-error *ngIf="cf.description.hasError('required')" i18n="Title Error|Explains Title is required">
             Description is mandatory
@@ -80,8 +81,8 @@
         <p class="mat-h3  margin-bottom-xs" [ngClass]="{ required: true }">Type of score cutoffs</p>
         <div class="flex flex-row">
           <mat-radio-group class="flex flex-row" formControlName="scoreCutoffType">
-            <mat-radio-button class="mat-elevation-z2 mat-card cut_off_box margin-right-m"
-              *ngFor="let item of radioButtonData" [value]="item.id">
+            <mat-radio-button class="mat-elevation-z2 cut_off_box margin-right-m" *ngFor="let item of radioButtonData"
+              [value]="item.id">
               <span class="mat-body-2 flex flex-row margin-bottom-xs"><b>{{item.name}}</b></span>
               <p class="flex flex-row white-space-break sub_text ws-mat-black60-text margin-remove">
                 {{item.description}}
