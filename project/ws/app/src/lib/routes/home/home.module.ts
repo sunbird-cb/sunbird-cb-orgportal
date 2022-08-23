@@ -63,6 +63,10 @@ import { CompetencyListViewComponent } from './routes/competency/competency-list
 import { CompetencyHomeComponent } from './routes/competency/competency-home/competency-home.component'
 import { CompetencyDetailsComponent } from './routes/competency/competency-details/competency-details.component'
 import { CompetencyManageAssessmentComponent } from './routes/competency/competency-manage-assessment/competency-manage-assessment.component'
+import { AuthAssessmentHomeComponent } from './routes/competency/assessment/auth-assessment-home/auth-assessment-home.component'
+import { AuthAssessmentAddQuestionFormMetaComponent } from './routes/competency/assessment/auth-assessment-add-question - form-meta/auth-assessment-add-question-form-meta.component'
+import { AuthAssessmentAddQuestionComponent } from './routes/competency/assessment/auth-assessment-add-question/auth-assessment-add-question.component'
+import { AuthAssessmentBasicInfoComponent } from './routes/competency/assessment/auth-assessment-basic-info/auth-assessment-basic-info.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -87,7 +91,12 @@ import { CompetencyManageAssessmentComponent } from './routes/competency/compete
     CompetencyListViewComponent,
     CompetencyHomeComponent,
     CompetencyDetailsComponent,
-    CompetencyManageAssessmentComponent
+    CompetencyManageAssessmentComponent,
+    AuthAssessmentHomeComponent,
+    AuthAssessmentBasicInfoComponent,
+    AuthAssessmentAddQuestionFormMetaComponent,
+    AuthAssessmentAddQuestionComponent
+
   ],
   imports: [
     CommonModule,

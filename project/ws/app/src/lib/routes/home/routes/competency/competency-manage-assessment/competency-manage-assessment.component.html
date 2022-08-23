@@ -7,27 +7,33 @@
             <span class="h-600-s-20-m color-87">Choose level to create assessment</span>
           </mat-card-title>
         </div>
-        <div class="flex flex-1 flex-col">
-          <div class="card_box flex flex-1 flex-row items-center justify-between margin-top-m">
-            <h2 class="margin-remove-bottom">Level 1</h2>
-            <button mat-raised-button type="button" class="text-primary margin-right-l edit-btn">
-              <b class="ws-mat-default-text" i18n>Edit</b>
-            </button>
-          </div>
-
-          <!--======= second card ============-->
-          <div class="card_box flex flex-1 flex-row items-center justify-between margin-top-m">
-            <h2 class="margin-remove-bottom">Level 2</h2>
-            <button mat-raised-button type="button"
-              class="text-white ws-mat-primary-background text-white margin-right-m edit-btn">
-              <b class="text-white" i18n>Create</b>
-            </button>
-          </div>
-        </div>
       </div>
     </mat-card-header>
     <mat-card-content>
+      <div class="flex flex-1 flex-col" *ngIf="showBasicInfo === 'start'">
+        <div class="card_box flex flex-1 flex-row items-center justify-between margin-top-m">
+          <h2 class="margin-remove-bottom">Level 1</h2>
+          <button mat-raised-button type="button" class="text-primary margin-right-l edit-btn">
+            <b class="ws-mat-default-text" i18n>Edit</b>
+          </button>
+        </div>
 
+        <!--======= second card ============-->
+        <div class="card_box flex flex-1 flex-row items-center justify-between margin-top-m">
+          <h2 class="margin-remove-bottom">Level 2</h2>
+          <button mat-raised-button type="button"
+            class="text-white ws-mat-primary-background text-white margin-right-m edit-btn"
+            (click)="showBasicInfoDiv()">
+            <b class="text-white" i18n>Create</b>
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-1 flex-col" *ngIf="showBasicInfo === 'basicInfoDiv'">
+        <ws-auth-assessment-home [typeOfData]="parentType" [selectedDataIdentifier]="selectedNodeIdentifier"
+          [assessmentPrimaryCategory]="assessmentCategory" (closeModel)="takeActionOnClose($event)"
+          (assessmentData)="takeActionOnSaveForAssessment($event)">
+        </ws-auth-assessment-home>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

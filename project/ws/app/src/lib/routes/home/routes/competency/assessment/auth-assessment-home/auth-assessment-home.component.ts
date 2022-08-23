@@ -1,9 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core'
-import { MatSnackBar, MatTabGroup } from '@angular/material'
-import { NOTIFICATION_TIME } from '@ws/author/src/lib/constants/constant'
-import { NotificationComponent } from '@ws/author/src/lib/modules/shared/components/notification/notification.component'
-import { Notify } from '@ws/author/src/lib/constants/notificationMessage'
-import { NsContent } from '../../../../../../../../../../../../../library/ws-widget/collection/src/public-api'
+import { MatTabGroup } from '@angular/material'
 
 @Component({
   selector: 'ws-auth-assessment-home',
@@ -22,10 +18,10 @@ export class AuthAssessmentHomeComponent implements OnChanges {
 
   typeOfSelectedData!: any
   isEditEnabled = false
-  allPrimaryCategory = NsContent.EPrimaryCategory
+  allPrimaryCategory = 'Course Assessment'
 
   constructor(
-    private snackBar: MatSnackBar,
+    // private snackBar: MatSnackBar,
   ) { }
 
   async ngOnChanges() {
@@ -53,24 +49,24 @@ export class AuthAssessmentHomeComponent implements OnChanges {
   }
 
   showMessage(item: string) {
-    switch (item) {
-      case 'createParent':
-        this.snackBar.openFromComponent(NotificationComponent, {
-          data: {
-            type: Notify.CREATE_CONTENT,
-          },
-          duration: NOTIFICATION_TIME * 1000,
-        })
-        break
-      case 'fail':
-        this.snackBar.openFromComponent(NotificationComponent, {
-          data: {
-            type: Notify.SAVE_FAIL,
-          },
-          duration: NOTIFICATION_TIME * 1000,
-        })
-        break
-    }
+    // switch (item) {
+    //   case 'createParent':
+    //     this.snackBar.openFromComponent(NotificationComponent, {
+    //       data: {
+    //         type: Notify.CREATE_CONTENT,
+    //       },
+    //       duration: NOTIFICATION_TIME * 1000,
+    //     })
+    //     break
+    //   case 'fail':
+    //     this.snackBar.openFromComponent(NotificationComponent, {
+    //       data: {
+    //         type: Notify.SAVE_FAIL,
+    //       },
+    //       duration: NOTIFICATION_TIME * 1000,
+    //     })
+    //     break
+    // }
 
   }
 

@@ -19,12 +19,18 @@ import { CompetencyInfo } from '../../../models/competency.model'
 })
 export class CompetencyManageAssessmentComponent implements OnInit, OnDestroy {
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
+
+  parentType = 'Course Assessment'
+  selectedNodeIdentifier = ''
+  assessmentCategory = 'Course Assessment'
+
   sideNavBarOpened = true
   private defaultSideNavBarOpenedSubscription: any
   public screenSizeIsLtMedium = false
   isLtMedium$ = this.valueSvc.isLtMedium$
   mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
   tabsData: CompetencyInfo.ICompetencyTab[] | undefined
+  showBasicInfo = 'start'
 
   constructor(
     private route: ActivatedRoute,
@@ -55,5 +61,9 @@ export class CompetencyManageAssessmentComponent implements OnInit, OnDestroy {
         this.tabsData = config.tabs
       },
       _err => { })
+  }
+
+  showBasicInfoDiv() {
+    this.showBasicInfo = 'basicInfoDiv'
   }
 }
