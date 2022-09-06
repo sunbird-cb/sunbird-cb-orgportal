@@ -59,6 +59,7 @@ import { BudgetschemepopupComponent } from './components/budgetschemepopup/budge
 import { BudgetproofspopupComponent } from './components/budgetproofspopup/budgetproofspopup.component'
 import { UploadService } from './services/upload.service'
 import { AdmintableComponent } from './components/admintable/admintable.component'
+import { UsersModule } from '../users/users.module'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -131,6 +132,7 @@ import { AdmintableComponent } from './components/admintable/admintable.componen
     MatTableModule,
     MatTooltipModule,
     MatSortModule,
+    UsersModule,
   ],
   entryComponents: [
     AdduserpopupComponent,
