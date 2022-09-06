@@ -16,6 +16,7 @@ import { LeadershipComponent } from './routes/leadership/leadership.component'
 import { StaffComponent } from './routes/staff/staff.component'
 import { BudgetComponent } from './routes/budget/budget.component'
 import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
+import { PageResolve } from '@sunbird-cb/utils'
 
 const routes: Routes = [
   {
@@ -45,8 +46,11 @@ const routes: Routes = [
         component: UsersViewComponent,
         resolve: {
           usersList: UsersListResolve,
+          pageData: PageResolve,
         },
         data: {
+          pageType: 'feature',
+          pageKey: 'users-view',
           pageId: 'users',
           module: 'home',
         },
