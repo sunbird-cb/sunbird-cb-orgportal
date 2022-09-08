@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { EventsService } from '../../services/events.service'
 import { HttpClient } from '@angular/common/http'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 export interface IParticipantElement {
     firstname: string,
@@ -100,11 +102,12 @@ export class ParticipantsComponent implements OnInit {
                 this.participants = []
                 Object.keys(resultdata).forEach((key: any) => {
                     const obj = resultdata[key]
-                    if (obj.email !== undefined) {
+                    const email = _.get(obj, 'profileDetails.personalDetails.primaryEmail')
+                    if (email !== undefined) {
                         const participantObj = {
+                            email,
                             firstname: obj.firstName,
                             lastname: obj.lastName,
-                            email: obj.email,
                             id: obj.userId,
                         }
                         this.participants.push(participantObj)
