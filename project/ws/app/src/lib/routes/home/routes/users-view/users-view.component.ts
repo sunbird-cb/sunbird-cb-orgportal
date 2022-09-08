@@ -281,7 +281,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         // _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i))
         // this.usersService.deActiveUser(user).subscribe(response => {
         this.usersService.newBlockUser(loggedInUserId, user.request.userId).subscribe(response => {
-          if (response.params.status === 'success') {
+          if (_.toUpper(response.params.status) === 'SUCCESS') {
             setTimeout(() => {
               this.getAllUsers()
 
@@ -311,7 +311,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i))
         // this.usersService.deActiveUser(user).subscribe(response => {
         this.usersService.newUnBlockUser(loggedInUserId, user.request.userId).subscribe(response => {
-          if (response.params.status === 'success') {
+          if (_.toUpper(response.params.status) === 'SUCCESS') {
             setTimeout(() => {
               this.getAllUsers()
               this.snackBar.open('Activated successfully!')
