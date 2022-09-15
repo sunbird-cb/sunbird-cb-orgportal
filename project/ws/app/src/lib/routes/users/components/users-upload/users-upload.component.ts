@@ -85,7 +85,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator
-    this.dataSource = new MatTableDataSource(this.bulkUploadData)
+    // this.dataSource = new MatTableDataSource(this.bulkUploadData)
     setTimeout(() => {
       this.dataSource.sort = this.sort
     })
@@ -97,16 +97,18 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
       this.fetching = false
       if (res.result && res.result.content) {
         this.bulkUploadData = res.result.content
+        // this.bulkUploadData = []
         this.dataSource = new MatTableDataSource(this.bulkUploadData)
         setTimeout(() => this.dataSource.paginator = this.paginator)
-        setTimeout(() => {
-          if (this.sort) {
-            this.sort.active = this.tabledata.sortColumn,
-              this.sort.start = this.tabledata.sortState
-
-          }
-          this.dataSource.sort = this.sort
-        })
+        setTimeout(
+          () => {
+            if (this.sort) {
+              this.sort.active = this.tabledata.sortColumn,
+                this.sort.start = this.tabledata.sortState
+            }
+            this.dataSource.sort = this.sort
+          },
+          100)
       }
     })
       .catch(() => { })

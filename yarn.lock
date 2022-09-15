@@ -1127,10 +1127,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
-"@sunbird-cb/collection@1.0.15":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/collection/-/collection-1.0.15.tgz#9865fc0f4a545542b316553fdb920d3a3445df37"
-  integrity sha512-2KvrZXKJ/KgTwOel6SoK4poTQG2UjJDlBminQ2Y8o7n1FDKRUslpYpYC1PqXQFbGAQDTI2sbJybVMsHxeXv6Bg==
+"@sunbird-cb/collection@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/collection/-/collection-1.0.17.tgz#8e94672da429e8ae4a26024dea546e4bf4386deb"
+  integrity sha512-KKIKHmIgOFbZh/q1ZB0EyqpsuwGv2rV2DSmkACUKhM8DmCD76PY9wUi/D9X3xd2jZ6zte2K4wxGdW/dxX9BEuQ==
   dependencies:
     tslib "^1.9.0"
 
@@ -1139,10 +1139,10 @@
   resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.1.tgz#66795a90e6a3fe3609cd574e694ad296fdc9a1a5"
   integrity sha512-GYfnfpNfzZjnU5Ss+xfSdVbvyek97Yq8cDVsfT4+R0MgsIYnI4gqx7G0Qvx9caZYgb3eoE6wlsyb0K2aWyO+UQ==
 
-"@sunbird-cb/rain-dashboards@^0.2.3":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.2.5.tgz#686e3ddb6840c13a2101ff4f1172f8c868956653"
-  integrity sha512-+ZltJsJbezZVJC2BD5EnFnziMlMOnzZe2RZtcocal44793F4ugkgCt2irffYW5G/VvvvhjGh447LS+IZkRK1wg==
+"@sunbird-cb/rain-dashboards@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.2.6.tgz#fa7756dddbfd5679770232884bf41a43afb953e2"
+  integrity sha512-kAn28KzMniibhSi+jV6zLzl3+VF1mEBD6Da4AeTP1itP+dNVwiDw1SgvzJV1SgcGmbEnfLoBY/FTSECA25x2AA==
   dependencies:
     tslib "^1.9.0"
 
@@ -1440,10 +1440,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.7.tgz#98a993516c859eb0d5c4c8f098317a9ea68db9ad"
   integrity sha512-cxWFQVseBm6O9Gbw1IWb8r6OS4OhSt3hPZLkFApLjM8TEXROBuQGLAH2i2gZpcXdLBIrpXuTDhH7Vbm1iXmNGA==
 
-"@types/lodash@^4.14.172":
-  version "4.14.182"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.182.tgz#05301a4d5e62963227eaafe0ce04dd77c54ea5c2"
-  integrity sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==
+"@types/lodash@4.14.172":
+  version "4.14.172"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.172.tgz#aad774c28e7bfd7a67de25408e03ee5a8c3d028a"
+  integrity sha512-/BHF5HAx3em7/KkzVKm3LrsD6HZAXuXO1AJZQ3cRRBZj4oHZDviWPYu0aEplAqDFNHZPW6d3G7KN+ONcCCC7pw==
 
 "@types/minimatch@*":
   version "3.0.4"
@@ -6842,15 +6842,15 @@ lodash.toarray@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.toarray/-/lodash.toarray-4.4.0.tgz#24c4bfcd6b2fba38bfd0594db1179d8e9b656561"
   integrity sha1-JMS/zWsvuji/0FlNsRedjptlZWE=
 
+lodash@4.17.21, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.20, lodash@^4.17.5, lodash@^4.5.0:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+
 lodash@^3.10.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
   integrity sha512-9mDDwqVIma6OZX79ZlDACZl8sBm0TEnkf99zV3iMA4GzkIT/9hiqP5mY0HoT1iNLCrKc/R1HByV+yJfRWVJryQ==
-
-lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.5, lodash@^4.5.0:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
-  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log4js@^3.0.0:
   version "3.0.6"

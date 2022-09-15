@@ -12,6 +12,7 @@
       <div>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(form)" #form>
           <input type="file" class="mb-5" (change)="onFileChange($event)" name="file" placeholder="Choose file"
+            (dblclick)="$event.preventDefault();"
             accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .xlsx, .xls" />
           <!-- <input type="submit" [disabled]="formGroup.invalid" value="upload" /> -->
           <mat-error *ngIf="showFileError">Only .xlsx or .csv files are accepted</mat-error>
@@ -38,7 +39,8 @@
     <div class="example-loading w-full text-center" *ngIf="fetching">
       <mat-spinner></mat-spinner>
     </div>
-    <div *ngIf="bulkUploadData && bulkUploadData.length">
+    <!-- <div *ngIf="bulkUploadData && bulkUploadData.length"> -->
+    <div [hidden]="!bulkUploadData || (bulkUploadData && !bulkUploadData.length) || fetching">
       <div class=" mx-5 my-5 table-container w-full">
         <div class="pt-2 ">
           <!-- <div class=" m-5 flex items-end justify-end">
