@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator'
 import { MatTableDataSource } from '@angular/material/table'
 import { environment } from 'src/environments/environment'
 import { ActivatedRoute } from '@angular/router'
+// tslint:disable-next-line
+import _ from 'lodash'
 
 @Component({
   selector: 'ws-app-users-upload',
@@ -49,6 +51,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   pageDataSubscription!: any
   downloadSampleFilePath = ''
   downloadAsFileName = ''
+  rootOrgId!: any
 
   objDataSource = new MatTableDataSource<any>()
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | null = null
@@ -67,6 +70,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
   ) {
+    this.rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     this.dataSource = new MatTableDataSource(this.bulkUploadData)
     this.dataSource.paginator = this.paginator
 
@@ -93,7 +97,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getBulkUploadData() {
     this.fetching = true
-    this.fileService.getBulkUploadData().then((res: any) => {
+    this.fileService.getBulkUploadDataV1(this.rootOrgId).then((res: any) => {
       this.fetching = false
       if (res.result && res.result.content) {
         this.bulkUploadData = res.result.content

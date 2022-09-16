@@ -82,4 +82,8 @@ export class FileService {
   async getBulkUploadData() {
     return await this.http.get(`${API_ENDPOINTS.getBulkUploadData}`).toPromise()
   }
+
+  async getBulkUploadDataV1(rootOrgId: any) {
+    return await this.http.get(`${API_ENDPOINTS.getBulkUploadData}/${rootOrgId}`).toPromise()
+  }
 }
