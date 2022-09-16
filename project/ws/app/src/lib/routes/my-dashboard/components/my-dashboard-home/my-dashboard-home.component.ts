@@ -15,13 +15,12 @@ export class MyDashboardHomeComponent implements OnInit {
 
   constructor(private router: Router, private configSvc: ConfigurationsService) { }
   pageNavbar: Partial<NsPage.INavBackground> = this.configSvc.pageNavBar
-
   getDashboardForKM =
-      '/apis/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi'
-    getDashboardForProfile =
-      '/apis/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi'
-    getChartV2 =
-      '/apis/proxies/v8/dashboard/analytics/getChartV2/Karmayogi'
+    '/apis/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi'
+  getDashboardForProfile =
+    '/apis/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi?realm=mdo'
+  getChartV2 =
+    '/apis/proxies/v8/dashboard/analytics/getChartV2/Karmayogi'
 
   selectedDashboardId = ''
 
