@@ -22,7 +22,7 @@ export class PublishedAllocationsComponent implements OnInit {
   departmentName: any
   departmentID: any
   bdtitles = [{ title: 'Work allocation tool', url: '/app/home/workallocation' },
-  { title: 'Published', url: '/app/home/workallocation' }]
+  { title: 'Published', url: '/app/home/workallocation/published' }]
 
   config: ExportAsConfig = {
     type: 'pdf',

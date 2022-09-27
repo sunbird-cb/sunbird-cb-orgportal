@@ -15,12 +15,12 @@
           <!-- <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'underreview',
               'ws-mat-accent-border font-medium':currentFilter !== 'underreview'}" mat-button
             (click)="filter('underreview')" role="button">Under review</a> -->
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'active',
-              'ws-mat-accent-border font-medium':currentFilter !== 'active'}" mat-button
-            (click)="filter('active'); tabTelemetry('active', 0)" role="button">Active</a>
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'inactive',
-                          'ws-mat-accent-border font-medium':currentFilter !== 'inactive'}" mat-button
-            (click)="filter('inactive'); tabTelemetry('inactive', 1)" role="button">Inactive</a>
+          <a routerLink="/app/home/users/active" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'active',
+              'ws-mat-accent-border font-medium':currentFilter !== 'active'}"
+            (click)="filter('active'); tabTelemetry('active', 0)" role="link">Active</a>
+          <a routerLink="/app/home/users/inactive" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'inactive',
+                          'ws-mat-accent-border font-medium':currentFilter !== 'inactive'}"
+            (click)="filter('inactive'); tabTelemetry('inactive', 1)" role="link">Inactive</a>
           <!-- <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'blocked',
                           'ws-mat-accent-border font-medium':currentFilter !== 'blocked'}" mat-button
             (click)="filter('blocked')" role="button">Blocked</a> -->
