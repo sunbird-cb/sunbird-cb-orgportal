@@ -77,6 +77,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           this.skillDetails = profileData.skills
           this.interests = profileData.interests
           this.userStatus = profileDataAll.isDeleted ? 'Inactive' : 'Active'
+
         }
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
         this.department = fullProfile.unMappedUser.rootOrgId

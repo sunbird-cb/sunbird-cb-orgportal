@@ -16,8 +16,6 @@ import { LeadershipComponent } from './routes/leadership/leadership.component'
 import { StaffComponent } from './routes/staff/staff.component'
 import { BudgetComponent } from './routes/budget/budget.component'
 import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
-import { PageResolve } from '@sunbird-cb/utils'
-
 const routes: Routes = [
   {
     path: '',
@@ -42,15 +40,23 @@ const routes: Routes = [
         },
       },
       {
+        path: 'users/:tab',
+        component: UsersViewComponent,
+        resolve: {
+          usersList: UsersListResolve,
+        },
+        data: {
+          pageId: 'users',
+          module: 'home',
+        },
+      },
+      {
         path: 'users',
         component: UsersViewComponent,
         resolve: {
           usersList: UsersListResolve,
-          pageData: PageResolve,
         },
         data: {
-          pageType: 'feature',
-          pageKey: 'users-view',
           pageId: 'users',
           module: 'home',
         },
@@ -83,7 +89,16 @@ const routes: Routes = [
         },
       },
       {
+        path: 'workallocation/:tab',
+        data: {
+          pageId: 'workallocation',
+          module: 'home',
+        },
+        component: WorkallocationComponent,
+      },
+      {
         path: 'workallocation',
+        // redirectTo: 'workallocation/:tab', pathMatch: 'full',
         data: {
           pageId: 'workallocation',
           module: 'home',

@@ -28,6 +28,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   Math: any
   /* tslint:enable */
   currentFilter = 'active'
+  filterPath = '/app/home/users'
   discussionList!: any
   discussProfileData!: any
   portalProfile!: NSProfileDataV2.IProfile
@@ -75,7 +76,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     this.Math = Math
     this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
-    // console.log(_.get(this.route, 'snapshot.data.usersList.data'))
+
     // this.usersData = _.get(this.route, 'snapshot.data.usersList.data') || {}
     // this.filterData()
   }
@@ -83,9 +84,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   // decideAPICall() {
   // }
   ngOnDestroy() {
-    if (this.tabs) {
-      this.tabs.unsubscribe()
-    }
+    // if (this.tabs) {
+    //   this.tabs.unsubscribe()
+    // }
   }
   ngOnInit() {
     this.getAllUsers()
@@ -201,7 +202,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     //   },
     // }
     // this.usersService.getAllUsers(filterObj).subscribe(data => {
-    //   console.log(data)
     //   this.usersData = data
     //   this.filterData()
     // })

@@ -30,6 +30,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
   @Output() clicked?: EventEmitter<any>
   @Output() actionsClick?: EventEmitter<any>
   @Output() eOnRowClick = new EventEmitter<any>()
+  @Input() currentFilter!: any
   bodyHeight = document.body.clientHeight - 125
   displayedColumns: IColums[] | undefined
   viewPaginator = false

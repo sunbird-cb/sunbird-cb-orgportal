@@ -41,8 +41,11 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   currentDashboard: any = []
   dashboardEmpty = dashboardEmptyData
 
-  constructor(@Inject(DOCUMENT) private document: Document, private homeResolver: ProfileV2Service, private router: Router,
-              private events: EventService) {
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private homeResolver: ProfileV2Service,
+    private router: Router,
+    private events: EventService) {
   }
   filterR(type: string) {
     this.resolutionFilter = type
