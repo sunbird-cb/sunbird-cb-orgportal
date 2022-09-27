@@ -16,7 +16,6 @@ import { LeadershipComponent } from './routes/leadership/leadership.component'
 import { StaffComponent } from './routes/staff/staff.component'
 import { BudgetComponent } from './routes/budget/budget.component'
 import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
-
 const routes: Routes = [
   {
     path: '',

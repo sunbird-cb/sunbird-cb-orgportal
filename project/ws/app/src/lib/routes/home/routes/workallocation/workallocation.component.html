@@ -16,15 +16,15 @@
           <a routerLink="/app/home/workallocation/draft" routerLinkActive="router-link-active" class="filter-option"
             [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Draft',
           'ws-mat-accent-border font-medium':currentFilter !== 'Draft'}" mat-button
-            (click)="filter('Draft'); tabTelemetry('Drafts', 0)">Drafts-{{ this.currentFilter}}</a>
+            (click)="filter('Draft'); tabTelemetry('Drafts', 0)">Drafts</a>
           <a routerLink="/app/home/workallocation/published" routerLinkActive="router-link-active" class="filter-option"
             [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Published',
           'ws-mat-accent-border font-medium':currentFilter !== 'Published'}" mat-button
-            (click)="filter('Published'); tabTelemetry('Published', 1)">Published-{{ currentFilter}}</a>
+            (click)="filter('Published'); tabTelemetry('Published', 1)">Published</a>
           <a routerLink="/app/home/workallocation/archived" routerLinkActive="router-link-active" class="filter-option"
             [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Archived',
           'ws-mat-accent-border font-medium':currentFilter !== 'Archived'}" mat-button
-            (click)="filter('Archived'); tabTelemetry('Archived', 2)">Archived- {{currentFilter}}</a>
+            (click)="filter('Archived'); tabTelemetry('Archived', 2)">Archived</a>
         </div>
       </div>
       <ng-container>

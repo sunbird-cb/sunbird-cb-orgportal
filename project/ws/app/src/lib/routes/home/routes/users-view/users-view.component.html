@@ -24,13 +24,19 @@
           <!-- <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'blocked',
                           'ws-mat-accent-border font-medium':currentFilter !== 'blocked'}" mat-button
             (click)="filter('blocked')" role="button">Blocked</a> -->
+          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'upload',
+                                      'ws-mat-accent-border font-medium':currentFilter !== 'upload'}" mat-button
+            (click)="filter('upload'); tabTelemetry('upload', 2)" role="button">File uploads</a>
         </div>
       </div>
-      <ng-container *ngIf="usersData">
-        <ws-widget-org-user-table [tableData]="tabledata" [data]="dataForTable" [isUpload]=fasle [isCreate]=true
-          (eOnCreateClick)="onCreateClick()" (eOnRowClick)="onRoleClick($event)" (actionsClick)="menuActions($event)"
-          (searchByEnterKey)="onEnterkySearch($event)">
+      <ng-container *ngIf="usersData && currentFilter !== 'upload'">
+        <ws-widget-org-user-table [tableData]="tabledata" [data]="dataForTable" [isUpload]=true [isCreate]=true
+          (eOnButtonClick)="clickHandler($event)" (eOnRowClick)="onRoleClick($event)"
+          (actionsClick)="menuActions($event)" (searchByEnterKey)="onEnterkySearch($event)">
         </ws-widget-org-user-table>
+      </ng-container>
+      <ng-container *ngIf="currentFilter === 'upload'">
+        <ws-app-users-upload></ws-app-users-upload>
       </ng-container>
     </mat-card-content>
   </mat-card>
