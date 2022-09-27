@@ -272,6 +272,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       case 'showOnKarma':
         window.open(`${environment.karmYogiPath}/app/person-profile/${user.request.userId}`)
         break
+      case 'editInfo':
+        this.onRoleClick($event.row)
+        break
       case 'block':
         _.set(user, 'isBlocked', true)
         _.set(user, 'isDeleted', false)
