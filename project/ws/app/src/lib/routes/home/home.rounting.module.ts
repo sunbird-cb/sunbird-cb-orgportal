@@ -41,6 +41,17 @@ const routes: Routes = [
         },
       },
       {
+        path: 'users/:tab',
+        component: UsersViewComponent,
+        resolve: {
+          usersList: UsersListResolve,
+        },
+        data: {
+          pageId: 'users',
+          module: 'home',
+        },
+      },
+      {
         path: 'users',
         component: UsersViewComponent,
         resolve: {
@@ -79,7 +90,16 @@ const routes: Routes = [
         },
       },
       {
+        path: 'workallocation/:tab',
+        data: {
+          pageId: 'workallocation',
+          module: 'home',
+        },
+        component: WorkallocationComponent,
+      },
+      {
         path: 'workallocation',
+        // redirectTo: 'workallocation/:tab', pathMatch: 'full',
         data: {
           pageId: 'workallocation',
           module: 'home',

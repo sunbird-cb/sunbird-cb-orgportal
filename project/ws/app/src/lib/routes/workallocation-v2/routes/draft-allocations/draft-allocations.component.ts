@@ -26,7 +26,7 @@ export class DraftAllocationsComponent implements OnInit {
   departmentName: any
   departmentID: any
   bdtitles = [{ title: 'Work allocation tool', url: '/app/home/workallocation' },
-  { title: 'Drafts', url: '/app/home/workallocation' }]
+  { title: 'Drafts', url: '/app/home/workallocation/draft' }]
 
   userslist: any[] = []
   downloaddata: any = []

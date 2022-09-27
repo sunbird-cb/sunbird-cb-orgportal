@@ -13,15 +13,18 @@
     <mat-card-content>
       <div class="flex flex-1">
         <div class="flex flex-1 filter max-height-60">
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Draft',
+          <a routerLink="/app/home/workallocation/draft" routerLinkActive="router-link-active" class="filter-option"
+            [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Draft',
           'ws-mat-accent-border font-medium':currentFilter !== 'Draft'}" mat-button
-            (click)="filter('Draft'); tabTelemetry('Drafts', 0)" role="button">Drafts</a>
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Published',
+            (click)="filter('Draft'); tabTelemetry('Drafts', 0)">Drafts-{{ this.currentFilter}}</a>
+          <a routerLink="/app/home/workallocation/published" routerLinkActive="router-link-active" class="filter-option"
+            [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Published',
           'ws-mat-accent-border font-medium':currentFilter !== 'Published'}" mat-button
-            (click)="filter('Published'); tabTelemetry('Published', 1)" role="button">Published</a>
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Archived',
+            (click)="filter('Published'); tabTelemetry('Published', 1)">Published-{{ currentFilter}}</a>
+          <a routerLink="/app/home/workallocation/archived" routerLinkActive="router-link-active" class="filter-option"
+            [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'Archived',
           'ws-mat-accent-border font-medium':currentFilter !== 'Archived'}" mat-button
-            (click)="filter('Archived'); tabTelemetry('Archived', 2)" role="button">Archived</a>
+            (click)="filter('Archived'); tabTelemetry('Archived', 2)">Archived- {{currentFilter}}</a>
         </div>
       </div>
       <ng-container>
@@ -35,6 +38,10 @@
                     (ngModelChange)="searchBasedOnQurey($event)" [(ngModel)]="searchQuery" placeholder="Search">
                 </div>
               </div>
+            </div>
+
+            <div>
+
             </div>
             <div class="flex-2">
               <!-- <button type="button" mat-button class="downlaod-btn" (click)="export()"  *ngIf="data && data.length > 0">
