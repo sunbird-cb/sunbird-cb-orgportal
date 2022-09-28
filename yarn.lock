@@ -1127,10 +1127,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
-"@sunbird-cb/collection@^1.0.17":
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/collection/-/collection-1.0.17.tgz#8e94672da429e8ae4a26024dea546e4bf4386deb"
-  integrity sha512-KKIKHmIgOFbZh/q1ZB0EyqpsuwGv2rV2DSmkACUKhM8DmCD76PY9wUi/D9X3xd2jZ6zte2K4wxGdW/dxX9BEuQ==
+"@sunbird-cb/collection@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/collection/-/collection-1.0.18.tgz#e97b688f80a9b0d0dfd217c899a7a1493f7d90a5"
+  integrity sha512-8dAqZmvAQ/kcc4Dv82r9421E+/GuGwgagPyvUuQSOzt6WS2Y0l/w7RHkoyDXu5blpnB9i/1NSqT3IKD/eTWSyw==
   dependencies:
     tslib "^1.9.0"
 
@@ -1139,10 +1139,10 @@
   resolved "https://registry.yarnpkg.com/@sunbird-cb/design-system/-/design-system-0.0.1.tgz#66795a90e6a3fe3609cd574e694ad296fdc9a1a5"
   integrity sha512-GYfnfpNfzZjnU5Ss+xfSdVbvyek97Yq8cDVsfT4+R0MgsIYnI4gqx7G0Qvx9caZYgb3eoE6wlsyb0K2aWyO+UQ==
 
-"@sunbird-cb/rain-dashboards@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.2.6.tgz#fa7756dddbfd5679770232884bf41a43afb953e2"
-  integrity sha512-kAn28KzMniibhSi+jV6zLzl3+VF1mEBD6Da4AeTP1itP+dNVwiDw1SgvzJV1SgcGmbEnfLoBY/FTSECA25x2AA==
+"@sunbird-cb/rain-dashboards@^0.2.8":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@sunbird-cb/rain-dashboards/-/rain-dashboards-0.2.9.tgz#6fbcf82386e09475901137411ca5fee7d0c8c29f"
+  integrity sha512-4i3AL3r0MIS0cLTR2bW1sNJ9QdQY0Yyx2z3HIcqZlvWQdb6GE3vobYwtX1Tn1APy/2eUBlLKwO+BDF0QqQ50LA==
   dependencies:
     tslib "^1.9.0"
 
