@@ -24,7 +24,7 @@
           <!-- <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'blocked',
                           'ws-mat-accent-border font-medium':currentFilter !== 'blocked'}" mat-button
             (click)="filter('blocked')" role="button">Blocked</a> -->
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'upload',
+          <a routerLink="/app/home/users/fileupload" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'upload',
                                       'ws-mat-accent-border font-medium':currentFilter !== 'upload'}" mat-button
             (click)="filter('upload'); tabTelemetry('upload', 2)" role="button">File uploads</a>
         </div>
