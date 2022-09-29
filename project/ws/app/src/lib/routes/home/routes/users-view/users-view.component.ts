@@ -89,24 +89,13 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     // }
   }
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.currentFilter = params['tab']
-      if (this.currentFilter === null || this.currentFilter === undefined) {
-        this.currentFilter = 'active'
-      }
-    })
+    this.currentFilter = this.route.snapshot.params['tab'] || 'active'
     this.getAllUsers()
-    this.filter(this.currentFilter)
   }
 
   filter(filter: string) {
     this.currentFilter = filter
-    // this.events.raiseInteractTelemetry(
-    //   {
-    //     type: TelemetryEvents.EnumInteractTypes.CLICK,
-    //     subType: TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
-    //   }, {}
-    // )
+
   }
 
   public tabTelemetry(label: string, index: number) {
@@ -121,7 +110,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
 
   get dataForTable() {
-
     switch (this.currentFilter) {
       case 'active':
         return this.activeUsersData

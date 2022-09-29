@@ -111,6 +111,10 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       this.filter("Archived")
 
     }
+
+
+
+
   }
 
   get getTableData() {
