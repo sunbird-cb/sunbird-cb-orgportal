@@ -89,7 +89,14 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     // }
   }
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.currentFilter = params['tab']
+      if (this.currentFilter === null || this.currentFilter === undefined) {
+        this.currentFilter = 'active'
+      }
+    })
     this.getAllUsers()
+    this.filter(this.currentFilter)
   }
 
   filter(filter: string) {

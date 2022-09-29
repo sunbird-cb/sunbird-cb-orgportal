@@ -105,6 +105,12 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       this.currentFilter = 'Draft'
       this.filter("Draft")
     }
+    if (paramsMap === 'archived') {
+      this.currentUrl = "app/home/workallocation/archived"
+      this.currentFilter = 'Archived'
+      this.filter("Archived")
+
+    }
   }
 
   get getTableData() {
@@ -155,6 +161,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       pageSize: 1000,
       departmentName: this.departmentName,
       status: (statusKey !== '') ? statusKey : "Draft",
+
     }
     //if (this.currentFilter !== statusKey) {
     this.workallocationSrvc.getUsers(req).subscribe(res => {
