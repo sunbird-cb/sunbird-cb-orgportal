@@ -52,6 +52,7 @@ const routes: Routes = [
       },
       {
         path: 'users',
+        redirectTo: 'users/active',
         component: UsersViewComponent,
         resolve: {
           usersList: UsersListResolve,
@@ -98,7 +99,7 @@ const routes: Routes = [
       },
       {
         path: 'workallocation',
-        // redirectTo: 'workallocation/:tab', pathMatch: 'full',
+        redirectTo: 'workallocation/draft', pathMatch: 'full',
         data: {
           pageId: 'workallocation',
           module: 'home',

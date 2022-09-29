@@ -2,12 +2,11 @@
   <div class="flex flex-1 custom">
     <div class="flex-3">
       <div class="flex flex-1 margin-left-xl">
-        <ws-widget-breadcrumbs-org
-          [widgetData]="{titles:[{title:'Users', url:'/app/home/users'},{title: userStatus, url:'/app/home/users/'+ userStatus.toLowerCase() },{title:fullname,url:'none'}] }">
-        </ws-widget-breadcrumbs-org>
 
-        <!-- <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs">
-        </ws-widget-breadcrumbs-org> -->
+
+        <ws-widget-breadcrumbs-org [widgetData]="{url: 'home',titles: breadcrumbs}">
+        </ws-widget-breadcrumbs-org>
+        {{ breadcrumbs |json }}
       </div>
       <div class="flex flex-4 flex-column">
         <div class="flex flex-1 custom">
