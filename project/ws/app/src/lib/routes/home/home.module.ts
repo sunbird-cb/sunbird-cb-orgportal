@@ -67,6 +67,7 @@ import { AuthAssessmentHomeComponent } from './routes/competency/assessment/auth
 import { AuthAssessmentAddQuestionFormMetaComponent } from './routes/competency/assessment/auth-assessment-add-question - form-meta/auth-assessment-add-question-form-meta.component'
 import { AuthAssessmentAddQuestionComponent } from './routes/competency/assessment/auth-assessment-add-question/auth-assessment-add-question.component'
 import { AuthAssessmentBasicInfoComponent } from './routes/competency/assessment/auth-assessment-basic-info/auth-assessment-basic-info.component'
+import { CompetencyService } from './routes/competency/competency.service'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -161,6 +162,7 @@ import { AuthAssessmentBasicInfoComponent } from './routes/competency/assessment
     InitResolver,
     MdoInfoService,
     UploadService,
+    CompetencyService
   ],
 })
 export class HomeModule {

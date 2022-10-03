@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { WidgetResolverService } from '@sunbird-cb/resolver'
 import { LoaderService } from '../../../../../../../../../../../src/app/services/loader.service'
+import { environment } from '../../../../../../../../../../../src/environments/environment'
+import { CompetencyService } from '../../competency.service'
 // import { NotificationComponent } from '../../../../../notification/components/notification/notification.component'
 
 @Component({
@@ -40,12 +42,14 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
   contentCreated = false
   metaData!: any
   isEditEnabled = false
+  assessmentConfig!: any
 
   constructor(
     private formBuilder: FormBuilder,
     private loaderService: LoaderService,
     // private snackBar: MatSnackBar,
-    // private configSvc: ConfigurationsService,
+    private widgetResolverService: WidgetResolverService,
+    private competencyAssessmentSrv: CompetencyService
   ) { }
 
   ngOnChanges() {
@@ -58,7 +62,9 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
     }
   }
 
-  createForm() {
+  async createForm() {
+    this.loaderService.changeLoad.next(true)
+    debugger
     this.contentForm = this.formBuilder.group({
       name: ['', Validators.required],
       purpose: ['', Validators.required],
@@ -69,13 +75,14 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
       totalQuestions: 0,
       maxQuestions: 0,
     })
+    this.assessmentConfig = await this.competencyAssessmentSrv.getAssessmentConfig().toPromise().catch(_error => { })
   }
 
   get cf() {
     return this.contentForm.controls
   }
 
-  submitToSave() {
+  async submitToSave() {
     if (!this.contentForm.invalid) {
       this.submittedData = true
       this.loaderService.changeLoad.next(true)
@@ -90,8 +97,49 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
         maxQuestions: 0,
         totalQuestions: 0,
       }
-      this.assessmentData.emit(item)
+      const requestPayload = await this.getRequestPayload(item)
+      const createAssessmentRes = await this.competencyAssessmentSrv.createNewAssessment(requestPayload).toPromise().catch(_error => { })
+      if (createAssessmentRes && createAssessmentRes.params && createAssessmentRes.params.status.toLowerCase() === 'successful') {
+        this.getAssessmentData(createAssessmentRes.result.identifier)
+      }
     }
+  }
+
+  async getAssessmentData(identifier: string) {
+    const getAssessmentDataRes = await this.competencyAssessmentSrv.readAssessmentQuestionSet(identifier).toPromise().catch(_error => { })
+    if (getAssessmentDataRes && getAssessmentDataRes.params && getAssessmentDataRes.params.status.toLowerCase() === 'successful') {
+      this.competencyAssessmentSrv.setAssessmentOriginalMetaHierarchy(getAssessmentDataRes.result.questionset)
+    }
+  }
+
+  getRequestPayload(item: any) {
+    let randomNumber = ''
+    // tslint:disable-next-line: no-increment-decrement
+    for (let i = 0; i < 16; i++) {
+      randomNumber += Math.floor(Math.random() * 10)
+    }
+    const requestBody = {
+      request: {
+        questionset: {
+          code: randomNumber,
+          createdBy: (this.widgetResolverService.userProfile) ? this.widgetResolverService.userProfile.userId : '',
+          createdFor: [(this.widgetResolverService.rootOrg) ? this.widgetResolverService.rootOrg.rootOrgId : ''],
+          scoreCutoffType: (item.scoreCutoffType) ? item.scoreCutoffType : '',
+          description: item.description,
+          framework: environment.framework,
+          license: (item.license) ? item.license : 'CC BY 4.0',
+          mimeType: (this.assessmentConfig) ? this.assessmentConfig.primaryCategory.competencyAssessment.mimeType : '',
+          name: item.name,
+          primaryCategory: (this.assessmentConfig) ? this.assessmentConfig.primaryCategory.competencyAssessment.name : '',
+          purpose: (item.purpose) ? item.purpose : '',
+          expectedDuration: (item.expectedDuration) ? item.expectedDuration : 0,
+          showTimer: (item.showTimer) ? item.showTimer : '',
+          totalQuestions: (item.totalQuestions) ? item.totalQuestions : 0,
+          maxQuestions: (item.maxQuestions) ? item.maxQuestions : 0,
+        },
+      },
+    }
+    return requestBody
   }
 
   async assignData() {

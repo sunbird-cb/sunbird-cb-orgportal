@@ -325,7 +325,8 @@ export class InitService {
             // console.log('outside is institute ---- NOT calling org profile')
             this.configSvc.unMappedUser.orgProfile = null
           }
-
+          this.widgetResolverService.userProfile = this.configSvc.userProfile
+          this.widgetResolverService.rootOrg = completeProdata.rootOrg
         } else {
           this.authSvc.force_logout()
         }

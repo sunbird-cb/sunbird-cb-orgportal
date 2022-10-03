@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ConfigurationsService, ValueService, WidgetContentService } from '@sunbird-cb/utils'
+import { v4 as uuidv4 } from 'uuid'
 /* tslint:disable */
 import _ from 'lodash'
 import { map } from 'rxjs/operators'
@@ -20,9 +21,9 @@ import { CompetencyInfo } from '../../../models/competency.model'
 export class CompetencyManageAssessmentComponent implements OnInit, OnDestroy {
   @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
 
-  parentType = 'Course Assessment'
+  parentType = 'Competency Assessment'
   selectedNodeIdentifier = ''
-  assessmentCategory = 'Course Assessment'
+  assessmentCategory = 'Competency Assessment'
 
   sideNavBarOpened = true
   private defaultSideNavBarOpenedSubscription: any
@@ -63,7 +64,20 @@ export class CompetencyManageAssessmentComponent implements OnInit, OnDestroy {
       _err => { })
   }
 
-  showBasicInfoDiv() {
-    this.showBasicInfo = 'basicInfoDiv'
+  showBasicInfoDiv(type: string) {
+    switch (type) {
+      case 'newAssessment':
+        this.showBasicInfo = 'basicInfoDiv'
+        break
+      case 'editAssessment':
+        this.showBasicInfo = 'basicInfoDiv'
+        this.selectedNodeIdentifier = 'do_1136329571243704321241'
+        break
+    }
+
+  }
+
+  takeActionOnClose(item: any) {
+    this.showBasicInfo = item
   }
 }

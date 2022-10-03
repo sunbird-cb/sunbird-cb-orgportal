@@ -1,6 +1,6 @@
 <div class="flex flex-1 flex-column margin-left-l">
   <mat-card class="flex-custom ws-mat-accent-border comp-mat-card">
-    <mat-card-header class="flex-custom-m">
+    <mat-card-header class="flex-custom-m" *ngIf="showBasicInfo === 'start'">
       <div class="flex-1" role="link" tabindex="0">
         <div class="flex flex-1">
           <mat-card-title class="flex-4 mobile-margin text-capitalize margin-remove">
@@ -13,7 +13,8 @@
       <div class="flex flex-1 flex-col" *ngIf="showBasicInfo === 'start'">
         <div class="card_box flex flex-1 flex-row items-center justify-between margin-top-m">
           <h2 class="margin-remove-bottom">Level 1</h2>
-          <button mat-raised-button type="button" class="text-primary margin-right-l edit-btn">
+          <button mat-raised-button type="button" class="text-primary margin-right-l edit-btn"
+            (click)="showBasicInfoDiv('editAssessment')">
             <b class="ws-mat-default-text" i18n>Edit</b>
           </button>
         </div>
@@ -23,7 +24,7 @@
           <h2 class="margin-remove-bottom">Level 2</h2>
           <button mat-raised-button type="button"
             class="text-white ws-mat-primary-background text-white margin-right-m edit-btn"
-            (click)="showBasicInfoDiv()">
+            (click)="showBasicInfoDiv('newAssessment')">
             <b class="text-white" i18n>Create</b>
           </button>
         </div>
