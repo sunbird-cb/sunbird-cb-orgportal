@@ -10,9 +10,15 @@
       </div>
     </mat-card-header>
     <mat-card-content>
-      <ng-container>
-        <ws-widget-org-user-table [tableData]="tabledata" [data]="data" (eOnRowClick)="onRoleClick($event)">
+      <ng-container *ngIf="data?.length > 0">
+        <ws-widget-org-user-table [tableData]="tabledata" [data]="data" (eOnRowClick)="onRoleClick($event)"
+          (actionsClick)="actionsClick($event)">
         </ws-widget-org-user-table>
+      </ng-container>
+      <ng-container *ngIf="!roleCountSpinner">
+        <div class="flex flex-1 loader-box">
+          <mat-spinner strokeWidth="3" diameter="50"></mat-spinner>
+        </div>
       </ng-container>
     </mat-card-content>
   </mat-card>
