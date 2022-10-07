@@ -14,13 +14,13 @@ import { UsersService } from '../../../users/services/users.service'
 export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
   tabledata!: ITableData
   data: any = []
-  roleCountSpinner: boolean = true
+  roleCountSpinner = true
 
   constructor(private router: Router,
-    private activeRouter: ActivatedRoute,
-    private usersService: UsersService,
+              private activeRouter: ActivatedRoute,
+              private usersService: UsersService,
     // private telemetrySvc: TelemetryService,
-    private events: EventService) { }
+              private events: EventService) { }
 
   ngOnInit() {
     this.tabledata = {
