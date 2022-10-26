@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core'
-import { MatTabGroup } from '@angular/material'
+import { MatSnackBar, MatTabGroup } from '@angular/material'
+import { NotificationComponent } from '../../../../components/notification/notification.component'
+import { NOTIFICATION_TIME } from '../../quiz/constants/quiz-constants'
+import { Notify } from '../../quiz/shared/notificationMessage'
 
 @Component({
   selector: 'ws-auth-assessment-home',
@@ -9,7 +12,6 @@ import { MatTabGroup } from '@angular/material'
 export class AuthAssessmentHomeComponent implements OnChanges {
 
   @Output() closeModel = new EventEmitter<any>()
-  @Output() assessmentData = new EventEmitter<any>()
   @Input() typeOfData!: string
   @Input() selectedDataIdentifier!: string
   @Input() assessmentPrimaryCategory!: string
@@ -21,7 +23,7 @@ export class AuthAssessmentHomeComponent implements OnChanges {
   allPrimaryCategory = 'Course Assessment'
 
   constructor(
-    // private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
   ) { }
 
   async ngOnChanges() {
@@ -49,29 +51,30 @@ export class AuthAssessmentHomeComponent implements OnChanges {
   }
 
   showMessage(item: string) {
-    // switch (item) {
-    //   case 'createParent':
-    //     this.snackBar.openFromComponent(NotificationComponent, {
-    //       data: {
-    //         type: Notify.CREATE_CONTENT,
-    //       },
-    //       duration: NOTIFICATION_TIME * 1000,
-    //     })
-    //     break
-    //   case 'fail':
-    //     this.snackBar.openFromComponent(NotificationComponent, {
-    //       data: {
-    //         type: Notify.SAVE_FAIL,
-    //       },
-    //       duration: NOTIFICATION_TIME * 1000,
-    //     })
-    //     break
-    // }
-
+    switch (item) {
+      case 'createParent':
+        this.snackBar.openFromComponent(NotificationComponent, {
+          data: {
+            type: Notify.CREATE_CONTENT,
+          },
+          duration: NOTIFICATION_TIME * 1000,
+        })
+        break
+      case 'fail':
+        this.snackBar.openFromComponent(NotificationComponent, {
+          data: {
+            type: Notify.SAVE_FAIL,
+          },
+          duration: NOTIFICATION_TIME * 1000,
+        })
+        break
+    }
   }
 
   takeActionOnData(item: any) {
-    this.assessmentData.emit(item)
+    if (item && item.identifier) {
+      this.selectedDataIdentifier = item.identifier
+    }
   }
 
   selectedTab() {

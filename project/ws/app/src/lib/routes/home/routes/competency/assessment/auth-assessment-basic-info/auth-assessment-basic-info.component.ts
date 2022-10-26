@@ -4,7 +4,10 @@ import { MatSnackBar } from '@angular/material'
 import { WidgetResolverService } from '@sunbird-cb/resolver'
 import { LoaderService } from '../../../../../../../../../../../src/app/services/loader.service'
 import { environment } from '../../../../../../../../../../../src/environments/environment'
+import { NotificationComponent } from '../../../../components/notification/notification.component'
 import { CompetencyService } from '../../competency.service'
+import { NOTIFICATION_TIME } from '../../quiz/constants/quiz-constants'
+import { Notify } from '../../quiz/shared/notificationMessage'
 // import { NotificationComponent } from '../../../../../notification/components/notification/notification.component'
 
 @Component({
@@ -47,7 +50,7 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
   constructor(
     private formBuilder: FormBuilder,
     private loaderService: LoaderService,
-    // private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
     private widgetResolverService: WidgetResolverService,
     private competencyAssessmentSrv: CompetencyService
   ) { }
@@ -56,6 +59,7 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
     this.isEditEnabled = true
     this.createForm()
     if (this.selectedData && this.selectedData.identifier) {
+      this.metaData = this.competencyAssessmentSrv.getAssessmentOriginalMeta(this.selectedData.identifier)
       this.selectedData.primaryCategory = this.metaData.primaryCategory
       this.assignData()
       this.contentCreated = true
@@ -63,8 +67,6 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
   }
 
   async createForm() {
-    this.loaderService.changeLoad.next(true)
-    debugger
     this.contentForm = this.formBuilder.group({
       name: ['', Validators.required],
       purpose: ['', Validators.required],
@@ -109,6 +111,8 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
     const getAssessmentDataRes = await this.competencyAssessmentSrv.readAssessmentQuestionSet(identifier).toPromise().catch(_error => { })
     if (getAssessmentDataRes && getAssessmentDataRes.params && getAssessmentDataRes.params.status.toLowerCase() === 'successful') {
       this.competencyAssessmentSrv.setAssessmentOriginalMetaHierarchy(getAssessmentDataRes.result.questionset)
+      this.competencyAssessmentSrv.parentContent = getAssessmentDataRes.result.questionset.identifier
+      this.assessmentData.emit({ identifier: identifier })
     }
   }
 
@@ -196,54 +200,45 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
           },
         },
       }
-      // const updateResData = await this.editorService.updateAssessmentHierarchy(requestPayload).toPromise().catch(_error => { })
-      // if (updateResData && updateResData.params && updateResData.params.status === 'successful') {
-      //   const readContentRes = await this.editorService.readcontentV3(this.contentService.parentContent).toPromise().catch(_error => { })
-      //   if (readContentRes && readContentRes.identifier) {
-      //     this.contentService.resetOriginalMetaWithHierarchy(readContentRes)
-      //     const assessmentHierarchy =
-      //       await this.editorService.getAssessmentHierarchy(this.selectedData.identifier).toPromise().catch(_error => { })
-      //     if (assessmentHierarchy && assessmentHierarchy.params && assessmentHierarchy.params.status === 'successful') {
-      //       this.contentService.assessmentOriginalContent = {}
-      //       this.contentService.setAssessmentOriginalMetaHierarchy(assessmentHierarchy.result.questionSet)
-      //     }
-      //   }
-      //   this.loaderService.changeLoad.next(false)
-      //   this.showTosterMessage('success')
-      // } else {
-      //   this.loaderService.changeLoad.next(false)
-      //   this.showTosterMessage('fail')
-      // }
+      const updateResData: any = await this.competencyAssessmentSrv.updateAssessmentHierarchy(requestPayload).toPromise().catch(_error => { })
+      if (updateResData && updateResData.params && updateResData.params.status === 'successful') {
+        this.getAssessmentData(this.selectedData.identifier)
+        this.loaderService.changeLoad.next(false)
+        this.showTosterMessage('success')
+      } else {
+        this.loaderService.changeLoad.next(false)
+        this.showTosterMessage('fail')
+      }
     }
   }
 
   showTosterMessage(type: string) {
-    // switch (type) {
-    //   case 'success':
-    //     this.snackBar.openFromComponent(NotificationComponent, {
-    //       data: {
-    //         type: Notify.SAVE_SUCCESS,
-    //       },
-    //       duration: NOTIFICATION_TIME * 1000,
-    //     })
-    //     break
-    //   case 'fail':
-    //     this.snackBar.openFromComponent(NotificationComponent, {
-    //       data: {
-    //         type: Notify.SAVE_FAIL,
-    //       },
-    //       duration: NOTIFICATION_TIME * 1000,
-    //     })
-    //     break
-    //   case 'upToDate':
-    //     this.snackBar.openFromComponent(NotificationComponent, {
-    //       data: {
-    //         type: Notify.UP_TO_DATE,
-    //       },
-    //       duration: NOTIFICATION_TIME * 1000,
-    //     })
-    //     break
-    // }
+    switch (type) {
+      case 'success':
+        this.snackBar.openFromComponent(NotificationComponent, {
+          data: {
+            type: Notify.SAVE_SUCCESS,
+          },
+          duration: NOTIFICATION_TIME * 1000,
+        })
+        break
+      case 'fail':
+        this.snackBar.openFromComponent(NotificationComponent, {
+          data: {
+            type: Notify.SAVE_FAIL,
+          },
+          duration: NOTIFICATION_TIME * 1000,
+        })
+        break
+      case 'upToDate':
+        this.snackBar.openFromComponent(NotificationComponent, {
+          data: {
+            type: Notify.UP_TO_DATE,
+          },
+          duration: NOTIFICATION_TIME * 1000,
+        })
+        break
+    }
   }
 
   checkTimerAction() {

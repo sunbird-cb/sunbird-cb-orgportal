@@ -68,6 +68,8 @@ import { AuthAssessmentAddQuestionFormMetaComponent } from './routes/competency/
 import { AuthAssessmentAddQuestionComponent } from './routes/competency/assessment/auth-assessment-add-question/auth-assessment-add-question.component'
 import { AuthAssessmentBasicInfoComponent } from './routes/competency/assessment/auth-assessment-basic-info/auth-assessment-basic-info.component'
 import { CompetencyService } from './routes/competency/competency.service'
+import { QuizModule } from './routes/competency/quiz/quiz.module'
+import { NotificationComponent } from './components/notification/notification.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -96,8 +98,8 @@ import { CompetencyService } from './routes/competency/competency.service'
     AuthAssessmentHomeComponent,
     AuthAssessmentBasicInfoComponent,
     AuthAssessmentAddQuestionFormMetaComponent,
-    AuthAssessmentAddQuestionComponent
-
+    AuthAssessmentAddQuestionComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
@@ -149,12 +151,17 @@ import { CompetencyService } from './routes/competency/competency.service'
     MatTableModule,
     MatTooltipModule,
     MatSortModule,
+    QuizModule
+  ],
+  exports: [
+    NotificationComponent
   ],
   entryComponents: [
     AdduserpopupComponent,
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
+    NotificationComponent
   ],
   providers: [
     // CKEditorService,
@@ -162,7 +169,7 @@ import { CompetencyService } from './routes/competency/competency.service'
     InitResolver,
     MdoInfoService,
     UploadService,
-    CompetencyService
+    CompetencyService,
   ],
 })
 export class HomeModule {

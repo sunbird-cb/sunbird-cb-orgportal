@@ -12,6 +12,8 @@ export const environment: IEnvironment = {
   contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   framework: (window as { [key: string]: any })['env']['framework'] || '',
+  azureHost: (window as { [key: string]: any })['env']['azureHost'] || '',
+  azureBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
 }
 interface IEnvironment {
   name: null | string
@@ -23,6 +25,8 @@ interface IEnvironment {
   contentHost: string
   contentBucket?: string
   framework: string
+  azureHost: string
+  azureBucket: string
 }
 
 /*

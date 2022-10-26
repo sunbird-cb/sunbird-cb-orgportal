@@ -1,0 +1,83 @@
+<div class="margin-m">
+  <div mat-dialog-content>
+    <h3 class="margin-remove">
+      <ng-container i18n *ngIf="data === 'delete'">
+        Are you sure you want to delete it?
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'restoreDeleted'">
+        Are you sure you want to restore it by moving the content and all its children to Draft state?
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'transcodeMessage'">
+        Video content takes some time to reflect after the upload is complete, depending on the size of the video. You
+        can come back
+        later to this content to take further actions.
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'publishMessage'">
+        Updated content may take between 5 to 30 minutes to take effect. You may also have to reload the web page to
+        view the changes.
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'directPublishMessage'">
+        As you are a publisher content will be published directly. Updated content may take between 5 to 30 minutes to
+        take effect.
+        You may also have to reload the web page to view the changes.
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'deleteTreeNode'">
+        Are you sure you want to remove the mapping?
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'dialog'">
+        Selecting this option will discard pre entered data of other options. Do you wish to continue ?
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'unpublish'">
+        Are you sure you want to unpublish it?
+      </ng-container>
+      <ng-container *ngIf="data === 'retrieveParent'" i18n>Are you sure you want to retrieve this content and its
+        children?
+      </ng-container>
+      <ng-container *ngIf="data === 'retrieveChild'" i18n>Are you sure you want to retrieve this content?
+      </ng-container>
+      <ng-container *ngIf="data.type === 'deleteQues'">
+        <span i18n> Are you sure you want to delete Quiz</span>-{{ data.index }} ?
+      </ng-container>
+      <ng-container *ngIf="data.type === 'deleteModulepg'">
+        <span i18n> Are you sure you want to delete Page</span>-{{ data.index }} ?
+      </ng-container>
+      <ng-container *ngIf="data === 'deleteAudio'">
+        <span i18n> Are you sure you want to delete the audio file attached for this page ?</span>
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'deleteContent'">
+        Are you sure you want to delete this content? <br />
+        You will not be able to get the content back again.
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'rejectContent'">
+        Are you sure you want to reject the content?
+        <mat-form-field class="w-full margin-top-s" appearance="outline">
+          <textarea matInput placeholder="Reason for rejecting the content" rows="3"
+            [(ngModel)]="rejectComment"></textarea>
+        </mat-form-field>
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'acceptConent'">
+        Are you sure you want to proceed?
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'deleteQuestion'">
+        Are you sure you want to delete question?
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'deleteSection'">
+        Are you sure you want to delete section? All the questions inside the section will be deleted
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'resetSurvey'">
+        Are you sure you want to reset the survey? All the questions inside the survey will be deleted
+      </ng-container>
+      <ng-container i18n *ngIf="data === 'copyContent'">
+        Are you sure you want to create a copy of this course? <br /><br />
+        Enter the new course name
+        <mat-form-field class="w-full" appearance="outline">
+          <input matInput placeholder="Enter course name" [(ngModel)]="copyContentName" />
+        </mat-form-field>
+      </ng-container>
+    </h3>
+  </div>
+  <div mat-dialog-actions class="flex-row-reverse">
+    <button i18n mat-raised-button color="primary" [mat-dialog-close]="getActionData()">Yes</button>
+    <button i18n mat-raised-button mat-dialog-close cdkFocusInitial>No</button>
+  </div>
+</div>

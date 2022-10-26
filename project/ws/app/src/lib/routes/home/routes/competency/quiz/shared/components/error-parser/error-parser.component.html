@@ -1,0 +1,33 @@
+<h1 mat-dialog-title i18n class="font-medium">
+  Unable to complete actions because of following reasons:
+</h1>
+<div mat-dialog-content>
+  <ng-container *ngIf="errorMsg">
+    {{ errorMsg }}
+  </ng-container>
+  <mat-list *ngIf="processErrorData">
+    <ng-container *ngFor="let error of processErrorData; let i = index">
+      <mat-list-item *ngIf="error.name">
+        <h3 class="heading m-0 font-normal">{{ error.name }} :</h3>
+      </mat-list-item>
+      <mat-list-item *ngIf="!error.name">
+        <h3 class="heading m-0 font-normal" i18n>Untitled Content :</h3>
+      </mat-list-item>
+      <mat-list style="margin-left:30px">
+        <div *ngFor="let message of error.message; let i = index">
+          <mat-list-item style="margin-bottom: 3px;">{{ i + 1 }}. {{ message }}</mat-list-item>
+        </div>
+      </mat-list>
+      <mat-divider *ngIf="i < processErrorData?.length - 1"></mat-divider>
+    </ng-container>
+  </mat-list>
+  <ng-container *ngIf="!errorMsg && !processErrorData">
+    {{ data.errorFromBackendData | json }}
+  </ng-container>
+</div>
+<div mat-dialog-actions class="float-right">
+  <button [mat-dialog-close] class="ws-mat-accent-text ws-mat-accent-border-active mat-raised-button" cdkFocusInitial
+    i18n>
+    I Understand
+  </button>
+</div>

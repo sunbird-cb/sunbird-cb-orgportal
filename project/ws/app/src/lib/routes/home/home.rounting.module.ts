@@ -157,7 +157,7 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'competencyDetails'
+        redirectTo: 'competencyDetails',
       },
       {
         path: 'competencyDetails',
@@ -174,9 +174,9 @@ const routes: Routes = [
           pageId: 'manageAssessment',
           module: 'home',
         },
-      }
-    ]
-  }
+      },
+    ],
+  },
 ]
 
 @NgModule({

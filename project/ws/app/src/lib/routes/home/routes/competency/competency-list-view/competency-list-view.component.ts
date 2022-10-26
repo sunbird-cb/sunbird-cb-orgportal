@@ -35,12 +35,12 @@ export class CompetencyListViewComponent implements OnInit, OnDestroy {
   dataForTable = [{
     competency: 'Desired 1',
     type: 'Behavioural',
-    microQuestions: '15'
+    microQuestions: '15',
   },
   {
     competency: 'Desired 2',
     type: 'Behavioural',
-    microQuestions: '20'
+    microQuestions: '20',
   }]
 
   constructor(

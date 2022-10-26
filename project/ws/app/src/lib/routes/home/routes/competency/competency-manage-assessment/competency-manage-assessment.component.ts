@@ -7,6 +7,7 @@ import _ from 'lodash'
 import { map } from 'rxjs/operators'
 import { LoaderService } from '../../../../../../../../../../src/app/services/loader.service'
 import { CompetencyInfo } from '../../../models/competency.model'
+import { CompetencyService } from '../competency.service'
 /* tslint:enable */
 
 @Component({
@@ -37,7 +38,8 @@ export class CompetencyManageAssessmentComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private valueSvc: ValueService,
     private configSvc: ConfigurationsService,
-    private widgetContentSvc: WidgetContentService
+    private widgetContentSvc: WidgetContentService,
+    private competencyAssessmentSrv: CompetencyService
   ) {
   }
 
@@ -64,14 +66,19 @@ export class CompetencyManageAssessmentComponent implements OnInit, OnDestroy {
       _err => { })
   }
 
-  showBasicInfoDiv(type: string) {
+  async showBasicInfoDiv(type: string) {
     switch (type) {
       case 'newAssessment':
         this.showBasicInfo = 'basicInfoDiv'
         break
       case 'editAssessment':
-        this.showBasicInfo = 'basicInfoDiv'
         this.selectedNodeIdentifier = 'do_1136329571243704321241'
+        const getAssessmentDataRes = await this.competencyAssessmentSrv.readAssessmentQuestionSet(this.selectedNodeIdentifier).toPromise().catch(_error => { })
+        if (getAssessmentDataRes && getAssessmentDataRes.params && getAssessmentDataRes.params.status.toLowerCase() === 'successful') {
+          this.competencyAssessmentSrv.setAssessmentOriginalMetaHierarchy(getAssessmentDataRes.result.questionset)
+          this.competencyAssessmentSrv.parentContent = getAssessmentDataRes.result.questionset.identifier
+        }
+        this.showBasicInfo = 'basicInfoDiv'
         break
     }
 

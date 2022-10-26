@@ -31,8 +31,7 @@
       </div>
       <div class="flex flex-1 flex-col" *ngIf="showBasicInfo === 'basicInfoDiv'">
         <ws-auth-assessment-home [typeOfData]="parentType" [selectedDataIdentifier]="selectedNodeIdentifier"
-          [assessmentPrimaryCategory]="assessmentCategory" (closeModel)="takeActionOnClose($event)"
-          (assessmentData)="takeActionOnSaveForAssessment($event)">
+          [assessmentPrimaryCategory]="assessmentCategory" (closeModel)="takeActionOnClose($event)">
         </ws-auth-assessment-home>
       </div>
     </mat-card-content>

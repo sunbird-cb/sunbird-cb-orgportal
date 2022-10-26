@@ -111,8 +111,8 @@
       </mat-list>
     </div>
 
-    <div class="flex flex-col point_detail_box margin-left-xs" *ngIf="selectedQuestionNode"
-      [ngClass]="{'disable': !isEditEnabled}">
+    <div class="flex flex-col point_detail_box margin-left-xs" [ngClass]="{'disable': !isEditEnabled}">
+      <!--  *ngIf="selectedQuestionNode" -->
       <div class="flex flex-1 flex-row">
         <div class="select_box">
           <mat-form-field appearance="outline">
@@ -141,7 +141,7 @@
 
       <div class="question_box">
         <div class="flex flex-col ">
-          <!-- <ws-auth-multiple-choice-question *ngIf="questionType === 'mcq-sca' || questionType === 'mcq-mca'"
+          <ws-auth-multiple-choice-question *ngIf="questionType === 'mcq-sca' || questionType === 'mcq-mca'"
             [currentId]="selectedQuestionNode" [showHint]="false" [submitPressed]="false"
             (value)="updateSelectedQuiz($event)">
           </ws-auth-multiple-choice-question>
@@ -150,7 +150,7 @@
           </ws-auth-fill-ups-editor>
           <ws-auth-match-the-following *ngIf="questionType === 'mtf'" [currentId]="selectedQuestionNode"
             [showHint]="false" [submitPressed]="false" (value)="updateSelectedQuiz($event)">
-          </ws-auth-match-the-following> -->
+          </ws-auth-match-the-following>
         </div>
       </div>
 
@@ -162,9 +162,6 @@
           </button>
         </div>
         <div class="flex flex-row items-center">
-          <!-- <span class="mat-button-wrapper">
-            <mat-icon class="mat-icon">content_copy</mat-icon>
-          </span> -->
           <button mat-button class="padding-xs" (click)="removeAssessment('deleteQuestion')" *ngIf="isEditEnabled">
             <span class="mat-button-wrapper">
               <mat-icon class="mat-icon">delete</mat-icon>

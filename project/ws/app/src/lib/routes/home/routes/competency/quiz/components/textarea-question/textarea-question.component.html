@@ -1,0 +1,11 @@
+<div class="flex addpadding items-center margin-top-l margin-bottom-m">
+  <mat-form-field appearance="outline" class="margin-top-xs w-full">
+    <textarea id="description" matInput [matTextareaAutosize] [matAutosizeMaxRows]="10" [matAutosizeMinRows]="4"
+      maxlength="500" placeholder="Type your answer here" i18n-placeholder #description
+      [disabled]="isDisabled"></textarea>
+    <mat-hint align="end">max 500 characters</mat-hint>
+    <mat-error i18n>
+      You have exceeded 500 characters.
+    </mat-error>
+  </mat-form-field>
+</div>
