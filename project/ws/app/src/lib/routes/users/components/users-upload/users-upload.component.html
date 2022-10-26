@@ -1,0 +1,132 @@
+<div class="flex flex-wrap">
+  <div class="flex flex-row fle-wrap w-full">
+    <div class="flex-1 inline-flex items-end justify-end">
+      <!-- <span class="mat-body-1 mr-5 pl-1">Download the sample file</span> -->
+      <button class="download-btn mat-accent-border mat-button mat-button-base" i18n (click)="downloadFile()">
+        <ng-container i18n>Download sample file</ng-container>
+      </button>
+    </div>
+  </div>
+  <div class="flex flex-row fle-wrap w-full">
+    <mat-card class="my-5 flex-custom ws-mat-accent-border mat-card w-full">
+      <div>
+        <form [formGroup]="formGroup" #form>
+          <input type="file" class="mb-5" (change)="onFileChange($event)" name="file" placeholder="Choose file"
+            (dblclick)="$event.preventDefault();"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .xlsx, .xls" />
+          <!-- <input type="submit" [disabled]="formGroup.invalid" value="upload" /> -->
+          <mat-error *ngIf="showFileError">Only .xlsx or .csv files are accepted</mat-error>
+
+          <div class="mt-5 text-left">
+            <div *ngIf="displayLoader | async" class="pr-4 flex items-center justify-center">
+              <mat-spinner [diameter]="30"></mat-spinner>
+            </div>
+            <button mat-button class="upload-btn mat-button mat-button-base" type="submit" i18n
+              [disabled]="formGroup.invalid || (displayLoader | async)" (click)="onSubmit(form)"
+              (dblclick)="$event.preventDefault();">
+              <ng-container i18n>Upload</ng-container>
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </mat-card>
+  </div>
+  <div class="w-full relative">
+    <h2 class="w-full contacts-head">File uploads</h2>
+    <div class="mb-4 ws-mat-black60-text">
+      Need help? contact us <a class="mat-accent" target="_blank" href="{{contactUsUrl}}">here</a>
+    </div>
+    <div class="example-loading w-full text-center" *ngIf="fetching">
+      <mat-spinner></mat-spinner>
+    </div>
+    <!-- <div *ngIf="bulkUploadData && bulkUploadData.length"> -->
+    <div [hidden]="!bulkUploadData || (bulkUploadData && !bulkUploadData.length) || fetching">
+      <div class=" mx-5 my-5 table-container w-full">
+        <div class="pt-2 ">
+          <!-- <div class=" m-5 flex items-end justify-end">
+          <button mat-raised-button color="primary" class="self-end" i18n (click)="refreshTable()">
+            <ng-container i18n>Refresh</ng-container>
+          </button>
+        </div> -->
+          <mat-table mat-table [dataSource]="dataSource" matSort [matSortActive]="tabledata?.sortColumn"
+            [matSortDirection]="tabledata?.sortState">
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="identifier">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Id
+              </th>
+              <td mat-cell *matCellDef="let row"> {{row.identifier}} </td>
+              <!-- <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.identifier}} </mat-cell> -->
+            </ng-container>
+
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="fileName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Name
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <a href="{{row.filePath}}" download="{{row.fileName}}"> {{row.fileName}}</a>
+              </td>
+            </ng-container>
+
+            <!-- status Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Status
+              </th>
+              <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+            </ng-container>
+
+            <!-- status Column -->
+            <ng-container matColumnDef="dateCreatedOn">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Created
+                on
+              </th>
+              <td mat-cell *matCellDef="let row"> {{row.dateCreatedOn | date:'dd MMM yyy h:mm a' }} </td>
+            </ng-container>
+
+            <!-- status Column -->
+            <ng-container matColumnDef="dateUpdatedOn">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Updated
+                on
+              </th>
+              <td mat-cell *matCellDef="let row"> {{row.dateUpdatedOn | date:'dd MMM yyy h:mm a' }} </td>
+            </ng-container>
+
+            <!-- report Column -->
+            <!-- <ng-container matColumnDef="report">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> report </th>
+                  <td mat-cell *matCellDef="let row">
+                    <button mat-raised-button color="primary" i18n *ngIf="row.status === 'completed'"
+                      (click)="downloadReport(row)">
+                      <ng-container i18n>Download</ng-container>
+                    </button>
+                  </td>
+                </ng-container> -->
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data ...</td>
+            </tr>
+
+          </mat-table>
+
+          <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="(!bulkUploadData || !bulkUploadData.length) && !fetching">
+      <h4 class="w-full
+       ws-mat-black60-text text-center">No data to be displayed!</h4>
+    </ng-container>
+  </div>
+</div>
+
+<input type="hidden" i18-value i18-aria-value aria-value="File upload successful..!" [value]="uplaodSuccessMsg"
+  #toastSuccess />
+<input type="hidden" i18-value i18-aria-value aria-value="Unable to process file upload..!"
+  value="Unable to process file upload..!" #toastError />

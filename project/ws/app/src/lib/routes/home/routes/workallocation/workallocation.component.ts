@@ -32,6 +32,9 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   departmentID: any
   selectedPDFid: any
   searchQuery!: string
+  publishUrl = "app/home/workallocation/published"
+  draftUrl = "app/home/workallocation/draft"
+  currentUrl: any
 
   config: ExportAsConfig = {
     type: 'pdf',
@@ -47,21 +50,29 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    if (this.tabs) {
-      this.tabs.unsubscribe()
-    }
+    // if (this.tabs) {
+    //   this.tabs.unsubscribe()
+    // }
   }
 
   constructor(private exportAsService: ExportAsService, private router: Router, private wrkAllocServ: WorkallocationService,
     private workallocationSrvc: WorkallocationService, private activeRoute: ActivatedRoute, private events: EventService, private route: ActivatedRoute,
     public dialog: MatDialog, public eventSvc: EventService) {
-    this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
-    const paramsMap = this.activeRoute.snapshot.params.tab
-    if (paramsMap === 'Published') {
-      this.currentFilter = 'Published'
-    } else {
-      this.currentFilter = 'Draft'
-    }
+    // this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
+    // const paramsMap = this.activeRoute.snapshot.params.tab
+    // console.log(paramsMap, '-paramsMap====')
+    // if (paramsMap === 'published') {
+    //   this.currentUrl = "app/home/workallocation/published"
+    //   this.currentFilter = 'Published'
+    //   console.log(this.currentUrl, 'this.currentUrl published==========')
+    //   console.log(paramsMap, '- published paramsMap====')
+    // }
+    // if (paramsMap === 'draft') {
+    //   this.currentUrl = "app/home/workallocation/draft"
+    //   this.currentFilter = 'Draft'
+    //   console.log(this.currentUrl, 'this.currentUrl draft ==========')
+    //   console.log(paramsMap, '- draft paramsMap====')
+    // }
   }
 
   ngOnInit() {
@@ -81,11 +92,34 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       sortState: 'asc',
       needUserMenus: true,
     }
-    this.filter("Draft")
+    this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
+    const paramsMap = this.activeRoute.snapshot.params.tab
+    if (paramsMap === 'published') {
+      this.currentUrl = "app/home/workallocation/published"
+      this.currentFilter = 'Published'
+      this.filter("Published")
+
+    }
+    if (paramsMap === 'draft') {
+      this.currentUrl = "app/home/workallocation/draft"
+      this.currentFilter = 'Draft'
+      this.filter("Draft")
+    }
+    if (paramsMap === 'archived') {
+      this.currentUrl = "app/home/workallocation/archived"
+      this.currentFilter = 'Archived'
+      this.filter("Archived")
+
+    }
+
+
+
+
   }
 
   get getTableData() {
     return this.data
+
   }
   // Download format
   export() {
@@ -131,6 +165,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       pageSize: 1000,
       departmentName: this.departmentName,
       status: (statusKey !== '') ? statusKey : "Draft",
+
     }
     //if (this.currentFilter !== statusKey) {
     this.workallocationSrvc.getUsers(req).subscribe(res => {

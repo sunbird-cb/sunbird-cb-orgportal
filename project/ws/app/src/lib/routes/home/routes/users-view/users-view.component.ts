@@ -28,6 +28,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   Math: any
   /* tslint:enable */
   currentFilter = 'active'
+  filterPath = '/app/home/users'
   discussionList!: any
   discussProfileData!: any
   portalProfile!: NSProfileDataV2.IProfile
@@ -75,7 +76,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     this.Math = Math
     this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
-    // console.log(_.get(this.route, 'snapshot.data.usersList.data'))
+
     // this.usersData = _.get(this.route, 'snapshot.data.usersList.data') || {}
     // this.filterData()
   }
@@ -83,22 +84,18 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   // decideAPICall() {
   // }
   ngOnDestroy() {
-    if (this.tabs) {
-      this.tabs.unsubscribe()
-    }
+    // if (this.tabs) {
+    //   this.tabs.unsubscribe()
+    // }
   }
   ngOnInit() {
+    this.currentFilter = this.route.snapshot.params['tab'] || 'active'
     this.getAllUsers()
   }
 
   filter(filter: string) {
     this.currentFilter = filter
-    // this.events.raiseInteractTelemetry(
-    //   {
-    //     type: TelemetryEvents.EnumInteractTypes.CLICK,
-    //     subType: TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
-    //   }, {}
-    // )
+
   }
 
   public tabTelemetry(label: string, index: number) {
@@ -113,7 +110,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
 
   get dataForTable() {
-
     switch (this.currentFilter) {
       case 'active':
         return this.activeUsersData
@@ -201,7 +197,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     //   },
     // }
     // this.usersService.getAllUsers(filterObj).subscribe(data => {
-    //   console.log(data)
     //   this.usersData = data
     //   this.filterData()
     // })
@@ -209,6 +204,19 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       this.usersData = data.result.response
       this.filterData()
     })
+  }
+
+  clickHandler(event: any) {
+    // tslint:disable-next-line: no-console
+    console.log('clickHandler :: event ', event)
+    switch (event.type) {
+      case 'createUser':
+        this.onCreateClick()
+        break
+      case 'upload':
+        this.onUploadClick()
+        break
+    }
   }
 
   onCreateClick() {
@@ -220,6 +228,10 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       },
       {}
     )
+  }
+
+  onUploadClick() {
+    this.filter('upload')
   }
 
   onRoleClick(user: any) {
@@ -254,6 +266,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     switch ($event.action) {
       case 'showOnKarma':
         window.open(`${environment.karmYogiPath}/app/person-profile/${user.request.userId}`)
+        break
+      case 'editInfo':
+        this.onRoleClick($event.row)
         break
       case 'block':
         _.set(user, 'isBlocked', true)

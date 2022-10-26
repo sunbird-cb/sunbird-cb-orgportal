@@ -77,6 +77,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           this.skillDetails = profileData.skills
           this.interests = profileData.interests
           this.userStatus = profileDataAll.isDeleted ? 'Inactive' : 'Active'
+
         }
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
         this.department = fullProfile.unMappedUser.rootOrgId
@@ -149,7 +150,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
             this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: this.userStatus, url: 'none' }, { title: 'MDO information', url: '/app/home/mdoinfo/leadership' }, { title: this.fullname, url: 'none' }] }
           } else {
             // tslint:disable-next-line:max-line-length
-            this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: this.userStatus, url: 'none' }, { title: this.fullname, url: 'none' }] }
+            this.breadcrumbs = [{ title: 'Users', url: '/app/home/users/active' }, { title: this.userStatus, url: `/app/home/users/${this.userStatus.toLowerCase()}` }, { title: this.fullname, url: 'none' }]
           }
         })
 

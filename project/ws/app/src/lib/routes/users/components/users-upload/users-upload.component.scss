@@ -1,0 +1,47 @@
+table {
+    width: 100%;
+  }
+
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  td, th {
+    width: 25%;
+  }
+
+  .table-container{
+       position: relative;
+  }
+
+  .example-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.download-btn {
+    min-width: 112px;
+    width: auto;
+    border: 1px solid #0075B7;
+    border-radius: 4px;
+    color: #0075B7 !important;
+}
+
+.upload-btn {
+    width: auto;
+    background: #0075B7 !important;
+    color: white !important;
+}
+
+.upload-btn:disabled {
+    opacity: 0.7;
+}

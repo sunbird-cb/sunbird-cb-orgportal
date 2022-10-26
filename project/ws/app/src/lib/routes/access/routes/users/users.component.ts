@@ -30,7 +30,8 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.configSvc = _.get(this.route, 'snapshot.parent.data.configService') || {}
     // int left blank
     this.tabledata = {
-      actions: [{ name: 'Details', label: 'Details', icon: 'remove_red_eye', type: 'link' }],
+      // actions: [{ name: 'Details', label: 'Details', icon: 'remove_red_eye', type: 'link' }],
+      actions: [],
       columns: [
         { displayName: 'Full name', key: 'fullName' },
         { displayName: 'Email', key: 'email' },

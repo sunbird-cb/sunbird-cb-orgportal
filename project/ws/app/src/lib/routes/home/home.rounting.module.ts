@@ -21,6 +21,7 @@ import { CompetencyHomeComponent } from './routes/competency/competency-home/com
 import { CompetencyDetailsComponent } from './routes/competency/competency-details/competency-details.component'
 import { CompetencyManageAssessmentComponent } from './routes/competency/competency-manage-assessment/competency-manage-assessment.component'
 
+import { PageResolve } from '@sunbird-cb/utils'
 const routes: Routes = [
   {
     path: '',
@@ -45,14 +46,32 @@ const routes: Routes = [
         },
       },
       {
-        path: 'users',
+        path: 'users/:tab',
         component: UsersViewComponent,
         resolve: {
           usersList: UsersListResolve,
+          pageData: PageResolve,
         },
         data: {
           pageId: 'users',
           module: 'home',
+          pageType: 'feature',
+          pageKey: 'users-view',
+        },
+      },
+      {
+        path: 'users',
+        redirectTo: 'users/active',
+        component: UsersViewComponent,
+        resolve: {
+          usersList: UsersListResolve,
+          pageData: PageResolve,
+        },
+        data: {
+          pageId: 'users',
+          module: 'home',
+          pageType: 'feature',
+          pageKey: 'users-view',
         },
       },
       {
@@ -83,7 +102,16 @@ const routes: Routes = [
         },
       },
       {
+        path: 'workallocation/:tab',
+        data: {
+          pageId: 'workallocation',
+          module: 'home',
+        },
+        component: WorkallocationComponent,
+      },
+      {
         path: 'workallocation',
+        redirectTo: 'workallocation/draft', pathMatch: 'full',
         data: {
           pageId: 'workallocation',
           module: 'home',

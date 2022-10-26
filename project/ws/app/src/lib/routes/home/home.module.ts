@@ -70,6 +70,7 @@ import { AuthAssessmentBasicInfoComponent } from './routes/competency/assessment
 import { CompetencyService } from './routes/competency/competency.service'
 import { QuizModule } from './routes/competency/quiz/quiz.module'
 import { NotificationComponent } from './components/notification/notification.component'
+import { UsersModule } from '../users/users.module'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -154,7 +155,8 @@ import { NotificationComponent } from './components/notification/notification.co
     QuizModule
   ],
   exports: [
-    NotificationComponent
+    NotificationComponent,
+    UsersModule,
   ],
   entryComponents: [
     AdduserpopupComponent,
