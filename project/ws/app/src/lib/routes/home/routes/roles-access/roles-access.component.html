@@ -1,6 +1,6 @@
 <div class="flex flex-4 flex-column">
-  <mat-card class="flex-custom">
-    <mat-card-header class="flex-custom-m">
+  <mat-card>
+    <!-- <mat-card-header class="flex-custom-m">
       <div class="flex-1" role="link" tabindex="1">
         <div class="flex flex-1">
           <mat-card-title class="flex-4 mobile-margin mat-h2">
@@ -8,7 +8,10 @@
           </mat-card-title>
         </div>
       </div>
-    </mat-card-header>
+    </mat-card-header> -->
+    <mat-card-title class="flex-4 mobile-margin mat-h2">
+      Roles and access
+    </mat-card-title>
     <mat-card-content>
       <ng-container *ngIf="data?.length > 0">
         <ws-widget-org-user-table [tableData]="tabledata" [data]="data" (eOnRowClick)="onRoleClick($event)"
