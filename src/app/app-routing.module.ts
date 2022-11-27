@@ -88,6 +88,18 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/mandatory-courses',
+    loadChildren: () => import('./routes/route-events.module').then(u => u.RouteEventsAppModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'events',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/events',
     loadChildren: () => import('./routes/route-events.module').then(u => u.RouteEventsAppModule),
     canActivate: [GeneralGuard],
