@@ -17,6 +17,7 @@ import { StaffComponent } from './routes/staff/staff.component'
 import { BudgetComponent } from './routes/budget/budget.component'
 import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
 import { PageResolve } from '@sunbird-cb/utils'
+import { MandatoryCoursesComponent } from './routes/mandatory-courses/mandatory-courses.component'
 const routes: Routes = [
   {
     path: '',
@@ -90,7 +91,7 @@ const routes: Routes = [
       },
       {
         path: 'mandatory-courses',
-        component: RolesAccessComponent,
+        component: MandatoryCoursesComponent,
         data: {
           pageId: 'mandatory-courses',
           module: 'home',

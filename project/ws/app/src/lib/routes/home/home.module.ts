@@ -59,7 +59,8 @@ import { BudgetschemepopupComponent } from './components/budgetschemepopup/budge
 import { BudgetproofspopupComponent } from './components/budgetproofspopup/budgetproofspopup.component'
 import { UploadService } from './services/upload.service'
 import { AdmintableComponent } from './components/admintable/admintable.component'
-import { UsersModule } from '../users/users.module'
+import { UsersModule } from '../users/users.module';
+import { MandatoryCoursesComponent } from './routes/mandatory-courses/mandatory-courses.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -81,6 +82,7 @@ import { UsersModule } from '../users/users.module'
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
+    MandatoryCoursesComponent
   ],
   imports: [
     CommonModule,

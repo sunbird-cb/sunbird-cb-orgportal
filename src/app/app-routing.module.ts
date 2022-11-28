@@ -88,7 +88,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'app/mandatory-courses',
+    path: 'app/home/mandatory-courses',
     loadChildren: () => import('./routes/route-mandatory-courses.module').then(u => u.RouteMandatoryCoursesModule),
     canActivate: [GeneralGuard],
     data: {

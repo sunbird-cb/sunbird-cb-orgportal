@@ -5,7 +5,7 @@ import { MandatoryCoursesHomeComponent } from './routes/mandatory-courses-home/m
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'folders',
     component: MandatoryCoursesHomeComponent,
   },
 

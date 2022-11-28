@@ -1,0 +1,41 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.search {
+  display: flex;
+  flex: 1;
+}
+.rsearch {
+    display: flex;
+    position: relative;
+    flex: 1 1 auto;
+}
+.sinput {
+    width: 29%;
+    border-radius: 4px;
+    border: 1px solid #d5d0d0;
+    padding: 9px 9px 9px 35px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    font: normal 14px Lato;
+    font-weight: 400;
+}
+
+.create-btn {
+    width: 130px;
+    background: #0075b7!important;
+    color: #fff!important;
+    font-family: Lato;
+    font-weight: 700;
+    font-size: 14px;
+}
+.flex-3 {
+    flex: 3;
+}
+.search-icon {
+    position: absolute;
+    top: 19px;
+    font-size: 20px;
+    left: 10px;
+}
