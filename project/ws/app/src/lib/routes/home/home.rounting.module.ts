@@ -89,6 +89,17 @@ const routes: Routes = [
         },
       },
       {
+        path: 'mandatory-courses',
+        component: RolesAccessComponent,
+        data: {
+          pageId: 'mandatory-courses',
+          module: 'home',
+        },
+        resolve: {
+          usersList: UsersListResolve,
+        },
+      },
+      {
         path: 'approvals',
         component: ApprovalsComponent,
         data: {

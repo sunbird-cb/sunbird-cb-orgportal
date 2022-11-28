@@ -89,11 +89,11 @@ const routes: Routes = [
   },
   {
     path: 'app/mandatory-courses',
-    loadChildren: () => import('./routes/route-events.module').then(u => u.RouteEventsAppModule),
+    loadChildren: () => import('./routes/route-mandatory-courses.module').then(u => u.RouteMandatoryCoursesModule),
     canActivate: [GeneralGuard],
     data: {
       pageType: 'feature',
-      pageKey: 'events',
+      pageKey: 'mandatory-courses',
     },
     resolve: {
       pageData: PageResolve,
