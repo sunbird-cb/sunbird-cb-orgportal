@@ -17,5 +17,33 @@
         </button>
       </div>
     </div>
+    <div class="folder-list">
+      <!-- <mat-table>
+        <mat-header-row>
+          <mat-header-cell>Folder name</mat-header-cell>
+          <mat-header-cell>Courses</mat-header-cell>
+          <mat-header-cell>Batch</mat-header-cell>
+          <mat-header-cell></mat-header-cell>
+        </mat-header-row>
+        <mat-row>
+          <mat-cell>Level 1 new course</mat-cell>
+          <mat-cell>02</mat-cell>
+          <mat-cell>02</mat-cell>
+          <mat-cell>
+            <button>
+              <mat-icon class="notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">more_horiz
+              </mat-icon>
+            </button>
+          </mat-cell>
+        </mat-row>
+      </mat-table> -->
+
+      <table mat-table [dataSource]="folderData">
+        <ng-container matColumnDef="folderName">
+          <tr mat-header-row *matRowDef="let folderrow; columns: displayedColumns;"></tr>
+          <!-- <td mat-cell *matCellDef="let folder"> {{folder.folderName}} </td> -->
+        </ng-container>
+      </table>
+    </div>
   </mat-card>
 </div>

@@ -1,4 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+
+
+
+export interface CourseFolder {
+  Id: number,
+  folderName: string,
+  courseCount: number,
+  batchCount: number
+}
+
+
+
+
 
 @Component({
   selector: 'ws-app-mandatory-courses',
@@ -7,7 +20,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MandatoryCoursesComponent implements OnInit {
 
-  constructor() { }
+  displayedColumns: string[] = ['Id', 'folderName', 'courseCount', 'batchCount'];
+
+
+  constructor() {
+    const folderData: CourseFolder[] = [
+      {
+        "Id": 1,
+        "folderName": "Course 01 folder",
+        "courseCount": 5,
+        "batchCount": 7
+      },
+      {
+        "Id": 2,
+        "folderName": "Course 02 folder",
+        "courseCount": 5,
+        "batchCount": 7
+      }
+
+    ]
+  }
 
   ngOnInit() {
   }
