@@ -1,0 +1,36 @@
+<form [formGroup]="addFolderForm" (ngSubmit)="addFolder()">
+  <div class="input-column px-2">
+    <h2 class="heading margin-bottom-xs">New folder</h2>
+
+    <div class="input-wrapper flex flex-1">
+      <!-- <mat-form-field appearance="outline" class="margin-top-xs">
+        <input id="fname" matInput #folderName formControlName="folderName" i18n-placeholder
+          placeholder="Enter folder name" i18n-aria-label aria-label="Folder name input" class="form-input"
+          autocomplete="off" />
+      </mat-form-field> -->
+      <mat-form-field appearance="outline" class="margin-top-s form_field flex flex-1 full-width">
+        <input matInput autocomplete="off" #folderName placeholder="Enter folder name" class="flex flex-1"
+          formControlName="folderName" i18n-aria-label aria-label="Folder name input" />
+
+      </mat-form-field>
+    </div>
+    <div class="flex items-center justify-end">
+
+      <a mat-raised-button type="submit" class="skip_link mat-accent mat-button margin-right-xs"
+        (click)="closeDialouge()">
+        Cancle
+      </a>
+
+      <a mat-raised-button type="submit" class="next_link text-white ws-mat-primary-background mat-button">
+        <span class="text-white" i18n>
+          Next
+        </span>
+
+      </a>
+    </div>
+
+
+
+
+  </div>
+</form>

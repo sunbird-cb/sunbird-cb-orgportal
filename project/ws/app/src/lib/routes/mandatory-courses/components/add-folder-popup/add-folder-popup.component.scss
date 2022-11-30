@@ -1,0 +1,56 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+@import 'profile-form';
+
+
+.input-wrapper {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.input-column{
+    flex: auto;
+}
+.heading {
+    font-weight: 600;
+    font-family: Montserrat;
+    font-size: 20px;
+    display: block;
+    padding: 0!important;
+}
+.mat-form-field {
+    width: 100%;
+    max-width: 540px;
+}
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0.25em 0;
+}
+.mat-form-field-flex {
+    min-height: 40px;
+    align-items: center;
+}
+
+.skip_link {
+    border: 2px solid #0074b6;
+    color: #0074b6;
+    border-radius: 4px;
+    text-align: center;
+    padding: 0px 12px;
+    height: 48px;
+    line-height: 46px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.next_link {
+    height: 48px!important;
+    line-height: 46px;
+}
+input.mat-input-element {
+    color: rgba(0,0,0,.87)!important;
+    margin-top: 0.5rem!important;
+    font-size: 14px!important;
+    font-weight: 400;
+    font-family: Lato;
+}

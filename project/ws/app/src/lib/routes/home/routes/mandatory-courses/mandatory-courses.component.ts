@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-
-
-
-export interface CourseFolder {
-  Id: number,
-  folderName: string,
-  courseCount: number,
-  batchCount: number
-}
+import { MatDialog } from '@angular/material'
+import { AddFolderPopupComponent } from '../../../mandatory-courses/components/add-folder-popup/add-folder-popup.component'
 
 
 
@@ -19,29 +12,21 @@ export interface CourseFolder {
   styleUrls: ['./mandatory-courses.component.scss']
 })
 export class MandatoryCoursesComponent implements OnInit {
-
-  displayedColumns: string[] = ['Id', 'folderName', 'courseCount', 'batchCount'];
-
-
-  constructor() {
-    const folderData: CourseFolder[] = [
-      {
-        "Id": 1,
-        "folderName": "Course 01 folder",
-        "courseCount": 5,
-        "batchCount": 7
-      },
-      {
-        "Id": 2,
-        "folderName": "Course 02 folder",
-        "courseCount": 5,
-        "batchCount": 7
-      }
-
-    ]
+  constructor(private dialog: MatDialog) {
   }
 
   ngOnInit() {
+  }
+
+
+  openCreateFolderDialog() {
+    console.log("popup btn clicked")
+    this.dialog.open(AddFolderPopupComponent, {
+      // height: '400px',
+      width: '400px',
+
+      // panelClass: 'custom-dialog-container',
+    })
   }
 
 }
