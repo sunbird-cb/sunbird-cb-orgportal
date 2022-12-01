@@ -1,17 +1,35 @@
 table {
   width: 100%;
-  border:1px solid
+  border:1px solid;
 }
-// tr.mat-header-row {
-//   width: 100%;
-//   border-bottom-color: rgba(0,0,0,.12);
-// }
-.mat-header-cell {
-    background-color: #f5f5f5;
-    width: 100%;
-}
-.mat-cell {
+tr.mat-header-row {
   width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: #f5f5f5!important;
+}
+.mat-header-cell {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    min-height: inherit;
+    border-bottom-color:transparent!important;
+}
+tr.mat-row {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+td.mat-cell {
+  width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    min-height: inherit;
+    font-size: 14px!important;
+  border-bottom-color:transparent!important;
 }
 .mat-header-row, .mat-row {
     display: flex;

@@ -1,30 +1,27 @@
 <mat-table [dataSource]="dataSource" class="">
-
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
-  <!-- Position Column -->
-  <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef> No. </th>
-    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+  <ng-container matColumnDef="folderName">
+    <th mat-header-cell *matHeaderCellDef> Folder name </th>
+    <td mat-cell *matCellDef="let element"> {{element.folderName}} </td>
   </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  <ng-container matColumnDef="courseCount">
+    <th mat-header-cell *matHeaderCellDef> Courses </th>
+    <td mat-cell *matCellDef="let element"> {{element.courseCount}} </td>
   </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="weight">
-    <th mat-header-cell *matHeaderCellDef> Weight </th>
-    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+  <ng-container matColumnDef="batchCount">
+    <th mat-header-cell *matHeaderCellDef> Batch </th>
+    <td mat-cell *matCellDef="let element"> {{element.batchCount}} </td>
   </ng-container>
 
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="symbol">
-    <th mat-header-cell *matHeaderCellDef> Symbol </th>
-    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+  <ng-container matColumnDef="">
+    <button aria-haspopup="true" aria-label="action items"
+      class="action-btn mat-menu-trigger mat-icon-button mat-button-base" mat-icon-button="" type="button"><span
+        class="mat-button-wrapper">
+        <mat-icon class="mat-icon notranslate material-icons" role="img"
+          aria-hidden="true">more_horiz</mat-icon>
+      </span>
+    </button>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core'
 
-export interface PeriodicElement {
-  name: string
-  position: number
-  weight: number
-  symbol: string
+export interface courseFolder {
+  folderName: string
+  courseCount: number
+  batchCount: number
+
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+const ELEMENT_DATA: courseFolder[] = [
+  { folderName: "Course 1 folder", courseCount: 3, batchCount: 9 },
+  { folderName: "Course 2 folder", courseCount: 4, batchCount: 2 },
+  { folderName: "Course 3 folder", courseCount: 4, batchCount: 4 },
+  { folderName: "Course 4 folder", courseCount: 7, batchCount: 5 },
 ]
 
 @Component({
@@ -20,7 +20,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./folder-list-table.component.scss']
 })
 export class FolderListTableComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol']
+  displayedColumns: string[] = ['folderName', 'courseCount', 'batchCount']
   dataSource = ELEMENT_DATA
   constructor() {
 
