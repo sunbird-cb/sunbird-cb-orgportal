@@ -1,1 +1,14 @@
-<p>no-data works!</p>
+<div class="nodata margin-left-xs margin-l text-center font-medium ">
+  <ng-container *ngIf="!data?.image">
+    <img src="/assets/icons/Officers_empty.svg" alt="No Officers" class="margin-top-xl margin-bottom-m">
+  </ng-container>
+  <ng-container *ngIf="data?.image">
+    <img [src]="data?.image" alt="No Officers" class="margin-top-xl margin-bottom-m">
+  </ng-container>
+  <p class="mat-subheading-1">{{data?.heading}}</p>
+  <p class="ws-mat-black60-text">{{data?.description}}</p>
+  <button *ngIf="data?.btnRequired" mat-button class="action-btn mat-button mat-button-base" type="button"
+    (click)="btnClick()">
+    <span i18n>{{data?.btnText}}</span>
+  </button>
+</div>
