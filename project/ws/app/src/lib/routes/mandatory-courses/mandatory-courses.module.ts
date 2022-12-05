@@ -12,7 +12,8 @@ import { NoDataComponent } from './components/no-data/no-data.component'
 import { MandatoryCourseHomeComponent } from './routes/mandatory-course-home/mandatory-course-home.component'
 import { AddCoursesComponent } from './routes/add-courses/add-courses.component'
 import { AddBatchDialougeComponent } from './components/add-batch-dialouge/add-batch-dialouge.component'
-import {BreadcrumbsOrgModule} from '@sunbird-cb/collection'
+import { BreadcrumbsOrgModule, CardContentModule } from '@sunbird-cb/collection';
+import { BatchListComponent } from './components/batch-list/batch-list.component'
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {BreadcrumbsOrgModule} from '@sunbird-cb/collection'
     MandatoryCourseComponent,
     NoDataComponent,
     AddCoursesComponent,
-    AddBatchDialougeComponent],
+    AddBatchDialougeComponent,
+    BatchListComponent],
   imports: [
     CommonModule,
     MatTableModule,
@@ -34,7 +36,8 @@ import {BreadcrumbsOrgModule} from '@sunbird-cb/collection'
     MatIconModule,
     MatCardModule,
     MatTabsModule,
-    BreadcrumbsOrgModule
+    BreadcrumbsOrgModule,
+    CardContentModule
   ],
   entryComponents: [
     AddBatchDialougeComponent

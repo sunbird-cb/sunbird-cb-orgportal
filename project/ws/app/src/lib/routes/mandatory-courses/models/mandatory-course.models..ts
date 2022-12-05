@@ -142,24 +142,24 @@ export namespace NsContent {
   }
 
   export interface IContentResponse {
-    id: string,
-    params: any,
-    responseCode: string,
+    id: string
+    params: any
+    responseCode: string
     result: {
       content: IContent
     },
-    ts: string,
+    ts: string
     ver: string
   }
 
   export interface IBatch {
-    batchId: string,
-    createdBy: string,
-    endDate: string | null,
-    enrollmentType: string,
-    identifier: string,
-    name: string,
-    startDate: string,
+    batchId: string
+    createdBy: string
+    endDate: string | null
+    enrollmentType: string
+    identifier: string
+    name: string
+    startDate: string
     status: number
     cert_templates?: null
     collectionId: string

@@ -13,6 +13,8 @@ import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/a
 export class MandatoryCourseComponent implements OnInit {
   currentCourseId!: string
   currentFilter = 'course-list'
+  content: NsContent.IContent | null = null
+  bdtitles = [{ title: 'Folders', url: '' }, { title: 'folder name', url: 'none' }]
   noDataConfig: NsContent.IEmptyDataDisplay = {
     image: '',
     heading: 'No course collections',
