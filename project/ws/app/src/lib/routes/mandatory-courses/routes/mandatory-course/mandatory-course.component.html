@@ -1,2 +1,47 @@
-<p>mandatory-course works!</p>
 <ws-app-no-data [data]="noDataConfig"></ws-app-no-data>
+
+<mat-card-content>
+  <div class="flex flex-1 flex-column margin-fix">
+    <div class="flex flex-1 filter max-height-60">
+      <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'course-list',
+            'ws-mat-accent-border font-medium':currentFilter !== 'course-list'}" mat-button
+        (click)="filter('course-list')" role="button">Courses</a>
+      <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'batch-list',
+            'ws-mat-accent-border font-medium':currentFilter !== 'batch-list'}" mat-button
+        (click)="filter('batch-list')" role="button">Batches</a>
+    </div>
+  </div>
+  <ng-container *ngIf="currentFilter === 'course-list'">
+
+
+    <ws-app-folder-list-table></ws-app-folder-list-table>
+
+
+  </ng-container>
+
+
+
+
+
+  <!-- <ng-container *ngIf="currentFilter === 'batch-list'">
+    <div class="flex flex-1 flex-col justify-center items-center">
+      <h4 class="text-center">No batche's created yet</h4>
+      <p class="text-center h-400-r-14-l">Create a batch to distribute courses.</p>
+
+      <a mat-raised-button type="submit" class="next_link margin-top-l text-white ws-mat-primary-background mat-button"
+        (click)="openCreateBatchDialog()">
+        <span class="text-white" i18n>
+          Create a batch
+        </span>
+
+      </a>
+    </div>
+
+    <p>Batch list</p>
+  </ng-container> -->
+
+  <ws-app-no-data [data]="noBatchDataConfig"></ws-app-no-data>
+</mat-card-content>
+
+
+<!-- course card ---->

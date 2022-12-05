@@ -11,6 +11,7 @@ import { MandatoryCourseComponent } from './routes/mandatory-course/mandatory-co
 import { NoDataComponent } from './components/no-data/no-data.component'
 import { MandatoryCourseHomeComponent } from './routes/mandatory-course-home/mandatory-course-home.component'
 import { AddCoursesComponent } from './routes/add-courses/add-courses.component'
+import { AddBatchDialougeComponent } from './components/add-batch-dialouge/add-batch-dialouge.component'
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AddCoursesComponent } from './routes/add-courses/add-courses.component'
     AddFolderPopupComponent,
     MandatoryCourseComponent,
     NoDataComponent,
-    AddCoursesComponent],
+    AddCoursesComponent,
+    AddBatchDialougeComponent],
   imports: [
     CommonModule,
     MatTableModule,
@@ -31,6 +33,9 @@ import { AddCoursesComponent } from './routes/add-courses/add-courses.component'
     MatIconModule,
     MatCardModule,
     MatTabsModule
+  ],
+  entryComponents: [
+    AddBatchDialougeComponent
   ],
   exports: [FolderListTableComponent, AddFolderPopupComponent],
 

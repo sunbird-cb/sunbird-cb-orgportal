@@ -17,6 +17,14 @@ export class MandatoryCourseComponent implements OnInit {
     btnLink: 'choose-courses',
     btnText: 'Add Courses',
   }
+  noBatchDataConfig: NsContent.IEmptyDataDisplay = {
+    image: '',
+    heading: "No batche's created yet",
+    description: 'Create a batch to distribute courses.',
+    btnRequired: true,
+    btnLink: '',
+    btnText: 'Create a batch',
+  }
   constructor(
     private activatedRoute: ActivatedRoute
   ) { }

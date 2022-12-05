@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { NsContent } from '../../models/mandatory-course.models.'
+import { MatDialog } from '@angular/material'
+import { AddBatchDialougeComponent } from '../add-batch-dialouge/add-batch-dialouge.component'
 
 @Component({
   selector: 'ws-app-no-data',
@@ -12,7 +14,8 @@ export class NoDataComponent implements OnInit {
 
   currentFilter = 'course-list'
   constructor(
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -32,6 +35,16 @@ export class NoDataComponent implements OnInit {
 
   btnClick() {
     this.router.navigate([`${this.data.btnLink}`])
+  }
+
+  openCreateBatchDialog() {
+    console.log("popup btn clicked")
+    this.dialog.open(AddBatchDialougeComponent, {
+      // height: '400px',
+      width: '400px',
+
+      // panelClass: 'custom-dialog-container',
+    })
   }
 
 }
