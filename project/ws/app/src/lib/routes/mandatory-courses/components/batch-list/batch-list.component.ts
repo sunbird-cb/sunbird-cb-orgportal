@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
 import { NsContent } from '../../models/mandatory-course.models.'
 // export interface courseFolder {
 //   folderId: number,
@@ -11,13 +12,13 @@ import { NsContent } from '../../models/mandatory-course.models.'
 const ELEMENT_DATA: NsContent.IBatch[] = [
 
   {
-    batchId: '123',
+    batchId: '1210',
     createdBy: '',
     endDate: '',
-    enrollmentType: '00',
+    enrollmentType: '01',
     identifier: 'string',
     name: 'Course 1 batch',
-    startDate: '10 june',
+    startDate: '11 june',
     status: 1212,
     cert_templates: null,
     collectionId: '0001',
@@ -26,11 +27,53 @@ const ELEMENT_DATA: NsContent.IBatch[] = [
     createdFor: [],
     description: null,
     enrollmentEndDate: 'string',
-    id: '005',
+    id: '001',
     mentors: ['string'],
     tandc: null,
     updatedDate: 'string'
-  }
+  },
+  {
+    batchId: '1212',
+    createdBy: '',
+    endDate: '',
+    enrollmentType: '002',
+    identifier: 'string',
+    name: 'Course 1 batch',
+    startDate: '11 june',
+    status: 1212,
+    cert_templates: null,
+    collectionId: '0002',
+    courseId: 'string',
+    createdDate: 'string',
+    createdFor: [],
+    description: null,
+    enrollmentEndDate: 'string',
+    id: '002',
+    mentors: ['string'],
+    tandc: null,
+    updatedDate: 'string'
+  },
+  {
+    batchId: '1213',
+    createdBy: '',
+    endDate: '',
+    enrollmentType: '01',
+    identifier: 'string',
+    name: 'Course 1 batch',
+    startDate: '13 june',
+    status: 1212,
+    cert_templates: null,
+    collectionId: '0003',
+    courseId: 'string',
+    createdDate: 'string',
+    createdFor: [],
+    description: null,
+    enrollmentEndDate: 'string',
+    id: '003',
+    mentors: ['string'],
+    tandc: null,
+    updatedDate: 'string'
+  },
 ]
 
 @Component({
@@ -39,11 +82,14 @@ const ELEMENT_DATA: NsContent.IBatch[] = [
   styleUrls: ['./batch-list.component.scss']
 })
 export class BatchListComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'enrollmentType', 'collectionId', 'id', 'startDate', 'enrollmentEndDate', 'null']
+  displayedColumns: string[] = ['name', 'enrollmentType', 'collectionId', 'id', 'startDate', 'enrollmentEndDate', 'addMember', 'null']
   dataSource = ELEMENT_DATA
-  constructor() { }
+  folderId: any
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.folderId = this.route.snapshot.params['doId']
+    console.log(this.folderId, 'this.paramMap')
   }
 
 }

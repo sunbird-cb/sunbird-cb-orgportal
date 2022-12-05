@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { AddCoursesComponent } from './routes/add-courses/add-courses.component'
+import { AddMembersComponent } from './routes/add-members/add-members.component'
 import { MandatoryCourseHomeComponent } from './routes/mandatory-course-home/mandatory-course-home.component'
 import { MandatoryCourseComponent } from './routes/mandatory-course/mandatory-course.component'
 
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: ':doId/choose-courses',
         component: AddCoursesComponent,
+      },
+      {
+        path: ':doId/:batchId/add-members',
+        component: AddMembersComponent,
       },
     ],
   },
