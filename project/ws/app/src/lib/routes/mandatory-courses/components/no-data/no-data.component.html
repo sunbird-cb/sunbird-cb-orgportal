@@ -1,31 +1,3 @@
-<!-- <p>no-data works!</p> -->
-<!-- <ws-widget-breadcrumbs-org
-  [widgetData]="{titles:[{title:'Folders', url:''},{title:role,url:'none'}] }">
-</ws-widget-breadcrumbs-org> -->
-<div class="flex flex-row items-center justify-content-end">
-  <a class="h-400-r-14-l margin-right-m">
-    <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">edit
-    </mat-icon> <span class="text-span">Rename</span>
-  </a>
-  <a class="h-400-r-14-l">
-    <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">delete
-    </mat-icon><span class="text-span">Delete</span>
-  </a>
-</div>
-
-<!-- <div class="flex flex-1 flex-col justify-center items-center margin-top-l">
-  <h4 class="text-center">No course collections</h4>
-  <p class="text-center h-400-r-14-l">Create an outstanding collection of courses by adding courses.</p>
-
-  <a mat-raised-button type="submit" class="next_link margin-top-l text-white ws-mat-primary-background mat-button"
-    routerLink="choose-courses" routerLinkActive="router-link-active">
-    <span class="text-white" i18n>
-      Add Courses
-    </span>
-
-  </a>
-</div> -->
-
 <div class="nodata margin-left-xs margin-l text-center font-medium ">
   <ng-container *ngIf="!data?.image">
     <img src="/assets/icons/Officers_empty.svg" alt="No Officers" class="margin-top-xl margin-bottom-m">
@@ -40,12 +12,3 @@
     <span i18n>{{data?.btnText}}</span>
   </button>
 </div>
-
-
-
-
-<!-- <mat-tab-group>
-  <mat-tab label="First"> Content 1 </mat-tab>
-  <mat-tab label="Second"> Content 2 </mat-tab>
-  <mat-tab label="Third"> Content 3 </mat-tab>
-</mat-tab-group> -->

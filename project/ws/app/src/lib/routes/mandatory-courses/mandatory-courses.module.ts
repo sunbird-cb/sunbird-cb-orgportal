@@ -12,6 +12,7 @@ import { NoDataComponent } from './components/no-data/no-data.component'
 import { MandatoryCourseHomeComponent } from './routes/mandatory-course-home/mandatory-course-home.component'
 import { AddCoursesComponent } from './routes/add-courses/add-courses.component'
 import { AddBatchDialougeComponent } from './components/add-batch-dialouge/add-batch-dialouge.component'
+import {BreadcrumbsOrgModule} from '@sunbird-cb/collection'
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AddBatchDialougeComponent } from './components/add-batch-dialouge/add-b
     ReactiveFormsModule,
     MatIconModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    BreadcrumbsOrgModule
   ],
   entryComponents: [
     AddBatchDialougeComponent
