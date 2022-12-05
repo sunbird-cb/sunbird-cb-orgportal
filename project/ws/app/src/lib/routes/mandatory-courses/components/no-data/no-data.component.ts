@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Router } from '@angular/router'
 import { NsContent } from '../../models/mandatory-course.models.'
-
 
 @Component({
   selector: 'ws-app-no-data',
@@ -10,8 +9,7 @@ import { NsContent } from '../../models/mandatory-course.models.'
 })
 export class NoDataComponent implements OnInit {
   @Input() data!: NsContent.IEmptyDataDisplay
-
-
+  @Output() buttonClicked?: EventEmitter<any> = new EventEmitter()
   constructor(
     private router: Router
   ) { }
@@ -19,13 +17,13 @@ export class NoDataComponent implements OnInit {
   ngOnInit() {
   }
 
-
-
-
   btnClick() {
-    this.router.navigate([`${this.data.btnLink}`])
+    if (this.data.btnLink !== 'none') {
+      this.router.navigate([`${this.data.btnLink}`])
+    }
+    if (this.buttonClicked) {
+      this.buttonClicked.emit({ buttonClicked: true, data: this.data })
+    }
   }
-
-
 
 }
