@@ -1,1 +1,69 @@
-<p>no-data works!</p>
+<!-- <p>no-data works!</p> -->
+<!-- <ws-widget-breadcrumbs-org
+  [widgetData]="{titles:[{title:'Folders', url:''},{title:role,url:'none'}] }">
+</ws-widget-breadcrumbs-org> -->
+<div class="flex flex-row items-center justify-content-end">
+  <a class="h-400-r-14-l margin-right-m">
+    <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">edit
+    </mat-icon> <span class="text-span">Rename</span>
+  </a>
+  <a class="h-400-r-14-l">
+    <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">delete
+    </mat-icon><span class="text-span">Delete</span>
+  </a>
+</div>
+
+<div class="flex flex-1 flex-col justify-center items-center margin-top-l">
+  <h4 class="text-center">No course collections</h4>
+  <p class="text-center h-400-r-14-l">Create an outstanding collection of courses by adding courses.</p>
+
+  <a mat-raised-button type="submit" class="next_link margin-top-l text-white ws-mat-primary-background mat-button"
+    routerLink="choose-courses" routerLinkActive="router-link-active">
+    <span class="text-white" i18n>
+      Add Courses
+    </span>
+
+  </a>
+</div>
+<mat-card-content>
+  <div class="flex flex-1 flex-column margin-fix">
+    <div class="flex flex-1 filter max-height-60">
+      <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'course-list',
+            'ws-mat-accent-border font-medium':currentFilter !== 'course-list'}" mat-button
+        (click)="filter('course-list')" role="button">Courses</a>
+      <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'batch-list',
+            'ws-mat-accent-border font-medium':currentFilter !== 'batch-list'}" mat-button
+        (click)="filter('batch-list')" role="button">Batches</a>
+    </div>
+  </div>
+  <ng-container *ngIf="currentFilter === 'course-list'">
+
+
+    <ws-app-folder-list-table></ws-app-folder-list-table>
+
+
+  </ng-container>
+
+  <ng-container *ngIf="currentFilter === 'batch-list'">
+    <div class="flex flex-1 flex-col justify-center items-center">
+      <h4 class="text-center">No batche's created yet</h4>
+      <p class="text-center h-400-r-14-l">Create a batch to distribute courses.</p>
+
+      <a mat-raised-button type="submit" class="next_link margin-top-l text-white ws-mat-primary-background mat-button">
+        <span class="text-white" i18n>
+          Create a batch
+        </span>
+
+      </a>
+    </div>
+
+    <p>Batch list</p>
+  </ng-container>
+</mat-card-content>
+
+
+<!-- <mat-tab-group>
+  <mat-tab label="First"> Content 1 </mat-tab>
+  <mat-tab label="Second"> Content 2 </mat-tab>
+  <mat-tab label="Third"> Content 3 </mat-tab>
+</mat-tab-group> -->

@@ -1,0 +1,11 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.container-balanced {
+    margin-left: 0!important;
+    margin-right: auto!important;
+}
+.flex-custom.mat-card {
+    padding: 1em 4em!important;
+}

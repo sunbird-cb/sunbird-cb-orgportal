@@ -1,0 +1,18 @@
+.next_link {
+    height: 48px!important;
+    line-height: 46px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.filter .filter-option:first-child {
+    margin-left: 0;
+}
+.filter .filter-option {
+    margin: 12px;
+    border-radius: 0;
+    border-width: 0 0 2px;
+}
+.mat-icon, .text-span {
+    vertical-align: middle;
+}

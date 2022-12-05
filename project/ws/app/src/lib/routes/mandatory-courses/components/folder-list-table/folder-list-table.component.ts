@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 
 export interface courseFolder {
+  folderId: number,
   folderName: string
   courseCount: number
   batchCount: number
@@ -8,10 +9,10 @@ export interface courseFolder {
 }
 
 const ELEMENT_DATA: courseFolder[] = [
-  { folderName: "Course 1 folder", courseCount: 3, batchCount: 9 },
-  { folderName: "Course 2 folder", courseCount: 4, batchCount: 2 },
-  { folderName: "Course 3 folder", courseCount: 4, batchCount: 4 },
-  { folderName: "Course 4 folder", courseCount: 7, batchCount: 5 },
+  { folderId: 123, folderName: "Course 1 folder", courseCount: 3, batchCount: 9 },
+  { folderId: 1232, folderName: "Course 2 folder", courseCount: 4, batchCount: 2 },
+  { folderId: 1233, folderName: "Course 3 folder", courseCount: 4, batchCount: 4 },
+  { folderId: 1234, folderName: "Course 4 folder", courseCount: 7, batchCount: 5 },
 ]
 
 @Component({

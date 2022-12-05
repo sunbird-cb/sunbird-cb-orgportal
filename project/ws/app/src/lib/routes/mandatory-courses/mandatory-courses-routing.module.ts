@@ -14,7 +14,7 @@ const routes: Routes = [
         component: MandatoryCourseComponent,
       },
       {
-        path: ':id/courses',
+        path: ':id/choose-courses',
         component: AddCoursesComponent,
       },
     ],

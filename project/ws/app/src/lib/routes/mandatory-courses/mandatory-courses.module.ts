@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common'
 import { MandatoryCoursesRoutingModule } from './mandatory-courses-routing.module'
 import { FolderListTableComponent } from './components/folder-list-table/folder-list-table.component'
 import { AddFolderPopupComponent } from './components/add-folder-popup/add-folder-popup.component'
-import { MatIconModule, MatTableModule } from '@angular/material'
-import { MatFormFieldModule, MatInputModule } from '@angular/material'
+import { MatCardModule, MatIconModule, MatTableModule } from '@angular/material'
+import { MatFormFieldModule, MatInputModule, MatTabsModule } from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { MandatoryCourseComponent } from './routes/mandatory-courses-home/mandatory-courses-home/mandatory-course.component'
@@ -23,7 +23,9 @@ import { AddCoursesComponent } from './routes/add-courses/add-courses.component'
     FormsModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatTabsModule
   ],
   exports: [FolderListTableComponent, AddFolderPopupComponent]
 
