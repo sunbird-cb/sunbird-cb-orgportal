@@ -504,4 +504,13 @@ export namespace NsContent {
     EMimeTypes.TEXT_WEB,
     EMimeTypes.SURVEY,
   ]
+
+  export interface IEmptyDataDisplay {
+    image?: string,
+    heading: string,
+    description: string,
+    btnRequired?: boolean,
+    btnLink?: string,
+    btnText?: string,
+  }
 }

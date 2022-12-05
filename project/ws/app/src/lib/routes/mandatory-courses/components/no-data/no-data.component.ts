@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { NsContent } from '../../models/mandatory-course.models.'
 
 @Component({
   selector: 'ws-app-no-data',
@@ -6,9 +8,12 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./no-data.component.scss'],
 })
 export class NoDataComponent implements OnInit {
+  @Input() data!: NsContent.IEmptyDataDisplay
 
   currentFilter = 'course-list'
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -21,6 +26,12 @@ export class NoDataComponent implements OnInit {
     } else if (data === 'batch-list') {
       this.currentFilter = 'batch-list'
     }
+
+
+}
+
+  btnClick() {
+    this.router.navigate([`${this.data.btnLink}`])
   }
 
 }

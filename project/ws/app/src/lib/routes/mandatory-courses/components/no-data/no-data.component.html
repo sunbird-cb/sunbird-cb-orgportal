@@ -13,7 +13,7 @@
   </a>
 </div>
 
-<div class="flex flex-1 flex-col justify-center items-center margin-top-l">
+<!-- <div class="flex flex-1 flex-col justify-center items-center margin-top-l">
   <h4 class="text-center">No course collections</h4>
   <p class="text-center h-400-r-14-l">Create an outstanding collection of courses by adding courses.</p>
 
@@ -24,7 +24,23 @@
     </span>
 
   </a>
+</div> -->
+
+<div class="nodata margin-left-xs margin-l text-center font-medium ">
+  <ng-container *ngIf="!data?.image">
+    <img src="/assets/icons/Officers_empty.svg" alt="No Officers" class="margin-top-xl margin-bottom-m">
+  </ng-container>
+  <ng-container *ngIf="data?.image">
+    <img [src]="data?.image" alt="No Officers" class="margin-top-xl margin-bottom-m">
+  </ng-container>
+  <p class="mat-subheading-1">{{data?.heading}}</p>
+  <p class="ws-mat-black60-text">{{data?.description}}</p>
+  <button *ngIf="data?.btnRequired" mat-button class="action-btn mat-button mat-button-base" type="button"
+    (click)="btnClick()">
+    <span i18n>{{data?.btnText}}</span>
+  </button>
 </div>
+
 <mat-card-content>
   <div class="flex flex-1 flex-column margin-fix">
     <div class="flex flex-1 filter max-height-60">
@@ -43,6 +59,10 @@
 
 
   </ng-container>
+
+
+
+
 
   <ng-container *ngIf="currentFilter === 'batch-list'">
     <div class="flex flex-1 flex-col justify-center items-center">
@@ -67,3 +87,4 @@
   <mat-tab label="Second"> Content 2 </mat-tab>
   <mat-tab label="Third"> Content 3 </mat-tab>
 </mat-tab-group> -->
+

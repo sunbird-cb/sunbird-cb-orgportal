@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { AddCoursesComponent } from './routes/add-courses/add-courses.component'
 import { MandatoryCourseHomeComponent } from './routes/mandatory-course-home/mandatory-course-home.component'
-import { MandatoryCourseComponent } from './routes/mandatory-courses-home/mandatory-courses-home/mandatory-course.component'
+import { MandatoryCourseComponent } from './routes/mandatory-course/mandatory-course.component'
 
 const routes: Routes = [
   {
@@ -10,11 +10,11 @@ const routes: Routes = [
     component: MandatoryCourseHomeComponent,
     children: [
       {
-        path: ':id',
+        path: ':doId',
         component: MandatoryCourseComponent,
       },
       {
-        path: ':id/choose-courses',
+        path: ':doId/choose-courses',
         component: AddCoursesComponent,
       },
     ],
