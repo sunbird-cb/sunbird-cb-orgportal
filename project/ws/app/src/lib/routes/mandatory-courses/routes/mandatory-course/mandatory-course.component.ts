@@ -4,7 +4,6 @@ import { NsContent } from '../../models/mandatory-course.models.'
 import { MatDialog } from '@angular/material'
 import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/add-batch-dialouge.component'
 
-
 @Component({
   selector: 'ws-app-mandatory-course-home',
   templateUrl: './mandatory-course.component.html',
@@ -25,10 +24,10 @@ export class MandatoryCourseComponent implements OnInit {
   }
   noBatchDataConfig: NsContent.IEmptyDataDisplay = {
     image: '',
-    heading: "No batche's created yet",
+    heading: `No batche's created yet`,
     description: 'Create a batch to distribute courses.',
     btnRequired: true,
-    btnLink: '',
+    btnLink: 'none',
     btnText: 'Create a batch',
   }
   constructor(
@@ -50,12 +49,10 @@ export class MandatoryCourseComponent implements OnInit {
     } else if (data === 'batch-list') {
       this.currentFilter = 'batch-list'
     }
-
-
   }
 
   openCreateBatchDialog() {
-    console.log("popup btn clicked")
+    console.log('popup btn clicked')
     this.dialog.open(AddBatchDialougeComponent, {
       // height: '400px',
       width: '400px',

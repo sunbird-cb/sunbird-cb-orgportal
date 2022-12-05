@@ -35,8 +35,9 @@
   <ng-container *ngIf="currentFilter === 'batch-list'">
 
 
-    <ws-app-no-data [data]="noBatchDataConfig"></ws-app-no-data>
+    <ws-app-no-data [data]="noBatchDataConfig" (buttonClicked)="openCreateBatchDialog()"></ws-app-no-data>
     <ws-app-batch-list></ws-app-batch-list>
+
 
 
   </ng-container>
