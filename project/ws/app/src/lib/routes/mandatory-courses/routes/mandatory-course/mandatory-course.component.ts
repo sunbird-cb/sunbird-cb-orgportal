@@ -15,7 +15,7 @@ export class MandatoryCourseComponent implements OnInit {
   content: NsContent.IContent | null = null
   bdtitles = [{ title: 'Folders', url: '' }, { title: 'folder name', url: 'none' }]
   noDataConfig: NsContent.IEmptyDataDisplay = {
-    image: '',
+    image: 'assets/images/banners/no_data.svg',
     heading: 'No course collections',
     description: 'Create an outstanding collection of courses by adding courses.',
     btnRequired: true,
@@ -23,7 +23,7 @@ export class MandatoryCourseComponent implements OnInit {
     btnText: 'Add Courses',
   }
   noBatchDataConfig: NsContent.IEmptyDataDisplay = {
-    image: '',
+    image: 'assets/images/banners/no_data.svg',
     heading: `No batche's created yet`,
     description: 'Create a batch to distribute courses.',
     btnRequired: true,

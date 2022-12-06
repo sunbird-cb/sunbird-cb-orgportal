@@ -11,7 +11,7 @@ export class BatchDetailsComponent implements OnInit {
   currentCourseId!: string
   currentBatchId!: string
   noDataConfig: NsContent.IEmptyDataDisplay = {
-    image: '',
+    image: 'assets/images/banners/no_data.svg',
     heading: 'No members added',
     description: 'Add members to assign course',
     btnRequired: true,

@@ -14,7 +14,7 @@ import { AddCoursesComponent } from './routes/add-courses/add-courses.component'
 import { AddBatchDialougeComponent } from './components/add-batch-dialouge/add-batch-dialouge.component'
 
 import { BreadcrumbsOrgModule, CardContentModule } from '@sunbird-cb/collection';
-// import { BatchListComponent } from './components/batch-list/batch-list.component';
+import { BatchListComponent } from './components/batch-list/batch-list.component';
 // import { AddMembersComponent } from './routes/add-members/add-members.component'
 
 // import { BreadcrumbsOrgModule } from '@sunbird-cb/collection';
@@ -33,6 +33,7 @@ import { BatchDetailsComponent } from './routes/batch-details/batch-details.comp
     AddBatchDialougeComponent,
     AddMembersComponent,
     BatchDetailsComponent,
+    BatchListComponent
   ],
   imports: [
     CommonModule,
