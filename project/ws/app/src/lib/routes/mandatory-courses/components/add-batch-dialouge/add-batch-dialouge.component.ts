@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { FormBuilder, FormGroup } from '@angular/forms'
 import { MatDialogRef } from '@angular/material'
 
 @Component({
@@ -8,13 +9,30 @@ import { MatDialogRef } from '@angular/material'
 })
 export class AddBatchDialougeComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<AddBatchDialougeComponent>) { }
+  addBatchForm: FormGroup
+
+  constructor(public dialogRef: MatDialogRef<AddBatchDialougeComponent>, private fb: FormBuilder) {
+    this.addBatchForm = this.fb.group({
+      batchTitle: [''],
+      startDate: [''],
+      endDate: ['']
+
+    })
+  }
 
   ngOnInit() {
   }
 
   closeDialouge(): void {
     this.dialogRef.close()
+  }
+
+  addBatch() {
+    const batchVal = this.addBatchForm.value
+    console.log(batchVal)
+    if (batchVal && batchVal.length) {
+      this.closeDialouge()
+    }
   }
 
 }

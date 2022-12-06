@@ -54,8 +54,7 @@ export class MandatoryCourseComponent implements OnInit {
   openCreateBatchDialog() {
     console.log('popup btn clicked')
     this.dialog.open(AddBatchDialougeComponent, {
-      // height: '400px',
-      width: '400px',
+      width: 'auto',
 
       // panelClass: 'custom-dialog-container',
     })

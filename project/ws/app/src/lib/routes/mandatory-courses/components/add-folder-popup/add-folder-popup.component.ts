@@ -18,7 +18,7 @@ export class AddFolderPopupComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  ngOnInit() {  
   }
 
 
