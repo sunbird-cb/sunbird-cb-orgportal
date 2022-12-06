@@ -1,9 +1,10 @@
 <div class="nodata margin-left-xs margin-l text-center font-medium ">
   <ng-container *ngIf="!data?.image">
-    <img src="/assets/icons/Officers_empty.svg" alt="No Officers" class="margin-top-xl margin-bottom-m no-data-img">
+    <img src="/assets/icons/Officers_empty.svg" alt="No Officers" class=" margin-top-xl margin-bottom-m"
+      id="nodata-image">
   </ng-container>
   <ng-container *ngIf="data?.image">
-    <img [src]="data?.image" alt="No Officers" class="margin-top-xl margin-bottom-m">
+    <img [src]="data?.image" alt="No Officers" class="margin-top-xl margin-bottom-m nodata-image">
   </ng-container>
   <p class="mat-subheading-1">{{data?.heading}}</p>
   <p class="ws-mat-black60-text">{{data?.description}}</p>

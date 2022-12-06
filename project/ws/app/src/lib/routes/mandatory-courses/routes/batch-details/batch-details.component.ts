@@ -19,7 +19,7 @@ export class BatchDetailsComponent implements OnInit {
     btnText: 'Add members',
   }
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute, 
   ) { }
 
   ngOnInit() {
