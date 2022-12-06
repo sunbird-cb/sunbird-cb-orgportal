@@ -13,7 +13,7 @@ export class MandatoryCourseComponent implements OnInit {
   currentCourseId!: string
   currentFilter = 'course-list'
   content: NsContent.IContent | null = null
-  bdtitles = [{ title: 'Folders', url: '' }, { title: 'folder name', url: 'none' }]
+  bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }, { title: 'Folder name', url: 'none' }]
   noDataConfig: NsContent.IEmptyDataDisplay = {
     image: 'assets/images/banners/no_data.svg',
     heading: 'No course collections',

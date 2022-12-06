@@ -10,6 +10,11 @@ import { NsContent } from '../../models/mandatory-course.models.'
 export class BatchDetailsComponent implements OnInit {
   currentCourseId!: string
   currentBatchId!: string
+  bdtitles = [
+    { title: 'Folders', url: '/app/home/mandatory-courses' },
+    { title: 'Folder name', url: '/app/mandatory-courses/132' },
+    { title: 'Batch name', url: 'none' },
+  ]
   noDataConfig: NsContent.IEmptyDataDisplay = {
     image: 'assets/images/banners/no_data.svg',
     heading: 'No members added',
@@ -19,7 +24,7 @@ export class BatchDetailsComponent implements OnInit {
     btnText: 'Add members',
   }
   constructor(
-    private activatedRoute: ActivatedRoute, 
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
