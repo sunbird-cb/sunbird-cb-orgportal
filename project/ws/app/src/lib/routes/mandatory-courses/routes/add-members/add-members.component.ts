@@ -14,4 +14,15 @@ export class AddMembersComponent implements OnInit {
   ngOnInit() {
   }
 
+
+
+  getUserFullName(user: any) {
+    // this.getHoverUser(user: any)
+    if (user && user.first_name && user.last_name) {
+
+      return `${user.first_name.trim()} ${user.last_name.trim()}`
+    }
+    return ''
+  }
+
 }
