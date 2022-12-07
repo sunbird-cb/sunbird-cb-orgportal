@@ -1,2 +1,15 @@
-<ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }"></ws-widget-breadcrumbs-org>
+<div class="flex flex-1 justify-between">
+  <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }"></ws-widget-breadcrumbs-org>
+  <div class="flex flex-row items-center justify-content-end">
+    <a class="h-400-r-14-l margin-right-m edit-link">
+      <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">edit
+      </mat-icon> <span class="text-span">Rename</span>
+    </a>
+    <a class="h-400-r-14-l edit-link">
+      <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">delete
+      </mat-icon><span class="text-span">Delete</span>
+    </a>
+  </div>
+</div>
+
 <ws-app-no-data [data]="noDataConfig"></ws-app-no-data>
