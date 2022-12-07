@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router'
 import { NsContent } from '../../models/mandatory-course.models.'
 import { MatDialog } from '@angular/material'
 import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/add-batch-dialouge.component'
+import { MandatoryCourseService } from '../../services/mandatory-course.service'
 
 @Component({
   selector: 'ws-app-mandatory-course-home',
@@ -11,6 +12,7 @@ import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/a
 })
 export class MandatoryCourseComponent implements OnInit {
   currentCourseId!: string
+  searchResults: any = []
   currentFilter = 'course-list'
   content: NsContent.IContent | null = null
   bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }, { title: 'Folder name', url: 'none' }]
@@ -32,7 +34,8 @@ export class MandatoryCourseComponent implements OnInit {
   }
   constructor(
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private mandatoryCourseSvc: MandatoryCourseService
   ) { }
 
   ngOnInit() {
@@ -40,6 +43,7 @@ export class MandatoryCourseComponent implements OnInit {
       this.currentCourseId = params['doId']
       this.noDataConfig.btnLink = `/app/mandatory-courses/${this.currentCourseId}/choose-courses`
     })
+    this.getSearchedData()
   }
 
   filter(data: any) {
@@ -57,6 +61,33 @@ export class MandatoryCourseComponent implements OnInit {
       width: 'auto',
 
       // panelClass: 'custom-dialog-container',
+    })
+  }
+
+  getSearchedData() {
+    const queryparam = {
+      request: {
+        filters: {
+          contentType: [],
+          primaryCategory: [],
+          mimeType: [],
+          source: [],
+          mediaType: [],
+          status: ['Live'],
+          'competencies_v3.name': [],
+          topics: [],
+        },
+        query: '',
+        sort_by: { lastUpdatedOn: 'desc' },
+        fields: [],
+        facets: ['primaryCategory', 'mimeType', 'source', 'competencies_v3.name', 'topics'],
+        limit: 100,
+        offset: 0,
+        fuzzy: true,
+      },
+    }
+    this.mandatoryCourseSvc.fetchSearchData(queryparam).subscribe((response: any) => {
+      this.searchResults = response.result.content
     })
   }
 
