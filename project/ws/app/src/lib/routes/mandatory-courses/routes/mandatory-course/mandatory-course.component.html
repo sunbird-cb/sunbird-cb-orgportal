@@ -29,10 +29,13 @@
   </div>
   <ng-container *ngIf="currentFilter === 'course-list'">
 
-
-    <ws-app-folder-list-table></ws-app-folder-list-table>
-    <!-- <ws-widget-card-content></ws-widget-card-content> -->
-
+    <div class="flex flex-1 flex-wrap">
+      <ng-container *ngFor="let c of searchResults">
+        <ws-widget-card-content *ngIf="c" [widgetData]="{
+                                        content: c
+                                      }"></ws-widget-card-content>
+      </ng-container>
+    </div>
   </ng-container>
 
   <ng-container *ngIf="currentFilter === 'batch-list'">
