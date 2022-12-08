@@ -1,7 +1,73 @@
 
+// .mat-icon, .text-span {
+//     vertical-align: middle;
+// }
+// .edit-link {
+//  cursor: pointer;
+// }
+
+
+
+  .unit-cohort {
+    background: #E7EAEB;
+    margin: 10px 0;
+    padding: 22px 15px;
+    border-radius: 4px;
+    align-self: center;
+    width: 300px;
+    // .datadiv {
+      // margin-left: 60px;
+    // }
+
+    .circle-l-xs, .circle-l-s, .circle-l, .circle-xl, .circle-m, .circle-xxl {
+      width: 56px !important;
+      height: 56px !important;
+    }
+  }
+
+
+.widget-box {
+    height: 7rem;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(0,0,0,.08)!important;
+    background-color: #fff;
+    background-position: 90% 100%;
+    padding: 1rem;
+    width: 11rem;
+}
+
+.info-icon-1 {
+    color: silver;
+    cursor: pointer;
+    padding-top: 0!important;
+    padding-left: 0.35rem!important;
+    font-size: 1rem;
+    vertical-align: -0.2rem;
+}
+
+.widget-box label{
+    color: rgba(0,0,0,.87);
+    font-family: Lato-Bold;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    // padding-left: 10%;
+    // padding-bottom: 10%;
+}
+
+.circle-m {
+    border-radius: 10%;
+    width: 40px!important;
+    height: 40px!important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
 .mat-icon, .text-span {
     vertical-align: middle;
 }
+
 .edit-link {
  cursor: pointer;
 }

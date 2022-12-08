@@ -9,6 +9,9 @@ import { MandatoryCourseService } from '../../services/mandatory-course.service'
   selector: 'ws-app-mandatory-course-home',
   templateUrl: './mandatory-course.component.html',
   styleUrls: ['./mandatory-course.component.scss'],
+  /* tslint:disable */
+  // host: { class: 'flex flex-1' },
+  /* tslint:enable */
 })
 export class MandatoryCourseComponent implements OnInit {
   currentCourseId!: string
