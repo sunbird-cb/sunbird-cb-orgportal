@@ -1,2 +1,11 @@
 <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }"></ws-widget-breadcrumbs-org>
-<ws-app-folder-list-table></ws-app-folder-list-table>
+<!-- <ws-app-folder-list-table></ws-app-folder-list-table> -->
+
+
+<div class="flex flex-1 flex-wrap margin-top-l">
+  <ng-container *ngFor="let c of searchResults">
+    <ws-widget-card-content *ngIf="c" [widgetData]="{
+                                          content: c
+                                        }"></ws-widget-card-content>
+  </ng-container>
+</div>
