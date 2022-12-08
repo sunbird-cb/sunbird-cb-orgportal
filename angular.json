@@ -18,8 +18,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/favicon.png",
+              "favicon.png",
               "src/mdo-assets"
             ],
             "stylePreprocessorOptions": {
@@ -253,7 +252,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
+              "favicon.png",
               "src/mdo-assets"
             ],
             "styles": [
