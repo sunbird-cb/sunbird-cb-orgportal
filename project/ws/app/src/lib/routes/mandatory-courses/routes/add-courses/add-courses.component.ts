@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { FormControl } from '@angular/forms'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 
 @Component({
@@ -12,7 +13,9 @@ export class AddCoursesComponent implements OnInit {
     { title: 'Folder name', url: '/app/mandatory-courses/132' },
     { title: 'Choose courses', url: 'none' },
   ]
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
   searchResults: any = []
+  toppings = new FormControl('');
   constructor(private mandatoryCourseSvc: MandatoryCourseService) { }
 
   ngOnInit() {

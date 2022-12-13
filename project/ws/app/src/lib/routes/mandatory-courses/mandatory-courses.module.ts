@@ -4,8 +4,13 @@ import { CommonModule } from '@angular/common'
 import { MandatoryCoursesRoutingModule } from './mandatory-courses-routing.module'
 import { FolderListTableComponent } from './components/folder-list-table/folder-list-table.component'
 import { AddFolderPopupComponent } from './components/add-folder-popup/add-folder-popup.component'
-import { MatIconModule, MatTableModule, MatFormFieldModule, MatInputModule, MatTabsModule, MatCardModule, MatDialogModule, MatDatepickerModule } from '@angular/material'
+import {
+  MatIconModule, MatTableModule, MatFormFieldModule, MatInputModule,
+  MatTabsModule, MatCardModule, MatDialogModule, MatDatepickerModule, MatCheckboxModule
+} from '@angular/material'
+import { MatSelectModule } from '@angular/material/select'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+// import { MatListModule } from '@angular/material/list'
 
 import { MandatoryCourseComponent } from './routes/mandatory-course/mandatory-course.component'
 import { NoDataComponent } from './components/no-data/no-data.component'
@@ -51,6 +56,8 @@ import { BatchDetailsComponent } from './routes/batch-details/batch-details.comp
     MatDialogModule,
     BreadcrumbsOrgModule,
     MatDatepickerModule,
+    MatSelectModule,
+    MatCheckboxModule
   ],
   entryComponents: [
     AddBatchDialougeComponent,

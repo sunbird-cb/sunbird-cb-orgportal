@@ -1,0 +1,119 @@
+
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.search {
+  display: flex;
+  flex: 1;
+}
+.rsearch {
+    display: flex;
+    position: relative;
+    flex: 1 1 auto;
+}
+.sinput {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #d5d0d0;
+    padding: 9px 9px 9px 35px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    font: normal 14px Lato;
+    font-weight: 400;
+}
+.all_select {
+    height: 38px;
+    padding: 0px 20px;
+    box-sizing: border-box;
+    font: 400 14px Lato;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #d5d0d0;
+
+}
+::ng-deep.mat-form-field-infix {
+    padding: 0;
+    margin: 8px 0 0;
+    border: none;
+}
+::ng-deep.mat-form-field-outline {
+    min-height: 40px;
+    background: #fff;
+    border-radius: 8px;
+}
+::ng-deep.mat-form-field-outline.mat-form-field-outline-thick {
+    min-height: 40px;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.create-btn {
+    width: 130px;
+    background: #0075b7!important;
+    color: #fff!important;
+    font-family: Lato;
+    font-weight: 700;
+    font-size: 14px;
+}
+.flex-3 {
+    flex: 3;
+}
+.search-icon {
+    position: absolute;
+    top: 19px;
+    font-size: 20px;
+    left: 10px;
+}
+
+// .example-additional-selection {
+//   opacity: 0.75;
+//   font-size: 0.75em;
+// }
+
+// .mat-form-field-appearance-fill .mat-form-field-flex {
+//   background-color: #fff;
+// }
+
+// .mat-list-base{
+//     padding-top: 8px;
+//     display: block;
+//     -webkit-tap-highlight-color: transparent;
+//     max-width: 340px!important;
+//     margin-bottom: 20px;
+//     min-height: 200px;
+// }
+
+
+.filter_box{
+  width: 265px;
+  mat-form-field {
+    width: 100%;
+
+    mat-form-field-infix {
+      border: 1px solid #fafafa;
+    }
+  }
+}
+.search_box{
+  width: 265px;
+}
+
+.add_btn_footer_box {
+  position: fixed;
+  left: 0;
+  bottom:0;
+  width: 100%;
+  background-color: #fff;
+   box-shadow: 0px -4px 3px rgba(0, 0, 0, 0.08);
+   z-index: 9;
+}
+.btn_inner_box {
+  width: 94%;
+  margin-left: 3%;
+  padding:2rem 0;
+}
+
