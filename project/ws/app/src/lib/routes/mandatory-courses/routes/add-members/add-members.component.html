@@ -1,6 +1,38 @@
 <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }"></ws-widget-breadcrumbs-org>
 
+<form>
+  <div class="flex flex-1 flex-row custom choice_box">
 
+    <div class="flex filter_box margin-right-m">
+
+      <mat-form-field>
+        <mat-select placeholder="Toppings">
+          <mat-option *ngFor="let topping of toppingList; let i =index" [value]="topping">
+            <mat-checkbox [checked]="selected === i" (change)="onChange(topping);selected = i">
+              {{topping}}</mat-checkbox>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+    <div class="flex-2 flex margin-right-m">
+      <div class="search">
+        <div class="rsearch">
+
+          <mat-icon class="color-60 search-icon">search</mat-icon>
+          <input class="sinput color-60" type="Standard" label="" placeholder="Search by folder name">
+        </div>
+      </div>
+    </div>
+    <div class="flex-1 flex">
+      <a class="all_select">
+        <mat-checkbox class="margin-right-s"></mat-checkbox> Select all
+      </a>
+
+    </div>
+
+  </div>
+</form>
 <div class="flex flex flex-row margin-top-xl justify-between">
 
   <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row">

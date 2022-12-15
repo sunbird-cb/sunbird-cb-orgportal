@@ -1,4 +1,46 @@
 
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.search {
+  display: flex;
+  flex: 1;
+}
+.rsearch {
+    display: flex;
+    position: relative;
+    flex: 1 1 auto;
+}
+.sinput {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #d5d0d0;
+    padding: 9px 9px 9px 35px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    font: normal 14px Lato;
+    font-weight: 400;
+}
+.all_select {
+    height: 38px;
+    padding: 0px 20px;
+    box-sizing: border-box;
+    font: 400 14px Lato;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #d5d0d0;
+
+}
+.search-icon {
+    position: absolute;
+    top: 19px;
+    font-size: 20px;
+    left: 10px;
+}
 
   .unit-cohort {
     background: #E7EAEB;
