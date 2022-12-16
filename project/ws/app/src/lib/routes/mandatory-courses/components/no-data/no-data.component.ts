@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Router } from '@angular/router'
-import { NsContent } from '../../models/mandatory-course.models.'
+import { NsMandatoryCourse } from '../../models/mandatory-course.models.'
 
 @Component({
   selector: 'ws-app-no-data',
@@ -8,7 +8,7 @@ import { NsContent } from '../../models/mandatory-course.models.'
   styleUrls: ['./no-data.component.scss'],
 })
 export class NoDataComponent implements OnInit {
-  @Input() data!: NsContent.IEmptyDataDisplay
+  @Input() data!: NsMandatoryCourse.IEmptyDataDisplay
   @Output() buttonClicked?: EventEmitter<any> = new EventEmitter()
   constructor(
     private router: Router

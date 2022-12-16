@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { NsContent } from '../../models/mandatory-course.models.'
+import { NsContent } from '@sunbird-cb/collection'
 // export interface courseFolder {
 //   folderId: number,
 //   folderName: string
@@ -30,7 +30,7 @@ const ELEMENT_DATA: NsContent.IBatch[] = [
     id: '001',
     mentors: ['string'],
     tandc: null,
-    updatedDate: 'string'
+    updatedDate: 'string',
   },
   {
     batchId: '1212',
@@ -51,7 +51,7 @@ const ELEMENT_DATA: NsContent.IBatch[] = [
     id: '002',
     mentors: ['string'],
     tandc: null,
-    updatedDate: 'string'
+    updatedDate: 'string',
   },
   {
     batchId: '1213',
@@ -72,14 +72,14 @@ const ELEMENT_DATA: NsContent.IBatch[] = [
     id: '003',
     mentors: ['string'],
     tandc: null,
-    updatedDate: 'string'
+    updatedDate: 'string',
   },
 ]
 
 @Component({
   selector: 'ws-app-batch-list',
   templateUrl: './batch-list.component.html',
-  styleUrls: ['./batch-list.component.scss']
+  styleUrls: ['./batch-list.component.scss'],
 })
 export class BatchListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'enrollmentType', 'collectionId', 'id', 'startDate', 'enrollmentEndDate', 'addMember', 'null']

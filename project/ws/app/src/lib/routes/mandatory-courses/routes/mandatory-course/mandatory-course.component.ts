@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { NsContent } from '../../models/mandatory-course.models.'
+import { NsMandatoryCourse } from '../../models/mandatory-course.models.'
 import { MatDialog } from '@angular/material'
 import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/add-batch-dialouge.component'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
+import { NsContent } from '@sunbird-cb/collection'
 
 @Component({
   selector: 'ws-app-mandatory-course-home',
@@ -19,7 +20,7 @@ export class MandatoryCourseComponent implements OnInit {
   currentFilter = 'course-list'
   content: NsContent.IContent | null = null
   bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }, { title: 'Folder name', url: 'none' }]
-  noDataConfig: NsContent.IEmptyDataDisplay = {
+  noDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
     image: 'assets/images/banners/no_data.svg',
     heading: 'No course collections',
     description: 'Create an outstanding collection of courses by adding courses.',
@@ -27,7 +28,7 @@ export class MandatoryCourseComponent implements OnInit {
     btnLink: 'choose-courses',
     btnText: 'Add Courses',
   }
-  noBatchDataConfig: NsContent.IEmptyDataDisplay = {
+  noBatchDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
     image: 'assets/images/banners/no_data.svg',
     heading: `No batche's created yet`,
     description: 'Create a batch to distribute courses.',
