@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { NsContent } from '../../models/mandatory-course.models.'
+import { NsMandatoryCourse } from '../../models/mandatory-course.models.'
 
 @Component({
   selector: 'ws-app-batch-details',
@@ -15,7 +15,7 @@ export class BatchDetailsComponent implements OnInit {
     { title: 'Folder name', url: '/app/mandatory-courses/132' },
     { title: 'Batch name', url: 'none' },
   ]
-  noDataConfig: NsContent.IEmptyDataDisplay = {
+  noDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
     image: 'assets/images/banners/no_data.svg',
     heading: 'No members added',
     description: 'Add members to assign course',
