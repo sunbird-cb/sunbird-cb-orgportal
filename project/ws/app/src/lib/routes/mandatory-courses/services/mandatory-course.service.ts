@@ -92,4 +92,12 @@ export class MandatoryCourseService {
   getAllUsers(filter: object): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, filter).pipe(map(res => _.get(res, 'result.response')))
   }
+
+  addMember(req: any) {
+    return this.http.post<any>(`${API_END_POINTS.ADD_USER_TO_BATCH}`, req)
+  }
+
+  addBatch(req: any) {
+    return this.http.post<any>(`${API_END_POINTS.CREATE_BATCH}`, req)
+  }
 }

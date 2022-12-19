@@ -15,7 +15,7 @@ export class AddBatchDialougeComponent implements OnInit {
     this.addBatchForm = this.fb.group({
       batchTitle: [''],
       startDate: [''],
-      endDate: ['']
+      endDate: [''],
 
     })
   }
@@ -29,7 +29,6 @@ export class AddBatchDialougeComponent implements OnInit {
 
   addBatch() {
     const batchVal = this.addBatchForm.value
-    console.log(batchVal)
     if (batchVal && batchVal.length) {
       this.closeDialouge()
     }

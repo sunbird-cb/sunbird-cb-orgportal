@@ -6,7 +6,7 @@ import { FolderListTableComponent } from './components/folder-list-table/folder-
 import { AddFolderPopupComponent } from './components/add-folder-popup/add-folder-popup.component'
 import {
   MatIconModule, MatTableModule, MatFormFieldModule, MatInputModule,
-  MatTabsModule, MatCardModule, MatDialogModule, MatDatepickerModule, MatCheckboxModule
+  MatTabsModule, MatCardModule, MatDialogModule, MatDatepickerModule, MatCheckboxModule,
 } from '@angular/material'
 import { MatSelectModule } from '@angular/material/select'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -26,7 +26,6 @@ import { BatchListComponent } from './components/batch-list/batch-list.component
 import { AddMembersComponent } from './routes/add-members/add-members.component'
 import { BatchDetailsComponent } from './routes/batch-details/batch-details.component'
 
-
 @NgModule({
   declarations: [
     MandatoryCourseHomeComponent,
@@ -38,7 +37,7 @@ import { BatchDetailsComponent } from './routes/batch-details/batch-details.comp
     AddBatchDialougeComponent,
     AddMembersComponent,
     BatchDetailsComponent,
-    BatchListComponent
+    BatchListComponent,
   ],
   imports: [
     CommonModule,
@@ -57,7 +56,7 @@ import { BatchDetailsComponent } from './routes/batch-details/batch-details.comp
     BreadcrumbsOrgModule,
     MatDatepickerModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   entryComponents: [
     AddBatchDialougeComponent,
