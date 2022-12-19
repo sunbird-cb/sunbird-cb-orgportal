@@ -51,7 +51,6 @@ export class MandatoryCourseComponent implements OnInit {
   }
 
   filter(data: any) {
-    console.log(data, 'data value---')
     if (data === 'course-list') {
       this.currentFilter = 'course-list'
     } else if (data === 'batch-list') {
@@ -60,7 +59,6 @@ export class MandatoryCourseComponent implements OnInit {
   }
 
   openCreateBatchDialog() {
-    console.log('popup btn clicked')
     this.dialog.open(AddBatchDialougeComponent, {
       width: 'auto',
 
