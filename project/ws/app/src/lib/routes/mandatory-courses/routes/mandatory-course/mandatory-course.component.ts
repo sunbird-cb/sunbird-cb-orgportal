@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { NsMandatoryCourse } from '../../models/mandatory-course.models.'
+import { NsMandatoryCourse } from '../../models/mandatory-course.model'
 import { MatDialog } from '@angular/material'
 import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/add-batch-dialouge.component'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
