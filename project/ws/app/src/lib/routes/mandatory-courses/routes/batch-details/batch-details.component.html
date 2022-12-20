@@ -92,8 +92,8 @@
 
 <div class="flex flex flex-row margin-top-xl justify-between">
 
-  <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row" *ngFor="let cad of batchList"
-    [ngClass]="{'highlight':cad.selected}">
+  <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row" *ngFor="let cad of batchList; let i = index;"
+    [ngClass]="{'highlight':cad.selected}" (click)="onSelect(i)">
     <div class="circle-m" style="background-color: rgb(48, 105, 51);">
       {{cad.initial}}
     </div>

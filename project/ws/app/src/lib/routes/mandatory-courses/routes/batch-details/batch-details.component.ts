@@ -29,7 +29,7 @@ export class BatchDetailsComponent implements OnInit {
     { initial: 'BB', name: 'Bhavya Basu', position: 'Assistant director general', selected: true },
     { initial: 'BK', name: 'Bala Kumar', position: 'Assistant director general', selected: false },
     { initial: 'BK', name: 'Bala Kumar', position: 'Assistant director general', selected: true },
-    { initial: 'BK', name: 'Bala Kumar', position: 'Assistant director general', selected: false }
+    { initial: 'BK', name: 'Bala Kumar', position: 'Assistant director general', selected: false },
   ]
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -41,6 +41,10 @@ export class BatchDetailsComponent implements OnInit {
       this.currentBatchId = params['batchId']
       this.noDataConfig.btnLink = `/app/mandatory-courses/${this.currentCourseId}/batch-details/${this.currentCourseId}/choose-members`
     })
+  }
+
+  onSelect(i: number) {
+    this.batchList[i].selected = !this.batchList[i].selected
   }
 
 }
