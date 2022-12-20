@@ -6,6 +6,7 @@ import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/a
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 import { NsContent } from '@sunbird-cb/collection'
 
+
 @Component({
   selector: 'ws-app-mandatory-course-home',
   templateUrl: './mandatory-course.component.html',
@@ -15,9 +16,11 @@ import { NsContent } from '@sunbird-cb/collection'
   /* tslint:enable */
 })
 export class MandatoryCourseComponent implements OnInit {
+
+
   currentCourseId!: string
   searchResults: any = []
-  currentFilter = 'course-list'
+  currentFilter = 'meta-data'
   content: NsContent.IContent | null = null
   bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }, { title: 'Folder name', url: 'none' }]
   noDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
@@ -25,7 +28,7 @@ export class MandatoryCourseComponent implements OnInit {
     heading: 'No course collections',
     description: 'Create an outstanding collection of courses by adding courses.',
     btnRequired: true,
-    btnLink: 'choose-courses',
+    btnLink: 'course-list',
     btnText: 'Add Courses',
   }
   noBatchDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
@@ -40,7 +43,10 @@ export class MandatoryCourseComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private mandatoryCourseSvc: MandatoryCourseService
-  ) { }
+
+  ) {
+
+  }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
@@ -56,6 +62,8 @@ export class MandatoryCourseComponent implements OnInit {
       this.currentFilter = 'course-list'
     } else if (data === 'batch-list') {
       this.currentFilter = 'batch-list'
+    } else if (data === 'meta-data') {
+      this.currentFilter = 'meta-data'
     }
   }
 

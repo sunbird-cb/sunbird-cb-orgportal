@@ -1,24 +1,44 @@
 <div class="flex flex-1 justify-between">
   <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }">
   </ws-widget-breadcrumbs-org>
-  <div class="flex flex-row items-center justify-content-end">
-    <a class="h-400-r-14-l margin-right-m edit-link">
-      <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">edit
-      </mat-icon> <span class="text-span">Rename</span>
-    </a>
-    <a class="h-400-r-14-l edit-link">
-      <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">delete
-      </mat-icon><span class="text-span">Delete</span>
-    </a>
+  <div class="flex flex-1 justify-end margin-bottom-m">
+    <div class="flex flex-row items-center justify-content-end">
+      <a class="h-400-r-14-l margin-right-m edit-link">
+        <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">edit
+        </mat-icon> <span class="text-span">Edit</span>
+      </a>
+      <a class="h-400-r-14-l edit-link margin-right-m">
+        <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">
+          delete
+        </mat-icon><span class="text-span">Delete</span>
+      </a>
+
+      <a class="h-400-r-14-l edit-link margin-right-m">
+        <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">
+          info_outlined
+        </mat-icon>
+        <!--<span class="text-span"></span> -->
+      </a>
+
+      <button mat-raised-button type="submit" class="next_link text-white ws-mat-primary-background mat-button">
+        <span class="text-white" i18n>
+          Publish and go to batch
+        </span>
+      </button>
+    </div>
   </div>
+
 </div>
 
 
-<ws-app-no-data [data]="noDataConfig"></ws-app-no-data>
+
 
 <mat-card-content>
   <div class="flex flex-1 flex-column margin-fix">
     <div class="flex flex-1 filter max-height-60">
+      <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'meta-data',
+            'ws-mat-accent-border font-medium':currentFilter !== 'meta-data'}" mat-button (click)="filter('meta-data')"
+        role="button">Meta data</a>
       <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'course-list',
             'ws-mat-accent-border font-medium':currentFilter !== 'course-list'}" mat-button
         (click)="filter('course-list')" role="button">Courses</a>
@@ -27,38 +47,17 @@
         (click)="filter('batch-list')" role="button">Batches</a>
     </div>
   </div>
+
+  <ng-container *ngIf="currentFilter === 'meta-data'">
+    <ws-app-add-meta-data></ws-app-add-meta-data>
+
+  </ng-container>
   <ng-container *ngIf="currentFilter === 'course-list'">
-    <div class="flex flex-1 justify-end margin-bottom-m">
-      <div class="flex flex-row items-center justify-content-end">
-        <a class="h-400-r-14-l margin-right-m edit-link">
-          <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">edit
-          </mat-icon> <span class="text-span">Rename</span>
-        </a>
-        <a class="h-400-r-14-l edit-link margin-right-m">
-          <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">
-            delete
-          </mat-icon><span class="text-span">Delete</span>
-        </a>
-
-        <a class="h-400-r-14-l edit-link margin-right-m">
-          <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">
-            info_outlined
-          </mat-icon>
-          <!--<span class="text-span"></span> -->
-        </a>
-
-        <button mat-raised-button type="submit" class="next_link text-white ws-mat-primary-background mat-button">
-          <span class="text-white" i18n>
-            Publish and go to batch
-          </span>
-        </button>
-      </div>
-    </div>
 
     <!-- <ws-app-folder-list-table></ws-app-folder-list-table> -->
     <!-- <ws-widget-card-content></ws-widget-card-content> -->
 
-  
+    <ws-app-no-data [data]="noDataConfig"></ws-app-no-data>
     <div class="flex flex-1 flex-wrap">
       <ng-container *ngFor="let c of searchResults">
         <ws-widget-card-content *ngIf="c" [widgetData]="{
