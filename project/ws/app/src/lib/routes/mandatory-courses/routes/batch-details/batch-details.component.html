@@ -92,19 +92,20 @@
 
 <div class="flex flex flex-row margin-top-xl justify-between">
 
-  <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row">
+  <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row" *ngFor="let cad of batchList"
+    [ngClass]="{'highlight':cad.selected}">
     <div class="circle-m" style="background-color: rgb(48, 105, 51);">
-      AN
+      {{cad.initial}}
     </div>
     <div class="margin-left-m">
       <div class="width-expand padding-left-xs">
-        <p>Asim Narayan</p>
-        <p class="mat-body-2 ws-mat-black60-text">Assistant director general</p>
+        <p>{{cad.name}}</p>
+        <p class="mat-body-2 ws-mat-black60-text">{{cad.position}}</p>
       </div>
     </div>
   </div>
 
-  <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row">
+  <!-- <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row">
     <div class="circle-m" style="background-color: rgb(48, 105, 51);">
       AD
     </div>
@@ -137,6 +138,6 @@
         <p class="mat-body-2 ws-mat-black60-text">Assistant director general</p>
       </div>
     </div>
-  </div>
+  </div> -->
 
 </div>

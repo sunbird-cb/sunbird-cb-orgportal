@@ -10,6 +10,7 @@ import { NsMandatoryCourse } from '../../models/mandatory-course.model'
 export class BatchDetailsComponent implements OnInit {
   currentCourseId!: string
   currentBatchId!: string
+
   bdtitles = [
     { title: 'Folders', url: '/app/home/mandatory-courses' },
     { title: 'Folder name', url: '/app/mandatory-courses/132' },
@@ -23,6 +24,13 @@ export class BatchDetailsComponent implements OnInit {
     btnLink: 'choose-members',
     btnText: 'Add members',
   }
+  batchList = [
+    { initial: 'AN', name: 'Asim Narayan', position: 'Assistant director general', selected: false },
+    { initial: 'BB', name: 'Bhavya Basu', position: 'Assistant director general', selected: true },
+    { initial: 'BK', name: 'Bala Kumar', position: 'Assistant director general', selected: false },
+    { initial: 'BK', name: 'Bala Kumar', position: 'Assistant director general', selected: true },
+    { initial: 'BK', name: 'Bala Kumar', position: 'Assistant director general', selected: false }
+  ]
   constructor(
     private activatedRoute: ActivatedRoute,
   ) { }
