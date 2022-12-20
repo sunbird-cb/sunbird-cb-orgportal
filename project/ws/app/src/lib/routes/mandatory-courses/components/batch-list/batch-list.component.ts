@@ -89,7 +89,6 @@ export class BatchListComponent implements OnInit {
 
   ngOnInit() {
     this.folderId = this.route.snapshot.params['doId']
-    console.log(this.folderId, 'this.paramMap')
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { NsMandatoryCourse } from '../../models/mandatory-course.models.'
+import { NsMandatoryCourse } from '../../models/mandatory-course.model'
 
 @Component({
   selector: 'ws-app-batch-details',

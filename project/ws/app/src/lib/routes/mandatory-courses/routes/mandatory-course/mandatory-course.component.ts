@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { NsMandatoryCourse } from '../../models/mandatory-course.models.'
+import { NsMandatoryCourse } from '../../models/mandatory-course.model'
 import { MatDialog } from '@angular/material'
 import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/add-batch-dialouge.component'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
@@ -57,7 +57,6 @@ export class MandatoryCourseComponent implements OnInit {
   }
 
   filter(data: any) {
-    console.log(data, 'data value---')
     if (data === 'course-list') {
       this.currentFilter = 'course-list'
     } else if (data === 'batch-list') {
@@ -68,7 +67,6 @@ export class MandatoryCourseComponent implements OnInit {
   }
 
   openCreateBatchDialog() {
-    console.log('popup btn clicked')
     this.dialog.open(AddBatchDialougeComponent, {
       width: 'auto',
 
