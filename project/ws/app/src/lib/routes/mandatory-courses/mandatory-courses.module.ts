@@ -25,7 +25,8 @@ import { BatchListComponent } from './components/batch-list/batch-list.component
 // import { BreadcrumbsOrgModule } from '@sunbird-cb/collection';
 import { AddMembersComponent } from './routes/add-members/add-members.component'
 import { BatchDetailsComponent } from './routes/batch-details/batch-details.component';
-import { AddMetaDataComponent } from './components/add-meta-data/add-meta-data.component'
+import { AddMetaDataComponent } from './components/add-meta-data/add-meta-data.component';
+import { UserCardComponent } from './components/user-card/user-card.component'
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AddMetaDataComponent } from './components/add-meta-data/add-meta-data.c
     AddMembersComponent,
     BatchDetailsComponent,
     BatchListComponent,
-    AddMetaDataComponent
+    AddMetaDataComponent,
+    UserCardComponent
   ],
   imports: [
     CommonModule,

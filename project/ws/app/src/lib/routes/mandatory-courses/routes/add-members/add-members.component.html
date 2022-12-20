@@ -33,22 +33,12 @@
 
   </div>
 </form>
-<div class="flex flex flex-row margin-top-xl justify-between">
+<div class="flex flex flex-row margin-top-xl justify-between flex-wrap">
+
+
   <ng-container *ngFor="let user of activeUsersData">
-    <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row">
-      <div class="circle-m" style="background-color: rgb(48, 105, 51);">
-        AN
-      </div>
-      <div class="margin-left-m">
-        <div class="width-expand padding-left-xs">
-          <p>{{user.firstName}} {{user.lastName}}</p>
-          <p class="mat-body-2 ws-mat-black60-text">Dept - {{user.employmentDetails?.departmentName}}</p>
-          <p class="mat-body-2 ws-mat-black60-text" *ngIf="user.professionalDetails && user.professionalDetails.length">
-            Des - {{user.professionalDetails[0].designation}}
-          </p>
-        </div>
-      </div>
-    </div>
+    <ws-app-user-card [user]="user" (click)="selectedMember(user)"
+      [class.selected-card]="user.id === selectedId"></ws-app-user-card>
   </ng-container>
 </div>
 

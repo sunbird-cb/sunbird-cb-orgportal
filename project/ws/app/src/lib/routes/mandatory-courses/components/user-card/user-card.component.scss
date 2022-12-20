@@ -44,11 +44,14 @@
 
   .unit-cohort {
     background: #E7EAEB;
-    margin: 10px 0;
+    // margin: 10px 0;
     padding: 22px 15px;
     border-radius: 4px;
     align-self: center;
-    width: 300px;
+    box-sizing: border-box;
+    width: 330px;
+    height: 100px;
+    overflow: hidden;
     // .datadiv {
       // margin-left: 60px;
     // }
@@ -69,14 +72,6 @@
     padding: 1rem;
     width: 11rem;
 }
-
-.user-card-box {
-  overflow: hidden;
-  cursor: pointer;
-}
-.ws-mat-accent-border-active {
-  border: 2px solid #0074b6;
- }
 
 .info-icon-1 {
     color: silver;

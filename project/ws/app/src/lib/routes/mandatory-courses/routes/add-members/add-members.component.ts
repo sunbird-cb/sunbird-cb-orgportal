@@ -14,6 +14,8 @@ export class AddMembersComponent implements OnInit {
   deptID: any = ''
   usersData!: any
   activeUsersData!: any[]
+  isSelectedMember: boolean = false
+  selectedId: BigInteger | undefined
   bdtitles = [
     { title: 'Folders', url: '/app/home/mandatory-courses' },
     { title: 'Folder name', url: '/app/mandatory-courses/132' },
@@ -73,6 +75,17 @@ export class AddMembersComponent implements OnInit {
       return activeUsersData
     }
     return []
+  }
+
+
+
+  selectedMember(user: any) {
+    // if (user.id)
+    // this.isSelectedMember = !this.isSelectedMember
+
+    this.selectedId = user.id
+    console.log(this.selectedId, 'this.isSelectedMember ---')
+    console.log(user, 'selected user----')
   }
 
 }
