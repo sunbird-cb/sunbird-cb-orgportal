@@ -16,6 +16,7 @@ export class AddMembersComponent implements OnInit {
   activeUsersData!: any[]
   isSelectedMember: boolean = false
   selectedId: BigInteger | undefined
+  selectedUser: any[] = []
   bdtitles = [
     { title: 'Folders', url: '/app/home/mandatory-courses' },
     { title: 'Folder name', url: '/app/mandatory-courses/132' },
@@ -80,12 +81,25 @@ export class AddMembersComponent implements OnInit {
 
 
   selectedMember(user: any) {
-    // if (user.id)
-    // this.isSelectedMember = !this.isSelectedMember
+    const index = this.selectedUser.indexOf(user)
+    if (index > -1) { // only splice array when item is found
+      this.selectedUser.splice(index, 1) // 2nd parameter means remove one item only
 
-    this.selectedId = user.id
-    console.log(this.selectedId, 'this.isSelectedMember ---')
+      // this.isSelectedMember = false
+    } else {
+      this.selectedUser.push(user)
+      this.selectedId = user.id
+      this.isSelectedMember = true
+    }
+
+    // this.selectedId = user.id
+    console.log(this.selectedUser, 'this.selectedUser arry ---')
     console.log(user, 'selected user----')
   }
+
+
+  // onSelect(i: number) {
+
+  // }
 
 }

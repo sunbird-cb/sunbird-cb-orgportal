@@ -2,6 +2,7 @@
 @import 'ws-common';
 @import 'ws-vars';
 @import 'ws-mixins';
+@import 'profile-form';
 
 .search {
   display: flex;
@@ -85,7 +86,7 @@
 ::ng-deep .mat-form-field-infix {
     padding: 5px 0px!important;
     margin-top: 12px;
-    border: 1px solid #d5d0d0 !important;
+    // border: 1px solid #d5d0d0 !important;
     border-radius: 4px 4px!important;
 
   }
@@ -162,3 +163,5 @@ input.mat-input-element {
   margin-left: 3%;
   padding:2rem 0;
 }
+
+
