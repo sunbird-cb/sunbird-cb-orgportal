@@ -1,4 +1,5 @@
-<div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row">
+<div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row" [ngClass]="{'highlight':user.selected}"
+  (click)="onSelect(user)">
   <div class="circle-m" style="background-color: rgb(48, 105, 51);">
     AN
   </div>

@@ -37,22 +37,21 @@
 
 
   <ng-container *ngFor="let user of activeUsersData">
-    <ws-app-user-card [user]="user" (click)="selectedMember(user)" [ngClass]="{'highlight':selectedId === user.id}"
-      class="margin-bottom-s"></ws-app-user-card>
+    <ws-app-user-card [user]="user" (selected)="selectedMember(user)" class="margin-bottom-s"></ws-app-user-card>
   </ng-container>
-</div>
 
-<div class="add_btn_footer_box">
-  <div class="btn_inner_box flex justify-end">
-    <div class="flex items-center justify-end">
-      <button mat-raised-button type="submit" class="skip_link mat-accent mat-button margin-right-xs">
-        Cancel
-      </button>
-      <button mat-raised-button type="submit" class="next_link text-white ws-mat-primary-background mat-button">
-        <span class="text-white" i18n>
-          Add
-        </span>
-      </button>
+  <div class="add_btn_footer_box">
+    <div class="btn_inner_box flex justify-end">
+      <div class="flex items-center justify-end">
+        <button mat-raised-button type="submit" class="skip_link mat-accent mat-button margin-right-xs">
+          Cancel
+        </button>
+        <button mat-raised-button (click)="saveSelected()"
+          class="next_link text-white ws-mat-primary-background mat-button">
+          <span class="text-white" i18n>
+            Add
+          </span>
+        </button>
+      </div>
     </div>
   </div>
-</div>

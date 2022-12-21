@@ -92,7 +92,7 @@
 
 <div class="flex flex flex-row margin-top-xl justify-between">
 
-  <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row" *ngFor="let cad of batchList; let i = index;"
+  <!-- <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row" *ngFor="let cad of batchList; let i = index;"
     [ngClass]="{'highlight':cad.selected}" (click)="onSelect(i)">
     <div class="circle-m" style="background-color: rgb(48, 105, 51);">
       {{cad.initial}}
@@ -103,7 +103,9 @@
         <p class="mat-body-2 ws-mat-black60-text">{{cad.position}}</p>
       </div>
     </div>
-  </div>
+  </div> -->
+  <ws-app-add-members></ws-app-add-members>
+  <!-- <ws-app-user-card *ngFor="let cad of batchList; let i = index;" (click)="onSelect(i)"></ws-app-user-card> -->
 
   <!-- <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row">
     <div class="circle-m" style="background-color: rgb(48, 105, 51);">

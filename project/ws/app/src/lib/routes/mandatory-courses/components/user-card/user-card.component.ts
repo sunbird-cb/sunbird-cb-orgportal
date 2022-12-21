@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 
 @Component({
   selector: 'ws-app-user-card',
@@ -7,10 +7,15 @@ import { Component, OnInit, Input } from '@angular/core'
 })
 export class UserCardComponent implements OnInit {
   @Input() user: any
+  @Output() selected = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
 
+  }
+
+  onSelect(user: any) {
+    this.selected.emit(user)
   }
 
 }

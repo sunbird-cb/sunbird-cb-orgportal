@@ -71,6 +71,7 @@ export class AddMembersComponent implements OnInit {
     const activeUsersData: any[] = []
     if (this.usersData && this.usersData.length > 0) {
       _.filter(this.usersData, { isDeleted: false }).forEach((user: any) => {
+        user.selected = false
         activeUsersData.push(user)
       })
       return activeUsersData
@@ -81,25 +82,33 @@ export class AddMembersComponent implements OnInit {
 
 
   selectedMember(user: any) {
-    const index = this.selectedUser.indexOf(user)
-    if (index > -1) { // only splice array when item is found
-      this.selectedUser.splice(index, 1) // 2nd parameter means remove one item only
 
-      // this.isSelectedMember = false
-    } else {
-      this.selectedUser.push(user)
-      this.selectedId = user.id
-      this.isSelectedMember = true
-    }
+    // const index = this.selectedUser.indexOf(user)
+    // if (index > -1) { // only splice array when item is found
+    //   this.selectedUser.splice(index, 1) // 2nd parameter means remove one item only
 
-    // this.selectedId = user.id
-    console.log(this.selectedUser, 'this.selectedUser arry ---')
-    console.log(user, 'selected user----')
+    //   // this.isSelectedMember = false
+    // } else {
+    //   this.selectedUser.push(user)
+    //   this.selectedId = user.id
+    //   this.isSelectedMember = true
+    // }
+
+    // // this.selectedId = user.id
+    // console.log(this.selectedUser, 'this.selectedUser arry ---')
+    // console.log(user, 'selected user----')
+    this.activeUsersData = this.activeUsersData.map(usr => {
+      if (usr.id === user.id) {
+        usr.selected = !usr.selected
+      }
+      return usr
+    })
   }
 
-
-  // onSelect(i: number) {
-
-  // }
+  // All the selected members will be there,
+  saveSelected() {
+    const allSelectedUser = this.activeUsersData.filter(user => user.selected === true)
+    console.log(allSelectedUser)
+  }
 
 }
