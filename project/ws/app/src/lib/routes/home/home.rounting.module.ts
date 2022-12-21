@@ -93,12 +93,15 @@ const routes: Routes = [
         path: 'mandatory-courses',
         component: MandatoryCoursesComponent,
         data: {
-          pageId: 'mandatory-courses',
-          module: 'home',
+          pageType: 'feature',
+          pageKey: 'mandatory-courses',
+          pageId: 'app/mandatory-courses',
+          module: 'mandatory-courses'
         },
         resolve: {
           usersList: UsersListResolve,
-        },
+          pageData: PageResolve
+        }
       },
       {
         path: 'approvals',

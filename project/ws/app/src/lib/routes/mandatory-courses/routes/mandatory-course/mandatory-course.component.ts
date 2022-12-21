@@ -6,7 +6,6 @@ import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/a
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 import { NsContent } from '@sunbird-cb/collection'
 
-
 @Component({
   selector: 'ws-app-mandatory-course-home',
   templateUrl: './mandatory-course.component.html',
@@ -16,7 +15,6 @@ import { NsContent } from '@sunbird-cb/collection'
   /* tslint:enable */
 })
 export class MandatoryCourseComponent implements OnInit {
-
 
   currentCourseId!: string
   searchResults: any = []
