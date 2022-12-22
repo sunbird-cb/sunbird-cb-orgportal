@@ -38,7 +38,7 @@
   <ng-container *ngFor="let c of searchResults">
     <ws-widget-card-content *ngIf="c" [widgetData]="{
                                           content: c
-                                        }"></ws-widget-card-content>
+                                        }" (click)="selectedCourseCard(c)"></ws-widget-card-content>
   </ng-container>
 </div>
 

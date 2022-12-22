@@ -16,6 +16,7 @@ export class AddCoursesComponent implements OnInit {
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato']
   searchResults: any = []
   toppings = new FormControl('')
+  selectedCourses: any[] = []
   constructor(private mandatoryCourseSvc: MandatoryCourseService) { }
 
   ngOnInit() {
@@ -47,6 +48,21 @@ export class AddCoursesComponent implements OnInit {
     this.mandatoryCourseSvc.fetchSearchData(queryparam).subscribe((response: any) => {
       this.searchResults = response.result.content
     })
+  }
+
+
+  selectedCourseCard(course: any) {
+    const index = this.selectedCourses.indexOf(course)
+    if (index > -1) {
+      this.selectedCourses.splice(index, 1)
+    } else {
+      this.selectedCourses.push(course)
+
+    }
+
+    // this.selectedId = user.id
+    console.log(this.selectedCourses, 'this.selectedUser arry ---')
+    console.log(course, 'selected user----')
   }
 
 }
