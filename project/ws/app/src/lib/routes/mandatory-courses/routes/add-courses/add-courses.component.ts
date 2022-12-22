@@ -61,8 +61,8 @@ export class AddCoursesComponent implements OnInit {
     }
 
     // this.selectedId = user.id
-    console.log(this.selectedCourses, 'this.selectedUser arry ---')
-    console.log(course, 'selected user----')
+    console.log(this.selectedCourses, 'this.selectedCourses arry ---')
+    console.log(course, 'selected course----')
   }
 
 }

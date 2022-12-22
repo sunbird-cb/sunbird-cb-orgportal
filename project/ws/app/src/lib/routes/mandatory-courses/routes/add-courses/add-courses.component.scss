@@ -24,7 +24,8 @@
 }
 .all_select {
     height: 38px;
-    padding: 0px 20px;
+    padding: 0px 12px;
+    width: 130px;
     box-sizing: border-box;
     font: 400 14px Lato;
     vertical-align: middle;
@@ -107,13 +108,13 @@
     }
   }
 
-  ::ng-deep .mat-form-field-infix {
-    padding: 5px 0px!important;
-    margin-top: 12px;
-    border: 1px solid #d5d0d0 !important;
-    border-radius: 4px 4px!important;
+  // ::ng-deep .mat-form-field-infix {
+  //   padding: 5px 0px!important;
+  //   margin-top: 12px;
+  //   border: 1px solid #d5d0d0 !important;
+  //   border-radius: 4px 4px!important;
 
-  }
+  // }
 
   // ::ng-deep .mat-form-field-flex {
   //   min-height: 40px;
@@ -142,7 +143,7 @@
     position: absolute;
     top: 19px;
     font-size: 20px;
-    left: 10px;
+    left: 8px;
 }
 
 // .example-additional-selection {
@@ -168,10 +169,6 @@
   width: 265px;
   mat-form-field {
     width: 100%;
-
-    mat-form-field-infix {
-      border: 1px solid #fafafa;
-    }
   }
 }
 .search_box{

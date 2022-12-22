@@ -24,8 +24,9 @@
     font-weight: 400;
 }
 .all_select {
-    height: 48px;
-    padding: 0px 20px;
+    height: 38px;
+    padding: 0px 12px;
+    width: 130px;
     box-sizing: border-box;
     font: 400 14px Lato;
     vertical-align: middle;
@@ -38,9 +39,9 @@
 }
 .search-icon {
     position: absolute;
-    top: 25px;
+    top: 20px;
     font-size: 20px;
-    left: 10px;
+    left: 8px;
 }
 
   // .unit-cohort {
@@ -168,8 +169,38 @@ input.mat-input-element {
   margin-left: 3%;
   padding:2rem 0;
 }
-
-.filter_box .select_box_filter  .mat-form-field-wrapper .mat-form-field-flex {
-  border:1px solid #f0f0f0;
-  padding: 0px 10px;
+.filter_box{
+  width: 265px;
+  mat-form-field {
+    width: 100%;
+  }
 }
+
+
+ ::ng-deep .mat-form-field-outline.mat-form-field-outline-thick {
+    min-height: 40px;
+    background: #fff;
+    border-radius: 8px;
+
+    .mat-form-field-outline-start {
+      border-radius: 8px 0 0 8px;
+      min-width: 8px;
+      border: 1px solid currentColor;
+      border-right-style: none;
+    }
+
+    .mat-form-field-outline-gap {
+      border-width: 1px;
+      border: 1px solid currentColor;
+      border-radius: 8px;
+      border-left-style: none;
+      border-right-style: none;
+    }
+
+    .mat-form-field-outline-end {
+      border-width: 1px;
+      border-radius: 0 8px 8px 0;
+      border: 1px solid currentColor;
+      border-left-style: none;
+    }
+  }

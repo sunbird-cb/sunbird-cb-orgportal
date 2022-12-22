@@ -5,7 +5,7 @@
 
     <div class="flex filter_box margin-right-m">
 
-      <mat-form-field>
+      <mat-form-field class="select_box">
         <mat-select placeholder="Toppings">
           <mat-option *ngFor="let topping of toppingList; let i =index" [value]="topping">
             <mat-checkbox [checked]="selected === i" (change)="onChange(topping);selected = i">
