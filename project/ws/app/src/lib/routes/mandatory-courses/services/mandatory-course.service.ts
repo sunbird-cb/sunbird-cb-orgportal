@@ -8,7 +8,7 @@ import _ from 'lodash'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
-  SEARCH_V6: `${PROTECTED_SLAG_V8}/sunbirdigot/search`,
+  SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
   CREATE_CONTENT: `${PROTECTED_SLAG_V8}/action/content/v3/create`,
   UPDATE_HIERARCHY: `${PROTECTED_SLAG_V8}/action/content/v3/hierarchy/update`,
   PUBLISH_CONTENT: (contentId: string) => `${PROTECTED_SLAG_V8}/action/content/v3/publish/${contentId}`,
@@ -85,7 +85,6 @@ export class MandatoryCourseService {
   }
 
   fetchSearchData(request: any): Observable<any> {
-    request.request.filters.rootOrgId = (this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) || ''
     return this.http.post<any>(API_END_POINTS.SEARCH_V6, request)
   }
 
