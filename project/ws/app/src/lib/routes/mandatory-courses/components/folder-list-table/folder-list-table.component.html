@@ -1,7 +1,7 @@
 <mat-table [dataSource]="dataSource" class="">
   <ng-container matColumnDef="folderName">
     <th mat-header-cell *matHeaderCellDef> Folder name </th>
-    <td mat-cell *matCellDef="let element"><a routerLink="/app/mandatory-courses/{{ element.folderId}}"
+    <td mat-cell *matCellDef="let element"><a routerLink="/app/mandatory-courses/{{element.folderId}}"
         routerLinkActive="router-link-active">{{element.folderName}}</a> </td>
   </ng-container>
 

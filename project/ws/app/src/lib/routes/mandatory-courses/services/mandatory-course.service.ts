@@ -6,7 +6,6 @@ import { NsMandatoryCourse } from '../models/mandatory-course.model'
 // tslint:disable
 import _ from 'lodash'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-
 const PROTECTED_SLAG_V8 = '/apis/protected/v8'
 const API_END_POINTS = {
   SEARCH_V6: `${PROTECTED_SLAG_V8}/sunbirdigot/search`,
@@ -22,35 +21,35 @@ const API_END_POINTS = {
   providedIn: 'root',
 })
 export class MandatoryCourseService {
-
+  // private pageData = new Subject();
+  // currentPageDate$ = this.pageData.asObservable();
+  private pageData: any
   constructor(
     private http: HttpClient,
     private configSvc: ConfigurationsService
   ) { }
 
-  createContent(meta:
-    {
-      mimeType: string; contentType: string; locale: string, name: string, primaryCategory: string, purpose: string
-    }): Observable<string> {
+  createContent(name: string): Observable<string> {
 
     const requestBody: NsMandatoryCourse.ICreateMetaRequestV2 = {
       request: {
         content: {
-          contentType: meta.contentType,
+          contentType: this.pageData.contentType,
           createdBy: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
           createdFor: [(this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) ? this.configSvc.userProfile.rootOrgId : ''],
           creator: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
           description: '',
-          mimeType: meta.mimeType,
-          name: meta.name,
-          purpose: (meta.purpose) ? meta.purpose : '',
+          mimeType: this.pageData.mimeType,
+          name: name,
+          purpose: '',
           organisation: [
             (this.configSvc.userProfile && this.configSvc.userProfile.departmentName) ? this.configSvc.userProfile.departmentName : '',
           ],
-          isExternal: meta.mimeType === 'text/x-url',
-          primaryCategory: meta.primaryCategory,
-          license: 'CC BY 4.0',
-          ownershipType: ['createdFor'],
+          isExternal: this.pageData.isExternal,
+          primaryCategory: this.pageData.primaryCategory,
+          license: this.pageData.license,
+          ownershipType: this.pageData.ownershipType,
+          visibility: this.pageData.visibility
         },
       },
     }
@@ -86,6 +85,7 @@ export class MandatoryCourseService {
   }
 
   fetchSearchData(request: any): Observable<any> {
+    request.request.filters.rootOrgId = (this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) || ''
     return this.http.post<any>(API_END_POINTS.SEARCH_V6, request)
   }
 
@@ -99,5 +99,8 @@ export class MandatoryCourseService {
 
   addBatch(req: any) {
     return this.http.post<any>(`${API_END_POINTS.CREATE_BATCH}`, req)
+  }
+  updatePageData(pageData: any) {
+    this.pageData = pageData
   }
 }

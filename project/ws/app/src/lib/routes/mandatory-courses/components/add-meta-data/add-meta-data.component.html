@@ -1,4 +1,4 @@
-<form [formGroup]="mataDataForm">
+<form [formGroup]="mataDataForm" (ngSubmit)="createContent()">
   <mat-card class="margin-top-m ws-mat-accent-border">
     <mat-card-title class="m-auto">
       <span id="basic-information" class="mat-title">Basic information</span>
@@ -12,8 +12,7 @@
                 Title
               </span>
               <mat-form-field appearance="outline" class="margin-top-xs">
-                <input matInput #name formControlName="title" maxlength="70" i18n-placeholder
-                  placeholder="Enter a title" />
+                <input matInput formControlName="title" maxlength="70" i18n-placeholder placeholder="Enter a title" />
 
               </mat-form-field>
             </div>
@@ -26,7 +25,7 @@
                 Subtitle
               </span>
               <mat-form-field appearance="outline" class="margin-top-xs">
-                <input matInput #name formControlName="subtitle" maxlength="70" i18n-placeholder
+                <input matInput formControlName="subtitle" maxlength="70" i18n-placeholder
                   placeholder="Enter a subtitle" />
               </mat-form-field>
             </div>
