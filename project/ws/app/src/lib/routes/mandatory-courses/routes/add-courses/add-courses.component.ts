@@ -44,6 +44,7 @@ export class AddCoursesComponent implements OnInit {
         fuzzy: true,
       },
     }
+
     this.mandatoryCourseSvc.fetchSearchData(queryparam).subscribe((response: any) => {
       this.searchResults = response.result.content
     })

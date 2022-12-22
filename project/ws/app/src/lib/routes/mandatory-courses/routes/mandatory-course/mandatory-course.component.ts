@@ -76,8 +76,8 @@ export class MandatoryCourseComponent implements OnInit {
     const queryparam = {
       request: {
         filters: {
-          contentType: [],
-          primaryCategory: [],
+          contentType: ['course'],
+          primaryCategory: ['course'],
           mimeType: [],
           source: [],
           mediaType: [],

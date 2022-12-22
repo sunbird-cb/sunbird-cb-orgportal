@@ -32,11 +32,11 @@ export class MandatoryCoursesComponent implements OnInit {
       request: {
         filters: {
           primaryCategory: [
-            this.activatedRoute.snapshot.data.pageData.data.primaryCategory
+            'Mandatory Course Goal',
           ],
-          query: ""
-        }
-      }
+        },
+        query: '',
+      },
     }
     this.mandatoryCourseServices.fetchSearchData(request).subscribe(data => {
       console.log(data)
