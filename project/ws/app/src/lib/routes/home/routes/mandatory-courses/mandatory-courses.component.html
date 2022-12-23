@@ -17,8 +17,8 @@
         </a>
       </div>
     </div>
-    <div class="folder-list">
-      <ws-app-folder-list-table></ws-app-folder-list-table>
+    <div class="folder-list" *ngIf="folderList.length>0">
+      <ws-app-folder-list-table [folderListData]="folderList"></ws-app-folder-list-table>
     </div>
   </mat-card>
 </div>

@@ -9,6 +9,7 @@ import { MandatoryCourseService } from '../../../mandatory-courses/services/mand
   styleUrls: ['./mandatory-courses.component.scss'],
 })
 export class MandatoryCoursesComponent implements OnInit {
+  folderList: any = []
   constructor(private dialog: MatDialog, private activatedRoute: ActivatedRoute, private mandatoryCourseServices: MandatoryCourseService) {
   }
 
@@ -28,18 +29,28 @@ export class MandatoryCoursesComponent implements OnInit {
   }
 
   getFolderList() {
-    const request = {
+    const queryparam = {
       request: {
         filters: {
-          primaryCategory: [
-            'Mandatory Course Goal',
-          ],
+          contentType: ['Course'],
+          primaryCategory: ['Mandatory Course Goal'],
+          mimeType: [],
+          source: [],
+          mediaType: [],
+          status: ['Draft'],
+          topics: [],
         },
         query: '',
+        sort_by: { lastUpdatedOn: 'desc' },
+        fields: [],
+        facets: ['primaryCategory'],
+        limit: 100,
+        offset: 0,
+        fuzzy: true,
       },
     }
-    this.mandatoryCourseServices.fetchSearchData(request).subscribe(data => {
-      console.log(data)
+    this.mandatoryCourseServices.fetchSearchData(queryparam).subscribe(data => {
+      this.folderList = data.result.content
     })
   }
 }

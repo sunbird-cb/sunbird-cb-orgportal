@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 
 export interface courseFolder {
   folderId: number,
@@ -8,12 +8,6 @@ export interface courseFolder {
 
 }
 
-const ELEMENT_DATA: courseFolder[] = [
-  { folderId: 123, folderName: 'Course 1 folder', courseCount: 3, batchCount: 9 },
-  { folderId: 1232, folderName: 'Course 2 folder', courseCount: 4, batchCount: 2 },
-  { folderId: 1233, folderName: 'Course 3 folder', courseCount: 4, batchCount: 4 },
-  { folderId: 1234, folderName: 'Course 4 folder', courseCount: 7, batchCount: 5 },
-]
 
 @Component({
   selector: 'ws-app-folder-list-table',
@@ -21,12 +15,17 @@ const ELEMENT_DATA: courseFolder[] = [
   styleUrls: ['./folder-list-table.component.scss'],
 })
 export class FolderListTableComponent implements OnInit {
-  displayedColumns: string[] = ['folderName', 'courseCount', 'batchCount']
-  dataSource = ELEMENT_DATA
+  displayedColumns: string[] = ['name', 'courseCount', 'batchCount']
+  dataSource: any
+  @Input() folderListData: any
   constructor() { }
 
   ngOnInit() {
-    // this.displayedColumns
+    this.dataSource = this.folderListData.map((folderList: any) => {
+      folderList.courseCount = 0
+      folderList.batchCount = 0
+      return folderList
+    })
   }
 
 }

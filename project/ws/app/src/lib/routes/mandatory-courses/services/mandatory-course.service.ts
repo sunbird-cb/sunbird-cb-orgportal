@@ -6,9 +6,9 @@ import { NsMandatoryCourse } from '../models/mandatory-course.model'
 // tslint:disable
 import _ from 'lodash'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-const PROTECTED_SLAG_V8 = '/apis/protected/v8'
+const PROTECTED_SLAG_V8 = '/apis/proxies/v8'
 const API_END_POINTS = {
-  SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
+  SEARCH_V6: `/apis/proxies/v8/sunbirdigot/read`,
   CREATE_CONTENT: `${PROTECTED_SLAG_V8}/action/content/v3/create`,
   UPDATE_HIERARCHY: `${PROTECTED_SLAG_V8}/action/content/v3/hierarchy/update`,
   PUBLISH_CONTENT: (contentId: string) => `${PROTECTED_SLAG_V8}/action/content/v3/publish/${contentId}`,
@@ -30,10 +30,15 @@ export class MandatoryCourseService {
   ) { }
 
   createContent(name: string): Observable<string> {
+    let randomNumber = ''
+    for (let i = 0; i < 16; i++) {
+      randomNumber += Math.floor(Math.random() * 10)
+    }
 
     const requestBody: NsMandatoryCourse.ICreateMetaRequestV2 = {
       request: {
         content: {
+          code: randomNumber,
           contentType: this.pageData.contentType,
           createdBy: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
           createdFor: [(this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) ? this.configSvc.userProfile.rootOrgId : ''],
@@ -85,6 +90,7 @@ export class MandatoryCourseService {
   }
 
   fetchSearchData(request: any): Observable<any> {
+    request.request.filters.createdBy = (this.configSvc.userProfile && this.configSvc.userProfile.userId) || ''
     return this.http.post<any>(API_END_POINTS.SEARCH_V6, request)
   }
 

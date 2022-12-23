@@ -51,7 +51,7 @@ export class MandatoryCourseComponent implements OnInit {
       this.currentCourseId = params['doId']
       this.noDataConfig.btnLink = `/app/mandatory-courses/${this.currentCourseId}/choose-courses`
     })
-    this.getSearchedData()
+    // this.getSearchedData()
   }
 
   filter(data: any) {
@@ -72,31 +72,31 @@ export class MandatoryCourseComponent implements OnInit {
     })
   }
 
-  getSearchedData() {
-    const queryparam = {
-      request: {
-        filters: {
-          contentType: ['course'],
-          primaryCategory: ['course'],
-          mimeType: [],
-          source: [],
-          mediaType: [],
-          status: ['Live'],
-          'competencies_v3.name': [],
-          topics: [],
-        },
-        query: '',
-        sort_by: { lastUpdatedOn: 'desc' },
-        fields: [],
-        facets: ['primaryCategory', 'mimeType', 'source', 'competencies_v3.name', 'topics'],
-        limit: 100,
-        offset: 0,
-        fuzzy: true,
-      },
-    }
-    this.mandatoryCourseSvc.fetchSearchData(queryparam).subscribe((response: any) => {
-      this.searchResults = response.result.content
-    })
-  }
+  // getSearchedData() {
+  //   const queryparam = {
+  //     request: {
+  //       filters: {
+  //         contentType: ['Course'],
+  //         primaryCategory: ['Mandatory Course Goal'],
+  //         mimeType: [],
+  //         source: [],
+  //         mediaType: [],
+  //         status: ['Draft'],
+  //         'competencies_v3.name': [],
+  //         topics: [],
+  //       },
+  //       query: '',
+  //       sort_by: { lastUpdatedOn: 'desc' },
+  //       fields: [],
+  //       facets: ['primaryCategory'],
+  //       limit: 100,
+  //       offset: 0,
+  //       fuzzy: true,
+  //     },
+  //   }
+  //   this.mandatoryCourseSvc.fetchSearchData(queryparam).subscribe((response: any) => {
+  //     this.searchResults = response.result.content
+  //   })
+  // }
 
 }
