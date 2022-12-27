@@ -23,7 +23,7 @@ export class MandatoryCoursesComponent implements OnInit {
     this.dialog.open(AddFolderPopupComponent, {
       // height: '400px',
       width: '400px',
-
+      data: this.activatedRoute.snapshot.data.pageData.data
       // panelClass: 'custom-dialog-container',
     })
   }
@@ -47,7 +47,7 @@ export class MandatoryCoursesComponent implements OnInit {
         limit: 100,
         offset: 0,
         fuzzy: true,
-      },
+      }
     }
     this.mandatoryCourseServices.fetchSearchData(queryparam).subscribe(data => {
       this.folderList = data.result.content

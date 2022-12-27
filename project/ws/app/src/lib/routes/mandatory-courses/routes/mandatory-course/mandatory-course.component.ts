@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router'
 import { NsMandatoryCourse } from '../../models/mandatory-course.model'
 import { MatDialog } from '@angular/material'
 import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/add-batch-dialouge.component'
-import { MandatoryCourseService } from '../../services/mandatory-course.service'
 import { NsContent } from '@sunbird-cb/collection'
 
 @Component({
@@ -39,9 +38,7 @@ export class MandatoryCourseComponent implements OnInit {
   }
   constructor(
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog,
-    private mandatoryCourseSvc: MandatoryCourseService
-
+    private dialog: MatDialog
   ) {
 
   }

@@ -10,14 +10,16 @@ import { MandatoryCourseService } from '../../services/mandatory-course.service'
 })
 export class AddFolderPopupComponent implements OnInit {
   addFolderForm: FormGroup
-
+  pageData: any
   constructor(public dialogRef: MatDialogRef<AddFolderPopupComponent>, private fb: FormBuilder, private router: Router, private mandatoryCourseService: MandatoryCourseService) {
     this.addFolderForm = this.fb.group({
       folderName: ['', Validators.required]
     })
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.pageData = this.mandatoryCourseService.getPageData()
+  }
 
   closeDialouge(): void {
     this.dialogRef.close()
@@ -27,8 +29,12 @@ export class AddFolderPopupComponent implements OnInit {
     console.log(this.addFolderForm.value)
     if (this.addFolderForm.valid) {
       this.closeDialouge()
-      this.mandatoryCourseService.createContent(this.addFolderForm.value.folderName).subscribe(res => {
-        this.router.navigate([`/app/mandatory-courses/${res}}`])
+      const metaData = {
+        name: this.addFolderForm.value.folderName,
+        ...this.pageData.folder
+      }
+      this.mandatoryCourseService.createContent(metaData).subscribe(res => {
+        this.router.navigateByUrl(`/app/mandatory-courses/${res}`)
       })
     }
   }

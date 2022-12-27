@@ -10,11 +10,13 @@ const PROTECTED_SLAG_V8 = '/apis/proxies/v8'
 const API_END_POINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/read`,
   CREATE_CONTENT: `${PROTECTED_SLAG_V8}/action/content/v3/create`,
+  UPDATE_CONTENT: `${PROTECTED_SLAG_V8}/action/content/v3/update`,
   UPDATE_HIERARCHY: `${PROTECTED_SLAG_V8}/action/content/v3/hierarchy/update`,
   PUBLISH_CONTENT: (contentId: string) => `${PROTECTED_SLAG_V8}/action/content/v3/publish/${contentId}`,
   CREATE_BATCH: `/apis/authApi/batch/create`,
   ADD_USER_TO_BATCH: `/apis/authApi/batch/addUser`,
   GET_ALL_USERS: `/apis/proxies/v8/user/v1/search`,
+  UPLOAD: `${PROTECTED_SLAG_V8}/upload/action/content/v3/upload/`
 }
 
 @Injectable({
@@ -29,7 +31,9 @@ export class MandatoryCourseService {
     private configSvc: ConfigurationsService
   ) { }
 
-  createContent(name: string): Observable<string> {
+  createContent(meta: {
+    name: string, mimeType: string, contentType: string, primaryCategory: string, isExternal: boolean, ownershipType: string[], license: string, visibility: string
+  }): Observable<string> {
     let randomNumber = ''
     for (let i = 0; i < 16; i++) {
       randomNumber += Math.floor(Math.random() * 10)
@@ -39,21 +43,21 @@ export class MandatoryCourseService {
       request: {
         content: {
           code: randomNumber,
-          contentType: this.pageData.contentType,
+          contentType: meta.contentType,
           createdBy: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
           createdFor: [(this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) ? this.configSvc.userProfile.rootOrgId : ''],
           creator: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
           description: '',
-          mimeType: this.pageData.mimeType,
-          name: name,
+          mimeType: meta.mimeType,
+          name: meta.name,
           purpose: '',
           organisation: [
             (this.configSvc.userProfile && this.configSvc.userProfile.departmentName) ? this.configSvc.userProfile.departmentName : '',
           ],
-          isExternal: this.pageData.isExternal,
-          primaryCategory: this.pageData.primaryCategory,
+          isExternal: meta.isExternal,
+          primaryCategory: meta.primaryCategory,
+          ownershipType: meta.ownershipType,
           license: this.pageData.license,
-          ownershipType: this.pageData.ownershipType,
           visibility: this.pageData.visibility
         },
       },
@@ -70,9 +74,15 @@ export class MandatoryCourseService {
       )
   }
 
-  updateContent(meta: NsMandatoryCourse.IContentUpdateV3) {
-    return this.http.patch<null>(
-      `${API_END_POINTS.UPDATE_HIERARCHY}`,
+  updateContent(meta: any, id: string) {
+    meta.request.content.createdBy = (this.configSvc.userProfile && this.configSvc.userProfile.userId) || ''
+    meta.request.content.creatorContacts = {
+      name: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
+      id: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
+      email: (this.configSvc.userProfile && this.configSvc.userProfile.email) || '',
+    }
+    return this.http.patch<any>(
+      `${API_END_POINTS.UPDATE_CONTENT}/${id}`,
       meta,
     )
   }
@@ -87,6 +97,10 @@ export class MandatoryCourseService {
       },
     }
     return this.http.post<any>(API_END_POINTS.PUBLISH_CONTENT(id), requestbody)
+  }
+
+  uploadFile(req: any) {
+    return this.http.post<any>(API_END_POINTS.UPLOAD, req)
   }
 
   fetchSearchData(request: any): Observable<any> {
@@ -107,5 +121,8 @@ export class MandatoryCourseService {
   }
   updatePageData(pageData: any) {
     this.pageData = pageData
+  }
+  getPageData() {
+    return this.pageData
   }
 }
