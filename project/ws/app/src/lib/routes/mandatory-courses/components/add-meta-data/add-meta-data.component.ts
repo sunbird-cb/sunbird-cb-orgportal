@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 import { ImageCropComponent } from '../../../../image-crop/image-crop.component'
-// import { Observable } from 'rxjs'
+import { forkJoin } from 'rxjs'
 // import { map } from 'rxjs/operators'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { AddThumbnailComponent } from '../../../../thumbnail/add-thumbnail/add-thumbnail.component'
@@ -125,6 +125,7 @@ export class AddMetaDataComponent implements OnInit {
                   }
                 }
               }
+
               this.mandatoryCourseService.updateContent(req, data.result.identifier).subscribe(res => {
                 console.log(res)
               })
@@ -156,21 +157,28 @@ export class AddMetaDataComponent implements OnInit {
   }
   showError(meta: string) {
     console.log(meta)
-    // if (
-    //   this.contentService.checkCondition(this.contentMeta.identifier, meta, 'required') &&
-    //   !this.contentService.isPresent(meta, this.contentMeta.identifier)
-    // ) {
-    //   if (this.isSubmitPressed) {
-    //     return true
-    //   }
-    //   if (this.contentForm.controls[meta] && this.contentForm.controls[meta].touched) {
-    //     return true
-    //   }
-    //   return false
-    // }
     return false
   }
   updateContent() {
+    const requestParams = {
+      request: {
+        data: {
+          nodesModified: {
+            [this.route.snapshot.params.doId]: {
+              isNew: false,
+              root: true
+            }
+          },
+          hierarchy: {
+            [this.route.snapshot.params.doId]: {
+              root: true,
+              children: [
+              ]
+            }
+          }
+        }
+      }
+    }
     if (this.metaDataForm.valid) {
       console.log(this.metaDataForm.value)
       const requestBody = {
@@ -181,8 +189,7 @@ export class AddMetaDataComponent implements OnInit {
           }
         }
       }
-      this.mandatoryCourseService.updateContent(requestBody, this.route.snapshot.params.doId).subscribe(() => {
-
+      forkJoin([this.mandatoryCourseService.updateContent(requestBody, this.route.snapshot.params.doId), this.mandatoryCourseService.updateHierarchy(requestParams)]).subscribe(() => {
         this.snackBar.open('Saved Successfully', 'Close', { verticalPosition: 'top' })
       })
     }

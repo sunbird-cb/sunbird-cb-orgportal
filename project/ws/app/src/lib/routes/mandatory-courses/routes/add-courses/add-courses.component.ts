@@ -9,7 +9,6 @@ import { MandatoryCourseService } from '../../services/mandatory-course.service'
 })
 export class AddCoursesComponent implements OnInit {
   bdtitles: any = []
-  // toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato']
   searchResults: any = []
   selectedCourses: any = []
   selectAll: boolean = false
@@ -118,7 +117,33 @@ export class AddCoursesComponent implements OnInit {
 
 
   saveSelectedCourses() {
-    this.selectedCourses = this.searchResults.filter((course: any) => course.selected)
+    this.selectedCourses = this.searchResults.filter((course: any) => course.selected).map((course: any) => course.identifier)
     console.log(this.selectedCourses)
+    this.mandatoryCourseSvc.getfolderData().subscribe((folder: any) => {
+      console.log(folder)
+    })
+    const requestParams = {
+      request: {
+        data: {
+          nodesModified: {
+            [this.route.snapshot.params.doId]: {
+              isNew: false,
+              root: true
+            }
+          },
+          hierarchy: {
+            [this.route.snapshot.params.doId]: {
+              root: true,
+              children: [
+                ...this.selectedCourses
+              ]
+            }
+          }
+        }
+      }
+    }
+    this.mandatoryCourseSvc.updateHierarchy(requestParams).subscribe((res: any) => {
+      console.log(res)
+    })
   }
 }

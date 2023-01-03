@@ -79,6 +79,10 @@ export class MandatoryCourseService {
       )
   }
 
+  updateHierarchy(requestParas: any) {
+    return this.http.patch(`${API_END_POINTS.UPDATE_HIERARCHY}`, requestParas)
+  }
+
   updateContent(meta: any, id: string) {
     return this.http.patch<any>(
       `${API_END_POINTS.UPDATE_CONTENT}/${id}`,
