@@ -31,12 +31,9 @@ export class BatchDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      console.log(params, 'params')
       this.currentCourseId = params['dSoId']
       this.currentBatchId = params['batchId']
       this.noDataConfig.btnLink = `/app/mandatory-courses/${this.currentCourseId}/batch-details/${this.currentCourseId}/choose-members`
     })
   }
-
-
 }

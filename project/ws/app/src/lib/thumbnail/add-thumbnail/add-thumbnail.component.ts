@@ -75,7 +75,6 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
     this.showMainContent = this.showMainContent ? false : true
   }
 
-
   filter(key: string | 'myimages' | 'all') {
     if (key) {
       this.currentFilter = key

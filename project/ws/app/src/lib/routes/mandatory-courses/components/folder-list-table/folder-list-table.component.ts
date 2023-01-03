@@ -1,13 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core'
 
-export interface courseFolder {
+export interface IFolder {
   folderId: number,
   folderName: string
   courseCount: number
   batchCount: number
-
 }
-
 
 @Component({
   selector: 'ws-app-folder-list-table',

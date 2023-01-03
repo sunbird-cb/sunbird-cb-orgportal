@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'ws-app-add-courses',
   templateUrl: './add-courses.component.html',
-  styleUrls: ['./add-courses.component.scss']
+  styleUrls: ['./add-courses.component.scss'],
 })
 export class AddCoursesComponent implements OnInit {
   bdtitles: any = []
   searchResults: any = []
   selectedCourses: any = []
-  selectAll: boolean = false
+  selectAll = false
   competeniesList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato']
   selectedCompetency = []
   filtersList: any = []
-  constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute) { }
+  constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.bdtitles = this.mandatoryCourseSvc.getBreadCrumbList()
@@ -72,14 +73,13 @@ export class AddCoursesComponent implements OnInit {
 
   removeFilter(item: any) {
     this.filtersList = this.filtersList.filter((list: any) => list.name !== item.name)
-    console.log(this.filtersList)
-    this.selectedCompetency = this.selectedCompetency.filter((fil: any) => fil != item.name)
+    this.selectedCompetency = this.selectedCompetency.filter((fil: any) => fil !== item.name)
   }
 
   onChange(value: any, selectedType: string) {
     switch (selectedType) {
       case 'filter': if (this.selectedCompetency.length > 0) {
-        this.selectedCompetency.forEach((competency) => {
+        this.selectedCompetency.forEach(competency => {
           if (!this.filtersList.map((fil: any) => fil.name).includes(competency)) {
             this.filtersList.push({ name: competency, type: selectedType })
           }
@@ -89,9 +89,9 @@ export class AddCoursesComponent implements OnInit {
         break
       case 'query':
         if (this.filtersList.length > 0) {
-          this.filtersList.forEach((fil: any) => {
+          this.filtersList.forEach((val: any) => {
             if (this.filtersList.map((fil: any) => fil.type).includes(selectedType)) {
-              fil.name = value
+              val.name = value
             } else {
               this.filtersList.push({ name: value, type: selectedType })
             }
@@ -115,35 +115,30 @@ export class AddCoursesComponent implements OnInit {
     })
   }
 
-
   saveSelectedCourses() {
     this.selectedCourses = this.searchResults.filter((course: any) => course.selected).map((course: any) => course.identifier)
-    console.log(this.selectedCourses)
-    this.mandatoryCourseSvc.getfolderData().subscribe((folder: any) => {
-      console.log(folder)
-    })
     const requestParams = {
       request: {
         data: {
           nodesModified: {
             [this.route.snapshot.params.doId]: {
               isNew: false,
-              root: true
-            }
+              root: true,
+            },
           },
           hierarchy: {
             [this.route.snapshot.params.doId]: {
               root: true,
               children: [
-                ...this.selectedCourses
-              ]
-            }
-          }
-        }
-      }
+                ...this.selectedCourses,
+              ],
+            },
+          },
+        },
+      },
     }
-    this.mandatoryCourseSvc.updateHierarchy(requestParams).subscribe((res: any) => {
-      console.log(res)
+    this.mandatoryCourseSvc.updateHierarchy(requestParams).subscribe(() => {
+      this.snackBar.open('Saved Successfully', 'Close', { verticalPosition: 'top' })
     })
   }
 }

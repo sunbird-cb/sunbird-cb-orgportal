@@ -4,11 +4,9 @@ import { AddThumbnailComponent } from './add-thumbnail/add-thumbnail.component'
 import { MatButtonModule, MatButtonToggleModule, MatCardModule, MatDialogModule, MatIconModule } from '@angular/material'
 import { ThumbnailService } from './thumbnail.service'
 
-
-
 @NgModule({
   declarations: [
-    AddThumbnailComponent
+    AddThumbnailComponent,
   ],
   imports: [
     MatIconModule,
@@ -16,11 +14,11 @@ import { ThumbnailService } from './thumbnail.service'
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
   ],
   providers: [ThumbnailService],
   exports: [
-    AddThumbnailComponent
-  ]
+    AddThumbnailComponent,
+  ],
 })
 export class ThumbnailModule { }

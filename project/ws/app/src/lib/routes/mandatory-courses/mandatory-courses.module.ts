@@ -11,7 +11,6 @@ import {
 import { MatSelectModule } from '@angular/material/select'
 import { MatListModule } from '@angular/material/list'
 
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 // import { MatListModule } from '@angular/material/list'
 
@@ -72,11 +71,11 @@ import { FilterTagsComponent } from './components/filter-tags/filter-tags.compon
     MatCheckboxModule,
     MatSnackBarModule,
     ThumbnailModule,
-    ImageCropModule
+    ImageCropModule,
   ],
   entryComponents: [
     AddBatchDialougeComponent,
-    AddThumbnailComponent
+    AddThumbnailComponent,
   ],
   exports: [FolderListTableComponent, AddFolderPopupComponent],
 

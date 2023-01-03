@@ -25,14 +25,14 @@ export class AddMetaDataComponent implements OnInit {
   bdtitles!: any
 
   constructor(private fb: FormBuilder, private dialog: MatDialog,
-    private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
-    private route: ActivatedRoute, private snackBar: MatSnackBar) {
+              private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
+              private route: ActivatedRoute, private snackBar: MatSnackBar) {
     this.metaDataForm = this.fb.group({
       name: [''],
       purpose: [''],
       description: [''],
       appIcon: [''],
-      posterImage: ['']
+      posterImage: [''],
     })
   }
 
@@ -109,7 +109,7 @@ export class AddMetaDataComponent implements OnInit {
 
           const requestBody = {
             name: fileName,
-            ...this.pageData.image
+            ...this.pageData.image,
           }
           this.mandatoryCourseService.createContent(requestBody).pipe(
             mergeMap(id => this.mandatoryCourseService.upload(formdata, id)))
@@ -121,13 +121,13 @@ export class AddMetaDataComponent implements OnInit {
                 request: {
                   content: {
                     artifactUrl: data.result.artifactUrl,
-                    versionKey: data.result.versionKey
-                  }
-                }
+                    versionKey: data.result.versionKey,
+                  },
+                },
               }
 
-              this.mandatoryCourseService.updateContent(req, data.result.identifier).subscribe(res => {
-                console.log(res)
+              this.mandatoryCourseService.updateContent(req, data.result.identifier).subscribe(() => {
+                this.snackBar.open('Saved Successfully', 'Close', { verticalPosition: 'top' })
               })
 
             })
@@ -155,8 +155,7 @@ export class AddMetaDataComponent implements OnInit {
     const newUrl = newLink.join('/')
     return newUrl
   }
-  showError(meta: string) {
-    console.log(meta)
+  showError() {
     return false
   }
   updateContent() {
@@ -166,30 +165,30 @@ export class AddMetaDataComponent implements OnInit {
           nodesModified: {
             [this.route.snapshot.params.doId]: {
               isNew: false,
-              root: true
-            }
+              root: true,
+            },
           },
           hierarchy: {
             [this.route.snapshot.params.doId]: {
               root: true,
               children: [
-              ]
-            }
-          }
-        }
-      }
+              ],
+            },
+          },
+        },
+      },
     }
     if (this.metaDataForm.valid) {
-      console.log(this.metaDataForm.value)
       const requestBody = {
         request: {
           content: {
             ...this.metaDataForm.value,
-            versionKey: this.folderInfo.versionKey
-          }
-        }
+            versionKey: this.folderInfo.versionKey,
+          },
+        },
       }
-      forkJoin([this.mandatoryCourseService.updateContent(requestBody, this.route.snapshot.params.doId), this.mandatoryCourseService.updateHierarchy(requestParams)]).subscribe(() => {
+      forkJoin([this.mandatoryCourseService.updateContent(requestBody, this.route.snapshot.params.doId),
+      this.mandatoryCourseService.updateHierarchy(requestParams)]).subscribe(() => {
         this.snackBar.open('Saved Successfully', 'Close', { verticalPosition: 'top' })
       })
     }

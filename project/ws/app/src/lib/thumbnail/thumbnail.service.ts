@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators'
 import { environment } from '../../../../../../src/environments/environment'
 const SEARCH = '/apis/proxies/v8/sunbirdigot/read'
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThumbnailService {
 

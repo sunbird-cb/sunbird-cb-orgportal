@@ -29,8 +29,8 @@ const routes: Routes = [
         path: ':doId/choose-courses',
         component: AddCoursesComponent,
         data: {
-          label: 'choose-courses'
-        }
+          label: 'choose-courses',
+        },
       },
       {
         path: ':doId/batch-details/:batchId',

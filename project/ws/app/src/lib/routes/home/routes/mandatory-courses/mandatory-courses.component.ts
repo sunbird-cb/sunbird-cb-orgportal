@@ -13,7 +13,7 @@ export class MandatoryCoursesComponent implements OnInit {
   folderList: any = []
   user: any
   constructor(private dialog: MatDialog, private activatedRoute: ActivatedRoute,
-    private mandatoryCourseServices: MandatoryCourseService) { }
+              private mandatoryCourseServices: MandatoryCourseService) { }
 
   ngOnInit() {
     this.user = this.mandatoryCourseServices.getUserId()
@@ -22,11 +22,10 @@ export class MandatoryCoursesComponent implements OnInit {
   }
 
   openCreateFolderDialog() {
-    console.log('popup btn clicked')
     this.dialog.open(AddFolderPopupComponent, {
       // height: '400px',
       width: '400px',
-      data: this.activatedRoute.snapshot.data.pageData.data
+      data: this.activatedRoute.snapshot.data.pageData.data,
       // panelClass: 'custom-dialog-container',
     })
   }
@@ -42,7 +41,7 @@ export class MandatoryCoursesComponent implements OnInit {
           mediaType: [],
           status: ['Draft', 'LIVE'],
           topics: [],
-          createdBy: this.user
+          createdBy: this.user,
         },
         query: '',
         sort_by: { lastUpdatedOn: 'desc' },
@@ -51,7 +50,7 @@ export class MandatoryCoursesComponent implements OnInit {
         limit: 100,
         offset: 0,
         fuzzy: true,
-      }
+      },
     }
     this.mandatoryCourseServices.fetchSearchData(queryparam).subscribe(data => {
       this.folderList = data.result.content
