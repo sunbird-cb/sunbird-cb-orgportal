@@ -1,0 +1,22 @@
+@import '../../../../../../../../../src/styles/ws-vars';
+
+.filer-tags {
+    display: flex;
+    padding-top: 0px;
+    .mat-list-item{
+        margin-right: 10px;
+        background: $bg-color-grey;
+        border-radius:4px;
+        height: 40px;
+        text-transform: capitalize;
+        margin-right:20px;
+        width: max-content;
+        ::ng-deep .mat-list-item-content{
+          padding:0 10px;
+        }
+        .mat-icon {
+          padding-left:30px;
+          cursor: pointer;
+        }
+    }
+}

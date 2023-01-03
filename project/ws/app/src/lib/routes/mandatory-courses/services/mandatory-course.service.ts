@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { NsMandatoryCourse } from '../models/mandatory-course.model'
 // tslint:disable
@@ -11,21 +11,26 @@ const API_END_POINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/read`,
   CREATE_CONTENT: `${PROTECTED_SLAG_V8}/action/content/v3/create`,
   UPDATE_CONTENT: `${PROTECTED_SLAG_V8}/action/content/v3/update`,
+  EDIT_HIERARCHY: `${PROTECTED_SLAG_V8}/action/content/v3/hierarchy`,
   UPDATE_HIERARCHY: `${PROTECTED_SLAG_V8}/action/content/v3/hierarchy/update`,
   PUBLISH_CONTENT: (contentId: string) => `${PROTECTED_SLAG_V8}/action/content/v3/publish/${contentId}`,
   CREATE_BATCH: `/apis/authApi/batch/create`,
   ADD_USER_TO_BATCH: `/apis/authApi/batch/addUser`,
   GET_ALL_USERS: `/apis/proxies/v8/user/v1/search`,
-  UPLOAD: `${PROTECTED_SLAG_V8}/upload/action/content/v3/upload/`
+  UPLOAD: `${PROTECTED_SLAG_V8}/upload/action/content/v3/upload`,
+  COMPETENCY: `${PROTECTED_SLAG_V8}/frac/getAllNodes/dictionary`
 }
+
+const BREAD_CRUMB_LIST = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]
 
 @Injectable({
   providedIn: 'root',
 })
 export class MandatoryCourseService {
-  // private pageData = new Subject();
-  // currentPageDate$ = this.pageData.asObservable();
   private pageData: any
+  private folderSubject = new Subject<any>();
+  private breadCrumbList = BREAD_CRUMB_LIST;
+  private folderinfo: any
   constructor(
     private http: HttpClient,
     private configSvc: ConfigurationsService
@@ -75,12 +80,6 @@ export class MandatoryCourseService {
   }
 
   updateContent(meta: any, id: string) {
-    meta.request.content.createdBy = (this.configSvc.userProfile && this.configSvc.userProfile.userId) || ''
-    meta.request.content.creatorContacts = {
-      name: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
-      id: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
-      email: (this.configSvc.userProfile && this.configSvc.userProfile.email) || '',
-    }
     return this.http.patch<any>(
       `${API_END_POINTS.UPDATE_CONTENT}/${id}`,
       meta,
@@ -99,12 +98,30 @@ export class MandatoryCourseService {
     return this.http.post<any>(API_END_POINTS.PUBLISH_CONTENT(id), requestbody)
   }
 
-  uploadFile(req: any) {
-    return this.http.post<any>(API_END_POINTS.UPLOAD, req)
+  upload(
+    data: FormData,
+    id: any,
+    isZip = false,
+  ): Observable<any> {
+    if (isZip) {
+      // return this.zipUpload(data, contentData, options)
+    }
+    const file = data.get('content') as File
+    let fileName = file.name
+    // if (FIXED_FILE_NAME.indexOf(fileName) < 0) {
+    //   fileName = this.appendToFilename(fileName)
+    // }
+    const newFormData = new FormData()
+    newFormData.append('data', file, fileName)
+    return this.http.post<any>(
+      // tslint:disable-next-line:max-line-length
+      // ${CONTENT_BASE}${this.accessService.rootOrg.replace(/ /g, '_')}/${this.accessService.org.replace(/ /g, '_')}/Public/${contentData.contentId.replace('.img', '')}${contentData.contentType}
+      `${API_END_POINTS.UPLOAD}/${id}`,
+      newFormData,
+    )
   }
 
   fetchSearchData(request: any): Observable<any> {
-    request.request.filters.createdBy = (this.configSvc.userProfile && this.configSvc.userProfile.userId) || ''
     return this.http.post<any>(API_END_POINTS.SEARCH_V6, request)
   }
 
@@ -119,10 +136,42 @@ export class MandatoryCourseService {
   addBatch(req: any) {
     return this.http.post<any>(`${API_END_POINTS.CREATE_BATCH}`, req)
   }
+
   updatePageData(pageData: any) {
     this.pageData = pageData
   }
   getPageData() {
     return this.pageData
+  }
+  getEditContent(doId: any) {
+    return this.http.get(`${API_END_POINTS.EDIT_HIERARCHY}/${doId}?mode=edit`)
+  }
+  getCompetencies() {
+    return this.http.get(`${API_END_POINTS.COMPETENCY}`)
+  }
+  sharefolderData(data: any) {
+    this.folderinfo = data
+    this.folderSubject.next(data)
+  }
+  getfolderData() {
+    return this.folderSubject.asObservable()
+  }
+  getFolderInfo() {
+    return this.folderinfo
+  }
+  updateBreadcrumbList(link: any) {
+    const list = this.breadCrumbList.map((bd: any) => bd.title)
+    if (!list.includes(link.title)) {
+      this.breadCrumbList.push(link)
+    }
+  }
+  getBreadCrumbList() {
+    return this.breadCrumbList
+  }
+  removeBreadCrum(link: any) {
+    this.breadCrumbList = this.breadCrumbList.filter(item => item.title !== link.title)
+  }
+  getUserId() {
+    return (this.configSvc.userProfile && this.configSvc.userProfile.userId) || ''
   }
 }

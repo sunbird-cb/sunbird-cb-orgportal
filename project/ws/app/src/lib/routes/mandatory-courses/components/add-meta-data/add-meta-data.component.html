@@ -1,95 +1,96 @@
-<form [formGroup]="metaDataForm" (ngSubmit)="updateContent()">
-  <mat-card class="margin-top-m ws-mat-accent-border">
-    <mat-card-title class="m-auto">
-      <span id="basic-information" class="mat-title">Basic information</span>
-    </mat-card-title>
-    <mat-card-content class="margin-top-m mobile-break mat-app-background">
-      <div class="card-contan margin-top-m flex flex-1 flex-row">
-        <div class="mobile-break mat-app-background">
-          <div class="margin-top-s">
-            <div class="margin-top-xs">
-              <span class="mat-subheading-2 margin-0" i18n="Title label|Label which explains the user to enter title">
-                Title
-              </span>
-              <mat-form-field appearance="outline" class="margin-top-xs">
-                <input matInput formControlName="name" maxlength="70" i18n-placeholder placeholder="Enter a title" />
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="margin-top-s">
-            <div class="margin-top-xs">
-              <span class="mat-subheading-2 margin-0"
-                i18n="Title label|Label which explains the user to enter subtitle">
-                Subtitle
-              </span>
-              <mat-form-field appearance="outline" class="margin-top-xs">
-                <input matInput formControlName="purpose" maxlength="70" i18n-placeholder
-                  placeholder="Enter a subtitle" />
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="margin-top-s">
-            <div class="margin-top-xs">
-              <span class="mat-subheading-2 margin-0"
-                i18n="Description label|Label which explains the user to enter description">
-                Description
-              </span>
-              <mat-form-field appearance="outline" class="margin-top-xs">
-                <textarea matInput #instructions formControlName="instructions" maxlength="70" i18n-placeholder
-                  placeholder="Enter description"></textarea>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="mobile-break mat-app-background">
-          <div class="flex flex-column margin-auto">
-            <div class="logos">
+<div class="meta-data">
+  <form [formGroup]="metaDataForm" (ngSubmit)="updateContent()">
+    <mat-card class="margin-top-m ws-mat-accent-border">
+      <mat-card-title class="m-auto">
+        <span id="basic-information" class="mat-title">Basic information</span>
+      </mat-card-title>
+      <mat-card-content class="margin-top-m mobile-break mat-app-background">
+        <div class="card-contan margin-top-m flex flex-1 flex-row">
+          <div class="mobile-break mat-app-background">
+            <div class="margin-top-s">
               <div class="margin-top-xs">
-                <label>
-                  <div class="margin-top-xs flex flex-middle thumb-text">
-                    <span class="mat-subheading-2 margin-0" i18n>Thumbnail</span>
+                <span class="mat-subheading-2 margin-0" i18n="Title label|Label which explains the user to enter title">
+                  Title
+                </span>
+                <mat-form-field appearance="outline" class="margin-top-xs">
+                  <input matInput formControlName="name" maxlength="70" i18n-placeholder placeholder="Enter a title" />
+                </mat-form-field>
+              </div>
+            </div>
 
-                  </div>
-                  <span class="mat-body-2">
-                    Image will be cropped to 16:9 aspect ratio
-                  </span>
-                </label>
+            <div class="margin-top-s">
+              <div class="margin-top-xs">
+                <span class="mat-subheading-2 margin-0"
+                  i18n="Title label|Label which explains the user to enter subtitle">
+                  Subtitle
+                </span>
+                <mat-form-field appearance="outline" class="margin-top-xs">
+                  <input matInput formControlName="purpose" maxlength="70" i18n-placeholder
+                    placeholder="Enter a subtitle" />
+                </mat-form-field>
+              </div>
+            </div>
 
+            <div class="margin-top-s">
+              <div class="margin-top-xs">
+                <span class="mat-subheading-2 margin-0"
+                  i18n="Description label|Label which explains the user to enter description">
+                  Description
+                </span>
+                <mat-form-field appearance="outline" class="margin-top-xs">
+                  <textarea matInput #description formControlName="description" maxlength="70" i18n-placeholder
+                    placeholder="Enter description"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="mobile-break mat-app-background">
+            <div class="flex flex-column margin-auto">
+              <div class="logos">
                 <div class="margin-top-xs">
+                  <label>
+                    <div class="margin-top-xs flex flex-middle thumb-text">
+                      <span class="mat-subheading-2 margin-0" i18n>Thumbnail</span>
 
-                  <!-- <div>
+                    </div>
+                    <span class="mat-body-2">
+                      Image will be cropped to 16:9 aspect ratio
+                    </span>
+                  </label>
+
+                  <div class="margin-top-xs">
+
+                    <!-- <div>
                         <img class="image max-width" height="150" width="100%" src="" />
                       </div> -->
-                  <div class="cursor-pointer thumbnail-logo" (click)="openDialog('appIcon')">
-                    <img class="image max-width" *ngIf="metaDataForm.controls.appIcon.value" [ngClass]="{
+                    <div class="cursor-pointer thumbnail-logo" (click)="openDialog('appIcon')">
+                      <img class="image max-width" *ngIf="metaDataForm.controls.appIcon.value" [ngClass]="{
                                                           'image-border': showError('appIcon'),
                                                           'ws-mat-warn-text': showError('appIcon')
                                                         }" height="150" width="100%" [src]="data.appURL" />
-                  </div>
-                  <div class="photo mat-elevation-z4 ws-mat-primary-background">
-                    <mat-icon class="mat-icon photo-icon text-white">photo_camera</mat-icon>
+                    </div>
+                    <div class="photo mat-elevation-z4 ws-mat-primary-background">
+                      <mat-icon class="mat-icon photo-icon text-white">photo_camera</mat-icon>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+
+
         </div>
-
-
-
-      </div>
-      <mat-card-actions>
-        <div class="flex flex-start margin-top-l margin-bottom-s margin-left-s">
-          <button mat-raised-button type="submit" style="line-height: 48px;"
-            class="ws-mat-default-text ws-mat-accent-border-active">
-            <span class="mat-subheading-2 padding-xs" i18n>Save</span>
-          </button>
-        </div>
-      </mat-card-actions>
-    </mat-card-content>
-  </mat-card>
-</form>
+        <mat-card-actions>
+          <div class="flex flex-start margin-top-l margin-bottom-s margin-left-s">
+            <button mat-raised-button type="submit" class="ws-mat-default-text ws-mat-accent-border-active">
+              <span class="mat-subheading-2 padding-xs" i18n>Save</span>
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

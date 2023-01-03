@@ -6,9 +6,12 @@ import { FolderListTableComponent } from './components/folder-list-table/folder-
 import { AddFolderPopupComponent } from './components/add-folder-popup/add-folder-popup.component'
 import {
   MatIconModule, MatTableModule, MatFormFieldModule, MatInputModule,
-  MatTabsModule, MatCardModule, MatDialogModule, MatDatepickerModule, MatCheckboxModule,
+  MatTabsModule, MatCardModule, MatDialogModule, MatDatepickerModule, MatCheckboxModule, MatSnackBarModule,
 } from '@angular/material'
 import { MatSelectModule } from '@angular/material/select'
+import { MatListModule } from '@angular/material/list'
+
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 // import { MatListModule } from '@angular/material/list'
 
@@ -30,6 +33,7 @@ import { UserCardComponent } from './components/user-card/user-card.component'
 import { AddThumbnailComponent } from '../../thumbnail/add-thumbnail/add-thumbnail.component'
 import { ThumbnailModule } from '../../thumbnail/thumbnail.module'
 import { ImageCropModule } from '../../image-crop/image-crop.module'
+import { FilterTagsComponent } from './components/filter-tags/filter-tags.component'
 
 @NgModule({
   declarations: [
@@ -45,6 +49,7 @@ import { ImageCropModule } from '../../image-crop/image-crop.module'
     BatchListComponent,
     AddMetaDataComponent,
     UserCardComponent,
+    FilterTagsComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +62,7 @@ import { ImageCropModule } from '../../image-crop/image-crop.module'
     MatIconModule,
     MatCardModule,
     MatTabsModule,
+    MatListModule,
     BreadcrumbsOrgModule,
     CardContentModule,
     MatDialogModule,
@@ -64,6 +70,7 @@ import { ImageCropModule } from '../../image-crop/image-crop.module'
     MatDatepickerModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatSnackBarModule,
     ThumbnailModule,
     ImageCropModule
   ],

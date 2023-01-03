@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material'
 import { ActivatedRoute } from '@angular/router'
 import { AddFolderPopupComponent } from '../../../mandatory-courses/components/add-folder-popup/add-folder-popup.component'
 import { MandatoryCourseService } from '../../../mandatory-courses/services/mandatory-course.service'
+
 @Component({
   selector: 'ws-app-mandatory-courses',
   templateUrl: './mandatory-courses.component.html',
@@ -10,10 +11,12 @@ import { MandatoryCourseService } from '../../../mandatory-courses/services/mand
 })
 export class MandatoryCoursesComponent implements OnInit {
   folderList: any = []
-  constructor(private dialog: MatDialog, private activatedRoute: ActivatedRoute, private mandatoryCourseServices: MandatoryCourseService) {
-  }
+  user: any
+  constructor(private dialog: MatDialog, private activatedRoute: ActivatedRoute,
+    private mandatoryCourseServices: MandatoryCourseService) { }
 
   ngOnInit() {
+    this.user = this.mandatoryCourseServices.getUserId()
     this.mandatoryCourseServices.updatePageData(this.activatedRoute.snapshot.data.pageData.data)
     this.getFolderList()
   }
@@ -37,8 +40,9 @@ export class MandatoryCoursesComponent implements OnInit {
           mimeType: [],
           source: [],
           mediaType: [],
-          status: ['Draft'],
+          status: ['Draft', 'LIVE'],
           topics: [],
+          createdBy: this.user
         },
         query: '',
         sort_by: { lastUpdatedOn: 'desc' },

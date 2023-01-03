@@ -661,3 +661,28 @@ h3.shepherd-title {
   max-width: 500px;
   padding: 16px;
 }
+
+.competency-filter {
+
+  &.mat-form-field{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .mat-form-field-infix{
+    padding:10px;
+  }
+ .mat-form-field-wrapper{
+    width: 90% !important;
+ }
+}
+.mat-select-wrap-option{
+  .mat-option-pseudo-checkbox{
+    &.mat-pseudo-checkbox-checked {
+        background: #0074b6 !important;
+  }
+ }
+ .mat-option-text{
+      color: #333 !important;
+  }
+}

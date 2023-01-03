@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup } from '@angular/forms'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
@@ -10,6 +10,8 @@ import { environment } from '../../../../../../../../../src/environments/environ
 import { AddThumbnailComponent } from '../../../../thumbnail/add-thumbnail/add-thumbnail.component'
 // import { ThumbnailService } from '../../../../thumbnail/thumbnail.service'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
+import { flatMap, mergeMap } from 'rxjs/operators'
+import { MatSnackBar } from '@angular/material/snack-bar'
 @Component({
   selector: 'ws-app-add-meta-data',
   templateUrl: './add-meta-data.component.html',
@@ -19,26 +21,47 @@ export class AddMetaDataComponent implements OnInit {
   metaDataForm: FormGroup
   data!: any
   pageData!: any
+  folderInfo: any
+  bdtitles!: any
+
   constructor(private fb: FormBuilder, private dialog: MatDialog,
-    private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService, private route: ActivatedRoute) {
+    private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
+    private route: ActivatedRoute, private snackBar: MatSnackBar) {
     this.metaDataForm = this.fb.group({
-      name: ['', [Validators.required]],
-      purpose: ['', [Validators.required]],
-      instructions: [''],
-      appIcon: ['', [Validators.required]],
-      posterImage: ['', [Validators.required]],
-      creatorLogo: []
+      name: [''],
+      purpose: [''],
+      description: [''],
+      appIcon: [''],
+      posterImage: ['']
     })
   }
 
   ngOnInit() {
-    this.pageData = this.mandatoryCourseService.getPageData()
+    this.pageData = this.route.snapshot.data.pageData.data
+    this.mandatoryCourseService.updatePageData(this.route.snapshot.data.pageData.data)
+    this.getinitalData()
+  }
+
+  getinitalData() {
+    this.route.params.pipe(
+      flatMap(id => this.mandatoryCourseService.getEditContent(id.doId))
+    ).subscribe((res: any) => {
+      this.metaDataForm.controls.name.setValue(res.result.content.name)
+      this.metaDataForm.controls.purpose.setValue(res.result.content.purpose || '')
+      this.metaDataForm.controls.description.setValue(res.result.content.description || '')
+      this.metaDataForm.controls.appIcon.setValue(res.result.content.appIcon || '')
+      this.metaDataForm.controls.posterImage.setValue(res.result.content.posterImage || '')
+      this.data = { appURL: res.result.content.appIcon }
+      this.folderInfo = res.result.content
+      this.mandatoryCourseService.sharefolderData(this.folderInfo)
+    })
   }
 
   openDialog(type: string) {
 
     const dialogConfig = new MatDialogConfig()
     const dialogRef = this.dialog.open(AddThumbnailComponent, dialogConfig)
+
     const instance = dialogRef.componentInstance
 
     instance.isUpdate = true
@@ -86,11 +109,27 @@ export class AddMetaDataComponent implements OnInit {
 
           const requestBody = {
             name: fileName,
-            ...this.pageData
+            ...this.pageData.image
           }
-          this.mandatoryCourseService.createContent(requestBody).subscribe(res => {
-            console.log(res)
-          })
+          this.mandatoryCourseService.createContent(requestBody).pipe(
+            mergeMap(id => this.mandatoryCourseService.upload(formdata, id)))
+            .subscribe(data => {
+              this.metaDataForm.controls.appIcon.setValue(data.result.artifactUrl || '')
+              this.metaDataForm.controls.posterImage.setValue(data.result.artifactUrl || '')
+              this.data.appURL = data.result.artifactUrl
+              const req = {
+                request: {
+                  content: {
+                    artifactUrl: data.result.artifactUrl,
+                    versionKey: data.result.versionKey
+                  }
+                }
+              }
+              this.mandatoryCourseService.updateContent(req, data.result.identifier).subscribe(res => {
+                console.log(res)
+              })
+
+            })
         }
       },
     })
@@ -137,12 +176,14 @@ export class AddMetaDataComponent implements OnInit {
       const requestBody = {
         request: {
           content: {
-            ...this.metaDataForm.value
+            ...this.metaDataForm.value,
+            versionKey: this.folderInfo.versionKey
           }
         }
       }
-      this.mandatoryCourseService.updateContent(requestBody, this.route.snapshot.params.doId).subscribe(res => {
-        console.log(res)
+      this.mandatoryCourseService.updateContent(requestBody, this.route.snapshot.params.doId).subscribe(() => {
+
+        this.snackBar.open('Saved Successfully', 'Close', { verticalPosition: 'top' })
       })
     }
   }

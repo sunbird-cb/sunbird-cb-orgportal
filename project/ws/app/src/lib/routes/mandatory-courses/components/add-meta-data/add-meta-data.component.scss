@@ -1,6 +1,8 @@
 @import 'profile-form';
 
 
+.meta-data{
+
 
 .mobile-break{
     display: flex;
@@ -35,4 +37,11 @@
     border-radius: 8px;
     width: 256px;
     height: 150px;
+}
+.mat-card-actions{
+    .ws-mat-default-text{
+        line-height: 48px;
+        cursor: pointer;
+    }
+}
 }
