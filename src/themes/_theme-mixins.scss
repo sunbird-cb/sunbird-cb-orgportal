@@ -334,6 +334,18 @@
       background-color: $colorBackground;
     }
 
+    .select_box .mat-form-field-infix {
+      border:1px solid #d5d0d0;
+      padding-left:0.5rem;
+      padding-right: 0.5rem;
+      margin: 12px 0 0;
+      line-height: 1.25!important;
+      border-radius: 4px 4px;
+    }
+    .select_box .mat-form-field-underline  {
+      display: none;
+    }
+
     ws-app-footer {
       .mat-toolbar {
         background-color: $footerColor;
@@ -422,6 +434,8 @@
       //  $background: map-get($theme, background);
       //  $foreground: map-get($theme, foreground);
     }
+
+
   }
 
   @if $is-dark {
