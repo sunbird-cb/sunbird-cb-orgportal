@@ -11,6 +11,11 @@ export const environment: IEnvironment = {
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
   contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
+  cbpPortal: (window as { [key: string]: any })['env']['cbpPortal'] || '',
+  cbpContentBucket: (window as { [key: string]: any })['env']['contentBucket'] || '',
+  certImage: (window as { [key: string]: any })['env']['certImage'] || '',
+  azureHost: (window as { [key: string]: any })['azureHost'] || '',
+  azureBucket: (window as { [key: string]: any })['azureBucket'] || '',
 }
 interface IEnvironment {
   name: null | string
@@ -21,6 +26,11 @@ interface IEnvironment {
   portalRoles: string[]
   contentHost: string
   contentBucket?: string
+  cbpPortal?: string,
+  certImage?: string,
+  cbpContentBucket: string,
+  azureHost: string,
+  azureBucket: string
 }
 
 /*

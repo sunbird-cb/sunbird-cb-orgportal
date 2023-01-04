@@ -96,12 +96,12 @@ const routes: Routes = [
           pageType: 'feature',
           pageKey: 'mandatory-courses',
           pageId: 'app/mandatory-courses',
-          module: 'mandatory-courses'
+          module: 'mandatory-courses',
         },
         resolve: {
           usersList: UsersListResolve,
-          pageData: PageResolve
-        }
+          pageData: PageResolve,
+        },
       },
       {
         path: 'approvals',

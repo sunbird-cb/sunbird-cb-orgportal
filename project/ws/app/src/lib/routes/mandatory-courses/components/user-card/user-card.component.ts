@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 })
 export class UserCardComponent implements OnInit {
   @Input() user: any
-  @Output() selected = new EventEmitter();
+  @Output() selected = new EventEmitter()
   constructor() { }
 
   ngOnInit() {

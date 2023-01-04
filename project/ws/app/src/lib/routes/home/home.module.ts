@@ -84,7 +84,7 @@ import { AddFolderPopupComponent } from '../mandatory-courses/components/add-fol
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
-    MandatoryCoursesComponent
+    MandatoryCoursesComponent,
   ],
   imports: [
     CommonModule,

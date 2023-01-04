@@ -6,9 +6,11 @@ import { FolderListTableComponent } from './components/folder-list-table/folder-
 import { AddFolderPopupComponent } from './components/add-folder-popup/add-folder-popup.component'
 import {
   MatIconModule, MatTableModule, MatFormFieldModule, MatInputModule,
-  MatTabsModule, MatCardModule, MatDialogModule, MatDatepickerModule, MatCheckboxModule,
+  MatTabsModule, MatCardModule, MatDialogModule, MatDatepickerModule, MatCheckboxModule, MatSnackBarModule,
 } from '@angular/material'
 import { MatSelectModule } from '@angular/material/select'
+import { MatListModule } from '@angular/material/list'
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 // import { MatListModule } from '@angular/material/list'
 
@@ -27,6 +29,10 @@ import { AddMembersComponent } from './routes/add-members/add-members.component'
 import { BatchDetailsComponent } from './routes/batch-details/batch-details.component'
 import { AddMetaDataComponent } from './components/add-meta-data/add-meta-data.component'
 import { UserCardComponent } from './components/user-card/user-card.component'
+import { AddThumbnailComponent } from '../../thumbnail/add-thumbnail/add-thumbnail.component'
+import { ThumbnailModule } from '../../thumbnail/thumbnail.module'
+import { ImageCropModule } from '../../image-crop/image-crop.module'
+import { FilterTagsComponent } from './components/filter-tags/filter-tags.component'
 
 @NgModule({
   declarations: [
@@ -42,6 +48,7 @@ import { UserCardComponent } from './components/user-card/user-card.component'
     BatchListComponent,
     AddMetaDataComponent,
     UserCardComponent,
+    FilterTagsComponent,
   ],
   imports: [
     CommonModule,
@@ -54,6 +61,7 @@ import { UserCardComponent } from './components/user-card/user-card.component'
     MatIconModule,
     MatCardModule,
     MatTabsModule,
+    MatListModule,
     BreadcrumbsOrgModule,
     CardContentModule,
     MatDialogModule,
@@ -61,9 +69,13 @@ import { UserCardComponent } from './components/user-card/user-card.component'
     MatDatepickerModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatSnackBarModule,
+    ThumbnailModule,
+    ImageCropModule,
   ],
   entryComponents: [
     AddBatchDialougeComponent,
+    AddThumbnailComponent,
   ],
   exports: [FolderListTableComponent, AddFolderPopupComponent],
 
