@@ -138,6 +138,8 @@ export class MandatoryCourseService {
   }
 
   addBatch(req: any) {
+    req.request.createdBy = (this.configSvc.userProfile && this.configSvc.userProfile.userId) || ''
+    req.request.createdFor = [(this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) ? this.configSvc.userProfile.rootOrgId : '']
     return this.http.post<any>(`${API_END_POINTS.CREATE_BATCH}`, req)
   }
 
