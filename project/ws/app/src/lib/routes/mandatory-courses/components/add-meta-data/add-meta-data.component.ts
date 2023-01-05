@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Output, EventEmitter } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
@@ -12,6 +12,7 @@ import { AddThumbnailComponent } from '../../../../thumbnail/add-thumbnail/add-t
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 import { flatMap, mergeMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
+
 @Component({
   selector: 'ws-app-add-meta-data',
   templateUrl: './add-meta-data.component.html',
@@ -23,10 +24,10 @@ export class AddMetaDataComponent implements OnInit {
   pageData!: any
   folderInfo: any
   bdtitles!: any
-
+  @Output() sendCourseInfo = new EventEmitter()
   constructor(private fb: FormBuilder, private dialog: MatDialog,
-              private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
-              private route: ActivatedRoute, private snackBar: MatSnackBar) {
+    private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
+    private route: ActivatedRoute, private snackBar: MatSnackBar) {
     this.metaDataForm = this.fb.group({
       name: [''],
       purpose: [''],
@@ -54,6 +55,7 @@ export class AddMetaDataComponent implements OnInit {
       this.data = { appURL: res.result.content.appIcon }
       this.folderInfo = res.result.content
       this.mandatoryCourseService.sharefolderData(this.folderInfo)
+      this.sendCourseInfo.emit(this.folderInfo.children)
     })
   }
 

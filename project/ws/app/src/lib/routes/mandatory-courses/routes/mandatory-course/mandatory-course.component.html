@@ -20,7 +20,8 @@
         <!--<span class="text-span"></span> -->
       </a>
 
-      <button mat-raised-button type="submit" class="next_link text-white ws-mat-primary-background mat-button">
+      <button mat-raised-button (click)="publishFolder()"
+        class="next_link text-white ws-mat-primary-background mat-button" [disabled]="courseList.length==0">
         <span class="text-white" i18n>
           Publish and go to batch
         </span>
@@ -49,7 +50,7 @@
   </div>
 
   <ng-container *ngIf="currentFilter === 'meta-data'">
-    <ws-app-add-meta-data></ws-app-add-meta-data>
+    <ws-app-add-meta-data (sendCourseInfo)="updateCourseList($event)"></ws-app-add-meta-data>
 
   </ng-container>
   <ng-container *ngIf="currentFilter === 'course-list'">
@@ -57,9 +58,9 @@
     <!-- <ws-app-folder-list-table></ws-app-folder-list-table> -->
     <!-- <ws-widget-card-content></ws-widget-card-content> -->
 
-    <ws-app-no-data [data]="noDataConfig"></ws-app-no-data>
+    <ws-app-no-data [data]="noDataConfig" *ngIf="courseList.length==0"></ws-app-no-data>
     <div class="flex flex-1 flex-wrap">
-      <ng-container *ngFor="let c of searchResults">
+      <ng-container *ngFor="let c of courseList">
         <ws-widget-card-content *ngIf="c" [widgetData]="{
                                         content: c
                                       }"></ws-widget-card-content>

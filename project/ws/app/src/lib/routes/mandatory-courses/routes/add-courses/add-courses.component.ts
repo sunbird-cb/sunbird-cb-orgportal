@@ -37,7 +37,7 @@ export class AddCoursesComponent implements OnInit {
           source: [],
           mediaType: [],
           status: ['Live'],
-          'competencies_v3.name': [],
+          ['competencies_v3.name']: [],
           topics: [],
         },
         query: search,
@@ -88,6 +88,11 @@ export class AddCoursesComponent implements OnInit {
       }
         break
       case 'query':
+        if (!value) {
+          this.filtersList = this.filtersList.filter((val: any) => val.type !== selectedType)
+          this.getSearchedData(value)
+          return
+        }
         if (this.filtersList.length > 0) {
           this.filtersList.forEach((val: any) => {
             if (this.filtersList.map((fil: any) => fil.type).includes(selectedType)) {
@@ -99,6 +104,7 @@ export class AddCoursesComponent implements OnInit {
         } else {
           this.filtersList.push({ name: value, type: selectedType })
         }
+
         this.getSearchedData(value)
         break
       case 'selectAll': this.filtersList.length = 0
