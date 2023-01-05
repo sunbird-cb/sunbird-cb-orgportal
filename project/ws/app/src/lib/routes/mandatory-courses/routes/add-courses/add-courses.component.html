@@ -21,7 +21,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="flex-2 flex margin-right-m">
+      <div class="flex-2 flex margin-right-m search_box">
         <mat-form-field appearance="outline">
           <input matInput #search placeholder="Search Course" (keyup.enter)="onChange(search.value, 'query')">
           <mat-icon matPrefix class="color-60" (click)="onChange(search.value, 'query')">search</mat-icon>
@@ -36,9 +36,9 @@
     </div>
   </form>
   <ws-app-filter-tags [filtersList]="filtersList" (removeFilterItem)="removeFilter($event)"></ws-app-filter-tags>
-  <div class="flex flex-1 flex-wrap margin-top-l" *ngIf="searchResults">
+  <div class="flex flex-1 flex-wrap margin-top-l justify-between items-center" *ngIf="searchResults">
     <ng-container *ngFor="let c of searchResults">
-      <div class="course-card">
+      <div class="course-card margin-bottom-m">
         <mat-checkbox [checked]="c.selected" (change)="onSelectedCourse(c)"></mat-checkbox>
         <ws-widget-card-content *ngIf="c" [widgetData]="{
                                                     content: c
