@@ -23,7 +23,8 @@
       </div>
       <div class="flex-2 flex margin-right-m search_box">
         <mat-form-field appearance="outline">
-          <input matInput #search placeholder="Search Course" (keyup.enter)="onChange(search.value, 'query')">
+          <input matInput #search [(ngModel)]='searchTerm' name="search" placeholder="Search Course"
+            (keyup.enter)="onChange(search.value, 'query')">
           <mat-icon matPrefix class="color-60" (click)="onChange(search.value, 'query')">search</mat-icon>
         </mat-form-field>
 

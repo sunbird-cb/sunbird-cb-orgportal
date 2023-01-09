@@ -218,12 +218,9 @@
       padding: 0px 5px 4px;
       background: #fff;
       border-radius: 4px;
+      ::ng-deep .mat-checkbox-inner-container {
+          margin-right:0px !important;
+      }
     }
   }
-  .choice_box{
-
-  }
-}
-::ng-deep .mat-checkbox-inner-container {
-    margin-right:0px !important;
 }

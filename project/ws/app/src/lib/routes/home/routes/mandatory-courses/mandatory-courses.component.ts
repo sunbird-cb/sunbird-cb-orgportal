@@ -13,12 +13,12 @@ export class MandatoryCoursesComponent implements OnInit {
   folderList: any = []
   user: any
   constructor(private dialog: MatDialog, private activatedRoute: ActivatedRoute,
-              private mandatoryCourseServices: MandatoryCourseService) { }
+    private mandatoryCourseServices: MandatoryCourseService) { }
 
   ngOnInit() {
     this.user = this.mandatoryCourseServices.getUserId()
     this.mandatoryCourseServices.updatePageData(this.activatedRoute.snapshot.data.pageData.data)
-    this.getFolderList()
+    this.getFolderList('')
   }
 
   openCreateFolderDialog() {
@@ -30,7 +30,7 @@ export class MandatoryCoursesComponent implements OnInit {
     })
   }
 
-  getFolderList() {
+  getFolderList(search: any) {
     const queryparam = {
       request: {
         filters: {
@@ -43,7 +43,7 @@ export class MandatoryCoursesComponent implements OnInit {
           topics: [],
           createdBy: this.user,
         },
-        query: '',
+        query: search,
         sort_by: { lastUpdatedOn: 'desc' },
         fields: [],
         facets: ['primaryCategory'],

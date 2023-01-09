@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { ActivatedRoute } from '@angular/router'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 
 @Component({
@@ -14,14 +13,13 @@ export class AddBatchDialougeComponent implements OnInit {
   addBatchForm: FormGroup
 
   constructor(public dialogRef: MatDialogRef<AddBatchDialougeComponent>, private fb: FormBuilder,
-    private mandatoryService: MandatoryCourseService, private route: ActivatedRoute, @Inject(MAT_DIALOG_DATA) public data: { doId: string }) {
+    private mandatoryService: MandatoryCourseService, @Inject(MAT_DIALOG_DATA) public data: { doId: string }) {
 
     this.addBatchForm = this.fb.group({
       batchTitle: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
     })
-
   }
 
   ngOnInit() {
@@ -44,7 +42,7 @@ export class AddBatchDialougeComponent implements OnInit {
           enrollmentType: 'invite-only',
           startDate: this.addBatchForm.value.startDate.toISOString().slice(0, 10),
           endDate: this.addBatchForm.value.endDate.toISOString().slice(0, 10),
-          enrollmentEndDate: this.addBatchForm.value.startDate.toISOString().slice(0, 10)
+          enrollmentEndDate: this.addBatchForm.value.endDate.toISOString().slice(0, 10)
         }
       }
       this.mandatoryService.addBatch(requestParams).subscribe((data: any) => {

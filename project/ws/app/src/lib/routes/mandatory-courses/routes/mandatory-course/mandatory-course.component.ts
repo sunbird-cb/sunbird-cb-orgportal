@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { NsMandatoryCourse } from '../../models/mandatory-course.model'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/add-batch-dialouge.component'
@@ -22,6 +22,7 @@ export class MandatoryCourseComponent implements OnInit {
   content: NsContent.IContent | null = null
   bdtitles: any
   currentBread: any
+  folderInfo: any
   courseList: any = []
   noDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
     image: 'assets/images/banners/no_data.svg',
@@ -43,7 +44,9 @@ export class MandatoryCourseComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private mandatoryCourseService: MandatoryCourseService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
 
   }
@@ -53,14 +56,17 @@ export class MandatoryCourseComponent implements OnInit {
       this.currentCourseId = params['doId']
       this.noDataConfig.btnLink = `/app/mandatory-courses/${this.currentCourseId}/choose-courses`
     })
-    // this.getSearchedData()
-    this.updateBreadcrumb()
-
+    this.getFolderInfo()
+  }
+  getFolderInfo() {
+    this.mandatoryCourseService.getEditContent(this.route.snapshot.params.doId).subscribe(res => {
+      this.folderInfo = res
+      this.mandatoryCourseService.sharefolderData(this.folderInfo)
+      this.updateBreadcrumb(this.folderInfo.result.content)
+      this.courseList = this.folderInfo.result.content.children
+    })
   }
 
-  updateCourseList(event: any) {
-    this.courseList = event
-  }
 
   filter(data: any) {
     if (data === 'course-list') {
@@ -88,13 +94,15 @@ export class MandatoryCourseComponent implements OnInit {
     })
   }
 
+  editCourseList() {
+    console.log(this.folderInfo)
+    this.router.navigate([`/app/mandatory-courses/${this.route.snapshot.params.doId}/choose-courses`])
+  }
 
 
-  updateBreadcrumb() {
-    this.mandatoryCourseService.getfolderData().subscribe(data => {
-      this.bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]
-      this.bdtitles.push({ title: data.name, url: `/app/mandatory-courses/${data.identifier}` })
-    })
+  updateBreadcrumb(data: any) {
+    this.bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]
+    this.bdtitles.push({ title: data.name, url: `/app/mandatory-courses/${data.identifier}` })
   }
 
 }

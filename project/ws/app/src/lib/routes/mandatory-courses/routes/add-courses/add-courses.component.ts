@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
-
+import * as _ from 'lodash'
 @Component({
   selector: 'ws-app-add-courses',
   templateUrl: './add-courses.component.html',
@@ -13,9 +13,12 @@ export class AddCoursesComponent implements OnInit {
   searchResults: any = []
   selectedCourses: any = []
   selectAll = false
-  competeniesList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato']
+  competeniesList: string[] = ['Service oriented', 'Vigilance', 'History & Archaeology', 'Recruitment/Placement', 'Budget preparation for Ministry/ Department', 'Scenario Planning and Analysis']
   selectedCompetency = []
   filtersList: any = []
+  searchTerm: any
+  previousCourses: any
+
   constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -25,6 +28,7 @@ export class AddCoursesComponent implements OnInit {
     this.mandatoryCourseSvc.getCompetencies().subscribe((res: any) => {
       this.competeniesList = res.responseData
     })
+    this.previousCourses = this.mandatoryCourseSvc.getFolderInfo().children.map((course: any) => course.identifier)
   }
 
   getSearchedData(search: string) {
@@ -47,13 +51,13 @@ export class AddCoursesComponent implements OnInit {
         limit: 100,
         offset: 0,
         fuzzy: true,
-      },
+      }
     }
 
     this.mandatoryCourseSvc.fetchSearchData(queryparam).subscribe((response: any) => {
       this.searchResults = response.result.content
       this.searchResults = this.searchResults.map((course: any) => {
-        course.selected = false
+        course.selected = this.previousCourses.includes(course.identifier) ? true : false
         return course
       })
     })
@@ -72,6 +76,12 @@ export class AddCoursesComponent implements OnInit {
   }
 
   removeFilter(item: any) {
+    switch (item.type) {
+      case 'query': this.searchTerm = ''
+        this.getSearchedData('')
+        break
+      default: break
+    }
     this.filtersList = this.filtersList.filter((list: any) => list.name !== item.name)
     this.selectedCompetency = this.selectedCompetency.filter((fil: any) => fil !== item.name)
   }
@@ -113,16 +123,18 @@ export class AddCoursesComponent implements OnInit {
   }
 
   updateBreadcrumb() {
-    // console.log(this.route.snapshot.params.doId)
+    const data = this.mandatoryCourseSvc.getFolderInfo()
     this.bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]
-    this.mandatoryCourseSvc.getEditContent(this.route.snapshot.params.doId).subscribe((data: any) => {
-      this.bdtitles.push({ title: data.result.content.name, url: `/app/mandatory-courses/${data.result.content.identifier}` })
-      this.bdtitles.push({ title: this.route.snapshot.data.label, url: 'none' })
-    })
+    this.bdtitles.push({ title: data.name, url: `/app/mandatory-courses/${data.identifier}` })
+    this.bdtitles.push({ title: this.route.snapshot.data.label, url: 'none' })
   }
 
   saveSelectedCourses() {
     this.selectedCourses = this.searchResults.filter((course: any) => course.selected).map((course: any) => course.identifier)
+    if (!this.selectedCourses.length) {
+      this.snackBar.open('Please select course', 'Close', { verticalPosition: 'bottom' })
+      return
+    }
     const requestParams = {
       request: {
         data: {
@@ -147,4 +159,6 @@ export class AddCoursesComponent implements OnInit {
       this.snackBar.open('Saved Successfully', 'Close', { verticalPosition: 'top' })
     })
   }
+
+
 }

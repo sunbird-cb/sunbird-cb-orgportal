@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
@@ -10,7 +10,7 @@ import { environment } from '../../../../../../../../../src/environments/environ
 import { AddThumbnailComponent } from '../../../../thumbnail/add-thumbnail/add-thumbnail.component'
 // import { ThumbnailService } from '../../../../thumbnail/thumbnail.service'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
-import { flatMap, mergeMap } from 'rxjs/operators'
+import { mergeMap } from 'rxjs/operators'
 import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
@@ -22,9 +22,10 @@ export class AddMetaDataComponent implements OnInit {
   metaDataForm: FormGroup
   data!: any
   pageData!: any
-  folderInfo: any
+  // folderInfo: any
   bdtitles!: any
   @Output() sendCourseInfo = new EventEmitter()
+  @Input() folderInfo: any
   constructor(private fb: FormBuilder, private dialog: MatDialog,
     private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
     private route: ActivatedRoute, private snackBar: MatSnackBar) {
@@ -37,26 +38,26 @@ export class AddMetaDataComponent implements OnInit {
     })
   }
 
+  ngOnChanges() {
+    this.getinitalData(this.folderInfo)
+  }
+
   ngOnInit() {
     this.pageData = this.route.snapshot.data.pageData.data
     this.mandatoryCourseService.updatePageData(this.route.snapshot.data.pageData.data)
-    this.getinitalData()
+    this.getinitalData(this.folderInfo)
   }
 
-  getinitalData() {
-    this.route.params.pipe(
-      flatMap(id => this.mandatoryCourseService.getEditContent(id.doId))
-    ).subscribe((res: any) => {
-      this.metaDataForm.controls.name.setValue(res.result.content.name)
-      this.metaDataForm.controls.purpose.setValue(res.result.content.purpose || '')
-      this.metaDataForm.controls.description.setValue(res.result.content.description || '')
-      this.metaDataForm.controls.appIcon.setValue(res.result.content.appIcon || '')
-      this.metaDataForm.controls.posterImage.setValue(res.result.content.posterImage || '')
-      this.data = { appURL: res.result.content.appIcon }
-      this.folderInfo = res.result.content
-      this.mandatoryCourseService.sharefolderData(this.folderInfo)
-      this.sendCourseInfo.emit(this.folderInfo.children)
-    })
+  getinitalData(res: any) {
+    this.metaDataForm.controls.name.setValue(res.result.content.name)
+    this.metaDataForm.controls.purpose.setValue(res.result.content.purpose || '')
+    this.metaDataForm.controls.description.setValue(res.result.content.description || '')
+    this.metaDataForm.controls.appIcon.setValue(res.result.content.appIcon || '')
+    this.metaDataForm.controls.posterImage.setValue(res.result.content.posterImage || '')
+    this.data = { appURL: res.result.content.appIcon }
+    // this.folderInfo = res.result.content
+    // this.mandatoryCourseService.sharefolderData(this.folderInfo)
+    // this.sendCourseInfo.emit(this.folderInfo.children)
   }
 
   openDialog(type: string) {
@@ -185,7 +186,7 @@ export class AddMetaDataComponent implements OnInit {
         request: {
           content: {
             ...this.metaDataForm.value,
-            versionKey: this.folderInfo.versionKey,
+            versionKey: this.folderInfo.result.content.versionKey,
           },
         },
       }

@@ -8,7 +8,7 @@ import _ from 'lodash'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 const PROTECTED_SLAG_V8 = '/apis/proxies/v8'
 const API_END_POINTS = {
-  SEARCH_V6: `/apis/proxies/v8/sunbirdigot/read`,
+  SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
   CREATE_CONTENT: `${PROTECTED_SLAG_V8}/action/content/v3/create`,
   UPDATE_CONTENT: `${PROTECTED_SLAG_V8}/action/content/v3/update`,
   EDIT_HIERARCHY: `${PROTECTED_SLAG_V8}/action/content/v3/hierarchy`,
@@ -30,7 +30,6 @@ export class MandatoryCourseService {
   private pageData: any
   private folderSubject = new Subject<any>();
   private breadCrumbList = BREAD_CRUMB_LIST;
-  private folderinfo: any
   constructor(
     private http: HttpClient,
     private configSvc: ConfigurationsService
@@ -156,14 +155,15 @@ export class MandatoryCourseService {
     return this.http.get(`${API_END_POINTS.COMPETENCY}`)
   }
   sharefolderData(data: any) {
-    this.folderinfo = data
+    localStorage.setItem('collectionInfo', JSON.stringify(data.result.content))
     this.folderSubject.next(data)
   }
   getfolderData() {
     return this.folderSubject.asObservable()
   }
   getFolderInfo() {
-    return this.folderinfo
+    let collectionInfo = localStorage.getItem('collectionInfo') || ''
+    return JSON.parse(collectionInfo)
   }
   updateBreadcrumbList(link: any) {
     const list = this.breadCrumbList.map((bd: any) => bd.title)

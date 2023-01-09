@@ -18,10 +18,17 @@ export class FolderListTableComponent implements OnInit {
   @Input() folderListData: any
   constructor() { }
 
-  ngOnInit() {
+  ngOnChanges() {
+    this.updateDataSourse()
+  }
+
+  ngOnInit() { }
+
+  updateDataSourse() {
     this.dataSource = this.folderListData.map((folderList: any) => {
-      folderList.courseCount = 0
-      folderList.batchCount = 0
+      folderList.courseCount = folderList.hasOwnProperty('childNodes') ?
+        folderList.childNodes.length < 10 ? `0${folderList.childNodes.length}` : folderList.childNodes.length : '00'
+      folderList.batchCount = '00'
       return folderList
     })
   }

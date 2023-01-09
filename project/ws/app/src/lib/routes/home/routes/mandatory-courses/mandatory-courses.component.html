@@ -6,8 +6,9 @@
       <div class="flex-3">
         <div class="search">
           <div class="rsearch">
-            <mat-icon class="color-60 search-icon">search</mat-icon>
-            <input class="sinput color-60" type="Standard" label="" placeholder="Search by folder name">
+            <mat-icon class="color-60 search-icon" (click)=getFolderList(search.value)>search</mat-icon>
+            <input class="sinput color-60" type="Standard" #search (keyup.enter)=getFolderList(search.value) label=""
+              placeholder="Search by folder name">
           </div>
         </div>
       </div>
