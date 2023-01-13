@@ -50,6 +50,7 @@ const endpoint = {
 })
 export class InitService {
   private baseUrl = this.configSvc.baseUrl
+  private userDetails = {}
   constructor(
     private logger: LoggerService,
     private configSvc: ConfigurationsService,
@@ -325,8 +326,10 @@ export class InitService {
             // console.log('outside is institute ---- NOT calling org profile')
             this.configSvc.unMappedUser.orgProfile = null
           }
-          this.widgetResolverService.userProfile = this.configSvc.userProfile
-          this.widgetResolverService.rootOrg = completeProdata.rootOrg
+          this.userDetails = {
+            userProfile: this.configSvc.userProfile,
+            rootOrg: completeProdata.rootOrg,
+          }
         } else {
           this.authSvc.force_logout()
         }
@@ -555,5 +558,8 @@ export class InitService {
       }
     })
     return returnValue
+  }
+  getUserDetails() {
+    return this.userDetails
   }
 }

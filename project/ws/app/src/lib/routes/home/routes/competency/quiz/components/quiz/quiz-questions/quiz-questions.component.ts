@@ -7,7 +7,6 @@ import { OnInit, OnDestroy, Component } from '@angular/core'
 })
 export class QuizQusetionsComponent implements OnInit, OnDestroy {
 
-
   constructor(
   ) { }
 

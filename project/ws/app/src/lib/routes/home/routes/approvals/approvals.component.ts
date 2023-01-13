@@ -35,6 +35,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     sortColumn: 'fullname',
     sortState: 'asc',
     needUserMenus: false,
+    actionColumnName: '',
   }
   configSvc: any
 

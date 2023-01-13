@@ -43,6 +43,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       sortColumn: 'fullName',
       sortState: 'asc',
       needUserMenus: false,
+      actionColumnName: '',
     }
     this.usersData = _.get(this.route, 'snapshot.data.usersList.data') || {}
     this.getMyDepartment()

@@ -100,7 +100,7 @@ import { UsersModule } from '../users/users.module'
     AuthAssessmentBasicInfoComponent,
     AuthAssessmentAddQuestionFormMetaComponent,
     AuthAssessmentAddQuestionComponent,
-    NotificationComponent
+    NotificationComponent,
   ],
   imports: [
     CommonModule,
@@ -152,7 +152,8 @@ import { UsersModule } from '../users/users.module'
     MatTableModule,
     MatTooltipModule,
     MatSortModule,
-    QuizModule
+    QuizModule,
+    UsersModule,
   ],
   exports: [
     NotificationComponent,
@@ -163,7 +164,7 @@ import { UsersModule } from '../users/users.module'
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
-    NotificationComponent
+    NotificationComponent,
   ],
   providers: [
     // CKEditorService,

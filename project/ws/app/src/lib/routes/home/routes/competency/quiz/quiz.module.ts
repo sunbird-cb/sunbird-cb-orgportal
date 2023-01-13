@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { QuizRoutingModule } from './quiz-routing.module'
 import { QuizStoreService } from './services/store.service'
-// import { OpenPlainCkEditorComponent } from './shared/components/open-plain-ck-editor/open-plain-ck-editor.component'
+import { OpenPlainCkEditorComponent } from './shared/components/open-plain-ck-editor/open-plain-ck-editor.component'
 import { QuizQusetionsComponent } from './components/quiz/quiz-questions/quiz-questions.component'
 import { StarRatingQuestionComponent } from './components/star-rating-question/star-rating-question.component'
 import { TextareaQuestionComponent } from './components/textarea-question/textarea-question.component'
@@ -20,8 +20,9 @@ import {
   MatTabsModule, MatButtonModule, MatButtonToggleModule, MatCardModule, MatMenuModule, MatCheckboxModule,
   MatSidenavModule, MatAutocompleteModule, MatDialogModule, MatTooltipModule, MatExpansionModule, MatListModule,
   MatSnackBarModule, MatSelectModule, MatChipsModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule,
-  MatSlideToggleModule, MatTreeModule, MatRadioModule, MatProgressBarModule
+  MatSlideToggleModule, MatTreeModule, MatRadioModule, MatProgressBarModule,
 } from '@angular/material'
+import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component'
 
 @NgModule({
   declarations: [
@@ -32,11 +33,11 @@ import {
     MultipleChoiceQuestionComponent,
     FillUpsEditorComponent,
     // QuestionEditorSidenavComponent,
-    // OpenPlainCkEditorComponent,
+    OpenPlainCkEditorComponent,
     RomanConvertPipe,
     StarRatingQuestionComponent,
     TextareaQuestionComponent,
-
+    ConfirmDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -76,7 +77,7 @@ import {
     QuizRoutingModule,
   ],
   providers: [QuizStoreService],
-  // entryComponents: [OpenPlainCkEditorComponent],
+  entryComponents: [ConfirmDialogComponent],
   exports: [
     QuizComponent,
     QuizQusetionsComponent,

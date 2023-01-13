@@ -19,7 +19,7 @@ import { NotificationService } from '../../../../../../../notification-v2/servic
 })
 export class DeleteDialogComponent implements OnInit {
   API_ENDPOINT = {
-    deleteApi: 'apis/proxies/v8/v1/content/retire'
+    deleteApi: 'apis/proxies/v8/v1/content/retire',
   }
   commentsForm!: FormGroup
   contentMeta!: ISearchContent

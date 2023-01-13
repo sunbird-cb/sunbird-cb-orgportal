@@ -13,7 +13,7 @@ const API_END_POINTS = {
   DELETE_CONTENT: `${PROXIES_SLAG_V8}/v1/content/retire`,
   UPDATE_ASSESSMENT_HIERARCHY: `${PROXIES_SLAG_V8}${QUESTION_V1}hierarchy/update`,
   GET_ASSESSMENT_HIERARCHY: `${PROXIES_SLAG_V8}${QUESTION_V1}hierarchy/`,
-  GET_QUESTION_DETAILS: `${PROXIES_SLAG_V8}cbp/question/list`
+  GET_QUESTION_DETAILS: `${PROXIES_SLAG_V8}cbp/question/list`,
 }
 
 @Injectable()
@@ -21,7 +21,8 @@ export class CompetencyService {
 
   assessmentOriginalContent: { [key: string]: any } = {}
   assessmentHierarchyTree: any = {}
-  parentContent: string = ''
+  assessmentQuestions: any = {}
+  parentContent = ''
 
   constructor(
     private http: HttpClient,
@@ -125,6 +126,19 @@ export class CompetencyService {
 
   deleteContent(tempOptions: any) {
     return this.http.delete<any>(`${API_END_POINTS.DELETE_CONTENT}`, tempOptions)
+  }
+
+  getAssessmentQuestions(id: string) {
+    const returningData = this.assessmentQuestions[id]
+    return returningData
+  }
+
+  setAssessmentQuestions(item: any, identifier: string) {
+    this.assessmentQuestions[identifier] = {
+      questionText: item.question,
+      questionType: item.type,
+      answerOptions: item.answerOptions,
+    }
   }
 
 }

@@ -80,7 +80,7 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
   }
 
   async assignData() {
-    // this.assessmentData = this.contentService.getAssessmentOriginalMeta(this.sectionData)
+    this.assessmentData = this.competencyAssessmentSrv.getAssessmentOriginalMeta(this.sectionData)
     if (this.assessmentData) {
       this.questionContentForm.setValue({
         name: this.assessmentData.name,
@@ -128,7 +128,7 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
         request: {
           data: {
             nodesModified: nodesModify,
-            hierarchy: {},
+            hierarchy: this.competencyAssessmentSrv.getAssessmentTreeHierarchy(this.selectedData.identifier),
           },
         },
       }
@@ -161,11 +161,10 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
       request: {
         data: {
           nodesModified: nodesModify,
-          hierarchy: {},
+          hierarchy: this.competencyAssessmentSrv.getAssessmentTreeHierarchy(this.selectedData.identifier, this.sectionData),
         },
       },
     }
-    debugger
     this.triggerSave(requestPayload, true)
   }
 
@@ -264,7 +263,7 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
 
   selectedQuestionType(item: any) {
     this.questionType = item.value
-    // this.quizStoreSvc.addQuestion(this.questionType)
+    this.quizStoreSvc.addQuestion(this.questionType)
   }
 
   addQuestionList() {
@@ -311,9 +310,9 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
     this.questionType = ''
     this.questionText = ''
     this.fitbCount = 0
-    // this.quizStoreSvc.collectiveQuiz[this.selectedQuestionNode] = []
-    // this.quizStoreSvc.currentId = this.selectedQuestionNode
-    // this.quizStoreSvc.changeQuiz(0)
+    this.quizStoreSvc.collectiveQuiz[this.selectedQuestionNode] = []
+    this.quizStoreSvc.currentId = this.selectedQuestionNode
+    this.quizStoreSvc.changeQuiz(0)
     if (this.contentData && this.contentData.childNodes && this.contentData.childNodes.includes(item.value)) {
       const requestPayload = {
         request: {
@@ -325,7 +324,8 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
         },
       }
       this.loaderService.changeLoad.next(true)
-      const getQuestionDataRes: any = await this.competencyAssessmentSrv.getQuestionDetailsApi(requestPayload).toPromise().catch(_error => { })
+      const getQuestionDataRes: any =
+        await this.competencyAssessmentSrv.getQuestionDetailsApi(requestPayload).toPromise().catch(_error => { })
       if (getQuestionDataRes && getQuestionDataRes.params && getQuestionDataRes.params.status === 'successful') {
         this.loaderService.changeLoad.next(false)
         const questionData = getQuestionDataRes.result.questions
@@ -367,7 +367,14 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
       })
     }
     configQuestion.options = questionOptions
+    this.answerOptions = questionOptions
     this.quizStoreSvc.collectiveQuiz[this.selectedQuestionNode].push(configQuestion)
+    const questionStore = {
+      question: this.questionText,
+      type: this.questionType,
+      answerOptions: this.answerOptions,
+    }
+    this.competencyAssessmentSrv.setAssessmentQuestions(questionStore, this.selectedQuestionNode)
   }
 
   saveQuestion() {
@@ -384,6 +391,11 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
       if (flag) {
         return
       }
+    }
+    if (this.checkIfQuestionUpdate()) {
+      this.loaderService.changeLoad.next(false)
+      this.showTosterMessage('upToDate')
+      return
     }
     if (this.questionText && this.questionType && this.answerOptions.length > 0) {
       if (this.questionType === 'mcq-sca' && this.answerOptions.length > 0) {
@@ -413,6 +425,11 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
         }
         this.saveMcq()
       } else if (this.questionType === 'fitb' && this.answerOptions.length > 0) {
+        if (this.fitbCount < this.answerOptions.length) {
+          this.loaderService.changeLoad.next(false)
+          this.showTosterMessage('missingBlank')
+          return
+        }
         if (this.fitbCount !== this.answerOptions.length) {
           this.loaderService.changeLoad.next(false)
           this.showTosterMessage('missingAnswer')
@@ -439,7 +456,7 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
   }
 
   async saveMcq() {
-    const requestPayload = this.getRequestPayload()
+    const requestPayload = await this.getRequestPayload()
     const dataSaved = await this.triggerSave(requestPayload, false, true)
     if (dataSaved) {
       this.assignData()
@@ -462,7 +479,7 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
     }
   }
 
-  getRequestPayload() {
+  async getRequestPayload() {
     const optionsValue: { answer: boolean; value: { body: any; value: number } }[] = []
     const choicesValue: { value: { body: any; value: number } }[] = []
     let answerIndex = ''
@@ -490,7 +507,7 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
     })
     const nodesModify: any = {}
     let editiedMeta = <any>{}
-    let questionConfig: any = this.competencyAssessmentSrv.getAssessmentConfig()
+    let questionConfig: any = await this.competencyAssessmentSrv.getAssessmentConfig().toPromise().catch(_error => { })
     if (questionConfig) {
       questionConfig = questionConfig.questionsConfig
       editiedMeta = {
@@ -529,7 +546,6 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
         },
       },
     }
-
     return requestPayload
   }
 
@@ -630,13 +646,15 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
         request: {
           data: {
             nodesModified: nodesModify,
-            hierarchy: {},
+            hierarchy: this.competencyAssessmentSrv.getAssessmentTreeHierarchy(this.selectedData.identifier),
           },
         },
       }
-      const updateResData: any = await this.competencyAssessmentSrv.updateAssessmentHierarchy(requestPayload).toPromise().catch(_error => { })
+      const updateResData: any =
+        await this.competencyAssessmentSrv.updateAssessmentHierarchy(requestPayload).toPromise().catch(_error => { })
       if (updateResData && updateResData.params && updateResData.params.status === 'successful') {
-        const readContentRes = await this.competencyAssessmentSrv.readAssessmentQuestionSet(this.contentData.identifier).toPromise().catch(_error => { })
+        const readContentRes =
+          await this.competencyAssessmentSrv.readAssessmentQuestionSet(this.contentData.identifier).toPromise().catch(_error => { })
         if (readContentRes && readContentRes.params && readContentRes.params.status.toLowerCase() === 'successful') {
           this.competencyAssessmentSrv.setAssessmentOriginalMetaHierarchy(readContentRes.result.questionset)
         }
@@ -647,6 +665,23 @@ export class AuthAssessmentAddQuestionFormMetaComponent implements OnChanges {
         this.showTosterMessage('fail')
       }
     }
+  }
+
+  checkIfQuestionUpdate() {
+    let flag = false
+    const questionDetails = this.competencyAssessmentSrv.getAssessmentQuestions(this.selectedQuestionNode)
+    if (questionDetails && this.questionText && (this.questionText === questionDetails.questionText)) {
+      if (this.answerOptions && this.answerOptions.length > 0) {
+        this.answerOptions.forEach((element: any, index: any) => {
+          if (element.isCorrect === questionDetails.answerOptions[index].isCorrect) {
+            if (element.text === questionDetails.answerOptions[index].text) {
+              flag = true
+            }
+          }
+        })
+      }
+    }
+    return flag
   }
 
 }

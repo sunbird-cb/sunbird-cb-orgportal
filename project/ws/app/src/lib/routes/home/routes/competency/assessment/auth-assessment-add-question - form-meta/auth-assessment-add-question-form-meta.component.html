@@ -111,8 +111,8 @@
       </mat-list>
     </div>
 
-    <div class="flex flex-col point_detail_box margin-left-xs" [ngClass]="{'disable': !isEditEnabled}">
-      <!--  *ngIf="selectedQuestionNode" -->
+    <div class="flex flex-col point_detail_box margin-left-xs" [ngClass]="{'disable': !isEditEnabled}"
+      *ngIf="selectedQuestionNode">
       <div class="flex flex-1 flex-row">
         <div class="select_box">
           <mat-form-field appearance="outline">

@@ -91,6 +91,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
       sortColumn: 'workorders',
       sortState: 'asc',
       needUserMenus: true,
+      actionColumnName: ''
     }
     this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     const paramsMap = this.activeRoute.snapshot.params.tab

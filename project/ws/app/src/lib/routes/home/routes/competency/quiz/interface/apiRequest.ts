@@ -1,11 +1,10 @@
-import {
-  CONTENT_BASE_STATIC,
-  CONTENT_BASE_STREAM,
-  CONTENT_BASE_WEBHOST,
-  CONTENT_BASE_WEBHOST_ASSETS,
-} from '../constants/apiEndpoints'
+
 import { NSContent } from './content'
 
+export const CONTENT_BASE_STATIC = '/artifacts'
+export const CONTENT_BASE_STREAM = '/assets'
+export const CONTENT_BASE_WEBHOST = '/web-hosted'
+export const CONTENT_BASE_WEBHOST_ASSETS = '/web-hosted/assets'
 export namespace NSApiRequest {
   export interface ICreateMetaRequestGeneral {
     name: string

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ConfigurationsService, ValueService, WidgetContentService } from '@sunbird-cb/utils'
-import { v4 as uuidv4 } from 'uuid'
+// import { v4 as uuidv4 } from 'uuid'
 /* tslint:disable */
 import _ from 'lodash'
 import { map } from 'rxjs/operators'
@@ -72,8 +72,9 @@ export class CompetencyManageAssessmentComponent implements OnInit, OnDestroy {
         this.showBasicInfo = 'basicInfoDiv'
         break
       case 'editAssessment':
-        this.selectedNodeIdentifier = 'do_1136329571243704321241'
-        const getAssessmentDataRes = await this.competencyAssessmentSrv.readAssessmentQuestionSet(this.selectedNodeIdentifier).toPromise().catch(_error => { })
+        this.selectedNodeIdentifier = 'do_1136575881385000961148'
+        const getAssessmentDataRes =
+          await this.competencyAssessmentSrv.readAssessmentQuestionSet(this.selectedNodeIdentifier).toPromise().catch(_error => { })
         if (getAssessmentDataRes && getAssessmentDataRes.params && getAssessmentDataRes.params.status.toLowerCase() === 'successful') {
           this.competencyAssessmentSrv.setAssessmentOriginalMetaHierarchy(getAssessmentDataRes.result.questionset)
           this.competencyAssessmentSrv.parentContent = getAssessmentDataRes.result.questionset.identifier

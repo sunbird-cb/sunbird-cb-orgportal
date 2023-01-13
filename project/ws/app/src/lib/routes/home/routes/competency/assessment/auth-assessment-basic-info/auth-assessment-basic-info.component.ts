@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material'
-import { WidgetResolverService } from '@sunbird-cb/resolver'
+import { InitService } from '../../../../../../../../../../../src/app/services/init.service'
 import { LoaderService } from '../../../../../../../../../../../src/app/services/loader.service'
 import { environment } from '../../../../../../../../../../../src/environments/environment'
 import { NotificationComponent } from '../../../../components/notification/notification.component'
@@ -46,17 +46,19 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
   metaData!: any
   isEditEnabled = false
   assessmentConfig!: any
+  userDetails!: any
 
   constructor(
     private formBuilder: FormBuilder,
     private loaderService: LoaderService,
     private snackBar: MatSnackBar,
-    private widgetResolverService: WidgetResolverService,
-    private competencyAssessmentSrv: CompetencyService
+    private competencyAssessmentSrv: CompetencyService,
+    private initService: InitService,
   ) { }
 
   ngOnChanges() {
     this.isEditEnabled = true
+    this.userDetails = this.initService.getUserDetails()
     this.createForm()
     if (this.selectedData && this.selectedData.identifier) {
       this.metaData = this.competencyAssessmentSrv.getAssessmentOriginalMeta(this.selectedData.identifier)
@@ -112,7 +114,7 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
     if (getAssessmentDataRes && getAssessmentDataRes.params && getAssessmentDataRes.params.status.toLowerCase() === 'successful') {
       this.competencyAssessmentSrv.setAssessmentOriginalMetaHierarchy(getAssessmentDataRes.result.questionset)
       this.competencyAssessmentSrv.parentContent = getAssessmentDataRes.result.questionset.identifier
-      this.assessmentData.emit({ identifier: identifier })
+      this.assessmentData.emit({ identifier })
     }
   }
 
@@ -126,8 +128,8 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
       request: {
         questionset: {
           code: randomNumber,
-          createdBy: (this.widgetResolverService.userProfile) ? this.widgetResolverService.userProfile.userId : '',
-          createdFor: [(this.widgetResolverService.rootOrg) ? this.widgetResolverService.rootOrg.rootOrgId : ''],
+          createdBy: (this.userDetails.userProfile) ? this.userDetails.userProfile.userId : '',
+          createdFor: [(this.userDetails.rootOrg) ? this.userDetails.rootOrg.rootOrgId : ''],
           scoreCutoffType: (item.scoreCutoffType) ? item.scoreCutoffType : '',
           description: item.description,
           framework: environment.framework,
@@ -200,7 +202,8 @@ export class AuthAssessmentBasicInfoComponent implements OnChanges {
           },
         },
       }
-      const updateResData: any = await this.competencyAssessmentSrv.updateAssessmentHierarchy(requestPayload).toPromise().catch(_error => { })
+      const updateResData: any =
+        await this.competencyAssessmentSrv.updateAssessmentHierarchy(requestPayload).toPromise().catch(_error => { })
       if (updateResData && updateResData.params && updateResData.params.status === 'successful') {
         this.getAssessmentData(this.selectedData.identifier)
         this.loaderService.changeLoad.next(false)

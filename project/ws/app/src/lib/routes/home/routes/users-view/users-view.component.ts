@@ -57,6 +57,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     sortColumn: 'fullName',
     sortState: 'asc',
     needUserMenus: true,
+    actionColumnName: '',
   }
   constructor(
     public dialog: MatDialog,
