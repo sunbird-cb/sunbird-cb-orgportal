@@ -33,6 +33,7 @@ import { AddThumbnailComponent } from '../../thumbnail/add-thumbnail/add-thumbna
 import { ThumbnailModule } from '../../thumbnail/thumbnail.module'
 import { ImageCropModule } from '../../image-crop/image-crop.module'
 import { FilterTagsComponent } from './components/filter-tags/filter-tags.component'
+import { StatusWidgetComponent } from './components/status-widget/status-widget.component'
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { FilterTagsComponent } from './components/filter-tags/filter-tags.compon
     AddMetaDataComponent,
     UserCardComponent,
     FilterTagsComponent,
+    StatusWidgetComponent,
   ],
   imports: [
     CommonModule,

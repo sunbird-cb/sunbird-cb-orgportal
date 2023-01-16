@@ -84,15 +84,17 @@
     </ng-container>
 
     <ng-container *ngIf="currentFilter === 'batch-list'">
-
-
-      <ws-app-no-data [data]="noBatchDataConfig" (buttonClicked)="openCreateBatchDialog()"></ws-app-no-data>
-      <!--<ws-app-batch-list></ws-app-batch-list> -->
-      <!-- <ws-app-batch-details></ws-app-batch-details> -->
-      <ws-app-batch-list></ws-app-batch-list>
-
-
-
+      <ws-app-no-data [data]="noBatchDataConfig" (buttonClicked)="openCreateBatchDialog()" *ngIf="batches.length==0">
+      </ws-app-no-data>
+      <div class="flex create-batch" *ngIf="batches.length>1">
+        <button mat-raised-button (click)="openCreateBatchDialog()"
+          class="next_link text-white ws-mat-primary-background mat-button" [disabled]="courseList.length==0">
+          <span class="text-white" i18n>
+            Create Batch
+          </span>
+        </button>
+      </div>
+      <ws-app-batch-list *ngIf="batches.length>1" [batches]="batches"></ws-app-batch-list>
     </ng-container>
 
 

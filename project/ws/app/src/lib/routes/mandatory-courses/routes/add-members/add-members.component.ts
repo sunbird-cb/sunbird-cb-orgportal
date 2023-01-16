@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
@@ -17,6 +17,19 @@ export class AddMembersComponent implements OnInit {
   isSelectedMember: boolean = false
   selectedId: BigInteger | undefined
   selectedUser: any[] = []
+  folderInfo: any
+  selectedCompetency: any = []
+  query = ''
+  @Input() hideBreadScrum: boolean = false
+  @Input() batchMemberList: any = []
+  @Output() updateBatchList = new EventEmitter()
+  filterConfig = {
+    filterUsage: 'members',
+    noOfSelectionText: "designation selected",
+    filterListText: 'Search Designation',
+    selectPlaceHolder: "Choose Designation",
+    inputPlaceHolder: "Search by name"
+  }
   bdtitles = [
     { title: 'Folders', url: '/app/home/mandatory-courses' },
     { title: 'Folder name', url: '/app/mandatory-courses/132' },
@@ -25,16 +38,31 @@ export class AddMembersComponent implements OnInit {
   ]
   constructor(
     private configSvc: ConfigurationsService,
-    private activeRoute: ActivatedRoute,
+    private route: ActivatedRoute,
     private mandatoryCourseSvc: MandatoryCourseService,
   ) { }
 
   ngOnInit() {
     if (this.configSvc.userProfile) {
       this.deptID = this.configSvc.userProfile.rootOrgId
-    } else if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')) {
-      this.deptID = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.rootOrgId')
+    } else if (_.get(this.route, 'snapshot.data.configService.userProfile.rootOrgId')) {
+      this.deptID = _.get(this.route, 'snapshot.data.configService.userProfile.rootOrgId')
     }
+    this.folderInfo = this.mandatoryCourseSvc.getFolderInfo()
+    this.updateBreadcrumb()
+    this.getAllUsers()
+  }
+
+  searchData(filterList: any) {
+    this.selectedCompetency.length = 0
+    this.query = ''
+    filterList.forEach((fil: any) => {
+      if (fil.type === 'query') {
+        this.query = fil.name
+      } else {
+        this.selectedCompetency.push(fil.name)
+      }
+    })
     this.getAllUsers()
   }
 
@@ -50,9 +78,10 @@ export class AddMembersComponent implements OnInit {
   getAllUsers() {
     const filterObj = {
       request: {
-        query: '',
+        query: this.query,
         filters: {
           rootOrgId: this.deptID,
+          ['competencies_v3.name']: this.selectedCompetency,
         },
       },
     }
@@ -65,7 +94,15 @@ export class AddMembersComponent implements OnInit {
   }
 
   filterData() {
+    let tempMemberList: any = []
     this.activeUsersData = this.activeUsers
+    if (this.batchMemberList.length > 0) {
+      this.batchMemberList.forEach((member: any) => {
+        tempMemberList.push(this.activeUsersData.filter(mem => mem.userId === member.user_id)[0])
+      })
+      console.log(tempMemberList)
+      this.activeUsersData = tempMemberList
+    }
   }
   get activeUsers() {
     const activeUsersData: any[] = []
@@ -79,24 +116,7 @@ export class AddMembersComponent implements OnInit {
     return []
   }
 
-
-
   selectedMember(user: any) {
-
-    // const index = this.selectedUser.indexOf(user)
-    // if (index > -1) { // only splice array when item is found
-    //   this.selectedUser.splice(index, 1) // 2nd parameter means remove one item only
-
-    //   // this.isSelectedMember = false
-    // } else {
-    //   this.selectedUser.push(user)
-    //   this.selectedId = user.id
-    //   this.isSelectedMember = true
-    // }
-
-    // // this.selectedId = user.id
-    // console.log(this.selectedUser, 'this.selectedUser arry ---')
-    // console.log(user, 'selected user----')
     this.activeUsersData = this.activeUsersData.map(usr => {
       if (usr.id === user.id) {
         usr.selected = !usr.selected
@@ -104,11 +124,52 @@ export class AddMembersComponent implements OnInit {
       return usr
     })
   }
+  selectAllMembers(selectAll: boolean) {
+    this.activeUsersData = this.activeUsersData.map((course: any) => {
+      course.selected = selectAll ? true : false
+      return course
+    })
 
+  }
   // All the selected members will be there,
   saveSelected() {
-    const allSelectedUser = this.activeUsersData.filter(user => user.selected === true)
-    console.log(allSelectedUser)
+    const allSelectedUser = this.activeUsersData.filter(user => user.selected === true).map(user => user.id)
+    allSelectedUser.forEach((memberId) => {
+      const requestParam = {
+        request: {
+          courseId: this.route.snapshot.params.doId,
+          batchId: this.route.snapshot.params.batchId,
+          userId: memberId
+        }
+      }
+      this.mandatoryCourseSvc.addMember(requestParam).subscribe(res => {
+        console.log(res)
+      })
+    })
   }
-
+  deleteSelected() {
+    const allSelectedUser = this.activeUsersData.filter(user => user.selected === true).map(user => user.id)
+    allSelectedUser.forEach((memberId) => {
+      const requestParam = {
+        request: {
+          courseId: this.route.snapshot.params.doId,
+          batchId: this.route.snapshot.params.batchId,
+          userId: memberId
+        }
+      }
+      this.mandatoryCourseSvc.removeMember(requestParam).subscribe(res => {
+        console.log(res)
+        this.updateBatchList.emit()
+      })
+    })
+  }
+  updateBreadcrumb() {
+    this.bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]
+    this.bdtitles.push({ title: this.folderInfo.name, url: `/app/mandatory-courses/${this.folderInfo.identifier}` })
+    this.bdtitles.push({
+      title: this.folderInfo.batches.filter((batch: any) => batch.batchId === this.route.snapshot.params.batchId)[0].name,
+      url: `/app/mandatory-courses/${this.folderInfo.identifier}/batch-details//${this.route.snapshot.params.batchId}`
+    })
+    this.bdtitles.push({ title: 'Add members', url: 'none' })
+  }
 }

@@ -204,3 +204,12 @@ input.mat-input-element {
       border-left-style: none;
     }
   }
+.delete-icon{
+    justify-content: flex-end;
+    a{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      cursor: pointer;
+    }
+}

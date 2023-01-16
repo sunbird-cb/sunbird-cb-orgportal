@@ -676,6 +676,24 @@ h3.shepherd-title {
     width: 90% !important;
  }
 }
+.competency-filter-panel{
+  .competencies-done{
+      display: flex;
+      justify-content: center;
+      background: #fff;
+      padding:5px 0;
+      height: 40px;
+      position: relative;
+    .mat-button {
+        position: absolute;
+        bottom: 3px;
+        color:#0074b6 !important;
+        background: #fff !important;
+        border: 1px solid #0074b6;
+        width: 90%;
+      }
+  }
+}
 .mat-select-wrap-option{
   .mat-option-pseudo-checkbox{
     &.mat-pseudo-checkbox-checked {

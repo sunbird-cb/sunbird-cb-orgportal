@@ -1,145 +1,24 @@
 <div class="flex flex-1 justify-between">
   <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }"></ws-widget-breadcrumbs-org>
-  <div class="flex flex-row items-center justify-content-end">
-    <a class="h-400-r-14-l margin-right-m edit-link">
-      <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">edit
-      </mat-icon> <span class="text-span">Rename</span>
-    </a>
-    <a class="h-400-r-14-l edit-link">
-      <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">delete
-      </mat-icon><span class="text-span">Delete</span>
-    </a>
-  </div>
 </div>
 
-<ws-app-no-data [data]="noDataConfig"></ws-app-no-data>
+<ws-app-no-data [data]="noDataConfig" *ngIf="memberList.length===0"></ws-app-no-data>
 
-<div class="flex flex-1 flex-row justify-between">
-
-
-  <div class="flex flex-row flex-1 justify-start align-items-center">
-    <div class="widget-box" style="margin-right: 1.5rem" data-index="0">
-      <div class="" style="padding-top: 0.15rem">
-        <div class="d-flex flex-row">
-          <p class=""> Number of courses</p>
-
-        </div>
-
-        <label class="">04</label>
-        <!-- <span class="">
-      </span> -->
-
-      </div>
-    </div>
-
-    <div class="widget-box" style="margin-right: 1.5rem" data-index="0">
-      <div class="" style="padding-top: 0.15rem">
-        <div class="d-flex flex-row">
-          <p class=""> Number of members</p>
-
-        </div>
-
-        <label class="">08</label>
-        <!-- <span class="">
-      </span> -->
-
-      </div>
-    </div>
-
-    <div class="widget-box" style="margin-right: 1.5rem" data-index="0">
-      <div class="" style="padding-top: 0.15rem">
-        <div class="d-flex flex-row">
-          <p class=""> Start date</p>
-
-        </div>
-
-        <label class="">01/12/2022</label>
-        <!-- <span class="">
-      </span> -->
-
-      </div>
-    </div>
-
-
-    <div class="widget-box" style="margin-right: 1.5rem" data-index="0">
-      <div class="" style="padding-top: 0.15rem">
-        <div class="d-flex flex-row">
-          <p class=""> End date</p>
-          <!-- <mat-icon aria-hidden="false" aria-label="chart info" class="info-icon-1 mt-2 mat-icon mat-icon-no-color"
-          mattooltiphidedelay="2000" mattooltipposition="right" role="img"
-          style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-          info</mat-icon> -->
-        </div>
-
-        <label class="">30/01/2023</label>
-        <!-- <span class="">
-      </span> -->
-
-      </div>
-    </div>
-  </div>
+<div class="flex flex-1 flex-row justify-between" *ngIf="memberList.length > 0">
+  <ws-app-status-widget [statusInfoList]="statusInfoList"></ws-app-status-widget>
   <div class="flex flex-row items-end justify-content-end">
-    <a class="h-400-r-14-l margin-right-m edit-link">
+    <a href="javascript:void(0)" class="h-400-r-14-l margin-right-m edit-link" (click)="gotoChooseMember()">
       <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">edit
-      </mat-icon> <span class="text-span">Rename</span>
+      </mat-icon> <span class="text-span">Edit</span>
     </a>
-    <a class="h-400-r-14-l edit-link">
+    <a class="h-400-r-14-l edit-link" href="javascript:void(0)" (click)="removeMembers()">
       <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">delete
       </mat-icon><span class="text-span">Delete</span>
     </a>
   </div>
 </div>
 
-<div class="flex flex flex-row margin-top-xl justify-between">
-
-  <!-- <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row" *ngFor="let cad of batchList; let i = index;"
-    [ngClass]="{'highlight':cad.selected}" (click)="onSelect(i)">
-    <div class="circle-m" style="background-color: rgb(48, 105, 51);">
-      {{cad.initial}}
-    </div>
-    <div class="margin-left-m">
-      <div class="width-expand padding-left-xs">
-        <p>{{cad.name}}</p>
-        <p class="mat-body-2 ws-mat-black60-text">{{cad.position}}</p>
-      </div>
-    </div>
-  </div> -->
-  <ws-app-add-members></ws-app-add-members>
-  <!-- <ws-app-user-card *ngFor="let cad of batchList; let i = index;" (click)="onSelect(i)"></ws-app-user-card> -->
-
-  <!-- <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row">
-    <div class="circle-m" style="background-color: rgb(48, 105, 51);">
-      AD
-    </div>
-    <div class="margin-left-m">
-      <div class="width-expand padding-left-xs">
-        <p>Agni Dua</p>
-        <p class="mat-body-2 ws-mat-black60-text">Assistant director general</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row">
-    <div class="circle-m" style="background-color: rgb(48, 105, 51);">
-      BB
-    </div>
-    <div class="margin-left-m">
-      <div class="width-expand padding-left-xs">
-        <p>Bhavya Basu</p>
-        <p class="mat-body-2 ws-mat-black60-text">Assistant director general</p>
-      </div>
-    </div>
-  </div>
-  <div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row">
-    <div class="circle-m" style="background-color: rgb(48, 105, 51);">
-      BK
-    </div>
-    <div class="margin-left-m">
-      <div class="width-expand padding-left-xs">
-        <p>Bala Kumar</p>
-        <p class="mat-body-2 ws-mat-black60-text">Assistant director general</p>
-      </div>
-    </div>
-  </div> -->
-
+<div class="flex flex flex-row margin-top-xl justify-between" *ngIf="memberList.length > 0">
+  <ws-app-add-members #addMember [hideBreadScrum]="true" [batchMemberList]="memberList"
+    (updateBatchList)="getBatchDetails()"></ws-app-add-members>
 </div>

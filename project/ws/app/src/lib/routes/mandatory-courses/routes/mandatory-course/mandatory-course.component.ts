@@ -24,6 +24,7 @@ export class MandatoryCourseComponent implements OnInit {
   currentBread: any
   folderInfo: any
   courseList: any = []
+  batches: any = []
   noDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
     image: 'assets/images/banners/no_data.svg',
     heading: 'No course collections',
@@ -58,12 +59,14 @@ export class MandatoryCourseComponent implements OnInit {
     })
     this.getFolderInfo()
   }
+
   getFolderInfo() {
-    this.mandatoryCourseService.getEditContent(this.route.snapshot.params.doId).subscribe(res => {
-      this.folderInfo = res
-      this.mandatoryCourseService.sharefolderData(this.folderInfo)
-      this.updateBreadcrumb(this.folderInfo.result.content)
-      this.courseList = this.folderInfo.result.content.children
+    this.folderInfo = this.mandatoryCourseService.getFolderInfo()
+    this.updateBreadcrumb(this.folderInfo)
+    this.mandatoryCourseService.getEditContent(this.route.snapshot.params.doId).subscribe((data: any) => {
+      this.courseList = data.result.content.children
+      this.batches = data.result.content.batches || []
+      this.mandatoryCourseService.sharefolderData(data.result.content)
     })
   }
 
@@ -79,12 +82,15 @@ export class MandatoryCourseComponent implements OnInit {
   }
 
   openCreateBatchDialog() {
-    this.dialog.open(AddBatchDialougeComponent, {
+    const dialogRef = this.dialog.open(AddBatchDialougeComponent, {
       width: 'auto',
       // panelClass: 'custom-dialog-container',
       data: {
         doId: this.activatedRoute.snapshot.params.doId
       }
+    })
+    dialogRef.afterClosed().subscribe(() => {
+      this.getFolderInfo()
     })
   }
 

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
+import { MandatoryCourseService } from '../../services/mandatory-course.service'
 
 @Component({
   selector: 'ws-app-filter-tags',
@@ -6,13 +7,73 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
   styleUrls: ['./filter-tags.component.scss'],
 })
 export class FilterTagsComponent implements OnInit {
-  @Input() filtersList: any
+  filtersList: any = []
+  @Input() filterConfig: any
   @Output() removeFilterItem = new EventEmitter()
-  constructor() { }
+  @Output() searchFilterData = new EventEmitter()
+  @Output() onselectAll = new EventEmitter()
+  selectAll = false
+  competeniesList: string[] = []
+  selectedCompetency = []
+  constructor(private mandatoryCourseSvc: MandatoryCourseService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+    this.mandatoryCourseSvc.getCompetencies().subscribe((res: any) => {
+      this.competeniesList = res.responseData
+    })
+  }
+
+  // removeFilter(item: any) {
+  //   this.removeFilterItem.emit(item)
+  // }
+
+  onSelectAll() {
+    this.selectAll = !this.selectAll
+    this.onselectAll.emit(this.selectAll)
+  }
+
+  onChange(value: any, selectedType: string) {
+    switch (selectedType) {
+      case 'filter': if (this.selectedCompetency.length > 0) {
+        this.selectedCompetency.forEach(competency => {
+          if (!this.filtersList.map((fil: any) => fil.name).includes(competency)) {
+            this.filtersList.push({ name: competency, type: selectedType })
+          }
+        })
+      }
+        break
+      case 'query':
+        if (!value) {
+          this.filtersList = this.filtersList.filter((val: any) => val.type !== selectedType)
+          this.searchFilterData.emit(this.filtersList)
+          return
+        }
+        const isExist = this.filtersList.map((fil: any) => fil.type).includes(selectedType)
+        if (!isExist) {
+          this.filtersList.push({ name: value, type: selectedType })
+          this.getSearchedData()
+          return
+        }
+        this.filtersList.forEach((val: any) => {
+          if (val.type === selectedType) {
+            val.name = value
+            return
+          } else {
+            this.filtersList.push({ name: value, type: selectedType })
+          }
+        })
+        this.getSearchedData()
+        break
+    }
+  }
 
   removeFilter(item: any) {
-    this.removeFilterItem.emit(item)
+    this.filtersList = this.filtersList.filter((list: any) => list.name !== item.name)
+    this.selectedCompetency = this.selectedCompetency.filter((fil: any) => fil !== item.name)
+    this.getSearchedData()
+  }
+  getSearchedData() {
+    this.searchFilterData.emit(this.filtersList)
   }
 }

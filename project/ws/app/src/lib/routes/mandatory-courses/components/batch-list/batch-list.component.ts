@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
 // export interface courseFolder {
@@ -85,10 +85,18 @@ export class BatchListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'enrollmentType', 'collectionId', 'id', 'startDate', 'enrollmentEndDate', 'addMember', 'null']
   dataSource = ELEMENT_DATA
   folderId: any
+  @Input() batches: any
+
   constructor(private route: ActivatedRoute) { }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.folderId = this.route.snapshot.params['doId']
+    console.log(this.batches)
+    this.dataSource = this.batches
+  }
+
+  ngOnInit() {
+
   }
 
 }

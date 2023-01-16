@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
 import { NsMandatoryCourse } from '../../models/mandatory-course.model'
+import { MandatoryCourseService } from '../../services/mandatory-course.service'
+import { AddMembersComponent } from '../add-members/add-members.component'
 
 @Component({
   selector: 'ws-app-batch-details',
@@ -10,10 +12,11 @@ import { NsMandatoryCourse } from '../../models/mandatory-course.model'
 export class BatchDetailsComponent implements OnInit {
   currentCourseId!: string
   currentBatchId!: string
-
+  folderInfo: any
+  @ViewChild('addMember', { static: false }) addMember!: AddMembersComponent
   bdtitles = [
-    { title: 'Folders', url: '/app/home/mandatory-courses' },
-    { title: 'Folder name', url: '/app/mandatory-courses/132' },
+    // { title: 'Folders', url: '/app/home/mandatory-courses' },
+    // { title: 'Folder name', url: '/app/mandatory-courses/132' },
     { title: 'Batch name', url: 'none' },
   ]
   noDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
@@ -25,15 +28,50 @@ export class BatchDetailsComponent implements OnInit {
     btnText: 'Add members',
   }
 
+  statusInfoList: any = []
+  memberList: any = []
+  batchDetails: any
+
   constructor(
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private mandatoryCourseSvc: MandatoryCourseService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.currentCourseId = params['dSoId']
+      this.currentCourseId = params['doId']
       this.currentBatchId = params['batchId']
-      this.noDataConfig.btnLink = `/app/mandatory-courses/${this.currentCourseId}/batch-details/${this.currentCourseId}/choose-members`
+      this.noDataConfig.btnLink = `/app/mandatory-courses/${this.currentCourseId}/batch-details/${this.currentBatchId}/choose-members`
     })
+    this.folderInfo = this.mandatoryCourseSvc.getFolderInfo()
+    this.batchDetails = this.folderInfo.batches.filter((batch: any) => batch.batchId === this.activatedRoute.snapshot.params.batchId)[0]
+    this.getBatchDetails()
+    this.updateBreadcrumb()
+  }
+  getBatchDetails() {
+    this.mandatoryCourseSvc.getBatchDetails(this.currentBatchId).subscribe(data => {
+      this.memberList = data
+      this.updateStatusWidgets()
+    })
+  }
+  gotoChooseMember() {
+    this.router.navigate([this.noDataConfig.btnLink])
+  }
+
+  removeMembers() {
+    this.addMember.deleteSelected()
+  }
+
+  updateStatusWidgets() {
+    this.statusInfoList.push({ name: 'Number of courses', value: this.folderInfo.children ? this.folderInfo.children.length : '00' })
+    this.statusInfoList.push({ name: 'Number of members', value: this.memberList.length })
+    this.statusInfoList.push({ name: 'Start date', value: this.batchDetails.startDate })
+    this.statusInfoList.push({ name: 'End date', value: this.batchDetails.endDate })
+  }
+  updateBreadcrumb() {
+    this.bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]
+    this.bdtitles.push({ title: this.folderInfo.name, url: `/app/mandatory-courses/${this.folderInfo.identifier}` })
+    this.bdtitles.push({ title: this.batchDetails.name, url: 'none' })
   }
 }

@@ -1,6 +1,6 @@
-<div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row" [ngClass]="{'highlight':user.selected}"
-  (click)="onSelect(user)">
-  <div class="circle-m" style="background-color: rgb(48, 105, 51);">
+<div class="unit-cohort sm:pr-8 md:pr-10 flex flex-row user-card"
+  [ngClass]="{'highlight':user.selected, 'removeSelection': !isSelectable}" (click)="onSelect(user)">
+  <div class="circle-m" [ngStyle]="{'background-color': profileColor}">
     AN
   </div>
   <div class="margin-left-s">

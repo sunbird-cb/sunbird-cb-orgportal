@@ -49,15 +49,12 @@ export class AddMetaDataComponent implements OnInit {
   }
 
   getinitalData(res: any) {
-    this.metaDataForm.controls.name.setValue(res.result.content.name)
-    this.metaDataForm.controls.purpose.setValue(res.result.content.purpose || '')
-    this.metaDataForm.controls.description.setValue(res.result.content.description || '')
-    this.metaDataForm.controls.appIcon.setValue(res.result.content.appIcon || '')
-    this.metaDataForm.controls.posterImage.setValue(res.result.content.posterImage || '')
-    this.data = { appURL: res.result.content.appIcon }
-    // this.folderInfo = res.result.content
-    // this.mandatoryCourseService.sharefolderData(this.folderInfo)
-    // this.sendCourseInfo.emit(this.folderInfo.children)
+    this.metaDataForm.controls.name.setValue(res.name)
+    this.metaDataForm.controls.purpose.setValue(res.purpose || '')
+    this.metaDataForm.controls.description.setValue(res.description || '')
+    this.metaDataForm.controls.appIcon.setValue(res.appIcon || '')
+    this.metaDataForm.controls.posterImage.setValue(res.posterImage || '')
+    this.data = { appURL: res.appIcon }
   }
 
   openDialog(type: string) {
@@ -115,7 +112,7 @@ export class AddMetaDataComponent implements OnInit {
             ...this.pageData.image,
           }
           this.mandatoryCourseService.createContent(requestBody).pipe(
-            mergeMap(id => this.mandatoryCourseService.upload(formdata, id)))
+            mergeMap((data: any) => this.mandatoryCourseService.upload(formdata, data.identifier)))
             .subscribe(data => {
               this.metaDataForm.controls.appIcon.setValue(data.result.artifactUrl || '')
               this.metaDataForm.controls.posterImage.setValue(data.result.artifactUrl || '')
@@ -186,7 +183,7 @@ export class AddMetaDataComponent implements OnInit {
         request: {
           content: {
             ...this.metaDataForm.value,
-            versionKey: this.folderInfo.result.content.versionKey,
+            versionKey: this.folderInfo.versionKey,
           },
         },
       }

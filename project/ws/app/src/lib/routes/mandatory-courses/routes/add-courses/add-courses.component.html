@@ -2,41 +2,9 @@
   <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }"></ws-widget-breadcrumbs-org>
   <!-- <ws-app-folder-list-table></ws-app-folder-list-table> -->
 
-  <form>
-    <div class="flex flex-1 flex-row custom choice_box">
-      <div class="flex filter_box margin-right-m">
-        <mat-form-field appearance="outline">
-          <mat-select placeholder="Select Competency" multiple [(value)]="selectedCompetency"
-            (selectionChange)="onChange($event, 'filter')">
-            <mat-select-trigger *ngIf="selectedCompetency.length>0">
-              {{selectedCompetency.length}} competencies selected.
-            </mat-select-trigger>
-            <mat-form-field appearance="outline" class="competency-filter">
-              <input matInput type="text" placeholder="Search Competency" />
-            </mat-form-field>
-            <mat-option *ngFor="let competency of competeniesList; let i =index" [value]="competency"
-              class="mat-select-wrap-option">
-              {{competency}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="flex-2 flex margin-right-m search_box">
-        <mat-form-field appearance="outline">
-          <input matInput #search [(ngModel)]='searchTerm' name="search" placeholder="Search Course"
-            (keyup.enter)="onChange(search.value, 'query')">
-          <mat-icon matPrefix class="color-60" (click)="onChange(search.value, 'query')">search</mat-icon>
-        </mat-form-field>
-
-      </div>
-      <div class="flex-1 flex">
-        <a class="all_select">
-          <mat-checkbox class="margin-right-s" (change)="onSelectAll()" [checked]="selectAll"></mat-checkbox> Select all
-        </a>
-      </div>
-    </div>
-  </form>
-  <ws-app-filter-tags [filtersList]="filtersList" (removeFilterItem)="removeFilter($event)"></ws-app-filter-tags>
+  <ws-app-filter-tags [filterConfig]="courseConfig" (searchFilterData)="searchData($event)"
+    (onselectAll)="onSelectAllCourse($event)">
+  </ws-app-filter-tags>
   <div class="flex flex-1 flex-wrap margin-top-l justify-between items-center" *ngIf="searchResults">
     <ng-container *ngFor="let c of searchResults">
       <div class="course-card margin-bottom-m">
@@ -47,7 +15,6 @@
       </div>
     </ng-container>
   </div>
-
   <div class="add_btn_footer_box">
     <div class="btn_inner_box flex justify-end">
       <div class="flex items-center justify-end">

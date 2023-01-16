@@ -12,26 +12,41 @@ export class AddCoursesComponent implements OnInit {
   bdtitles: any = []
   searchResults: any = []
   selectedCourses: any = []
-  selectAll = false
-  competeniesList: string[] = ['Service oriented', 'Vigilance', 'History & Archaeology', 'Recruitment/Placement', 'Budget preparation for Ministry/ Department', 'Scenario Planning and Analysis']
-  selectedCompetency = []
   filtersList: any = []
   searchTerm: any
   previousCourses: any
-
+  selectedCompetency: any = []
+  query = ''
+  courseConfig = {
+    filterUsage: 'courses',
+    noOfSelectionText: "competencies selected",
+    filterListText: 'Search Competencies',
+    selectPlaceHolder: "Select Competency",
+    inputPlaceHolder: "Search Course"
+  }
   constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.bdtitles = this.mandatoryCourseSvc.getBreadCrumbList()
-    this.getSearchedData('')
+    this.getSearchedData()
     this.updateBreadcrumb()
-    this.mandatoryCourseSvc.getCompetencies().subscribe((res: any) => {
-      this.competeniesList = res.responseData
-    })
     this.previousCourses = this.mandatoryCourseSvc.getFolderInfo().children.map((course: any) => course.identifier)
   }
 
-  getSearchedData(search: string) {
+  searchData(filterList: any) {
+    this.selectedCompetency.length = 0
+    this.query = ''
+    filterList.forEach((fil: any) => {
+      if (fil.type === 'query') {
+        this.query = fil.name
+      } else {
+        this.selectedCompetency.push(fil.name)
+      }
+    })
+    this.getSearchedData()
+  }
+
+  getSearchedData() {
     const queryparam = {
       request: {
         filters: {
@@ -41,10 +56,10 @@ export class AddCoursesComponent implements OnInit {
           source: [],
           mediaType: [],
           status: ['Live'],
-          ['competencies_v3.name']: [],
+          ['competencies_v3.name']: this.selectedCompetency,
           topics: [],
         },
-        query: search,
+        query: this.query,
         sort_by: { lastUpdatedOn: 'desc' },
         fields: [],
         facets: ['primaryCategory', 'mimeType', 'source', 'competencies_v3.name', 'topics'],
@@ -67,60 +82,16 @@ export class AddCoursesComponent implements OnInit {
     course.selected = !course.selected
   }
 
-  onSelectAll() {
-    this.selectAll = !this.selectAll
+  onSelectAllCourse(selectAll: boolean) {
     this.searchResults = this.searchResults.map((course: any) => {
-      course.selected = this.selectAll ? true : false
+      course.selected = selectAll ? true : false
       return course
     })
   }
 
-  removeFilter(item: any) {
-    switch (item.type) {
-      case 'query': this.searchTerm = ''
-        this.getSearchedData('')
-        break
-      default: break
-    }
-    this.filtersList = this.filtersList.filter((list: any) => list.name !== item.name)
-    this.selectedCompetency = this.selectedCompetency.filter((fil: any) => fil !== item.name)
-  }
 
-  onChange(value: any, selectedType: string) {
-    switch (selectedType) {
-      case 'filter': if (this.selectedCompetency.length > 0) {
-        this.selectedCompetency.forEach(competency => {
-          if (!this.filtersList.map((fil: any) => fil.name).includes(competency)) {
-            this.filtersList.push({ name: competency, type: selectedType })
-          }
-        })
 
-      }
-        break
-      case 'query':
-        if (!value) {
-          this.filtersList = this.filtersList.filter((val: any) => val.type !== selectedType)
-          this.getSearchedData(value)
-          return
-        }
-        if (this.filtersList.length > 0) {
-          this.filtersList.forEach((val: any) => {
-            if (this.filtersList.map((fil: any) => fil.type).includes(selectedType)) {
-              val.name = value
-            } else {
-              this.filtersList.push({ name: value, type: selectedType })
-            }
-          })
-        } else {
-          this.filtersList.push({ name: value, type: selectedType })
-        }
 
-        this.getSearchedData(value)
-        break
-      case 'selectAll': this.filtersList.length = 0
-
-    }
-  }
 
   updateBreadcrumb() {
     const data = this.mandatoryCourseSvc.getFolderInfo()

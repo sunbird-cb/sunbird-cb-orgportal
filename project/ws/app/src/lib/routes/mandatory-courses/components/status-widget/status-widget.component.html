@@ -1,0 +1,10 @@
+<div class="flex flex-row flex-1 justify-start align-items-center status-widget">
+  <div class="widget-box" style="margin-right: 1.5rem" data-index="0" *ngFor="let status of statusInfoList">
+    <div class="" style="padding-top: 0.15rem">
+      <div class="d-flex flex-row">
+        <p class="">{{status.name}}</p>
+      </div>
+      <label class="">{{status.value}}</label>
+    </div>
+  </div>
+</div>

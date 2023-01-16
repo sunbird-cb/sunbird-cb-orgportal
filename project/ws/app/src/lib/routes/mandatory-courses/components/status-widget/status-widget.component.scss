@@ -1,0 +1,28 @@
+
+.widget-box {
+    height: 7rem;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(0,0,0,.08)!important;
+    background-color: #fff;
+    background-position: 90% 100%;
+    padding: 1rem;
+    width: 11rem;
+}
+
+.info-icon-1 {
+    color: silver;
+    cursor: pointer;
+    padding-top: 0!important;
+    padding-left: 0.35rem!important;
+    font-size: 1rem;
+    vertical-align: -0.2rem;
+}
+
+.widget-box label{
+    color: rgba(0,0,0,.87);
+    font-family: Lato-Bold;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    // padding-left: 10%;
+    // padding-bottom: 10%;
+}

@@ -9,16 +9,18 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 const PROTECTED_SLAG_V8 = '/apis/proxies/v8'
 const API_END_POINTS = {
   SEARCH_V6: `/apis/proxies/v8/sunbirdigot/search`,
-  CREATE_CONTENT: `${PROTECTED_SLAG_V8}/action/content/v3/create`,
-  UPDATE_CONTENT: `${PROTECTED_SLAG_V8}/action/content/v3/update`,
+  CREATE_CONTENT: `${PROTECTED_SLAG_V8}/mdo/content/v3/create`,
+  UPDATE_CONTENT: `${PROTECTED_SLAG_V8}/mdo/content/v3/update`,
   EDIT_HIERARCHY: `${PROTECTED_SLAG_V8}/action/content/v3/hierarchy`,
-  UPDATE_HIERARCHY: `${PROTECTED_SLAG_V8}/action/content/v3/hierarchy/update`,
-  PUBLISH_CONTENT: (contentId: string) => `${PROTECTED_SLAG_V8}/action/content/v3/publish/${contentId}`,
+  UPDATE_HIERARCHY: `${PROTECTED_SLAG_V8}/mdo/content/v3/hierarchy/update`,
+  PUBLISH_CONTENT: (contentId: string) => `${PROTECTED_SLAG_V8}/mdo/content/v3/publish/${contentId}`,
   CREATE_BATCH: `/apis/authApi/batch/create`,
   ADD_USER_TO_BATCH: `/apis/authApi/batch/addUser`,
+  REMOVE_USER_TO_BATCH: `/apis/authApi/batch/removeUser`,
+  READ_BATCH: '/apis/protected/v8/cohorts/course/getUsersForBatch',
   GET_ALL_USERS: `/apis/proxies/v8/user/v1/search`,
   UPLOAD: `${PROTECTED_SLAG_V8}/upload/action/content/v3/upload`,
-  COMPETENCY: `${PROTECTED_SLAG_V8}/frac/getAllNodes/dictionary`
+  COMPETENCY: `/apis/protected/v8/frac/getAllNodes/dictionary`
 }
 
 const BREAD_CRUMB_LIST = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]
@@ -29,6 +31,7 @@ const BREAD_CRUMB_LIST = [{ title: 'Folders', url: '/app/home/mandatory-courses'
 export class MandatoryCourseService {
   private pageData: any
   private folderSubject = new Subject<any>();
+  private batchSubeject = new Subject()
   private breadCrumbList = BREAD_CRUMB_LIST;
   constructor(
     private http: HttpClient,
@@ -73,7 +76,7 @@ export class MandatoryCourseService {
       )
       .pipe(
         map((data: any) => {
-          return data.result.identifier
+          return data.result
         }),
       )
   }
@@ -135,13 +138,17 @@ export class MandatoryCourseService {
   addMember(req: any) {
     return this.http.post<any>(`${API_END_POINTS.ADD_USER_TO_BATCH}`, req)
   }
-
+  removeMember(req: any) {
+    return this.http.post<any>(`${API_END_POINTS.REMOVE_USER_TO_BATCH}`, req)
+  }
   addBatch(req: any) {
     req.request.createdBy = (this.configSvc.userProfile && this.configSvc.userProfile.userId) || ''
     req.request.createdFor = [(this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) ? this.configSvc.userProfile.rootOrgId : '']
     return this.http.post<any>(`${API_END_POINTS.CREATE_BATCH}`, req)
   }
-
+  getBatchDetails(batchId: any) {
+    return this.http.get(`${API_END_POINTS.READ_BATCH}/${batchId}`)
+  }
   updatePageData(pageData: any) {
     this.pageData = pageData
   }
@@ -155,7 +162,7 @@ export class MandatoryCourseService {
     return this.http.get(`${API_END_POINTS.COMPETENCY}`)
   }
   sharefolderData(data: any) {
-    localStorage.setItem('collectionInfo', JSON.stringify(data.result.content))
+    localStorage.setItem('collectionInfo', JSON.stringify(data))
     this.folderSubject.next(data)
   }
   getfolderData() {
@@ -179,5 +186,8 @@ export class MandatoryCourseService {
   }
   getUserId() {
     return (this.configSvc.userProfile && this.configSvc.userProfile.userId) || ''
+  }
+  updateBatchList() {
+    this.batchSubeject.next()
   }
 }

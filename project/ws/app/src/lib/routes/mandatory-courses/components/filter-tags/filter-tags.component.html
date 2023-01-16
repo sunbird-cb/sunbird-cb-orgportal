@@ -1,3 +1,42 @@
+<form>
+  <div class="flex flex-1 flex-row custom choice_box">
+    <div class="flex filter_box margin-right-m">
+      <mat-form-field appearance="outline">
+        <mat-select panelClass="competency-filter-panel" placeholder="{{filterConfig.selectPlaceHolder}}" multiple
+          [(value)]="selectedCompetency" (selectionChange)="onChange($event, 'filter')">
+          <mat-select-trigger *ngIf="selectedCompetency.length>0">
+            {{selectedCompetency.length}} {{filterConfig.noOfSelectionText}}.
+          </mat-select-trigger>
+          <mat-form-field appearance="outline" class="competency-filter">
+            <input matInput type="text" placeholder="Search Competency" />
+          </mat-form-field>
+          <mat-option *ngFor="let competency of competeniesList; let i =index" [value]="competency.name"
+            class="mat-select-wrap-option">
+            {{competency.name}}
+          </mat-option>
+          <div class="competencies-done">
+            <button mat-stroked-button class="next_link mat-button" (click)="getSearchedData()">Done</button>
+          </div>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="flex-2 flex margin-right-m search_box">
+      <mat-form-field appearance="outline">
+        <input matInput #search [(ngModel)]='searchTerm' name="search" placeholder="{{filterConfig.inputPlaceHolder}}"
+          (keyup.enter)="onChange(search.value, 'query')">
+        <mat-icon class="search-icon" matPrefix class="color-60" (click)="onChange(search.value, 'query')">search
+        </mat-icon>
+      </mat-form-field>
+
+    </div>
+    <div class="flex-1 flex">
+      <a class="all_select">
+        <mat-checkbox class="margin-right-s" (change)="onSelectAll()" [checked]="selectAll"></mat-checkbox> Select all
+      </a>
+    </div>
+  </div>
+</form>
+
 <mat-list *ngIf="filtersList.length>0" class="filer-tags">
   <mat-list-item *ngFor="let item of filtersList">
     {{item.name}}
