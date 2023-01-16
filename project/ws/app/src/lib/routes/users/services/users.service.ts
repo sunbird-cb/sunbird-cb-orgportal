@@ -150,4 +150,8 @@ export class UsersService {
 
     return this.http.post<any>(`${API_END_POINTS.SEARCH_USER_TABLE}`, reqBody)
   }
+
+  checkForUserReport(url: string) {
+    return this.http.get<any>(url)
+  }
 }
