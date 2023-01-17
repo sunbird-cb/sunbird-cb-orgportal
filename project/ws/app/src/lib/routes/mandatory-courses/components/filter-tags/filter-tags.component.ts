@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 
 @Component({
@@ -15,13 +16,17 @@ export class FilterTagsComponent implements OnInit {
   selectAll = false
   competeniesList: string[] = []
   selectedCompetency = []
-  constructor(private mandatoryCourseSvc: MandatoryCourseService) { }
+  positions = []
+  constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-
-    this.mandatoryCourseSvc.getCompetencies().subscribe((res: any) => {
-      this.competeniesList = res.responseData
-    })
+    if (this.filterConfig.filterUsage === 'members') {
+      this.competeniesList = this.route.snapshot.data.pageData.data
+    } else {
+      this.mandatoryCourseSvc.getCompetencies().subscribe((res: any) => {
+        this.competeniesList = res.responseData
+      })
+    }
   }
 
   // removeFilter(item: any) {

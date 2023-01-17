@@ -1,5 +1,5 @@
 <ng-container *ngIf="folderInfo">
-  <div class="flex flex-1 justify-between">
+  <div class="flex flex-1 justify-between mandatory-course-wrap">
     <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }">
     </ws-widget-breadcrumbs-org>
     <div class="flex flex-1 justify-end margin-bottom-m">
@@ -14,7 +14,9 @@
         </mat-icon><span class="text-span">Delete</span>
       </a> -->
 
-        <a class="h-400-r-14-l edit-link margin-right-m">
+        <a class="h-400-r-14-l edit-link margin-right-m"
+          matTooltip="Courses can be edited up until they are published, and this course must be published before you can create a batch"
+          matTooltipClass="tooltip-color">
           <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">
             info_outlined
           </mat-icon>
@@ -40,13 +42,14 @@
       <div class="flex flex-1 filter max-height-60">
         <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'meta-data',
             'ws-mat-accent-border font-medium':currentFilter !== 'meta-data'}" mat-button (click)="filter('meta-data')"
-          role="button">Meta data</a>
+          role="button">{{pageConfigData.folder.folderInfo.tabs.metaData}}</a>
         <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'course-list',
             'ws-mat-accent-border font-medium':currentFilter !== 'course-list'}" mat-button
-          (click)="filter('course-list')" role="button">Courses</a>
+          (click)="filter('course-list')" role="button">{{pageConfigData.folder.folderInfo.tabs.courses}}</a>
         <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'batch-list',
             'ws-mat-accent-border font-medium':currentFilter !== 'batch-list'}" mat-button
-          (click)="filter('batch-list')" role="button">Batches</a>
+          (click)="filter('batch-list')" role="button"
+          *ngIf="courseList.length > 0">{{pageConfigData.folder.folderInfo.tabs.batches}}</a>
       </div>
     </div>
 
@@ -67,11 +70,11 @@
               edit
             </mat-icon> <span class="text-span">Edit</span>
           </a>
-          <a class="h-400-r-14-l edit-link margin-right-m">
+          <!-- <a class="h-400-r-14-l edit-link margin-right-m">
             <mat-icon class="mat-icon material-icons mat-icon-no-color margin-right-xs" role="img" aria-hidden="true">
               delete
             </mat-icon><span class="text-span">Delete</span>
-          </a>
+          </a> -->
         </div>
         <div class="flex flex-1 flex-wrap course-list-wrap">
           <ng-container *ngFor="let c of courseList">
@@ -94,7 +97,7 @@
           </span>
         </button>
       </div>
-      <ws-app-batch-list *ngIf="batches.length>1" [batches]="batches"></ws-app-batch-list>
+      <ws-app-batch-list *ngIf="batches.length>0" [batches]="batches"></ws-app-batch-list>
     </ng-container>
 
 

@@ -4,14 +4,16 @@
 
   <ws-app-filter-tags [filterConfig]="courseConfig" (searchFilterData)="searchData($event)"
     (onselectAll)="onSelectAllCourse($event)">
+    <div class="flex previous-course" *ngIf="this.previousCourses.length>0">
+      {{this.previousCourses.length}} Course selected
+    </div>
   </ws-app-filter-tags>
+
   <div class="flex flex-1 flex-wrap margin-top-l justify-between items-center" *ngIf="searchResults">
     <ng-container *ngFor="let c of searchResults">
       <div class="course-card margin-bottom-m">
         <mat-checkbox [checked]="c.selected" (change)="onSelectedCourse(c)"></mat-checkbox>
-        <ws-widget-card-content *ngIf="c" [widgetData]="{
-                                                    content: c
-                                                  }"></ws-widget-card-content>
+        <ws-widget-card-content [widgetData]="{content: c }"></ws-widget-card-content>
       </div>
     </ng-container>
   </div>

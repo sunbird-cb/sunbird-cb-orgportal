@@ -1,6 +1,6 @@
 <div class="flex flex-4 flex-column">
   <mat-card>
-    <h4>Folders</h4>
+    <h4>{{pageCongifData.folder.title}}</h4>
 
     <div class="flex flex-1 custom">
       <div class="flex-3">
@@ -8,18 +8,19 @@
           <div class="rsearch">
             <mat-icon class="color-60 search-icon" (click)=getFolderList(search.value)>search</mat-icon>
             <input class="sinput color-60" type="Standard" #search (keyup.enter)=getFolderList(search.value) label=""
-              placeholder="Search by folder name">
+              placeholder="{{pageCongifData.folder.searchBoxPlaceHolder}}">
           </div>
         </div>
       </div>
       <div class="right-align">
         <a type="button" mat-button class="create-btn" (click)="openCreateFolderDialog()">
-          Create a folder
+          {{pageCongifData.folder.createFolderBtn}}
         </a>
       </div>
     </div>
     <div class="folder-list" *ngIf="folderList.length>0">
-      <ws-app-folder-list-table [folderListData]="folderList"></ws-app-folder-list-table>
+      <ws-app-folder-list-table [folderListData]="folderList" [folderConfig]="folderConfigInfo">
+      </ws-app-folder-list-table>
     </div>
   </mat-card>
 </div>

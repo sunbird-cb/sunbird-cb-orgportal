@@ -11,11 +11,15 @@ import { MandatoryCourseService } from '../../../mandatory-courses/services/mand
 })
 export class MandatoryCoursesComponent implements OnInit {
   folderList: any = []
+  pageCongifData: any
+  folderConfigInfo: any
   user: any
   constructor(private dialog: MatDialog, private activatedRoute: ActivatedRoute,
     private mandatoryCourseServices: MandatoryCourseService) { }
 
   ngOnInit() {
+    this.pageCongifData = this.activatedRoute.snapshot.data.pageData.data
+    this.folderConfigInfo = this.pageCongifData.folder.table
     this.user = this.mandatoryCourseServices.getUserId()
     this.mandatoryCourseServices.updatePageData(this.activatedRoute.snapshot.data.pageData.data)
     this.getFolderList('')

@@ -704,3 +704,8 @@ h3.shepherd-title {
       color: #333 !important;
   }
 }
+::ng-deep .mat-tooltip {
+    background: #fff !important;
+    color: #333 !important;
+    font-size: 14px !important;
+}

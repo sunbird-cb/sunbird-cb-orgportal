@@ -3,8 +3,10 @@
 .filer-tags {
     display: flex;
     padding-top: 0px;
+    flex-wrap: wrap;
     .mat-list-item{
         margin-right: 10px;
+         margin-bottom: 10px;
         background: $bg-color-grey;
         border-radius:4px;
         height: 40px;
