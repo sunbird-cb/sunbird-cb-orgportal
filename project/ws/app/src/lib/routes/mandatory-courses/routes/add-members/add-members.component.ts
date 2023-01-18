@@ -136,7 +136,6 @@ export class AddMembersComponent implements OnInit {
   }
   // All the selected members will be there,
   async saveSelected() {
-    let count = 0
     const allSelectedUser = this.activeUsersData.filter(user => user.selected === true).map(user => user.id)
     await allSelectedUser.forEach((memberId) => {
       const requestParam = {
@@ -146,11 +145,9 @@ export class AddMembersComponent implements OnInit {
           userId: memberId
         }
       }
-      this.mandatoryCourseSvc.addMember(requestParam).subscribe(() => {
-        count++
-      })
+      this.mandatoryCourseSvc.addMember(requestParam).subscribe(() => { })
     })
-    this.snackbar.open(`${count} members added.`, 'Close', { verticalPosition: 'top' })
+    this.snackbar.open(`${allSelectedUser.length} members added.`, 'Close', { verticalPosition: 'top' })
     this.selectAllMembers(false)
   }
 

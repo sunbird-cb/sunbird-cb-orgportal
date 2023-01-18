@@ -83,7 +83,7 @@ export class MandatoryCourseComponent implements OnInit {
       width: 'auto',
       // panelClass: 'custom-dialog-container',
       data: {
-        doId: this.activatedRoute.snapshot.params.doId
+        batchInfo: this.activatedRoute.snapshot.params.doId
       }
     })
     dialogRef.afterClosed().subscribe(() => {

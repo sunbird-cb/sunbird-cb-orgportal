@@ -20,7 +20,9 @@ const API_END_POINTS = {
   READ_BATCH: '/apis/protected/v8/cohorts/course/getUsersForBatch',
   GET_ALL_USERS: `/apis/proxies/v8/user/v1/search`,
   UPLOAD: `${PROTECTED_SLAG_V8}/upload/action/content/v3/upload`,
-  COMPETENCY: `/apis/protected/v8/frac/getAllNodes/dictionary`
+  COMPETENCY: `/apis/protected/v8/frac/getAllNodes/dictionary`,
+  UPDATE_BATCH: '/apis/authApi/batch/update',
+  REMOVE_BATCH: '/apis/authApi/batch/delete'
 }
 
 const BREAD_CRUMB_LIST = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]
@@ -145,6 +147,14 @@ export class MandatoryCourseService {
     req.request.createdBy = (this.configSvc.userProfile && this.configSvc.userProfile.userId) || ''
     req.request.createdFor = [(this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) ? this.configSvc.userProfile.rootOrgId : '']
     return this.http.post<any>(`${API_END_POINTS.CREATE_BATCH}`, req)
+  }
+  updateBatch(req: any, batchId: any) {
+    req.request.createdBy = (this.configSvc.userProfile && this.configSvc.userProfile.userId) || ''
+    req.request.createdFor = [(this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) ? this.configSvc.userProfile.rootOrgId : '']
+    return this.http.patch<any>(`${API_END_POINTS.UPDATE_BATCH}/${batchId}`, req)
+  }
+  deleteBatch(req: any) {
+    return this.http.post<any>(`${API_END_POINTS.REMOVE_BATCH}`, req)
   }
   getBatchDetails(batchId: any) {
     return this.http.get(`${API_END_POINTS.READ_BATCH}/${batchId}`)

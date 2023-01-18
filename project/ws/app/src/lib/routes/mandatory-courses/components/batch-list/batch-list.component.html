@@ -52,10 +52,10 @@
         </span>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="openCreateBatchDialog(element)">
           Edit
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="deleteBatch(element)">
           Delete
         </button>
 

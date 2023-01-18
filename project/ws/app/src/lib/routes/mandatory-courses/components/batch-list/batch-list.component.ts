@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
-
+import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/add-batch-dialouge.component'
 const ELEMENT_DATA: NsContent.IBatch[] = []
 
 @Component({
@@ -16,7 +17,7 @@ export class BatchListComponent implements OnInit {
   folderId: any
   @Input() batches: any
   addMemberLinks: any
-  constructor(private route: ActivatedRoute, private mandatoryCourseServce: MandatoryCourseService) { }
+  constructor(private route: ActivatedRoute, private mandatoryCourseServce: MandatoryCourseService, private dialog: MatDialog, private snackbar: MatSnackBar) { }
 
   ngOnChanges() {
     this.folderId = this.route.snapshot.params['doId']
@@ -28,6 +29,25 @@ export class BatchListComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  openCreateBatchDialog(batchInfo: any) {
+    const dialogRef = this.dialog.open(AddBatchDialougeComponent, {
+      width: 'auto',
+      // panelClass: 'custom-dialog-container',
+      data: {
+        batchInfo: batchInfo
+      }
+    })
+    dialogRef.afterClosed().subscribe(() => {
+      // this.getFolderInfo()
+    })
+  }
+
+  deleteBatch(batch: any) {
+    this.mandatoryCourseServce.deleteBatch(batch.batchId).subscribe(() => {
+      this.snackbar.open('deleted the batch', 'Close')
+    })
   }
 
   updateAddMembers() {

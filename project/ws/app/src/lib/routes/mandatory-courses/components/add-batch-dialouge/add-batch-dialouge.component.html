@@ -65,8 +65,11 @@
         Cancel
       </button>
       <button mat-raised-button type="submit" class="next_link text-white ws-mat-primary-background mat-button">
-        <span class="text-white" i18n>
+        <span class="text-white" i18n *ngIf="!data.batchInfo.batchId">
           Create
+        </span>
+        <span class="text-white" i18n *ngIf="data.batchInfo.batchId">
+          Update
         </span>
       </button>
     </div>
