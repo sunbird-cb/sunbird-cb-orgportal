@@ -677,20 +677,30 @@ h3.shepherd-title {
  }
 }
 .competency-filter-panel{
+  overflow: hidden!important;
+  height:350px!important;
+  max-height: 380px!important;
+  .filter-item-list {
+    height: 300px;
+    overflow: auto;
+  }
   .competencies-done{
       display: flex;
       justify-content: center;
       background: #fff;
       padding:5px 0;
       height: 40px;
-      position: relative;
+      position: fixed;
+      bottom:0;
+      width: 100%;
     .mat-button {
-        position: absolute;
-        bottom: 3px;
+        position: relative;
+        margin-bottom: 4px;
         color:#0074b6 !important;
         background: #fff !important;
         border: 1px solid #0074b6;
         width: 90%;
+        margin-left: 5%;
       }
   }
 }

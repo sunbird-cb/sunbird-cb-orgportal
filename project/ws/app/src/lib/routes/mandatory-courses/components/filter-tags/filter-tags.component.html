@@ -10,10 +10,13 @@
           <mat-form-field appearance="outline" class="competency-filter">
             <input matInput type="text" placeholder="Search Competency" />
           </mat-form-field>
-          <mat-option *ngFor="let competency of competeniesList; let i =index" [value]="competency.name"
-            class="mat-select-wrap-option">
-            {{competency.name}}
-          </mat-option>
+          <div class="filter-item-list">
+            <mat-option *ngFor="let competency of competeniesList; let i =index" [value]="competency.name"
+              class="mat-select-wrap-option">
+              {{competency.name}}
+            </mat-option>
+          </div>
+
           <div class="competencies-done">
             <button mat-stroked-button class="next_link mat-button" (click)="getSearchedData()">Done</button>
           </div>
