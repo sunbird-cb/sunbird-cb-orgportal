@@ -12,7 +12,7 @@ export class AddFolderPopupComponent implements OnInit {
   addFolderForm: FormGroup
   pageData: any
   constructor(public dialogRef: MatDialogRef<AddFolderPopupComponent>, private fb: FormBuilder,
-    private router: Router, private mandatoryCourseService: MandatoryCourseService) {
+              private router: Router, private mandatoryCourseService: MandatoryCourseService) {
     this.addFolderForm = this.fb.group({
       folderName: ['', Validators.required],
     })
@@ -34,7 +34,10 @@ export class AddFolderPopupComponent implements OnInit {
         ...this.pageData.folder,
       }
       this.mandatoryCourseService.createContent(metaData).subscribe((res: any) => {
-        this.mandatoryCourseService.sharefolderData({ name: this.addFolderForm.value.folderName, identifier: res.identifier, versionKey: res.versionKey })
+        this.mandatoryCourseService.sharefolderData({
+          name: this.addFolderForm.value.folderName,
+          identifier: res.identifier, versionKey: res.versionKey,
+        })
         this.router.navigateByUrl(`/app/mandatory-courses/${res.identifier}`)
       })
     }

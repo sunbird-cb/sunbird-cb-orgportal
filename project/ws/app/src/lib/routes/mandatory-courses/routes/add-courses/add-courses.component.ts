@@ -19,10 +19,10 @@ export class AddCoursesComponent implements OnInit {
   query = ''
   courseConfig = {
     filterUsage: 'courses',
-    noOfSelectionText: "competencies selected",
+    noOfSelectionText: 'competencies selected',
     filterListText: 'Search Competencies',
-    selectPlaceHolder: "Select Competency",
-    inputPlaceHolder: "Search Course"
+    selectPlaceHolder: 'Select Competency',
+    inputPlaceHolder: 'Search Course',
   }
   constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute, private snackBar: MatSnackBar) { }
 
@@ -66,7 +66,7 @@ export class AddCoursesComponent implements OnInit {
         limit: 100,
         offset: 0,
         fuzzy: true,
-      }
+      },
     }
 
     this.mandatoryCourseSvc.fetchSearchData(queryparam).subscribe((response: any) => {
@@ -126,6 +126,5 @@ export class AddCoursesComponent implements OnInit {
       this.snackBar.open(`${this.selectedCourses.length} courses added successfully`, 'Close', { verticalPosition: 'top' })
     })
   }
-
 
 }

@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { StatusWidgetComponent } from './status-widget.component';
+import { StatusWidgetComponent } from './status-widget.component'
 
 describe('StatusWidgetComponent', () => {
-  let component: StatusWidgetComponent;
-  let fixture: ComponentFixture<StatusWidgetComponent>;
+  let component: StatusWidgetComponent
+  let fixture: ComponentFixture<StatusWidgetComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatusWidgetComponent ]
+      declarations: [StatusWidgetComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StatusWidgetComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(StatusWidgetComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

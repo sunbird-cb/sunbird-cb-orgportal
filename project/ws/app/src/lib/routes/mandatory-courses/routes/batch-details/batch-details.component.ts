@@ -61,10 +61,22 @@ export class BatchDetailsComponent implements OnInit {
   }
 
   updateStatusWidgets() {
-    this.statusInfoList.push({ name: this.pageConfig.statusWidget.noOfCourse, value: this.folderInfo.children ? this.folderInfo.children.length : '00' })
-    this.statusInfoList.push({ name: this.pageConfig.statusWidget.noOfMembers, value: this.memberList.length })
-    this.statusInfoList.push({ name: this.pageConfig.statusWidget.startDate, value: formatDate(this.batchDetails.startDate, 'dd/MM/yyyy', 'en-US') })
-    this.statusInfoList.push({ name: this.pageConfig.statusWidget.endDate, value: formatDate(this.batchDetails.endDate, 'dd/MM/yyyy', 'en-US') })
+    this.statusInfoList.push({
+      name: this.pageConfig.statusWidget.noOfCourse,
+      value: this.folderInfo.children ? this.folderInfo.children.length : '00',
+    })
+    this.statusInfoList.push({
+      name: this.pageConfig.statusWidget.noOfMembers,
+      value: this.memberList.length,
+    })
+    this.statusInfoList.push({
+      name: this.pageConfig.statusWidget.startDate,
+      value: formatDate(this.batchDetails.startDate, 'dd/MM/yyyy', 'en-US'),
+    })
+    this.statusInfoList.push({
+      name: this.pageConfig.statusWidget.endDate,
+      value: formatDate(this.batchDetails.endDate, 'dd/MM/yyyy', 'en-US'),
+    })
   }
   updateBreadcrumb() {
     this.bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]

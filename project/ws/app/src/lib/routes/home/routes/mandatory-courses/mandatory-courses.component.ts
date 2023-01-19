@@ -15,7 +15,7 @@ export class MandatoryCoursesComponent implements OnInit {
   folderConfigInfo: any
   user: any
   constructor(private dialog: MatDialog, private activatedRoute: ActivatedRoute,
-    private mandatoryCourseServices: MandatoryCourseService) { }
+              private mandatoryCourseServices: MandatoryCourseService) { }
 
   ngOnInit() {
     this.pageCongifData = this.activatedRoute.snapshot.data.pageData.data

@@ -64,9 +64,8 @@ export class FilterTagsComponent implements OnInit {
           if (val.type === selectedType) {
             val.name = value
             return
-          } else {
-            this.filtersList.push({ name: value, type: selectedType })
           }
+          this.filtersList.push({ name: value, type: selectedType })
         })
         this.getSearchedData()
         break

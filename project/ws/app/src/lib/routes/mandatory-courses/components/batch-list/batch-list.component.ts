@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, OnChanges } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
@@ -11,17 +11,17 @@ const ELEMENT_DATA: NsContent.IBatch[] = []
   templateUrl: './batch-list.component.html',
   styleUrls: ['./batch-list.component.scss'],
 })
-export class BatchListComponent implements OnInit {
+export class BatchListComponent implements OnInit, OnChanges {
   displayedColumns: string[] = ['name', 'enrollmentType', 'collectionId', 'id', 'startDate', 'enrollmentEndDate', 'addMember', 'null']
   dataSource = ELEMENT_DATA
   folderId: any
   @Input() batches: any
   addMemberLinks: any
-  constructor(private route: ActivatedRoute, private mandatoryCourseServce: MandatoryCourseService, private dialog: MatDialog, private snackbar: MatSnackBar) { }
+  constructor(private route: ActivatedRoute, private mandatoryCourseServce: MandatoryCourseService,
+              private dialog: MatDialog, private snackbar: MatSnackBar) { }
 
   ngOnChanges() {
     this.folderId = this.route.snapshot.params['doId']
-    console.log(this.batches)
     // this.dataSource = this.batches
     this.addMemberLinks = `/app/mandatory-courses/${this.route.snapshot.params.doId}/batch-details/`
     this.updateAddMembers()
@@ -36,8 +36,8 @@ export class BatchListComponent implements OnInit {
       width: 'auto',
       // panelClass: 'custom-dialog-container',
       data: {
-        batchInfo: batchInfo
-      }
+        batchInfo,
+      },
     })
     dialogRef.afterClosed().subscribe(() => {
       // this.getFolderInfo()
@@ -62,4 +62,3 @@ export class BatchListComponent implements OnInit {
 
   }
 }
-

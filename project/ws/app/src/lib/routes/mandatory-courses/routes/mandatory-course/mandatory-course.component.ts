@@ -28,11 +28,11 @@ export class MandatoryCourseComponent implements OnInit {
   pageConfigData: any
   noDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
     heading: 'No course collections',
-    description: 'Create an outstanding collection of courses by adding courses.'
+    description: 'Create an outstanding collection of courses by adding courses.',
   }
   noBatchDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
     heading: `No batche's created yet`,
-    description: 'Create a batch to distribute courses.'
+    description: 'Create a batch to distribute courses.',
   }
   positions: any = []
   constructor(
@@ -67,7 +67,6 @@ export class MandatoryCourseComponent implements OnInit {
     })
   }
 
-
   filter(data: any) {
     if (data === 'course-list') {
       this.currentFilter = 'course-list'
@@ -83,8 +82,8 @@ export class MandatoryCourseComponent implements OnInit {
       width: 'auto',
       // panelClass: 'custom-dialog-container',
       data: {
-        batchInfo: this.activatedRoute.snapshot.params.doId
-      }
+        batchInfo: this.activatedRoute.snapshot.params.doId,
+      },
     })
     dialogRef.afterClosed().subscribe(() => {
       this.getFolderInfo()
@@ -98,10 +97,8 @@ export class MandatoryCourseComponent implements OnInit {
   }
 
   editCourseList() {
-    console.log(this.folderInfo)
     this.router.navigate([`/app/mandatory-courses/${this.route.snapshot.params.doId}/choose-courses`])
   }
-
 
   updateBreadcrumb(data: any) {
     this.bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]

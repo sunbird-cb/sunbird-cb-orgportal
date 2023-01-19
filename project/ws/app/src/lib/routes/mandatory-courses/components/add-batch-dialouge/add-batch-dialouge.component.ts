@@ -11,10 +11,11 @@ import { MandatoryCourseService } from '../../services/mandatory-course.service'
 export class AddBatchDialougeComponent implements OnInit {
 
   addBatchForm: FormGroup
-  todayDate: Date = new Date();
+  todayDate: Date = new Date()
   endDateStart = this.todayDate
   constructor(public dialogRef: MatDialogRef<AddBatchDialougeComponent>, private fb: FormBuilder,
-    private mandatoryService: MandatoryCourseService, @Inject(MAT_DIALOG_DATA) public data: { batchInfo: any }, private snackBar: MatSnackBar) {
+              private mandatoryService: MandatoryCourseService, @Inject(MAT_DIALOG_DATA) public data: { batchInfo: any },
+              private snackBar: MatSnackBar) {
 
     this.addBatchForm = this.fb.group({
       batchTitle: ['', [Validators.required]],
@@ -24,7 +25,6 @@ export class AddBatchDialougeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.dialogRef)
     this.initBatchForm()
   }
 
@@ -45,7 +45,7 @@ export class AddBatchDialougeComponent implements OnInit {
   }
   addBatch() {
     if (this.addBatchForm.valid) {
-      let requestParams = {
+      const requestParams = {
         request: {
           courseId: this.data.batchInfo,
           name: this.addBatchForm.value.batchTitle,
@@ -53,14 +53,14 @@ export class AddBatchDialougeComponent implements OnInit {
           enrollmentType: 'invite-only',
           startDate: this.addBatchForm.value.startDate.toISOString().slice(0, 10),
           endDate: this.addBatchForm.value.endDate.toISOString().slice(0, 10),
-          enrollmentEndDate: this.addBatchForm.value.endDate.toISOString().slice(0, 10)
-        }
+          enrollmentEndDate: this.addBatchForm.value.endDate.toISOString().slice(0, 10),
+        },
       }
       if (!this.data.batchInfo.batchId) {
         this.mandatoryService.addBatch(requestParams).subscribe(() => {
           this.snackBar.open(`${requestParams.request.name} created successfully`, 'Close', { verticalPosition: 'top' })
           this.closeDialouge()
-        }, () => {
+        },                                                      () => {
           this.snackBar.open('Please publish the goal to create batch', 'Close', { verticalPosition: 'top' })
         })
       } else {

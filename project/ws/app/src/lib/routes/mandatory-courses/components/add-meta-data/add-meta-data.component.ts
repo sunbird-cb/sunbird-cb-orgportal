@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
@@ -18,7 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
   templateUrl: './add-meta-data.component.html',
   styleUrls: ['./add-meta-data.component.scss'],
 })
-export class AddMetaDataComponent implements OnInit {
+export class AddMetaDataComponent implements OnInit, OnChanges {
   metaDataForm: FormGroup
   data!: any
   pageData!: any
@@ -27,8 +27,8 @@ export class AddMetaDataComponent implements OnInit {
   @Output() sendCourseInfo = new EventEmitter()
   @Input() folderInfo: any
   constructor(private fb: FormBuilder, private dialog: MatDialog,
-    private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
-    private route: ActivatedRoute, private snackBar: MatSnackBar) {
+              private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
+              private route: ActivatedRoute, private snackBar: MatSnackBar) {
     this.metaDataForm = this.fb.group({
       name: [''],
       purpose: [''],

@@ -7,13 +7,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 })
 export class UserCardComponent implements OnInit {
   @Input() user: any
-  @Input() isSelectable: boolean = true
+  @Input() isSelectable = true
   @Output() selected = new EventEmitter()
   profileColor!: string
   private randomcolors = [
     '#7E4C8D',
     '#3670B2',
-    '#4E9E87'
+    '#4E9E87',
   ]
   constructor() { }
 
@@ -23,7 +23,7 @@ export class UserCardComponent implements OnInit {
   }
 
   onSelect(user: any) {
-    if (!this.isSelectable) return
+    if (!this.isSelectable) { return }
     this.selected.emit(user)
   }
 

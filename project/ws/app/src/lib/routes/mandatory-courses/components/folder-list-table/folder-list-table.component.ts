@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnChanges, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 
@@ -14,7 +14,7 @@ export interface IFolder {
   templateUrl: './folder-list-table.component.html',
   styleUrls: ['./folder-list-table.component.scss'],
 })
-export class FolderListTableComponent implements OnInit {
+export class FolderListTableComponent implements OnInit, OnChanges {
   displayedColumns: string[] = ['name', 'courseCount', 'batchCount']
   dataSource: any
   @Input() folderListData: any
@@ -23,7 +23,6 @@ export class FolderListTableComponent implements OnInit {
 
   ngOnChanges() {
     this.updateDataSourse()
-    console.log(this.folderConfig)
   }
 
   ngOnInit() { }

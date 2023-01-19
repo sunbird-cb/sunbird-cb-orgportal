@@ -11,5 +11,5 @@ export const environment = {
   cbpContentBucket: (window as { [key: string]: any })['env']['contentBucket'] || '',
   certImage: (window as { [key: string]: any })['env']['certImage'] || '',
   azureHost: (window as { [key: string]: any })['azureHost'] || '',
-  azureBucket: (window as { [key: string]: any })['azureBucket'] || ''
+  azureBucket: (window as { [key: string]: any })['azureBucket'] || '',
 }

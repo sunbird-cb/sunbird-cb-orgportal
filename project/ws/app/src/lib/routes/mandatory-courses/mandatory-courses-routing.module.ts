@@ -43,7 +43,7 @@ const routes: Routes = [
         },
         resolve: {
           pageData: PageResolve,
-        }
+        },
       },
       {
         path: ':doId/batch-details/:batchId/choose-members',
