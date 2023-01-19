@@ -14,21 +14,14 @@ export class BatchDetailsComponent implements OnInit {
   currentBatchId!: string
   folderInfo: any
   @ViewChild('addMember', { static: false }) addMember!: AddMembersComponent
-  bdtitles = [
-    // { title: 'Folders', url: '/app/home/mandatory-courses' },
-    // { title: 'Folder name', url: '/app/mandatory-courses/132' },
-    { title: 'Batch name', url: 'none' },
-  ]
+  bdtitles: any = []
   noDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
-    image: 'assets/images/banners/no_data.svg',
     heading: 'No members added',
     description: 'Add members to assign course',
-    btnRequired: true,
-    btnLink: 'choose-members',
-    btnText: 'Add members',
-  }
 
-  statusInfoList: any = []
+  }
+  pageConfig: any
+  statusInfoList: NsMandatoryCourse.IStatusWidget[] = []
   memberList: any = []
   batchDetails: any
 
@@ -39,6 +32,8 @@ export class BatchDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.pageConfig = this.activatedRoute.snapshot.data.pageData.data
+    this.noDataConfig = this.pageConfig.noDataConfig
     this.activatedRoute.params.subscribe(params => {
       this.currentCourseId = params['doId']
       this.currentBatchId = params['batchId']
@@ -66,10 +61,10 @@ export class BatchDetailsComponent implements OnInit {
   }
 
   updateStatusWidgets() {
-    this.statusInfoList.push({ name: 'Number of courses', value: this.folderInfo.children ? this.folderInfo.children.length : '00' })
-    this.statusInfoList.push({ name: 'Number of members', value: this.memberList.length })
-    this.statusInfoList.push({ name: 'Start date', value: formatDate(this.batchDetails.startDate, 'dd/MM/yyyy', 'en-US') })
-    this.statusInfoList.push({ name: 'End date', value: formatDate(this.batchDetails.endDate, 'dd/MM/yyyy', 'en-US') })
+    this.statusInfoList.push({ name: this.pageConfig.statusWidget.noOfCourse, value: this.folderInfo.children ? this.folderInfo.children.length : '00' })
+    this.statusInfoList.push({ name: this.pageConfig.statusWidget.noOfMembers, value: this.memberList.length })
+    this.statusInfoList.push({ name: this.pageConfig.statusWidget.startDate, value: formatDate(this.batchDetails.startDate, 'dd/MM/yyyy', 'en-US') })
+    this.statusInfoList.push({ name: this.pageConfig.statusWidget.endDate, value: formatDate(this.batchDetails.endDate, 'dd/MM/yyyy', 'en-US') })
   }
   updateBreadcrumb() {
     this.bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]

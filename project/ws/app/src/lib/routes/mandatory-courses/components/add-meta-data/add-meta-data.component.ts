@@ -127,7 +127,7 @@ export class AddMetaDataComponent implements OnInit {
               }
 
               this.mandatoryCourseService.updateContent(req, data.result.identifier).subscribe(() => {
-                this.snackBar.open('Saved Successfully', 'Close', { verticalPosition: 'top' })
+                this.snackBar.open(this.pageData.folder.folderEditTab.successMessage, 'Close', { verticalPosition: 'top' })
               })
 
             })
@@ -189,7 +189,7 @@ export class AddMetaDataComponent implements OnInit {
       }
       forkJoin([this.mandatoryCourseService.updateContent(requestBody, this.route.snapshot.params.doId),
       this.mandatoryCourseService.updateHierarchy(requestParams)]).subscribe(() => {
-        this.snackBar.open('Saved Successfully', 'Close', { verticalPosition: 'top' })
+        this.snackBar.open(this.pageData.folder.folderEditTab.successMessage, 'Close', { verticalPosition: 'top' })
       })
     }
   }

@@ -89,4 +89,8 @@ export namespace NsMandatoryCourse {
       }
     }
   }
+  export interface IStatusWidget {
+    name?: string,
+    value?: any
+  }
 }
