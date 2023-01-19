@@ -2,7 +2,7 @@
   <form [formGroup]="metaDataForm" (ngSubmit)="updateContent()">
     <mat-card class="margin-top-m ws-mat-accent-border">
       <mat-card-title class="m-auto">
-        <span id="basic-information" class="mat-title">Basic information</span>
+        <span id="basic-information" class="mat-title">{{pageData.folder.folderEditTab.heading}}</span>
       </mat-card-title>
       <mat-card-content class="margin-top-m mobile-break mat-app-background">
         <div class="card-contan margin-top-m flex flex-1 flex-row">
@@ -10,7 +10,7 @@
             <div class="margin-top-s">
               <div class="margin-top-xs">
                 <span class="mat-subheading-2 margin-0" i18n="Title label|Label which explains the user to enter title">
-                  Title
+                  {{pageData.folder.folderEditTab.title}}
                 </span>
                 <mat-form-field appearance="outline" class="margin-top-xs">
                   <input matInput formControlName="name" maxlength="70" i18n-placeholder placeholder="Enter a title" />
@@ -22,7 +22,7 @@
               <div class="margin-top-xs">
                 <span class="mat-subheading-2 margin-0"
                   i18n="Title label|Label which explains the user to enter subtitle">
-                  Subtitle
+                  {{pageData.folder.folderEditTab.subtitle}}
                 </span>
                 <mat-form-field appearance="outline" class="margin-top-xs">
                   <input matInput formControlName="purpose" maxlength="70" i18n-placeholder
@@ -35,7 +35,7 @@
               <div class="margin-top-xs">
                 <span class="mat-subheading-2 margin-0"
                   i18n="Description label|Label which explains the user to enter description">
-                  Description
+                  {{pageData.folder.folderEditTab.description}}
                 </span>
                 <mat-form-field appearance="outline" class="margin-top-xs">
                   <textarea matInput #description formControlName="description" maxlength="70" i18n-placeholder
@@ -52,7 +52,7 @@
                 <div class="margin-top-xs">
                   <label>
                     <div class="margin-top-xs flex flex-middle thumb-text">
-                      <span class="mat-subheading-2 margin-0" i18n>Thumbnail</span>
+                      <span class="mat-subheading-2 margin-0" i18n>{{pageData.folder.folderEditTab.thumbnail}}</span>
 
                     </div>
                     <span class="mat-body-2">
@@ -86,7 +86,7 @@
         <mat-card-actions>
           <div class="flex flex-start margin-top-l margin-bottom-s margin-left-s">
             <button mat-raised-button type="submit" class="ws-mat-default-text ws-mat-accent-border-active">
-              <span class="mat-subheading-2 padding-xs" i18n>Save</span>
+              <span class="mat-subheading-2 padding-xs" i18n>{{pageData.folder.folderEditTab.save}}</span>
             </button>
           </div>
         </mat-card-actions>

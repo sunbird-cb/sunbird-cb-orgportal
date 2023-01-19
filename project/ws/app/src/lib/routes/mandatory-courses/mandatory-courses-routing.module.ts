@@ -35,6 +35,15 @@ const routes: Routes = [
       {
         path: ':doId/batch-details/:batchId',
         component: BatchDetailsComponent,
+        data: {
+          pageType: 'feature',
+          pageKey: 'batch-details',
+          pageId: 'app/batch-details',
+          module: 'batch-details',
+        },
+        resolve: {
+          pageData: PageResolve,
+        }
       },
       {
         path: ':doId/batch-details/:batchId/choose-members',
