@@ -1,80 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute } from '@angular/router'
 import { NsContent } from '@sunbird-cb/collection'
-// export interface courseFolder {
-//   folderId: number,
-//   folderName: string
-//   courseCount: number
-//   batchCount: number
-
-// }
-
-const ELEMENT_DATA: NsContent.IBatch[] = [
-
-  {
-    batchId: '1210',
-    createdBy: '',
-    endDate: '',
-    enrollmentType: '01',
-    identifier: 'string',
-    name: 'Course 01 batch 01',
-    startDate: '11 june',
-    status: 1212,
-    cert_templates: null,
-    collectionId: '0001',
-    courseId: 'string',
-    createdDate: 'string',
-    createdFor: [],
-    description: null,
-    enrollmentEndDate: 'string',
-    id: '001',
-    mentors: ['string'],
-    tandc: null,
-    updatedDate: 'string',
-  },
-  {
-    batchId: '1212',
-    createdBy: '',
-    endDate: '',
-    enrollmentType: '002',
-    identifier: 'string',
-    name: 'Course 02 batch 02',
-    startDate: '11 june',
-    status: 1212,
-    cert_templates: null,
-    collectionId: '0002',
-    courseId: 'string',
-    createdDate: 'string',
-    createdFor: [],
-    description: null,
-    enrollmentEndDate: 'string',
-    id: '002',
-    mentors: ['string'],
-    tandc: null,
-    updatedDate: 'string',
-  },
-  {
-    batchId: '1213',
-    createdBy: '',
-    endDate: '',
-    enrollmentType: '01',
-    identifier: 'string',
-    name: 'Course 03 batch 03',
-    startDate: '13 june',
-    status: 1212,
-    cert_templates: null,
-    collectionId: '0003',
-    courseId: 'string',
-    createdDate: 'string',
-    createdFor: [],
-    description: null,
-    enrollmentEndDate: 'string',
-    id: '003',
-    mentors: ['string'],
-    tandc: null,
-    updatedDate: 'string',
-  },
-]
+import { MandatoryCourseService } from '../../services/mandatory-course.service'
+import { AddBatchDialougeComponent } from '../../components/add-batch-dialouge/add-batch-dialouge.component'
+const ELEMENT_DATA: NsContent.IBatch[] = []
 
 @Component({
   selector: 'ws-app-batch-list',
@@ -86,17 +16,50 @@ export class BatchListComponent implements OnInit {
   dataSource = ELEMENT_DATA
   folderId: any
   @Input() batches: any
-
-  constructor(private route: ActivatedRoute) { }
+  addMemberLinks: any
+  constructor(private route: ActivatedRoute, private mandatoryCourseServce: MandatoryCourseService, private dialog: MatDialog, private snackbar: MatSnackBar) { }
 
   ngOnChanges() {
     this.folderId = this.route.snapshot.params['doId']
     console.log(this.batches)
-    this.dataSource = this.batches
+    // this.dataSource = this.batches
+    this.addMemberLinks = `/app/mandatory-courses/${this.route.snapshot.params.doId}/batch-details/`
+    this.updateAddMembers()
   }
 
   ngOnInit() {
 
   }
 
+  openCreateBatchDialog(batchInfo: any) {
+    const dialogRef = this.dialog.open(AddBatchDialougeComponent, {
+      width: 'auto',
+      // panelClass: 'custom-dialog-container',
+      data: {
+        batchInfo: batchInfo
+      }
+    })
+    dialogRef.afterClosed().subscribe(() => {
+      // this.getFolderInfo()
+    })
+  }
+
+  deleteBatch(batch: any) {
+    this.mandatoryCourseServce.deleteBatch(batch.batchId).subscribe(() => {
+      this.snackbar.open('deleted the batch', 'Close')
+    })
+  }
+
+  updateAddMembers() {
+    this.batches.forEach((batch: any) => {
+      this.mandatoryCourseServce.getBatchDetails(batch.batchId).subscribe((data: any) => {
+        batch.members = data.length < 10 ? `0${data.length}` : data.length || '00'
+        batch.pending = '00'
+        batch.completed = '00'
+      })
+      this.dataSource = this.batches
+    })
+
+  }
 }
+

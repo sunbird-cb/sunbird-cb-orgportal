@@ -8,16 +8,16 @@
 
   <ng-container matColumnDef="enrollmentType">
     <th mat-header-cell *matHeaderCellDef> Members </th>
-    <td mat-cell *matCellDef="let element"> {{element.enrollmentType}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.members}} </td>
   </ng-container>
 
   <ng-container matColumnDef="collectionId">
     <th mat-header-cell *matHeaderCellDef> Completed </th>
-    <td mat-cell *matCellDef="let element"> {{element.collectionId}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.completed}} </td>
   </ng-container>
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> Pending </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.pending}} </td>
   </ng-container>
 
   <ng-container matColumnDef="startDate">
@@ -26,15 +26,15 @@
   </ng-container>
   <ng-container matColumnDef="enrollmentEndDate">
     <th mat-header-cell *matHeaderCellDef> End date </th>
-    <td mat-cell *matCellDef="let element"> {{element.enrollmentEndDate}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
   </ng-container>
 
   <ng-container matColumnDef="addMember">
     <th mat-header-cell *matHeaderCellDef> </th>
     <td mat-cell *matCellDef="let element">
-      <a routerLink="" routerLinkActive="router-link-active"
-        class="action-btn member-btn mat-menu-trigger mat-icon-button mat-button-base" mat-icon-button="" type="button"><span
-          class="mat-button-wrapper">
+      <a routerLink="{{addMemberLinks}}/{{element.batchId}}/choose-members" routerLinkActive="router-link-active"
+        class="action-btn member-btn mat-menu-trigger mat-icon-button mat-button-base" mat-icon-button=""
+        type="button"><span class="mat-button-wrapper">
           Add members
         </span>
       </a>
@@ -46,11 +46,20 @@
     <th mat-header-cell *matHeaderCellDef> </th>
     <td mat-cell *matCellDef="let element">
       <button aria-haspopup="true" aria-label="action items"
-        class="action-btn mat-menu-trigger mat-icon-button mat-button-base" mat-icon-button="" type="button"><span
-          class="mat-button-wrapper">
+        class="action-btn mat-menu-trigger mat-icon-button mat-button-base" mat-icon-button="" type="button"
+        [matMenuTriggerFor]="menu"><span class="mat-button-wrapper">
           <mat-icon class="mat-icon notranslate material-icons" role="img" aria-hidden="true">more_horiz</mat-icon>
         </span>
       </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openCreateBatchDialog(element)">
+          Edit
+        </button>
+        <button mat-menu-item (click)="deleteBatch(element)">
+          Delete
+        </button>
+
+      </mat-menu>
     </td>
   </ng-container>
 

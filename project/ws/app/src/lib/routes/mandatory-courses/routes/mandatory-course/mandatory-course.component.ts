@@ -25,22 +25,16 @@ export class MandatoryCourseComponent implements OnInit {
   folderInfo: any
   courseList: any = []
   batches: any = []
+  pageConfigData: any
   noDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
-    image: 'assets/images/banners/no_data.svg',
     heading: 'No course collections',
-    description: 'Create an outstanding collection of courses by adding courses.',
-    btnRequired: true,
-    btnLink: 'course-list',
-    btnText: 'Add Courses',
+    description: 'Create an outstanding collection of courses by adding courses.'
   }
   noBatchDataConfig: NsMandatoryCourse.IEmptyDataDisplay = {
-    image: 'assets/images/banners/no_data.svg',
     heading: `No batche's created yet`,
-    description: 'Create a batch to distribute courses.',
-    btnRequired: true,
-    btnLink: 'none',
-    btnText: 'Create a batch',
+    description: 'Create a batch to distribute courses.'
   }
+  positions: any = []
   constructor(
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
@@ -53,6 +47,9 @@ export class MandatoryCourseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.pageConfigData = this.activatedRoute.snapshot.data.pageData.data
+    this.noDataConfig = this.pageConfigData.mandatoryCourses.noDataConfig
+    this.noBatchDataConfig = this.pageConfigData.mandatoryCourses.noBatchDataConfig
     this.activatedRoute.params.subscribe(params => {
       this.currentCourseId = params['doId']
       this.noDataConfig.btnLink = `/app/mandatory-courses/${this.currentCourseId}/choose-courses`
@@ -86,7 +83,7 @@ export class MandatoryCourseComponent implements OnInit {
       width: 'auto',
       // panelClass: 'custom-dialog-container',
       data: {
-        doId: this.activatedRoute.snapshot.params.doId
+        batchInfo: this.activatedRoute.snapshot.params.doId
       }
     })
     dialogRef.afterClosed().subscribe(() => {

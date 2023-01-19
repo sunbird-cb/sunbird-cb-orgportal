@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { NsMandatoryCourse } from '../../models/mandatory-course.model'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 import { AddMembersComponent } from '../add-members/add-members.component'
-
+import { formatDate } from '@angular/common'
 @Component({
   selector: 'ws-app-batch-details',
   templateUrl: './batch-details.component.html',
@@ -50,6 +50,8 @@ export class BatchDetailsComponent implements OnInit {
     this.updateBreadcrumb()
   }
   getBatchDetails() {
+    this.statusInfoList.length = 0
+    this.memberList.length = 0
     this.mandatoryCourseSvc.getBatchDetails(this.currentBatchId).subscribe(data => {
       this.memberList = data
       this.updateStatusWidgets()
@@ -66,8 +68,8 @@ export class BatchDetailsComponent implements OnInit {
   updateStatusWidgets() {
     this.statusInfoList.push({ name: 'Number of courses', value: this.folderInfo.children ? this.folderInfo.children.length : '00' })
     this.statusInfoList.push({ name: 'Number of members', value: this.memberList.length })
-    this.statusInfoList.push({ name: 'Start date', value: this.batchDetails.startDate })
-    this.statusInfoList.push({ name: 'End date', value: this.batchDetails.endDate })
+    this.statusInfoList.push({ name: 'Start date', value: formatDate(this.batchDetails.startDate, 'dd/MM/yyyy', 'en-US') })
+    this.statusInfoList.push({ name: 'End date', value: formatDate(this.batchDetails.endDate, 'dd/MM/yyyy', 'en-US') })
   }
   updateBreadcrumb() {
     this.bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]

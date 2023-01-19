@@ -12,6 +12,7 @@
           <input id="fname" matInput #batchTitle formControlName="batchTitle" i18n-placeholder
             placeholder="Enter batch title" i18n-aria-label aria-label="batch title input" class="form-input"
             autocomplete="off" />
+          <mat-error>Title is required</mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -35,8 +36,8 @@
         </label>
         <mat-form-field appearance="outline" class="margin-top-xs">
           <input id="startDate" matInput #startDate formControlName="startDate" [matDatepicker]="picker"
-            i18n-placeholder (focus)="picker.open()" placeholder="Choose start date (dd-mm-yyyy)" [min]="1/1/1900"
-            [max]="today" readonly>
+            i18n-placeholder (focus)="picker.open()" placeholder="Start Date" [min]="todayDate" [max]="" readonly
+            (dateChange)="onChangeStartDate()">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker (closed)="startDate.blur()" i18n-aria-label aria-label="Date picker">
           </mat-datepicker>
@@ -50,7 +51,7 @@
         </label>
         <mat-form-field appearance="outline" class="margin-top-xs">
           <input id="endDate" matInput #endDate formControlName="endDate" [matDatepicker]="picker1" i18n-placeholder
-            (focus)="picker1.open()" placeholder="Choose end date (dd-mm-yyyy)" [min]="1/1/1900" [max]="today" readonly>
+            (focus)="picker1.open()" placeholder="End Date" [min]="endDateStart" [max]="" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1 (closed)="endDate.blur()" i18n-aria-label aria-label="Date picker">
           </mat-datepicker>
@@ -59,12 +60,16 @@
     </div>
 
     <div class="flex items-center justify-end">
-      <button mat-raised-button type="reset" class="skip_link mat-accent mat-button margin-right-xs">
+      <button mat-raised-button type="reset" (click)="closeDialouge()"
+        class="skip_link mat-accent mat-button margin-right-xs">
         Cancel
       </button>
       <button mat-raised-button type="submit" class="next_link text-white ws-mat-primary-background mat-button">
-        <span class="text-white" i18n>
+        <span class="text-white" i18n *ngIf="!data.batchInfo.batchId">
           Create
+        </span>
+        <span class="text-white" i18n *ngIf="data.batchInfo.batchId">
+          Update
         </span>
       </button>
     </div>

@@ -28,7 +28,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     usersData!: any
     department: any
     departmentID: any
-
+    configService: any
     constructor(
         private router: Router,
         private eventSvc: EventsService,
@@ -37,6 +37,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         private events: EventService
     ) {
         this.math = Math
+        this.configService = this.activeRoute.snapshot.data.configService
         if (this.configSvc.userProfile) {
             this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
             this.department = this.configSvc.userProfile && this.configSvc.userProfile.departmentName
@@ -47,9 +48,13 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
             }
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')) {
                 this.department = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')
+                _.set(this.department, 'snapshot.data.configService.userProfile.departmentName', this.department ? this.department : '')
             }
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')) {
                 this.currentUser = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')
+            }
+            if (this.configService.userProfile && this.configService.userProfile.departmentName) {
+                this.configService.userProfile.departmentName = this.department
             }
         }
     }
@@ -121,7 +126,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
                     const minutes = obj.duration % 60
                     const duration = (hours === 0) ? ((minutes === 0) ? '---' : `${minutes} minutes`) : (minutes === 0) ? (hours === 1) ?
                         `${hours} hour` : `${hours} hours` : (hours === 1) ? `${hours} hour ${minutes} minutes` :
-                            `${hours} hours ${minutes} minutes`
+                        `${hours} hours ${minutes} minutes`
                     const creatordata = obj.creatorDetails !== undefined ? obj.creatorDetails : []
                     const str = creatordata && creatordata.length > 0 ? creatordata.replace(/\\/g, '') : []
                     const creatorDetails = str && str.length > 0 ? JSON.parse(str) : creatordata

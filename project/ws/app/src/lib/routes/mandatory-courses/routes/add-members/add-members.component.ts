@@ -5,6 +5,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 // tslint:disable
 import _ from 'lodash'
+import { MatSnackBar } from '@angular/material'
 @Component({
   selector: 'ws-app-add-members',
   templateUrl: './add-members.component.html',
@@ -23,6 +24,7 @@ export class AddMembersComponent implements OnInit {
   @Input() hideBreadScrum: boolean = false
   @Input() batchMemberList: any = []
   @Output() updateBatchList = new EventEmitter()
+  positions: any = []
   filterConfig = {
     filterUsage: 'members',
     noOfSelectionText: "designation selected",
@@ -40,6 +42,7 @@ export class AddMembersComponent implements OnInit {
     private configSvc: ConfigurationsService,
     private route: ActivatedRoute,
     private mandatoryCourseSvc: MandatoryCourseService,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -81,7 +84,7 @@ export class AddMembersComponent implements OnInit {
         query: this.query,
         filters: {
           rootOrgId: this.deptID,
-          ['competencies_v3.name']: this.selectedCompetency,
+          ['designation.name']: this.selectedCompetency,
         },
       },
     }
@@ -132,9 +135,9 @@ export class AddMembersComponent implements OnInit {
 
   }
   // All the selected members will be there,
-  saveSelected() {
+  async saveSelected() {
     const allSelectedUser = this.activeUsersData.filter(user => user.selected === true).map(user => user.id)
-    allSelectedUser.forEach((memberId) => {
+    await allSelectedUser.forEach((memberId) => {
       const requestParam = {
         request: {
           courseId: this.route.snapshot.params.doId,
@@ -142,11 +145,12 @@ export class AddMembersComponent implements OnInit {
           userId: memberId
         }
       }
-      this.mandatoryCourseSvc.addMember(requestParam).subscribe(res => {
-        console.log(res)
-      })
+      this.mandatoryCourseSvc.addMember(requestParam).subscribe(() => { })
     })
+    this.snackbar.open(`${allSelectedUser.length} members added.`, 'Close', { verticalPosition: 'top' })
+    this.selectAllMembers(false)
   }
+
   deleteSelected() {
     const allSelectedUser = this.activeUsersData.filter(user => user.selected === true).map(user => user.id)
     allSelectedUser.forEach((memberId) => {
@@ -163,6 +167,7 @@ export class AddMembersComponent implements OnInit {
       })
     })
   }
+
   updateBreadcrumb() {
     this.bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]
     this.bdtitles.push({ title: this.folderInfo.name, url: `/app/mandatory-courses/${this.folderInfo.identifier}` })
@@ -172,4 +177,5 @@ export class AddMembersComponent implements OnInit {
     })
     this.bdtitles.push({ title: 'Add members', url: 'none' })
   }
+
 }

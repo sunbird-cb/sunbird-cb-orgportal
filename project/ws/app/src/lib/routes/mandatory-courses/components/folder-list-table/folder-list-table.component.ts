@@ -18,10 +18,12 @@ export class FolderListTableComponent implements OnInit {
   displayedColumns: string[] = ['name', 'courseCount', 'batchCount']
   dataSource: any
   @Input() folderListData: any
+  @Input() folderConfig: any
   constructor(private router: Router, private mandatoryCourseService: MandatoryCourseService) { }
 
   ngOnChanges() {
     this.updateDataSourse()
+    console.log(this.folderConfig)
   }
 
   ngOnInit() { }

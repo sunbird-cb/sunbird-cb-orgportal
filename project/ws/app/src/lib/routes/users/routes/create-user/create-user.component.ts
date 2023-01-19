@@ -73,7 +73,10 @@ export class CreateUserComponent implements OnInit, OnDestroy {
           _.set(leftData, 'widgetData.userRoles', this.myRoles)
           this.widgetData = leftData
         } else {
-          this.widgetData = this.activeRoute.snapshot.data.pageData.data.menus
+          const leftData = this.activeRoute.snapshot.data.pageData.data.menus
+          const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
+          _.set(leftData, 'widgetData.name', fullProfile ? fullProfile.unMappedUser.channel : '')
+          this.widgetData = leftData
         }
       }
     })

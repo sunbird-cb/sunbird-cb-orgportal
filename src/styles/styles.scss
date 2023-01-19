@@ -178,6 +178,11 @@ iframe {
   max-width: 290px !important;
 }
 
+.mat-menu-box {
+  margin-left:-200px!important;
+}
+
+
 // Material Over-rides
 .auto-mat-form-field-input-infix {
   .mat-form-field-infix {
@@ -713,4 +718,9 @@ h3.shepherd-title {
  .mat-option-text{
       color: #333 !important;
   }
+}
+::ng-deep .mat-tooltip {
+    background: #fff !important;
+    color: #333 !important;
+    font-size: 14px !important;
 }

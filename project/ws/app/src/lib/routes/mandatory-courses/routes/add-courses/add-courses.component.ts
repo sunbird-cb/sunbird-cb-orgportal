@@ -89,10 +89,6 @@ export class AddCoursesComponent implements OnInit {
     })
   }
 
-
-
-
-
   updateBreadcrumb() {
     const data = this.mandatoryCourseSvc.getFolderInfo()
     this.bdtitles = [{ title: 'Folders', url: '/app/home/mandatory-courses' }]
@@ -127,7 +123,7 @@ export class AddCoursesComponent implements OnInit {
       },
     }
     this.mandatoryCourseSvc.updateHierarchy(requestParams).subscribe(() => {
-      this.snackBar.open('Saved Successfully', 'Close', { verticalPosition: 'top' })
+      this.snackBar.open(`${this.selectedCourses.length} courses added successfully`, 'Close', { verticalPosition: 'top' })
     })
   }
 

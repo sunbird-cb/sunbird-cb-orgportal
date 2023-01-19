@@ -25,7 +25,7 @@
     </div>
     <div class="flex-2 flex margin-right-m search_box">
       <mat-form-field appearance="outline">
-        <input matInput #search [(ngModel)]='searchTerm' name="search" placeholder="{{filterConfig.inputPlaceHolder}}"
+        <input matInput #search name="search" placeholder="{{filterConfig.inputPlaceHolder}}"
           (keyup.enter)="onChange(search.value, 'query')">
         <mat-icon class="search-icon" matPrefix class="color-60" (click)="onChange(search.value, 'query')">search
         </mat-icon>
@@ -37,6 +37,7 @@
         <mat-checkbox class="margin-right-s" (change)="onSelectAll()" [checked]="selectAll"></mat-checkbox> Select all
       </a>
     </div>
+    <ng-content></ng-content>
   </div>
 </form>
 
