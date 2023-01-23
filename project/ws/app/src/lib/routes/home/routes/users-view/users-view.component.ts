@@ -224,6 +224,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       case 'download':
         this.downloadUserList()
         break
+      case 'consumptionReport':
+        this.downloadConsumptionReport()
+        break
     }
   }
 
@@ -277,8 +280,14 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     // XLSX.utils.book_append_sheet(wb, ws, 'Sheet1')
     // XLSX.writeFile(wb, `${(this.currentFilter === 'active') ?
     // 'Active-' : (this.currentFilter === 'inactive') ? 'Inactive-' : ''}UserList.xlsx`)
-    const tempDate = new Date()
-    const fileName = `userReport-${tempDate.getFullYear()}-${tempDate.getMonth() + 1}-${tempDate.getDate()}.xlsx`
+    // const tempDate = new Date() ${tempDate.getFullYear()}-${month}-${tempDate.getDate()}
+    const fileName = `userReport.xlsx`
+    const downloadUrl = `${environment.domainName}${environment.userBucket}/system/${fileName}`
+    window.location.href = downloadUrl
+  }
+
+  downloadConsumptionReport() {
+    const fileName = `userReport.xlsx`
     const downloadUrl = `${environment.domainName}${environment.userBucket}${this.configSvc.userProfile.rootOrgId}/${fileName}`
     window.location.href = downloadUrl
   }
