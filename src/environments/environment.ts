@@ -11,6 +11,8 @@ export const environment: IEnvironment = {
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
   contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
+  userBucket: (window as { [key: string]: any })['env']['userBucket'] || '',
+  domainName: (window as { [key: string]: any })['env']['domainName'] || '',
 }
 interface IEnvironment {
   name: null | string
@@ -21,6 +23,8 @@ interface IEnvironment {
   portalRoles: string[]
   contentHost: string
   contentBucket?: string
+  userBucket?: string
+  domainName?: string
 }
 
 /*

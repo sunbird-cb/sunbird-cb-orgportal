@@ -34,9 +34,9 @@
         </div>
       </div>
       <ng-container *ngIf="usersData && currentFilter !== 'upload'">
-        <ws-widget-org-user-table [tableData]="tabledata" [data]="dataForTable" [isUpload]=true [isCreate]=true
-          (eOnButtonClick)="clickHandler($event)" (actionsClick)="menuActions($event)"
-          (searchByEnterKey)="onEnterkySearch($event)">
+        <ws-widget-org-user-table [tableData]="tabledata" [data]="dataForTable" [isUpload]=false [isCreate]=true
+          [isDownload]=true [isConsumptionReport]=true (eOnButtonClick)="clickHandler($event)"
+          (actionsClick)="menuActions($event)" (searchByEnterKey)="onEnterkySearch($event)">
         </ws-widget-org-user-table>
         <!-- <ws-widget-org-user-table [tableData]="tabledata" [data]="dataForTable" [isUpload]=true [isCreate]=true
           (eOnButtonClick)="clickHandler($event)" (eOnRowClick)="onRoleClick($event)" (actionsClick)="menuActions($event)"

@@ -13,6 +13,7 @@ import { EventService } from '@sunbird-cb/utils'
 import { NsContent } from '@sunbird-cb/collection'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 import { LoaderService } from '../../../../../../../../../src/app/services/loader.service'
+// import * as XLSX from 'xlsx'
 
 @Component({
   selector: 'ws-app-users-view',
@@ -141,6 +142,8 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           active: !user.isDeleted,
           blocked: user.blocked,
           roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
+          orgId: user.rootOrgId,
+          orgName: user.rootOrgName,
         })
       })
     }
@@ -161,6 +164,8 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           active: !user.isDeleted,
           blocked: user.blocked,
           roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
+          orgId: user.rootOrgId,
+          orgName: user.rootOrgName,
         })
       })
     }
@@ -216,6 +221,12 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       case 'upload':
         this.onUploadClick()
         break
+      case 'download':
+        this.downloadUserList()
+        break
+      case 'consumptionReport':
+        this.downloadConsumptionReport()
+        break
     }
   }
 
@@ -228,6 +239,57 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       },
       {}
     )
+  }
+
+  async downloadUserList() {
+    // const tempData: any = []
+    // if (this.currentFilter === 'active') {
+    //   this.activeUsers.forEach((element: any) => {
+    //     let tempRoles = ''
+    //     element.role.forEach((roleEle: any, index: any) => {
+    //       tempRoles = `${roleEle}${(index === 0) ? '' : ', '}${tempRoles}`
+    //     })
+    //     tempData.push({
+    //       'Full Name': element.fullname,
+    //       Email: element.email,
+    //       Roles: tempRoles,
+    //       Active: element.active,
+    //       // 'Organisation ID': element.orgId,
+    //       // 'Organisation Name': element.orgName,
+    //     })
+    //   })
+    // }
+    // if (this.currentFilter === 'inactive') {
+    //   this.inActiveUsers.forEach((element: any) => {
+    //     let tempRoles = ''
+    //     element.role.forEach((roleEle: any, index: any) => {
+    //       tempRoles = `${roleEle}${(index === 0) ? '' : ', '}${tempRoles}`
+    //     })
+    //     tempData.push({
+    //       'Full Name': element.fullname,
+    //       Email: element.email,
+    //       Roles: tempRoles,
+    //       Active: element.active,
+    //       // 'Organisation ID': element.orgId,
+    //       // 'Organisation Name': element.orgName,
+    //     })
+    //   })
+    // }
+    // const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(tempData)
+    // const wb: XLSX.WorkBook = XLSX.utils.book_new()
+    // XLSX.utils.book_append_sheet(wb, ws, 'Sheet1')
+    // XLSX.writeFile(wb, `${(this.currentFilter === 'active') ?
+    // 'Active-' : (this.currentFilter === 'inactive') ? 'Inactive-' : ''}UserList.xlsx`)
+    // const tempDate = new Date() ${tempDate.getFullYear()}-${month}-${tempDate.getDate()}
+    const fileName = `userReport.xlsx`
+    const downloadUrl = `${environment.domainName}${environment.userBucket}/system/${fileName}`
+    window.location.href = downloadUrl
+  }
+
+  downloadConsumptionReport() {
+    const fileName = `userReport.xlsx`
+    const downloadUrl = `${environment.domainName}${environment.userBucket}${this.configSvc.userProfile.rootOrgId}/${fileName}`
+    window.location.href = downloadUrl
   }
 
   onUploadClick() {
