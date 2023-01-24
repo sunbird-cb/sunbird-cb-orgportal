@@ -282,12 +282,12 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     // 'Active-' : (this.currentFilter === 'inactive') ? 'Inactive-' : ''}UserList.xlsx`)
     // const tempDate = new Date() ${tempDate.getFullYear()}-${month}-${tempDate.getDate()}
     const fileName = `userReport.xlsx`
-    const downloadUrl = `${environment.domainName}${environment.userBucket}/system/${fileName}`
+    const downloadUrl = `${environment.domainName}${environment.userBucket}${this.configSvc.userProfile.rootOrgId}/${fileName}`
     window.location.href = downloadUrl
   }
 
   downloadConsumptionReport() {
-    const fileName = `userReport.xlsx`
+    const fileName = `userEnrolmentReport.xlsx`
     const downloadUrl = `${environment.domainName}${environment.userBucket}${this.configSvc.userProfile.rootOrgId}/${fileName}`
     window.location.href = downloadUrl
   }
