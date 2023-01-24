@@ -228,7 +228,8 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
       },
     }
     this.mandatoryCourseService.updateHierarchy(requestParams).subscribe(() => {
-      this.snackBar.open(`${this.metaDataForm.value.name} ${this.pageData.folder.folderEditTab.successMessage}`, 'Close', { verticalPosition: 'top' })
+      this.snackBar.open(`${this.metaDataForm.value.name} ${this.pageData.folder.folderEditTab.successMessage}`,
+        'Close', { verticalPosition: 'top' })
       this.mandatoryCourseService.sharefolderData({
         ...this.metaDataForm.value,
         identifier: data.identifier, versionKey: data.versionKey,
