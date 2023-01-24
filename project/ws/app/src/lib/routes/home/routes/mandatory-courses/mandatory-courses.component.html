@@ -22,5 +22,10 @@
       <ws-app-folder-list-table [folderListData]="folderList" [folderConfig]="folderConfigInfo">
       </ws-app-folder-list-table>
     </div>
+    <div class="flex flex-row justify-end pageinator-wrap">
+      <mat-paginator [length]="totalCount" #paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)" aria-label="Select page">
+      </mat-paginator>
+    </div>
   </mat-card>
 </div>

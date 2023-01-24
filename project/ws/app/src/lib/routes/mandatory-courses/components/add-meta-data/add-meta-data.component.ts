@@ -1,11 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 import { ImageCropComponent } from '../../../../image-crop/image-crop.component'
-import { forkJoin } from 'rxjs'
-// import { map } from 'rxjs/operators'
+import { forkJoin, } from 'rxjs'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { AddThumbnailComponent } from '../../../../thumbnail/add-thumbnail/add-thumbnail.component'
 // import { ThumbnailService } from '../../../../thumbnail/thumbnail.service'
@@ -25,12 +24,14 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
   // folderInfo: any
   bdtitles!: any
   @Output() sendCourseInfo = new EventEmitter()
+  @Output() upDateFolderInfo = new EventEmitter()
   @Input() folderInfo: any
+  isNew!: string
   constructor(private fb: FormBuilder, private dialog: MatDialog,
-              private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
-              private route: ActivatedRoute, private snackBar: MatSnackBar) {
+    private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
+    private route: ActivatedRoute, private snackBar: MatSnackBar) {
     this.metaDataForm = this.fb.group({
-      name: [''],
+      name: ['', [Validators.required]],
       purpose: [''],
       description: [''],
       appIcon: [''],
@@ -40,6 +41,7 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.getinitalData(this.folderInfo)
+    this.isNew = this.route.snapshot.params.doId
   }
 
   ngOnInit() {
@@ -58,12 +60,9 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
   }
 
   openDialog(type: string) {
-
     const dialogConfig = new MatDialogConfig()
     const dialogRef = this.dialog.open(AddThumbnailComponent, dialogConfig)
-
     const instance = dialogRef.componentInstance
-
     instance.isUpdate = true
     dialogRef.afterClosed().subscribe(data => {
       this.data = data
@@ -158,6 +157,21 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
   showError() {
     return false
   }
+
+  addFolder() {
+    if (this.metaDataForm.valid) {
+      const requestBody = {
+        ...this.metaDataForm.value,
+        ...this.pageData.folder,
+      }
+
+      this.mandatoryCourseService.createContent(requestBody).subscribe((res: any) => {
+        this.updateHierarchy(res)
+
+      })
+    }
+  }
+
   updateContent() {
     const requestParams = {
       request: {
@@ -192,5 +206,34 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
         this.snackBar.open(this.pageData.folder.folderEditTab.successMessage, 'Close', { verticalPosition: 'top' })
       })
     }
+  }
+
+  updateHierarchy(data: any) {
+    const requestParams = {
+      request: {
+        data: {
+          nodesModified: {
+            [data.identifier]: {
+              isNew: false,
+              root: true,
+            },
+          },
+          hierarchy: {
+            [data.identifier]: {
+              root: true,
+              children: [],
+            },
+          },
+        },
+      },
+    }
+    this.mandatoryCourseService.updateHierarchy(requestParams).subscribe(() => {
+      this.snackBar.open(`${this.metaDataForm.value.name} ${this.pageData.folder.folderEditTab.successMessage}`, 'Close', { verticalPosition: 'top' })
+      this.mandatoryCourseService.sharefolderData({
+        ...this.metaDataForm.value,
+        identifier: data.identifier, versionKey: data.versionKey,
+      })
+      this.upDateFolderInfo.emit({ name: this.metaDataForm.value.name, identifier: data.identifier })
+    })
   }
 }

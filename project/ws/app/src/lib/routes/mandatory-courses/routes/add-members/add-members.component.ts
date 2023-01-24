@@ -1,11 +1,12 @@
 
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core'
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 // tslint:disable
 import _ from 'lodash'
-import { MatSnackBar } from '@angular/material'
+import { MatSnackBar, PageEvent } from '@angular/material'
+import { FilterTagsComponent } from '../../components/filter-tags/filter-tags.component'
 @Component({
   selector: 'ws-app-add-members',
   templateUrl: './add-members.component.html',
@@ -24,6 +25,8 @@ export class AddMembersComponent implements OnInit {
   @Input() hideBreadScrum: boolean = false
   @Input() batchMemberList: any = []
   @Output() updateBatchList = new EventEmitter()
+  @ViewChild('filterTags', { static: false }) filterTags!: FilterTagsComponent
+
   positions: any = []
   filterConfig = {
     filterUsage: 'members',
@@ -33,11 +36,15 @@ export class AddMembersComponent implements OnInit {
     inputPlaceHolder: "Search by name"
   }
   bdtitles = [
-    { title: 'Folders', url: '/app/home/mandatory-courses' },
-    { title: 'Folder name', url: '/app/mandatory-courses/132' },
-    { title: 'Batch name', url: '/app/mandatory-courses/132/batch-details/123' },
     { title: 'Add members', url: 'none' },
   ]
+  totalCount = 0
+  pageSize = 50
+  pageSizeOptions = [50, 40, 30, 20, 10]
+  pageIndex = 0
+  selectedMembers: any = []
+  previousPage: any = []
+  currentPage: any = []
   constructor(
     private configSvc: ConfigurationsService,
     private route: ActivatedRoute,
@@ -78,20 +85,28 @@ export class AddMembersComponent implements OnInit {
     return ''
   }
 
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex
+    this.getAllUsers()
+    this.filterTags.onPageChange(false)
+  }
+
   getAllUsers() {
     const filterObj = {
       request: {
         query: this.query,
         filters: {
           rootOrgId: this.deptID,
-          ['designation.name']: this.selectedCompetency,
+          ['profileDetails.professionalDetails.designation']: this.selectedCompetency,
         },
+        limit: this.pageSize,
+        offset: this.pageSize * this.pageIndex
       },
     }
     this.mandatoryCourseSvc.getAllUsers(filterObj).subscribe(
       (res: any) => {
-        // this.usersData = res.content
         this.usersData = res.content
+        this.totalCount = res.count
         this.filterData()
       })
   }
@@ -101,9 +116,10 @@ export class AddMembersComponent implements OnInit {
     this.activeUsersData = this.activeUsers
     if (this.batchMemberList.length > 0) {
       this.batchMemberList.forEach((member: any) => {
-        tempMemberList.push(this.activeUsersData.filter(mem => mem.userId === member.user_id)[0])
+        const mem = this.activeUsersData.filter(mem => mem.userId === member.user_id)[0]
+        mem.selected = false
+        tempMemberList.push(mem)
       })
-      console.log(tempMemberList)
       this.activeUsersData = tempMemberList
     }
   }
@@ -111,12 +127,39 @@ export class AddMembersComponent implements OnInit {
     const activeUsersData: any[] = []
     if (this.usersData && this.usersData.length > 0) {
       _.filter(this.usersData, { isDeleted: false }).forEach((user: any) => {
-        user.selected = false
+        if (this.isAlreadySelected(user)) {
+          user.selected = true
+          if (this.allCoursesChecked()) {
+            this.filterTags.onPageChange(true)
+          } else {
+            this.filterTags.onPageChange(false)
+          }
+        } else {
+          user.selected = false
+        }
         activeUsersData.push(user)
       })
       return activeUsersData
     }
     return []
+  }
+  allCoursesChecked() {
+    const checkedItems = this.activeUsersData.filter((res: any) => res.selected === true)
+    return checkedItems.length === this.activeUsersData.length ? true : false
+  }
+
+  isAlreadySelected(item: any) {
+    const isExist = this.selectedMembers.filter((usr: any) => usr.id === item.id)
+    return isExist.length > 0 ? true : false
+  }
+
+  updateSelectedMembers(user: any) {
+    if (!this.isAlreadySelected(user) && user.selected) {
+      this.selectedMembers.push(user)
+    }
+    if (this.isAlreadySelected(user) && !user.selected) {
+      this.selectedMembers = this.selectedMembers.filter((mem: any) => user.id !== mem.id)
+    }
   }
 
   selectedMember(user: any) {
@@ -124,16 +167,19 @@ export class AddMembersComponent implements OnInit {
       if (usr.id === user.id) {
         usr.selected = !usr.selected
       }
+      this.updateSelectedMembers(user)
       return usr
     })
   }
   selectAllMembers(selectAll: boolean) {
-    this.activeUsersData = this.activeUsersData.map((course: any) => {
-      course.selected = selectAll ? true : false
-      return course
+    this.activeUsersData = this.activeUsersData.map((user: any) => {
+      user.selected = selectAll ? true : false
+      this.updateSelectedMembers(user)
+      return user
     })
-
+    // this.activeUsersData = this.selectedMembers
   }
+
   // All the selected members will be there,
   async saveSelected() {
     const allSelectedUser = this.activeUsersData.filter(user => user.selected === true).map(user => user.id)
@@ -149,6 +195,7 @@ export class AddMembersComponent implements OnInit {
     })
     this.snackbar.open(`${allSelectedUser.length} members added.`, 'Close', { verticalPosition: 'top' })
     this.selectAllMembers(false)
+    this.filterTags.onPageChange(false)
   }
 
   deleteSelected() {
@@ -161,8 +208,7 @@ export class AddMembersComponent implements OnInit {
           userId: memberId
         }
       }
-      this.mandatoryCourseSvc.removeMember(requestParam).subscribe(res => {
-        console.log(res)
+      this.mandatoryCourseSvc.removeMember(requestParam).subscribe(() => {
         this.updateBatchList.emit()
       })
     })
@@ -177,5 +223,4 @@ export class AddMembersComponent implements OnInit {
     })
     this.bdtitles.push({ title: 'Add members', url: 'none' })
   }
-
 }

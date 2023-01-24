@@ -3,12 +3,16 @@
   <!-- <ws-app-folder-list-table></ws-app-folder-list-table> -->
 
   <ws-app-filter-tags [filterConfig]="courseConfig" (searchFilterData)="searchData($event)"
-    (onselectAll)="onSelectAllCourse($event)">
-    <div class="flex previous-course" *ngIf="this.previousCourses.length>0">
-      {{this.previousCourses.length}} Course selected
+    (onselectAll)="onSelectAllCourse($event)" #filterTags>
+    <div class="flex previous-course" *ngIf="this.selectedItems.length>0">
+      {{this.selectedItems.length}} Course selected
     </div>
   </ws-app-filter-tags>
-
+  <div class="flex flex-row justify-end pageinator-wrap">
+    <mat-paginator [length]="totalCount" #paginator [hidePageSize]="true" [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" aria-label="Select page">
+    </mat-paginator>
+  </div>
   <div class="flex flex-1 flex-wrap margin-top-l justify-between items-center" *ngIf="searchResults">
     <ng-container *ngFor="let c of searchResults">
       <div class="course-card margin-bottom-m">

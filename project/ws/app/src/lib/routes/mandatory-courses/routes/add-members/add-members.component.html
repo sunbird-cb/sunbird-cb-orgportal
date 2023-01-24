@@ -2,15 +2,23 @@
   <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }"></ws-widget-breadcrumbs-org>
 
   <ws-app-filter-tags [filterConfig]="filterConfig" (searchFilterData)="searchData($event)"
-    (onselectAll)="selectAllMembers($event)">
+    (onselectAll)="selectAllMembers($event)" [selectAll]="selectAll" #filterTags>
+    <div class="flex previous-course" *ngIf="selectedMembers.length>0">
+      {{selectedMembers.length}} members selected
+    </div>
   </ws-app-filter-tags>
 </ng-container>
-<div class="flex flex-row margin-top-xl justify-between flex-wrap">
+<div class="flex flex-row justify-end pageinator-wrap" *ngIf="!hideBreadScrum">
+  <mat-paginator [length]="totalCount" #paginator [hidePageSize]="true" [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" aria-label="Select page">
+  </mat-paginator>
+</div>
+<div class="flex flex-row justify-between flex-wrap">
   <ng-container *ngFor="let user of activeUsersData">
-    <ws-app-user-card [user]="user" (selected)="selectedMember(user)" [isSelectable]="true" class="margin-bottom-s margin-right-m">
+    <ws-app-user-card [user]="user" (selected)="selectedMember(user)" [isSelectable]="true"
+      class="margin-bottom-s margin-right-m">
     </ws-app-user-card>
   </ng-container>
-
   <div class="add_btn_footer_box" *ngIf="!hideBreadScrum">
     <div class="btn_inner_box flex justify-end">
       <div class="flex items-center justify-end">
@@ -26,4 +34,3 @@
       </div>
     </div>
   </div>
-

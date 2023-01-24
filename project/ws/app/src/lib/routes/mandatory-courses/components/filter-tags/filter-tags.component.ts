@@ -13,7 +13,7 @@ export class FilterTagsComponent implements OnInit {
   @Output() removeFilterItem = new EventEmitter()
   @Output() searchFilterData = new EventEmitter()
   @Output() onselectAll = new EventEmitter()
-  selectAll = false
+  @Input() selectAll: boolean = false
   competeniesList: string[] = []
   selectedCompetency = []
   positions = []
@@ -37,7 +37,9 @@ export class FilterTagsComponent implements OnInit {
     this.selectAll = !this.selectAll
     this.onselectAll.emit(this.selectAll)
   }
-
+  onPageChange(status: boolean) {
+    this.selectAll = status
+  }
   onChange(value: any, selectedType: string) {
     switch (selectedType) {
       case 'filter': if (this.selectedCompetency.length > 0) {

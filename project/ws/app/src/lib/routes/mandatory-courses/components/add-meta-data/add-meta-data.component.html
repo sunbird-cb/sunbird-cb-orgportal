@@ -1,5 +1,5 @@
 <div class="meta-data">
-  <form [formGroup]="metaDataForm" (ngSubmit)="updateContent()">
+  <form [formGroup]="metaDataForm" (ngSubmit)="isNew=='new'?addFolder():updateContent()">
     <mat-card class="margin-top-m ws-mat-accent-border">
       <mat-card-title class="m-auto">
         <span id="basic-information" class="mat-title">{{pageData.folder.folderEditTab.heading}}</span>
@@ -22,7 +22,7 @@
               <div class="margin-top-xs">
                 <span class="mat-subheading-2 margin-0"
                   i18n="Title label|Label which explains the user to enter subtitle">
-                  {{pageData.folder.folderEditTab.subtitle}}
+                  {{pageData.folder.folderEditTab.subTitle}}
                 </span>
                 <mat-form-field appearance="outline" class="margin-top-xs">
                   <input matInput formControlName="purpose" maxlength="70" i18n-placeholder

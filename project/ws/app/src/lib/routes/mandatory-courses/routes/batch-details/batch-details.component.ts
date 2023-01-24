@@ -24,6 +24,11 @@ export class BatchDetailsComponent implements OnInit {
   statusInfoList: NsMandatoryCourse.IStatusWidget[] = []
   memberList: any = []
   batchDetails: any
+  totalCount = 0
+  pageSize = 50
+  pageSizeOptions = [50, 40, 30, 20, 10]
+  pageIndex = 0
+  selectedMembers: any = []
 
   constructor(
     private activatedRoute: ActivatedRoute,

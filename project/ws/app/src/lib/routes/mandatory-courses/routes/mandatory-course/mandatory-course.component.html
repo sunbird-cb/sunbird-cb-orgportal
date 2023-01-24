@@ -52,7 +52,8 @@
           role="button">{{pageConfigData.folder.folderInfo.tabs.metaData}}</a>
         <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'course-list',
             'ws-mat-accent-border font-medium':currentFilter !== 'course-list'}" mat-button
-          (click)="filter('course-list')" role="button">{{pageConfigData.folder.folderInfo.tabs.courses}}</a>
+          (click)="filter('course-list')" role="button"
+          *ngIf="!isNew">{{pageConfigData.folder.folderInfo.tabs.courses}}</a>
         <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'batch-list',
             'ws-mat-accent-border font-medium':currentFilter !== 'batch-list'}" mat-button
           (click)="filter('batch-list')" role="button"
@@ -61,11 +62,11 @@
     </div>
 
     <ng-container *ngIf="currentFilter === 'meta-data'">
-      <ws-app-add-meta-data [folderInfo]="folderInfo" *ngIf="folderInfo"></ws-app-add-meta-data>
-
+      <ws-app-add-meta-data [folderInfo]="folderInfo" (upDateFolderInfo)="upDateFolderInfo($event)" *ngIf="folderInfo">
+      </ws-app-add-meta-data>
     </ng-container>
-    <ng-container *ngIf="currentFilter === 'course-list'">
 
+    <ng-container *ngIf="currentFilter === 'course-list'">
       <!-- <ws-app-folder-list-table></ws-app-folder-list-table> -->
       <!-- <ws-widget-card-content></ws-widget-card-content> -->
 
@@ -96,7 +97,7 @@
     <ng-container *ngIf="currentFilter === 'batch-list'">
       <ws-app-no-data [data]="noBatchDataConfig" (buttonClicked)="openCreateBatchDialog()" *ngIf="batches.length==0">
       </ws-app-no-data>
-      <div class="flex create-batch" *ngIf="batches.length>1">
+      <div class="flex create-batch" *ngIf="batches.length>0">
         <button mat-raised-button (click)="openCreateBatchDialog()"
           class="next_link text-white ws-mat-primary-background mat-button" [disabled]="courseList.length==0">
           <span class="text-white" i18n>

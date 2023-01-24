@@ -213,3 +213,9 @@ input.mat-input-element {
       cursor: pointer;
     }
 }
+
+::ng-deep .mat-paginator{
+    .mat-paginator-container{
+      min-height: 30px;
+    }
+}

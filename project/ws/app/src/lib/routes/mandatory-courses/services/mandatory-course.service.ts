@@ -182,6 +182,9 @@ export class MandatoryCourseService {
     let collectionInfo = localStorage.getItem('collectionInfo') || ''
     return JSON.parse(collectionInfo)
   }
+  removeFolderInfo() {
+    localStorage.removeItem('collectionInfo')
+  }
   updateBreadcrumbList(link: any) {
     const list = this.breadCrumbList.map((bd: any) => bd.title)
     if (!list.includes(link.title)) {

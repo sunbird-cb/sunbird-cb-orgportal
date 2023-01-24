@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select'
 import { MatListModule } from '@angular/material/list'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatPaginatorModule } from '@angular/material/paginator'
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 // import { MatListModule } from '@angular/material/list'
@@ -78,6 +79,7 @@ import { StatusWidgetComponent } from './components/status-widget/status-widget.
     ImageCropModule,
     MatTooltipModule,
     MatMenuModule,
+    MatPaginatorModule
   ],
   entryComponents: [
     AddBatchDialougeComponent,

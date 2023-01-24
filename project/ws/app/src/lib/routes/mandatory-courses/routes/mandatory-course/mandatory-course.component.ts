@@ -35,6 +35,7 @@ export class MandatoryCourseComponent implements OnInit {
     description: 'Create a batch to distribute courses.',
   }
   positions: any = []
+  isNew = false
   constructor(
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
@@ -55,9 +56,15 @@ export class MandatoryCourseComponent implements OnInit {
       this.noDataConfig.btnLink = `/app/mandatory-courses/${this.currentCourseId}/choose-courses`
     })
     this.getFolderInfo()
+    this.isNew = this.activatedRoute.snapshot.params.doId === 'new' ? true : false
   }
 
   getFolderInfo() {
+    if (this.route.snapshot.params.doId === 'new') {
+      this.updateBreadcrumb({ name: 'New', identifier: 'new' })
+      this.folderInfo = {}
+      return
+    }
     this.folderInfo = this.mandatoryCourseService.getFolderInfo()
     this.updateBreadcrumb(this.folderInfo)
     this.mandatoryCourseService.getEditContent(this.route.snapshot.params.doId).subscribe((data: any) => {
@@ -65,8 +72,14 @@ export class MandatoryCourseComponent implements OnInit {
       this.batches = data.result.content.batches || []
       this.mandatoryCourseService.sharefolderData(data.result.content)
     })
-  }
 
+  }
+  upDateFolderInfo(event: any) {
+    this.router.navigateByUrl(`/app/mandatory-courses/${event.identifier}`)
+    this.updateBreadcrumb({ name: event.name, identifier: event.identifier })
+    this.isNew = false
+    this.currentFilter = 'course-list'
+  }
   filter(data: any) {
     if (data === 'course-list') {
       this.currentFilter = 'course-list'
@@ -93,6 +106,7 @@ export class MandatoryCourseComponent implements OnInit {
   publishFolder() {
     this.mandatoryCourseService.publishContent(this.mandatoryCourseService.getFolderInfo().identifier).subscribe(() => {
       this.snackBar.open('Published Successfully', 'Close', { verticalPosition: 'top' })
+      this.currentFilter = 'batch-list'
     })
   }
 

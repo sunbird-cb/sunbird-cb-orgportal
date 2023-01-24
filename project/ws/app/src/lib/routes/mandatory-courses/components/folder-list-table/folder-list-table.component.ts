@@ -19,6 +19,7 @@ export class FolderListTableComponent implements OnInit, OnChanges {
   dataSource: any
   @Input() folderListData: any
   @Input() folderConfig: any
+
   constructor(private router: Router, private mandatoryCourseService: MandatoryCourseService) { }
 
   ngOnChanges() {
