@@ -79,7 +79,7 @@ import { StatusWidgetComponent } from './components/status-widget/status-widget.
     ImageCropModule,
     MatTooltipModule,
     MatMenuModule,
-    MatPaginatorModule
+    MatPaginatorModule,
   ],
   entryComponents: [
     AddBatchDialougeComponent,

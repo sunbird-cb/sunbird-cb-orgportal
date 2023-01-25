@@ -13,7 +13,7 @@ export class FilterTagsComponent implements OnInit {
   @Output() removeFilterItem = new EventEmitter()
   @Output() searchFilterData = new EventEmitter()
   @Output() onselectAll = new EventEmitter()
-  @Input() selectAll: boolean = false
+  @Input() selectAll = false
   competeniesList: string[] = []
   selectedCompetency = []
   positions = []

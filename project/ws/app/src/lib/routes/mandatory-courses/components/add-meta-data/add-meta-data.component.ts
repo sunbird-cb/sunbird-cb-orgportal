@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 import { ImageCropComponent } from '../../../../image-crop/image-crop.component'
-import { forkJoin, } from 'rxjs'
+import { forkJoin } from 'rxjs'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { AddThumbnailComponent } from '../../../../thumbnail/add-thumbnail/add-thumbnail.component'
 // import { ThumbnailService } from '../../../../thumbnail/thumbnail.service'
@@ -28,8 +28,8 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
   @Input() folderInfo: any
   isNew!: string
   constructor(private fb: FormBuilder, private dialog: MatDialog,
-    private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
-    private route: ActivatedRoute, private snackBar: MatSnackBar) {
+              private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
+              private route: ActivatedRoute, private snackBar: MatSnackBar) {
     this.metaDataForm = this.fb.group({
       name: ['', [Validators.required]],
       purpose: [''],
@@ -229,7 +229,7 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
     }
     this.mandatoryCourseService.updateHierarchy(requestParams).subscribe(() => {
       this.snackBar.open(`${this.metaDataForm.value.name} ${this.pageData.folder.folderEditTab.successMessage}`,
-        'Close', { verticalPosition: 'top' })
+                         'Close', { verticalPosition: 'top' })
       this.mandatoryCourseService.sharefolderData({
         ...this.metaDataForm.value,
         identifier: data.identifier, versionKey: data.versionKey,

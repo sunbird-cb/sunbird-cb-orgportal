@@ -60,7 +60,11 @@ export class AddMembersComponent implements OnInit {
     }
     this.folderInfo = this.mandatoryCourseSvc.getFolderInfo()
     this.updateBreadcrumb()
-    this.getAllUsers()
+    if (this.batchMemberList.length > 0) {
+      this.changeBatchMembers()
+    } else {
+      this.getAllUsers()
+    }
   }
 
   searchData(filterList: any) {
@@ -75,7 +79,15 @@ export class AddMembersComponent implements OnInit {
     })
     this.getAllUsers()
   }
-
+  changeBatchMembers() {
+    this.activeUsersData = this.batchMemberList.map((member: any) => {
+      member.firstName = member.first_name
+      member.lastName = member.last_name
+      member.id = member.user_id
+      member.selected = false
+      return member
+    })
+  }
   getUserFullName(user: any) {
     // this.getHoverUser(user: any)
     if (user && user.first_name && user.last_name) {
@@ -116,9 +128,11 @@ export class AddMembersComponent implements OnInit {
     this.activeUsersData = this.activeUsers
     if (this.batchMemberList.length > 0) {
       this.batchMemberList.forEach((member: any) => {
-        const mem = this.activeUsersData.filter(mem => mem.userId === member.user_id)[0]
-        mem.selected = false
-        tempMemberList.push(mem)
+        const mem = this.activeUsersData.filter(m => m.userId === member.user_id)[0]
+        if (mem) {
+          mem.selected = false
+          tempMemberList.push(mem)
+        }
       })
       this.activeUsersData = tempMemberList
     }
