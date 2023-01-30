@@ -8,11 +8,11 @@
             {{selectedCompetency.length}} {{filterConfig.noOfSelectionText}}.
           </mat-select-trigger>
           <mat-form-field appearance="outline" class="competency-filter">
-            <input matInput type="text" placeholder="Search Competency" />
+            <input matInput type="text" name="search" [(ngModel)]="searchInput" placeholder="Search Competency" />
           </mat-form-field>
           <div class="filter-item-list">
-            <mat-option *ngFor="let competency of competeniesList; let i =index" [value]="competency.name"
-              class="mat-select-wrap-option">
+            <mat-option *ngFor="let competency of competeniesList |mandatoryFilter:searchInput; let i =index"
+              [value]="competency.name" class="mat-select-wrap-option">
               {{competency.name}}
             </mat-option>
           </div>

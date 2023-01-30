@@ -37,6 +37,7 @@ import { ThumbnailModule } from '../../thumbnail/thumbnail.module'
 import { ImageCropModule } from '../../image-crop/image-crop.module'
 import { FilterTagsComponent } from './components/filter-tags/filter-tags.component'
 import { StatusWidgetComponent } from './components/status-widget/status-widget.component'
+import { MandatoryFilterPipe } from '../mandatory-courses/pipes/filter.pipe'
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { StatusWidgetComponent } from './components/status-widget/status-widget.
     UserCardComponent,
     FilterTagsComponent,
     StatusWidgetComponent,
+    MandatoryFilterPipe,
   ],
   imports: [
     CommonModule,
