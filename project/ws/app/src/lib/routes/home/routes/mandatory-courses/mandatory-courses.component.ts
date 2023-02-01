@@ -19,7 +19,7 @@ export class MandatoryCoursesComponent implements OnInit {
   pageIndex = 0
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   constructor(private activatedRoute: ActivatedRoute,
-              private mandatoryCourseServices: MandatoryCourseService, private router: Router) { }
+    private mandatoryCourseServices: MandatoryCourseService, private router: Router) { }
 
   ngOnInit() {
     this.pageCongifData = this.activatedRoute.snapshot.data.pageData.data
@@ -27,7 +27,7 @@ export class MandatoryCoursesComponent implements OnInit {
     this.user = this.mandatoryCourseServices.getUserId()
     this.mandatoryCourseServices.updatePageData(this.activatedRoute.snapshot.data.pageData.data)
     this.getFolderList('')
-    this.paginator._intl.itemsPerPageLabel = 'Folders per page'
+
   }
 
   openCreateFolderDialog() {
@@ -66,10 +66,12 @@ export class MandatoryCoursesComponent implements OnInit {
     this.mandatoryCourseServices.fetchSearchData(queryparam).subscribe(data => {
       this.folderList = data.result.content
       this.totalCount = data.result.count
+      // this.paginator._intl.itemsPerPageLabel = 'Folders per page'
     })
   }
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex
+    this.pageSize = event.pageSize
     this.getFolderList('')
   }
 }

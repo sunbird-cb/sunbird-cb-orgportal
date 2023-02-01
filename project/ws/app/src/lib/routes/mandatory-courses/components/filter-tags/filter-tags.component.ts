@@ -17,7 +17,7 @@ export class FilterTagsComponent implements OnInit {
   competeniesList: string[] = []
   selectedCompetency = []
   positions = []
-  searchInput: string = ''
+  searchInput = ''
   constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute) { }
 
   ngOnInit() {

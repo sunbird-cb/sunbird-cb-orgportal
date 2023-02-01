@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core'
 
 @Pipe({
   name: 'mandatoryFilter',
-  pure: false
+  pure: false,
 })
 export class MandatoryFilterPipe implements PipeTransform {
 
