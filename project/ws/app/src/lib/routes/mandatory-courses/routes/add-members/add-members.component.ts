@@ -120,6 +120,11 @@ export class AddMembersComponent implements OnInit {
         this.usersData = res.content
         this.totalCount = res.count
         this.filterData()
+        if (this.allMembersChecked()) {
+          this.filterTags.onPageChange(true)
+        } else {
+          this.filterTags.onPageChange(false)
+        }
       })
   }
 
@@ -143,11 +148,6 @@ export class AddMembersComponent implements OnInit {
       _.filter(this.usersData, { isDeleted: false }).forEach((user: any) => {
         if (this.isAlreadySelected(user)) {
           user.selected = true
-          if (this.allCoursesChecked()) {
-            this.filterTags.onPageChange(true)
-          } else {
-            this.filterTags.onPageChange(false)
-          }
         } else {
           user.selected = false
         }
@@ -157,7 +157,7 @@ export class AddMembersComponent implements OnInit {
     }
     return []
   }
-  allCoursesChecked() {
+  allMembersChecked() {
     const checkedItems = this.activeUsersData.filter((res: any) => res.selected === true)
     return checkedItems.length === this.activeUsersData.length ? true : false
   }
