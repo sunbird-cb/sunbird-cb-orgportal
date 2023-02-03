@@ -12,13 +12,13 @@ const ELEMENT_DATA: NsContent.IBatch[] = []
   styleUrls: ['./batch-list.component.scss'],
 })
 export class BatchListComponent implements OnInit, OnChanges {
-  displayedColumns: string[] = ['name', 'enrollmentType', 'collectionId', 'id', 'startDate', 'enrollmentEndDate', 'addMember', 'null']
+  displayedColumns: string[] = ['name', 'enrollmentType', 'startDate', 'enrollmentEndDate', 'addMember', 'null']
   dataSource = ELEMENT_DATA
   folderId: any
   @Input() batches: any
   addMemberLinks: any
   constructor(private route: ActivatedRoute, private mandatoryCourseServce: MandatoryCourseService,
-              private dialog: MatDialog, private snackbar: MatSnackBar) { }
+    private dialog: MatDialog, private snackbar: MatSnackBar) { }
 
   ngOnChanges() {
     this.folderId = this.route.snapshot.params['doId']
