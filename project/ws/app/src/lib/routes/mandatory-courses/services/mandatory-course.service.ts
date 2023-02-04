@@ -41,7 +41,7 @@ export class MandatoryCourseService {
   ) { }
 
   createContent(meta: {
-    name: string, mimeType: string, contentType: string, primaryCategory: string, isExternal: boolean, ownershipType: string[], license: string, visibility: string
+    name: string, purpose: string, posterImage: string, appIcon: string, description: string, mimeType: string, contentType: string, primaryCategory: string, isExternal: boolean, ownershipType: string[], license: string, visibility: string
   }): Observable<string> {
     let randomNumber = ''
     for (let i = 0; i < 16; i++) {
@@ -56,10 +56,12 @@ export class MandatoryCourseService {
           createdBy: (this.configSvc.userProfile && this.configSvc.userProfile.userId) || '',
           createdFor: [(this.configSvc.userProfile && this.configSvc.userProfile.rootOrgId) ? this.configSvc.userProfile.rootOrgId : ''],
           creator: (this.configSvc.userProfile && this.configSvc.userProfile.userName) || '',
-          description: '',
+          description: meta.description,
           mimeType: meta.mimeType,
           name: meta.name,
-          purpose: '',
+          purpose: meta.purpose,
+          appIcon: meta.appIcon,
+          posterImage: meta.posterImage,
           organisation: [
             (this.configSvc.userProfile && this.configSvc.userProfile.departmentName) ? this.configSvc.userProfile.departmentName : '',
           ],

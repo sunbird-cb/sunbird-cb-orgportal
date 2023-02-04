@@ -79,6 +79,7 @@ export class MandatoryCourseComponent implements OnInit {
     this.updateBreadcrumb({ name: event.name, identifier: event.identifier })
     this.isNew = false
     this.currentFilter = 'course-list'
+    setTimeout(() => { this.getFolderInfo() }, 500)
   }
   filter(data: any) {
     if (data === 'course-list') {

@@ -19,7 +19,7 @@ export class MandatoryCoursesComponent implements OnInit {
   pageIndex = 0
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   constructor(private activatedRoute: ActivatedRoute,
-    private mandatoryCourseServices: MandatoryCourseService, private router: Router) { }
+              private mandatoryCourseServices: MandatoryCourseService, private router: Router) { }
 
   ngOnInit() {
     this.pageCongifData = this.activatedRoute.snapshot.data.pageData.data

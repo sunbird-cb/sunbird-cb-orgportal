@@ -28,7 +28,9 @@ export namespace NsMandatoryCourse {
         license?: string
         ownershipType?: string[]
         purpose?: string
-        visibility?: string
+        visibility?: string,
+        appIcon?: string,
+        posterImage?: string
       }
     }
   }

@@ -28,8 +28,8 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
   @Input() folderInfo: any
   isNew!: string
   constructor(private fb: FormBuilder, private dialog: MatDialog,
-              private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
-              private route: ActivatedRoute, private snackBar: MatSnackBar) {
+    private sanitizer: DomSanitizer, private mandatoryCourseService: MandatoryCourseService,
+    private route: ActivatedRoute, private snackBar: MatSnackBar) {
     this.metaDataForm = this.fb.group({
       name: ['', [Validators.required]],
       purpose: [''],
@@ -161,37 +161,16 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
   addFolder() {
     if (this.metaDataForm.valid) {
       const requestBody = {
-        ...this.metaDataForm.value,
         ...this.pageData.folder,
+        ...this.metaDataForm.value,
       }
-
       this.mandatoryCourseService.createContent(requestBody).subscribe((res: any) => {
         this.updateHierarchy(res)
-
       })
     }
   }
 
   updateContent() {
-    const requestParams = {
-      request: {
-        data: {
-          nodesModified: {
-            [this.route.snapshot.params.doId]: {
-              isNew: false,
-              root: true,
-            },
-          },
-          hierarchy: {
-            [this.route.snapshot.params.doId]: {
-              root: true,
-              children: [
-              ],
-            },
-          },
-        },
-      },
-    }
     if (this.metaDataForm.valid) {
       const requestBody = {
         request: {
@@ -201,9 +180,13 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
           },
         },
       }
-      forkJoin([this.mandatoryCourseService.updateContent(requestBody, this.route.snapshot.params.doId),
-      this.mandatoryCourseService.updateHierarchy(requestParams)]).subscribe(() => {
+      this.mandatoryCourseService.updateContent(requestBody, this.route.snapshot.params.doId).subscribe((data) => {
         this.snackBar.open(this.pageData.folder.folderEditTab.successMessage, 'Close', { verticalPosition: 'top' })
+        this.mandatoryCourseService.sharefolderData({
+          ...this.metaDataForm.value,
+          identifier: data.result.identifier, versionKey: data.result.versionKey,
+        })
+        this.upDateFolderInfo.emit({ name: this.metaDataForm.value.name, identifier: data.result.identifier })
       })
     }
   }
@@ -229,7 +212,7 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
     }
     this.mandatoryCourseService.updateHierarchy(requestParams).subscribe(() => {
       this.snackBar.open(`${this.metaDataForm.value.name} ${this.pageData.folder.folderEditTab.successMessage}`,
-                         'Close', { verticalPosition: 'top' })
+        'Close', { verticalPosition: 'top' })
       this.mandatoryCourseService.sharefolderData({
         ...this.metaDataForm.value,
         identifier: data.identifier, versionKey: data.versionKey,
