@@ -18,7 +18,7 @@ export class BatchListComponent implements OnInit, OnChanges {
   @Input() batches: any
   addMemberLinks: any
   constructor(private route: ActivatedRoute, private mandatoryCourseServce: MandatoryCourseService,
-    private dialog: MatDialog, private snackbar: MatSnackBar) { }
+              private dialog: MatDialog, private snackbar: MatSnackBar) { }
 
   ngOnChanges() {
     this.folderId = this.route.snapshot.params['doId']

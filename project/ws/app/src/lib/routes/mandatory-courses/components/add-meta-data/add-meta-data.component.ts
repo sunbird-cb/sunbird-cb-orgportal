@@ -4,7 +4,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 import { ImageCropComponent } from '../../../../image-crop/image-crop.component'
-import { forkJoin } from 'rxjs'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { AddThumbnailComponent } from '../../../../thumbnail/add-thumbnail/add-thumbnail.component'
 // import { ThumbnailService } from '../../../../thumbnail/thumbnail.service'
@@ -180,7 +179,7 @@ export class AddMetaDataComponent implements OnInit, OnChanges {
           },
         },
       }
-      this.mandatoryCourseService.updateContent(requestBody, this.route.snapshot.params.doId).subscribe((data) => {
+      this.mandatoryCourseService.updateContent(requestBody, this.route.snapshot.params.doId).subscribe(data => {
         this.snackBar.open(this.pageData.folder.folderEditTab.successMessage, 'Close', { verticalPosition: 'top' })
         this.mandatoryCourseService.sharefolderData({
           ...this.metaDataForm.value,
