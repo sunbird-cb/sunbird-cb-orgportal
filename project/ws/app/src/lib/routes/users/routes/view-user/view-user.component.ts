@@ -34,6 +34,8 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   department: any = {}
   departmentName = ''
   rolesList: any = []
+  rolesObject: any = []
+  uniqueRoles: any = []
   configSvc: any
   userID: any
   public userRoles: Set<string> = new Set()
@@ -83,21 +85,41 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         this.department = fullProfile.unMappedUser.rootOrgId
         this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
         const orgLst = _.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList')
-        const filteredDept = _.compact(_.map(orgLst, ls => {
-          const f = _.filter(ls.flags, (fl: any) => fullProfile.unMappedUser.rootOrg[fl])
-          if (f && f.length > 0) {
-            return ls
-          }
-          return null
-        }))
-        /* tslint:disable-next-line */
-        const rolesListFull = _.uniq(_.map(_.compact(_.flatten(_.map(filteredDept, 'roles'))), rol => ({ roleName: rol, description: rol })))
 
-        rolesListFull.forEach((role: any) => {
+        // New code for roles
+        for (let i = 0; i < orgLst.length; i += 1) {
+          if (orgLst[i].name === 'MDO') {
+            _.each(orgLst[i].roles, rolesObject => {
+              this.uniqueRoles.push({
+                roleName: rolesObject, description: rolesObject,
+              })
+            })
+          }
+        }
+
+        this.uniqueRoles.forEach((role: any) => {
           if (!this.rolesList.some((item: any) => item.roleName === role.roleName)) {
             this.rolesList.push(role)
           }
         })
+
+        // Old code
+        // const filteredDept = _.compact(_.map(orgLst, ls => {
+        //   const f = _.filter(ls.flags, (fl: any) => fullProfile.unMappedUser.rootOrg[fl])
+        //   if (f && f.length > 0) {
+        //     return ls
+        //   }
+        //   return null
+        // }))
+
+        /* tslint:disable-next-line */
+        // const rolesListFull = _.uniq(_.map(_.compact(_.flatten(_.map(filteredDept, 'roles'))), rol => ({ roleName: rol, description: rol })))
+
+        // rolesListFull.forEach((role: any) => {
+        //   if (!this.rolesList.some((item: any) => item.roleName === role.roleName)) {
+        //     this.rolesList.push(role)
+        //   }
+        // })
 
         const usrRoles = profileDataAll.roles
         usrRoles.forEach((role: any) => {
