@@ -5,6 +5,7 @@ import { EventService } from '@sunbird-cb/utils'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import { RolesService } from '../../../users/services/roles.service'
 import { UsersService } from '../../../users/services/users.service'
 @Component({
   selector: 'ws-app-roles-access',
@@ -15,12 +16,16 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
   tabledata!: ITableData
   data: any = []
   roleCountSpinner = true
+  parseRoledata: any = []
+  rolesObject: any = []
+  uniqueRoles: any = []
 
   constructor(private router: Router,
               private activeRouter: ActivatedRoute,
               private usersService: UsersService,
     // private telemetrySvc: TelemetryService,
-              private events: EventService) { }
+              private events: EventService,
+              private roleservice: RolesService) { }
 
   ngOnInit() {
     this.tabledata = {
@@ -83,17 +88,31 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* API call to get all roles*/
   fetchRolesNew() {
-    let totalUsers: any[] = []
-    const usrsList = _.get(this.activeRouter.snapshot, 'data.usersList.data.content') || []
-    totalUsers = _.map(_.groupBy(_.flatten(_.map(_.flatten(_.map(usrsList, 'organisations')), 'roles'))), (_k, v) => {
-      return {
-        role: (v || ''),
-        // .replace(/[/_/]/g, ' '),
-        // count: (k || []).length || 0,
-        count: 0,
+    this.roleservice.getAllRoles().subscribe(data => {
+      this.parseRoledata = JSON.parse(data.result.response.value)
+      for (let i = 0; i < this.parseRoledata.orgTypeList.length; i += 1) {
+        if (this.parseRoledata.orgTypeList[i].name === 'MDO') {
+          this.rolesObject.push(this.parseRoledata.orgTypeList[i].roles)
+        }
       }
+      const arrayConcat = _.uniq([].concat(...this.rolesObject))
+      _.each(arrayConcat, rolesObject => {
+        this.uniqueRoles.push({ role: rolesObject, count: '0' })
+      })
+      this.data = _.uniq(this.uniqueRoles)
     })
-    this.data = totalUsers
+    // Old code
+    // let totalUsers: any[] = []
+    // const usrsList = _.get(this.activeRouter.snapshot, 'data.usersList.data.content') || []
+    // totalUsers = _.map(_.groupBy(_.flatten(_.map(_.flatten(_.map(usrsList, 'organisations')), 'roles'))), (_k, v) => {
+    //   return {
+    //     role: (v || ''),
+    //     // .replace(/[/_/]/g, ' '),
+    //     // count: (k || []).length || 0,
+    //     count: 0,
+    //   }
+    // })
+    // this.data = totalUsers
   }
 
   ngOnDestroy() { }
