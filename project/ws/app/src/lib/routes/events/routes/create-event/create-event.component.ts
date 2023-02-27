@@ -244,7 +244,7 @@ export class CreateEventComponent implements OnInit {
       const setSelectedPresentersObj = {
         firstname: obj.firstName || obj.firstname,
         lastname: obj.lastName || obj.lastname,
-        email: obj.email,
+        email: obj.profileDetails.personalDetails.primaryEmail,
         type: 'Karmayogi User',
       }
       const contactsObj = {
