@@ -13,6 +13,7 @@ import * as moment from 'moment'
 /* tslint:disable */
 import _ from 'lodash'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import { ProfileV2UtillService } from '../../../home/services/home-utill.service'
 /* tslint:enable */
 @Component({
   selector: 'ws-app-create-event',
@@ -98,7 +99,7 @@ export class CreateEventComponent implements OnInit {
     // tslint:disable-next-line:align
     private router: Router, private configSvc: ConfigurationsService, private changeDetectorRefs: ChangeDetectorRef,
     // tslint:disable-next-line:align
-    private activeRoute: ActivatedRoute, private events: EventService,
+    private activeRoute: ActivatedRoute, private events: EventService, private profileUtilSvc: ProfileV2UtillService
   ) {
 
     if (this.configSvc.userProfile) {
@@ -244,7 +245,7 @@ export class CreateEventComponent implements OnInit {
       const setSelectedPresentersObj = {
         firstname: obj.firstName || obj.firstname,
         lastname: obj.lastName || obj.lastname,
-        email: obj.profileDetails.personalDetails.primaryEmail,
+        email: this.profileUtilSvc.emailTransform(obj.profileDetails.personalDetails.primaryEmail),
         type: 'Karmayogi User',
       }
       const contactsObj = {

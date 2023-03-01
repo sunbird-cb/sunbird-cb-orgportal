@@ -9,6 +9,7 @@ import { AdduserpopupComponent } from '../adduserpopup/adduserpopup.component'
 import { MdoInfoService } from '../../services/mdoinfo.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute, Router } from '@angular/router'
+import { ProfileV2UtillService } from '../../services/home-utill.service'
 
 @Component({
   selector: 'ws-app-leadershiptable',
@@ -52,7 +53,8 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
 
   constructor(public dialog: MatDialog, private activeRoute: ActivatedRoute, private snackBar: MatSnackBar,
     // tslint:disable-next-line:align
-    private mdoinfoSrvc: MdoInfoService, private configSvc: ConfigurationsService, private router: Router) {
+    private mdoinfoSrvc: MdoInfoService, private configSvc: ConfigurationsService, private router: Router,
+    private profileUtilSvc: ProfileV2UtillService) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
   }
@@ -142,7 +144,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
               const obj = {
                 srnumber: index + 1,
                 fullname: `${user.firstName} ${user.lastName}`,
-                email: user.email,
+                email: this.profileUtilSvc.emailTransform(user.email),
                 position: pos,
                 id: user.id,
               }

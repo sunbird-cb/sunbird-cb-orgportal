@@ -30,4 +30,10 @@ export class ProfileV2UtillService {
       .get<any>(API_END_POINTS.USER_BADGE_RECENT)
       .pipe(map(notifications => notifications))
   }
+
+  emailTransform(value: string): any {
+    return value.split(".").join("[dot]").replace("@", "[at]")
+
+  }
+
 }
