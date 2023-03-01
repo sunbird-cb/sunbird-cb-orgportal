@@ -32,6 +32,8 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   departmentName = ''
   toastSuccess: any
   rolesList: any = []
+  rolesObject: any = []
+  uniqueRoles: any = []
   public userRoles: Set<string> = new Set()
   configService: any
   routeSubscription: Subscription | null = null
@@ -86,21 +88,43 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         this.department = fullProfile.unMappedUser.rootOrgId
         this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
         const orgLst = _.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList')
-        const filteredDept = _.compact(_.map(orgLst, ls => {
-          const f = _.filter(ls.flags, (fl: any) => fullProfile.unMappedUser.rootOrg[fl])
-          if (f && f.length > 0) {
-            return ls
-          }
-          return null
-        }))
-        /* tslint:disable-next-line */
-        const rolesListFull = _.uniq(_.map(_.compact(_.flatten(_.map(filteredDept, 'roles'))), rol => ({ roleName: rol, description: rol })))
 
-        rolesListFull.forEach((role: any) => {
+        // new code
+        for (let i = 0; i < orgLst.length; i += 1) {
+          if (orgLst[i].name === 'MDO') {
+            _.each(orgLst[i].roles, rolesObject => {
+              this.uniqueRoles.push({
+                roleName: rolesObject, description: rolesObject,
+              })
+            })
+          }
+        }
+
+        this.uniqueRoles.forEach((role: any) => {
           if (!this.rolesList.some((item: any) => item.roleName === role.roleName)) {
             this.rolesList.push(role)
           }
         })
+
+        /// old code
+        /* tslint:disable-next-line */
+
+        // const filteredDept = _.compact(_.map(orgLst, ls => {
+        //   const f = _.filter(ls.flags, (fl: any) => fullProfile.unMappedUser.rootOrg[fl])
+        //   if (f && f.length > 0) {
+        //     return ls
+        //   }
+        //   return null
+        // }))
+        // const rolesListFull = _.uniq(_.map(_.compact(_.flatten(_.map(filteredDept, 'roles'))),
+        //  rol => ({ roleName: rol, description: rol })))
+
+        // rolesListFull.forEach((role: any) => {
+        //   if (!this.rolesList.some((item: any) => item.roleName === role.roleName)) {
+        //     this.rolesList.push(role)
+        //   }
+        // })
+
         if (this.configService.userProfile && this.configService.userProfile.departmentName) {
           this.configService.userProfile.departmentName = this.departmentName
         }
