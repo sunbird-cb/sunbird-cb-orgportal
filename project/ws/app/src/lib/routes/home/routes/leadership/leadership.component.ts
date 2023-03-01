@@ -6,6 +6,7 @@ import { IColums, ITableData } from '../../interface/interfaces'
 import { MatSort } from '@angular/material/sort'
 import * as _ from 'lodash'
 import { MdoInfoService } from '../../services/mdoinfo.service'
+import { ProfileV2UtillService } from '../../services/home-utill.service'
 
 @Component({
   selector: 'ws-app-leadership',
@@ -48,7 +49,8 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
   deptID: any
   tabData = 'MDO_LEADER'
 
-  constructor(private activeRoute: ActivatedRoute, private configSvc: ConfigurationsService, private mdoinfoSrvc: MdoInfoService) {
+  constructor(private activeRoute: ActivatedRoute, private configSvc: ConfigurationsService,
+    private mdoinfoSrvc: MdoInfoService, private profileUtilSvc: ProfileV2UtillService) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
   }
@@ -138,7 +140,7 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
           this.usersData.forEach((user: any, index: any)  => {
             const obj = {
               fullname: `${user.firstName} ${user.lastName}`,
-              email: user.email,
+              email: this.profileUtilSvc.emailTransform(user.email),
               position: user.channel,
               id: user.id,
               srnumber: index + 1,

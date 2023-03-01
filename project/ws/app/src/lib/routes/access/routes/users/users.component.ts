@@ -5,6 +5,7 @@ import { UsersService } from '../../services/users.service'
 /* tslint:disable */
 import _ from 'lodash'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
+import { ProfileV2UtillService } from '../../../home/services/home-utill.service'
 /* tslint:enable */
 @Component({
   selector: 'ws-app-users',
@@ -22,7 +23,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   roleName: string | undefined
   private defaultSideNavBarOpenedSubscription: any
 
-  constructor(private usersSvc: UsersService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private usersSvc: UsersService, private router: Router, private route: ActivatedRoute, private profileUtilSvc: ProfileV2UtillService,) { }
   ngOnInit() {
     const url = this.router.url.split('/')
     this.role = url[url.length - 2]
@@ -34,9 +35,9 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       actions: [],
       columns: [
         { displayName: 'Full name', key: 'fullName' },
-        { displayName: 'Email', key: 'email' },
+        { displayName: 'Email id', key: 'email' },
         // { displayName: 'Position', key: 'position' },
-        { displayName: 'Role', key: 'role', isList: true },
+        { displayName: 'Role acc', key: 'role', isList: true },
       ],
       needCheckBox: false,
       needHash: false,
@@ -59,7 +60,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       this.data = res.users.map((user: any) => {
         return {
           fullName: `${user.first_name} ${user.last_name}`,
-          email: user.email,
+          email: this.profileUtilSvc.emailTransform(user.email),
           position: user.department_name,
           role: this.role,
           wid: user.wid,
@@ -92,7 +93,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
         user => {
           return {
             fullName: `${user.firstName} ${user.lastName}`,
-            email: _.get(user, 'profileDetails.personalDetails.primaryEmail') || user.email,
+            email: _.get(user, 'this.profileUtilSvc.emailTransform(profileDetails.personalDetails.primaryEmail)') || this.profileUtilSvc.emailTransform(user.email),
             position: user.department_name,
             role: this.getRoleList(user),
             wid: user.userId,
