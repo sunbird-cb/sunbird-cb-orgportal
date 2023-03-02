@@ -23,7 +23,8 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   roleName: string | undefined
   private defaultSideNavBarOpenedSubscription: any
 
-  constructor(private usersSvc: UsersService, private router: Router, private route: ActivatedRoute, private profileUtilSvc: ProfileV2UtillService,) { }
+  constructor(private usersSvc: UsersService, private router: Router, private route: ActivatedRoute,
+              private profileUtilSvc: ProfileV2UtillService) { }
   ngOnInit() {
     const url = this.router.url.split('/')
     this.role = url[url.length - 2]
@@ -93,7 +94,8 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
         user => {
           return {
             fullName: `${user.firstName} ${user.lastName}`,
-            email: _.get(user, 'this.profileUtilSvc.emailTransform(profileDetails.personalDetails.primaryEmail)') || this.profileUtilSvc.emailTransform(user.email),
+            email: _.get(user, 'this.profileUtilSvc.emailTransform(profileDetails.personalDetails.primaryEmail)')
+              || this.profileUtilSvc.emailTransform(user.email),
             position: user.department_name,
             role: this.getRoleList(user),
             wid: user.userId,

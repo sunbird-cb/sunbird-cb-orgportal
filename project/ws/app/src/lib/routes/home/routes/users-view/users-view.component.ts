@@ -139,7 +139,8 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') }
         activeUsersData.push({
           fullname: user ? `${user.firstName} ${user.lastName}` : null,
-          email: user.personalDetails && user.personalDetails.primaryEmail ? this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
+          email: user.personalDetails && user.personalDetails.primaryEmail ?
+            this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
           role: org.roles || [],
           userId: user.id,
           active: !user.isDeleted,
@@ -161,7 +162,8 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') || [] }
         inactiveUsersData.push({
           fullname: user ? `${user.firstName} ${user.lastName}` : null,
-          email: user.personalDetails && user.personalDetails.primaryEmail ? this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
+          email: user.personalDetails && user.personalDetails.primaryEmail ?
+          this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
           role: org.roles || [],
           userId: user.id,
           active: !user.isDeleted,
@@ -175,15 +177,14 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     return inactiveUsersData
   }
 
-
-
   blockedUsers() {
     const blockedUsersData: any[] = []
     if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
       _.filter(this.usersData.content, { isDeleted: false }).forEach((user: any) => {
         blockedUsersData.push({
           fullname: user ? `${user.firstName} ${user.lastName}` : null,
-          email: user.personalDetails && user.personalDetails.primaryEmail ? this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
+          email: user.personalDetails && user.personalDetails.primaryEmail ?
+          this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
           role: user.roles,
           userId: user.id,
           active: !user.isDeleted,
