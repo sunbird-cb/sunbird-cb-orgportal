@@ -50,7 +50,7 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
   tabData = 'MDO_LEADER'
 
   constructor(private activeRoute: ActivatedRoute, private configSvc: ConfigurationsService,
-    private mdoinfoSrvc: MdoInfoService, private profileUtilSvc: ProfileV2UtillService) {
+              private mdoinfoSrvc: MdoInfoService, private profileUtilSvc: ProfileV2UtillService) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
   }
