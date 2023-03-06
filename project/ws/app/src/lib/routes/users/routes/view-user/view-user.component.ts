@@ -123,13 +123,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         //   }
         // })
 
-
         const usrRoles = profileDataAll.roles
         usrRoles.forEach((role: any) => {
           this.orguserRoles.push(role)
           this.modifyUserRoles(role)
         })
-
 
         // if (this.department.active_users && this.department.active_users.length > 0) {
         //   this.department.active_users.forEach((user: any) => {
