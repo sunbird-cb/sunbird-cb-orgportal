@@ -104,8 +104,7 @@ export class ParticipantsComponent implements OnInit {
                 this.participants = []
                 Object.keys(resultdata).forEach((key: any) => {
                     const obj = resultdata[key]
-                    const email_id = _.get(obj, 'profileDetails.personalDetails.primaryEmail')
-                    const email = this.profileUtilSvc.emailTransform(email_id)
+                    const email = this.profileUtilSvc.emailTransform(_.get(obj, 'profileDetails.personalDetails.primaryEmail'))
                     if (email !== undefined) {
                         const participantObj = {
                             email,
