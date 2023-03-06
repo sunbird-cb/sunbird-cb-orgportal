@@ -32,7 +32,8 @@ export class ProfileV2UtillService {
   }
 
   emailTransform(value: string): any {
-    return value.split('.').join('[dot]').replace('@', '[at]')
+    // return value.split('.').join('[dot]').replace('@', '[at]')
+    return value.replace(/\./g, '[dot]').replace('@', '[at]')
 
   }
 

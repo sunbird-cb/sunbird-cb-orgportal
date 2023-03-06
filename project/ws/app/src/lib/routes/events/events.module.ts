@@ -23,6 +23,7 @@ import {
 } from '@angular/material'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { PipeEmailModule } from '../pipes/pipe-email/pipe-email.module'
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
       MatRadioModule,
       MatExpansionModule,
       MatDividerModule,
+      PipeEmailModule,
     ],
   entryComponents: [
     ParticipantsComponent,

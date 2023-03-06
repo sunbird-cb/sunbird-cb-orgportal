@@ -123,14 +123,14 @@
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Primary email</label>
                                 <input type="text" [disabled]="true"
-                                  [value]="basicInfo.primaryEmail ? basicInfo.primaryEmail : ''"
+                                  [value]="basicInfo.primaryEmail ? (basicInfo.primaryEmail | pipeEmail) : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Secondary email</label>
                                 <input type="text" [disabled]="true"
-                                  [value]="basicInfo.personalEmail ? basicInfo.personalEmail : ''"
+                                  [value]="basicInfo.personalEmail ? ( basicInfo.personalEmail | pipeEmail) : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
 

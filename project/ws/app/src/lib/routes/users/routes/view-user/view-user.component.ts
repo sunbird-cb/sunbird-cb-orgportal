@@ -64,6 +64,8 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
+        // console.log(this.activeRoute.snapshot.data, 'this.activeRoute.snapshot.data====')
+        // console.log(this.activeRoute.snapshot.data.profileData.data, 'this.activeRoute.snapshot.data.profileData.data')
         this.configSvc = this.activeRoute.snapshot.data.configService || {}
         const profileDataAll = this.activeRoute.snapshot.data.profileData.data || {}
         const profileData = profileDataAll.profileDetails
@@ -126,6 +128,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           this.orguserRoles.push(role)
           this.modifyUserRoles(role)
         })
+
         // if (this.department.active_users && this.department.active_users.length > 0) {
         //   this.department.active_users.forEach((user: any) => {
         //     if (this.userID === user.userId) {
