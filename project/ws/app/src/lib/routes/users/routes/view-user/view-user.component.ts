@@ -64,6 +64,8 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
+        // console.log(this.activeRoute.snapshot.data, 'this.activeRoute.snapshot.data====')
+        // console.log(this.activeRoute.snapshot.data.profileData.data, 'this.activeRoute.snapshot.data.profileData.data')
         this.configSvc = this.activeRoute.snapshot.data.configService || {}
         const profileDataAll = this.activeRoute.snapshot.data.profileData.data || {}
         const profileData = profileDataAll.profileDetails
@@ -81,6 +83,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           this.userStatus = profileDataAll.isDeleted ? 'Inactive' : 'Active'
 
         }
+        console.log(this.userStatus, 'this.userStatus==')
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
         this.department = fullProfile.unMappedUser.rootOrgId
         this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
@@ -121,11 +124,16 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         //   }
         // })
 
-        const usrRoles = profileDataAll.roles
-        usrRoles.forEach((role: any) => {
-          this.orguserRoles.push(role)
-          this.modifyUserRoles(role)
-        })
+        console.log(profileDataAll, 'profileDataAll==')
+        if (profileDataAll.length > 0) {
+          const usrRoles = profileDataAll.roles
+          console.log(usrRoles, 'usrRoles==')
+          usrRoles.forEach((role: any) => {
+            this.orguserRoles.push(role)
+            this.modifyUserRoles(role)
+          })
+        }
+
         // if (this.department.active_users && this.department.active_users.length > 0) {
         //   this.department.active_users.forEach((user: any) => {
         //     if (this.userID === user.userId) {

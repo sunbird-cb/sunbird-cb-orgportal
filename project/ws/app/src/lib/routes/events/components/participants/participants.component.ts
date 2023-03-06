@@ -8,6 +8,7 @@ import { EventsService } from '../../services/events.service'
 import { HttpClient } from '@angular/common/http'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { ProfileV2UtillService } from '../../../home/services/home-utill.service'
 
 export interface IParticipantElement {
     firstname: string,
@@ -34,6 +35,7 @@ export class ParticipantsComponent implements OnInit {
     constructor(
         public eventSrc: EventsService,
         public http: HttpClient,
+        private profileUtilSvc: ProfileV2UtillService,
         public dialogRef: MatDialogRef<ParticipantsComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) { }
@@ -102,7 +104,8 @@ export class ParticipantsComponent implements OnInit {
                 this.participants = []
                 Object.keys(resultdata).forEach((key: any) => {
                     const obj = resultdata[key]
-                    const email = _.get(obj, 'profileDetails.personalDetails.primaryEmail')
+                    const email_id = _.get(obj, 'profileDetails.personalDetails.primaryEmail')
+                    const email = this.profileUtilSvc.emailTransform(email_id)
                     if (email !== undefined) {
                         const participantObj = {
                             email,
