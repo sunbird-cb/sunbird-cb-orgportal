@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import * as _ from 'lodash'
@@ -33,7 +33,7 @@ export class AddCoursesComponent implements OnInit {
   selectedItems: any = []
   @ViewChild('filterTags', { static: false }) filterTags!: FilterTagsComponent
 
-  constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute, private snackBar: MatSnackBar) { }
+  constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
     this.bdtitles = this.mandatoryCourseSvc.getBreadCrumbList()
@@ -89,7 +89,7 @@ export class AddCoursesComponent implements OnInit {
         } else {
           course.selected = false
         }
-        // course.selected = this.previousCourses.includes(course.identifier) ? true : false
+        course.selected = this.previousCourses.includes(course.identifier) ? true : false
         return course
       })
       if (this.allCoursesChecked()) {
@@ -120,6 +120,7 @@ export class AddCoursesComponent implements OnInit {
 
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex
+    this.pageSize = event.pageSize
     this.getSearchedData()
     this.filterTags.onPageChange(false)
   }
@@ -170,7 +171,9 @@ export class AddCoursesComponent implements OnInit {
       },
     }
     this.mandatoryCourseSvc.updateHierarchy(requestParams).subscribe(() => {
+      const data = this.mandatoryCourseSvc.getFolderInfo()
       this.snackBar.open(`${this.selectedCourses.length} courses added successfully`, 'Close', { verticalPosition: 'top' })
+      this.router.navigate([`/app/mandatory-courses/${data.identifier}`])
     })
   }
 

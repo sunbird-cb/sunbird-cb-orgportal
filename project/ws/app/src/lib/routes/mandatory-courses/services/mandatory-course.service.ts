@@ -202,7 +202,13 @@ export class MandatoryCourseService {
   getUserId() {
     return (this.configSvc.userProfile && this.configSvc.userProfile.userId) || ''
   }
-  updateBatchList() {
-    this.batchSubeject.next()
+  updateBatchList(list: any) {
+    localStorage.setItem('batchMembersList', JSON.stringify(list))
+    this.batchSubeject.next(list)
   }
+  getBatchList() {
+    let batchList = localStorage.getItem('batchMembersList') || ''
+    return JSON.parse(batchList)
+  }
+
 }

@@ -1,6 +1,6 @@
 
 import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { MandatoryCourseService } from '../../services/mandatory-course.service'
 // tslint:disable
@@ -49,7 +49,8 @@ export class AddMembersComponent implements OnInit {
     private configSvc: ConfigurationsService,
     private route: ActivatedRoute,
     private mandatoryCourseSvc: MandatoryCourseService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -64,6 +65,7 @@ export class AddMembersComponent implements OnInit {
       this.changeBatchMembers()
     } else {
       this.getAllUsers()
+      this.selectedMembers = this.mandatoryCourseSvc.getBatchList()
     }
   }
 
@@ -99,6 +101,7 @@ export class AddMembersComponent implements OnInit {
 
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex
+    this.pageSize = event.pageSize
     this.getAllUsers()
     this.filterTags.onPageChange(false)
   }
@@ -205,7 +208,9 @@ export class AddMembersComponent implements OnInit {
           userId: memberId
         }
       }
-      this.mandatoryCourseSvc.addMember(requestParam).subscribe(() => { })
+      this.mandatoryCourseSvc.addMember(requestParam).subscribe(() => {
+        this.router.navigate([`/app/mandatory-courses/${this.folderInfo.identifier}/batch-details//${this.route.snapshot.params.batchId}`])
+      })
     })
     this.snackbar.open(`${allSelectedUser.length} members added.`, 'Close', { verticalPosition: 'top' })
     this.selectAllMembers(false)
@@ -233,7 +238,7 @@ export class AddMembersComponent implements OnInit {
     this.bdtitles.push({ title: this.folderInfo.name, url: `/app/mandatory-courses/${this.folderInfo.identifier}` })
     this.bdtitles.push({
       title: this.folderInfo.batches.filter((batch: any) => batch.batchId === this.route.snapshot.params.batchId)[0].name,
-      url: `/app/mandatory-courses/${this.folderInfo.identifier}/batch-details//${this.route.snapshot.params.batchId}`
+      url: `/app/mandatory-courses/${this.folderInfo.identifier}/batch-details/${this.route.snapshot.params.batchId}`
     })
     this.bdtitles.push({ title: 'Add members', url: 'none' })
   }

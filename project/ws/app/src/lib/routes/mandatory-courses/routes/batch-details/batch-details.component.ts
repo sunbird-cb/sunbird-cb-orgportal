@@ -58,6 +58,7 @@ export class BatchDetailsComponent implements OnInit {
     })
   }
   gotoChooseMember() {
+    this.mandatoryCourseSvc.updateBatchList(this.memberList)
     this.router.navigate([this.noDataConfig.btnLink])
   }
 

@@ -8,11 +8,7 @@
       {{this.selectedItems.length}} Course selected
     </div>
   </ws-app-filter-tags>
-  <div class="flex flex-row justify-end pageinator-wrap">
-    <mat-paginator [length]="totalCount" #paginator [hidePageSize]="true" [pageSize]="pageSize"
-      [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" aria-label="Select page">
-    </mat-paginator>
-  </div>
+
   <div class="flex flex-1 flex-wrap margin-top-l justify-between items-center" *ngIf="searchResults">
     <ng-container *ngFor="let c of searchResults">
       <div class="course-card margin-bottom-m">
@@ -20,6 +16,11 @@
         <ws-widget-card-content [widgetData]="{content: c }"></ws-widget-card-content>
       </div>
     </ng-container>
+  </div>
+  <div class="flex flex-row justify-end pageinator-wrap">
+    <mat-paginator [length]="totalCount" #paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChange($event)" aria-label="Select page">
+    </mat-paginator>
   </div>
   <div class="add_btn_footer_box">
     <div class="btn_inner_box flex justify-end">

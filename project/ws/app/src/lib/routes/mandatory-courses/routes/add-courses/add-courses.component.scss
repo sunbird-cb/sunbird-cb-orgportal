@@ -37,3 +37,31 @@
     margin-left: 3%;
     padding:2rem 0;
   }
+.pageinator-wrap{
+  height: 100px;
+ ::ng-deep .mat-paginator-page-size-select {
+    width: 40px !important;
+    height: 10px;
+    padding-bottom: 30px;
+  }
+  ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+      background-color: transparent;
+  }
+
+  ::ng-deep .mat-select-value {
+    color: #005999;
+      font-weight: bold;
+      font-size: 15px;
+  }
+  ::ng-deep .mat-select-arrow {
+      color: #005999;
+  }
+  ::ng-deep .mat-option{
+    padding: 0!important;
+
+  }
+  ::ng-deep .mat-option-text {
+
+      text-align: right;
+  }
+}
