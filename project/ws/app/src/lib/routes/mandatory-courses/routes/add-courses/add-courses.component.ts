@@ -33,7 +33,8 @@ export class AddCoursesComponent implements OnInit {
   selectedItems: any = []
   @ViewChild('filterTags', { static: false }) filterTags!: FilterTagsComponent
 
-  constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute, private snackBar: MatSnackBar, private router: Router) { }
+  constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute,
+              private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
     this.bdtitles = this.mandatoryCourseSvc.getBreadCrumbList()
