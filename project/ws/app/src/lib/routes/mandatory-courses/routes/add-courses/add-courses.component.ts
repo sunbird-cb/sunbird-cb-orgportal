@@ -34,7 +34,7 @@ export class AddCoursesComponent implements OnInit {
   @ViewChild('filterTags', { static: false }) filterTags!: FilterTagsComponent
 
   constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute,
-    private snackBar: MatSnackBar, private router: Router) { }
+              private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
     this.bdtitles = this.mandatoryCourseSvc.getBreadCrumbList()
