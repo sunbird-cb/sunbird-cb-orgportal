@@ -210,4 +210,7 @@ export class MandatoryCourseService {
     let batchList = localStorage.getItem('batchMembersList') || ''
     return JSON.parse(batchList)
   }
+  removeBatchList() {
+    localStorage.removeItem('batchMembersList')
+  }
 }
