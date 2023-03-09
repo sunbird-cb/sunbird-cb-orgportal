@@ -34,7 +34,7 @@ export class AddCoursesComponent implements OnInit {
   @ViewChild('filterTags', { static: false }) filterTags!: FilterTagsComponent
 
   constructor(private mandatoryCourseSvc: MandatoryCourseService, private route: ActivatedRoute,
-              private snackBar: MatSnackBar, private router: Router) { }
+    private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
     this.bdtitles = this.mandatoryCourseSvc.getBreadCrumbList()
@@ -174,7 +174,7 @@ export class AddCoursesComponent implements OnInit {
     this.mandatoryCourseSvc.updateHierarchy(requestParams).subscribe(() => {
       const data = this.mandatoryCourseSvc.getFolderInfo()
       this.snackBar.open(`${this.selectedCourses.length} courses added successfully`, 'Close', { verticalPosition: 'top' })
-      this.router.navigate([`/app/mandatory-courses/${data.identifier}`])
+      this.router.navigate([`/app/mandatory-courses/${data.identifier}`], { state: { from: 'add-course' } })
     })
   }
 

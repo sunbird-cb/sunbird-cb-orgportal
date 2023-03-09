@@ -221,9 +221,19 @@ input.mat-input-element {
 }
 
 .pageinator-wrap{
-  height: 100px;
-  width: 100%;
-  justify-content: end;
+    height: 70px;
+    position: fixed;
+    bottom: 80px;
+    right: 0;
+    left: 0;
+    z-index: 21;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 -4px 3px rgb(0 0 0 / 8%);
+    justify-content: end;
+   .mat-paginator{
+      padding-right: 45px;
+    }
  ::ng-deep .mat-paginator-page-size-select {
     width: 40px !important;
     height: 10px;

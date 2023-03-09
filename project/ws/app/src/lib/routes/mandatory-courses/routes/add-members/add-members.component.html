@@ -9,7 +9,7 @@
   </ws-app-filter-tags>
 </ng-container>
 
-<div class="flex flex-row justify-between flex-wrap">
+<div class="flex flex-row flex-start flex-wrap">
   <ng-container *ngFor="let user of activeUsersData">
     <ws-app-user-card [user]="user" (selected)="selectedMember(user)" [isSelectable]="true"
       class="margin-bottom-s margin-right-m">

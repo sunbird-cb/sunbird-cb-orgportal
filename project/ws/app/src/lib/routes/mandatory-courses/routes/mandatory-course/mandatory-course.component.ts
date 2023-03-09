@@ -57,6 +57,11 @@ export class MandatoryCourseComponent implements OnInit {
     })
     this.getFolderInfo()
     this.isNew = this.activatedRoute.snapshot.params.doId === 'new' ? true : false
+    this.route.paramMap.subscribe(() => {
+      if (window.history.state.from === 'add-course') {
+        this.currentFilter = 'course-list'
+      }
+    })
   }
 
   getFolderInfo() {
@@ -71,6 +76,7 @@ export class MandatoryCourseComponent implements OnInit {
       this.courseList = data.result.content.children
       this.batches = data.result.content.batches || []
       this.mandatoryCourseService.sharefolderData(data.result.content)
+      this.folderInfo = data.result.content
     })
 
   }
@@ -107,7 +113,8 @@ export class MandatoryCourseComponent implements OnInit {
   publishFolder() {
     this.mandatoryCourseService.publishContent(this.mandatoryCourseService.getFolderInfo().identifier).subscribe(() => {
       this.snackBar.open('Published Successfully', 'Close', { verticalPosition: 'top' })
-      this.currentFilter = 'batch-list'
+      // this.currentFilter = 'batch-list'
+      this.getFolderInfo()
     })
   }
 

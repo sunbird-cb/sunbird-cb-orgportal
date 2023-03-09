@@ -57,7 +57,7 @@
         <a href="javascript:void(0)" class="filter-option mat-button" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'batch-list',
             'ws-mat-accent-border font-medium':currentFilter !== 'batch-list'}" mat-button
           (click)="filter('batch-list')" role="button"
-          *ngIf="courseList.length > 0">{{pageConfigData.folder.folderInfo.tabs.batches}}</a>
+          *ngIf="folderInfo && folderInfo.status === 'Live'">{{pageConfigData.folder.folderInfo.tabs.batches}}</a>
       </div>
     </div>
 
@@ -84,11 +84,13 @@
             </mat-icon><span class="text-span">Delete</span>
           </a> -->
         </div>
-        <div class="flex flex-1 flex-wrap course-list-wrap">
+        <div class="flex flex-1 flex-wrap justify-between course-list-wrap">
           <ng-container *ngFor="let c of courseList">
-            <ws-widget-card-content *ngIf="c" [widgetData]="{
+            <div class="course-card margin-bottom-m">
+              <ws-widget-card-content *ngIf="c" [widgetData]="{
                                                 content: c
                                               }"></ws-widget-card-content>
+            </div>
           </ng-container>
         </div>
       </ng-template>
