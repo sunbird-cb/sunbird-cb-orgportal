@@ -84,7 +84,7 @@
             </mat-icon><span class="text-span">Delete</span>
           </a> -->
         </div>
-        <div class="flex flex-1 flex-wrap justify-between course-list-wrap">
+        <div class="flex flex-1 flex-wrap flex-start space-x-4 course-list-wrap">
           <ng-container *ngFor="let c of courseList">
             <div class="course-card margin-bottom-m">
               <ws-widget-card-content *ngIf="c" [widgetData]="{
