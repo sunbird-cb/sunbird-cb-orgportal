@@ -30,7 +30,8 @@
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
                     <input id="fname" matInput #fname formControlName="fname" i18n-placeholder placeholder="Type here"
-                      i18n-aria-label aria-label="First name input" class="form-input" autocomplete="off" />
+                      i18n-aria-label aria-label="First name input" class="form-input" autocomplete="off"
+                      maxlength="150" />
                     <mat-error [hidden]="false" i18n="First name Error|Explains name is required" i18n-aria-label
                       aria-label="First name Error|Explains name is required "
                       *ngIf="createUserForm?.controls['fname']?.touched && createUserForm?.controls['fname'].errors?.required">
@@ -50,7 +51,8 @@
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
                     <input id="lname" matInput #lname formControlName="lname" i18n-placeholder placeholder="Type here"
-                      i18n-aria-label aria-label="Last name input" class="form-input" autocomplete="off" />
+                      i18n-aria-label aria-label="Last name input" class="form-input" autocomplete="off"
+                      maxlength="150" />
                     <mat-error [hidden]="false" i18n="Last name Error|Explains name is required" i18n-aria-label
                       aria-label="Last name Error|Explains name is required "
                       *ngIf="createUserForm?.controls['lname']?.touched && createUserForm?.controls['lname'].errors?.required">
@@ -70,7 +72,7 @@
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
                     <input id="email" matInput #email formControlName="email" i18n-placeholder placeholder="Type here"
-                      i18n-aria-label aria-label="Email input" class="form-input" autocomplete="off" />
+                      i18n-aria-label aria-label="Email input" class="form-input" autocomplete="off" maxlength="150" />
                     <mat-error [hidden]="false" i18n="Email Error|Explains name is required" i18n-aria-label
                       aria-label="Email Error|Explains name is required "
                       *ngIf="createUserForm?.controls['email']?.touched && createUserForm?.controls['email'].errors?.required">
@@ -91,7 +93,7 @@
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
                       <input id="department" class="form-input" [(ngModel)]="departmentName" type="text" matInput
                         placeholder="Type here" formControlName="department" i18n-aria-label
-                        aria-label="Department input filed" readonly>
+                        aria-label="Department input filed" readonly maxlength="250">
                     </mat-form-field>
                   </div>
 
