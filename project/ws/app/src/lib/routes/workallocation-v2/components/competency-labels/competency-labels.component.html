@@ -40,7 +40,7 @@
                     <input [attr.id]="'compName_' + i" matInput #compName formControlName="compDescription"
                       i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
                       class="form-input flex-1" (input)="filterCompetencies(compName.value)"
-                      [matAutocomplete]="competencyAuto" autocomplete="off" />
+                      [matAutocomplete]="competencyAuto" autocomplete="off" maxlength="250" />
                     <mat-autocomplete [attr.id]="'compAuto1_' + i" #competencyAuto="matAutocomplete"
                       (optionSelected)="competencySelected($event,i)">
                       <ng-container
@@ -168,7 +168,8 @@
                       <input [attr.id]="'compName_' + gaIdx" formControlName="compName" matInput #compName
                         i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
                         class="form-input flex-1" autocomplete="off" (click)="setSelectedFilter(gaIdx)"
-                        (input)="filterCompetencies(compName.value, gaIdx)" [matAutocomplete]="competencyAuto1" />
+                        (input)="filterCompetencies(compName.value, gaIdx)" [matAutocomplete]="competencyAuto1"
+                        maxlength="250" />
                       <mat-autocomplete [attr.id]="'compAuto_' + gaIdx" #competencyAuto1="matAutocomplete"
                         (optionSelected)="competencySelected($event,i)">
                         <ng-container
@@ -210,7 +211,7 @@
                       <textarea [attr.id]="'compt_' + gaIdx" class="form-input flex-1" matInput #OfficerName
                         formControlName="compDescription" i18n-placeholder placeholder="Type here" i18n-aria-label
                         aria-label="Type here" autocomplete="off" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
-                        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+                        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" maxlength="2000"></textarea>
                     </mat-form-field>
                   </div>
                   <div *ngIf="i === 0" class="flex margin-auto">
