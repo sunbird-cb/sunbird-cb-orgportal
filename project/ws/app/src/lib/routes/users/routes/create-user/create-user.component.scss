@@ -559,3 +559,10 @@ input.mat-input-element {
     margin-left: 45%;
     z-index: 1;
 }
+
+.email-error {
+  position: absolute;
+  font-size: 10px;
+  color: #f44336;
+  top: 35px;
+}
