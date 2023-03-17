@@ -11,7 +11,8 @@
                         <form class="example-container" [formGroup]="staffdata">
                             <div class="display-block">
                                 <div class="display-inline-block margin-right-xl">
-                                    <label for="totalpositions" class="display-block mat-subheading-2 margin-remove-bottom form-label"
+                                    <label for="totalpositions"
+                                        class="display-block mat-subheading-2 margin-remove-bottom form-label"
                                         i18n="Total positions label|Label which explains the user to enter total positions"
                                         i18n-aria-label aria-label="Total positions label">
                                         Total positions
@@ -19,8 +20,9 @@
                                     <mat-form-field appearance="outline" class="margin-top-xs">
                                         <input type="text" [readonly]="isDisabled" id="totalpositions" matInput
                                             #totalpositions formControlName="totalpositions" i18n-placeholder
-                                            placeholder="0" i18n-aria-label aria-label="Total positions input" class="form-input"
-                                            autocomplete="off" [disabled]="isDisabled" style="opacity: 0.9" />
+                                            placeholder="0" i18n-aria-label aria-label="Total positions input"
+                                            class="form-input" autocomplete="off" [disabled]="isDisabled"
+                                            style="opacity: 0.9" maxlength="5" />
                                         <!-- <mat-error [hidden]="false" i18n="Total positions Error|Explains name is required" i18n-aria-label
                                     aria-label="Total positions Error|Explains name is required "
                                     *ngIf="staffdata?.controls['totalpositions']?.touched && staffdata?.controls['totalpositions'].errors?.required">
@@ -29,42 +31,50 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="display-inline-block margin-right-xl">
-                                    <label for="posfilled" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                    <label for="posfilled"
+                                        class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                         i18n="Total positions filled label|Label which explains the user to enter total positions"
                                         i18n-aria-label aria-label="Total positions label">
                                         Total positions filled
                                     </label>
                                     <mat-form-field appearance="outline" class="margin-top-xs">
                                         <input id="posfilled" matInput #posfilled formControlName="posfilled"
-                                            i18n-placeholder placeholder="Add number" i18n-aria-label aria-label="Total positions filled input"
-                                            class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
-                                        <mat-error [hidden]="false" i18n="Total positions filled Error|Explains name is required"
-                                            i18n-aria-label aria-label="Total positions filled Error|Explains name is required "
+                                            i18n-placeholder placeholder="Add number" i18n-aria-label
+                                            aria-label="Total positions filled input" class="form-input"
+                                            autocomplete="off" (keypress)="keyPressNumbers($event)" maxlength="5" />
+                                        <mat-error [hidden]="false"
+                                            i18n="Total positions filled Error|Explains name is required"
+                                            i18n-aria-label
+                                            aria-label="Total positions filled Error|Explains name is required "
                                             *ngIf="staffdata?.controls['posfilled']?.touched && staffdata?.controls['posfilled'].errors?.required">
                                             Field is mandatory
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="display-inline-block margin-right-xl">
-                                    <label for="posvacant" class="display-block mat-subheading-2 margin-remove-bottom form-label required"
+                                    <label for="posvacant"
+                                        class="display-block mat-subheading-2 margin-remove-bottom form-label required"
                                         i18n="Total positions vacant label|Label which explains the user to enter total positions"
                                         i18n-aria-label aria-label="Total positions label">
                                         Total positions vacant
                                     </label>
                                     <mat-form-field appearance="outline" class="margin-top-xs">
                                         <input id="posvacant" matInput #posvacant formControlName="posvacant"
-                                            i18n-placeholder placeholder="Add number" i18n-aria-label aria-label="Total positions vacant input"
-                                            class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
-                                        <mat-error [hidden]="false" i18n="Total positions vacant Error|Explains name is required"
-                                            i18n-aria-label aria-label="Total positions vacant Error|Explains name is required "
+                                            i18n-placeholder placeholder="Add number" i18n-aria-label
+                                            aria-label="Total positions vacant input" class="form-input"
+                                            autocomplete="off" (keypress)="keyPressNumbers($event)" maxlength="5" />
+                                        <mat-error [hidden]="false"
+                                            i18n="Total positions vacant Error|Explains name is required"
+                                            i18n-aria-label
+                                            aria-label="Total positions vacant Error|Explains name is required "
                                             *ngIf="staffdata?.controls['posvacant']?.touched && staffdata?.controls['posvacant'].errors?.required">
                                             Field is mandatory
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <button mat-raised-button type="submit" (click)="onSubmit(staffdata)" class="text-white btn-success btn-responsive"
-                                [disabled]="staffdata?.invalid">
+                            <button mat-raised-button type="submit" (click)="onSubmit(staffdata)"
+                                class="text-white btn-success btn-responsive" [disabled]="staffdata?.invalid">
                                 <span class="text-white" i18n>Save</span>
                             </button>
                         </form>
@@ -84,19 +94,22 @@
                                     <div class=rsearch>
                                         <mat-icon class="color-60 search-icon">search</mat-icon>
                                         <input class="sinput color-60 mat-body-2 margin-remove-top" type="Standard"
-                                            label="" (input)="applyFilter($event.target.value)" placeholder="Search">
+                                            label="" (input)="applyFilter($event.target.value)" placeholder="Search"
+                                            maxlength="50">
                                     </div>
                                 </div>
                             </div>
                             <div class="flex-1 right-align">
-                                <button type="button" mat-button class="create-btn mat-subheading-2" (click)="onAddPosition('')">
+                                <button type="button" mat-button class="create-btn mat-subheading-2"
+                                    (click)="onAddPosition('')">
                                     Add position
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <mat-table #table matSort [matSortActive]="tableData!.sortColumn" [matSortDirection]="tableData!.sortState"
-                        [dataSource]="dataSource" class="example-table table1 responsiveTable">
+                    <mat-table #table matSort [matSortActive]="tableData!.sortColumn"
+                        [matSortDirection]="tableData!.sortState" [dataSource]="dataSource"
+                        class="example-table table1 responsiveTable">
                         <ng-container matColumnDef="{{col.key}}" *ngFor="let col of tableData!.columns">
                             <mat-header-cell *matHeaderCellDef mat-sort-header class=".h-400-r-14-l color-60">
                                 {{col.displayName}}
@@ -110,7 +123,8 @@
                                 </span>
                             </mat-cell>
                         </ng-container>
-                        <ng-container matColumnDef="Actions" *ngIf="tableData!.actions && tableData!.actions.length > 0">
+                        <ng-container matColumnDef="Actions"
+                            *ngIf="tableData!.actions && tableData!.actions.length > 0">
                             <mat-header-cell *matHeaderCellDef class="clr-darkish-blue action-header"> Actions
                             </mat-header-cell>
                             <mat-cell *matCellDef="let row" class="action-cell">
@@ -134,7 +148,8 @@
                             </mat-header-cell>
                             <mat-cell *matCellDef="let row" class="action-cell">
                                 <button type="button" mat-icon-button i18n-aria-label aria-label="action items"
-                                    [matMenuTriggerFor]="cardMenu" [matMenuTriggerData]="{'data':row}" class="action-btn">
+                                    [matMenuTriggerFor]="cardMenu" [matMenuTriggerData]="{'data':row}"
+                                    class="action-btn">
                                     <mat-icon>more_horiz</mat-icon>
                                 </button>
                             </mat-cell>
@@ -145,10 +160,13 @@
                         <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection.toggle(row);">
                         </mat-row>
                     </mat-table>
-                    <mat-card class="flex-1" role="none" *ngIf="!dataSource.filter && dataSource.filteredData.length == 0">
-                        <span class="mat-subtitle ws-mat-black40-text">Click on 'Add position' to start entering data</span>
+                    <mat-card class="flex-1" role="none"
+                        *ngIf="!dataSource.filter && dataSource.filteredData.length == 0">
+                        <span class="mat-subtitle ws-mat-black40-text">Click on 'Add position' to start entering
+                            data</span>
                     </mat-card>
-                    <mat-card class="flex-1" role="none" *ngIf="dataSource.filter && dataSource.filteredData.length == 0">
+                    <mat-card class="flex-1" role="none"
+                        *ngIf="dataSource.filter && dataSource.filteredData.length == 0">
                         <span class="mat-subtitle ws-mat-black40-text">No search reuslts found.</span>
                     </mat-card>
                 </div>
@@ -157,12 +175,12 @@
             </div>
             <mat-menu #cardMenu="matMenu">
                 <ng-template matMenuContent let-rowData="data">
-                    <button (click)="updateData(rowData)" mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text"
-                        i18n-aria-label aria-label="Analytics">
+                    <button (click)="updateData(rowData)" mat-menu-item name="channel-analytics-button"
+                        class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
                         <span>Edit</span>
                     </button>
-                    <button (click)="deleteStaffDetails(rowData)" mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text"
-                        i18n-aria-label aria-label="Analytics">
+                    <button (click)="deleteStaffDetails(rowData)" mat-menu-item name="channel-analytics-button"
+                        class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
                         <span>Delete</span>
                     </button>
                 </ng-template>
