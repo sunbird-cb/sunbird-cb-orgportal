@@ -70,7 +70,8 @@
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
                     <input id="email" matInput #email formControlName="email" i18n-placeholder placeholder="Type here"
-                      i18n-aria-label aria-label="Email input" class="form-input" autocomplete="off" />
+                      i18n-aria-label aria-label="Email input" class="form-input" autocomplete="off" maxlength="320"
+                      (input)="emailVerification($event.target.value)" />
                     <mat-error [hidden]="false" i18n="Email Error|Explains name is required" i18n-aria-label
                       aria-label="Email Error|Explains name is required "
                       *ngIf="createUserForm?.controls['email']?.touched && createUserForm?.controls['email'].errors?.required">
@@ -80,6 +81,9 @@
                       i18n-aria-label aria-label="Email Error|Name fields not valid ">
                       Email field is not valid
                     </mat-error>
+                    <div *ngIf="emailLengthVal" class="email-error" i18n="Email Error|Explains character validation">
+                      Max 64 characters before "@" & 255 characters after "@" are valid.
+                    </div>
                   </mat-form-field>
 
                   <div class="input-wrapper margin-top-s">

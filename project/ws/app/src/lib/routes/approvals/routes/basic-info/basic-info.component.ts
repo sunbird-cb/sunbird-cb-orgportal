@@ -21,6 +21,7 @@ export class BasicInfoComponent implements OnInit {
         // if (this.configSvc.userProfile && this.configSvc.userProfile.departmentName) {
         //   this.configSvc.userProfile.departmentName = _.get(this.activeRoute, 'snapshot.data.department.data.deptName')
         // }
+        // console.log(this.activeRoute.snapshot, 'this.activeRoute.snapshot====')
         this.basicInfo = profileData.personalDetails
         this.imagePath = profileData.photo
       }

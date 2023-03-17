@@ -42,6 +42,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   breadcrumbs: any
   disableCreateButton = false
   displayLoader = false
+  emailLengthVal = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -156,6 +157,20 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       this.sideNavBarOpened = !isLtMedium
       this.screenSizeIsLtMedium = isLtMedium
     })
+  }
+
+  emailVerification(emailId: string) {
+    this.emailLengthVal = false
+    if (emailId && emailId.length > 0) {
+      const email = emailId.split('@')
+      if (email && email.length === 2) {
+        if ((email[0] && email[0].length > 64) || (email[1] && email[1].length > 255)) {
+          this.emailLengthVal = true
+        }
+      } else {
+        this.emailLengthVal = false
+      }
+    }
   }
 
   onSubmit(form: any) {
