@@ -55,12 +55,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           : ''
         const datas: any[] = Object.values(wfHistoryDatas)
         wfHistoryDatas = [].concat.apply([], datas)
-        const wfHistoryData = wfHistoryDatas.filter((wfh: { inWorkflow: any }) => !wfh.inWorkflow)
+        let wfHistoryData = wfHistoryDatas.filter((wfh: { inWorkflow: any }) => !wfh.inWorkflow)
         let currentdate: Date
 
         this.activeRoute.data.subscribe(data => {
           this.profileData = data.pageData.data.profileData
           this.profileDataKeys = data.pageData.data.profileDataKey
+        })
+        wfHistoryData = wfHistoryData.sort((a: any, b: any) => {
+          return b.createdOn - a.createdOn
         })
 
         wfHistoryData.forEach((wfh: any) => {
