@@ -29,13 +29,17 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   bulkUploadData: any
   uplaodSuccessMsg!: string
   dataSource: MatTableDataSource<any>
-  displayedColumns: string[] = ['identifier', 'fileName', 'status', 'dateCreatedOn', 'dateUpdatedOn']
+  // tslint:disable-next-line:max-line-length
+  displayedColumns: string[] = ['identifier', 'fileName', 'status', 'failedRecordsCount', 'successfulRecordsCount', 'totalRecords', 'dateCreatedOn', 'dateUpdatedOn']
   tabledata: any = {
     actions: [],
     columns: [
       { displayName: 'Id', key: 'identifier' },
       { displayName: 'Name', key: 'fileName' },
       { displayName: 'Status', key: 'status' },
+      { displayName: 'Failed Records', key: 'failedRecordsCount' },
+      { displayName: 'Success Records', key: 'successfulRecordsCount' },
+      { displayName: 'Total Records', key: 'totalRecords' },
       { displayName: 'Created on', key: 'dateCreatedOn' },
       { displayName: 'Updated on', key: 'dateUpdatedOn' },
     ],
