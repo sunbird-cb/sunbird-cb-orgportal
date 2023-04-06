@@ -80,7 +80,8 @@
 
             <!-- Failed Record Count Column -->
             <ng-container matColumnDef="failedRecordsCount">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Created
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Failed
+                Records
                 on
               </th>
               <td mat-cell *matCellDef="let row"> {{row.failedRecordsCount}} </td>
@@ -88,7 +89,8 @@
 
             <!-- Success Records COunt Column -->
             <ng-container matColumnDef="successfulRecordsCount">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Created
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Success
+                Records
                 on
               </th>
               <td mat-cell *matCellDef="let row"> {{row.successfulRecordsCount }} </td>
@@ -96,7 +98,8 @@
 
             <!-- Total Records COunt Column -->
             <ng-container matColumnDef="totalRecords">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Created
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Total
+                Records
                 on
               </th>
               <td mat-cell *matCellDef="let row"> {{row.totalRecords }} </td>
