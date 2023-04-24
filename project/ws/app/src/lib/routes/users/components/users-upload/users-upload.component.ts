@@ -214,4 +214,11 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  downloadFullFile(file: any) {
+    console.log('file', file)
+    this.fileService.downloadFile(file.fileName).subscribe((res: any) => {
+      console.log('res', res)
+    })
+  }
+
 }
