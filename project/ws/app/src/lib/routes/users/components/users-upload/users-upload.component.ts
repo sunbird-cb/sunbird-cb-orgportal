@@ -215,11 +215,8 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   downloadFullFile(file: any) {
-    // console.log('file', file)
-    this.fileService.downloadFile(file.fileName).subscribe((res: any) => {
-      // tslint:disable-next-line:no-console
-      console.log('res', res)
-    })
+    const fname = file.fileName
+    const url = `/apis/proxies/v8/user/v1/bulkuser/download/${fname}`
+    window.open(url, '_blank')
   }
-
 }
