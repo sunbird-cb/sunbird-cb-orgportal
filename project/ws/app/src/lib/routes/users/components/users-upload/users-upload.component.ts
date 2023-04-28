@@ -214,4 +214,9 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  downloadFullFile(file: any) {
+    const fname = file.fileName
+    const url = `/apis/proxies/v8/user/v1/bulkuser/download/${fname}`
+    window.open(url, '_blank')
+  }
 }

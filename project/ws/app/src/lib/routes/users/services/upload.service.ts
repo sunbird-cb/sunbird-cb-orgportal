@@ -10,6 +10,7 @@ const API_ENDPOINTS = {
   downloadReport: `/apis/protected/v8/admin/userRegistration/bulkUploadReport`,
   // getBulkUploadData: '/apis/protected/v8/admin/userRegistration/bulkUploadData',
   getBulkUploadData: '/apis/proxies/v8/user/v1/bulkupload',
+  // downloadfile: '/apis/proxies/v8/user/v1/bulkuser/download',
 }
 
 @Injectable()
@@ -86,4 +87,8 @@ export class FileService {
   async getBulkUploadDataV1(rootOrgId: any) {
     return await this.http.get(`${API_ENDPOINTS.getBulkUploadData}/${rootOrgId}`).toPromise()
   }
+
+  // public downloadFile(filename: string) {
+  //   return this.http.get(`${API_ENDPOINTS.downloadfile}/${filename}`)
+  // }
 }

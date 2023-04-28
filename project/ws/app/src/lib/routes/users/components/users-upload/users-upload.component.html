@@ -67,7 +67,8 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Name
               </th>
               <td mat-cell *matCellDef="let row">
-                <a href="{{row.filePath}}" download="{{row.fileName}}"> {{row.fileName}}</a>
+                <!-- <a href="{{row.filePath}}" download="{{row.fileName}}"> {{row.fileName}}</a> -->
+                <span class="cursor-pointer ws-mat-accent-text" (click)="downloadFullFile(row)"> {{row.fileName}}</span>
               </td>
             </ng-container>
 
