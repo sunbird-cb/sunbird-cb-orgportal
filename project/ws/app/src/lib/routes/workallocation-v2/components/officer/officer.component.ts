@@ -75,7 +75,7 @@ export class OfficerComponent implements OnInit, OnDestroy {
           const usrObj = this.officerForm.get('user')!.value
           let usrName = ''
           if (_.get(usrObj, 'firstName')) {
-            usrName = `${_.get(usrObj, 'firstName')} ${_.get(usrObj, 'lastName')}`
+            usrName = `${_.get(usrObj, 'firstName')}`
           } else {
             usrName = `${_.get(usrObj, 'officerName')}`
           }
@@ -144,7 +144,7 @@ export class OfficerComponent implements OnInit, OnDestroy {
       const frmctr1 = this.officerForm.get('officerName') as FormControl
       // const fullName = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
       // tslint:disable-next-line: prefer-template
-      const fullName = _.get(event, 'option.value.firstName') + ' ' + _.get(event, 'option.value.lastName')
+      const fullName = _.get(event, 'option.value.firstName')
       frmctr1.patchValue(fullName || '')
       this.watStore.setOfficerGroup(this.officerForm.value, false, true)
     }

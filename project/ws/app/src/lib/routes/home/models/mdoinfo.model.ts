@@ -70,7 +70,6 @@ export namespace MDOinfo {
         rank: number,
         wid: string,
         firstName: string,
-        lastName: string,
         channel: string,
     }
 
@@ -95,7 +94,6 @@ export namespace MDOinfo {
         requestRecieved?: boolean,
         connectionEstablished?: boolean,
         firstName: string,
-        lastName: string,
         channel: string,
     }
 
