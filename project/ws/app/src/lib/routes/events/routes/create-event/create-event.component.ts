@@ -244,13 +244,14 @@ export class CreateEventComponent implements OnInit {
       const obj = responseObj.data[index]
       const setSelectedPresentersObj = {
         firstname: obj.firstName || obj.firstname,
-        lastname: obj.lastName || obj.lastname,
+        // lastname: obj.lastName || obj.lastname,
         email: this.profileUtilSvc.emailTransform(obj.profileDetails.personalDetails.primaryEmail),
         type: 'Karmayogi User',
       }
       const contactsObj = {
         id: obj.id,
-        name: `${obj.firstName || obj.firstname} ${obj.lastName || obj.lastname}`,
+        name: `${obj.firstName || obj.firstname}`,
+        // name: `${obj.firstName || obj.firstname} ${obj.lastName || obj.lastname}`,
       }
       this.presentersArr.push(contactsObj)
       this.participantsArr.push(setSelectedPresentersObj)

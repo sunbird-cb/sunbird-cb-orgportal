@@ -145,7 +145,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     })
     this.createUserForm = new FormGroup({
       fname: new FormControl('', [Validators.required]),
-      lname: new FormControl('', [Validators.required]),
+      // lname: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       department: new FormControl(''),
       roles: new FormControl('', [Validators.required]),
@@ -181,7 +181,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         email: form.value.email,
         userName: form.value.fname,
         firstName: form.value.fname,
-        lastName: form.value.lname,
+        // lastName: form.value.lname,
         channel: this.departmentName ? this.departmentName : null,
       },
     }

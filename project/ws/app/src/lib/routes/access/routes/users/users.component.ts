@@ -24,7 +24,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   private defaultSideNavBarOpenedSubscription: any
 
   constructor(private usersSvc: UsersService, private router: Router, private route: ActivatedRoute,
-              private profileUtilSvc: ProfileV2UtillService) { }
+    private profileUtilSvc: ProfileV2UtillService) { }
   ngOnInit() {
     const url = this.router.url.split('/')
     this.role = url[url.length - 2]
@@ -60,7 +60,8 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       this.data2 = res
       this.data = res.users.map((user: any) => {
         return {
-          fullName: `${user.first_name} ${user.last_name}`,
+          fullName: `${user.first_name}`,
+          // fullName: `${user.first_name} ${user.last_name}`,
           email: this.profileUtilSvc.emailTransform(user.email),
           position: user.department_name,
           role: this.role,
@@ -94,7 +95,8 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
         user => {
 
           return {
-            fullName: `${user.firstName} ${user.lastName}`,
+            fullName: `${user.firstName}`,
+            // fullName: `${user.firstName} ${user.lastName}`,
             email: this.profileUtilSvc.emailTransform(_.get(user, 'profileDetails.personalDetails.primaryEmail'))
               || this.profileUtilSvc.emailTransform(user.email),
             position: user.department_name,
@@ -188,7 +190,8 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
           // tslint:disable-next-line
           user => {
             return {
-              fullName: `${user.firstName} ${user.lastName}`,
+              fullName: `${user.firstName}`,
+              // fullName: `${user.firstName} ${user.lastName}`,
               email: this.profileUtilSvc.emailTransform(_.get(user, 'profileDetails.personalDetails.primaryEmail'))
                 || this.profileUtilSvc.emailTransform(user.email),
               position: user.department_name,
