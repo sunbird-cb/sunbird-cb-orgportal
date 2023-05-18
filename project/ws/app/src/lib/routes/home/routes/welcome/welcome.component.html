@@ -49,13 +49,16 @@
         </div>
       </div>
     </mat-card-content>
-    <a [routerLink]="['/app/my-dashboard']" (click)="dashboardClick()" class="flex rel-custom"
+    <!--disabling dashboard in MDO portal home page - Temp fix. Need to identify the dashboard to show in home page-->
+    <!-- <a [routerLink]="['/app/my-dashboard']" (click)="dashboardClick()" class="flex rel-custom"
       routerLinkActive="router-link-active">
       <span class="mat-subheading-2 ws-mat-default-text">Go to dashboard</span>
       <mat-icon class="ws-mat-default-text">arrow_forward</mat-icon>
-    </a>
+    </a> -->
   </mat-card>
-  <div class="bootstrap-rain margin-top-m" *ngIf="currentDashboard[0]">
+  <!--disabling dashboard in MDO portal home page - Temp fix. Need to identify the dashboard to show in home page-->
+  <!-- <div class="bootstrap-rain margin-top-m" *ngIf="currentDashboard[0]"> -->
+  <div class="bootstrap-rain margin-top-m" *ngIf="false">
     <div class="rain-lib-container relative">
       <lib-rain-dashboards [showFilters]="false" [showMessage]="false" [messageType]="currentDashboard[0].messageType"
         [message]="currentDashboard[0].message" [mapLayoutFilePath]="mapPath" (libDashboardId)="getDashboardId($event)"
