@@ -28,7 +28,7 @@ const routes: Routes = [
     component: CreateUserComponent,
     data: {
       pageId: 'create-user',
-      module: 'user',
+      module: 'Home',
     },
     resolve: {
       // department: DepartmentResolve,

@@ -163,7 +163,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         inactiveUsersData.push({
           fullname: user ? `${user.firstName} ${user.lastName}` : null,
           email: user.personalDetails && user.personalDetails.primaryEmail ?
-          this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
+            this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
           role: org.roles || [],
           userId: user.id,
           active: !user.isDeleted,
@@ -184,7 +184,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         blockedUsersData.push({
           fullname: user ? `${user.firstName} ${user.lastName}` : null,
           email: user.personalDetails && user.personalDetails.primaryEmail ?
-          this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
+            this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
           role: user.roles,
           userId: user.id,
           active: !user.isDeleted,
@@ -242,6 +242,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.CREATE_BTN,
+        id: 'create-user-btn',
       },
       {}
     )
