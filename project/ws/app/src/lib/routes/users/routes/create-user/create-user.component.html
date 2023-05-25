@@ -26,7 +26,7 @@
                   <label for="fname" class="margin-remove-bottom form-label required"
                     i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
                     aria-label="First name label">
-                    First name
+                    Full name
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
                     <input id="fname" matInput #fname formControlName="fname" i18n-placeholder placeholder="Type here"
@@ -35,7 +35,7 @@
                     <mat-error [hidden]="false" i18n="First name Error|Explains name is required" i18n-aria-label
                       aria-label="First name Error|Explains name is required "
                       *ngIf="createUserForm?.controls['fname']?.touched && createUserForm?.controls['fname'].errors?.required">
-                      First name is mandatory
+                      Full name is mandatory
                     </mat-error>
                     <mat-error [hidden]="false" *ngIf="createUserForm?.controls['fname'].errors?.pattern"
                       i18n-aria-label
