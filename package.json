@@ -44,7 +44,7 @@
     "@project-sunbird/telemetry-sdk": "0.0.26",
     "@sunbird-cb/collection": "^1.0.22",
     "@sunbird-cb/design-system": "0.0.1",
-    "@sunbird-cb/rain-dashboards": "^0.4.11",
+    "@sunbird-cb/rain-dashboards": "^0.4.14",
     "@sunbird-cb/resolver": "^1.0.0",
     "@sunbird-cb/utils": "^1.0.12",
     "@types/file-saver": "^2.0.1",
@@ -134,6 +134,7 @@
     "tslint-config-airbnb": "^5.11.1",
     "typescript": "~3.5.3",
     "typescript-tslint-plugin": "^0.5.4",
+    "d3-funnel": "^2.1.1",
     "webpack-bundle-analyzer": "^4.4.0"
   }
 }
