@@ -268,7 +268,7 @@ export class InitService {
             givenName: completeProdata.firstName,
             userId: completeProdata.userId,
             firstName: completeProdata.firstName,
-            lastName: completeProdata.lastName,
+            // lastName: completeProdata.lastName,
             userName: completeProdata.userName,
             // tslint:disable-next-line: max-line-length
             // userName: `${completeProdata.firstName ? completeProdata.firstName : ' '}${completeProdata.lastName ? completeProdata.lastName : ' '}`,
@@ -298,8 +298,8 @@ export class InitService {
             userId: _.get(profileV2, 'userId') || completeProdata.userId,
             email: _.get(profileV2, 'personalDetails.primaryEmail') || completeProdata.email,
             firstName: _.get(profileV2, 'personalDetails.firstname') || completeProdata.firstName,
-            surName: _.get(profileV2, 'personalDetails.surname') || completeProdata.lastName,
-            middleName: _.get(profileV2, 'personalDetails.middlename') || '',
+            // surName: _.get(profileV2, 'personalDetails.surname') || completeProdata.lastName,
+            // middleName: _.get(profileV2, 'personalDetails.middlename') || '',
             departmentName: _.get(profileV2, 'employmentDetails.departmentName') || completeProdata.channel,
             // tslint:disable-next-line: max-line-length
             // userName: `${_.get(profileV2, 'personalDetails.firstname') ? _.get(profileV2, 'personalDetails.firstname') : ''}${_.get(profileV2, 'personalDetails.surname') ? _.get(profileV2, 'personalDetails.surname') : ''}`,

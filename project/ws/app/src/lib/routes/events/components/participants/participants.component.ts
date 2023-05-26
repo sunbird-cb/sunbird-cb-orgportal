@@ -12,7 +12,7 @@ import { ProfileV2UtillService } from '../../../home/services/home-utill.service
 
 export interface IParticipantElement {
     firstname: string,
-    lastname: string,
+    // lastname: string,
     email: number
 }
 
@@ -109,7 +109,7 @@ export class ParticipantsComponent implements OnInit {
                         const participantObj = {
                             email,
                             firstname: obj.firstName,
-                            lastname: obj.lastName,
+                            // lastname: obj.lastName,
                             id: obj.userId,
                         }
                         this.participants.push(participantObj)

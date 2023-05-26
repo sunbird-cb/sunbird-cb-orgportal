@@ -36,7 +36,7 @@
                                 <img [src]="basicInfo.photo" alt="User Avatar" (error)="changeToDefaultImg($event)">
                               </mat-grid-tile>
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">First name</label>
+                                <label class="appr-text-label">Full name</label>
                                 <input type="text" [disabled]="true" [value]="basicInfo.firstname"
                                   class="appr-text-field">
                               </mat-grid-tile>
@@ -46,11 +46,11 @@
                               <input type="text" [disabled]="true" [value]="basicInfo.middlename" class="appr-text-field">
                             </mat-grid-tile> -->
 
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                              <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Last name</label>
                                 <input type="text" [disabled]="true" [value]="basicInfo.surname"
                                   class="appr-text-field">
-                              </mat-grid-tile>
+                              </mat-grid-tile> -->
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Date of birth (dd-mm-yy)</label>
