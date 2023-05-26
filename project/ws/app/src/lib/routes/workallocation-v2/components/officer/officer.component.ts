@@ -145,6 +145,8 @@ export class OfficerComponent implements OnInit, OnDestroy {
       // const fullName = _.get(event, 'option.value.userDetails.first_name') + ' ' + _.get(event, 'option.value.userDetails.last_name')
       // tslint:disable-next-line: prefer-template
       const fullName = _.get(event, 'option.value.firstName')
+      // const fullName = _.get(event, 'option.value.firstName') + ' ' + _.get(event, 'option.value.lastName')
+      // const fullName = _.get(event, 'option.value.firstName') + ' ' + _.get(event, 'option.value.lastName')
       frmctr1.patchValue(fullName || '')
       this.watStore.setOfficerGroup(this.officerForm.value, false, true)
     }

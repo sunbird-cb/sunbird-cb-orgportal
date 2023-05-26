@@ -55,7 +55,8 @@ export class PublishPopupComponent implements OnInit {
   }
 
   closeDialog() {
-    const username = `${this.userData.firstName} `
+    const username = `${this.userData.firstName}`
+    // const username = `${this.userData.firstName} ${this.userData.lastName}`
     const org = []
     const createdforarray: any[] = []
     if (this.configSvc.userProfile) {

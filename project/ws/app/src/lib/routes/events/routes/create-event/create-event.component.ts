@@ -249,7 +249,8 @@ export class CreateEventComponent implements OnInit {
       }
       const contactsObj = {
         id: obj.id,
-        name: `${obj.firstName || obj.firstname} `,
+        name: `${obj.firstName || obj.firstname}`,
+        // name: `${obj.firstName || obj.firstname} ${obj.lastName || obj.lastname}`,
       }
       this.presentersArr.push(contactsObj)
       this.participantsArr.push(setSelectedPresentersObj)

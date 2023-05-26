@@ -44,6 +44,23 @@
                     </mat-error>
                   </mat-form-field>
 
+                  <!-- <label for="lname" class="margin-remove-bottom margin-top-xs form-label required"
+                    i18n="Last name label|Label which explains the user to enter last name" i18n-aria-label aria-label="Last name label">
+                    Last name
+                  </label>
+                  <mat-form-field appearance="outline" class="margin-top-xs">
+                    <input id="lname" matInput #lname formControlName="lname" i18n-placeholder placeholder="Type here" i18n-aria-label
+                      aria-label="Last name input" class="form-input" autocomplete="off" maxlength="150" />
+                    <mat-error [hidden]="false" i18n="Last name Error|Explains name is required" i18n-aria-label
+                      aria-label="Last name Error|Explains name is required "
+                      *ngIf="createUserForm?.controls['lname']?.touched && createUserForm?.controls['lname'].errors?.required">
+                      Last name is mandatory
+                    </mat-error>
+                    <mat-error [hidden]="false" *ngIf="createUserForm?.controls['lname'].errors?.pattern" i18n-aria-label
+                      aria-label="Last name Error|Name fields cannot contain numbers and special characters except ">
+                      Last name fields cannot contain numbers and special characters except '
+                    </mat-error>
+                  </mat-form-field> -->
 
                   <label for="email" class="margin-remove-bottom margin-top-xs form-label required"
                     i18n="Email label|Label which explains the user to enter email" i18n-aria-label

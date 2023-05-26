@@ -139,6 +139,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') }
         activeUsersData.push({
           fullname: user ? `${user.firstName}` : null,
+          // fullname: user ? `${user.firstName} ${user.lastName}` : null,
           email: user.personalDetails && user.personalDetails.primaryEmail ?
             this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
           role: org.roles || [],
@@ -162,6 +163,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') || [] }
         inactiveUsersData.push({
           fullname: user ? `${user.firstName} ` : null,
+          // fullname: user ? `${user.firstName} ${user.lastName}` : null,
           email: user.personalDetails && user.personalDetails.primaryEmail ?
             this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
           role: org.roles || [],
@@ -183,6 +185,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       _.filter(this.usersData.content, { isDeleted: false }).forEach((user: any) => {
         blockedUsersData.push({
           fullname: user ? `${user.firstName}` : null,
+          // fullname: user ? `${user.firstName} ${user.lastName}` : null,
           email: user.personalDetails && user.personalDetails.primaryEmail ?
             this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
           role: user.roles,
