@@ -37,7 +37,7 @@ const routes: Routes = [
         component: WelcomeComponent,
         data: {
           pageId: 'welcome',
-          module: 'home',
+          module: 'Home',
         },
       },
       {
@@ -49,7 +49,7 @@ const routes: Routes = [
         },
         data: {
           pageId: 'users',
-          module: 'home',
+          module: 'Home',
           pageType: 'feature',
           pageKey: 'users-view',
         },
@@ -64,7 +64,7 @@ const routes: Routes = [
         },
         data: {
           pageId: 'users',
-          module: 'home',
+          module: 'Home',
           pageType: 'feature',
           pageKey: 'users-view',
         },
@@ -74,7 +74,7 @@ const routes: Routes = [
         component: AboutComponent,
         data: {
           pageId: 'about',
-          module: 'home',
+          module: 'Home',
         },
       },
       {
@@ -82,7 +82,7 @@ const routes: Routes = [
         component: RolesAccessComponent,
         data: {
           pageId: 'roles-access',
-          module: 'home',
+          module: 'Home',
         },
         resolve: {
           usersList: UsersListResolve,
@@ -93,14 +93,14 @@ const routes: Routes = [
         component: ApprovalsComponent,
         data: {
           pageId: 'approvals',
-          module: 'home',
+          module: 'Home',
         },
       },
       {
         path: 'workallocation/:tab',
         data: {
           pageId: 'workallocation',
-          module: 'home',
+          module: 'Home',
         },
         component: WorkallocationComponent,
       },
@@ -109,7 +109,7 @@ const routes: Routes = [
         redirectTo: 'workallocation/draft', pathMatch: 'full',
         data: {
           pageId: 'workallocation',
-          module: 'home',
+          module: 'Home',
         },
         component: WorkallocationComponent,
       },
@@ -120,7 +120,7 @@ const routes: Routes = [
     component: MdoinfoComponent,
     data: {
       pageId: 'mdoinfo',
-      module: 'home',
+      module: 'Home',
     },
     resolve: {
       configService: ConfigResolveService,
@@ -131,7 +131,7 @@ const routes: Routes = [
         component: LeadershipComponent,
         data: {
           pageId: 'leadership',
-          module: 'home',
+          module: 'Home',
         },
         resolve: {
           configService: ConfigResolveService,
@@ -142,7 +142,7 @@ const routes: Routes = [
         component: StaffComponent,
         data: {
           pageId: 'staff',
-          module: 'home',
+          module: 'Home',
         },
         resolve: {
           configService: ConfigResolveService,
@@ -153,7 +153,7 @@ const routes: Routes = [
         component: BudgetComponent,
         data: {
           pageId: 'budget',
-          module: 'home',
+          module: 'Home',
         },
         resolve: {
           configService: ConfigResolveService,
