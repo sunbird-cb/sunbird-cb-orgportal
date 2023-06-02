@@ -245,6 +245,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.CREATE_BTN,
+        id: 'create-user-btn',
       },
       {}
     )
