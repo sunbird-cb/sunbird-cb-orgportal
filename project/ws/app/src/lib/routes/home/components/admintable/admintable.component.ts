@@ -51,8 +51,8 @@ export class AdmintableComponent implements OnInit, OnChanges {
   }
 
   constructor(public dialog: MatDialog, private snackBar: MatSnackBar,
-    private mdoinfoSrvc: MdoInfoService, private router: Router,
-    private profileUtilSvc: ProfileV2UtillService) {
+              private mdoinfoSrvc: MdoInfoService, private router: Router,
+              private profileUtilSvc: ProfileV2UtillService) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
 
