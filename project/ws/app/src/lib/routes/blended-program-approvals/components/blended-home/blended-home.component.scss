@@ -1,0 +1,82 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.container-balanced {
+  @extend %page-center;
+  height: auto;
+  min-height: 75vh;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%!important;
+  margin-left: auto!important;
+  margin-right: auto!important;
+}
+
+.container2 {
+  position: relative;
+}
+
+.container-balanced-inner {
+  padding: 24px!important;
+  box-sizing: border-box
+}
+.container-balanced-banner {
+  @extend %page-center;
+  height: auto;
+}
+
+.left-nav {
+  min-width: 240px;
+  overflow: hidden !important;
+  box-sizing: border-box;
+  height: 85vh;
+  background: rgb(240, 243, 244);
+  box-shadow: none;
+  visibility: hidden;
+
+  @include breakpoint-xs {
+    min-width: 100%;
+    max-width: none;
+  }
+}
+
+.flex-3 {
+  flex: 3;
+}
+
+.flex-5 {
+  flex: 5;
+}
+
+.flex-update {
+  flex-direction: row;
+
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+
+  @include breakpoint-s {
+    flex-direction: column;
+  }
+}
+
+::ng-deep .mat-drawer-content {
+  overflow-x: hidden!important;
+  overflow-y: hidden!important;
+}
+
+::ng-deep .mat-drawer-inner-container {
+  overflow: hidden;
+}
+::ng-deep.mat-drawer-backdrop.mat-drawer-shown {
+  visibility: hidden !important;
+}
+::ng-deep.mat-progress-spinner {
+    display: block;
+    position: fixed!important;
+    top: 0;
+    margin-top: 30%;
+    left: 0;
+    margin-left: 45%;
+}
