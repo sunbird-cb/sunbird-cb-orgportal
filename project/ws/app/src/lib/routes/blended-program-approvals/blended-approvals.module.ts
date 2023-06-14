@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
+  AvatarPhotoModule,
   BreadcrumbsOrgModule,
   LeftMenuWithoutLogoModule,
   UIORGTableModule,
@@ -17,11 +18,12 @@ import { BatchDetailsComponent } from './components/batch-details/batch-details.
 import { BatchListComponent } from './components/batch-list/batch-list.component'
 import { BlendedHomeComponent } from './components/blended-home/blended-home.component'
 import { BlendedApprovalsRoutingModule } from './blended-approvals-routing.module'
+import { UsersCardComponent } from './components/users-card/users-card.component'
 
 @NgModule({
-  declarations: [BlendedHomeComponent, BatchListComponent, BatchDetailsComponent],
+  declarations: [BlendedHomeComponent, BatchListComponent, BatchDetailsComponent, UsersCardComponent],
   imports: [CommonModule, BlendedApprovalsRoutingModule, BreadcrumbsOrgModule, LeftMenuWithoutLogoModule, WidgetResolverModule,
-    MatSidenavModule, MatIconModule, HomeModule, RouterModule, UIORGTableModule, MatCardModule],
+    MatSidenavModule, MatIconModule, HomeModule, RouterModule, UIORGTableModule, MatCardModule, AvatarPhotoModule],
   exports: [],
   providers: [],
 })

@@ -1,0 +1,23 @@
+<div class="flex flex-row items-center card-container ws-mat-primary-tags" (click)="goToUserProfile(user)">
+  <a href="javascript:void(0)" class="flex flex-1 items-center ws-mat-primary-tags" i18n-aria-label role="link"
+    aria-label="click on it to visit user profile">
+    <div class="mr-3">
+      <ws-widget-avatar-photo [name]="getUseravatarName()" [photoUrl]="user?.photo" size="m">
+      </ws-widget-avatar-photo>
+    </div>
+    <div class="flex flex-col flex-1">
+      <div class="designation truncate ws-mat-black60-text" *ngIf="user?.first_name">
+        {{user?.first_name}}
+      </div>
+      <div class="designation truncate ws-mat-black60-text" *ngIf="!user?.first_name">
+        {{user?.channel}}
+      </div>
+    </div>
+    <div *ngIf="actions">
+      <button type="button" mat-button class="margin-right-m cursor-pointer border-0"
+        (click)="onSubmit('Reject')">Reject</button>
+      <button type="button" mat-button class="approve-btn cursor-pointer mat-accent-border"
+        (click)="onSubmit('Approve')">Approve</button>
+    </div>
+  </a>
+</div>

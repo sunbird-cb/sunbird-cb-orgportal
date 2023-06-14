@@ -1,8 +1,62 @@
 <div class="flex flex-4 flex-column">
-  <mat-card class="flex-custom ws-mat-accent-border">
+  <mat-card class="flex-custom ws-mat-accent-border batch-detailspage">
+    <ws-widget-breadcrumbs-org [widgetData]="{titles:[{title:'Blended programs', url:'/app/home/blended-approvals'},
+      {title:'Program 1', url:'/app/blended-approvals/1/batches'}, {title:'Batches', url:'/app/blended-approvals/1/batches'},
+      {title:'Batch1',url:'none'}] }">
+    </ws-widget-breadcrumbs-org>
+    <div class="flex-4 mobile-margin mat-h2">
+      Batch 1
+    </div>
     <mat-card-content>
       <ng-container>
-        Batch details page
+        <div class="margin-bottom-xl margin-top-l grey-box paddig-m ws-mat-accent-border">
+          <p class="font-bold">Batch details</p>
+          <ul class="margin-top-m margin-bottom-m batch-data">
+            <li><mat-icon>tag</mat-icon> BTCHID123</li>
+            <li><mat-icon>event</mat-icon> 2 Jun, 2023 - 12 Jun, 2023</li>
+            <li><mat-icon>event</mat-icon> 10 Jun, 2023</li>
+            <li><mat-icon>people</mat-icon> 67 Learners</li>
+          </ul>
+        </div>
+      </ng-container>
+
+      <ng-container>
+        <div class="flex flex-1 flex-column margin-fix">
+          <div class="flex flex-1 filter max-height-60">
+            <a class="filter-option cursor-pointer" [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'pending',
+                                                'ws-mat-accent-border font-medium':currentFilter !== 'pending'}"
+              mat-button (click)="filter('pending')" role="button">Pending requests</a>
+            <a class="filter-option cursor-pointer"
+              [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'approved',
+                                                              'ws-mat-accent-border font-medium':currentFilter !== 'approved'}" mat-button
+              (click)="filter('approved')" role="button">Learners</a>
+            <a class="filter-option cursor-pointer"
+              [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'rejected',
+                                                                        'ws-mat-accent-border font-medium':currentFilter !== 'rejected'}" mat-button
+              (click)="filter('rejected')" role="button">Rejected requests</a>
+          </div>
+        </div>
+        <ng-container *ngIf="currentFilter === 'pending'">
+          <div class="b-c box">
+            <div *ngFor="let user of usersData">
+              <ws-app-users-card [user]="user" [actions]="true"></ws-app-users-card>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="currentFilter === 'approved'">
+          <div class="b-c box">
+            <div *ngFor="let user of usersData">
+              <ws-app-users-card [user]="user" [actions]="false"></ws-app-users-card>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="currentFilter === 'rejected'">
+          <div class="b-c box">
+            <div *ngFor="let user of usersData">
+              <ws-app-users-card [user]="user" [actions]="false"></ws-app-users-card>
+            </div>
+          </div>
+        </ng-container>
       </ng-container>
     </mat-card-content>
   </mat-card>

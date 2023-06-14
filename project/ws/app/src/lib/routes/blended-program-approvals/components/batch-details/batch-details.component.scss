@@ -1,0 +1,77 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.grey-box {
+  background: #F5F5F5;
+  padding: 1em;
+
+  .batch-data {
+    list-style: none;
+    padding: 0;
+    font: 400 14px/20px Lato;
+
+    li {
+      display: inline;
+      margin-right: 2em;
+
+      .mat-icon {
+        color: #979797;
+        vertical-align: bottom;
+        font-size: 18px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+.filter {
+  .filter-option {
+    margin: $size-s $size-s;
+    /* border-bottom: darkslateblue; */
+    border-radius: 0;
+    border-bottom-width: 2px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+  }
+
+  .filter-option:first-child {
+    margin-left: 0;
+  }
+}
+
+.box {
+  display: flex;
+  flex-wrap: wrap;
+}
+.box > * {
+  flex: 1 1 400px;
+
+  @include breakpoint-s {
+    flex: 1 1 350px;
+  }
+  @include breakpoint-xs {
+    flex: 1 1 100%;
+  }
+}
+.a {
+  flex: 0 0 150px;
+}
+.b-c {
+  flex-direction: row;
+  display: flex;
+  flex-grow: 1;
+  margin: 1em 0;
+  @include breakpoint-xs {
+    flex-direction: column;
+  }
+}
+.min-w {
+  min-width: 49%;
+}
+
+.font-medium {
+  font-weight: 500 !important;
+}
