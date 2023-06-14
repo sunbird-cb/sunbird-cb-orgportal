@@ -1,0 +1,12 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.grey-box {
+  background: #F5F5F5;
+  padding: 1em;
+  display: inline-block;
+  width: 28%;
+  border-radius: 4px;
+}
+

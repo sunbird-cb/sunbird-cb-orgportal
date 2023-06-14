@@ -1,12 +1,36 @@
 <div class="flex flex-4 flex-column">
   <mat-card class="flex-custom ws-mat-accent-border">
+    <ws-widget-breadcrumbs-org [widgetData]="{titles:[{title:'Blended programs', url:'/app/home/blended-approvals'},
+          {title:'Program 1', url:'/app/blended-approvals/1/batches'}, {title:'Batches', url:'none'}] }">
+    </ws-widget-breadcrumbs-org>
+    <div class="flex-4 mobile-margin mat-h2">
+      Batches
+    </div>
     <mat-card-content>
       <ng-container>
-        Batch list
+        <div class="batches-lsit">
+          <div class="grey-box paddig-m ws-mat-accent-border mat-body-2 cursor-pointer margin-bottom-m margin-right-l"
+            (click)="viewDetails(1)">
+            <div><span class="font-bold">Batch 1</span> <span class="float-right">BTCHID123</span></div>
+            <p class="">2 Jun, 2023 - 12 Jun, 2023</p>
+          </div>
 
-        <br>
-        <a (click)="viewDetails(1)">Batch 1</a><br>
-        <a (click)="viewDetails(2)">Batch 2</a>
+          <div class="grey-box paddig-m ws-mat-accent-border mat-body-2 cursor-pointer margin-bottom-m margin-right-l"
+            (click)="viewDetails(1)">
+            <div><span class="font-bold">Batch 1</span> <span class="float-right">BTCHID123</span></div>
+            <p class="">2 Jun, 2023 - 12 Jun, 2023</p>
+          </div>
+
+          <div class="grey-box paddig-m ws-mat-accent-border mat-body-2 cursor-pointer margin-bottom-m margin-right-l"
+            (click)="viewDetails(1)">
+            <div><span class="font-bold">Batch 1</span> <span class="float-right">BTCHID123</span></div>
+            <p class="">2 Jun, 2023 - 12 Jun, 2023</p>
+          </div>
+        </div>
+
+
+        <!-- <a (click)="viewDetails(1)">Batch 1</a><br>
+        <a (click)="viewDetails(2)">Batch 2</a> -->
       </ng-container>
     </mat-card-content>
   </mat-card>
