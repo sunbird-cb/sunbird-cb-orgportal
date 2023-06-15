@@ -17,8 +17,8 @@ export class BlendedApprovalsComponent implements OnInit {
   tabledata: ITableData = {
     actions: [],
     columns: [
-      { displayName: 'Program name', key: 'title' },
-      { displayName: 'Batches', key: 'batches' },
+      { displayName: 'Program name', key: 'name' },
+      { displayName: 'Batches', key: 'batchesCount' },
       { displayName: 'Learners', key: 'learners', isList: true },
       { displayName: 'New requests (Across batches)', key: 'newrequests', isList: true },
     ],
@@ -50,23 +50,28 @@ export class BlendedApprovalsComponent implements OnInit {
         query: '',
         filters: {
           status: ['Live'],
-          primaryCategory: ['Course', 'Program', 'Standalone Assessment'],
-          reviewerIDs: this.configSvc.userProfile ? this.configSvc.userProfile.userId : '',
+          primaryCategory: ['Blended Program'],
         },
         sort_by: { lastUpdatedOn: 'desc' },
         facets: ['primaryCategory', 'mimeType'],
-        limit: 100,
+        limit: 5,
         offset: 0,
       },
     }
     this.bpService.getBlendedPrograms(req).subscribe((res: any) => {
-      console.log('BP list', res.result)
+      const resultList = res.result.content
+      resultList.forEach((val: any) => {
+        val.batchesCount = val.batches.length
+        val.learners = val.learnersCount
+        val.newrequests = val.requestsCount
+      })
+      this.data = resultList
     })
   }
 
   viewDetails(event: any) {
-    console.log('event', event.target.value)
-    this.router.navigate(['/app/blended-approvals/1/batches'])
+    const id = event.identifier
+    this.router.navigate([`/app/blended-approvals/${id}/batches`], { state: event })
   }
 
   get getTableData() {

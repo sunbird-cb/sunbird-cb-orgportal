@@ -1,9 +1,6 @@
 <div class="flex flex-4 flex-column">
   <mat-card class="flex-custom ws-mat-accent-border batch-detailspage">
-    <ws-widget-breadcrumbs-org [widgetData]="{titles:[{title:'Blended programs', url:'/app/home/blended-approvals'},
-      {title:'Program 1', url:'/app/blended-approvals/1/batches'}, {title:'Batches', url:'/app/blended-approvals/1/batches'},
-      {title:'Batch1',url:'none'}] }">
-    </ws-widget-breadcrumbs-org>
+    <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs" *ngIf="breadcrumbs"></ws-widget-breadcrumbs-org>
     <div class="flex-4 mobile-margin mat-h2">
       Batch 1
     </div>
@@ -11,11 +8,12 @@
       <ng-container>
         <div class="margin-bottom-xl margin-top-l grey-box paddig-m ws-mat-accent-border">
           <p class="font-bold">Batch details</p>
-          <ul class="margin-top-m margin-bottom-m batch-data">
-            <li><mat-icon>tag</mat-icon> BTCHID123</li>
-            <li><mat-icon>event</mat-icon> 2 Jun, 2023 - 12 Jun, 2023</li>
-            <li><mat-icon>event</mat-icon> 10 Jun, 2023</li>
-            <li><mat-icon>people</mat-icon> 67 Learners</li>
+          <ul class="margin-top-m margin-bottom-m batch-data" *ngIf="batchData">
+            <li><mat-icon>tag</mat-icon> {{batchData.batchId}}</li>
+            <li><mat-icon>event</mat-icon> {{batchData.startDate}} - {{batchData.endDate}}</li>
+            <li><mat-icon>event</mat-icon> {{batchData.enrollmentEndDate}}</li>
+            <li *ngIf="approvedUsers && approvedUsers.length > 0"><mat-icon>people</mat-icon> {{approvedUsers.length}}
+              Learners</li>
           </ul>
         </div>
       </ng-container>
@@ -44,10 +42,13 @@
           </div>
         </ng-container>
         <ng-container *ngIf="currentFilter === 'approved'">
-          <div class="b-c box">
-            <div *ngFor="let user of usersData">
+          <div class="b-c box" *ngIf="approvedUsers && approvedUsers.length > 0">
+            <div *ngFor="let user of approvedUsers">
               <ws-app-users-card [user]="user" [actions]="false"></ws-app-users-card>
             </div>
+          </div>
+          <div class="b-c box" *ngIf="approvedUsers && approvedUsers.length == 0">
+            <p class="margin-top-m margin-bottom-m">No Learners</p>
           </div>
         </ng-container>
         <ng-container *ngIf="currentFilter === 'rejected'">

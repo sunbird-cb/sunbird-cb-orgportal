@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import { BlendedApporvalService } from '../../services/blended-approval.service'
 
 @Component({
   selector: 'ws-app-batch-details',
@@ -8,8 +10,24 @@ import { Component, OnInit } from '@angular/core'
 export class BatchDetailsComponent implements OnInit {
   currentFilter = 'pending'
   usersData: any = []
+  approvedUsers: any = []
+  programData: any
+  programID: any
+  batchID: any
+  batchData: any
+  breadcrumbs: any
 
-  constructor() { }
+  constructor(private router: Router, private activeRouter: ActivatedRoute, private bpService: BlendedApporvalService) {
+    const currentState = this.router.getCurrentNavigation()
+    if (currentState && currentState.extras.state) {
+      this.batchData = currentState.extras.state
+    }
+    this.programID = this.activeRouter.snapshot.params.id
+    this.batchID = this.activeRouter.snapshot.params.batchid
+    if (this.programID) {
+      this.getBPDetails(this.programID)
+    }
+  }
 
   ngOnInit() {
     this.usersData = [
@@ -57,7 +75,7 @@ export class BatchDetailsComponent implements OnInit {
         break
       case 'approved':
         this.currentFilter = 'approved'
-        // this.getApprovedList()
+        this.getLearnersList()
         break
       case 'rejected':
         this.currentFilter = 'rejected'
@@ -66,6 +84,31 @@ export class BatchDetailsComponent implements OnInit {
       default:
         break
     }
+  }
+
+  getBPDetails(programID: any) {
+    this.bpService.getBlendedProgramsDetails(programID).subscribe((res: any) => {
+      this.programData = res.result.content
+      this.breadcrumbs = {
+        titles: [{ title: 'Blended programs', url: '/app/home/blended-approvals' },
+        { title: this.programData.name, url: `/app/blended-approvals/${this.programData.identifier}/batches` },
+        { title: 'Batch 1', url: 'none' }],
+      }
+      if (!this.batchData) {
+        this.programData.batches.forEach((b: any) => {
+          if (b.batchId === this.batchID) {
+            this.batchData = b
+          }
+        })
+      }
+
+    })
+  }
+
+  getLearnersList() {
+    this.bpService.getLearners(this.batchData.batchId).subscribe((res: any) => {
+      this.approvedUsers = res.result.content
+    })
   }
 
 }
