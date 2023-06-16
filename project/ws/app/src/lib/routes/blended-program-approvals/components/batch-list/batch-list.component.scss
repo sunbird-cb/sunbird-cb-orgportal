@@ -4,7 +4,6 @@
 
 .grey-box {
   background: #F5F5F5;
-  padding: 1em;
   display: inline-block;
   width: 28%;
   border-radius: 4px;
@@ -12,11 +11,17 @@
   .mat-body-2 {
     margin-bottom: 0 !important;
     .mat-icon {
-    color: #979797;
-    vertical-align: bottom;
-    font-size: 18px;
-    width: 20px;
-    height: 20px;
+      color: #979797;
+      vertical-align: bottom;
+      font-size: 18px;
+      width: 20px;
+      height: 20px;
+    }
   }
+
+  .request-box {
+    color: #D96454;
+    font: 600 14px/18px Lato !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
   }
 }
