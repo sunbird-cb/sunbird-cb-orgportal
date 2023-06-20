@@ -54,7 +54,7 @@ export class BlendedApprovalsComponent implements OnInit {
         },
         sort_by: { lastUpdatedOn: 'desc' },
         facets: ['primaryCategory', 'mimeType'],
-        limit: 5,
+        limit: 1000,
         offset: 0,
       },
     }

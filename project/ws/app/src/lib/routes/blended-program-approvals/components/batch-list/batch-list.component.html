@@ -8,10 +8,10 @@
     <mat-card-content>
       <ng-container>
         <div class="batches-lsit" *ngIf="programData && programData.batches">
-          <div class="grey-box ws-mat-accent-border mat-body-2 cursor-pointer margin-bottom-m margin-right-l"
+          <div class="grey-box ws-mat-accent-border cursor-pointer margin-bottom-m margin-right-l"
             (click)="viewDetails(batch)" *ngFor="let batch of programData.batches">
             <div class="padding-left-s padding-right-s padding-xs">
-              <span class="font-bold mat-body">Batch 1</span>
+              <span class="mat-subheading-2">{{batch.name}}</span>
               <span class="float-right mat-body-2">{{batch.batchId}}</span>
             </div>
             <p class="padding-left-s padding-right-s margin-top-xs mat-body-2"><mat-icon>event</mat-icon>

@@ -2,7 +2,7 @@
   <mat-card class="flex-custom ws-mat-accent-border batch-detailspage">
     <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs" *ngIf="breadcrumbs"></ws-widget-breadcrumbs-org>
     <div class="flex-4 mobile-margin mat-h2">
-      Batch 1
+      {{batchData.name}}
     </div>
     <mat-card-content>
       <ng-container>
@@ -12,8 +12,7 @@
             <li><mat-icon>tag</mat-icon> {{batchData.batchId}}</li>
             <li><mat-icon>event</mat-icon> {{batchData.startDate}} - {{batchData.endDate}}</li>
             <li><mat-icon>event</mat-icon> {{batchData.enrollmentEndDate}}</li>
-            <li *ngIf="approvedUsers && approvedUsers.length > 0"><mat-icon>people</mat-icon> {{approvedUsers.length}}
-              Learners</li>
+            <li><mat-icon>people</mat-icon> {{approvedUsers.length}} Learners</li>
           </ul>
         </div>
       </ng-container>
@@ -23,7 +22,7 @@
           <div class="flex flex-1 filter max-height-60">
             <a class="filter-option cursor-pointer" [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'pending',
                                                 'ws-mat-accent-border font-medium':currentFilter !== 'pending'}"
-              mat-button (click)="filter('pending')" role="button">Pending requests</a>
+              mat-button (click)="filter('pending')" role="button">New requests</a>
             <a class="filter-option cursor-pointer"
               [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'approved',
                                                               'ws-mat-accent-border font-medium':currentFilter !== 'approved'}" mat-button
