@@ -1,4 +1,4 @@
-<div class="flex flex-4 flex-column">
+<div class="flex flex-4 flex-column" *ngIf="batchData">
   <mat-card class="flex-custom ws-mat-accent-border batch-detailspage">
     <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs" *ngIf="breadcrumbs"></ws-widget-breadcrumbs-org>
     <div class="flex-4 mobile-margin mat-h2">
@@ -36,7 +36,7 @@
         <ng-container *ngIf="currentFilter === 'pending'">
           <div class="b-c box">
             <div *ngFor="let user of usersData">
-              <ws-app-users-card [user]="user" [actions]="true"></ws-app-users-card>
+              <ws-app-users-card [user]="user" [actions]="true" (userClick)="onSubmit($event)"></ws-app-users-card>
             </div>
           </div>
         </ng-container>

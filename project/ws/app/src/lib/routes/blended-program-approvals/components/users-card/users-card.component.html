@@ -1,4 +1,4 @@
-<div class="flex flex-row items-center card-container ws-mat-primary-tags" (click)="goToUserProfile(user)">
+<div class="flex flex-row items-center card-container ws-mat-primary-tags">
   <a href="javascript:void(0)" class="flex flex-1 items-center ws-mat-primary-tags" i18n-aria-label role="link"
     aria-label="click on it to visit user profile">
     <div class="mr-3">
@@ -15,9 +15,9 @@
     </div>
     <div *ngIf="actions">
       <button type="button" mat-button class="margin-right-m cursor-pointer border-0"
-        (click)="onSubmit('Reject')">Reject</button>
+        (click)="clickReject()">Reject</button>
       <button type="button" mat-button class="approve-btn cursor-pointer mat-accent-border"
-        (click)="onSubmit('Approve')">Approve</button>
+        (click)="clickApprove()">Approve</button>
     </div>
   </a>
 </div>

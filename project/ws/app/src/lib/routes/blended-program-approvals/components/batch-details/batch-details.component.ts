@@ -111,4 +111,8 @@ export class BatchDetailsComponent implements OnInit {
     })
   }
 
+  onSubmit(event: any) {
+    console.log('======', event)
+  }
+
 }
