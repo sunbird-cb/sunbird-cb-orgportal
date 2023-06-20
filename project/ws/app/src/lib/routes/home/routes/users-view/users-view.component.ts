@@ -252,54 +252,81 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
 
   async downloadUserList() {
-    // const tempData: any = []
-    // if (this.currentFilter === 'active') {
-    //   this.activeUsers.forEach((element: any) => {
-    //     let tempRoles = ''
-    //     element.role.forEach((roleEle: any, index: any) => {
-    //       tempRoles = `${roleEle}${(index === 0) ? '' : ', '}${tempRoles}`
-    //     })
-    //     tempData.push({
-    //       'Full Name': element.fullname,
-    //       Email: element.email,
-    //       Roles: tempRoles,
-    //       Active: element.active,
-    //       // 'Organisation ID': element.orgId,
-    //       // 'Organisation Name': element.orgName,
-    //     })
-    //   })
-    // }
-    // if (this.currentFilter === 'inactive') {
-    //   this.inActiveUsers.forEach((element: any) => {
-    //     let tempRoles = ''
-    //     element.role.forEach((roleEle: any, index: any) => {
-    //       tempRoles = `${roleEle}${(index === 0) ? '' : ', '}${tempRoles}`
-    //     })
-    //     tempData.push({
-    //       'Full Name': element.fullname,
-    //       Email: element.email,
-    //       Roles: tempRoles,
-    //       Active: element.active,
-    //       // 'Organisation ID': element.orgId,
-    //       // 'Organisation Name': element.orgName,
-    //     })
-    //   })
-    // }
-    // const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(tempData)
-    // const wb: XLSX.WorkBook = XLSX.utils.book_new()
-    // XLSX.utils.book_append_sheet(wb, ws, 'Sheet1')
-    // XLSX.writeFile(wb, `${(this.currentFilter === 'active') ?
-    // 'Active-' : (this.currentFilter === 'inactive') ? 'Inactive-' : ''}UserList.xlsx`)
-    // const tempDate = new Date() ${tempDate.getFullYear()}-${month}-${tempDate.getDate()}
+
+    const popup = this.snackBar
+
     const fileName = `userReport.xlsx`
+
     const downloadUrl = `${environment.domainName}${environment.userBucket}${this.configSvc.userProfile.rootOrgId}/${fileName}`
-    window.location.href = downloadUrl
+
+
+    const xhr = new XMLHttpRequest()
+
+    xhr.onreadystatechange = () => {
+
+      if (xhr.readyState !== 4) {
+
+        return
+
+      }
+
+      if (xhr.status === 200) {
+
+        window.location.href = downloadUrl
+
+      } else {
+
+        popup.open('File not generated yet!')
+
+      }
+
+    }
+
+    xhr.open('GET', downloadUrl)
+
+    xhr.send()
+
   }
 
+
+
+
   downloadConsumptionReport() {
+
+    const popup = this.snackBar
+
     const fileName = `userEnrolmentReport.xlsx`
+
     const downloadUrl = `${environment.domainName}${environment.userBucket}${this.configSvc.userProfile.rootOrgId}/${fileName}`
-    window.location.href = downloadUrl
+
+    // window.location.href = downloadUrl
+
+    const xhr = new XMLHttpRequest()
+
+    xhr.onreadystatechange = () => {
+
+      if (xhr.readyState !== 4) {
+
+        return
+
+      }
+
+      if (xhr.status === 200) {
+
+        window.location.href = downloadUrl
+
+      } else {
+
+        popup.open('File not generated yet!')
+
+      }
+
+    }
+
+    xhr.open('GET', downloadUrl)
+
+    xhr.send()
+
   }
 
   onUploadClick() {
