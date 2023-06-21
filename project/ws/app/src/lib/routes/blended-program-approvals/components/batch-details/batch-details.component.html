@@ -1,7 +1,7 @@
 <div class="flex flex-4 flex-column" *ngIf="batchData">
-  <mat-card class="flex-custom ws-mat-accent-border batch-detailspage">
+  <mat-card class="flex-custom batch-detailspage">
     <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs" *ngIf="breadcrumbs"></ws-widget-breadcrumbs-org>
-    <div class="flex-4 mobile-margin mat-h2">
+    <div class="flex-4 mobile-margin mat-h2 margin-top-m">
       {{batchData.name}}
     </div>
     <mat-card-content>
@@ -34,10 +34,13 @@
           </div>
         </div>
         <ng-container *ngIf="currentFilter === 'pending'">
-          <div class="b-c box">
-            <div *ngFor="let user of usersData">
+          <div class="b-c box" *ngIf="newUsers && newUsers.length > 0">
+            <div *ngFor="let user of newUsers">
               <ws-app-users-card [user]="user" [actions]="true" (userClick)="onSubmit($event)"></ws-app-users-card>
             </div>
+          </div>
+          <div class="b-c box" *ngIf="newUsers && newUsers.length == 0">
+            <p class="padding-m">No new requests yet</p>
           </div>
         </ng-container>
         <ng-container *ngIf="currentFilter === 'approved'">
@@ -47,14 +50,17 @@
             </div>
           </div>
           <div class="b-c box" *ngIf="approvedUsers && approvedUsers.length == 0">
-            <p class="margin-top-m margin-bottom-m">No Learners</p>
+            <p class="padding-m">No learners yet</p>
           </div>
         </ng-container>
         <ng-container *ngIf="currentFilter === 'rejected'">
-          <div class="b-c box">
-            <div *ngFor="let user of usersData">
+          <div class="b-c box" *ngIf="rejectedUsers && rejectedUsers.length > 0">
+            <div *ngFor="let user of rejectedUsers">
               <ws-app-users-card [user]="user" [actions]="false"></ws-app-users-card>
             </div>
+          </div>
+          <div class="b-c box" *ngIf="rejectedUsers && rejectedUsers.length == 0">
+            <p class="padding-m">No rejected requests yet</p>
           </div>
         </ng-container>
       </ng-container>

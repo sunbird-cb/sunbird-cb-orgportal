@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import { BlendedApporvalService } from '../../services/blended-approval.service'
 
@@ -9,15 +10,18 @@ import { BlendedApporvalService } from '../../services/blended-approval.service'
 })
 export class BatchDetailsComponent implements OnInit {
   currentFilter = 'pending'
-  usersData: any = []
   approvedUsers: any = []
   programData: any
   programID: any
   batchID: any
   batchData: any
   breadcrumbs: any
+  newUsers: any = []
+  rejectedUsers: any = []
 
-  constructor(private router: Router, private activeRouter: ActivatedRoute, private bpService: BlendedApporvalService) {
+  constructor(private router: Router, private activeRouter: ActivatedRoute,
+    // tslint:disable-next-line:align
+    private bpService: BlendedApporvalService, private snackBar: MatSnackBar) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
@@ -29,49 +33,13 @@ export class BatchDetailsComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.usersData = [
-      {
-        city: '',
-        department: 'jpal',
-        desc: '',
-        designation: '',
-        email: 'test01july0907@yopmail.com',
-        first_name: 'test01 july0907',
-        last_name: '',
-        userLocation: '',
-        user_id: '27a35578-841c-450b-afc7-ace35f1051da',
-      },
-      {
-        city: '',
-        department: 'General Administration Ladakh',
-        desc: '',
-        designation: 'ACCOUNTS ASSISTANT',
-        email: 'JulyTest.Testjuly@yopmail.com',
-        first_name: 'JulyTest Testjuly',
-        last_name: '',
-        userLocation: '',
-        user_id: 'bdf547ba-79e8-49d9-9143-54353673212d',
-      },
-      {
-        city: '',
-        department: 'jpal',
-        desc: '',
-        designation: '',
-        email: 'testinguser0007@yopmail.com',
-        first_name: 'testinguser user',
-        last_name: '',
-        userLocation: '',
-        user_id: '8a24ee2d-20ec-4eb0-b559-627b30dfd894',
-      },
-    ]
-  }
+  ngOnInit() { }
 
   filter(key: 'pending' | 'approved' | 'rejected') {
     switch (key) {
       case 'pending':
         this.currentFilter = 'pending'
-        // this.getPendingList()
+        this.getNewRequestsList()
         break
       case 'approved':
         this.currentFilter = 'approved'
@@ -79,7 +47,7 @@ export class BatchDetailsComponent implements OnInit {
         break
       case 'rejected':
         this.currentFilter = 'rejected'
-        // this.getRejectedList()
+        this.getRejectedList()
         break
       default:
         break
@@ -89,11 +57,6 @@ export class BatchDetailsComponent implements OnInit {
   getBPDetails(programID: any) {
     this.bpService.getBlendedProgramsDetails(programID).subscribe((res: any) => {
       this.programData = res.result.content
-      this.breadcrumbs = {
-        titles: [{ title: 'Blended programs', url: '/app/home/blended-approvals' },
-        { title: this.programData.name, url: `/app/blended-approvals/${this.programData.identifier}/batches` },
-        { title: 'Batch 1', url: 'none' }],
-      }
       if (!this.batchData) {
         this.programData.batches.forEach((b: any) => {
           if (b.batchId === this.batchID) {
@@ -101,18 +64,97 @@ export class BatchDetailsComponent implements OnInit {
           }
         })
       }
-
+      if (this.programData && this.batchData) {
+        this.breadcrumbs = {
+          titles: [{ title: 'Blended programs', url: '/app/home/blended-approvals' },
+          { title: this.programData.name, url: `/app/blended-approvals/${this.programData.identifier}/batches` },
+          { title: this.batchData.name, url: 'none' }],
+        }
+        this.getNewRequestsList()
+      }
     })
   }
 
   getLearnersList() {
     this.bpService.getLearners(this.batchData.batchId).subscribe((res: any) => {
-      this.approvedUsers = res.result.content
+      if (res && res.length > 0) {
+        this.approvedUsers = res.result.content
+      }
+    })
+  }
+
+  getNewRequestsList() {
+    const request = {
+      serviceName: 'blendedprogram',
+      applicationStatus: 'SEND_FOR_MDO_APPROVAL',
+      applicationIds: [this.batchData.batchId],
+      limit: 100,
+      offset: 0,
+      deptName: this.programData.organisation[0],
+    }
+    this.bpService.getRequests(request).subscribe((res: any) => {
+      if (res) {
+        this.newUsers = res.result.data
+      }
+    })
+  }
+
+  getRejectedList() {
+    const request = {
+      serviceName: 'blendedprogram',
+      applicationStatus: 'REJECTED',
+      applicationIds: [this.batchData.batchId],
+      limit: 100,
+      offset: 0,
+      deptName: this.programData.organisation[0],
+    }
+    this.bpService.getRequests(request).subscribe((res: any) => {
+      if (res) {
+        this.rejectedUsers = res.result.data
+      }
     })
   }
 
   onSubmit(event: any) {
     console.log('======', event)
+    const actionType = event.action.toUpperCase()
+    const reqData = event.userData.wfInfo[0]
+    const request = {
+      state: 'SEND_FOR_MDO_APPROVAL',
+      action: actionType,
+      wfId: reqData.wfId,
+      applicationId: reqData.applicationId,
+      userId: reqData.userId,
+      actorUserId: reqData.actorUUID,
+      serviceName: 'blendedprogram',
+      rootOrgId: reqData.rootOrg,
+      courseId: this.programID,
+      deptName: reqData.deptName,
+      updateFieldValues: [
+        {
+          toValue: {
+            name: event.userData.first_name,
+          },
+        },
+      ],
+    }
+    console.log('request', request)
+    this.bpService.updateBlendedRequests(request).subscribe((res: any) => {
+      console.log('res', res)
+      if (event.action === 'Approve') {
+        this.openSnackbar('Request is approved successfully!')
+        this.filter('approved')
+      } else {
+        this.openSnackbar('Request is rejected successfully!')
+        this.filter('rejected')
+      }
+    })
+  }
+
+  private openSnackbar(primaryMsg: string, duration: number = 5000) {
+    this.snackBar.open(primaryMsg, 'X', {
+      duration,
+    })
   }
 
 }

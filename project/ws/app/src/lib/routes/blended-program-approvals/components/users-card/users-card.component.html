@@ -5,13 +5,13 @@
       <ws-widget-avatar-photo [name]="getUseravatarName()" [photoUrl]="user?.photo" size="m">
       </ws-widget-avatar-photo>
     </div>
-    <div class="flex flex-col flex-1">
-      <div class="designation truncate ws-mat-black60-text" *ngIf="user?.first_name">
-        {{user?.first_name}}
-      </div>
-      <div class="designation truncate ws-mat-black60-text" *ngIf="!user?.first_name">
-        {{user?.channel}}
-      </div>
+    <div class="flex flex-col flex-1" *ngIf="user && user.userInfo">
+      <p class="truncate margin-remove mat-body-1">{{user?.userInfo.first_name}}</p>
+      <p class="truncate ws-mat-black60-text margin-remove mat-body-2">{{user?.wfInfo[0].deptName}}</p>
+    </div>
+    <div class="flex flex-col flex-1" *ngIf="user && !user.userInfo">
+      <p class="truncate margin-remove mat-body-1">{{user?.first_name}}</p>
+      <p class="truncate ws-mat-black60-text margin-remove mat-body-2">{{user?.deptName || user?.department }}</p>
     </div>
     <div *ngIf="actions">
       <button type="button" mat-button class="margin-right-m cursor-pointer border-0"
