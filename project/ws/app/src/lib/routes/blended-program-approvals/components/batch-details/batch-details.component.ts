@@ -116,6 +116,7 @@ export class BatchDetailsComponent implements OnInit {
   }
 
   onSubmit(event: any) {
+    // tslint:disable-next-line:no-console
     console.log('======', event)
     const actionType = event.action.toUpperCase()
     const reqData = event.userData.wfInfo[0]
@@ -138,8 +139,10 @@ export class BatchDetailsComponent implements OnInit {
         },
       ],
     }
+    // tslint:disable-next-line:no-console
     console.log('request', request)
     this.bpService.updateBlendedRequests(request).subscribe((res: any) => {
+      // tslint:disable-next-line:no-console
       console.log('res', res)
       if (event.action === 'Approve') {
         this.openSnackbar('Request is approved successfully!')
