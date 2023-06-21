@@ -143,7 +143,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
               }
               const obj = {
                 srnumber: index + 1,
-                fullname: `${user.firstName} ${user.lastName}`,
+                fullname: `${user.firstName}`,
                 email: this.profileUtilSvc.emailTransform(user.email),
                 position: pos,
                 id: user.id,

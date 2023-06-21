@@ -560,7 +560,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
             assignedToEmail = ''
         } else {
           // tslint:disable-next-line: prefer-template
-          assignedTo = _.get(event, 'option.value.firstName') + ' ' + _.get(event, 'option.value.lastName')
+          // assignedTo = _.get(event, 'option.value.firstName') + ' ' + _.get(event, 'option.value.lastName')
+          assignedTo = _.get(event, 'option.value.firstName')
           assignedToId = _.get(event, 'option.value.userId'),
             assignedToEmail = _.get(event, 'option.value.profileDetails.personalDetails.primaryEmail')
         }
