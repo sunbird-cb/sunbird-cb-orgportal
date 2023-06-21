@@ -51,7 +51,7 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* Click event to navigate to a particular role */
   onRoleClick(role: any) {
-    debugger
+    // debugger
     this.router.navigate([`/app/roles/${role.role}/users`])
     // this.router.navigate([`/app/home/roles-users`], { queryParams: { role: event.role, orgID: rootOrgId } })
     // this.telemetrySvc.impression()
@@ -69,7 +69,7 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   fetchIndidualRoleData(rootOrgId: string, rolename: string) {
-    debugger
+    // debugger
     this.usersService.getAllRoleUsers(rootOrgId, rolename).subscribe(data => {
       this.roleCountSpinner = true
       const individualCount = data.count
