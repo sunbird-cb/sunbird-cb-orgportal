@@ -54,7 +54,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   constructor(public dialog: MatDialog, private activeRoute: ActivatedRoute, private snackBar: MatSnackBar,
     // tslint:disable-next-line:align
     private mdoinfoSrvc: MdoInfoService, private configSvc: ConfigurationsService, private router: Router,
-              private profileUtilSvc: ProfileV2UtillService) {
+    private profileUtilSvc: ProfileV2UtillService) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
   }
@@ -143,7 +143,7 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
               }
               const obj = {
                 srnumber: index + 1,
-                fullname: `${user.firstName} ${user.lastName}`,
+                fullname: `${user.firstName}`,
                 email: this.profileUtilSvc.emailTransform(user.email),
                 position: pos,
                 id: user.id,
