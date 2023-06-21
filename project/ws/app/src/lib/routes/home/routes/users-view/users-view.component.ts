@@ -259,7 +259,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
     const downloadUrl = `${environment.domainName}${environment.userBucket}${this.configSvc.userProfile.rootOrgId}/${fileName}`
 
-
     const xhr = new XMLHttpRequest()
 
     xhr.onreadystatechange = () => {
@@ -276,7 +275,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
       } else {
 
-        popup.open('File not generated yet!')
+        popup.open('Report is not available')
 
       }
 
@@ -287,9 +286,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     xhr.send()
 
   }
-
-
-
 
   downloadConsumptionReport() {
 
@@ -317,7 +313,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
       } else {
 
-        popup.open('File not generated yet!')
+        popup.open('Report is not available')
 
       }
 
