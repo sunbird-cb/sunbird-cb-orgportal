@@ -76,3 +76,7 @@
 .font-medium {
   font-weight: 500 !important;
 }
+
+::ng-deep.h-600-s-20-m {
+  font: 700 14px Lato !important;
+}

@@ -1,8 +1,7 @@
-<div class="flex flex-4 flex-column">
-  <mat-card class="flex-custom ws-mat-accent-border">
-    <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs"
-      *ngIf="programData && breadcrumbs"></ws-widget-breadcrumbs-org>
-    <div class="flex-4 mobile-margin mat-h2">
+<div class="flex flex-4 flex-column" *ngIf="programData">
+  <mat-card class="flex-custom">
+    <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs" *ngIf="breadcrumbs"></ws-widget-breadcrumbs-org>
+    <div class="flex-4 mobile-margin mat-h2 margin-top-m">
       Batches
     </div>
     <mat-card-content>
@@ -10,16 +9,16 @@
         <div class="batches-lsit" *ngIf="programData && programData.batches">
           <div class="grey-box ws-mat-accent-border cursor-pointer margin-bottom-m margin-right-l"
             (click)="viewDetails(batch)" *ngFor="let batch of programData.batches">
-            <div class="padding-left-s padding-right-s padding-xs">
-              <span class="mat-subheading-2">{{batch.name}}</span>
-              <span class="float-right mat-body-2">{{batch.batchId}}</span>
+            <div class="padding-left-s padding-right-s padding-top-s padding-bottom-xs margin-remove">
+              <span class="mat-subheading-1 margin-remove">{{batch.name}}</span>
+              <span class="float-right mat-body-2 margin-remove">{{batch.batchId}}</span>
             </div>
-            <p class="padding-left-s padding-right-s margin-top-xs mat-body-2"><mat-icon>event</mat-icon>
-              {{batch.startDate}} -
-              {{batch.endDate}}</p>
-            <p class="padding-left-s padding-right-s margin-top-xs mat-body-2"><mat-icon>event</mat-icon>
-              {{batch.enrollmentEndDate}}</p>
-            <div class="request-box mat-body-2 margin-top-xs padding-xs padding-left-s padding-right-s">0 New requests
+            <div class="padding-left-s padding-right-s mat-body-2">
+              <!-- <p class="margin-remove"><mat-icon>tag</mat-icon> {{batch.batchId}}</p> -->
+              <p class="margin-remove"><mat-icon>event</mat-icon> {{batch.startDate}} - {{batch.endDate}}</p>
+              <p class="margin-remove"><mat-icon>event</mat-icon> {{batch.enrollmentEndDate}}</p>
+            </div>
+            <div class="request-box mat-body-2 margin-top-xs">{{batch.newrequestsCount}} New requests
             </div>
           </div>
         </div>
