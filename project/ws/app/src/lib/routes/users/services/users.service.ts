@@ -158,7 +158,6 @@ export class UsersService {
         (data: any) => ({ role, count: _.get(data, 'result.response') })))
   }
 
-
   searchUserByenter(value: string, rootOrgId: string) {
     const reqBody = {
       request: {

@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
+import { AfterViewInit, Component, OnInit, OnDestroy, ChangeDetectorRef, AfterContentChecked } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { UsersService } from '../../services/users.service'
 import { UsersService as UsersService2 } from '../../../users/services/users.service'
-import { ChangeDetectorRef } from '@angular/core'
 
 /* tslint:disable */
 import _ from 'lodash'
@@ -17,7 +16,7 @@ import { ProfileV2UtillService } from '../../../home/services/home-utill.service
   styleUrls: ['./users.component.scss'],
 })
 
-export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
+export class UsersComponent implements OnInit, AfterViewInit, AfterContentChecked, OnDestroy {
   tabledata!: ITableData
   configSvc: any
   data: any = []
@@ -27,26 +26,21 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   roleName: string | undefined
   currentRole: any
   private defaultSideNavBarOpenedSubscription: any
+  rootOrgId: any
 
   constructor(private usersSvc: UsersService, private router: Router, private activatedRoute: ActivatedRoute, private route: ActivatedRoute,
     private profileUtilSvc: ProfileV2UtillService, private userS: UsersService2, private cdref: ChangeDetectorRef) { }
-
 
   ngOnInit() {
     const url = this.router.url.split('/')
     this.role = url[url.length - 2]
     this.roleName = this.role.replace('%20', ' ')
     this.configSvc = _.get(this.route, 'snapshot.parent.data.configService') || {}
-    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+    this.rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
 
     // int left blank
     this.activatedRoute.params.subscribe(params => {
       this.currentRole = params['role']
-      this.userS.getTotalRoleUsers(rootOrgId, this.currentRole).subscribe((data: any) => {
-        console.log('test', data)
-        this.usersData = data.count
-        this.getMyDepartment()
-      })
     })
     this.tabledata = {
       // actions: [{ name: 'Details', label: 'Details', icon: 'remove_red_eye', type: 'link' }],
@@ -63,21 +57,24 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       sortState: 'asc',
       needUserMenus: false,
     }
-    // this.usersData = _.get(this.route, 'snapshot.data.usersList.data') || {}
-    // const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+    this.fetchAllUsersWithRole()
+  }
 
-    // this.userS.getTotalRoleUsers(rootOrgId, this.currentRole).subscribe((data: any) => {
-    //   console.log('test', data)
-    //   this.usersData = data.count
-    //   this.getMyDepartment()
-    // })
-    // this.getMyDepartment()
+  fetchAllUsersWithRole() {
+    this.userS.getTotalRoleUsers(this.rootOrgId, this.currentRole).subscribe((data: any) => {
+      this.usersData = data.count
+      this.getMyDepartment()
+    })
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.cdref.detectChanges() /*cdRef injected in constructor*/
-    }, 0)
+    // setTimeout(() => {
+    //   this.cdref.detectChanges() /*cdRef injected in constructor*/
+    // }, 0)
+  }
+
+  ngAfterContentChecked(): void {
+    this.cdref.detectChanges()
   }
 
   /* API call to get all roles*/
@@ -113,7 +110,6 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
           _.each(i.organisations, o => {
             if (!o.isDeleted && (o.roles || []).indexOf(this.roleName) >= 0) {
               consider = true
-              console.log('organaisation', o.firstName, o.email)
             }
           })
         }
@@ -133,7 +129,6 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         })
     }
-    // debugger
     this.data = users
 
     // this.profile.getMyDepartmentAll().subscribe(res => {
