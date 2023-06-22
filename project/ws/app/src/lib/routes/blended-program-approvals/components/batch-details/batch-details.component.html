@@ -36,7 +36,7 @@
         <ng-container *ngIf="currentFilter === 'pending'">
           <div class="b-c box">
             <div *ngFor="let user of usersData">
-              <ws-app-users-card [user]="user" [actions]="true" (click)=""></ws-app-users-card>
+              <ws-app-users-card [user]="user" [actions]="true" (click)="loadUsersView($event)"></ws-app-users-card>
             </div>
           </div>
         </ng-container>

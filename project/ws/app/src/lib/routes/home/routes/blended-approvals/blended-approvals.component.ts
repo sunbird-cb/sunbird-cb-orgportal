@@ -61,6 +61,7 @@ export class BlendedApprovalsComponent implements OnInit {
     this.bpService.getBlendedPrograms(req).subscribe((res: any) => {
       const resultList = res.result.content
       resultList.forEach((val: any) => {
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ", val)
         val.batchesCount = val.batches.length
         val.learners = val.learnersCount
         val.newrequests = val.requestsCount
