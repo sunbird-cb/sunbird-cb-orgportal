@@ -120,6 +120,7 @@ export class UsersService {
   }
   // getAllRoleUsers(depId: string, role: {}): Observable<any> {
   getAllRoleUsers(depId: string, role: string): Observable<any> {
+    // debugger
     const reqBody = {
       request: {
         filters: {
@@ -137,6 +138,26 @@ export class UsersService {
       map(
         (data: any) => ({ role, count: _.get(data, 'result.response.count') })))
   }
+  getTotalRoleUsers(depId: string, role: string): Observable<any> {
+    // debugger
+    const reqBody = {
+      request: {
+        filters: {
+          rootOrgId: depId,
+          // status: 1,
+          'organisations.roles':
+            [role],
+
+        },
+        // limit: 1,
+      },
+    }
+    return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody).pipe(
+      retry(1),
+      map(
+        (data: any) => ({ role, count: _.get(data, 'result.response') })))
+  }
+
 
   searchUserByenter(value: string, rootOrgId: string) {
     const reqBody = {

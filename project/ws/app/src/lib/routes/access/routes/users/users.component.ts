@@ -2,10 +2,14 @@ import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { UsersService } from '../../services/users.service'
+import { UsersService as UsersService2 } from '../../../users/services/users.service'
+import { ChangeDetectorRef } from '@angular/core'
+
 /* tslint:disable */
 import _ from 'lodash'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
 import { ProfileV2UtillService } from '../../../home/services/home-utill.service'
+
 /* tslint:enable */
 @Component({
   selector: 'ws-app-users',
@@ -21,16 +25,29 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   data2: any
   role: any
   roleName: string | undefined
+  currentRole: any
   private defaultSideNavBarOpenedSubscription: any
 
-  constructor(private usersSvc: UsersService, private router: Router, private route: ActivatedRoute,
-              private profileUtilSvc: ProfileV2UtillService) { }
+  constructor(private usersSvc: UsersService, private router: Router, private activatedRoute: ActivatedRoute, private route: ActivatedRoute,
+    private profileUtilSvc: ProfileV2UtillService, private userS: UsersService2, private cdref: ChangeDetectorRef) { }
+
+
   ngOnInit() {
     const url = this.router.url.split('/')
     this.role = url[url.length - 2]
     this.roleName = this.role.replace('%20', ' ')
     this.configSvc = _.get(this.route, 'snapshot.parent.data.configService') || {}
+    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+
     // int left blank
+    this.activatedRoute.params.subscribe(params => {
+      this.currentRole = params['role']
+      this.userS.getTotalRoleUsers(rootOrgId, this.currentRole).subscribe((data: any) => {
+        console.log('test', data)
+        this.usersData = data.count
+        this.getMyDepartment()
+      })
+    })
     this.tabledata = {
       // actions: [{ name: 'Details', label: 'Details', icon: 'remove_red_eye', type: 'link' }],
       actions: [],
@@ -46,12 +63,21 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       sortState: 'asc',
       needUserMenus: false,
     }
-    this.usersData = _.get(this.route, 'snapshot.data.usersList.data') || {}
-    this.getMyDepartment()
+    // this.usersData = _.get(this.route, 'snapshot.data.usersList.data') || {}
+    // const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+
+    // this.userS.getTotalRoleUsers(rootOrgId, this.currentRole).subscribe((data: any) => {
+    //   console.log('test', data)
+    //   this.usersData = data.count
+    //   this.getMyDepartment()
+    // })
+    // this.getMyDepartment()
   }
 
   ngAfterViewInit() {
-    // this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+    setTimeout(() => {
+      this.cdref.detectChanges() /*cdRef injected in constructor*/
+    }, 0)
   }
 
   /* API call to get all roles*/
@@ -78,6 +104,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
     return []
   }
   getMyDepartment() {
+    // debugger
     let users: any[] = []
     if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
       users = _.map(_.compact(_.map(this.usersData.content, i => {
@@ -86,6 +113,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
           _.each(i.organisations, o => {
             if (!o.isDeleted && (o.roles || []).indexOf(this.roleName) >= 0) {
               consider = true
+              console.log('organaisation', o.firstName, o.email)
             }
           })
         }
@@ -93,7 +121,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       })),
         // tslint:disable-next-line
         user => {
-
+          // debugger
           return {
             fullName: `${user.firstName}`,
             // fullName: `${user.first_name} ${user.last_name}`,
@@ -105,6 +133,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         })
     }
+    // debugger
     this.data = users
 
     // this.profile.getMyDepartmentAll().subscribe(res => {
@@ -171,6 +200,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onEnterkySearch(enterValue: any) {
     const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+    // debugger
     this.usersSvc.searchUserByenter(enterValue, rootOrgId).subscribe(data => {
       this.usersData = data.result.response
 
