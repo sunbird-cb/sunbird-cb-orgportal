@@ -22,9 +22,11 @@ export class BatchListComponent implements OnInit {
           titles: [{ title: 'Blended programs', url: '/app/home/blended-approvals' },
           { title: this.programData.name, url: 'none' }],
         }
-        this.programData.batches.forEach((b: any) => {
-          b.newrequestsCount = this.getNewRequestsList(b.batchId)
-        })
+        if (this.programData.batches) {
+          this.programData.batches.forEach((b: any) => {
+            b.newrequestsCount = this.getNewRequestsList(b.batchId)
+          })
+        }
       }
     } else if (this.programID) {
       this.getBPDetails(this.programID)
@@ -46,9 +48,11 @@ export class BatchListComponent implements OnInit {
           { title: this.programData.name, url: 'none' }],
         }
 
-        this.programData.batches.forEach((b: any) => {
-          b.newrequestsCount = this.getNewRequestsList(b.batchId)
-        })
+        if (this.programData.batches) {
+          this.programData.batches.forEach((b: any) => {
+            b.newrequestsCount = this.getNewRequestsList(b.batchId)
+          })
+        }
       }
     })
   }
