@@ -17,15 +17,19 @@ export class BatchListComponent implements OnInit {
     this.programID = this.activeRouter.snapshot.params.id
     if (currentState && currentState.extras.state) {
       this.programData = currentState.extras.state
+      if (this.programData && this.programData.name) {
+        this.breadcrumbs = {
+          titles: [{ title: 'Blended programs', url: '/app/home/blended-approvals' },
+          { title: this.programData.name, url: 'none' }],
+        }
+        if (this.programData.batches) {
+          this.programData.batches.forEach((b: any) => {
+            b.newrequestsCount = this.getNewRequestsList(b.batchId)
+          })
+        }
+      }
     } else if (this.programID) {
       this.getBPDetails(this.programID)
-    }
-
-    if (this.programData && this.programData.name) {
-      this.breadcrumbs = {
-        titles: [{ title: 'Blended programs', url: '/app/home/blended-approvals' },
-        { title: this.programData.name, url: 'none' }],
-      }
     }
   }
 
@@ -38,6 +42,34 @@ export class BatchListComponent implements OnInit {
   getBPDetails(programID: any) {
     this.bpService.getBlendedProgramsDetails(programID).subscribe((res: any) => {
       this.programData = res.result.content
+      if (this.programData && this.programData.name) {
+        this.breadcrumbs = {
+          titles: [{ title: 'Blended programs', url: '/app/home/blended-approvals' },
+          { title: this.programData.name, url: 'none' }],
+        }
+
+        if (this.programData.batches) {
+          this.programData.batches.forEach((b: any) => {
+            b.newrequestsCount = this.getNewRequestsList(b.batchId)
+          })
+        }
+      }
+    })
+  }
+
+  getNewRequestsList(bId: any) {
+    const request = {
+      serviceName: 'blendedprogram',
+      applicationStatus: 'SEND_FOR_MDO_APPROVAL',
+      applicationIds: [bId],
+      limit: 100,
+      offset: 0,
+      deptName: this.programData.organisation[0],
+    }
+    this.bpService.getRequests(request).subscribe((res: any) => {
+      if (res) {
+        return res.result.data.length
+      }
     })
   }
 
