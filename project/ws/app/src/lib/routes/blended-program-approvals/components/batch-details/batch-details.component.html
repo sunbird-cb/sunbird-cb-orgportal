@@ -10,8 +10,9 @@
           <p class="font-bold">Batch details</p>
           <ul class="margin-top-m margin-bottom-m batch-data" *ngIf="batchData">
             <li><mat-icon>tag</mat-icon> {{batchData.batchId}}</li>
-            <li><mat-icon>event</mat-icon> {{batchData.startDate}} - {{batchData.endDate}}</li>
-            <li><mat-icon>event</mat-icon> {{batchData.enrollmentEndDate}}</li>
+            <li><mat-icon>event</mat-icon> {{batchData.startDate | date: 'mediumDate'}} - {{batchData.endDate | date:
+              'mediumDate'}}</li>
+            <li><mat-icon>event</mat-icon> {{batchData.enrollmentEndDate | date: 'mediumDate'}}</li>
             <li><mat-icon>people</mat-icon> {{approvedUsers.length}} Learners</li>
           </ul>
         </div>
@@ -22,15 +23,21 @@
           <div class="flex flex-1 filter max-height-60">
             <a class="filter-option cursor-pointer" [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'pending',
                                                 'ws-mat-accent-border font-medium':currentFilter !== 'pending'}"
-              mat-button (click)="filter('pending')" role="button">New requests</a>
+              mat-button (click)="filter('pending')" role="button">New requests
+              <!-- <span *ngIf="newUsers" class="ws-mat-black60-text">({{newUsers.length}})</span> -->
+            </a>
             <a class="filter-option cursor-pointer"
               [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'approved',
                                                               'ws-mat-accent-border font-medium':currentFilter !== 'approved'}" mat-button
-              (click)="filter('approved')" role="button">Learners</a>
+              (click)="filter('approved')" role="button">Learners
+              <!-- <span *ngIf="approvedUsers" class="ws-mat-black60-text">({{approvedUsers.length}})</span> -->
+            </a>
             <a class="filter-option cursor-pointer"
               [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'rejected',
                                                                         'ws-mat-accent-border font-medium':currentFilter !== 'rejected'}" mat-button
-              (click)="filter('rejected')" role="button">Rejected requests</a>
+              (click)="filter('rejected')" role="button">Rejected requests
+              <!-- <span *ngIf="rejectedUsers" class="ws-mat-black60-text">({{rejectedUsers.length}})</span> -->
+            </a>
           </div>
         </div>
         <ng-container *ngIf="currentFilter === 'pending'">
