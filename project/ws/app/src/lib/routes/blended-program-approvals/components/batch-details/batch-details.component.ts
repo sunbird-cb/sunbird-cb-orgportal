@@ -128,7 +128,7 @@ export class BatchDetailsComponent implements OnInit {
       userId: reqData.userId,
       actorUserId: reqData.actorUUID,
       serviceName: 'blendedprogram',
-      rootOrgId: reqData.rootOrg,
+      rootOrg: reqData.rootOrg,
       courseId: this.programID,
       deptName: reqData.deptName,
       updateFieldValues: [

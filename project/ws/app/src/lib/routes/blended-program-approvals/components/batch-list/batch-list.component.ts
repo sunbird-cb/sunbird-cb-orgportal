@@ -24,7 +24,20 @@ export class BatchListComponent implements OnInit {
         }
         if (this.programData.batches) {
           this.programData.batches.forEach((b: any) => {
-            b.newrequestsCount = this.getNewRequestsList(b.batchId)
+            // b.newrequestsCount = this.getNewRequestsList(b.batchId)
+            const request = {
+              serviceName: 'blendedprogram',
+              applicationStatus: 'SEND_FOR_MDO_APPROVAL',
+              applicationIds: [b.batchId],
+              limit: 100,
+              offset: 0,
+              deptName: this.programData.organisation[0],
+            }
+            this.bpService.getRequests(request).subscribe((resnew: any) => {
+              if (resnew) {
+                b.newrequestsCount = resnew.result.data.length
+              }
+            })
           })
         }
       }
@@ -50,25 +63,22 @@ export class BatchListComponent implements OnInit {
 
         if (this.programData.batches) {
           this.programData.batches.forEach((b: any) => {
-            b.newrequestsCount = this.getNewRequestsList(b.batchId)
+            // b.newrequestsCount = this.getNewRequestsList(b.batchId)
+            const request = {
+              serviceName: 'blendedprogram',
+              applicationStatus: 'SEND_FOR_MDO_APPROVAL',
+              applicationIds: [b.batchId],
+              limit: 100,
+              offset: 0,
+              deptName: this.programData.organisation[0],
+            }
+            this.bpService.getRequests(request).subscribe((resnew: any) => {
+              if (resnew) {
+                b.newrequestsCount = resnew.result.data.length
+              }
+            })
           })
         }
-      }
-    })
-  }
-
-  getNewRequestsList(bId: any) {
-    const request = {
-      serviceName: 'blendedprogram',
-      applicationStatus: 'SEND_FOR_MDO_APPROVAL',
-      applicationIds: [bId],
-      limit: 100,
-      offset: 0,
-      deptName: this.programData.organisation[0],
-    }
-    this.bpService.getRequests(request).subscribe((res: any) => {
-      if (res) {
-        return res.result.data.length
       }
     })
   }

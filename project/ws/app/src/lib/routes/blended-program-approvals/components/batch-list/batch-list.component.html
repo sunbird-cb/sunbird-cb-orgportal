@@ -11,15 +11,18 @@
             (click)="viewDetails(batch)" *ngFor="let batch of programData.batches">
             <div class="padding-left-s padding-right-s padding-top-s padding-bottom-xs margin-remove">
               <span class="mat-subheading-1 margin-remove">{{batch.name}}</span>
-              <span class="float-right mat-body-2 margin-remove">{{batch.batchId}}</span>
+              <!-- <span class="float-right mat-body-2 margin-remove">{{batch.batchId}}</span> -->
             </div>
             <div class="padding-left-s padding-right-s mat-body-2">
               <!-- <p class="margin-remove"><mat-icon>tag</mat-icon> {{batch.batchId}}</p> -->
-              <p class="margin-remove"><mat-icon>event</mat-icon> {{batch.startDate}} - {{batch.endDate}}</p>
-              <p class="margin-remove"><mat-icon>event</mat-icon> {{batch.enrollmentEndDate}}</p>
+              <p class="margin-remove"><mat-icon>event</mat-icon> {{batch.startDate | date: 'mediumDate'}} -
+                {{batch.endDate | date: 'mediumDate'}}</p>
+              <p class="margin-remove"><mat-icon>event</mat-icon> {{batch.enrollmentEndDate | date:'mediumDate'}}</p>
             </div>
-            <div class="request-box mat-body-2 margin-top-xs">{{batch.newrequestsCount}} New requests
-            </div>
+            <div class="request-box mat-body-2 margin-top-xs" *ngIf="batch.newrequestsCount > 1">
+              {{batch.newrequestsCount}} New requests</div>
+            <div class="request-box mat-body-2 margin-top-xs" *ngIf="batch.newrequestsCount === 1">
+              {{batch.newrequestsCount}} New request</div>
           </div>
         </div>
         <div class="batches-lsit" *ngIf="programData && !programData.batches">

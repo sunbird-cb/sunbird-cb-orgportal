@@ -28,7 +28,7 @@ export class BlendedApprovalsComponent implements OnInit {
     sortState: 'asc',
     needUserMenus: false,
   }
-  configSvc: any
+  userProfile: any
 
   constructor(
     private activeRouter: ActivatedRoute,
@@ -37,7 +37,8 @@ export class BlendedApprovalsComponent implements OnInit {
 
   ngOnInit() {
     if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService) {
-      this.configSvc = this.activeRouter.parent.snapshot.data.configService
+      this.userProfile = this.activeRouter.parent.snapshot.data.configService.unMappedUser
+      // console.log('this.userProfile', this.userProfile)
     }
     this.getBlendedPreogramsList()
   }
@@ -51,6 +52,7 @@ export class BlendedApprovalsComponent implements OnInit {
         filters: {
           status: ['Live'],
           primaryCategory: ['Blended Program'],
+          createdFor: [this.userProfile.rootOrgId],
         },
         sort_by: { lastUpdatedOn: 'desc' },
         facets: ['primaryCategory', 'mimeType'],
