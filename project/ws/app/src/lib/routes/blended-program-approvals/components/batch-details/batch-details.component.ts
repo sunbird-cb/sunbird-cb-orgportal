@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
+// tslint:disable-next-line:import-name
+import _ from 'lodash'
 import { BlendedApporvalService } from '../../services/blended-approval.service'
 
 @Component({
@@ -78,7 +80,7 @@ export class BatchDetailsComponent implements OnInit {
   getLearnersList() {
     this.bpService.getLearners(this.batchData.batchId).subscribe((res: any) => {
       if (res && res.length > 0) {
-        this.approvedUsers = res.result.content
+        this.approvedUsers = res
       }
     })
   }
@@ -119,7 +121,10 @@ export class BatchDetailsComponent implements OnInit {
     // tslint:disable-next-line:no-console
     console.log('======', event)
     const actionType = event.action.toUpperCase()
-    const reqData = event.userData.wfInfo[0]
+    // const reqData = event.userData.wfInfo[0]
+    const reqData = _.maxBy(event.userData.wfInfo, (el: any) => {
+      return new Date(el.lastUpdatedOn).getTime()
+    })
     const request = {
       state: 'SEND_FOR_MDO_APPROVAL',
       action: actionType,
@@ -134,7 +139,7 @@ export class BatchDetailsComponent implements OnInit {
       updateFieldValues: [
         {
           toValue: {
-            name: event.userData.first_name,
+            name: event.userData.userInfo.first_name,
           },
         },
       ],
@@ -145,8 +150,9 @@ export class BatchDetailsComponent implements OnInit {
       // tslint:disable-next-line:no-console
       console.log('res', res)
       if (event.action === 'Approve') {
-        this.openSnackbar('Request is approved successfully!')
-        this.filter('approved')
+        this.newUsers = []
+        this.openSnackbar('Request is approved successfully! Further needs to be approved by program coordinator.')
+        this.getNewRequestsList()
       } else {
         this.openSnackbar('Request is rejected successfully!')
         this.filter('rejected')
