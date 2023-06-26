@@ -8,8 +8,9 @@ table {
   }
 
   td, th {
-    // width: 25%;
-    width: auto;
+    width: 25%;
+    padding: 0px 12px!important;
+    // width: auto;
   }
 
   .table-container{
@@ -19,6 +20,12 @@ table {
          overflow-x: scroll;
       }
 
+  }
+
+  .text-span {
+    word-break: break-all!important;
+    min-width: 180px!important;
+    display: block;
   }
 
 
