@@ -8,12 +8,19 @@ table {
   }
 
   td, th {
-    width: 25%;
+    // width: 25%;
+    width: auto;
   }
 
   .table-container{
        position: relative;
+       width: 100%;
+      @media screen and (max-width: 768px) {
+         overflow-x: scroll;
+      }
+
   }
+
 
   .example-loading-shade {
     position: absolute;
@@ -26,6 +33,12 @@ table {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  @media screen and (max-width: 768px) {
+#upload-data-box {
+  overflow-x: scroll;
+}
   }
 
 .download-btn {
