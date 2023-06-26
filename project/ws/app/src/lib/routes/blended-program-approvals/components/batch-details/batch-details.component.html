@@ -36,7 +36,8 @@
         <ng-container *ngIf="currentFilter === 'pending'">
           <div class="b-c box" *ngIf="newUsers && newUsers.length > 0">
             <div *ngFor="let user of newUsers">
-              <ws-app-users-card [user]="user" [actions]="true" (userClick)="onSubmit($event)"></ws-app-users-card>
+              <ws-app-users-card [user]="user" [actions]="true" (click)="loadUsersView($event)"
+                (userClick)="onSubmit($event)"></ws-app-users-card>
             </div>
           </div>
           <div class="b-c box" *ngIf="newUsers && newUsers.length == 0">
