@@ -11,6 +11,7 @@ const routes: Routes = []
         path: '',
         component: MyDashboardHomeComponent,
         children: routes,
+        data: { module: 'Dashboard' }
       },
     ]),
   ],

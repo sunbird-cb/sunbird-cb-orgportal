@@ -12,7 +12,7 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       pageId: ':userId',
-      module: 'approval',
+      module: 'Approvals',
     },
     resolve: {
       profileData: HomeResolve,

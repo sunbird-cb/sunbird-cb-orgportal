@@ -33,7 +33,7 @@ const routes: Routes = [
         component: WelcomeOnboardComponent,
         data: {
           pageId: 'state-profile/wolcome',
-          module: 'state-profile',
+          module: 'Setup',
         },
       },
       {
@@ -41,7 +41,7 @@ const routes: Routes = [
         component: InstituteProfileComponent,
         data: {
           pageId: 'state-profile/institute-profile',
-          module: 'state-profile',
+          module: 'Setup',
           pageType: 'feature',
           pageKey: 'institute-profile',
         },
@@ -54,7 +54,7 @@ const routes: Routes = [
         component: RolesAndFunctionsComponent,
         data: {
           pageId: 'state-profile/roles',
-          module: 'state-profile',
+          module: 'Setup',
         },
       },
       {
@@ -62,7 +62,7 @@ const routes: Routes = [
         component: InfrastructureComponent,
         data: {
           pageId: 'state-profile/infra',
-          module: 'state-profile',
+          module: 'Setup',
         },
       },
       {
@@ -70,7 +70,7 @@ const routes: Routes = [
         component: TrainingRogramsComponent,
         data: {
           pageId: 'state-profile/training-programs',
-          module: 'state-profile',
+          module: 'Setup',
         },
       },
       {
@@ -78,7 +78,7 @@ const routes: Routes = [
         component: ResearchComponent,
         data: {
           pageId: 'state-profile/research',
-          module: 'state-profile',
+          module: 'Setup',
         },
       },
       {
@@ -86,7 +86,7 @@ const routes: Routes = [
         component: ConsultancyComponent,
         data: {
           pageId: 'state-profile/consultancy',
-          module: 'state-profile',
+          module: 'Setup',
         },
       },
       {
@@ -94,7 +94,7 @@ const routes: Routes = [
         component: FacultyComponent,
         data: {
           pageId: 'state-profile/faculty',
-          module: 'state-profile',
+          module: 'Setup',
         },
       },
 
