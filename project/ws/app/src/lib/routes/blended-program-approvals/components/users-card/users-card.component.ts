@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'ws-app-users-card',
@@ -10,9 +11,11 @@ import { DialogConfirmComponent } from '../../../../../../../../../src/app/compo
 export class UsersCardComponent implements OnInit {
   @Input() user!: any
   @Input() actions: any
+  @Input() public photoUrl!: string
+  @Input() public name!: string
   @Output() userClick = new EventEmitter()
 
-  constructor(private dialogue: MatDialog) { }
+  constructor(private dialogue: MatDialog, private router: Router) { }
 
   ngOnInit() { }
 
@@ -60,6 +63,12 @@ export class UsersCardComponent implements OnInit {
         this.userClick.emit(data)
       }
     })
+  }
+
+  loadUser(user: any) {
+    this.router.navigate([`/app/blended-approvals/user-profile/${user.user_id}`], { state: user })
+    // Logic to load the users-view component or navigate to its route
+    // You can use Angular's Router or any other mechanism to load the component
   }
 
 }

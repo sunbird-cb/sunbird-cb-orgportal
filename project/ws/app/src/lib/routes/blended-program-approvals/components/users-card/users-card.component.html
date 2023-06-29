@@ -2,14 +2,14 @@
   <a href="javascript:void(0)" class="flex flex-1 items-center ws-mat-primary-tags" i18n-aria-label role="link"
     aria-label="click on it to visit user profile">
     <div class="mr-3">
-      <ws-widget-avatar-photo [name]="getUseravatarName()" [photoUrl]="user?.photo" size="m">
+      <ws-widget-avatar-photo [name]="getUseravatarName()" [photoUrl]="user?.photo" size="m" (click)="loadUser(user)">
       </ws-widget-avatar-photo>
     </div>
-    <div class="flex flex-col flex-1" *ngIf="user && user.userInfo">
+    <div class="flex flex-col flex-1" *ngIf="user && user.userInfo" (click)="loadUser(user)">
       <p class="truncate margin-remove mat-body-1">{{user?.userInfo.first_name}}</p>
       <p class="truncate ws-mat-black60-text margin-remove mat-body-2">{{user?.wfInfo[0].deptName}}</p>
     </div>
-    <div class="flex flex-col flex-1" *ngIf="user && !user.userInfo">
+    <div class="flex flex-col flex-1" *ngIf="user && !user.userInfo" (click)="loadUser(user)">
       <p class="truncate margin-remove mat-body-1">{{user?.first_name}}</p>
       <p class="truncate ws-mat-black60-text margin-remove mat-body-2">{{user?.deptName || user?.department }}</p>
     </div>
