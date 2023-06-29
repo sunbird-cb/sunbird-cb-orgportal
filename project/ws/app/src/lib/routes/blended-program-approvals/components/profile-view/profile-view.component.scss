@@ -487,3 +487,8 @@ mat-card.card-container-sidenav-profile.mat-card {
   // box-shadow: none !important;
   box-shadow: 1px 1px 1px 1px #eee !important;
 }
+
+::ng-deep.circle-xxl-s {
+    width: 150px !important;
+    height: 130px !important;
+}

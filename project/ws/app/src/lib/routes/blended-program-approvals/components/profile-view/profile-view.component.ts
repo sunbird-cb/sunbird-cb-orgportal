@@ -80,7 +80,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
           this.portalProfile.userId = user
         }
 
-
       })
       // this.fetchUserBatchList()
 
