@@ -79,7 +79,7 @@ export class BlendedApprovalsComponent implements OnInit {
                 applicationIds: this.bIDs,
                 limit: 100,
                 offset: 0,
-                deptName: this.userProfile.rootOrg.channel,
+                deptName: this.userProfile.channel,
               }
               this.bpService.getRequests(request).subscribe((resnew: any) => {
                 if (resnew) {

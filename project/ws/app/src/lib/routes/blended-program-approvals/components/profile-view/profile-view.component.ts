@@ -31,6 +31,40 @@ import {
   /* tslint:enable */
 })
 export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
+  sticky = false
+  /* tslint:disable */
+  selectedTab: number = 2; // Default selected tab
+  doj: any
+  description: any
+  academics: any
+
+  Math: any
+  /* tslint:enable */
+  elementPosition: any
+  currentFilter = 'timestamp'
+  discussionList!: any
+  discussProfileData!: any
+  portalProfile!: NSProfileDataV2.IProfile
+  userDetails: any
+  location!: string | null
+  tabs: any
+  designation!: string | null
+  tabsData: NSProfileDataV2.IProfileTab[]
+  currentUser!: string | null
+  // connectionRequests!: NSNetworkDataV2.INetworkUser[]
+  currentUsername: any
+  certificationData: any
+  viewProfile: any[] = []
+  enrolledCourse: any = []
+  allCertificate: any = []
+
+  sideNavBarOpened = true
+  verifiedBadge = false
+  private defaultSideNavBarOpenedSubscription: any
+  public screenSizeIsLtMedium = false
+  programData: any
+  breadcrumbs: any
 
   constructor(
     public dialog: MatDialog,
@@ -41,7 +75,18 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.Math = Math
     // this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
-
+    const currentState = this.router.getCurrentNavigation()
+    if (currentState && currentState.extras.state) {
+      this.programData = currentState.extras.state
+      if (this.programData) {
+        this.breadcrumbs = {
+          titles: [{ title: 'Blended programs', url: '/app/home/blended-approvals' },
+          { title: this.programData.programName, url: `/app/blended-approvals/${this.programData.programID}/batches` },
+          // tslint:disable-next-line:max-line-length
+          { title: this.programData.batchName, url: `/app/blended-approvals/${this.programData.programID}/batches/${this.programData.batchID}` }],
+        }
+      }
+    }
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     const userId = this.route.snapshot.params.userId
 
@@ -84,41 +129,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       // this.fetchUserBatchList()
 
     })
-
   }
-  @ViewChild('stickyMenu', { static: true }) menuElement!: ElementRef
-  sticky = false
-  /* tslint:disable */
-  selectedTab: number = 2; // Default selected tab
-  doj: any
-  description: any
-  academics: any
-
-  Math: any
-  /* tslint:enable */
-  elementPosition: any
-  currentFilter = 'timestamp'
-  discussionList!: any
-  discussProfileData!: any
-  portalProfile!: NSProfileDataV2.IProfile
-  userDetails: any
-  location!: string | null
-  tabs: any
-  designation!: string | null
-  tabsData: NSProfileDataV2.IProfileTab[]
-  currentUser!: string | null
-  // connectionRequests!: NSNetworkDataV2.INetworkUser[]
-  currentUsername: any
-  certificationData: any
-  viewProfile: any[] = []
-  enrolledCourse: any = []
-  allCertificate: any = []
-
-  sideNavBarOpened = true
-  verifiedBadge = false
-  private defaultSideNavBarOpenedSubscription: any
-  public screenSizeIsLtMedium = false
-
   selectTab(tabIndex: number): void {
     this.selectedTab = tabIndex
   }
@@ -152,14 +163,7 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  ngOnInit() {
-
-    // int left blank
-
-    // this.defaultSideNavBarOpenedSubscription = this.isLtMedium$.subscribe(isLtMedium => {
-    //   this.sideNavBarOpened = !isLtMedium
-    // })
-  }
+  ngOnInit() { }
 
   ngOnDestroy() {
     if (this.tabs) {

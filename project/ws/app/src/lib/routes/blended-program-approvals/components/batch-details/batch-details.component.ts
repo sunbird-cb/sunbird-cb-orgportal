@@ -20,6 +20,8 @@ export class BatchDetailsComponent implements OnInit {
   breadcrumbs: any
   newUsers: any = []
   rejectedUsers: any = []
+  linkData: any
+  userProfile: any
 
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
@@ -27,6 +29,10 @@ export class BatchDetailsComponent implements OnInit {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
+    }
+    if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService) {
+      this.userProfile = this.activeRouter.parent.snapshot.data.configService.unMappedUser
+      // console.log('this.userProfile', this.userProfile)
     }
     this.programID = this.activeRouter.snapshot.params.id
     this.batchID = this.activeRouter.snapshot.params.batchid
@@ -72,6 +78,12 @@ export class BatchDetailsComponent implements OnInit {
           { title: this.programData.name, url: `/app/blended-approvals/${this.programData.identifier}/batches` },
           { title: this.batchData.name, url: 'none' }],
         }
+        this.linkData = {
+          programName: this.programData.name,
+          programID: this.programData.identifier,
+          batchName: this.batchData.name,
+          batchID: this.batchID,
+        }
         this.getNewRequestsList()
       }
     })
@@ -92,7 +104,7 @@ export class BatchDetailsComponent implements OnInit {
       applicationIds: [this.batchData.batchId],
       limit: 100,
       offset: 0,
-      deptName: this.programData.organisation[0],
+      deptName: this.userProfile.channel,
     }
     this.bpService.getRequests(request).subscribe((res: any) => {
       if (res) {
@@ -108,7 +120,7 @@ export class BatchDetailsComponent implements OnInit {
       applicationIds: [this.batchData.batchId],
       limit: 100,
       offset: 0,
-      deptName: this.programData.organisation[0],
+      deptName: this.userProfile.channel,
     }
     this.bpService.getRequests(request).subscribe((res: any) => {
       if (res) {
@@ -166,10 +178,10 @@ export class BatchDetailsComponent implements OnInit {
     })
   }
 
-  loadUsersView(user: any) {
-    this.router.navigate([`/app/blended-approvals/user-profile/${user.userId}`], { state: user })
-    // Logic to load the users-view component or navigate to its route
-    // You can use Angular's Router or any other mechanism to load the component
-  }
+  // loadUsersView(user: any) {
+  //   this.router.navigate([`/app/blended-approvals/user-profile/${user.userId}`], { state: user })
+  //   // Logic to load the users-view component or navigate to its route
+  //   // You can use Angular's Router or any other mechanism to load the component
+  // }
 
 }
