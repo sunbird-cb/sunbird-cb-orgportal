@@ -64,7 +64,6 @@ export class BlendedApprovalsComponent implements OnInit {
       if (res && res.result.content) {
         const resultList = res.result.content
         resultList.forEach((val: any) => {
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>", val)
           if (val.batches) {
             val.batchesCount = val.batches.length
             val.learners = 0

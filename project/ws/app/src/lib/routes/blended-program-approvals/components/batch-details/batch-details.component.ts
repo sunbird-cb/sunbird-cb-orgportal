@@ -166,8 +166,8 @@ export class BatchDetailsComponent implements OnInit {
     })
   }
 
-  loadUsersView(event: any) {
-    console.log("Event data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + event)
+  loadUsersView(user: any) {
+    this.router.navigate([`/app/blended-approvals/user-profile/${user.userId}`], { state: user })
     // Logic to load the users-view component or navigate to its route
     // You can use Angular's Router or any other mechanism to load the component
   }

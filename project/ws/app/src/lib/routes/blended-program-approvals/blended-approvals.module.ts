@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core'
+import { MatListModule } from '@angular/material/list'
 import { CommonModule } from '@angular/common'
 import {
   AvatarPhotoModule,
@@ -23,7 +24,7 @@ import { UsersCardComponent } from './components/users-card/users-card.component
 @NgModule({
   declarations: [BlendedHomeComponent, BatchListComponent, BatchDetailsComponent, UsersCardComponent],
   imports: [CommonModule, BlendedApprovalsRoutingModule, BreadcrumbsOrgModule, LeftMenuWithoutLogoModule, WidgetResolverModule,
-    MatSidenavModule, MatIconModule, HomeModule, RouterModule, UIORGTableModule, MatCardModule, AvatarPhotoModule],
+    MatSidenavModule, MatIconModule, HomeModule, RouterModule, UIORGTableModule, MatCardModule, AvatarPhotoModule, MatListModule],
   exports: [],
   providers: [],
 })
