@@ -19,7 +19,7 @@ export class BlendedApprovalsComponent implements OnInit {
     columns: [
       { displayName: 'Program name', key: 'name' },
       { displayName: 'Batches', key: 'batchesCount' },
-      { displayName: 'Learners', key: 'learners', isList: true },
+      // { displayName: 'Learners', key: 'learners', isList: true },
       { displayName: 'New requests (Across batches)', key: 'newrequests', isList: true },
     ],
     needCheckBox: false,
@@ -29,6 +29,7 @@ export class BlendedApprovalsComponent implements OnInit {
     needUserMenus: false,
   }
   userProfile: any
+  bIDs: any[] = []
 
   constructor(
     private activeRouter: ActivatedRoute,
@@ -66,11 +67,31 @@ export class BlendedApprovalsComponent implements OnInit {
         resultList.forEach((val: any) => {
           if (val.batches) {
             val.batchesCount = val.batches.length
-            val.learners = 0
-            val.newrequests = 0
+            // val.learners = 0
+            // val.newrequests = 0
+            val.batches.forEach((b: any) => {
+              this.bIDs.push(b.batchId)
+            })
+            if (this.bIDs && this.bIDs.length > 0) {
+              const request = {
+                serviceName: 'blendedprogram',
+                applicationStatus: 'SEND_FOR_MDO_APPROVAL',
+                applicationIds: this.bIDs,
+                limit: 100,
+                offset: 0,
+                deptName: this.userProfile.rootOrg.channel,
+              }
+              this.bpService.getRequests(request).subscribe((resnew: any) => {
+                if (resnew) {
+                  val.newrequests = resnew.result.data.length
+                }
+              })
+            } else {
+              val.newrequests = 0
+            }
           } else {
             val.batchesCount = 0
-            val.learners = 0
+            // val.learners = 0
             val.newrequests = 0
           }
         })
