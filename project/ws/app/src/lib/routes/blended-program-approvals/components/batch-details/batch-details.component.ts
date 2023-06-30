@@ -130,8 +130,6 @@ export class BatchDetailsComponent implements OnInit {
   }
 
   onSubmit(event: any) {
-    // tslint:disable-next-line:no-console
-    console.log('======', event)
     const actionType = event.action.toUpperCase()
     // const reqData = event.userData.wfInfo[0]
     const reqData = _.maxBy(event.userData.wfInfo, (el: any) => {
