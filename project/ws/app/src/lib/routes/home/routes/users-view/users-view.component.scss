@@ -207,6 +207,12 @@ a:not([href]):not([tabindex]) {
   @extend %page-center;
 }
 
+@media screen and (max-width: 1024px) {
+  .main-flex-box {
+  overflow: auto;
+}
+}
+
 .flex-3 {
   flex: 3;
 }
