@@ -24,12 +24,13 @@ import { UsersCardComponent } from './components/users-card/users-card.component
 import { ProfileViewComponent } from './components/profile-view/profile-view.component'
 import { PipeEmailModule } from '../pipes/pipe-email/pipe-email.module'
 import { PipeOrderByModule } from '../pipes/pipe-order-by/pipe-order-by.module'
+import { ProfileCertificateDialogModule } from './components/profile-certificate-dialog/profile-certificate-dialog.module'
 
 @NgModule({
   declarations: [BlendedHomeComponent, BatchListComponent, BatchDetailsComponent, UsersCardComponent, ProfileViewComponent],
   imports: [CommonModule, BlendedApprovalsRoutingModule, BreadcrumbsOrgModule, LeftMenuWithoutLogoModule, WidgetResolverModule,
     MatSidenavModule, MatButtonModule, MatIconModule, HomeModule, RouterModule, UIORGTableModule,
-    MatCardModule, AvatarPhotoModule, MatListModule, PipeEmailModule, PipeOrderByModule],
+    MatCardModule, AvatarPhotoModule, MatListModule, PipeEmailModule, PipeOrderByModule, ProfileCertificateDialogModule],
   exports: [],
   providers: [],
 })

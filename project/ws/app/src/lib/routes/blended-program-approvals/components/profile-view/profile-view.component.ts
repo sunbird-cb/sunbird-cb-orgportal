@@ -8,6 +8,7 @@ import _ from 'lodash'
 import { BlendedApporvalService } from '../../services/blended-approval.service'
 import { WidgetUserService } from '@sunbird-cb/collection'
 import moment from 'moment'
+import { ProfileCertificateDialogComponent } from '../profile-certificate-dialog/profile-certificate-dialog.component'
 
 @Component({
   selector: 'app-profile-view',
@@ -161,8 +162,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   selectTab(tabIndex: number): void {
     this.selectedTab = tabIndex
   }
-  // isLtMedium$ = this.valueSvc.isLtMedium$
-  // mode$ = this.isLtMedium$.pipe(map(isMedium => (isMedium ? 'over' : 'side')))
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -187,5 +186,17 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+  }
+
+  openCertificateDialog(value: any) {
+    if (value.issuedCertificates.length !== 0) {
+      if (value.issuedCertificates.identifier === value.identifier) {
+        const cet = value.dataUrl
+        this.dialog.open(ProfileCertificateDialogComponent, {
+          autoFocus: false,
+          data: { cet, value },
+        })
+      }
+    }
   }
 }

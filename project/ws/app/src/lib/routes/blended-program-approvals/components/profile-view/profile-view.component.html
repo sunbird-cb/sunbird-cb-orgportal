@@ -113,7 +113,7 @@
           </div> -->
           <mat-card class="mt-2 mat-list-item dark-card" *ngFor="let certificate of allCertificate" role="link"
             tabindex="0">
-            <div class="flex flex-1 cursor-pointer">
+            <div (click)="openCertificateDialog(certificate)" class="flex flex-1 cursor-pointer">
               <div *ngIf="certificate.content?.appIcon" class="float-left">
                 <img [src]="certificate.content?.appIcon | pipeCertImageURL" class="app-icon example-header-image"
                   [alt]="certificate.content.name || iGOT" />
