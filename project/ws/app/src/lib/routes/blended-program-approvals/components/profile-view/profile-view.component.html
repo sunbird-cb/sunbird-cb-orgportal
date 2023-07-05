@@ -2,7 +2,7 @@
   <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs" *ngIf="breadcrumbs"></ws-widget-breadcrumbs-org>
   <mat-card class="flex-custom mat-card" id="profileInfo">
     <mat-card-header class="flex-custom-m mat-card-header ng-star-inserted">
-      <mat-card-header class="flex-custom-m" *ngIf="portalProfile && portalProfile?.personalDetails"></mat-card-header>
+      <!-- <mat-card-header class="flex-custom-m" *ngIf="portalProfile && portalProfile?.personalDetails"></mat-card-header> -->
       <div mat-card-avatar class="example-header-image">
         <ng-container *ngIf="portalProfile?.personalDetails?.firstname">
           <ws-widget-avatar-photo [photoUrl]="null" [name]="portalProfile?.personalDetails?.firstname" size="xxl-s">
@@ -25,19 +25,7 @@
                 </span> -->
               </mat-card-title>
             </ng-container>
-            <!-- <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
-                src="fusion-assets/images/profile-badge.png" height="18">
-            </span> -->
           </div>
-          <!-- <div class="flex flex-1 flex-row-reverse">
-            <div *ngIf="portalProfile?.id === currentUser || portalProfile?.userId === currentUser"
-              class="ml-4 mr-6 mb-2 view-more ws-mat-accent-text view-all ws-mat-primary-lite-background-important">
-              <a mat-button [routerLink]="'/app/user-profile/details'">
-                <mat-icon class="margin-right-xs">edit</mat-icon>
-                <span i18n>{{ 'Edit Profile' }}</span>
-              </a>
-            </div>
-          </div> -->
         </div>
         <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.departmentName }}
@@ -45,29 +33,9 @@
         <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
           {{ portalProfile?.employmentDetails?.officialPostalAddress }}
         </mat-card-subtitle>
-        <ng-container>
-          <div class="flex flex-1 custom margin-0 margin-top-m bottom-fix mob" role="link" tabindex="0">
-            <div class="flex flex-1">
-              <!-- <span class="flex margin-right-l mobile">
-                <span class="ws-mat-default-text">{{ connectionRequests?.length || 0 }}</span>
-                <span class="pad-4">Connections</span>
-              </span> -->
-              <span class="flex margin-right-l mobile">
-                <!-- <span class="ws-mat-default-text">{{ Math.abs(discussProfileData?.topiccount || 0) }}</span>
-                <span class="pad-4">Discussions</span> -->
-
-              </span>
-            </div>
-            <!-- <div class="flex flex-1" class="text-right mobile2">
-
-                      <span class="noocoments" mat-card-subtitle>Last online
-                        {{discussProfileData.lastonline | pipeRelativeTime}}</span>
-                    </div> -->
-          </div>
-        </ng-container>
       </div>
     </mat-card-header>
-    <mat-card-header class="flex-custom-m" *ngIf="!portalProfile || !portalProfile?.personalDetails">
+    <!-- <mat-card-header class="flex-custom-m" *ngIf="!portalProfile || !portalProfile?.personalDetails">
       <div class="flex-1" role="link" tabindex="0">
         <div class="flex flex-1">
           <mat-card-title class="flex-4 mobile-margin text-capitalize mat-h2">
@@ -75,114 +43,7 @@
           </mat-card-title>
         </div>
       </div>
-    </mat-card-header>
-
-
-    <mat-sidenav-container name="discuss-menu" class="min-height margin-top-m">
-      <mat-sidenav [(opened)]="sideNavBarOpened" class="border-0 sidenav_inner">
-        <div class="contain">
-          <div class="flex-1" style="position: relative">
-            <div #stickyMenu [class.sticky]="sticky">
-              <!-- <app-profile-v2-left-menu [tabsData]="tabsData" class="flex flex-1"></app-profile-v2-left-menu> -->
-            </div>
-          </div>
-        </div>
-      </mat-sidenav>
-
-      <mat-sidenav-content class="sidenav_content">
-        <div *ngIf="screenSizeIsLtMedium">
-          <button type="button" mat-icon-button (click)="sideNavBarOpened = !sideNavBarOpened"
-            id="ws-auth-root-home-btn-menu" name="ws-auth-root-home-btn-menu">
-            <mat-icon>menu</mat-icon>
-          </button>
-        </div>
-
-        <div class="main_network_box">
-          <ng-container *ngFor="let tab of tabsData;let i=index">
-            <!-- <ws-widget-profile-v2-academics *ngIf="pdfData" [widgetData]="tab"></ws-widget-profile-v2-academics> -->
-            <ng-container *ngIf="tab && tab.render && tab.enabled">
-              <ng-container *ngIf="
-                portalProfile?.id === currentUser ||
-                portalProfile?.userId === currentUser
-              ">
-                <!-- <ng-container *ngIf="tab.key === 'certifications'" [wsResolverWidget]="{
-                    widgetType: tab.widget.widgetType,
-                    widgetSubType: tab.widget.widgetSubType,
-                    widgetHostClass: tab.widget.widgetHostClass,
-                    widgetData: {
-                      name: tab.name,
-                      key: tab.key,
-                      data: enrolledCourse,
-                      certificates: allCertificate
-                    }
-                  }">
-              </ng-container> -->
-              </ng-container>
-              <!-- <ng-container *ngIf="tab.key !== 'certifications'" [wsResolverWidget]="{
-                    widgetType: tab.widget.widgetType,
-                    widgetSubType: tab.widget.widgetSubType,
-                    widgetHostClass: tab.widget.widgetHostClass,
-                    widgetData: {
-                      name: tab.name,
-                      key: tab.key,
-                      data: portalProfile[tab.dataKey]
-                    }
-                  }"></ng-container> -->
-            </ng-container>
-          </ng-container>
-          <!-- <ng-container *ngIf="discussionList">
-            <div [attr.id]="discussions"
-              class="flex flex-1 flex-column margin-top-xs margin-botton-xs dark-card discussion-card"
-              style="box-shadow: none">
-              <div class="flex flex-1">
-                <span class="margin-bottom-xs margin-top-l mat-title flex-1">{{
-                  'Discussions'
-                  }}</span>
-              </div>
-              <ng-container>
-                <div class="w-full">
-                  <div class="flex flex-1 flex-column filter_outer_box">
-                    <div class="flex flex-1 filter flex-wrap">
-                      <a href="javascript:void(0)" class="filter-option font-normal" i18n-aria-label role="button"
-                        [ngClass]="{
-                            'ws-mat-accent-border-active':
-                              currentFilter === 'timestamp',
-                            'ws-mat-accent-border font-medium':
-                              currentFilter !== 'timestamp'
-                          }" mat-button (click)="filter('timestamp')">
-                        Recent posts
-                      </a>
-                      <a href="javascript:void(0)" class="filter-option" i18n-aria-label role="button" [ngClass]="{
-                            'ws-mat-accent-border-active': currentFilter === 'best',
-                            'ws-mat-accent-border font-medium':
-                              currentFilter !== 'best'
-                          }" mat-button (click)="filter('best')">
-                        Best posts
-                      </a>
-                      <a href="javascript:void(0)" class="filter-option" i18n-aria-label role="button" [ngClass]="{
-                            'ws-mat-accent-border-active':
-                              currentFilter === 'saved',
-                            'ws-mat-accent-border font-medium':
-                              currentFilter !== 'saved'
-                          }" mat-button (click)="filter('saved')" *ngIf="
-                            portalProfile?.id === currentUser ||
-                            portalProfile?.userId === currentUser
-                          ">
-                        Saved posts
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </ng-container>
-            </div>
-          </ng-container> -->
-        </div>
-      </mat-sidenav-content>
-
-
-
-      <!-- </div> -->
-    </mat-sidenav-container>
+    </mat-card-header> -->
   </mat-card>
 
   <div class="container sidenav">
@@ -238,45 +99,80 @@
         <mat-card-header>
           <mat-card-title>Certifications</mat-card-title>
         </mat-card-header>
-        <div class="card-container-sidenav-profile" *ngFor="let data of certificationData">
-          <div class="image-container image-card-container">
-            <img mat-card-lg-image [src]="data.courseLogoUrl" height="50" alt="Image" class="card-image" />
-          </div>
-          <div class="content-container">
-            <mat-card-content>
-              <mat-card-title>{{data.content.name}}</mat-card-title>
-              <mat-card-subtitle>{{data.content.description}}</mat-card-subtitle>
+        <div *ngIf="allCertificate && allCertificate.length > 0" class="certificate-box">
+          <!-- <div class="card-container-sidenav-profile" *ngFor="let data of allCertificate">
+            <div class="image-container image-card-container">
+              <img mat-card-lg-image [src]="data.courseLogoUrl" height="50" alt="Image" class="card-image" />
+            </div>
+            <div class="content-container">
+              <mat-card-content>
+                <mat-card-title>{{data.content.name}}</mat-card-title>
+                <mat-card-subtitle>{{data.content.description}}</mat-card-subtitle>
+              </mat-card-content>
+            </div>
+          </div> -->
+          <mat-card class="mt-2 mat-list-item dark-card" *ngFor="let certificate of allCertificate" role="link"
+            tabindex="0">
+            <div class="flex flex-1 cursor-pointer">
+              <div *ngIf="certificate.content?.appIcon" class="float-left">
+                <img [src]="certificate.content?.appIcon | pipeCertImageURL" class="app-icon example-header-image"
+                  [alt]="certificate.content.name || iGOT" />
+              </div>
+              <div *ngIf="!certificate.content?.appIcon" class="float-left">
+                <img src="/assets/instances/eagle/app_logos/default.png" class="app-icon example-header-image"
+                  [alt]="certificate.content.name || iGOT" />
+              </div>
+              <div class="flex flex-col gap-1">
+                <div class="subheading">{{certificate.content?.name}}</div>
+                <div>{{certificate.content?.description}}</div>
+                <div>{{certpaDate(certificate.issuedCertificates.lastIssuedOn)}}</div>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+        <div *ngIf="allCertificate && allCertificate.length === 0">
+          No certifications
+        </div>
+      </mat-card>
+
+      <mat-card class="card-container-sidenav-profile-card" *ngIf="selectedTab === 3">
+        <mat-card-header>
+          <mat-card-title>Career history</mat-card-title>
+        </mat-card-header>
+        <div class="flex flex-1 flex-column margin-top-xs margin-left-xs margin-right-xs">
+          <div class="flex-custom" id="hobbies">
+            <mat-card-content class="mat-card-content" *ngIf="designation && designation.length > 0">
+              <mat-card class="no-shadow mt-2 mat-list-item dark-card mat-card"
+                *ngFor="let designationData of designation">
+                <div class="mt-2 mat-list-item" role="link" tabindex="0">
+                  <div class="flex flex-1">
+
+                    <span class="flex-1 mat-subheading-1"> {{designationData.designation}} </span>
+                    <span class="mat-subheading-2 ws-mat-black60-text">
+                      Joined {{designationData.doj}}
+                    </span>
+                  </div>
+                  <div class="mat-body-2 flex-1"> {{designationData.description}}</div>
+                  <div class="mat-body-2 flex-1 ws-mat-black60-text"> {{designationData.location}} </div>
+                </div>
+              </mat-card>
+            </mat-card-content>
+            <mat-card-content *ngIf="designation && designation.length === 0">
+              <div>No designations</div>
             </mat-card-content>
           </div>
         </div>
       </mat-card>
 
-      <mat-card class="card-container-sidenav-profile-card" *ngIf="selectedTab === 3">
-        <mat-card-content class="mat-card-content" *ngFor="let designationData of designation">
-          <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0"> Career history</span>
-          <div *ngIf="viewProfile">
-            <div class="mt-2 mat-list-item dark-card mat-card " role="link" tabindex="0">
-              <div class="flex flex-1">
-
-                <span class="flex-1 mat-subheading-1"> {{designationData.designation}} </span>
-                <span class="mat-subheading-2 ws-mat-black60-text">
-                  Joined {{designationData.doj}}
-                </span>
-              </div>
-              <div class="mat-body-2 flex-1"> {{designationData.description}}</div>
-              <div class="mat-body-2 flex-1 ws-mat-black60-text"> {{designationData.location}} </div>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-
       <mat-card class="card-container-sidenav-profile-card" *ngIf="selectedTab === 4">
+        <mat-card-header>
+          <mat-card-title>Academics</mat-card-title>
+        </mat-card-header>
         <div class="flex flex-1 flex-column margin-top-xs margin-left-xs margin-right-xs">
-          <div class="flex-custom mat-card" id="academics">
-            <mat-card-content class="mat-card-content">
-              <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">Academics</span>
-              <mat-card class="no-shadow mt-2 mat-list-item dark-card mat-card ng-star-inserted" role="link"
-                tabindex="0" *ngFor="let academicsData of academics">
+          <div class="flex-custom" id="academics">
+            <mat-card-content class="mat-card-content" *ngIf="academics && academics.length > 0">
+              <mat-card class="no-shadow mt-2 mat-list-item dark-card mat-card"
+                *ngFor="let academicsData of academics | orderBy:'yearOfPassing':'desc'">
                 <div class="flex flex-1 mobile-margin margin-f">
                   <span class="flex-1 mat-subheading-1">{{academicsData.type}}</span>
                   <span
@@ -284,36 +180,33 @@
                 </div>
                 <div class="mat-body-2 flex-1 mobile-margin">{{academicsData.nameOfInstitute}}</div>
               </mat-card>
-              <!-- <mat-card class="no-shadow mt-2 mat-list-item dark-card mat-card ng-star-inserted" role="link"
-                tabindex="0">
-                <div class="flex flex-1 mobile-margin margin-f">
-                  <span class="flex-1 mat-subheading-1">XII STANDARD</span>
-                  <span class="mat-subheading-2 ws-mat-black60-text ng-star-inserted">0000</span>
-                </div>
-                <div class="mat-body-2 flex-1 mobile-margin">mds</div>
-              </mat-card> -->
+            </mat-card-content>
+            <mat-card-content *ngIf="academics && academics.length === 0">
+              <div>No academics</div>
             </mat-card-content>
           </div>
         </div>
       </mat-card>
 
       <mat-card class="card-container-sidenav-profile-card" *ngIf="selectedTab === 5">
+        <mat-card-header>
+          <mat-card-title>Hobbies</mat-card-title>
+        </mat-card-header>
         <div class="flex flex-1 flex-column margin-top-xs margin-left-xs margin-right-xs">
-          <div class="flex-custom mat-card" id="hobbies">
-            <mat-card-content class="mat-card-content">
-              <span class="mat-subheading-1 flex-4 mobile-margin" role="link" tabindex="0">Hobbies</span>
-              <div class="no-shadow mt-2 mat-list-item dark-card mat-card ng-star-inserted" role="link" tabindex="0">
-                <div class="flex flex-1 mobile-margin margin-f">
-                  <span class="mat-subtitle flex-1 mobile-margin">No hobbies information available</span>
+          <div class="flex-custom" id="hobbies">
+            <mat-card-content *ngIf="hobbies && hobbies.length > 0">
+              <mat-card class="no-shadow mt-2 mat-list-item dark-card mat-card" *ngFor="let hobby of hobbies">
+                <div class="hobby">
+                  <span role="link" tabindex="0" class="text-capitalize mat-body-2">{{hobby}}</span>
                 </div>
-              </div>
+              </mat-card>
+            </mat-card-content>
+            <mat-card-content *ngIf="hobbies && hobbies.length === 0">
+              <div>No academics</div>
             </mat-card-content>
           </div>
         </div>
       </mat-card>
-
     </div>
   </div>
-
-
 </div>

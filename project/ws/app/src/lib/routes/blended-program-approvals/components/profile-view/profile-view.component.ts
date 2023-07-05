@@ -1,26 +1,13 @@
 
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core'
-// import { MatNavList } from '@angular/material/list'
 import { NSProfileDataV2 } from '../../../../routes/approvals/models/profile-v2.model'
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
-// import { DiscussService } from '../../../discuss/services/discuss.service'
-// import { ProfileV2Service } from '../../services/profile-v2.servive'
 /* tslint:disable */
 import _ from 'lodash'
-// import { NetworkV2Service } from '../../../network-v2/services/network-v2.service'
-// import { NSNetworkDataV2 } from '../../../network-v2/models/network-v2.model'
-// import { ConfigurationsService, ValueService } from '@sunbird-cb/utils'
-// import { map } from 'rxjs/operators'
 import { BlendedApporvalService } from '../../services/blended-approval.service'
-
-import {
-  WidgetUserService,
-  NsContent
-  // WidgetContentService,
-} from '@sunbird-cb/collection'
-/* tslint:enable */
-// import {  } from '@sunbird-cb/utils'
+import { WidgetUserService } from '@sunbird-cb/collection'
+import moment from 'moment'
 
 @Component({
   selector: 'app-profile-view',
@@ -37,8 +24,8 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedTab: number = 2; // Default selected tab
   doj: any
   description: any
-  academics: any
-
+  academics: any = []
+  hobbies: any = []
   Math: any
   /* tslint:enable */
   elementPosition: any
@@ -49,12 +36,12 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   userDetails: any
   location!: string | null
   tabs: any
-  designation!: string | null
+  designation: any = []
   tabsData: NSProfileDataV2.IProfileTab[]
   currentUser!: string | null
   // connectionRequests!: NSNetworkDataV2.INetworkUser[]
   currentUsername: any
-  certificationData: any
+  certificationData: any = []
   viewProfile: any[] = []
   enrolledCourse: any = []
   allCertificate: any = []
@@ -94,15 +81,21 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.viewProfile = res
       // this.designation = res?.profileDetails?.professionalDetails[0]?.designation;
       this.userSvc.fetchUserBatchList(userId).subscribe((result: any) => {
-        this.certificationData = result
+        result.forEach((items: any) => {
+          if (items.completionPercentage === 100) {
+            this.certificationData.push(items)
+            // return items;
+          }
+        })
+        this.downloadAllCertificate(this.certificationData)
+        // this.certificationData = result
       })
       this.portalProfile = res
-      this.designation = res.profileDetails.professionalDetails
-      this.academics = res.profileDetails.academics
-
-      // this.location = res.profileDetails.professionalDetails[0].location
-      // this.doj = res.profileDetails.professionalDetails[0].doj
-      // this.description = res.profileDetails.professionalDetails[0].description
+      if (res.profileDetails) {
+        this.designation = res.profileDetails.professionalDetails ? res.profileDetails.professionalDetails : []
+        this.academics = res.profileDetails.academics ? res.profileDetails.academics : []
+        this.hobbies = res.profileDetails.interests ? res.profileDetails.interests : []
+      }
 
       this.tabs = this.route.data.subscribe(data => {
         if (res.profileDetails.verifiedKarmayogi === true) {
@@ -126,9 +119,44 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
       })
-      // this.fetchUserBatchList()
 
     })
+  }
+
+  downloadAllCertificate(data: any) {
+    data.forEach((item: any) => {
+      if (item.issuedCertificates.length !== 0) {
+        item.issuedCertificates.forEach((cid: any) => {
+          // const certId = item.issuedCertificates[0].identifier
+          const certId = cid.identifier
+          this.bpService.downloadCert(certId).subscribe((response: any) => {
+            this.allCertificate.push({
+              identifier: certId,
+              dataUrl: response.result.printUri,
+              content: item.content,
+              issuedCertificates: cid,
+            })
+
+          })
+        })
+      }
+    })
+  }
+
+  paDate(date: any): string {
+    const dat = moment(date, 'DD-MM-YYYY').toDate()
+    return dat.toDateString()
+  }
+
+  certpaDate(date: any): string {
+    let dat
+    if (date) {
+
+      dat = `Issued on ${moment(date).format('MMM YYYY')}`
+    } else {
+      dat = 'Certificate Not issued '
+    }
+    return dat
   }
   selectTab(tabIndex: number): void {
     this.selectedTab = tabIndex
@@ -145,23 +173,6 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sticky = false
     }
   }
-  decideAPICall() {
-    const user = this.portalProfile.userId || this.portalProfile.id || ''
-    if (this.portalProfile && user) {
-      this.fetchUserDetails(this.currentUsername)
-      // this.fetchConnectionDetails(user)
-    } else {
-
-      // if (this.configSvc.userProfile) {
-      //   const me = this.configSvc.userProfile.userName || ''
-      //   if (me) {
-      //     this.fetchUserDetails(me)
-      //     // this.fetchConnectionDetails(this.configSvc.userProfile.userId)
-      //   }
-      // }
-
-    }
-  }
 
   ngOnInit() { }
 
@@ -176,52 +187,5 @@ export class ProfileViewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    // this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
   }
-  fetchUserDetails(name: string) {
-    if (name) {
-      // this.discussService.fetchProfileInfo(name).subscribe((response: any) => {
-      //   if (response) {
-      //     this.discussProfileData = response
-      //     this.discussionList = _.uniqBy(_.filter(this.discussProfileData.posts, p => _.get(p, 'isMainPost') === true), 'tid') || []
-      //   }
-      // })
-    }
-  }
-  // fetchConnectionDetails(wid: string) {
-  //   this.networkV2Service.fetchAllConnectionEstablishedById(wid).subscribe(
-  //     (data: any) => {
-  //       this.connectionRequests = data.result.data
-  //     },
-  //     (_err: any) => {
-  //       // this.openSnackbar(err.error.message.split('|')[1] || this.defaultError)
-  //     })
-  // }
-
-  fetchUserBatchList() {
-    const user = this.portalProfile.userId || this.portalProfile.id || ''
-    this.userSvc.fetchUserBatchList(user).subscribe((courses: NsContent.ICourse[]) => {
-
-      courses.forEach(items => {
-        if (items.completionPercentage === 100) {
-          this.enrolledCourse.push(items)
-          // return items;
-        }
-      })
-      // this.downloadAllCertificate(this.enrolledCourse)
-    })
-  }
-
-  // downloadAllCertificate(data: any) {
-  //   data.forEach((item: any) => {
-  //     if (item.issuedCertificates.length !== 0) {
-  //       const certId = item.issuedCertificates[0].identifier
-  //       this.contentSvc.downloadCert(certId).subscribe(response => {
-
-  //         this.allCertificate.push({ identifier: item.issuedCertificates[0].identifier, dataUrl: response.result.printUri })
-
-  //       })
-  //     }
-  //   })
-  // }
 }

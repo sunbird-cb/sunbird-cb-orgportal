@@ -22,12 +22,14 @@ import { BlendedHomeComponent } from './components/blended-home/blended-home.com
 import { BlendedApprovalsRoutingModule } from './blended-approvals-routing.module'
 import { UsersCardComponent } from './components/users-card/users-card.component'
 import { ProfileViewComponent } from './components/profile-view/profile-view.component'
+import { PipeEmailModule } from '../pipes/pipe-email/pipe-email.module'
+import { PipeOrderByModule } from '../pipes/pipe-order-by/pipe-order-by.module'
 
 @NgModule({
   declarations: [BlendedHomeComponent, BatchListComponent, BatchDetailsComponent, UsersCardComponent, ProfileViewComponent],
   imports: [CommonModule, BlendedApprovalsRoutingModule, BreadcrumbsOrgModule, LeftMenuWithoutLogoModule, WidgetResolverModule,
     MatSidenavModule, MatButtonModule, MatIconModule, HomeModule, RouterModule, UIORGTableModule,
-    MatCardModule, AvatarPhotoModule, MatListModule],
+    MatCardModule, AvatarPhotoModule, MatListModule, PipeEmailModule, PipeOrderByModule],
   exports: [],
   providers: [],
 })

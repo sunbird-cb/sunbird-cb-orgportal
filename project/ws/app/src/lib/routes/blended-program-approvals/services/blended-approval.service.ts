@@ -11,6 +11,7 @@ const API_END_POINTS = {
   GET_LERANERS: '/apis/protected/v8/cohorts/course/getUsersForBatch',
   GET_REQUESTS: '/apis/proxies/v8/workflow/blendedprogram/search',
   READ_USER: '/apis/proxies/v8/api/user/v2/read/',
+  CERT_DOWNLOAD: `/apis/protected/v8/cohorts/course/batch/cert/download/`,
 }
 
 @Injectable({
@@ -41,5 +42,10 @@ export class BlendedApporvalService {
       return this.http.get<any>(API_END_POINTS.READ_USER + userid).pipe(map(resp => _.get(resp, 'result.response')))
     }
     return this.http.get<any>(API_END_POINTS.READ_USER).pipe(map(resp => _.get(resp, 'result.response')))
+  }
+
+  downloadCert(certId: any) {
+    const url = `${API_END_POINTS.CERT_DOWNLOAD}/${certId}`
+    return this.http.get<any>(url)
   }
 }

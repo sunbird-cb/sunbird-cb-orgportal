@@ -492,3 +492,31 @@ mat-card.card-container-sidenav-profile.mat-card {
     width: 150px !important;
     height: 130px !important;
 }
+
+.certificate-box {
+    .example-header-image {
+      background-size: cover;
+      width: 98px;
+      border-radius: calc(#{$size-s} - #{$size-xs}) !important;
+      height: 98px;
+      padding-right: 24px;
+    }
+
+    .margin-f {
+      margin: 0 0 1rem 0 !important;
+    }
+
+    .no-shadow {
+      box-shadow: none !important;
+    }
+
+    .subheading {
+      font: 600 16px/24px Montserrat;
+    }
+
+    .img-size {
+      height: 100px;
+      width: 100px;
+      padding-right: 24px;
+    }
+  }
