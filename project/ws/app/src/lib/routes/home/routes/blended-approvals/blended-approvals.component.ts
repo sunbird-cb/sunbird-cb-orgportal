@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
+import moment from 'moment'
 import { BlendedService } from '../../services/blended.service'
 
 @Component({
@@ -69,8 +70,13 @@ export class BlendedApprovalsComponent implements OnInit {
             val.batchesCount = val.batches.length
             // val.learners = 0
             // val.newrequests = 0
+
+            const today = moment(new Date())
             val.batches.forEach((b: any) => {
-              this.bIDs.push(b.batchId)
+              const allowedBatch = today.isSameOrBefore(moment(b.endDate || new Date()), 'day')
+              if (allowedBatch) {
+                this.bIDs.push(b.batchId)
+              }
             })
             if (this.bIDs && this.bIDs.length > 0) {
               const request = {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
+import moment from 'moment'
 import { BlendedApporvalService } from '../../services/blended-approval.service'
 
 @Component({
@@ -12,6 +13,7 @@ export class BatchListComponent implements OnInit {
   programID: any
   breadcrumbs: any
   userProfile: any
+  batchesList: any = []
 
   constructor(private router: Router, private activeRouter: ActivatedRoute, private bpService: BlendedApporvalService) {
     const currentState = this.router.getCurrentNavigation()
@@ -28,21 +30,27 @@ export class BatchListComponent implements OnInit {
           { title: this.programData.name, url: 'none' }],
         }
         if (this.programData.batches) {
+          const today = moment(new Date())
           this.programData.batches.forEach((b: any) => {
             // b.newrequestsCount = this.getNewRequestsList(b.batchId)
-            const request = {
-              serviceName: 'blendedprogram',
-              applicationStatus: 'SEND_FOR_MDO_APPROVAL',
-              applicationIds: [b.batchId],
-              limit: 100,
-              offset: 0,
-              deptName: this.userProfile.channel,
-            }
-            this.bpService.getRequests(request).subscribe((resnew: any) => {
-              if (resnew) {
-                b.newrequestsCount = resnew.result.data.length
+            const allowedBatch = today.isSameOrBefore(moment(b.endDate || new Date()), 'day')
+            if (allowedBatch) {
+              this.batchesList.push(b)
+              const request = {
+                serviceName: 'blendedprogram',
+                applicationStatus: 'SEND_FOR_MDO_APPROVAL',
+                applicationIds: [b.batchId],
+                limit: 100,
+                offset: 0,
+                deptName: this.userProfile.channel,
               }
-            })
+              this.bpService.getRequests(request).subscribe((resnew: any) => {
+                if (resnew) {
+                  b.newrequestsCount = resnew.result.data.length
+                }
+              })
+            }
+
           })
         }
       }
@@ -67,21 +75,26 @@ export class BatchListComponent implements OnInit {
         }
 
         if (this.programData.batches) {
+          const today = moment(new Date())
           this.programData.batches.forEach((b: any) => {
+            const allowedBatch = today.isSameOrBefore(moment(b.endDate || new Date()), 'day')
             // b.newrequestsCount = this.getNewRequestsList(b.batchId)
-            const request = {
-              serviceName: 'blendedprogram',
-              applicationStatus: 'SEND_FOR_MDO_APPROVAL',
-              applicationIds: [b.batchId],
-              limit: 100,
-              offset: 0,
-              deptName: this.userProfile.channel,
-            }
-            this.bpService.getRequests(request).subscribe((resnew: any) => {
-              if (resnew) {
-                b.newrequestsCount = resnew.result.data.length
+            if (allowedBatch) {
+              this.batchesList.push(b)
+              const request = {
+                serviceName: 'blendedprogram',
+                applicationStatus: 'SEND_FOR_MDO_APPROVAL',
+                applicationIds: [b.batchId],
+                limit: 100,
+                offset: 0,
+                deptName: this.userProfile.channel,
               }
-            })
+              this.bpService.getRequests(request).subscribe((resnew: any) => {
+                if (resnew) {
+                  b.newrequestsCount = resnew.result.data.length
+                }
+              })
+            }
           })
         }
       }
