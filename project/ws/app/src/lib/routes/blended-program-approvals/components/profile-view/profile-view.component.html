@@ -47,8 +47,7 @@
   </mat-card>
 
   <div class="container sidenav">
-    <mat-nav-list class="margin-left-xs margin-right-s margin-top-m flex-1 mat-nav-list mat-list-base"
-      role="navigation">
+    <mat-nav-list class="margin-left-xs margin-right-s flex-1 mat-nav-list mat-list-base" role="navigation">
       <!-- <a class="mat-list-item  " mat-list-item="" matripple="" style="">
         <div class="mat-list-item-content">
           <div class="mat-list-item-ripple mat-ripple" mat-ripple=""></div>
@@ -130,7 +129,7 @@
             </div>
           </mat-card>
         </div>
-        <div *ngIf="allCertificate && allCertificate.length === 0">
+        <div class="margin-left-s" *ngIf="allCertificate && allCertificate.length === 0">
           No certifications
         </div>
       </mat-card>
@@ -157,8 +156,8 @@
                 </div>
               </mat-card>
             </mat-card-content>
-            <mat-card-content *ngIf="designation && designation.length === 0">
-              <div>No designations</div>
+            <mat-card-content class="margin-left-s" *ngIf="designation && designation.length === 0">
+              <div>No career history</div>
             </mat-card-content>
           </div>
         </div>
@@ -181,7 +180,7 @@
                 <div class="mat-body-2 flex-1 mobile-margin">{{academicsData.nameOfInstitute}}</div>
               </mat-card>
             </mat-card-content>
-            <mat-card-content *ngIf="academics && academics.length === 0">
+            <mat-card-content class="margin-left-s" *ngIf="academics && academics.length === 0">
               <div>No academics</div>
             </mat-card-content>
           </div>
@@ -201,8 +200,8 @@
                 </div>
               </mat-card>
             </mat-card-content>
-            <mat-card-content *ngIf="hobbies && hobbies.length === 0">
-              <div>No academics</div>
+            <mat-card-content class="margin-left-s" *ngIf="hobbies && hobbies.length === 0">
+              <div>No hobbies</div>
             </mat-card-content>
           </div>
         </div>
