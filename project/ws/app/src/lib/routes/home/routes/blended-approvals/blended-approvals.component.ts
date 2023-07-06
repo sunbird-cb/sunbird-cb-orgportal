@@ -66,39 +66,41 @@ export class BlendedApprovalsComponent implements OnInit {
       if (res && res.result.content) {
         const resultList = res.result.content
         resultList.forEach((val: any) => {
+          val.batchesCount = 0
+          val.newrequests = 0
           if (val.batches) {
-            val.batchesCount = val.batches.length
-            // val.learners = 0
-            // val.newrequests = 0
-
+            // val.batchesCount = val.batches.length
             const today = moment(new Date())
+            const allowedBatchList: any[] = []
+            const bIds: any[] = []
             val.batches.forEach((b: any) => {
               const allowedBatch = today.isSameOrBefore(moment(b.endDate || new Date()), 'day')
               if (allowedBatch) {
-                this.bIDs.push(b.batchId)
+                allowedBatchList.push(b)
               }
             })
-            if (this.bIDs && this.bIDs.length > 0) {
-              const request = {
-                serviceName: 'blendedprogram',
-                applicationStatus: 'SEND_FOR_MDO_APPROVAL',
-                applicationIds: this.bIDs,
-                limit: 100,
-                offset: 0,
-                deptName: this.userProfile.channel,
-              }
-              this.bpService.getRequests(request).subscribe((resnew: any) => {
-                if (resnew) {
-                  val.newrequests = resnew.result.data.length
+            val.batchesCount = allowedBatchList.length
+
+            allowedBatchList.forEach((ab: any) => {
+              bIds.push(ab.batchId)
+              if (bIds.length === allowedBatchList.length) {
+                const request = {
+                  serviceName: 'blendedprogram',
+                  applicationStatus: 'SEND_FOR_MDO_APPROVAL',
+                  applicationIds: bIds,
+                  limit: 100,
+                  offset: 0,
+                  deptName: this.userProfile.channel,
                 }
-              })
-            } else {
-              val.newrequests = 0
-            }
-          } else {
-            val.batchesCount = 0
-            // val.learners = 0
-            val.newrequests = 0
+                this.bpService.getRequests(request).subscribe((resnew: any) => {
+                  if (resnew) {
+                    val.newrequests = resnew.result.data.length
+                  }
+                })
+              } else {
+                val.newrequests = 0
+              }
+            })
           }
         })
         this.data = resultList
