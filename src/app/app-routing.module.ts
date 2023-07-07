@@ -190,6 +190,18 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/blended-approvals',
+    loadChildren: () => import('./routes/route-blended-approvals.module').then(u => u.RouteBlendedApprovalsModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'blended-approvals',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'error-access-forbidden',
     component: ErrorResolverComponent,
     data: {

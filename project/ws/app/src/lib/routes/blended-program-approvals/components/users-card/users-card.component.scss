@@ -1,0 +1,30 @@
+.card-container {
+    padding: 20px 12px;
+    margin-bottom: 8px;
+    margin-right: 12px;
+    border-radius: 4px;
+}
+
+.name{
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: capitalize;
+}
+.designation{
+    line-height: 21px;
+}
+
+.approve-btn {
+    width: auto;
+    border: 1px solid #0075B7;
+    border-radius: 4px;
+    color: #0075B7 !important;
+}
+
+button {
+    display: inline;
+    font: 600 14px/20px Lato;
+    padding: 0.5em 1em;
+    color: rgba(0,0,0,0.7);
+    background: transparent;
+}
