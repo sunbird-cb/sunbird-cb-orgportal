@@ -139,7 +139,7 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
         if (this.usersData.length > 0) {
           this.usersData.forEach((user: any, index: any)  => {
             const obj = {
-              fullname: `${user.firstName} ${user.lastName}`,
+              fullname: `${user.firstName}`,
               email: this.profileUtilSvc.emailTransform(user.email),
               position: user.channel,
               id: user.id,

@@ -20,7 +20,7 @@ const routes: Routes = [
         component: PrivilegesComponent,
         data: {
           pageId: ':role',
-          module: 'roles-access',
+          module: 'Roles',
         },
       },
       {
@@ -28,7 +28,7 @@ const routes: Routes = [
         component: UsersComponent,
         data: {
           pageId: ':role',
-          module: 'roles-access',
+          module: 'Roles',
         },
         resolve: {
           usersList: UsersListResolve,

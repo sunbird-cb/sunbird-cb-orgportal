@@ -73,7 +73,8 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           this.userID = profileData.id || profileData.userId || profileDataAll.id
           this.basicInfo = profileData.personalDetails
           if (this.basicInfo) {
-            this.fullname = `${this.basicInfo.firstname} ${this.basicInfo.surname}`
+            // this.fullname = `${this.basicInfo.firstname} ${this.basicInfo.surname}`
+            this.fullname = `${this.basicInfo.firstname}`
           }
           this.academicDetails = profileData.academics
           this.professionalDetails = profileData.professionalDetails ? profileData.professionalDetails[0] : []

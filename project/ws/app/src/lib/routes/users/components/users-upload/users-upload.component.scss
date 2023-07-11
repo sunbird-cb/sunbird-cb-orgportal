@@ -9,10 +9,21 @@ table {
 
   td, th {
     width: 25%;
+    padding: 0px 12px!important;
   }
 
   .table-container{
-       position: relative;
+      position: relative;
+      width: 100%;
+      @media screen and (max-width: 1024px) {
+         overflow-x: scroll;
+      }
+  }
+
+  .text-span {
+    word-break: break-all!important;
+    min-width: 180px!important;
+    display: block;
   }
 
   .example-loading-shade {
@@ -26,6 +37,12 @@ table {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+   @media screen and (max-width: 1024px) {
+    #upload-data-box {
+      overflow-x: scroll;
+    }
   }
 
 .download-btn {

@@ -50,7 +50,7 @@ const routes: Routes = [
         },
         data: {
           pageId: 'users',
-          module: 'Home',
+          module: 'User',
           pageType: 'feature',
           pageKey: 'users-view',
         },
@@ -65,7 +65,7 @@ const routes: Routes = [
         },
         data: {
           pageId: 'users',
-          module: 'Home',
+          module: 'User',
           pageType: 'feature',
           pageKey: 'users-view',
         },
@@ -83,7 +83,7 @@ const routes: Routes = [
         component: RolesAccessComponent,
         data: {
           pageId: 'roles-access',
-          module: 'Home',
+          module: 'Roles',
         },
         resolve: {
           usersList: UsersListResolve,
@@ -94,14 +94,14 @@ const routes: Routes = [
         component: ApprovalsComponent,
         data: {
           pageId: 'approvals',
-          module: 'Home',
+          module: 'Approvals',
         },
       },
       {
         path: 'workallocation/:tab',
         data: {
           pageId: 'workallocation',
-          module: 'Home',
+          module: 'Work Allocation',
         },
         component: WorkallocationComponent,
       },
@@ -110,7 +110,7 @@ const routes: Routes = [
         redirectTo: 'workallocation/draft', pathMatch: 'full',
         data: {
           pageId: 'workallocation',
-          module: 'Home',
+          module: 'Work Allocation',
         },
         component: WorkallocationComponent,
       },
