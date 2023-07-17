@@ -1,6 +1,9 @@
 table {
     width: 100%;
   }
+  .mat-table {
+  overflow: auto;
+}
 
   .mat-form-field {
     font-size: 14px;
@@ -12,20 +15,34 @@ table {
     padding: 0px 12px!important;
   }
 
+.mat-row {
+  height: auto;
+}
 
+  .mat-cell {
+  // width: 25%;
+  padding: 0px 12px!important;
+  font-size: 14px !important;
+  }
+
+  .mat-header-cell {
+      font-size: 14px;
+    line-height: 1.1;
+    font-weight: 600;
+}
 
   .table-main-box, .table-container{
       position: relative;
       width: 100%;
       overflow-x: auto;
-      // @media screen and (max-width: 1440px) {
-      //    overflow-x: auto;
-      // }
+      @media screen and (max-width: 1440px) {
+         overflow-x: auto;
+      }
   }
 
   .text-span {
     word-break: break-all!important;
-    min-width: 180px!important;
+    // min-width: 180px!important;
     display: block;
   }
 
@@ -42,11 +59,11 @@ table {
     justify-content: center;
   }
 
-  //  @media screen and (max-width: 1440px) {
-  //   #upload-data-box {
-  //     overflow-x: auto;
-  //   }
-  // }
+   @media screen and (max-width: 1440px) {
+    #upload-data-box {
+      overflow-x: auto;
+    }
+  }
 
 .download-btn {
     min-width: 112px;
