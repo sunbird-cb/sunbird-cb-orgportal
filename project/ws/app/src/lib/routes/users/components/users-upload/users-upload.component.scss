@@ -15,8 +15,8 @@ table {
   .table-container{
       position: relative;
       width: 100%;
-      @media screen and (max-width: 1024px) {
-         overflow-x: scroll;
+      @media screen and (max-width: 1440px) {
+         overflow-x: auto;
       }
   }
 
@@ -39,9 +39,9 @@ table {
     justify-content: center;
   }
 
-   @media screen and (max-width: 1024px) {
+   @media screen and (max-width: 1440px) {
     #upload-data-box {
-      overflow-x: scroll;
+      overflow-x: auto;
     }
   }
 
