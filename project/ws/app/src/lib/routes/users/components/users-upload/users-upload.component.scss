@@ -12,12 +12,15 @@ table {
     padding: 0px 12px!important;
   }
 
-  .table-container{
+
+
+  .table-main-box, .table-container{
       position: relative;
       width: 100%;
-      @media screen and (max-width: 1440px) {
-         overflow-x: auto;
-      }
+      overflow-x: auto;
+      // @media screen and (max-width: 1440px) {
+      //    overflow-x: auto;
+      // }
   }
 
   .text-span {
@@ -39,11 +42,11 @@ table {
     justify-content: center;
   }
 
-   @media screen and (max-width: 1440px) {
-    #upload-data-box {
-      overflow-x: auto;
-    }
-  }
+  //  @media screen and (max-width: 1440px) {
+  //   #upload-data-box {
+  //     overflow-x: auto;
+  //   }
+  // }
 
 .download-btn {
     min-width: 112px;
