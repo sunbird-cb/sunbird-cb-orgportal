@@ -1,0 +1,11 @@
+<div class="flex flex-4 flex-column">
+  <mat-card>
+    <div class="flex-4 mobile-margin text-capitalize mat-h2">Blended programs enrollment approvals</div>
+    <mat-card-content>
+      <ng-container class="margin-top-l">
+        <ws-widget-org-user-table [tableData]='tabledata' [data]='getTableData' (eOnRowClick)="viewDetails($event)">
+        </ws-widget-org-user-table>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>

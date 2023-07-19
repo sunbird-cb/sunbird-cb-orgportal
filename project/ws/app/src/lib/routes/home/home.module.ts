@@ -60,6 +60,7 @@ import { BudgetproofspopupComponent } from './components/budgetproofspopup/budge
 import { UploadService } from './services/upload.service'
 import { AdmintableComponent } from './components/admintable/admintable.component'
 import { UsersModule } from '../users/users.module'
+import { BlendedApprovalsComponent } from './routes/blended-approvals/blended-approvals.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -81,6 +82,7 @@ import { UsersModule } from '../users/users.module'
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
+    BlendedApprovalsComponent,
   ],
   imports: [
     CommonModule,

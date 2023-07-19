@@ -17,6 +17,7 @@ import { StaffComponent } from './routes/staff/staff.component'
 import { BudgetComponent } from './routes/budget/budget.component'
 import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
 import { PageResolve } from '@sunbird-cb/utils'
+import { BlendedApprovalsComponent } from './routes/blended-approvals/blended-approvals.component'
 const routes: Routes = [
   {
     path: '',
@@ -112,6 +113,14 @@ const routes: Routes = [
           module: 'Work Allocation',
         },
         component: WorkallocationComponent,
+      },
+      {
+        path: 'blended-approvals',
+        component: BlendedApprovalsComponent,
+        data: {
+          pageId: 'blended-approvals',
+          module: 'Home',
+        },
       },
     ],
   },
