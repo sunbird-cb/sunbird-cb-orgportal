@@ -63,7 +63,8 @@
 
           <!-- Name Column -->
           <ng-container matColumnDef="fileName">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Name
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell fileName">
+              Name
             </mat-header-cell>
             <mat-cell *matCellDef="let row">
               <span class="cursor-pointer text-span ws-mat-accent-text" (click)="downloadFullFile(row)">
@@ -73,7 +74,8 @@
 
           <!-- status Column -->
           <ng-container matColumnDef="status">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Status
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+              class="ws-mat-black60-text mat-header-cell coloum-size-staus"> Status
             </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
           </ng-container>
@@ -83,17 +85,15 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell coloum-size">
               Failed
               Records
-              on
             </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.failedRecordsCount}} </mat-cell>
           </ng-container>
 
           <!-- Success Records COunt Column -->
           <ng-container matColumnDef="successfulRecordsCount">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell  coloum-size">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell coloum-size">
               Success
               Records
-              on
             </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.successfulRecordsCount}} </mat-cell>
           </ng-container>
@@ -108,7 +108,6 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell  coloum-size">
               Total
               Records
-              on
             </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.totalRecords}} </mat-cell>
           </ng-container>
@@ -134,7 +133,10 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header class="ws-mat-black60-text mat-header-cell"> Updated
               on
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.dateUpdatedOn | date:'dd MMM yyy h:mm a' }} </mat-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="text-span">{{row.dateUpdatedOn | date:'dd MMM yyy h:mm a' }}</span>
+            </mat-cell>
+            <!-- <mat-cell *matCellDef="let row"> {{row.dateUpdatedOn | date:'dd MMM yyy h:mm a' }} </mat-cell> -->
           </ng-container>
 
           <!-- report Column -->
@@ -163,7 +165,7 @@
 
         </mat-table>
 
-        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
         <!-- </div> -->
       </div>
     </div>
