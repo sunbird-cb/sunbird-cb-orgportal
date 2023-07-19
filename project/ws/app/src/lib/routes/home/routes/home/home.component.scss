@@ -21,9 +21,9 @@
 
 .left-nav {
   min-width: 240px;
-  overflow: hidden!important;
+  overflow: hidden !important;
   box-sizing: border-box;
-  height: 85vh;
+  height: 100vh;
   // max-width: 240px;
 
   // ::ng-deep.mat-drawer-inner-container {
@@ -94,5 +94,7 @@
   left: 0;
   right: 0;
   min-height: calc(100vh - 115px);
-}
+  // height: calc(100vh - 115px);
+  // padding-bottom: 50px;
 
+}
