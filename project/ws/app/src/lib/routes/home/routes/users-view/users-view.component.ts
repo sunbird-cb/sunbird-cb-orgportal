@@ -153,7 +153,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
           orgId: user.rootOrgId,
           orgName: user.rootOrgName,
-          allowEditUser: this.showEditUser(org.roles)
+          allowEditUser: this.showEditUser(org.roles),
         })
       })
     }
@@ -178,7 +178,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
           orgId: user.rootOrgId,
           orgName: user.rootOrgName,
-          allowEditUser: this.showEditUser(org.roles)
+          allowEditUser: this.showEditUser(org.roles),
         })
       })
     }
@@ -188,9 +188,8 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   showEditUser(roles: any): boolean {
     if (this.isMdoAdmin) {
       return (roles.includes('PUBLIC') && roles.length === 1)
-    } else {
-      return true
     }
+    return true
   }
 
   blockedUsers() {
