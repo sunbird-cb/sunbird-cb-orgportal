@@ -47,6 +47,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   activeUsersData!: any[]
   inactiveUsersData!: any[]
   content: NsContent.IContent = {} as NsContent.IContent
+  isMdoAdmin = false
 
   tabledata: ITableData = {
     actions: [],
@@ -94,6 +95,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.currentFilter = this.route.snapshot.params['tab'] || 'active'
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.roles) {
+      this.isMdoAdmin = this.configSvc.unMappedUser.roles.includes('MDO_ADMIN')
+    }
     this.getAllUsers()
   }
 
@@ -149,6 +153,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
           orgId: user.rootOrgId,
           orgName: user.rootOrgName,
+          allowEditUser: this.showEditUser(org.roles),
         })
       })
     }
@@ -173,10 +178,18 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
           orgId: user.rootOrgId,
           orgName: user.rootOrgName,
+          allowEditUser: this.showEditUser(org.roles),
         })
       })
     }
     return inactiveUsersData
+  }
+
+  showEditUser(roles: any): boolean {
+    if (this.isMdoAdmin) {
+      return (roles.includes('PUBLIC') && roles.length === 1)
+    }
+    return true
   }
 
   blockedUsers() {

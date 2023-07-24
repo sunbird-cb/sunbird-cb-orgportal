@@ -43,6 +43,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   disableCreateButton = false
   displayLoader = false
   emailLengthVal = false
+  isMdoAdmin = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -90,13 +91,25 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
         const orgLst = _.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList')
 
+        if (this.configService.unMappedUser && this.configService.unMappedUser.roles) {
+          this.isMdoAdmin = this.configService.unMappedUser.roles.includes('MDO_ADMIN')
+        }
+
         // new code
         for (let i = 0; i < orgLst.length; i += 1) {
           if (orgLst[i].name === 'MDO') {
             _.each(orgLst[i].roles, rolesObject => {
-              this.uniqueRoles.push({
-                roleName: rolesObject, description: rolesObject,
-              })
+              if (this.isMdoAdmin) {
+                if (rolesObject === 'PUBLIC') {
+                  this.uniqueRoles.push({
+                    roleName: rolesObject, description: rolesObject,
+                  })
+                }
+              } else {
+                this.uniqueRoles.push({
+                  roleName: rolesObject, description: rolesObject,
+                })
+              }
             })
           }
         }
