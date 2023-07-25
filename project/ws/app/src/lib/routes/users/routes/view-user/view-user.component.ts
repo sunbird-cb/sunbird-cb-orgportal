@@ -46,6 +46,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   qpParam: any
   qpPath: any
   breadcrumbs: any
+  isMdoAdmin = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -89,13 +90,25 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
         const orgLst = _.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList')
 
+        if (fullProfile.unMappedUser && fullProfile.unMappedUser.roles) {
+          this.isMdoAdmin = fullProfile.unMappedUser.roles.includes('MDO_ADMIN')
+        }
+
         // New code for roles
         for (let i = 0; i < orgLst.length; i += 1) {
           if (orgLst[i].name === 'MDO') {
             _.each(orgLst[i].roles, rolesObject => {
-              this.uniqueRoles.push({
-                roleName: rolesObject, description: rolesObject,
-              })
+              if (this.isMdoAdmin) {
+                if (rolesObject === 'PUBLIC') {
+                  this.uniqueRoles.push({
+                    roleName: rolesObject, description: rolesObject,
+                  })
+                }
+              } else {
+                this.uniqueRoles.push({
+                  roleName: rolesObject, description: rolesObject,
+                })
+              }
             })
           }
         }

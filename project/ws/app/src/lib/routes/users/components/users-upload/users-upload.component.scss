@@ -75,3 +75,11 @@ td, th {
 .file-name {
   line-height: 2;
 }
+
+.mat-column-dateCreatedOn,
+.mat-column-dateUpdatedOn {
+  width: 100px !important;
+  min-width: 100px !important;
+  max-width: 14%;
+  justify-content: center;
+}
