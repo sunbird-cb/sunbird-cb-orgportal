@@ -29,6 +29,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
       { displayName: 'Full Name', key: 'fullname' },
       { displayName: 'Requested on', key: 'requestedon' },
       { displayName: 'Fields', key: 'fields', isList: true },
+      { displayName: 'Tags', key: 'tag', isList: true },
     ],
     needCheckBox: false,
     needHash: false,
@@ -156,6 +157,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
           ${currentdate.getSeconds()}`,
             fields: keys.slice(0, -1),
             userWorkflow: approval,
+            tag: (approval.userInfo && approval.userInfo.tag) ? `${approval.userInfo.tag}` : '',
           })
         })
       })
