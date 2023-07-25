@@ -18,6 +18,7 @@ import { BudgetComponent } from './routes/budget/budget.component'
 import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
 import { PageResolve } from '@sunbird-cb/utils'
 import { BlendedApprovalsComponent } from './routes/blended-approvals/blended-approvals.component'
+import { ReportsSectionComponent } from './routes/reports-section/reports-section.component'
 const routes: Routes = [
   {
     path: '',
@@ -119,6 +120,14 @@ const routes: Routes = [
         component: BlendedApprovalsComponent,
         data: {
           pageId: 'blended-approvals',
+          module: 'Home',
+        },
+      },
+      {
+        path: 'reports-section',
+        component: ReportsSectionComponent,
+        data: {
+          pageId: 'reports-section',
           module: 'Home',
         },
       },

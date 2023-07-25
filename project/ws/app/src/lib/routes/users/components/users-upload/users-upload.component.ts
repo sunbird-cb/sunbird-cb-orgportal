@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment'
 import { ActivatedRoute } from '@angular/router'
 // tslint:disable-next-line
 import _ from 'lodash'
+import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'ws-app-users-upload',
@@ -16,12 +18,13 @@ import _ from 'lodash'
   styleUrls: ['./users-upload.component.scss'],
 })
 export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
-  private fileName: any
+  tableList!: any[]
+  public fileName: any
   public displayLoader!: Observable<boolean>
   public formGroup = this.fb.group({
     file: ['', Validators.required],
   })
-  fetching = false
+  fetching = true
   showFileError = false
   @ViewChild('toastSuccess', { static: true }) toastSuccess!: ElementRef<any>
   @ViewChild('toastError', { static: true }) toastError!: ElementRef<any>
@@ -31,24 +34,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   dataSource: MatTableDataSource<any>
   // tslint:disable-next-line:max-line-length
   displayedColumns: string[] = ['fileName', 'status', 'failedRecordsCount', 'successfulRecordsCount', 'totalRecords', 'dateCreatedOn', 'dateUpdatedOn']
-  tabledata: any = {
-    actions: [],
-    columns: [
-      // { displayName: 'Id', key: 'identifier' },
-      { displayName: 'Name', key: 'fileName' },
-      { displayName: 'Status', key: 'status' },
-      { displayName: 'Failed Records', key: 'failedRecordsCount' },
-      { displayName: 'Success Records', key: 'successfulRecordsCount' },
-      { displayName: 'Total Records', key: 'totalRecords' },
-      { displayName: 'Created on', key: 'dateCreatedOn' },
-      { displayName: 'Updated on', key: 'dateUpdatedOn' },
-    ],
-    needCheckBox: false,
-    needHash: false,
-    sortColumn: 'dateCreatedOn',
-    sortState: 'desc',
-    needUserMenus: false,
-  }
+  tabledata!: ITableData
   departments: string[] = []
   contactUsUrl = ''
   fileSelected!: any
@@ -73,6 +59,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     private fileService: FileService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
+    public datepipe: DatePipe
   ) {
     this.rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     this.dataSource = new MatTableDataSource(this.bulkUploadData)
@@ -89,6 +76,24 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.displayLoader = this.fileService.isLoading()
     this.contactUsUrl = `${environment.karmYogiPath}/public/contact `
+    this.tabledata = {
+      actions: [],
+      columns: [
+        // { displayName: 'Id', key: 'identifier' },
+        { displayName: 'Name', key: 'fileName' },
+        { displayName: 'Status', key: 'status' },
+        { displayName: 'Failed Records', key: 'failedRecordsCount' },
+        { displayName: 'Success Records', key: 'successfulRecordsCount' },
+        { displayName: 'Total Records', key: 'totalRecords' },
+        { displayName: 'Created on', key: 'dateCreatedOn' },
+        { displayName: 'Updated on', key: 'dateUpdatedOn' },
+      ],
+      needCheckBox: false,
+      needHash: false,
+      sortColumn: 'dateCreatedOn',
+      sortState: 'desc',
+      needUserMenus: false,
+    }
     this.getBulkUploadData()
   }
   ngAfterViewInit() {
@@ -100,54 +105,42 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getBulkUploadData() {
-    this.fetching = true
-    this.fileService.getBulkUploadDataV1(this.rootOrgId).then((res: any) => {
-      this.fetching = false
+    this.fileService.getBulkUploadDataV1(this.rootOrgId).subscribe((res: any) => {
+      this.tableList = []
       if (res.result && res.result.content) {
         this.bulkUploadData = res.result.content
+        this.bulkUploadData.forEach((element: any) => {
+          this.tableList.push({
+            fileName: element.fileName,
+            status: element.status ? element.status : '',
+            failedRecordsCount: element.failedRecordsCount ? element.failedRecordsCount : '',
+            successfulRecordsCount: element.successfulRecordsCount ? element.successfulRecordsCount : '',
+            totalRecords: element.totalRecords ? element.totalRecords : '',
+            dateCreatedOn: element.dateCreatedOn ? element.dateCreatedOn : '',
+            dateUpdatedOn: element.dateUpdatedOn ? element.dateUpdatedOn : '',
+          })
+        })
+        this.fetching = false
         // this.bulkUploadData = []
         this.dataSource = new MatTableDataSource(this.bulkUploadData)
         setTimeout(() => this.dataSource.paginator = this.paginator)
-        setTimeout(
-          () => {
-            if (this.sort) {
-              this.sort.active = this.tabledata.sortColumn,
-                this.sort.start = this.tabledata.sortState
-            }
-            this.dataSource.sort = this.sort
-          },
-          100)
+        // setTimeout(
+        //   () => {
+        //     if (this.sort) {
+        //       this.sort.active = this.tabledata.sortColumn,
+        //         this.sort.start = this.tabledata.sortState
+        //     }
+        //     this.dataSource.sort = this.sort
+        //   },
+        //   100)
+      } else {
+        this.fetching = false
       }
     })
-      .catch(() => { })
-      .finally(() => {
-        this.fetching = false
-      })
   }
 
   public onFileChange(event: any) {
     this.showFileError = false
-    // const reader = new FileReader()
-    // if (event.target.files && event.target.files.length) {
-    //   this.fileName = event.target.files[0].name
-    //   const [file] = event.target.files
-    //   reader.readAsDataURL(file)
-
-    //   reader.onload = () => {
-    //     this.formGroup.patchValue({
-    //       file: reader.result,
-    //     })
-    //   }
-    // }
-
-    // const file: File = event.target.files[0]
-    // this.fileName = file.name
-
-    // this.fileSelected = file
-    // this.formGroup.patchValue({
-    //   file,
-    // })
-
     const fileList = (<HTMLInputElement>event.target).files
     if (fileList && fileList.length > 0) {
       const file: File = fileList[0]
@@ -157,6 +150,16 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
         file,
       })
     }
+  }
+
+  fileClick(event: any) {
+    event.target.value = ''
+  }
+
+  cancelSelected() {
+    this.fileName = ''
+    this.fileSelected = ''
+    this.formGroup.controls['file'].setValue('')
   }
 
   public onSubmit(form: any): void {
@@ -214,9 +217,8 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  downloadFullFile(file: any) {
-    const fname = file.fileName
-    const url = `/apis/proxies/v8/user/v1/bulkuser/download/${fname}`
+  downloadFullFile(event: any) {
+    const url = `/apis/proxies/v8/user/v1/bulkuser/download/${event.fileName}`
     window.open(url, '_blank')
   }
 }

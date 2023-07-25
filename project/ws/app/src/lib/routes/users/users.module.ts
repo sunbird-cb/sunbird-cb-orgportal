@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core'
-import { CommonModule } from '@angular/common'
+import { CommonModule, DatePipe } from '@angular/common'
 import { CreateUserComponent } from './routes/create-user/create-user.component'
 import { ViewUserComponent } from './routes/view-user/view-user.component'
 import { RouterModule } from '@angular/router'
 import { UsersRoutingModule } from './users.routing.module'
-import { BreadcrumbsOrgModule, ScrollspyLeftMenuModule } from '@sunbird-cb/collection'
+import { BreadcrumbsOrgModule, ScrollspyLeftMenuModule, UIORGTableModule } from '@sunbird-cb/collection'
 import {
   MatSidenavModule, MatGridListModule, MatListModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatIconModule, MatButtonModule, MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,
@@ -27,8 +27,9 @@ import { PipeEmailModule } from '../pipes/pipe-email/pipe-email.module'
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule, MatSortModule, PipeEmailModule,
+    UIORGTableModule,
   ],
-  providers: [RolesService, FileService],
+  providers: [RolesService, FileService, DatePipe],
   exports: [UsersUploadComponent],
 })
 export class UsersModule { }

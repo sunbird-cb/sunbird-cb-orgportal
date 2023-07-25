@@ -84,8 +84,8 @@ export class FileService {
     return await this.http.get(`${API_ENDPOINTS.getBulkUploadData}`).toPromise()
   }
 
-  async getBulkUploadDataV1(rootOrgId: any) {
-    return await this.http.get(`${API_ENDPOINTS.getBulkUploadData}/${rootOrgId}`).toPromise()
+  public getBulkUploadDataV1(rootOrgId: any): Observable<any> {
+    return this.http.get(`${API_ENDPOINTS.getBulkUploadData}/${rootOrgId}`)
   }
 
   // public downloadFile(filename: string) {

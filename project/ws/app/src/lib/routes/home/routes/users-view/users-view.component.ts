@@ -243,12 +243,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       case 'upload':
         this.onUploadClick()
         break
-      case 'download':
-        this.downloadUserList()
-        break
-      case 'consumptionReport':
-        this.downloadConsumptionReport()
-        break
     }
   }
 
@@ -262,80 +256,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       },
       {}
     )
-  }
-
-  async downloadUserList() {
-
-    const popup = this.snackBar
-
-    const fileName = `userReport.xlsx`
-
-    const downloadUrl = `${environment.domainName}${environment.userBucket}${this.configSvc.userProfile.rootOrgId}/${fileName}`
-
-    const xhr = new XMLHttpRequest()
-
-    xhr.onreadystatechange = () => {
-
-      if (xhr.readyState !== 4) {
-
-        return
-
-      }
-
-      if (xhr.status === 200) {
-
-        window.location.href = downloadUrl
-
-      } else {
-
-        popup.open('Report is not available')
-
-      }
-
-    }
-
-    xhr.open('GET', downloadUrl)
-
-    xhr.send()
-
-  }
-
-  downloadConsumptionReport() {
-
-    const popup = this.snackBar
-
-    const fileName = `userEnrolmentReport.xlsx`
-
-    const downloadUrl = `${environment.domainName}${environment.userBucket}${this.configSvc.userProfile.rootOrgId}/${fileName}`
-
-    // window.location.href = downloadUrl
-
-    const xhr = new XMLHttpRequest()
-
-    xhr.onreadystatechange = () => {
-
-      if (xhr.readyState !== 4) {
-
-        return
-
-      }
-
-      if (xhr.status === 200) {
-
-        window.location.href = downloadUrl
-
-      } else {
-
-        popup.open('Report is not available')
-
-      }
-
-    }
-
-    xhr.open('GET', downloadUrl)
-
-    xhr.send()
-
   }
 
   onUploadClick() {
