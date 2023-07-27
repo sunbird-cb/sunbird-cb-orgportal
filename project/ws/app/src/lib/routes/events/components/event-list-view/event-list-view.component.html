@@ -64,9 +64,10 @@
             </div>
         </mat-table>
     </div>
-    <div *ngIf="dataSource.filteredData.length <= 0" class="h-600-s-20-m color-60 text-center">
-        No result found
+    <div *ngIf="dataSource.filteredData.length <= 0" class="h-600-s-20-m color-60 mt-4 mb-4 text-center">
+        No events found
     </div>
-    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
+    <mat-paginator [hidden]="dataSource && dataSource.filteredData.length < 1" [length]="length" [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions" class="mt-1">
     </mat-paginator>
 </div>
