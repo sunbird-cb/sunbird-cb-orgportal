@@ -7,7 +7,8 @@ import _ from 'lodash'
 
 const API_END_POINTS = {
   UPDATE_REQUEST: '/apis/proxies/v8/workflow/blendedprogram/update',
-  GET_PROGRAM_DETAILS: '/apis/proxies/v8/action/content/v3/hierarchy',
+  // GET_PROGRAM_DETAILS: '/apis/proxies/v8/action/content/v3/hierarchy',
+  GET_PROGRAM_DETAILS: '/apis/proxies/v8/action/content/v3/read',
   GET_LERANERS: '/apis/protected/v8/cohorts/course/getUsersForBatch',
   GET_REQUESTS: '/apis/proxies/v8/workflow/blendedprogram/search',
   READ_USER: '/apis/proxies/v8/api/user/v2/read/',
