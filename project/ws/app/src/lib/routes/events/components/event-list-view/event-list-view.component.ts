@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, Output, EventEmitter, ViewChild,
-  AfterViewInit, OnChanges, SimpleChanges, Inject, ChangeDetectorRef,
+  AfterViewInit, OnChanges, SimpleChanges, Inject, ChangeDetectorRef, AfterViewChecked,
 } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
@@ -24,7 +24,7 @@ export interface IContentShareData {
   templateUrl: './event-list-view.component.html',
   styleUrls: ['./event-list-view.component.scss'],
 })
-export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges {
+export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges, AfterViewChecked {
 
   @Input() tableData!: ITableData | undefined
   @Input() data?: []
