@@ -38,6 +38,22 @@
   .request-box {
     color: #D13924;
     padding: 8px 14px;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    //border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .extra-margin {
+    margin-top: 10px!important;
+  }
+  .circle {
+    width: 10px;
+    height: 10px;
+    background:red;
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    line-height:20px;
+    vertical-align:middle;
+    text-align:center;
+    color:white;
+    margin-bottom: 2px;
   }
 }
