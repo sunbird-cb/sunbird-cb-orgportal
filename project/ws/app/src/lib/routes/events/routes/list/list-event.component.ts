@@ -72,7 +72,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
             needCheckBox: false,
             needHash: false,
             sortColumn: '',
-            sortState: 'asc',
+            sortState: 'asc'
         }
         this.fetchEvents()
     }
