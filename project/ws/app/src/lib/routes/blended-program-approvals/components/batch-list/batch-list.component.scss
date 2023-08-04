@@ -7,9 +7,10 @@
   display: inline-block;
   width: 31%;
   border-radius: 4px;
+  padding-bottom: 10px;
 
   .title-div {
-    min-height: 48px;
+    min-height: 35px;
   }
 
   span {
@@ -31,7 +32,7 @@
       font-size: 16px;
       width: 15px;
       height: 16px;
-      margin-right: 6px
+      margin-right: 6px;
     }
   }
 
@@ -40,12 +41,13 @@
     padding: 8px 14px;
     //border-top: 1px solid rgba(0, 0, 0, 0.08);
   }
-  .extra-margin {
-    margin-top: 10px!important;
+  .extra-padding {
+    padding-top: 10px;
   }
+
   .circle {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     background:red;
     border-radius:50%;
     -moz-border-radius:50%;
@@ -54,6 +56,6 @@
     vertical-align:middle;
     text-align:center;
     color:white;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
   }
 }

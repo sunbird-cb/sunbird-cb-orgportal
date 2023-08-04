@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
+
 import moment from 'moment'
 import { BlendedApporvalService } from '../../services/blended-approval.service'
 
@@ -44,9 +45,17 @@ export class BatchListComponent implements OnInit {
                 offset: 0,
                 deptName: this.userProfile.channel,
               }
+              b.newrequestsCount = Math.floor(Math.random() * (10 - 0 + 0)) + 0
+              b.learnersCount = 0
               this.bpService.getRequests(request).subscribe((resnew: any) => {
                 if (resnew) {
                   b.newrequestsCount = resnew.result.data.length
+                }
+              })
+              this.bpService.getLearners(b.batchId).subscribe((res: any) => {
+                console.log("learners ", res)
+                if (res && res.length > 0) {
+                  b.learnersCount = res.length
                 }
               })
             }
@@ -89,9 +98,17 @@ export class BatchListComponent implements OnInit {
                 offset: 0,
                 deptName: this.userProfile.channel,
               }
+              b.learnersCount = 0
+              b.newrequestsCount = Math.floor(Math.random() * (10 - 0 + 0)) + 0
               this.bpService.getRequests(request).subscribe((resnew: any) => {
                 if (resnew) {
                   b.newrequestsCount = resnew.result.data.length
+                }
+              })
+              this.bpService.getLearners(b.batchId).subscribe((res: any) => {
+                console.log("learners ", res)
+                if (res && res.length > 0) {
+                  b.learnersCount = res.length
                 }
               })
             }

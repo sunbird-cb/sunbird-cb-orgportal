@@ -1,0 +1,33 @@
+<div class="margin-bottom-xl margin-top-l grey-box paddig-m ws-mat-accent-border">
+  <div class="details">
+    <p class="font-bold">{{session.title}}</p>
+    <p>{{session.description}}</p>
+    <div class="color-60 margin-top-l">
+      <ul class="margin-top-m margin-bottom-m batch-data">
+        <li>{{session.type}}</li>
+        <li>{{session.type}}</li>
+        <li>{{session.type}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="session-division">
+    <div class="details">
+      <div class="grid grid-cols-2 gap-1">
+        <div class="flex flex-column">
+          <div class="font-bold">QR attendance required</div>
+          <div>{{session.qrCode}}</div>
+        </div>
+        <div class="flex flex-column">
+          <div class="font-bold">Capture location details</div>
+          <div>{{session.localtion}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="session-division">
+    <div class="details">
+      <div class="font-bold">Facilitator</div>
+      <div>{{session.facilitator}}</div>
+    </div>
+  </div>
+</div>

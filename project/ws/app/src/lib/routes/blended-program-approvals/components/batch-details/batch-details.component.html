@@ -38,10 +38,18 @@
               (click)="filter('rejected')" role="button">Rejected requests
               <!-- <span *ngIf="rejectedUsers" class="ws-mat-black60-text">({{rejectedUsers.length}})</span> -->
             </a>
+            <a class="filter-option cursor-pointer"
+              [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'sessions',
+                                                                                    'ws-mat-accent-border font-medium':currentFilter !== 'sessions'}"
+              mat-button (click)="filter('sessions')" role="button">Sessions details
+              <!-- <span *ngIf="rejectedUsers" class="ws-mat-black60-text">({{rejectedUsers.length}})</span> -->
+            </a>
           </div>
         </div>
         <ng-container *ngIf="currentFilter === 'pending'">
           <div class="b-c box" *ngIf="newUsers && newUsers.length > 0">
+            <p class="padding-m new-request-count"> {{newUsers.length}} New
+              requests</p>
             <div *ngFor="let user of newUsers">
               <ws-app-users-card [user]="user" [actions]="true" [programData]="linkData"
                 (userClick)="onSubmit($event)"></ws-app-users-card>
@@ -69,6 +77,19 @@
           </div>
           <div class="b-c box" *ngIf="rejectedUsers && rejectedUsers.length == 0">
             <p class="padding-m">No rejected requests yet</p>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="currentFilter === 'sessions'">
+          <div *ngIf="sessionDetails && sessionDetails.length > 0">
+            <div class="flex-4 mobile-margin mat-h2 margin-top-m">
+              Sessions
+            </div>
+            <div *ngFor="let individulaSession of sessionDetails">
+              <ws-app-session-card [session]="individulaSession"></ws-app-session-card>
+            </div>
+          </div>
+          <div class="b-c box" *ngIf="sessionDetails && sessionDetails.length == 0">
+            <p class="padding-m">No sessions yet</p>
           </div>
         </ng-container>
       </ng-container>

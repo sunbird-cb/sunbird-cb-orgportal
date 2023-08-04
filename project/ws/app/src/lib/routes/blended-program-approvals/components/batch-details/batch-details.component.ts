@@ -22,6 +22,7 @@ export class BatchDetailsComponent implements OnInit {
   rejectedUsers: any = []
   linkData: any
   userProfile: any
+  sessionDetails: any = []
 
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
@@ -43,7 +44,7 @@ export class BatchDetailsComponent implements OnInit {
 
   ngOnInit() { }
 
-  filter(key: 'pending' | 'approved' | 'rejected') {
+  filter(key: 'pending' | 'approved' | 'rejected' | 'sessions') {
     switch (key) {
       case 'pending':
         this.currentFilter = 'pending'
@@ -56,6 +57,10 @@ export class BatchDetailsComponent implements OnInit {
       case 'rejected':
         this.currentFilter = 'rejected'
         this.getRejectedList()
+        break
+      case 'sessions':
+        this.currentFilter = 'sessions'
+        this.getSessionDetails()
         break
       default:
         break
@@ -127,6 +132,27 @@ export class BatchDetailsComponent implements OnInit {
         this.rejectedUsers = res.result.data
       }
     })
+  }
+
+  getSessionDetails() {
+    this.sessionDetails = [
+      {
+        title: "Intro to AI - Session 1",
+        description: "Angular is an open-source, JavaScript framework written in TypeScript. Google maintains it, and its primary purpose is to develop single-page applications. As a framework, Angular has clear advantages while also providing a standard structure for developers to work with. It enables users to create large applications in a maintainable manner. Frameworks in general boost web development efficiency and performance by providing a consistent structure so that developers don’t have to keep rebuilding code from scratch. Frameworks are time savers that offer developers a host of extra features that can be added to software without requiring extra effort.",
+        type: "Offline session",
+        facilitator: "Rangarajan",
+        localtion: "Yes",
+        qrCode: "Yes"
+      },
+      {
+        title: "Intro to Angular - Session 3",
+        description: 'Angular is a popular open-source web application framework developed by Google. It is written in TypeScript and is widely used for building dynamic and robust single-page applications (SPAs). Angular provides a set of tools and features that allow developers to create complex client-side applications with ease.',
+        type: "Online session",
+        facilitator: "Venkat Kandagaddala",
+        localtion: "No",
+        qrCode: "Yes"
+      }
+    ]
   }
 
   onSubmit(event: any) {
