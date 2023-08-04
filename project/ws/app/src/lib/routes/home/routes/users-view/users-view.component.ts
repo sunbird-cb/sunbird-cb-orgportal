@@ -47,6 +47,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   activeUsersData!: any[]
   inactiveUsersData!: any[]
   content: NsContent.IContent = {} as NsContent.IContent
+  isMdoAdmin = false
 
   tabledata: ITableData = {
     actions: [],
@@ -94,6 +95,9 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.currentFilter = this.route.snapshot.params['tab'] || 'active'
+    if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.roles) {
+      this.isMdoAdmin = this.configSvc.unMappedUser.roles.includes('MDO_ADMIN')
+    }
     this.getAllUsers()
   }
 
@@ -149,6 +153,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
           orgId: user.rootOrgId,
           orgName: user.rootOrgName,
+          allowEditUser: this.showEditUser(org.roles),
         })
       })
     }
@@ -173,10 +178,18 @@ export class UsersViewComponent implements OnInit, OnDestroy {
           roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
           orgId: user.rootOrgId,
           orgName: user.rootOrgName,
+          allowEditUser: this.showEditUser(org.roles),
         })
       })
     }
     return inactiveUsersData
+  }
+
+  showEditUser(roles: any): boolean {
+    if (this.isMdoAdmin) {
+      return (roles.includes('PUBLIC') && roles.length === 1)
+    }
+    return true
   }
 
   blockedUsers() {
@@ -230,12 +243,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       case 'upload':
         this.onUploadClick()
         break
-      case 'download':
-        this.downloadUserList()
-        break
-      case 'consumptionReport':
-        this.downloadConsumptionReport()
-        break
     }
   }
 
@@ -249,80 +256,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       },
       {}
     )
-  }
-
-  async downloadUserList() {
-
-    const popup = this.snackBar
-
-    const fileName = `userReport.xlsx`
-
-    const downloadUrl = `${environment.domainName}${environment.userBucket}${this.configSvc.userProfile.rootOrgId}/${fileName}`
-
-    const xhr = new XMLHttpRequest()
-
-    xhr.onreadystatechange = () => {
-
-      if (xhr.readyState !== 4) {
-
-        return
-
-      }
-
-      if (xhr.status === 200) {
-
-        window.location.href = downloadUrl
-
-      } else {
-
-        popup.open('Report is not available')
-
-      }
-
-    }
-
-    xhr.open('GET', downloadUrl)
-
-    xhr.send()
-
-  }
-
-  downloadConsumptionReport() {
-
-    const popup = this.snackBar
-
-    const fileName = `userEnrolmentReport.xlsx`
-
-    const downloadUrl = `${environment.domainName}${environment.userBucket}${this.configSvc.userProfile.rootOrgId}/${fileName}`
-
-    // window.location.href = downloadUrl
-
-    const xhr = new XMLHttpRequest()
-
-    xhr.onreadystatechange = () => {
-
-      if (xhr.readyState !== 4) {
-
-        return
-
-      }
-
-      if (xhr.status === 200) {
-
-        window.location.href = downloadUrl
-
-      } else {
-
-        popup.open('Report is not available')
-
-      }
-
-    }
-
-    xhr.open('GET', downloadUrl)
-
-    xhr.send()
-
   }
 
   onUploadClick() {

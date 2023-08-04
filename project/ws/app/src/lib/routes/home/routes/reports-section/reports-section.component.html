@@ -1,0 +1,22 @@
+<div class="flex flex-4 flex-column">
+  <mat-card>
+    <div class="flex-4 mobile-margin text-capitalize mat-h2">Download reports</div>
+    <mat-card-content>
+      <ng-container class="margin-top-l">
+        <div class="flex">
+          <div *ngFor="let item of btnList" class="margin-right-m">
+            <button type="button" mat-button class="upload-btn" (click)="onButtonClick(item.type, $event)">
+              <mat-icon>vertical_align_bottom</mat-icon> {{item.name}}
+            </button>
+          </div>
+          <!-- <button type="button" mat-button class="upload-btn" (click)="onButtonClick('consumptionReport', $event)">
+            <mat-icon>vertical_align_bottom</mat-icon> Consumption Report
+          </button>
+          <button type="button" mat-button class="upload-btn" (click)="onButtonClick('assessmentReport', $event)">
+            <mat-icon>vertical_align_bottom</mat-icon> Assessment Report
+          </button> -->
+        </div>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>
