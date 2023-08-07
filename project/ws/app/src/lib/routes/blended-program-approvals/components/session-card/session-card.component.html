@@ -2,12 +2,21 @@
   <div class="details">
     <p class="font-bold">{{session.title}}</p>
     <p>{{session.description}}</p>
-    <div class="color-60 margin-top-l">
-      <ul class="margin-top-m margin-bottom-m batch-data">
-        <li>{{session.type}}</li>
-        <li>{{session.type}}</li>
-        <li>{{session.type}}</li>
-      </ul>
+    <div class="color-60 margin-top-l margin-top-m margin-bottom-m">
+      <div class="flex flex-1 flex-row">
+        <div class="flex margin-right-m">{{session.type}}</div>
+        <div class="flex margin-right-m bullet-span">{{session.date}}</div>
+        <div class="flex bullet-span">{{session.duration}}, {{session.time}}</div>
+      </div>
+    </div>
+    <div class="margin-top-l">
+      <div class="font-bold">Join this link </div>
+      <div><a [href]="session.joinLink" target="_blank" class="link">{{session.joinLink}}</a></div>
+    </div>
+    <div class="margin-top-l margin-bottom-s" *ngIf="session.feedbackUrl">
+      <div class="font-bold">Provide feedback</div>
+      <div><a [href]="session.feedbackUrl" target="_blank" class="link">{{session.feedbackUrl}}</a></div>
+      <div class="color-60 link-help-text" *ngIf="session.feedbackUrlHelpText">{{session.feedbackUrlHelpText}}</div>
     </div>
   </div>
   <div class="session-division">

@@ -142,7 +142,12 @@ export class BatchDetailsComponent implements OnInit {
         type: "Offline session",
         facilitator: "Rangarajan",
         localtion: "Yes",
-        qrCode: "Yes"
+        qrCode: "Yes",
+        duration: "4Hrs",
+        date: "12 June 2023",
+        time: "9:00 AM - 1:00 PM",
+        feedbackUrl: "https://surveymonkey.com/123456",
+        joinLink: "https://teams.microsoft.com/QWDDIKMV129"
       },
       {
         title: "Intro to Angular - Session 3",
@@ -150,7 +155,13 @@ export class BatchDetailsComponent implements OnInit {
         type: "Online session",
         facilitator: "Venkat Kandagaddala",
         localtion: "No",
-        qrCode: "Yes"
+        qrCode: "Yes",
+        duration: "8Hrs",
+        date: "31 Aug 2023",
+        time: "9:00 AM - 5:00 PM",
+        feedbackUrl: "https://surveymonkey.com/67890",
+        feedbackUrlHelpText: "This survey won't take more than 2 minutes.",
+        joinLink: "https://teams.microsoft.com/ABCDPIKL123"
       }
     ]
   }

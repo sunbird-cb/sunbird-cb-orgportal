@@ -3,17 +3,25 @@
   .details {
     padding: 1em;
   }
-  .batch-data {
-    list-style: none;
+  .session-data {
     padding: 0;
     font: 400 14px/20px Lato;
-
-    li {
-      display: inline;
-      margin-right: 2em;
-    }
   }
+
+  .link {
+    background-color: #F5F5F5!important;
+  }
+
+  .link-help-text {
+    font-size: 13px;
+  }
+
+  .bullet-span::before {
+    content: "\2022";
+    padding-right: 5px;
+  }
+
 }
 .session-division {
-  border-top: 1px solid #c3c3c3;
+  border-top: 1px solid #e5dddd;
 }
