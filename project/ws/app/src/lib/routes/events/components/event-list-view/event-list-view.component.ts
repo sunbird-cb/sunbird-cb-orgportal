@@ -52,6 +52,7 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
   selection = new SelectionModel<any>(true, [])
   dialogRef: any
   configSvc: any
+  searchColumn!: string
 
   constructor(
     private router: Router,
@@ -73,8 +74,6 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
       this.displayedColumns = this.tableData.columns
     }
     this.dataSource.data = this.data
-    this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
   }
 
   ngOnChanges(data: SimpleChanges) {
@@ -82,7 +81,13 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
     this.length = this.dataSource.data.length
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator
+    this.dataSource.sort = this.sort
+    this.dataSource.filterPredicate = function (data: any, filter: string): boolean {
+      return data.eventName.toLowerCase().includes(filter)
+    }
+  }
 
   applyFilter(filterValue: any) {
     if (filterValue) {
