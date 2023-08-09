@@ -52,10 +52,9 @@ export class BatchListComponent implements OnInit {
                   b.newrequestsCount = resnew.result.data.length
                 }
               })
-              this.bpService.getLearners(b.batchId).subscribe((res: any) => {
-                console.log("learners ", res)
-                if (res && res.length > 0) {
-                  b.learnersCount = res.length
+              this.bpService.getLearners(b.batchId).subscribe((r: any) => {
+                if (r && r.length > 0) {
+                  b.learnersCount = r.length
                 }
               })
             }
@@ -105,10 +104,9 @@ export class BatchListComponent implements OnInit {
                   b.newrequestsCount = resnew.result.data.length
                 }
               })
-              this.bpService.getLearners(b.batchId).subscribe((res: any) => {
-                console.log("learners ", res)
-                if (res && res.length > 0) {
-                  b.learnersCount = res.length
+              this.bpService.getLearners(b.batchId).subscribe((r: any) => {
+                if (r && r.length > 0) {
+                  b.learnersCount = r.length
                 }
               })
             }

@@ -30,16 +30,16 @@ export class BatchDetailsComponent implements OnInit {
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
     private bpService: BlendedApporvalService,
-    private snackBar: MatSnackBar,
-    private events: EventService,
-    private dialogue: MatDialog) {
+              private snackBar: MatSnackBar,
+              private events: EventService,
+              private dialogue: MatDialog) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
     }
     if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService) {
       this.userProfile = this.activeRouter.parent.snapshot.data.configService.unMappedUser
-      console.log('this.userProfile', this.userProfile)
+      // console.log('this.userProfile', this.userProfile)
     }
     this.programID = this.activeRouter.snapshot.params.id
     this.batchID = this.activeRouter.snapshot.params.batchid
@@ -144,32 +144,32 @@ export class BatchDetailsComponent implements OnInit {
   getSessionDetails() {
     this.sessionDetails = [
       {
-        title: "Intro to Angular - Session 1",
-        description: "Angular is an open-source, JavaScript framework written in TypeScript. Google maintains it, and its primary purpose is to develop single-page applications. As a framework, Angular has clear advantages while also providing a standard structure for developers to work with. It enables users to create large applications in a maintainable manner. Frameworks in general boost web development efficiency and performance by providing a consistent structure so that developers don’t have to keep rebuilding code from scratch. Frameworks are time savers that offer developers a host of extra features that can be added to software without requiring extra effort.",
-        type: "Offline session",
-        facilitator: "Rangarajan",
-        localtion: "Yes",
-        qrCode: "Yes",
-        duration: "4Hrs",
-        date: "23 Aug 2023",
-        time: "9:00 AM - 1:00 PM",
-        feedbackUrl: "https://surveymonkey.com/123456",
-        joinLink: "https://teams.microsoft.com/QWDDIKMV129"
+        title: 'Intro to Angular - Session 1',
+        description: 'Angular is an open-source, JavaScript framework written in TypeScript. Google maintains it, and its primary purpose is to develop single-page applications. As a framework, Angular has clear advantages while also providing a standard structure for developers to work with. It enables users to create large applications in a maintainable manner. Frameworks in general boost web development efficiency and performance by providing a consistent structure so that developers don’t have to keep rebuilding code from scratch. Frameworks are time savers that offer developers a host of extra features that can be added to software without requiring extra effort.',
+        type: 'Offline session',
+        facilitator: 'Rangarajan',
+        localtion: 'Yes',
+        qrCode: 'Yes',
+        duration: '4Hrs',
+        date: '23 Aug 2023',
+        time: '9:00 AM - 1:00 PM',
+        feedbackUrl: 'https://surveymonkey.com/123456',
+        joinLink: 'https://teams.microsoft.com/QWDDIKMV129',
       },
       {
-        title: "Intro to Angular - Session 2",
+        title: 'Intro to Angular - Session 2',
         description: 'Angular is a popular open-source web application framework developed by Google. It is written in TypeScript and is widely used for building dynamic and robust single-page applications (SPAs). Angular provides a set of tools and features that allow developers to create complex client-side applications with ease.',
-        type: "Online session",
-        facilitator: "Maximilian Schwarzmüller",
-        localtion: "No",
-        qrCode: "Yes",
-        duration: "8Hrs",
-        date: "31 Aug 2023",
-        time: "9:00 AM - 5:00 PM",
-        feedbackUrl: "https://surveymonkey.com/67890",
-        feedbackUrlHelpText: "This survey won't take more than 2 minutes.",
-        joinLink: "https://teams.microsoft.com/ABCDPIKL123"
-      }
+        type: 'Online session',
+        facilitator: 'Maximilian Schwarzmüller',
+        localtion: 'No',
+        qrCode: 'Yes',
+        duration: '8Hrs',
+        date: '31 Aug 2023',
+        time: '9:00 AM - 5:00 PM',
+        feedbackUrl: 'https://surveymonkey.com/67890',
+        feedbackUrlHelpText: 'This survey won\'t take more than 2 minutes.',
+        joinLink: 'https://teams.microsoft.com/ABCDPIKL123',
+      },
     ]
   }
 
@@ -229,11 +229,9 @@ export class BatchDetailsComponent implements OnInit {
     const dialogRef = this.dialogue.open(NominateUsersDialogComponent, {
       width: '950px',
       data: { orgId: this.userProfile.rootOrgId },
-      disableClose: true
+      disableClose: true,
     })
-    console.log("name ", name)
     dialogRef.afterClosed().subscribe((response: any) => {
-      console.log("response ", response)
     })
 
   }

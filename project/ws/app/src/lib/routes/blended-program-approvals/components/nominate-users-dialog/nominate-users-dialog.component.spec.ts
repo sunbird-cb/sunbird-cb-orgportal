@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { NominateUsersDialogComponent } from './nominate-users-dialog.component';
+import { NominateUsersDialogComponent } from './nominate-users-dialog.component'
 
 describe('NominateUsersDialogComponent', () => {
-  let component: NominateUsersDialogComponent;
-  let fixture: ComponentFixture<NominateUsersDialogComponent>;
+  let component: NominateUsersDialogComponent
+  let fixture: ComponentFixture<NominateUsersDialogComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NominateUsersDialogComponent ]
+      declarations: [NominateUsersDialogComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NominateUsersDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(NominateUsersDialogComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

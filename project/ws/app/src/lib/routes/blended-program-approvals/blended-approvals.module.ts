@@ -17,7 +17,7 @@ import {
   MatBadgeModule,
   MatTableModule,
   MatCheckboxModule,
-  MatSortModule
+  MatSortModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { BatchDetailsComponent } from './components/batch-details/batch-details.component'
@@ -33,12 +33,14 @@ import { SessionCardComponent } from './components/session-card/session-card.com
 import { NominateUsersDialogComponent } from './components/nominate-users-dialog/nominate-users-dialog.component'
 
 @NgModule({
-  declarations: [BlendedHomeComponent, BatchListComponent, BatchDetailsComponent, UsersCardComponent, ProfileViewComponent, SessionCardComponent, NominateUsersDialogComponent],
+  declarations: [BlendedHomeComponent, BatchListComponent, BatchDetailsComponent, UsersCardComponent, ProfileViewComponent,
+    SessionCardComponent, NominateUsersDialogComponent],
   imports: [CommonModule, BlendedApprovalsRoutingModule, BreadcrumbsOrgModule, LeftMenuWithoutLogoModule, WidgetResolverModule,
     MatSidenavModule, MatButtonModule, MatIconModule, HomeModule, RouterModule, UIORGTableModule,
-    MatCardModule, AvatarPhotoModule, MatListModule, PipeEmailModule, PipeOrderByModule, ProfileCertificateDialogModule, MatBadgeModule, MatTableModule, MatCheckboxModule, MatSortModule],
+    MatCardModule, AvatarPhotoModule, MatListModule, PipeEmailModule, PipeOrderByModule, ProfileCertificateDialogModule,
+    MatBadgeModule, MatTableModule, MatCheckboxModule, MatSortModule],
   exports: [],
   providers: [],
-  entryComponents: [NominateUsersDialogComponent]
+  entryComponents: [NominateUsersDialogComponent],
 })
 export class BlendedApprovalsModule { }

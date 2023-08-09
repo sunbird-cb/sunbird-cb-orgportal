@@ -12,9 +12,9 @@ import { MatSort } from '@angular/material/sort'
 })
 export class NominateUsersDialogComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'name', 'email'];
+  displayedColumns: string[] = ['select', 'name', 'email']
 
-  selection = new SelectionModel(true, []);
+  selection = new SelectionModel(true, [])
   filteredUsers: any = []
   dataSource = new MatTableDataSource<any>()
 
@@ -25,13 +25,13 @@ export class NominateUsersDialogComponent implements OnInit {
   }
 
   tableColumns = [
-    { name: 'name', dispalyName: "Full name" },
-    { name: 'email', dispalyName: "Email" },
+    { name: 'name', dispalyName: 'Full name' },
+    { name: 'email', dispalyName: 'Email' },
   ]
 
   constructor(public dialogRef: MatDialogRef<NominateUsersDialogComponent>,
-    private usersService: UsersService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+              private usersService: UsersService,
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     const filterObj = {
@@ -52,7 +52,7 @@ export class NominateUsersDialogComponent implements OnInit {
         this.filteredUsers.push({
           name: details.firstName,
           email: details.maskedEmail,
-          userId: details.id
+          userId: details.id,
         })
       })
       this.dataSource = new MatTableDataSource(this.filteredUsers)
@@ -72,10 +72,10 @@ export class NominateUsersDialogComponent implements OnInit {
   }
 
   addLearners() {
-    console.log("learners", this.selection.selected)
+    console.log('learners', this.selection.selected)
   }
 
   closeDiaogBox() {
-    this.dialogRef.close("close")
+    this.dialogRef.close('close')
   }
 }
