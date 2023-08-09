@@ -44,7 +44,7 @@
     "@project-sunbird/telemetry-sdk": "0.0.26",
     "@sunbird-cb/collection": "^1.0.24",
     "@sunbird-cb/design-system": "0.0.1",
-    "@sunbird-cb/rain-dashboards": "^0.4.14",
+    "@sunbird-cb/rain-dashboards": "0.4.22-rc.1",
     "@sunbird-cb/resolver": "^1.0.0",
     "@sunbird-cb/utils": "^1.0.13",
     "@types/file-saver": "^2.0.1",
