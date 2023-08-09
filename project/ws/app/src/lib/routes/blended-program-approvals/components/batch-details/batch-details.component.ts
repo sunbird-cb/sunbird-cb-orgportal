@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 // tslint:disable-next-line:import-name
 import _ from 'lodash'
 import { BlendedApporvalService } from '../../services/blended-approval.service'
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import { EventService } from '@sunbird-cb/utils'
+import { NominateUsersDialogComponent } from '../nominate-users-dialog/nominate-users-dialog.component'
 
 @Component({
   selector: 'ws-app-batch-details',
@@ -26,14 +29,17 @@ export class BatchDetailsComponent implements OnInit {
 
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
-    private bpService: BlendedApporvalService, private snackBar: MatSnackBar) {
+    private bpService: BlendedApporvalService,
+    private snackBar: MatSnackBar,
+    private events: EventService,
+    private dialogue: MatDialog) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
     }
     if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService) {
       this.userProfile = this.activeRouter.parent.snapshot.data.configService.unMappedUser
-      // console.log('this.userProfile', this.userProfile)
+      console.log('this.userProfile', this.userProfile)
     }
     this.programID = this.activeRouter.snapshot.params.id
     this.batchID = this.activeRouter.snapshot.params.batchid
@@ -65,6 +71,7 @@ export class BatchDetailsComponent implements OnInit {
       default:
         break
     }
+    this.raiseTelemetry(this.currentFilter)
   }
 
   getBPDetails(programID: any) {
@@ -137,23 +144,23 @@ export class BatchDetailsComponent implements OnInit {
   getSessionDetails() {
     this.sessionDetails = [
       {
-        title: "Intro to AI - Session 1",
+        title: "Intro to Angular - Session 1",
         description: "Angular is an open-source, JavaScript framework written in TypeScript. Google maintains it, and its primary purpose is to develop single-page applications. As a framework, Angular has clear advantages while also providing a standard structure for developers to work with. It enables users to create large applications in a maintainable manner. Frameworks in general boost web development efficiency and performance by providing a consistent structure so that developers don’t have to keep rebuilding code from scratch. Frameworks are time savers that offer developers a host of extra features that can be added to software without requiring extra effort.",
         type: "Offline session",
         facilitator: "Rangarajan",
         localtion: "Yes",
         qrCode: "Yes",
         duration: "4Hrs",
-        date: "12 June 2023",
+        date: "23 Aug 2023",
         time: "9:00 AM - 1:00 PM",
         feedbackUrl: "https://surveymonkey.com/123456",
         joinLink: "https://teams.microsoft.com/QWDDIKMV129"
       },
       {
-        title: "Intro to Angular - Session 3",
+        title: "Intro to Angular - Session 2",
         description: 'Angular is a popular open-source web application framework developed by Google. It is written in TypeScript and is widely used for building dynamic and robust single-page applications (SPAs). Angular provides a set of tools and features that allow developers to create complex client-side applications with ease.',
         type: "Online session",
-        facilitator: "Venkat Kandagaddala",
+        facilitator: "Maximilian Schwarzmüller",
         localtion: "No",
         qrCode: "Yes",
         duration: "8Hrs",
@@ -205,6 +212,30 @@ export class BatchDetailsComponent implements OnInit {
         this.filter('rejected')
       }
     })
+  }
+
+  raiseTelemetry(name: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
+        id: `${_.camelCase(name)}-tab`,
+      },
+      {},
+    )
+  }
+
+  onNominateUsersClick(name: string) {
+    const dialogRef = this.dialogue.open(NominateUsersDialogComponent, {
+      width: '950px',
+      data: { orgId: this.userProfile.rootOrgId },
+      disableClose: true
+    })
+    console.log("name ", name)
+    dialogRef.afterClosed().subscribe((response: any) => {
+      console.log("response ", response)
+    })
+
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

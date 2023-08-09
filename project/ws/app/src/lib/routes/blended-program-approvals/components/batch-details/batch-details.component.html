@@ -19,7 +19,7 @@
       </ng-container>
 
       <ng-container>
-        <div class="flex flex-1 flex-column margin-fix">
+        <div class="flex flex-1 flex-row margin-fix">
           <div class="flex flex-1 filter max-height-60">
             <a class="filter-option cursor-pointer" [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'pending',
                                                 'ws-mat-accent-border font-medium':currentFilter !== 'pending'}"
@@ -44,6 +44,11 @@
               mat-button (click)="filter('sessions')" role="button">Session details
               <!-- <span *ngIf="rejectedUsers" class="ws-mat-black60-text">({{rejectedUsers.length}})</span> -->
             </a>
+          </div>
+          <div class="flex-2 right-align margin-top-l" *ngIf="currentFilter === 'approved'">
+            <button type="button" mat-button class="add-nomine-btn" (click)="onNominateUsersClick('nominateUsers')">
+              Nominate learners
+            </button>
           </div>
         </div>
         <ng-container *ngIf="currentFilter === 'pending'">

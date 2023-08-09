@@ -15,6 +15,9 @@ import {
   MatIconModule,
   MatButtonModule,
   MatBadgeModule,
+  MatTableModule,
+  MatCheckboxModule,
+  MatSortModule
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { BatchDetailsComponent } from './components/batch-details/batch-details.component'
@@ -25,15 +28,17 @@ import { UsersCardComponent } from './components/users-card/users-card.component
 import { ProfileViewComponent } from './components/profile-view/profile-view.component'
 import { PipeEmailModule } from '../pipes/pipe-email/pipe-email.module'
 import { PipeOrderByModule } from '../pipes/pipe-order-by/pipe-order-by.module'
-import { ProfileCertificateDialogModule } from './components/profile-certificate-dialog/profile-certificate-dialog.module';
+import { ProfileCertificateDialogModule } from './components/profile-certificate-dialog/profile-certificate-dialog.module'
 import { SessionCardComponent } from './components/session-card/session-card.component'
+import { NominateUsersDialogComponent } from './components/nominate-users-dialog/nominate-users-dialog.component'
 
 @NgModule({
-  declarations: [BlendedHomeComponent, BatchListComponent, BatchDetailsComponent, UsersCardComponent, ProfileViewComponent, SessionCardComponent],
+  declarations: [BlendedHomeComponent, BatchListComponent, BatchDetailsComponent, UsersCardComponent, ProfileViewComponent, SessionCardComponent, NominateUsersDialogComponent],
   imports: [CommonModule, BlendedApprovalsRoutingModule, BreadcrumbsOrgModule, LeftMenuWithoutLogoModule, WidgetResolverModule,
     MatSidenavModule, MatButtonModule, MatIconModule, HomeModule, RouterModule, UIORGTableModule,
-    MatCardModule, AvatarPhotoModule, MatListModule, PipeEmailModule, PipeOrderByModule, ProfileCertificateDialogModule, MatBadgeModule],
+    MatCardModule, AvatarPhotoModule, MatListModule, PipeEmailModule, PipeOrderByModule, ProfileCertificateDialogModule, MatBadgeModule, MatTableModule, MatCheckboxModule, MatSortModule],
   exports: [],
   providers: [],
+  entryComponents: [NominateUsersDialogComponent]
 })
 export class BlendedApprovalsModule { }
