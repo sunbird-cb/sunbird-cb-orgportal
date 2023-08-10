@@ -77,7 +77,6 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.displayLoader = this.fileService.isLoading()
     this.contactUsUrl = `${environment.karmYogiPath}/public/contact `
     this.tabledata = {
-      actions: [],
       columns: [
         // { displayName: 'Id', key: 'identifier' },
         { displayName: 'Name', key: 'fileName' },
@@ -93,6 +92,8 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
       sortColumn: 'dateCreatedOn',
       sortState: 'desc',
       needUserMenus: false,
+      actions: [{ icon: 'download', label: 'Download File', name: 'DownloadFile', type: 'link', disabled: false }],
+      actionColumnName: 'Download File',
     }
     this.getBulkUploadData()
   }
@@ -174,6 +175,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
             _res => {
               // this.uplaodSuccessMsg = res
               this.openSnackbar('File uploaded successfully..!')
+              this.cancelSelected()
               // // tslint:disable-next-line: no-non-null-assertion
               // this.formGroup!.get('file')!.setValue(['', Validators.required])
               if (form && form.file) {
@@ -218,7 +220,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   downloadFullFile(event: any) {
-    const url = `/apis/proxies/v8/user/v1/bulkuser/download/${event.fileName}`
+    const url = `/apis/proxies/v8/user/v1/bulkuser/download/${event.row.fileName}`
     window.open(url, '_blank')
   }
 }

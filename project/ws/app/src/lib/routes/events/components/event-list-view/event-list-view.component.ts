@@ -48,12 +48,16 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges,
   pageSize = 5
   pageSizeOptions = [5, 10, 20]
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
-  // @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
-  //   if (!this.dataSource.sort) {
-  //     this.dataSource.sort = sort
-  //   }
-  // }
-  @ViewChild(MatSort, { static: true }) sort?: MatSort
+  @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
+
+    if (!this.dataSource.sort) {
+
+      this.dataSource.sort = sort
+
+    }
+
+  }
+  // @ViewChild(MatSort, { static: true }) sort?: MatSort
   selection = new SelectionModel<any>(true, [])
   dialogRef: any
   configSvc: any
@@ -90,7 +94,7 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges,
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
+    // this.dataSource.sort = this.sort
     this.dataSource.filterPredicate = function (data: any, filter: string): boolean {
       return data.eventName.toLowerCase().includes(filter)
     }
