@@ -3,20 +3,26 @@
 
   <div class="example-table-container">
     <div class="container-balanced">
-      <div class="flex flex-1 custom">
+      <div class="flex flex-1 flex-row">
         <div class="flex-1">
           <div class="search">
             <div class="rsearch">
               <mat-icon class="color-60 search-icon">search</mat-icon>
-              <input class="search-input color-60" type="Standard" label="" (input)="applyFilter($event.target.value)"
-                (keydown.enter)="onSearchEnter($event)" placeholder="Search" autofocus="none">
+              <input class="search-input color-60" type="Standard" #searchText placeholder="Search by name or email"
+                autofocus="none">
             </div>
           </div>
+        </div>
+        <div class="flex-2 margin-left-m">
+          <button class="text-white ws-mat-primary-background" mat-raised-button color="primary" type="submit" i18n
+            (click)="searchUsers(searchText)">
+            <span class="text-white">Search</span>
+          </button>
         </div>
       </div>
     </div>
     <div class="users-data">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 nominate-learners  margin-top-l" matSort
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 nominate-learners  margin-top-s" matSort
         matSortActive="name" matSortDirection="asc" matSortDisableClear *ngIf="dataSource.filteredData.length > 0">
 
         <ng-container matColumnDef="select">

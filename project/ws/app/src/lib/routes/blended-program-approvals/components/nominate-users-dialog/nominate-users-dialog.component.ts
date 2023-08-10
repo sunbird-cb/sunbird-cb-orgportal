@@ -13,7 +13,7 @@ import { MatSort } from '@angular/material/sort'
 export class NominateUsersDialogComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'name', 'email']
-
+  searchText: string = ''
   selection = new SelectionModel(true, [])
   filteredUsers: any = []
   dataSource = new MatTableDataSource<any>()
@@ -30,8 +30,8 @@ export class NominateUsersDialogComponent implements OnInit {
   ]
 
   constructor(public dialogRef: MatDialogRef<NominateUsersDialogComponent>,
-              private usersService: UsersService,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+    private usersService: UsersService,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     const filterObj = {
@@ -47,6 +47,7 @@ export class NominateUsersDialogComponent implements OnInit {
 
   getAllUsers(filterObj: any) {
     this.filteredUsers = []
+    this.dataSource = new MatTableDataSource()
     this.usersService.getAllUsers(filterObj).subscribe(data => {
       data.content.map((details: any) => {
         this.filteredUsers.push({
@@ -59,10 +60,10 @@ export class NominateUsersDialogComponent implements OnInit {
     })
   }
 
-  applyFilter(filterValue: string) {
+  searchUsers(filterValue: any) {
     const filterObj = {
       request: {
-        query: filterValue ? filterValue.trim().toLowerCase() : '',
+        query: filterValue.value ? filterValue.value.trim().toLowerCase() : '',
         filters: {
           rootOrgId: this.data.orgId,
         },

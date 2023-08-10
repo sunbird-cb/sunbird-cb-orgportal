@@ -30,9 +30,9 @@ export class BatchDetailsComponent implements OnInit {
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
     private bpService: BlendedApporvalService,
-              private snackBar: MatSnackBar,
-              private events: EventService,
-              private dialogue: MatDialog) {
+    private snackBar: MatSnackBar,
+    private events: EventService,
+    private dialogue: MatDialog) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
@@ -230,8 +230,11 @@ export class BatchDetailsComponent implements OnInit {
       width: '950px',
       data: { orgId: this.userProfile.rootOrgId },
       disableClose: true,
+      autoFocus: false
     })
+    console.log(name)
     dialogRef.afterClosed().subscribe((response: any) => {
+      console.log(response)
     })
 
   }
