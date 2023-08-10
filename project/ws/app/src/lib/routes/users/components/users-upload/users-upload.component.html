@@ -59,14 +59,14 @@
     </div>
   </div>
 
-  <div class="w-full relative">
+  <div class="w-full relative bulkupload-table">
     <!-- <h2 class="w-full contacts-head">File uploads</h2> -->
 
     <div class="example-loading w-full text-center" *ngIf="fetching">
       <mat-spinner></mat-spinner>
     </div>
     <ng-container *ngIf="!fetching && tableList && tableList.length > 0">
-      <ws-widget-org-user-table [tableData]='tabledata' [data]='tableList' (eOnRowClick)="downloadFullFile($event)">
+      <ws-widget-org-user-table [tableData]='tabledata' [data]='tableList' (actionsClick)="downloadFullFile($event)">
       </ws-widget-org-user-table>
     </ng-container>
     <ng-container *ngIf="(!bulkUploadData || !bulkUploadData.length) && !fetching">

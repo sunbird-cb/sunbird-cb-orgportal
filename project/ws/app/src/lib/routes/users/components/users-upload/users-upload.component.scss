@@ -76,43 +76,27 @@ td, th {
   line-height: 2;
 }
 
-.mat-column-dateCreatedOn,
-.mat-column-dateUpdatedOn {
-  width: 100px !important;
-  min-width: 100px !important;
-  max-width: 14%;
-  justify-content: center;
+::ng-deep .bulkupload-table .mat-column-dateCreatedOn,
+::ng-deep .bulkupload-table .mat-column-dateUpdatedOn {
+  flex: 0 0 14% !important;
+  width: 14% !important;
 }
 
-::ng-deep .mat-header-cell:nth-child(1),
-::ng-deep .mat-cell:nth-child(1) {
+::ng-deep .bulkupload-table .mat-column-fileName {
   flex: 0 0 28% !important;
   width: 28% !important;
 }
 
-::ng-deep .mat-header-cell:nth-child(2),
-::ng-deep .mat-cell:nth-child(2) {
-  flex: 0 0 10% !important;
-  width: 10% !important;
-}
-
-::ng-deep .mat-header-cell:nth-child(3),
-::ng-deep .mat-cell:nth-child(3) {
-  flex: 0 0 10% !important;
-  width: 10% !important;
-}
-
-::ng-deep .mat-header-cell:nth-child(4),
-::ng-deep .mat-cell:nth-child(4) {
-  flex: 0 0 10% !important;
-  width: 10% !important;
-}
-::ng-deep .mat-header-cell:nth-child(5),
-::ng-deep .mat-cell:nth-child(5) {
-  flex: 0 0 10% !important;
-  width: 10% !important;
+::ng-deep .bulkupload-table .mat-header-cell,
+::ng-deep .bulkupload-table .mat-cell {
+  padding-right: 8px !important;
 }
 
 ::ng-deep.textclass {
   margin: 0 !important;
+}
+
+::ng-deep .bulkupload-table .mat-sort-header-button {
+  line-height: 1.5;
+  text-align: left;
 }
