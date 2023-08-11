@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
 import { Router } from '@angular/router'
+import { RejectReasonDialogComponent } from '../reject-reason-dialog/reject-reason-dialog.component'
 
 @Component({
   selector: 'ws-app-users-card',
@@ -15,6 +16,7 @@ export class UsersCardComponent implements OnInit {
   @Input() public photoUrl!: string
   @Input() public name!: string
   @Output() userClick = new EventEmitter()
+  @Input() remove: any
 
   constructor(private dialogue: MatDialog, private router: Router) { }
 
@@ -64,6 +66,22 @@ export class UsersCardComponent implements OnInit {
         this.userClick.emit(data)
       }
     })
+  }
+
+  clickRemove() {
+    const dialogRef = this.dialogue.open(RejectReasonDialogComponent, {
+      width: '450px',
+      disableClose: true,
+
+    })
+    dialogRef.afterClosed().subscribe((response: any) => {
+      console.log(response)
+      if (response) {
+        console.log("user ", this.user)
+      }
+
+    })
+
   }
 
   loadUser(user: any) {

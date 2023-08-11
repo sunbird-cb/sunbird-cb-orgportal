@@ -251,4 +251,10 @@ export class BatchDetailsComponent implements OnInit {
   //   // You can use Angular's Router or any other mechanism to load the component
   // }
 
+  removeLearner(startDate: any) {
+    const sDate: Date = new Date(startDate)
+    const currentDate: Date = new Date('2023-08-11')
+    return currentDate < sDate
+  }
+
 }
