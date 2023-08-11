@@ -52,9 +52,9 @@
           </div>
         </div>
         <ng-container *ngIf="currentFilter === 'pending'">
+          <p class="padding-m new-request-count" *ngIf="newUsers.length > 0"> {{newUsers.length}} New
+            requests</p>
           <div class="b-c box" *ngIf="newUsers && newUsers.length > 0">
-            <p class="padding-m new-request-count"> {{newUsers.length}} New
-              requests</p>
             <div *ngFor="let user of newUsers">
               <ws-app-users-card [user]="user" [actions]="true" [programData]="linkData"
                 (userClick)="onSubmit($event)"></ws-app-users-card>
