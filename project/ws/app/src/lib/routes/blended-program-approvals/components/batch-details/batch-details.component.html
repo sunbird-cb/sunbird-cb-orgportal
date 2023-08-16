@@ -14,6 +14,8 @@
               'mediumDate'}}</li>
             <li><mat-icon>event</mat-icon> {{batchData.enrollmentEndDate | date: 'mediumDate'}}</li>
             <li><mat-icon>people</mat-icon> {{approvedUsers.length}} Learners</li>
+            <li *ngIf="this.currentFilter === 'approved'"><mat-icon>person</mat-icon>
+              {{batchData.batchAttributes?.currentBatchSize}} Learners</li>
           </ul>
         </div>
       </ng-container>
@@ -58,7 +60,7 @@
                 <div class="rsearch">
                   <mat-icon class="color-60 search-icon">search</mat-icon>
                   <input class="search-input color-60" type="Standard" #searchText placeholder="Search for a learner"
-                    autofocus="none" (input)="onSearchLearners(searchText.value)">
+                    (input)="onSearchLearners(searchText.value)">
                 </div>
               </div>
             </div>
@@ -82,11 +84,13 @@
                 <div class="rsearch">
                   <mat-icon class="color-60 search-icon">search</mat-icon>
                   <input class="search-input color-60" type="Standard" #searchText placeholder="Search for a learner"
-                    autofocus="none" (input)="onSearchLearners(searchText.value)">
+                    (input)="onSearchLearners(searchText.value)">
                 </div>
               </div>
             </div>
           </div>
+          <p class="font-bold" *ngIf="approvedUsers.length > 0"> {{approvedUsers.length}} learners in this batch
+          </p>
           <div class="b-c box" *ngIf="approvedUsers && approvedUsers.length > 0">
             <div *ngFor="let user of approvedUsers">
               <ws-app-users-card [user]="user" [actions]="false" [remove]="removeLearner(batchData.startDate)"
@@ -104,7 +108,7 @@
                 <div class="rsearch">
                   <mat-icon class="color-60 search-icon">search</mat-icon>
                   <input class="search-input color-60" type="Standard" #searchText placeholder="Search for a learner"
-                    autofocus="none" (input)="onSearchLearners(searchText.value)">
+                    (input)="onSearchLearners(searchText.value)">
                 </div>
               </div>
             </div>
