@@ -26,6 +26,9 @@ export class BatchDetailsComponent implements OnInit {
   linkData: any
   userProfile: any
   sessionDetails: any = []
+  clonedNewUsers: any = []
+  clonedRejectedUsers: any = []
+  clonedApprovedUsers: any = []
 
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
@@ -51,6 +54,9 @@ export class BatchDetailsComponent implements OnInit {
   ngOnInit() { }
 
   filter(key: 'pending' | 'approved' | 'rejected' | 'sessions') {
+    this.approvedUsers = []
+    this.rejectedUsers = []
+    this.newUsers = []
     switch (key) {
       case 'pending':
         this.currentFilter = 'pending'
@@ -105,6 +111,7 @@ export class BatchDetailsComponent implements OnInit {
     this.bpService.getLearners(this.batchData.batchId).subscribe((res: any) => {
       if (res && res.length > 0) {
         this.approvedUsers = res
+        this.clonedApprovedUsers = res
       }
     })
   }
@@ -121,6 +128,7 @@ export class BatchDetailsComponent implements OnInit {
     this.bpService.getRequests(request).subscribe((res: any) => {
       if (res) {
         this.newUsers = res.result.data
+        this.clonedNewUsers = res.result.data
       }
     })
   }
@@ -137,6 +145,7 @@ export class BatchDetailsComponent implements OnInit {
     this.bpService.getRequests(request).subscribe((res: any) => {
       if (res) {
         this.rejectedUsers = res.result.data
+        this.clonedRejectedUsers = res.result.data
       }
     })
   }
@@ -255,6 +264,53 @@ export class BatchDetailsComponent implements OnInit {
     const sDate: Date = new Date(startDate)
     const currentDate: Date = new Date('2023-08-11')
     return currentDate < sDate
+  }
+
+  filterNewUsers(searchText: string) {
+    if (searchText.length > 0) {
+      this.newUsers = this.newUsers.filter((result: any) => {
+        if (result.userInfo) {
+          return result.userInfo.first_name.toLowerCase().includes(searchText.toLowerCase())
+        }
+      })
+    } else {
+      this.newUsers = this.clonedNewUsers
+    }
+  }
+
+  filterApprovedUsers(searchText: string) {
+    if (searchText.length > 0) {
+      this.approvedUsers = this.approvedUsers.filter((result: any) => {
+        console.log(result)
+        if (result.first_name) {
+          return result.first_name.toLowerCase().includes(searchText.toLowerCase())
+        }
+      })
+    } else {
+      this.approvedUsers = this.clonedApprovedUsers
+    }
+  }
+
+  filterRejectedUsers(searchText: string) {
+    if (searchText.length > 0) {
+      this.rejectedUsers = this.rejectedUsers.filter((result: any) => {
+        if (result.userInfo) {
+          return result.userInfo.first_name.toLowerCase().includes(searchText.toLowerCase())
+        }
+      })
+    } else {
+      this.rejectedUsers = this.clonedRejectedUsers
+    }
+  }
+
+  onSearchLearners(searchText: string) {
+    if (this.currentFilter === 'pending') {
+      this.filterNewUsers(searchText)
+    } else if (this.currentFilter === 'approved') {
+      this.filterApprovedUsers(searchText)
+    } else if (this.currentFilter === 'rejected') {
+      this.filterRejectedUsers(searchText)
+    }
   }
 
 }

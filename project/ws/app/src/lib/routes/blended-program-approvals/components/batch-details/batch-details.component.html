@@ -52,7 +52,18 @@
           </div>
         </div>
         <ng-container *ngIf="currentFilter === 'pending'">
-          <p class="padding-m new-request-count" *ngIf="newUsers.length > 0"> {{newUsers.length}} New
+          <div class="flex flex-1 flex-row margin-top-l" *ngIf="clonedNewUsers && clonedNewUsers.length > 0">
+            <div class="flex-1">
+              <div class="search">
+                <div class="rsearch">
+                  <mat-icon class="color-60 search-icon">search</mat-icon>
+                  <input class="search-input color-60" type="Standard" #searchText placeholder="Search for a learner"
+                    autofocus="none" (input)="onSearchLearners(searchText.value)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="new-request-count" *ngIf="newUsers.length > 0"> {{newUsers.length}} New
             requests</p>
           <div class="b-c box" *ngIf="newUsers && newUsers.length > 0">
             <div *ngFor="let user of newUsers">
@@ -65,6 +76,17 @@
           </div>
         </ng-container>
         <ng-container *ngIf="currentFilter === 'approved'">
+          <div class="flex flex-1 flex-row margin-top-l" *ngIf="clonedApprovedUsers && clonedApprovedUsers.length > 0">
+            <div class="flex-1">
+              <div class="search">
+                <div class="rsearch">
+                  <mat-icon class="color-60 search-icon">search</mat-icon>
+                  <input class="search-input color-60" type="Standard" #searchText placeholder="Search for a learner"
+                    autofocus="none" (input)="onSearchLearners(searchText.value)">
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="b-c box" *ngIf="approvedUsers && approvedUsers.length > 0">
             <div *ngFor="let user of approvedUsers">
               <ws-app-users-card [user]="user" [actions]="false" [remove]="removeLearner(batchData.startDate)"
@@ -76,7 +98,18 @@
           </div>
         </ng-container>
         <ng-container *ngIf="currentFilter === 'rejected'">
-          <div class="b-c box" *ngIf="rejectedUsers && rejectedUsers.length > 0">
+          <div class="flex flex-1 flex-row margin-top-l" *ngIf="rejectedUsers && rejectedUsers.length > 0">
+            <div class="flex-1">
+              <div class="search">
+                <div class="rsearch">
+                  <mat-icon class="color-60 search-icon">search</mat-icon>
+                  <input class="search-input color-60" type="Standard" #searchText placeholder="Search for a learner"
+                    autofocus="none" (input)="onSearchLearners(searchText.value)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class=" b-c box" *ngIf="rejectedUsers && rejectedUsers.length > 0">
             <div *ngFor="let user of rejectedUsers">
               <ws-app-users-card [user]="user" [actions]="false" [programData]="linkData"></ws-app-users-card>
             </div>
