@@ -70,7 +70,7 @@ export class UsersCardComponent implements OnInit {
 
   clickRemove() {
     const dialogRef = this.dialogue.open(RejectReasonDialogComponent, {
-      width: '450px',
+      width: '950px',
       disableClose: true,
 
     })
