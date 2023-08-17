@@ -15,13 +15,13 @@
                 <span *ngIf="batch.newrequestsCount > 0" class="circle"></span>
                 {{batch.name}}
               </span>
-              <span class="float-right mat-subheading-1 margin-remove color-60">{{batch.batchId}}</span>
+
             </div>
             <div class="padding-left-s padding-right-s mat-body-2">
-              <p class="margin-remove">Start and end date</p>
+              <p class="margin-remove sub-header">Start date and end date</p>
               <p class="margin-remove"><mat-icon>event</mat-icon> {{batch.startDate | date: 'dd/MMM/yyyy'}} -
                 {{batch.endDate | date: 'dd/MMM/yyyy'}}</p>
-              <p class="margin-remove  extra-padding">Last enrolment date</p>
+              <p class="margin-remove  extra-padding sub-header">Last enrolment date</p>
               <p class="margin-remove"><mat-icon>event</mat-icon> {{batch.enrollmentEndDate | date:'dd/MMM/yyyy'}}</p>
             </div>
             <div class="padding-left-s padding-right-s mat-body-2 extra-padding">

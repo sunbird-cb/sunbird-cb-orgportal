@@ -2,7 +2,7 @@
   <h2 mat-dialog-title class="required">Please provide the reason for removing the user from the batch</h2>
   <form [formGroup]="reasonForm" (ngSubmit)="onSubmit()" class="flex-4">
     <div mat-dialog-content>
-      <mat-form-field appearance="outline" class="margin-top-xs">
+      <mat-form-field appearance="outline">
         <textarea matInput #reason formControlName="reason" maxlength="500" i18n-placeholder
           placeholder="Enter reason here" type="text" rows="5"></textarea>
         <mat-hint i18n class="no-padding">

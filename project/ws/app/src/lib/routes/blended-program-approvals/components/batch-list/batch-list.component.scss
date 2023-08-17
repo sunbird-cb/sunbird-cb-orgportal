@@ -3,7 +3,7 @@
 @import 'ws-mixins';
 
 .grey-box {
-  background: #F5F5F5;
+  background: #f0f3f4 !important;
   display: inline-block;
   width: 31%;
   border-radius: 4px;
@@ -16,11 +16,9 @@
   span {
     display: inline-block;
   }
-  .mat-subheading-1 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+
+  .sub-header {
+    font-size: 12px!important;
   }
 
   .mat-body-2 {
