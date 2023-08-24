@@ -49,6 +49,8 @@ export class BatchDetailsComponent implements OnInit {
     if (this.programID) {
       this.getBPDetails(this.programID)
     }
+
+    console.log("batchData ", this.batchData)
   }
 
   ngOnInit() { }
@@ -151,35 +153,36 @@ export class BatchDetailsComponent implements OnInit {
   }
 
   getSessionDetails() {
-    this.sessionDetails = [
-      {
-        title: 'Intro to Angular - Session 1',
-        description: 'Angular is an open-source, JavaScript framework written in TypeScript. Google maintains it, and its primary purpose is to develop single-page applications. As a framework, Angular has clear advantages while also providing a standard structure for developers to work with. It enables users to create large applications in a maintainable manner. Frameworks in general boost web development efficiency and performance by providing a consistent structure so that developers don’t have to keep rebuilding code from scratch. Frameworks are time savers that offer developers a host of extra features that can be added to software without requiring extra effort.',
-        type: 'Offline session',
-        facilitator: 'Rangarajan',
-        localtion: 'Yes',
-        qrCode: 'Yes',
-        duration: '4Hrs',
-        date: '23 Aug 2023',
-        time: '9:00 AM - 1:00 PM',
-        feedbackUrl: 'https://surveymonkey.com/123456',
-        joinLink: 'https://teams.microsoft.com/QWDDIKMV129',
-      },
-      {
-        title: 'Intro to Angular - Session 2',
-        description: 'Angular is a popular open-source web application framework developed by Google. It is written in TypeScript and is widely used for building dynamic and robust single-page applications (SPAs). Angular provides a set of tools and features that allow developers to create complex client-side applications with ease.',
-        type: 'Online session',
-        facilitator: 'Maximilian Schwarzmüller',
-        localtion: 'No',
-        qrCode: 'Yes',
-        duration: '8Hrs',
-        date: '31 Aug 2023',
-        time: '9:00 AM - 5:00 PM',
-        feedbackUrl: 'https://surveymonkey.com/67890',
-        feedbackUrlHelpText: 'This survey won\'t take more than 2 minutes.',
-        joinLink: 'https://teams.microsoft.com/ABCDPIKL123',
-      },
-    ]
+    this.sessionDetails = this.batchData.batchAttributes.sessionDetails
+    // this.sessionDetails = [
+    //   {
+    //     title: 'Intro to Angular - Session 1',
+    //     description: 'Angular is an open-source, JavaScript framework written in TypeScript. Google maintains it, and its primary purpose is to develop single-page applications. As a framework, Angular has clear advantages while also providing a standard structure for developers to work with. It enables users to create large applications in a maintainable manner. Frameworks in general boost web development efficiency and performance by providing a consistent structure so that developers don’t have to keep rebuilding code from scratch. Frameworks are time savers that offer developers a host of extra features that can be added to software without requiring extra effort.',
+    //     type: 'Offline session',
+    //     facilitator: 'Rangarajan',
+    //     localtion: 'Yes',
+    //     qrCode: 'Yes',
+    //     duration: '4Hrs',
+    //     date: '23 Aug 2023',
+    //     time: '9:00 AM - 1:00 PM',
+    //     feedbackUrl: 'https://surveymonkey.com/123456',
+    //     joinLink: 'https://teams.microsoft.com/QWDDIKMV129',
+    //   },
+    //   {
+    //     title: 'Intro to Angular - Session 2',
+    //     description: 'Angular is a popular open-source web application framework developed by Google. It is written in TypeScript and is widely used for building dynamic and robust single-page applications (SPAs). Angular provides a set of tools and features that allow developers to create complex client-side applications with ease.',
+    //     type: 'Online session',
+    //     facilitator: 'Maximilian Schwarzmüller',
+    //     localtion: 'No',
+    //     qrCode: 'Yes',
+    //     duration: '8Hrs',
+    //     date: '31 Aug 2023',
+    //     time: '9:00 AM - 5:00 PM',
+    //     feedbackUrl: 'https://surveymonkey.com/67890',
+    //     feedbackUrlHelpText: 'This survey won\'t take more than 2 minutes.',
+    //     joinLink: 'https://teams.microsoft.com/ABCDPIKL123',
+    //   },
+    // ]
   }
 
   onSubmit(event: any) {

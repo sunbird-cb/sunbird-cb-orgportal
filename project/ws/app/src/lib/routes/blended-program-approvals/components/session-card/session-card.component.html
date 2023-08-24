@@ -5,18 +5,24 @@
     <div class="color-60 margin-top-l margin-top-m margin-bottom-m">
       <div class="flex flex-1 flex-row">
         <div class="flex margin-right-m">{{session.type}}</div>
-        <div class="flex margin-right-m bullet-span">{{session.date}}</div>
-        <div class="flex bullet-span">{{session.duration}}, {{session.time}}</div>
+        <div class="flex margin-right-m bullet-span">{{session.startDate | date: 'dd MMM yyyy'}}</div>
+        <div class="flex bullet-span">{{session.sessionDuration}}Hrs, {{session.startTime || 'No response' }} -
+          {{session.endTime || 'No response'}}
+        </div>
       </div>
     </div>
-    <div class="margin-top-l">
-      <div class="font-bold">Join this link </div>
-      <div><a [href]="session.joinLink" target="_blank" class="link">{{session.joinLink}}</a></div>
+    <div class="margin-top-l margin-bottom-s" *ngIf="session.session_handout">
+      <div class="margin-bottom-s" *ngFor="let handout of session.session_handout">
+        <div class="font-bold">{{handout.title}}</div>
+        <div><a [href]="handout.file || handout.url" target="_blank" class="link">{{handout.file || handout.url}}</a>
+        </div>
+      </div>
     </div>
-    <div class="margin-top-l margin-bottom-s" *ngIf="session.feedbackUrl">
-      <div class="font-bold">Provide feedback</div>
-      <div><a [href]="session.feedbackUrl" target="_blank" class="link">{{session.feedbackUrl}}</a></div>
-      <div class="color-60 link-help-text" *ngIf="session.feedbackUrlHelpText">{{session.feedbackUrlHelpText}}</div>
+    <div class="margin-top-l margin-bottom-s" *ngIf="session.attach_links">
+      <div class="margin-bottom-xs" *ngFor="let link of session.attach_links">
+        <div class="font-bold">{{link.title}}</div>
+        <div><a [href]="link.url" target="_blank" class="link">{{link.url}}</a></div>
+      </div>
     </div>
   </div>
   <div class="session-division">
@@ -24,19 +30,19 @@
       <div class="grid grid-cols-2 gap-1">
         <div class="flex flex-column">
           <div class="font-bold">QR attendance required</div>
-          <div>{{session.qrCode}}</div>
+          <div>{{session.qrCode || 'No response' }}</div>
         </div>
         <div class="flex flex-column">
           <div class="font-bold">Capture location details</div>
-          <div>{{session.localtion}}</div>
+          <div>{{session.localtion || 'No response'}}</div>
         </div>
       </div>
     </div>
   </div>
-  <div class="session-division">
+  <div class="session-division" *ngIf="session.facilatorDetails">
     <div class="details">
       <div class="font-bold">Facilitator</div>
-      <div>{{session.facilitator}}</div>
+      <div *ngFor="let facilitator of session.facilatorDetails">{{facilitator.name}}</div>
     </div>
   </div>
 </div>
