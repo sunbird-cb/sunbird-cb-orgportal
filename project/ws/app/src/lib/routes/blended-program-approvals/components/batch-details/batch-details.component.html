@@ -94,7 +94,7 @@
           <div class="b-c box" *ngIf="approvedUsers && approvedUsers.length > 0">
             <div *ngFor="let user of approvedUsers">
               <ws-app-users-card [user]="user" [actions]="false" [remove]="removeLearner(batchData.startDate)"
-                [programData]="linkData"></ws-app-users-card>
+                (userClick)="removeUser($event)" [programData]="linkData"></ws-app-users-card>
             </div>
           </div>
           <div class="b-c box" *ngIf="approvedUsers && approvedUsers.length == 0">

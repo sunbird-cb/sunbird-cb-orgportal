@@ -75,9 +75,14 @@ export class UsersCardComponent implements OnInit {
 
     })
     dialogRef.afterClosed().subscribe((response: any) => {
-      console.log(response)
       if (response) {
-        console.log("user ", this.user)
+        const data = {
+          action: 'Remove',
+          userData: this.user,
+          comment: response.reason
+        }
+        console.log(response)
+        this.userClick.emit(data)
       }
 
     })

@@ -42,15 +42,12 @@ export class BatchDetailsComponent implements OnInit {
     }
     if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService) {
       this.userProfile = this.activeRouter.parent.snapshot.data.configService.unMappedUser
-      // console.log('this.userProfile', this.userProfile)
     }
     this.programID = this.activeRouter.snapshot.params.id
     this.batchID = this.activeRouter.snapshot.params.batchid
     if (this.programID) {
       this.getBPDetails(this.programID)
     }
-
-    console.log("batchData ", this.batchData)
   }
 
   ngOnInit() { }
@@ -226,6 +223,37 @@ export class BatchDetailsComponent implements OnInit {
     })
   }
 
+  removeUser(event: any) {
+    console.log("event ", event)
+    const actionType = event.action.toUpperCase()
+    // const reqData = event.userData.wfInfo[0]
+    const reqData = _.maxBy(event.userData.wfInfo, (el: any) => {
+      return new Date(el.lastUpdatedOn).getTime()
+    })
+    const request = {
+      state: 'APPROVED',
+      action: actionType,
+      wfId: reqData.wfId,
+      applicationId: reqData.applicationId,
+      userId: reqData.userId,
+      actorUserId: reqData.actorUUID,
+      serviceName: 'blendedprogram',
+      rootOrgId: reqData.rootOrg,
+      courseId: this.programID,
+      deptName: reqData.deptName,
+      comment: '',
+      updateFieldValues: [
+        {
+          toValue: {
+            name: event.userData.userInfo.first_name,
+          },
+        },
+      ],
+    }
+    // tslint:disable-next-line:no-console
+    console.log('request', request)
+  }
+
   raiseTelemetry(name: string) {
     this.events.raiseInteractTelemetry(
       {
@@ -240,13 +268,15 @@ export class BatchDetailsComponent implements OnInit {
   onNominateUsersClick(name: string) {
     const dialogRef = this.dialogue.open(NominateUsersDialogComponent, {
       width: '950px',
-      data: { orgId: this.userProfile.rootOrgId },
+      data: { orgId: this.userProfile.rootOrgId, courseId: this.programID, applicationId: this.batchData.batchId },
       disableClose: true,
       autoFocus: false
     })
-    console.log(name)
+
     dialogRef.afterClosed().subscribe((response: any) => {
-      console.log(response)
+      if (response && response === 'done') {
+        this.getLearnersList()
+      }
     })
 
   }
