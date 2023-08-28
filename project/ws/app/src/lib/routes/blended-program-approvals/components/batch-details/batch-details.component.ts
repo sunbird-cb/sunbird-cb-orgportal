@@ -224,34 +224,26 @@ export class BatchDetailsComponent implements OnInit {
   }
 
   removeUser(event: any) {
-    console.log("event ", event)
     const actionType = event.action.toUpperCase()
-    // const reqData = event.userData.wfInfo[0]
-    const reqData = _.maxBy(event.userData.wfInfo, (el: any) => {
-      return new Date(el.lastUpdatedOn).getTime()
-    })
     const request = {
+      rootOrgId: this.userProfile.rootOrgId,
+      userId: event.userData.user_id,
+      actorUserId: this.userProfile.userId,
       state: 'APPROVED',
       action: actionType,
-      wfId: reqData.wfId,
-      applicationId: reqData.applicationId,
-      userId: reqData.userId,
-      actorUserId: reqData.actorUUID,
+      applicationId: this.batchID,
       serviceName: 'blendedprogram',
-      rootOrgId: reqData.rootOrg,
       courseId: this.programID,
-      deptName: reqData.deptName,
-      comment: '',
-      updateFieldValues: [
-        {
-          toValue: {
-            name: event.userData.userInfo.first_name,
-          },
-        },
-      ],
+      deptName: event.userData.department,
+      comment: event.comment,
     }
     // tslint:disable-next-line:no-console
     console.log('request', request)
+    this.bpService.removeLearner(request).subscribe((res: any) => {
+      console.log('request', res)
+      this.openSnackbar('Learner is removed successfully!')
+      this.filter('approved')
+    })
   }
 
   raiseTelemetry(name: string, subtype: string) {
