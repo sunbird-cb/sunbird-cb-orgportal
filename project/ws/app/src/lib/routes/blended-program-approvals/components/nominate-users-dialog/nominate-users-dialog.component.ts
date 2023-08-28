@@ -19,6 +19,7 @@ export class NominateUsersDialogComponent implements OnInit {
   filteredUsers: any = []
   dataSource = new MatTableDataSource<any>()
   displayLoader = false
+  learners: any = []
 
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
@@ -52,24 +53,31 @@ export class NominateUsersDialogComponent implements OnInit {
     this.displayLoader = true
     this.filteredUsers = []
     this.dataSource = new MatTableDataSource()
+    this.learners = this.data.learners.map((u: any) => {
+      return u.user_id
+    })
     this.usersService.getAllUsers(filterObj).subscribe(data => {
       data.content.map((details: any) => {
         let dept = (details.profileDetails && details.profileDetails.employmentDetails) ? details.profileDetails.employmentDetails.departmentName : details.rootOrgName
-        this.filteredUsers.push({
-          name: details.firstName,
-          email: details.maskedEmail,
-          userId: details.id,
-          rootOrgId: this.data.orgId,
-          actorUserId: details.id,
-          state: "APPROVED",
-          serviceName: 'blendedprogram',
-          deptName: dept,
-          courseId: this.data.courseId, // blended program course ID
-          applicationId: this.data.applicationId, //blended program batch ID
-          updateFieldValues: [
-            { toValue: { name: details.firstName } }
-          ]
-        })
+        console.log("this.learners ", this.learners)
+        if (!this.learners.includes(details.id)) {
+          this.filteredUsers.push({
+            name: details.firstName,
+            email: details.maskedEmail,
+            userId: details.id,
+            rootOrgId: this.data.orgId,
+            actorUserId: details.id,
+            state: "APPROVED",
+            serviceName: 'blendedprogram',
+            deptName: dept,
+            courseId: this.data.courseId, // blended program course ID
+            applicationId: this.data.applicationId, //blended program batch ID
+            updateFieldValues: [
+              { toValue: { name: details.firstName } }
+            ]
+          })
+        }
+
       })
       this.dataSource = new MatTableDataSource(this.filteredUsers)
       this.displayLoader = false

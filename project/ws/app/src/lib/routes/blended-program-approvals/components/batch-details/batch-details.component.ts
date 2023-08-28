@@ -76,7 +76,7 @@ export class BatchDetailsComponent implements OnInit {
       default:
         break
     }
-    this.raiseTelemetry(this.currentFilter)
+    this.raiseTelemetry(this.currentFilter, TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT)
   }
 
   getBPDetails(programID: any) {
@@ -254,11 +254,11 @@ export class BatchDetailsComponent implements OnInit {
     console.log('request', request)
   }
 
-  raiseTelemetry(name: string) {
+  raiseTelemetry(name: string, subtype: string) {
     this.events.raiseInteractTelemetry(
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
-        subType: TelemetryEvents.EnumInteractSubTypes.SIDE_NAV,
+        subType: subtype,
         id: `${_.camelCase(name)}-tab`,
       },
       {},
@@ -266,9 +266,15 @@ export class BatchDetailsComponent implements OnInit {
   }
 
   onNominateUsersClick(name: string) {
+    this.raiseTelemetry(name, TelemetryEvents.EnumInteractSubTypes.NOMINATE_BTN)
     const dialogRef = this.dialogue.open(NominateUsersDialogComponent, {
       width: '950px',
-      data: { orgId: this.userProfile.rootOrgId, courseId: this.programID, applicationId: this.batchData.batchId },
+      data: {
+        orgId: this.userProfile.rootOrgId,
+        courseId: this.programID,
+        applicationId: this.batchData.batchId,
+        learners: this.approvedUsers
+      },
       disableClose: true,
       autoFocus: false
     })
