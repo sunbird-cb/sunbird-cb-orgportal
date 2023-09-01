@@ -8,10 +8,12 @@ import { Component, Input, OnInit } from '@angular/core'
 export class SessionCardComponent implements OnInit {
 
   @Input() session!: any
+  @Input() batch!: any
 
   constructor() { }
 
   ngOnInit() {
+    console.log("batch ", this.batch)
   }
 
 }
