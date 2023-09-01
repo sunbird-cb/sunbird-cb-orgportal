@@ -207,6 +207,9 @@ export class BatchDetailsComponent implements OnInit {
       courseId: this.programID,
       deptName: event.userData.department,
       comment: event.comment,
+      updateFieldValues: [{
+        toValue: { name: event.userData.first_name }
+      }]
     }
     // tslint:disable-next-line:no-console
     console.log('request', request)
@@ -214,8 +217,11 @@ export class BatchDetailsComponent implements OnInit {
       console.log('request', res)
       this.openSnackbar('Learner is removed successfully!')
       this.filter('approved')
+    }, (err: { error: any }) => {
+      this.openSnackbar(err.error)
     })
   }
+
 
   raiseTelemetry(name: string, subtype: string) {
     this.events.raiseInteractTelemetry(
@@ -316,3 +322,7 @@ export class BatchDetailsComponent implements OnInit {
   }
 
 }
+function err(arg0: (error: any) => void): null | undefined {
+  throw new Error('Function not implemented.')
+}
+
