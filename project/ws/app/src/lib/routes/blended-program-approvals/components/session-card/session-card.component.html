@@ -28,13 +28,13 @@
   <div class="session-division">
     <div class="details">
       <div class="grid grid-cols-2 gap-1">
-        <div class="flex flex-column">
+        <div class="flex flex-column" *ngIf="batch.enableQR">
           <div class="font-bold">QR attendance required</div>
-          <div>{{session.qrCode || 'No response' }}</div>
+          <div>{{batch.enableQR }}</div>
         </div>
-        <div class="flex flex-column">
+        <div class="flex flex-column" *ngIf="batch.batchLocationDetails">
           <div class="font-bold">Capture location details</div>
-          <div>{{session.localtion || 'No response'}}</div>
+          <div>{{batch.batchLocationDetails}}</div>
         </div>
       </div>
     </div>

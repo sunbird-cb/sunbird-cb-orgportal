@@ -128,7 +128,7 @@
               Sessions
             </div>
             <div *ngFor="let individulaSession of sessionDetails">
-              <ws-app-session-card [session]="individulaSession"></ws-app-session-card>
+              <ws-app-session-card [session]="individulaSession" [batch]="batchData"></ws-app-session-card>
             </div>
           </div>
           <div class="b-c box" *ngIf="sessionDetails && sessionDetails.length == 0">
