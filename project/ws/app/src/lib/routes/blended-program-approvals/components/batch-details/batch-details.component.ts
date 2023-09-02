@@ -150,7 +150,7 @@ export class BatchDetailsComponent implements OnInit {
   }
 
   getSessionDetails() {
-    this.sessionDetails = this.batchData.batchAttributes.sessionDetails
+    this.sessionDetails = this.batchData.batchAttributes.sessionDetails_v2
   }
 
   onSubmit(event: any) {
@@ -211,14 +211,15 @@ export class BatchDetailsComponent implements OnInit {
         toValue: { name: event.userData.first_name }
       }]
     }
-    // tslint:disable-next-line:no-console
-    console.log('request', request)
     this.bpService.removeLearner(request).subscribe((res: any) => {
-      console.log('request', res)
       this.openSnackbar('Learner is removed successfully!')
       this.filter('approved')
+      // tslint:disable-next-line:no-console
+      console.log(res)
     }, (err: { error: any }) => {
-      this.openSnackbar(err.error)
+      // tslint:disable-next-line:no-console
+      console.log('request', err)
+      this.openSnackbar('Something went wrong. Please try after sometime.')
     })
   }
 
@@ -321,8 +322,5 @@ export class BatchDetailsComponent implements OnInit {
     }
   }
 
-}
-function err(arg0: (error: any) => void): null | undefined {
-  throw new Error('Function not implemented.')
 }
 
