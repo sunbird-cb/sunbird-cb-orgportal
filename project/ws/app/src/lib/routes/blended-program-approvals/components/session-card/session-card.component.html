@@ -11,15 +11,15 @@
         </div>
       </div>
     </div>
-    <div class="margin-top-l margin-bottom-s" *ngIf="session.session_handout">
-      <div class="margin-bottom-s" *ngFor="let handout of session.session_handout">
+    <div class="margin-top-l margin-bottom-s" *ngIf="session.sessionHandouts">
+      <div class="margin-bottom-s" *ngFor="let handout of session.sessionHandouts">
         <div class="font-bold">{{handout.title}}</div>
         <div><a [href]="handout.file || handout.url" target="_blank" class="link">{{handout.file || handout.url}}</a>
         </div>
       </div>
     </div>
-    <div class="margin-top-l margin-bottom-s" *ngIf="session.attach_links">
-      <div class="margin-bottom-xs" *ngFor="let link of session.attach_links">
+    <div class="margin-top-l margin-bottom-s" *ngIf="session.attachLinks">
+      <div class="margin-bottom-xs" *ngFor="let link of session.attachLinks">
         <div class="font-bold">{{link.title}}</div>
         <div><a [href]="link.url" target="_blank" class="link">{{link.url}}</a></div>
       </div>
