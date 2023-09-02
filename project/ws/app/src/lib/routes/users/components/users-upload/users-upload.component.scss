@@ -63,6 +63,7 @@ td, th {
 }
 
 .upload-btn {
+  min-width: 112px;
   width: auto;
   background: #0075B7 !important;
   color: white !important;
@@ -85,6 +86,11 @@ td, th {
 ::ng-deep .bulkupload-table .mat-column-fileName {
   flex: 0 0 28% !important;
   width: 28% !important;
+}
+
+::ng-deep .bulkupload-table .mat-column-status {
+  flex: 0 0 10% !important;
+  width: 10% !important;
 }
 
 ::ng-deep .bulkupload-table .mat-header-cell,

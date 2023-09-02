@@ -1,8 +1,8 @@
 <div class="flex flex-4 flex-column">
   <mat-card>
-    <div class="flex-4 mobile-margin text-capitalize mat-h2">Download reports</div>
+    <div class="flex-4 mobile-margin text-capitalize mat-h2">Reports</div>
     <mat-card-content>
-      <ng-container class="margin-top-l">
+      <!-- <ng-container class="margin-top-l">
         <div class="flex">
           <div *ngFor="let item of btnList" class="margin-right-m">
             <button type="button" mat-button class="upload-btn" (click)="onButtonClick(item.type, $event)">
@@ -14,8 +14,13 @@
           </button>
           <button type="button" mat-button class="upload-btn" (click)="onButtonClick('assessmentReport', $event)">
             <mat-icon>vertical_align_bottom</mat-icon> Assessment Report
-          </button> -->
+          </button> --
         </div>
+      </ng-container> -->
+      <ng-container class="margin-top-l" *ngIf="reportSectionData && reportSectionData.length > 0">
+        <ws-widget-org-user-table [tableData]='tabledata' [data]='reportSectionData'
+          (actionsClick)="downloadFullFile($event)">
+        </ws-widget-org-user-table>
       </ng-container>
     </mat-card-content>
   </mat-card>
