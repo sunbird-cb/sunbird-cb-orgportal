@@ -114,9 +114,9 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
           this.tableList.push({
             fileName: element.fileName,
             status: element.status ? element.status : '',
-            failedRecordsCount: element.failedRecordsCount ? element.failedRecordsCount : '',
-            successfulRecordsCount: element.successfulRecordsCount ? element.successfulRecordsCount : '',
-            totalRecords: element.totalRecords ? element.totalRecords : '',
+            failedRecordsCount: element.failedRecordsCount ? element.failedRecordsCount : 0,
+            successfulRecordsCount: element.successfulRecordsCount ? element.successfulRecordsCount : 0,
+            totalRecords: element.totalRecords ? element.totalRecords : 0,
             dateCreatedOn: element.dateCreatedOn ? element.dateCreatedOn : '',
             dateUpdatedOn: element.dateUpdatedOn ? element.dateUpdatedOn : '',
           })
