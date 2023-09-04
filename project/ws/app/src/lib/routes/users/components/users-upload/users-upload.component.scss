@@ -83,6 +83,11 @@ td, th {
   width: 14% !important;
 }
 
+::ng-deep .bulkupload-table .mat-column-status {
+  flex: 0 0 10% !important;
+  width: 10% !important;
+}
+
 ::ng-deep .bulkupload-table .mat-column-fileName {
   flex: 0 0 28% !important;
   width: 28% !important;
