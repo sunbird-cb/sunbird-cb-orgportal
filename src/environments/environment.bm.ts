@@ -9,4 +9,5 @@ export const environment = {
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   userBucket: (window as { [key: string]: any })['env']['userBucket'] || '',
   domainName: (window as { [key: string]: any })['env']['domainName'] || '',
+  mdoPath: (window as { [key: string]: any })['env']['mdoPath'] || '',
 }

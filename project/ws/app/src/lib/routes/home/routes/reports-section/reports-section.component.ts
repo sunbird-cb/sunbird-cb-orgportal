@@ -68,7 +68,7 @@ export class ReportsSectionComponent implements OnInit {
     const popup = this.snackBar
     const fileName = `${this.configSvc.userProfile.rootOrgId}.csv`
     const downloadUrl =
-      `${environment.domainName}${apiProxy}/${type}/${currentDate}/mdoid=${this.configSvc.userProfile.rootOrgId}/${fileName}`
+      `${environment.mdoPath}${apiProxy}/${type}/${currentDate}/mdoid=${this.configSvc.userProfile.rootOrgId}/${fileName}`
     const xhr = new XMLHttpRequest()
     xhr.onreadystatechange = () => {
       if (xhr.readyState !== 4) {
