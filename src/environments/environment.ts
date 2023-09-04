@@ -13,6 +13,7 @@ export const environment: IEnvironment = {
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   userBucket: (window as { [key: string]: any })['env']['userBucket'] || '',
   domainName: (window as { [key: string]: any })['env']['domainName'] || '',
+  mdoPath: (window as { [key: string]: any })['env']['mdoPath'] || '',
 }
 interface IEnvironment {
   name: null | string
@@ -25,6 +26,7 @@ interface IEnvironment {
   contentBucket?: string
   userBucket?: string
   domainName?: string
+  mdoPath: string
 }
 
 /*
