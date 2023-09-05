@@ -1,0 +1,23 @@
+<div class="reason-dialog">
+  <h2 mat-dialog-title class="required">Please provide the reason for removing the user from the batch</h2>
+  <form [formGroup]="reasonForm" (ngSubmit)="onSubmit()" class="flex-4">
+    <div mat-dialog-content>
+      <mat-form-field appearance="outline">
+        <textarea matInput #reason formControlName="reason" maxlength="500" i18n-placeholder
+          placeholder="Enter reason here" type="text" rows="5"></textarea>
+        <mat-hint i18n class="no-padding">
+          Limited to 500 characters.
+        </mat-hint>
+        <mat-error i18n="Reason Error | Explains reason is required" class="no-padding">
+          Reason is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="flex-row-reverse margin-top-m">
+      <button mat-button class="text-white ws-mat-primary-background" mat-raised-button color="primary" type="submit"
+        i18n [disabled]="!reasonForm.valid"><span class="text-white">Reject</span></button>
+      <button mat-button mat-raised-button class="flex-auto-display mat-button-base margin-right-m ws-mat-default-text"
+        [mat-dialog-close]=false cdkFocusInitial i18n>Cancel</button>
+    </div>
+  </form>
+</div>

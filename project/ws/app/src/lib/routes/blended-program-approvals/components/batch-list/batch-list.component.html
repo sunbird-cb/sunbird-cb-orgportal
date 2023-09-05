@@ -7,23 +7,28 @@
     <mat-card-content>
       <ng-container>
         <div class="batches-lsit" *ngIf="programData && batchesList && batchesList.length > 0">
-          <div class="grey-box ws-mat-accent-border cursor-pointer margin-bottom-m margin-right-l"
-            (click)="viewDetails(batch)" *ngFor="let batch of batchesList">
-            <div class="padding-left-s padding-right-s padding-top-s padding-bottom-xs margin-remove title-div">
-              <span class="mat-subheading-1 margin-remove">{{batch.name}}</span>
-              <!-- <span class="float-right mat-body-2 margin-remove">{{batch.batchId}}</span> -->
+          <div class="grey-box ws-mat-accent-border cursor-pointer margin-bottom-m margin-right-l demo-section"
+            (click)="viewDetails(batch)" *ngFor="let batch of batchesList" [matBadge]="batch.newrequestsCount"
+            matBadgeColor="warn">
+            <div class="padding-left-s padding-right-s padding-top-s margin-remove title-div">
+              <span class="float-left mat-subheading-1 margin-remove">
+                <span *ngIf="batch.newrequestsCount > 0" class="circle"></span>
+                {{batch.name}}
+              </span>
+
             </div>
             <div class="padding-left-s padding-right-s mat-body-2">
-              <!-- <p class="margin-remove"><mat-icon>tag</mat-icon> {{batch.batchId}}</p> -->
+              <p class="margin-remove sub-header">Start date and end date</p>
               <p class="margin-remove"><mat-icon>event</mat-icon> {{batch.startDate | date: 'dd/MMM/yyyy'}} -
                 {{batch.endDate | date: 'dd/MMM/yyyy'}}</p>
+              <p class="margin-remove  extra-padding sub-header">Last enrolment date</p>
               <p class="margin-remove"><mat-icon>event</mat-icon> {{batch.enrollmentEndDate | date:'dd/MMM/yyyy'}}</p>
             </div>
-            <div class="request-box mat-body-2 margin-top-xs" *ngIf="batch.newrequestsCount > 1">
-              {{batch.newrequestsCount}} New requests</div>
-            <div class="request-box mat-body-2 margin-top-xs"
-              *ngIf="batch.newrequestsCount === 1 || batch.newrequestsCount === 0">
-              {{batch.newrequestsCount}} New request</div>
+            <div class="padding-left-s padding-right-s mat-body-2 extra-padding">
+              <p class="margin-remove"><mat-icon>person</mat-icon>
+                {{batch.learnersCount}}/{{batch.batchAttributes?.currentBatchSize || 50}} learners enrolled
+              </p>
+            </div>
           </div>
         </div>
         <div class="batches-lsit" *ngIf="batchesList && batchesList.length === 0">

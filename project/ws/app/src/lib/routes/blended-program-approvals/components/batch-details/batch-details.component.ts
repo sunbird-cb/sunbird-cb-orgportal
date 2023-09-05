@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 // tslint:disable-next-line:import-name
 import _ from 'lodash'
 import { BlendedApporvalService } from '../../services/blended-approval.service'
-
+import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import { EventService } from '@sunbird-cb/utils'
+import { NominateUsersDialogComponent } from '../nominate-users-dialog/nominate-users-dialog.component'
+import moment from 'moment'
 @Component({
   selector: 'ws-app-batch-details',
   templateUrl: './batch-details.component.html',
@@ -22,17 +25,23 @@ export class BatchDetailsComponent implements OnInit {
   rejectedUsers: any = []
   linkData: any
   userProfile: any
+  sessionDetails: any = []
+  clonedNewUsers: any = []
+  clonedRejectedUsers: any = []
+  clonedApprovedUsers: any = []
 
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
-    private bpService: BlendedApporvalService, private snackBar: MatSnackBar) {
+    private bpService: BlendedApporvalService,
+              private snackBar: MatSnackBar,
+              private events: EventService,
+              private dialogue: MatDialog) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
     }
     if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService) {
       this.userProfile = this.activeRouter.parent.snapshot.data.configService.unMappedUser
-      // console.log('this.userProfile', this.userProfile)
     }
     this.programID = this.activeRouter.snapshot.params.id
     this.batchID = this.activeRouter.snapshot.params.batchid
@@ -43,7 +52,10 @@ export class BatchDetailsComponent implements OnInit {
 
   ngOnInit() { }
 
-  filter(key: 'pending' | 'approved' | 'rejected') {
+  filter(key: 'pending' | 'approved' | 'rejected' | 'sessions') {
+    this.approvedUsers = []
+    this.rejectedUsers = []
+    this.newUsers = []
     switch (key) {
       case 'pending':
         this.currentFilter = 'pending'
@@ -57,9 +69,14 @@ export class BatchDetailsComponent implements OnInit {
         this.currentFilter = 'rejected'
         this.getRejectedList()
         break
+      case 'sessions':
+        this.currentFilter = 'sessions'
+        this.getSessionDetails()
+        break
       default:
         break
     }
+    this.raiseTelemetry(this.currentFilter, TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT)
   }
 
   getBPDetails(programID: any) {
@@ -93,6 +110,7 @@ export class BatchDetailsComponent implements OnInit {
     this.bpService.getLearners(this.batchData.batchId).subscribe((res: any) => {
       if (res && res.length > 0) {
         this.approvedUsers = res
+        this.clonedApprovedUsers = res
       }
     })
   }
@@ -109,6 +127,7 @@ export class BatchDetailsComponent implements OnInit {
     this.bpService.getRequests(request).subscribe((res: any) => {
       if (res) {
         this.newUsers = res.result.data
+        this.clonedNewUsers = res.result.data
       }
     })
   }
@@ -125,8 +144,13 @@ export class BatchDetailsComponent implements OnInit {
     this.bpService.getRequests(request).subscribe((res: any) => {
       if (res) {
         this.rejectedUsers = res.result.data
+        this.clonedRejectedUsers = res.result.data
       }
     })
+  }
+
+  getSessionDetails() {
+    this.sessionDetails = this.batchData.batchAttributes.sessionDetails_v2
   }
 
   onSubmit(event: any) {
@@ -170,6 +194,68 @@ export class BatchDetailsComponent implements OnInit {
     })
   }
 
+  removeUser(event: any) {
+    const actionType = event.action.toUpperCase()
+    const request = {
+      rootOrgId: this.userProfile.rootOrgId,
+      userId: event.userData.user_id,
+      actorUserId: this.userProfile.userId,
+      state: 'APPROVED',
+      action: actionType,
+      applicationId: this.batchID,
+      serviceName: 'blendedprogram',
+      courseId: this.programID,
+      deptName: event.userData.department,
+      comment: event.comment,
+      updateFieldValues: [{
+        toValue: { name: event.userData.first_name },
+      }],
+    }
+    this.bpService.removeLearner(request).subscribe((res: any) => {
+      this.openSnackbar('Learner is removed successfully!')
+      this.filter('approved')
+      // tslint:disable-next-line:no-console
+      console.log(res)
+    },                                              (err: { error: any }) => {
+      // tslint:disable-next-line:no-console
+      console.log('request', err)
+      this.openSnackbar('Something went wrong. Please try after sometime.')
+    })
+  }
+
+  raiseTelemetry(name: string, subtype: string) {
+    this.events.raiseInteractTelemetry(
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: subtype,
+        id: `${_.camelCase(name)}-tab`,
+      },
+      {},
+    )
+  }
+
+  onNominateUsersClick(name: string) {
+    this.raiseTelemetry(name, TelemetryEvents.EnumInteractSubTypes.NOMINATE_BTN)
+    const dialogRef = this.dialogue.open(NominateUsersDialogComponent, {
+      width: '950px',
+      data: {
+        orgId: this.userProfile.rootOrgId,
+        courseId: this.programID,
+        applicationId: this.batchData.batchId,
+        learners: this.approvedUsers,
+      },
+      disableClose: true,
+      autoFocus: false,
+    })
+
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (response && response === 'done') {
+        this.getLearnersList()
+      }
+    })
+
+  }
+
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
     this.snackBar.open(primaryMsg, 'X', {
       duration,
@@ -181,5 +267,59 @@ export class BatchDetailsComponent implements OnInit {
   //   // Logic to load the users-view component or navigate to its route
   //   // You can use Angular's Router or any other mechanism to load the component
   // }
+
+  removeLearner(startDate: any) {
+    return moment(moment().format('YYYY-MM-DD')).isBefore(moment(startDate))
+  }
+
+  allowToNominate() {
+    return moment(moment().format('YYYY-MM-DD')).isSameOrBefore(moment(this.batchData.enrollmentEndDate))
+  }
+
+  filterNewUsers(searchText: string) {
+    if (searchText.length > 0) {
+      this.newUsers = this.newUsers.filter((result: any) => {
+        if (result.userInfo) {
+          return result.userInfo.first_name.toLowerCase().includes(searchText.toLowerCase())
+        }
+      })
+    } else {
+      this.newUsers = this.clonedNewUsers
+    }
+  }
+
+  filterApprovedUsers(searchText: string) {
+    if (searchText.length > 0) {
+      this.approvedUsers = this.approvedUsers.filter((result: any) => {
+        if (result.first_name) {
+          return result.first_name.toLowerCase().includes(searchText.toLowerCase())
+        }
+      })
+    } else {
+      this.approvedUsers = this.clonedApprovedUsers
+    }
+  }
+
+  filterRejectedUsers(searchText: string) {
+    if (searchText.length > 0) {
+      this.rejectedUsers = this.rejectedUsers.filter((result: any) => {
+        if (result.userInfo) {
+          return result.userInfo.first_name.toLowerCase().includes(searchText.toLowerCase())
+        }
+      })
+    } else {
+      this.rejectedUsers = this.clonedRejectedUsers
+    }
+  }
+
+  onSearchLearners(searchText: string) {
+    if (this.currentFilter === 'pending') {
+      this.filterNewUsers(searchText)
+    } else if (this.currentFilter === 'approved') {
+      this.filterApprovedUsers(searchText)
+    } else if (this.currentFilter === 'rejected') {
+      this.filterRejectedUsers(searchText)
+    }
+  }
 
 }
