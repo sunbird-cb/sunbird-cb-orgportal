@@ -79,14 +79,11 @@ export class UsersCardComponent implements OnInit {
         const data = {
           action: 'Remove',
           userData: this.user,
-          comment: response.reason
+          comment: response.reason,
         }
-        console.log(response)
         this.userClick.emit(data)
       }
-
     })
-
   }
 
   loadUser(user: any) {

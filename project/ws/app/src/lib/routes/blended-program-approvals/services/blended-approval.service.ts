@@ -13,7 +13,7 @@ const API_END_POINTS = {
   READ_USER: '/apis/proxies/v8/api/user/v2/read/',
   CERT_DOWNLOAD: `/apis/protected/v8/cohorts/course/batch/cert/download/`,
   NOMINATE_LEARNERS: '/apis/proxies/v8/workflow/blendedprogram/admin/enrol',
-  REMOVE_LEARNER: '/apis/proxies/v8/workflow/blendedprogram/remove'
+  REMOVE_LEARNER: '/apis/proxies/v8/workflow/blendedprogram/remove',
 }
 
 @Injectable({

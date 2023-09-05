@@ -14,7 +14,7 @@ import { BlendedApporvalService } from '../../services/blended-approval.service'
 export class NominateUsersDialogComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'name', 'email']
-  searchText: string = ''
+  searchText = ''
   selection = new SelectionModel(true, [])
   filteredUsers: any = []
   dataSource = new MatTableDataSource<any>()
@@ -33,9 +33,9 @@ export class NominateUsersDialogComponent implements OnInit {
   ]
 
   constructor(public dialogRef: MatDialogRef<NominateUsersDialogComponent>,
-    private usersService: UsersService,
-    @Inject(MAT_DIALOG_DATA) public data: any, private bpService: BlendedApporvalService,
-    private snackBar: MatSnackBar,) { }
+              private usersService: UsersService,
+              @Inject(MAT_DIALOG_DATA) public data: any, private bpService: BlendedApporvalService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     const filterObj = {
@@ -58,8 +58,8 @@ export class NominateUsersDialogComponent implements OnInit {
     })
     this.usersService.getAllUsers(filterObj).subscribe(data => {
       data.content.map((details: any) => {
-        let dept = (details.profileDetails && details.profileDetails.employmentDetails) ? details.profileDetails.employmentDetails.departmentName : details.rootOrgName
-        console.log("this.learners ", this.learners)
+        const dept = (details.profileDetails && details.profileDetails.employmentDetails)
+          ? details.profileDetails.employmentDetails.departmentName : details.rootOrgName
         if (!this.learners.includes(details.id)) {
           this.filteredUsers.push({
             name: details.firstName,
@@ -67,14 +67,14 @@ export class NominateUsersDialogComponent implements OnInit {
             userId: details.id,
             rootOrgId: this.data.orgId,
             actorUserId: details.id,
-            state: "APPROVED",
+            state: 'APPROVED',
             serviceName: 'blendedprogram',
             deptName: dept,
             courseId: this.data.courseId, // blended program course ID
-            applicationId: this.data.applicationId, //blended program batch ID
+            applicationId: this.data.applicationId, // blended program batch ID
             updateFieldValues: [
-              { toValue: { name: details.firstName } }
-            ]
+              { toValue: { name: details.firstName } },
+            ],
           })
         }
 
@@ -97,29 +97,28 @@ export class NominateUsersDialogComponent implements OnInit {
   }
 
   addLearners() {
-    let seletedLearner: any = []
+    const seletedLearner: any = []
     if (this.selection.selected.length > 0) {
       this.selection.selected.map((user: any) => {
-        let obj = {
+        const obj = {
           userId: user.userId,
           rootOrgId: this.data.orgId,
           actorUserId: user.userId,
-          state: "APPROVED",
+          state: 'APPROVED',
           serviceName: 'blendedprogram',
           deptName: user.deptName,
           courseId: this.data.courseId, // blended program course ID
-          applicationId: this.data.applicationId, //blended program batch ID
-          updateFieldValues: user.updateFieldValues
+          applicationId: this.data.applicationId, // blended program batch ID
+          updateFieldValues: user.updateFieldValues,
         }
         seletedLearner.push(obj)
       })
-      console.log("seletedLearner ", seletedLearner)
       this.bpService.nominateLearners(seletedLearner).subscribe((res: any) => {
         // tslint:disable-next-line:no-console
         console.log('res', res)
         this.openSnackbar('Users are added successfully!')
         this.dialogRef.close('done')
-      }, (err: { error: any }) => {
+      },                                                        (err: { error: any }) => {
         // tslint:disable-next-line:no-console
         console.log(err)
         this.openSnackbar('some thing went wrong, Please try after sometime.')

@@ -33,9 +33,9 @@ export class BatchDetailsComponent implements OnInit {
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
     private bpService: BlendedApporvalService,
-    private snackBar: MatSnackBar,
-    private events: EventService,
-    private dialogue: MatDialog) {
+              private snackBar: MatSnackBar,
+              private events: EventService,
+              private dialogue: MatDialog) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
@@ -208,21 +208,20 @@ export class BatchDetailsComponent implements OnInit {
       deptName: event.userData.department,
       comment: event.comment,
       updateFieldValues: [{
-        toValue: { name: event.userData.first_name }
-      }]
+        toValue: { name: event.userData.first_name },
+      }],
     }
     this.bpService.removeLearner(request).subscribe((res: any) => {
       this.openSnackbar('Learner is removed successfully!')
       this.filter('approved')
       // tslint:disable-next-line:no-console
       console.log(res)
-    }, (err: { error: any }) => {
+    },                                              (err: { error: any }) => {
       // tslint:disable-next-line:no-console
       console.log('request', err)
       this.openSnackbar('Something went wrong. Please try after sometime.')
     })
   }
-
 
   raiseTelemetry(name: string, subtype: string) {
     this.events.raiseInteractTelemetry(
@@ -243,10 +242,10 @@ export class BatchDetailsComponent implements OnInit {
         orgId: this.userProfile.rootOrgId,
         courseId: this.programID,
         applicationId: this.batchData.batchId,
-        learners: this.approvedUsers
+        learners: this.approvedUsers,
       },
       disableClose: true,
-      autoFocus: false
+      autoFocus: false,
     })
 
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -292,7 +291,6 @@ export class BatchDetailsComponent implements OnInit {
   filterApprovedUsers(searchText: string) {
     if (searchText.length > 0) {
       this.approvedUsers = this.approvedUsers.filter((result: any) => {
-        console.log(result)
         if (result.first_name) {
           return result.first_name.toLowerCase().includes(searchText.toLowerCase())
         }
@@ -325,4 +323,3 @@ export class BatchDetailsComponent implements OnInit {
   }
 
 }
-

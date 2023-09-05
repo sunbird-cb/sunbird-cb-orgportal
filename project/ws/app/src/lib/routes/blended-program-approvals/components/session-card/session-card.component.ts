@@ -13,7 +13,6 @@ export class SessionCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("batch ", this.batch)
   }
 
 }

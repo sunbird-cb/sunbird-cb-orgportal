@@ -20,7 +20,7 @@ import {
   MatSortModule,
   MatFormFieldModule,
   MatDialogModule,
-  MatInputModule
+  MatInputModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { BatchDetailsComponent } from './components/batch-details/batch-details.component'
@@ -36,7 +36,7 @@ import { SessionCardComponent } from './components/session-card/session-card.com
 import { NominateUsersDialogComponent } from './components/nominate-users-dialog/nominate-users-dialog.component'
 import { RejectReasonDialogComponent } from './components/reject-reason-dialog/reject-reason-dialog.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-//import { AppButtonModule } from '../../head/app-button/app-button.module'
+// import { AppButtonModule } from '../../head/app-button/app-button.module'
 
 @NgModule({
   declarations: [BlendedHomeComponent, BatchListComponent, BatchDetailsComponent, UsersCardComponent, ProfileViewComponent,
@@ -44,7 +44,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
   imports: [CommonModule, BlendedApprovalsRoutingModule, BreadcrumbsOrgModule, LeftMenuWithoutLogoModule, WidgetResolverModule,
     MatSidenavModule, MatButtonModule, MatIconModule, HomeModule, RouterModule, UIORGTableModule,
     MatCardModule, AvatarPhotoModule, MatListModule, PipeEmailModule, PipeOrderByModule, ProfileCertificateDialogModule,
-    MatBadgeModule, MatTableModule, MatCheckboxModule, MatSortModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatDialogModule, MatInputModule],
+    MatBadgeModule, MatTableModule, MatCheckboxModule, MatSortModule, FormsModule, ReactiveFormsModule,
+    MatFormFieldModule, MatDialogModule, MatInputModule],
   exports: [],
   providers: [],
   entryComponents: [NominateUsersDialogComponent, RejectReasonDialogComponent],
