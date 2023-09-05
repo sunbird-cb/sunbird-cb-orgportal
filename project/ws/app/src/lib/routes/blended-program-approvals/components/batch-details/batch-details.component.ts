@@ -7,7 +7,7 @@ import { BlendedApporvalService } from '../../services/blended-approval.service'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 import { EventService } from '@sunbird-cb/utils'
 import { NominateUsersDialogComponent } from '../nominate-users-dialog/nominate-users-dialog.component'
-
+import moment from 'moment'
 @Component({
   selector: 'ws-app-batch-details',
   templateUrl: './batch-details.component.html',
@@ -270,9 +270,11 @@ export class BatchDetailsComponent implements OnInit {
   // }
 
   removeLearner(startDate: any) {
-    const sDate: Date = new Date(startDate)
-    const currentDate: Date = new Date('2023-08-11')
-    return currentDate < sDate
+    return moment(moment().format('YYYY-MM-DD')).isBefore(moment(startDate))
+  }
+
+  allowToNominate() {
+    return moment(moment().format('YYYY-MM-DD')).isSameOrBefore(moment(this.batchData.enrollmentEndDate))
   }
 
   filterNewUsers(searchText: string) {

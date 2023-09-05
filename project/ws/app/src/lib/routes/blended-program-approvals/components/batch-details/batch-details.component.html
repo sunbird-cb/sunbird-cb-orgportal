@@ -47,7 +47,7 @@
               <!-- <span *ngIf="rejectedUsers" class="ws-mat-black60-text">({{rejectedUsers.length}})</span> -->
             </a>
           </div>
-          <div class="flex-2 right-align margin-top-l" *ngIf="currentFilter === 'approved'">
+          <div class="flex-2 right-align margin-top-l" *ngIf="currentFilter === 'approved' && allowToNominate()">
             <button type="button" mat-button class="add-nomine-btn" (click)="onNominateUsersClick('nominateUsers')">
               Nominate learners
             </button>
