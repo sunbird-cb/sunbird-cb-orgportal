@@ -43,8 +43,8 @@ export class ReportsSectionComponent implements OnInit {
       sortColumn: 'dateCreatedOn',
       sortState: 'desc',
       needUserMenus: false,
-      actions: [{ icon: 'download', label: 'Download report', name: 'DownloadFile', type: 'link', disabled: false }],
-      actionColumnName: 'Download report',
+      actions: [{ icon: '', label: 'Download', name: 'DownloadFile', type: 'Standard', disabled: false }],
+      actionColumnName: 'Action',
     }
     this.reportSectionData = []
     this.btnList.forEach((element: any) => {
