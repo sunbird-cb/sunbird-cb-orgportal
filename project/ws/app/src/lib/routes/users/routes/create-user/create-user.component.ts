@@ -44,6 +44,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   displayLoader = false
   emailLengthVal = false
   isMdoAdmin = false
+  isMdoLeader = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -93,6 +94,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
 
         if (this.configService.unMappedUser && this.configService.unMappedUser.roles) {
           this.isMdoAdmin = this.configService.unMappedUser.roles.includes('MDO_ADMIN')
+          this.isMdoLeader = this.configService.unMappedUser.roles.includes('MDO_LEADER')
         }
 
         // new code
@@ -106,9 +108,13 @@ export class CreateUserComponent implements OnInit, OnDestroy {
                   })
                 }
               } else {
-                this.uniqueRoles.push({
-                  roleName: rolesObject, description: rolesObject,
-                })
+                if (this.isMdoLeader) {
+                  if (rolesObject !== 'MDO_LEADER') {
+                    this.uniqueRoles.push({
+                      roleName: rolesObject, description: rolesObject,
+                    })
+                  }
+                }
               }
             })
           }
