@@ -49,8 +49,12 @@ export class ReportsSectionComponent implements OnInit {
     this.reportSectionData = []
     this.btnList.forEach((element: any) => {
       if (element.enabled) {
-        // tslint:disable-next-line:max-line-length
-        this.reportSectionData.push({ reportName: element.name, reportType: element.reportType, type: element.type, fileName: element.downloadReportFileName })
+        this.reportSectionData.push({
+          reportName: element.name,
+          reportType: element.reportType,
+          type: element.type,
+          fileName: element.downloadReportFileName,
+        })
       }
     })
     this.dataSource = new MatTableDataSource(this.reportSectionData)
