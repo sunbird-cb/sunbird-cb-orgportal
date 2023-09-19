@@ -49,7 +49,8 @@ export class ReportsSectionComponent implements OnInit {
     this.reportSectionData = []
     this.btnList.forEach((element: any) => {
       if (element.enabled) {
-        this.reportSectionData.push({ reportName: element.name, reportType: element.reportType, type: element.type })
+        // tslint:disable-next-line:max-line-length
+        this.reportSectionData.push({ reportName: element.name, reportType: element.reportType, type: element.type, fileName: element.downloadReportFileName })
       }
     })
     this.dataSource = new MatTableDataSource(this.reportSectionData)
@@ -57,16 +58,16 @@ export class ReportsSectionComponent implements OnInit {
   }
 
   downloadFullFile(event: any) {
-    if (event && event.row && event.row.type) {
-      this.downloadReportFile(event.row.type)
+    if (event && event.row && event.row.type && event.row.fileName) {
+      this.downloadReportFile(event.row.type, event.row.fileName)
     }
   }
 
-  async downloadReportFile(type: string) {
+  async downloadReportFile(type: string, reportFileName: string) {
     const currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
     const apiProxy = `apis/proxies/v8/storage/v1/report`
     const popup = this.snackBar
-    const fileName = `${this.configSvc.userProfile.rootOrgId}.csv`
+    const fileName = `${reportFileName}.csv`
     const downloadUrl =
       `${environment.mdoPath}${apiProxy}/${type}/${currentDate}/mdoid=${this.configSvc.userProfile.rootOrgId}/${fileName}`
     const xhr = new XMLHttpRequest()
