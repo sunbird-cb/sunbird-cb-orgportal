@@ -58,8 +58,8 @@ export class ReportsSectionComponent implements OnInit {
   }
 
   downloadFullFile(event: any) {
-    if (event && event.row && event.row.type && event.type.fileName) {
-      this.downloadReportFile(event.row.type, event.type.fileName)
+    if (event && event.row && event.row.type && event.row.fileName) {
+      this.downloadReportFile(event.row.type, event.row.fileName)
     }
   }
 
