@@ -14,8 +14,6 @@
               'mediumDate'}}</li>
             <li><mat-icon>event</mat-icon> {{batchData.enrollmentEndDate | date: 'mediumDate'}}</li>
             <li><mat-icon>people</mat-icon> {{approvedUsers.length}} Learners</li>
-            <li *ngIf="this.currentFilter === 'approved'"><mat-icon>person</mat-icon>
-              {{batchData.batchAttributes?.currentBatchSize}} Learners</li>
           </ul>
         </div>
       </ng-container>
@@ -48,7 +46,8 @@
             </a>
           </div>
           <div class="flex-2 right-align margin-top-l" *ngIf="currentFilter === 'approved' && allowToNominate()">
-            <button type="button" mat-button class="add-nomine-btn" (click)="onNominateUsersClick('nominateUsers')">
+            <button type="button" mat-button class="add-nomine-btn" (click)="onNominateUsersClick('nominateUsers')"
+              [disabled]="programData.wfApprovalType === 'oneStepPCApproval' || programData.wfApprovalType === 'twoStepPCAndMDOApproval'">
               Nominate learners
             </button>
           </div>
