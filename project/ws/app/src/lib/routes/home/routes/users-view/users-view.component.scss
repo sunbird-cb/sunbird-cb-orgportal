@@ -296,3 +296,16 @@ a:not([href]):not([tabindex]) {
 ::ng-deep.mat-header-cell .mat-icon {
   padding-left: 0.3em !important;
 }
+
+.move-button{
+  cursor: pointer;
+  height: auto;
+  border-radius: 4px;
+  border: none;
+  width: 60px;
+  // background: #0075b7!important;
+  // color: #fff!important;
+  //font-weight: 700;
+  font-family: Lato;
+  font-size: 14px;
+}
