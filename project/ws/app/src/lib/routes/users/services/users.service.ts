@@ -108,14 +108,28 @@ export class UsersService {
     return this.http.post<any>(`${API_END_POINTS.NEW_USER_UN_BLOCK_API}`, org)
   }
 
-  getAllKongUsers(depId: string): Observable<any> {
-    const reqBody = {
-      request: {
-        filters: {
-          rootOrgId: depId,
+  getAllKongUsers(depId: string, offsetNum?: number): Observable<any> {
+    let reqBody
+    if (offsetNum !== undefined) {
+      reqBody = {
+        request: {
+          filters: {
+            rootOrgId: depId,
+          },
+          limit: 250,
+          offset: offsetNum
         },
-      },
+      }
+    } else {
+      reqBody = {
+        request: {
+          filters: {
+            rootOrgId: depId,
+          },
+        },
+      }
     }
+
     return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody)
   }
   // getAllRoleUsers(depId: string, role: {}): Observable<any> {
