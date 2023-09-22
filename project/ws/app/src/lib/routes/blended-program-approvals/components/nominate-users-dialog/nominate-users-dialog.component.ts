@@ -97,6 +97,7 @@ export class NominateUsersDialogComponent implements OnInit {
   }
 
   addLearners() {
+    const stateTobe = (this.data.wfApprovalType === 'twoStepMDOAndPCApproval') ? 'SEND_FOR_PC_APPROVAL' : 'APPROVED'
     const seletedLearner: any = []
     if (this.selection.selected.length > 0) {
       this.selection.selected.map((user: any) => {
@@ -104,7 +105,7 @@ export class NominateUsersDialogComponent implements OnInit {
           userId: user.userId,
           rootOrgId: this.data.orgId,
           actorUserId: user.userId,
-          state: 'APPROVED',
+          state: stateTobe,
           serviceName: 'blendedprogram',
           deptName: user.deptName,
           courseId: this.data.courseId, // blended program course ID
@@ -113,10 +114,12 @@ export class NominateUsersDialogComponent implements OnInit {
         }
         seletedLearner.push(obj)
       })
-      this.bpService.nominateLearners(seletedLearner).subscribe((res: any) => {
-        // tslint:disable-next-line:no-console
-        console.log('res', res)
-        this.openSnackbar('Users are added successfully!')
+      this.bpService.nominateLearners(seletedLearner).subscribe((_res: any) => {
+        if (this.data.wfApprovalType === 'twoStepMDOAndPCApproval') {
+          this.openSnackbar('Request sent to Program coordinator for approval.')
+        } else {
+          this.openSnackbar('Users are nominated successfully!')
+        }
         this.dialogRef.close('done')
       },                                                        (err: { error: any }) => {
         // tslint:disable-next-line:no-console

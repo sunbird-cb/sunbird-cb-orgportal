@@ -243,6 +243,7 @@ export class BatchDetailsComponent implements OnInit {
         courseId: this.programID,
         applicationId: this.batchData.batchId,
         learners: this.approvedUsers,
+        wfApprovalType: this.programData.wfApprovalType,
       },
       disableClose: true,
       autoFocus: false,

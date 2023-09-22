@@ -54,7 +54,8 @@ export class BlendedApprovalsComponent implements OnInit {
         filters: {
           status: ['Live'],
           primaryCategory: ['Blended Program'],
-          createdFor: [this.userProfile.rootOrgId],
+          // createdFor: [this.userProfile.rootOrgId],
+          createdFor: [],
         },
         sort_by: { lastUpdatedOn: 'desc' },
         facets: ['primaryCategory', 'mimeType'],
