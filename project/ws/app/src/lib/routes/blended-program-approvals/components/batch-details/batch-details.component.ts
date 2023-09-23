@@ -100,6 +100,7 @@ export class BatchDetailsComponent implements OnInit {
           programID: this.programData.identifier,
           batchName: this.batchData.name,
           batchID: this.batchID,
+          approvalType: this.programData.wfApprovalType
         }
         this.getNewRequestsList()
       }
