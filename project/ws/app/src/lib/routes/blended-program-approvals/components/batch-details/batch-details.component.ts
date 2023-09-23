@@ -29,6 +29,7 @@ export class BatchDetailsComponent implements OnInit {
   clonedNewUsers: any = []
   clonedRejectedUsers: any = []
   clonedApprovedUsers: any = []
+  learnerCount = 0
 
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
@@ -112,6 +113,7 @@ export class BatchDetailsComponent implements OnInit {
       if (res && res.length > 0) {
         this.approvedUsers = res
         this.clonedApprovedUsers = res
+        this.learnerCount = res.length
       }
     })
   }
@@ -129,6 +131,12 @@ export class BatchDetailsComponent implements OnInit {
       if (res) {
         this.newUsers = res.result.data
         this.clonedNewUsers = res.result.data
+      }
+    })
+
+    this.bpService.getLearners(this.batchData.batchId).subscribe((res: any) => {
+      if (res && res.length > 0) {
+        this.learnerCount = res.length
       }
     })
   }
@@ -201,7 +209,7 @@ export class BatchDetailsComponent implements OnInit {
     if (this.programData.wfApprovalType === 'oneStepMDOApproval') {
       return 'Request is approved successfully'
     }
-      return 'Request is approved successfully! Further needs to be approved by program coordinator.'
+    return 'Request is approved successfully! Further needs to be approved by program coordinator.'
 
   }
 
@@ -332,6 +340,13 @@ export class BatchDetailsComponent implements OnInit {
     } else if (this.currentFilter === 'rejected') {
       this.filterRejectedUsers(searchText)
     }
+  }
+
+  showLearners() {
+    if (this.batchData && this.batchData.batchAttributes && this.batchData.batchAttributes.currentBatchSize) {
+      return `${this.learnerCount}/${this.batchData.batchAttributes.currentBatchSize}`
+    }
+    return this.learnerCount
   }
 
 }

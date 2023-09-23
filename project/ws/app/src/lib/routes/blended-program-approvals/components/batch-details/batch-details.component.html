@@ -13,7 +13,8 @@
             <li><mat-icon>event</mat-icon> {{batchData.startDate | date: 'mediumDate'}} - {{batchData.endDate | date:
               'mediumDate'}}</li>
             <li><mat-icon>event</mat-icon> {{batchData.enrollmentEndDate | date: 'mediumDate'}}</li>
-            <li><mat-icon>people</mat-icon> {{approvedUsers.length}} Learners</li>
+            <li><mat-icon>people</mat-icon> {{showLearners()}} Learners
+            </li>
           </ul>
         </div>
       </ng-container>
