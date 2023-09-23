@@ -179,6 +179,7 @@ export class BatchDetailsComponent implements OnInit {
       rootOrgId: reqData.rootOrg,
       courseId: this.programID,
       deptName: reqData.deptName,
+      comment: event.comment,
       updateFieldValues: [
         {
           toValue: {
@@ -187,8 +188,6 @@ export class BatchDetailsComponent implements OnInit {
         },
       ],
     }
-    // tslint:disable-next-line:no-console
-    console.log('request', request)
     this.bpService.updateBlendedRequests(request).subscribe((res: any) => {
       // tslint:disable-next-line:no-console
       console.log('res', res)
@@ -199,6 +198,7 @@ export class BatchDetailsComponent implements OnInit {
         }
         this.getNewRequestsList()
       } else {
+        this.getLearnersList()
         this.openSnackbar('Request is rejected successfully!')
         this.filter('rejected')
       }
@@ -235,6 +235,7 @@ export class BatchDetailsComponent implements OnInit {
       this.filter('approved')
       // tslint:disable-next-line:no-console
       console.log(res)
+      this.getLearnersList()
     },                                              (err: { error: any }) => {
       // tslint:disable-next-line:no-console
       console.log('request', err)

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Inject, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { MatDialogRef } from '@angular/material'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
 
 @Component({
   selector: 'ws-app-reject-reason-dialog',
@@ -8,8 +8,10 @@ import { MatDialogRef } from '@angular/material'
   styleUrls: ['./reject-reason-dialog.component.scss'],
 })
 export class RejectReasonDialogComponent implements OnInit {
+
   reasonForm!: FormGroup
-  constructor(public dialogRef: MatDialogRef<RejectReasonDialogComponent>) {
+  constructor(public dialogRef: MatDialogRef<RejectReasonDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
     this.reasonForm = new FormGroup({
       reason: new FormControl('', [Validators.required, Validators.maxLength(500)]),
     })
