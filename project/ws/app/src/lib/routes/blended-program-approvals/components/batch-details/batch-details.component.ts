@@ -33,9 +33,9 @@ export class BatchDetailsComponent implements OnInit {
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
     private bpService: BlendedApporvalService,
-    private snackBar: MatSnackBar,
-    private events: EventService,
-    private dialogue: MatDialog) {
+              private snackBar: MatSnackBar,
+              private events: EventService,
+              private dialogue: MatDialog) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
@@ -100,7 +100,7 @@ export class BatchDetailsComponent implements OnInit {
           programID: this.programData.identifier,
           batchName: this.batchData.name,
           batchID: this.batchID,
-          approvalType: this.programData.wfApprovalType
+          approvalType: this.programData.wfApprovalType,
         }
         this.getNewRequestsList()
       }
@@ -186,8 +186,9 @@ export class BatchDetailsComponent implements OnInit {
       console.log('res', res)
       if (event.action === 'Approve') {
         this.newUsers = []
-        if (this.programData.wfApprovalType)
+        if (this.programData.wfApprovalType) {
           this.openSnackbar(this.requestMesages())
+        }
         this.getNewRequestsList()
       } else {
         this.openSnackbar('Request is rejected successfully!')
@@ -199,9 +200,9 @@ export class BatchDetailsComponent implements OnInit {
   requestMesages() {
     if (this.programData.wfApprovalType === 'oneStepMDOApproval') {
       return 'Request is approved successfully'
-    } else {
-      return 'Request is approved successfully! Further needs to be approved by program coordinator.'
     }
+      return 'Request is approved successfully! Further needs to be approved by program coordinator.'
+
   }
 
   removeUser(event: any) {
@@ -226,7 +227,7 @@ export class BatchDetailsComponent implements OnInit {
       this.filter('approved')
       // tslint:disable-next-line:no-console
       console.log(res)
-    }, (err: { error: any }) => {
+    },                                              (err: { error: any }) => {
       // tslint:disable-next-line:no-console
       console.log('request', err)
       this.openSnackbar('Something went wrong. Please try after sometime.')
