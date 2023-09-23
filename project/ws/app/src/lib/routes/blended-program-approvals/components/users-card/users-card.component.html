@@ -20,8 +20,8 @@
         (click)="clickApprove()">Approve</button>
     </div>
     <div *ngIf="remove && remove.toString() === 'true'">
-      <button type="button" mat-button class="cursor-pointer border-0 remove-user"
-        (click)="clickRemove()">Remove</button>
+      <button type="button" mat-button class="cursor-pointer border-0 remove-user" (click)="clickRemove()"
+        [disabled]="canDisableRemoveLink()">Remove</button>
     </div>
   </a>
 </div>

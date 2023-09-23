@@ -96,4 +96,10 @@ export class UsersCardComponent implements OnInit {
     // You can use Angular's Router or any other mechanism to load the component
   }
 
+  canDisableRemoveLink() {
+    return this.programData.approvalType && (
+      this.programData.approvalType === 'oneStepPCApproval' ||
+      this.programData.approvalType === 'twoStepPCAndMDOApproval')
+  }
+
 }
