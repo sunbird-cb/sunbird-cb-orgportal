@@ -18,7 +18,7 @@ export class BlendedApprovalsComponent implements OnInit {
   tabledata: ITableData = {
     actions: [],
     columns: [
-      { displayName: 'Program name', key: 'name' },
+      { displayName: 'Blended Program name', key: 'name' },
       { displayName: 'Batches', key: 'batchesCount' },
       // { displayName: 'Learners', key: 'learners', isList: true },
       { displayName: 'New requests (Across batches)', key: 'newrequests', isList: true },
@@ -54,7 +54,8 @@ export class BlendedApprovalsComponent implements OnInit {
         filters: {
           status: ['Live'],
           primaryCategory: ['Blended Program'],
-          createdFor: [this.userProfile.rootOrgId],
+          // createdFor: [this.userProfile.rootOrgId],
+          createdFor: [],
         },
         sort_by: { lastUpdatedOn: 'desc' },
         facets: ['primaryCategory', 'mimeType'],

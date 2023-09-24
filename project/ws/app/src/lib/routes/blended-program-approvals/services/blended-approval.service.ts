@@ -14,6 +14,8 @@ const API_END_POINTS = {
   READ_USER: '/apis/proxies/v8/api/user/v2/read/',
   CERT_DOWNLOAD: `/apis/protected/v8/cohorts/course/batch/cert/download/`,
   SEARCH_FORM_WITH_USERID: 'apis/proxies/v8/forms/searchForms',
+  NOMINATE_LEARNERS: '/apis/proxies/v8/workflow/blendedprogram/admin/enrol',
+  REMOVE_LEARNER: '/apis/proxies/v8/workflow/blendedprogram/remove',
 }
 
 @Injectable({
@@ -53,5 +55,13 @@ export class BlendedApporvalService {
 
   getSurveyByUserID(req: any) {
     return this.http.post<any>(`${API_END_POINTS.SEARCH_FORM_WITH_USERID}`, req)
+  }
+
+  nominateLearners(req: any) {
+    return this.http.post<any>(`${API_END_POINTS.NOMINATE_LEARNERS}`, req)
+  }
+
+  removeLearner(req: any) {
+    return this.http.post<any>(`${API_END_POINTS.REMOVE_LEARNER}`, req)
   }
 }

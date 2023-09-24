@@ -80,3 +80,53 @@
 ::ng-deep.h-600-s-20-m {
   font: 700 14px Lato !important;
 }
+.new-request-count {
+  color: red;
+  font-weight: bold;
+}
+
+.add-nomine-btn {
+  background: #0075B7 !important;
+  color: white !important;
+  font-family: 'Lato';
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.search {
+  display: flex;
+  flex: 1;
+}
+
+.rsearch {
+  display: flex;
+  position: relative;
+  flex: 1 1 auto;
+}
+
+.search-input {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #d5d0d0;
+  padding: 9px 9px 9px 35px;
+  margin-bottom: 20px;
+  margin-top: 0;
+  font: normal 14px Lato;
+  font-weight: 400;
+  height: 1.8rem;
+}
+
+.search-icon {
+  position: absolute;
+  top: 15px;
+  font-size: 20px;
+  left: 10px;
+}
+
+.mat-button[disabled] {
+  opacity: 0.6;
+}

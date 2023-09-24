@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
 import { Router } from '@angular/router'
 import { ViewReportDialogComponent } from '../view-report-dialog/view-report-dialog.component'
+import { RejectReasonDialogComponent } from '../reject-reason-dialog/reject-reason-dialog.component'
 
 @Component({
   selector: 'ws-app-users-card',
@@ -18,6 +19,7 @@ export class UsersCardComponent implements OnInit {
   @Input() public photoUrl!: string
   @Input() public name!: string
   @Output() userClick = new EventEmitter()
+  @Input() remove: any
 
   isViewReport = false
   viewReportData = {
@@ -60,10 +62,11 @@ export class UsersCardComponent implements OnInit {
   }
 
   clickReject() {
-    const dialogRef = this.dialogue.open(DialogConfirmComponent, {
+    const dialogRef = this.dialogue.open(RejectReasonDialogComponent, {
+      width: '950px',
+      disableClose: true,
       data: {
-        title: 'Are you sure?',
-        body: `Please click <strong>Yes</strong> to reject this request.`,
+        title: 'Please provide the reason for rejecting the user from the batch',
       },
     })
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -71,6 +74,27 @@ export class UsersCardComponent implements OnInit {
         const data = {
           action: 'Reject',
           userData: this.user,
+          comment: response.reason,
+        }
+        this.userClick.emit(data)
+      }
+    })
+  }
+
+  clickRemove() {
+    const dialogRef = this.dialogue.open(RejectReasonDialogComponent, {
+      width: '950px',
+      disableClose: true,
+      data: {
+        title: 'Please provide the reason for removing the user from the batch',
+      },
+    })
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (response) {
+        const data = {
+          action: 'Remove',
+          userData: this.user,
+          comment: response.reason,
         }
         this.userClick.emit(data)
       }
@@ -104,6 +128,12 @@ export class UsersCardComponent implements OnInit {
       width: '920px',
     })
     dialogRef.afterClosed().subscribe(() => { })
+  }
+
+  canDisableRemoveLink() {
+    return this.programData.approvalType && (
+      this.programData.approvalType === 'oneStepPCApproval' ||
+      this.programData.approvalType === 'twoStepPCAndMDOApproval')
   }
 
 }

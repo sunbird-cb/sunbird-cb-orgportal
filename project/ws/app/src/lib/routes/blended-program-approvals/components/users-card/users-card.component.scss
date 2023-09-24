@@ -39,3 +39,9 @@ button {
     outline: none;
   }
 }
+.remove-user {
+    color: #0075B7!important;
+}
+.remove-user[disabled] {
+    opacity: 0.6;
+}
