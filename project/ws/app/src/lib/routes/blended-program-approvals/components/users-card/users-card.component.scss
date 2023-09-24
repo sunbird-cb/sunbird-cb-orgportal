@@ -28,3 +28,14 @@ button {
     color: rgba(0,0,0,0.7);
     background: transparent;
 }
+
+.view-report-btn {
+  width: auto;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.87) !important;
+
+  &:focus-visible {
+    outline: none;
+  }
+}

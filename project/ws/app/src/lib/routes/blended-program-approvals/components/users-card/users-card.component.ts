@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
 import { Router } from '@angular/router'
+import { ViewReportDialogComponent } from '../view-report-dialog/view-report-dialog.component'
 
 @Component({
   selector: 'ws-app-users-card',
@@ -11,14 +12,24 @@ import { Router } from '@angular/router'
 export class UsersCardComponent implements OnInit {
   @Input() user!: any
   @Input() actions: any
+  @Input() type?: any
+  @Input() contentData?: any
   @Input() programData: any
   @Input() public photoUrl!: string
   @Input() public name!: string
   @Output() userClick = new EventEmitter()
 
+  isViewReport = false
+  viewReportData = {
+    userId: '',
+    formId: '',
+  }
+
   constructor(private dialogue: MatDialog, private router: Router) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.checkForSurveyLink()
+  }
 
   getUseravatarName() {
     let name = ''
@@ -74,6 +85,25 @@ export class UsersCardComponent implements OnInit {
     // this.router.navigate([`/app/blended-approvals/user-profile/${user.user_id}`], { state: user })
     // Logic to load the users-view component or navigate to its route
     // You can use Angular's Router or any other mechanism to load the component
+  }
+
+  checkForSurveyLink() {
+    if (this.type === 'newRequest' && this.contentData && this.contentData['wfSurveyLink']) {
+      this.isViewReport = true
+      const sID = this.contentData.wfSurveyLink.split('surveys/')
+      this.viewReportData.formId = sID[1]
+      this.viewReportData.userId = (this.user
+        && this.user.userInfo && this.user.userInfo.wid) ? this.user.userInfo.wid : ''
+    }
+  }
+
+  openReportDialog() {
+    const dialogRef = this.dialogue.open(ViewReportDialogComponent, {
+      data: this.viewReportData,
+      autoFocus: false,
+      width: '920px',
+    })
+    dialogRef.afterClosed().subscribe(() => { })
   }
 
 }

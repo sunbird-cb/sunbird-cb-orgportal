@@ -13,6 +13,7 @@ const API_END_POINTS = {
   GET_REQUESTS: '/apis/proxies/v8/workflow/blendedprogram/search',
   READ_USER: '/apis/proxies/v8/api/user/v2/read/',
   CERT_DOWNLOAD: `/apis/protected/v8/cohorts/course/batch/cert/download/`,
+  SEARCH_FORM_WITH_USERID: 'apis/proxies/v8/forms/searchForms',
 }
 
 @Injectable({
@@ -48,5 +49,9 @@ export class BlendedApporvalService {
   downloadCert(certId: any) {
     const url = `${API_END_POINTS.CERT_DOWNLOAD}/${certId}`
     return this.http.get<any>(url)
+  }
+
+  getSurveyByUserID(req: any) {
+    return this.http.post<any>(`${API_END_POINTS.SEARCH_FORM_WITH_USERID}`, req)
   }
 }

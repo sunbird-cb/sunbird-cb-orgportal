@@ -120,7 +120,6 @@ export class UsersService {
   }
   // getAllRoleUsers(depId: string, role: {}): Observable<any> {
   getAllRoleUsers(depId: string, role: string): Observable<any> {
-    // debugger
     const reqBody = {
       request: {
         filters: {
@@ -139,7 +138,6 @@ export class UsersService {
         (data: any) => ({ role, count: _.get(data, 'result.response.count') })))
   }
   getTotalRoleUsers(depId: string, role: string): Observable<any> {
-    // debugger
     const reqBody = {
       request: {
         filters: {

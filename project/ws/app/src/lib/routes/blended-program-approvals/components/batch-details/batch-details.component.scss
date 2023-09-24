@@ -48,10 +48,10 @@
   flex-wrap: wrap;
 }
 .box > * {
-  flex: 0 0 550px;
+  flex: 0 0 100%;
 
   @include breakpoint-s {
-    flex: 1 1 350px;
+    flex: 1 1 100%;
   }
   @include breakpoint-xs {
     flex: 1 1 100%;
