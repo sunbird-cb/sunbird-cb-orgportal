@@ -21,11 +21,11 @@ export class RolesAccessComponent implements OnInit, AfterViewInit, OnDestroy {
   uniqueRoles: any = []
 
   constructor(private router: Router,
-    private activeRouter: ActivatedRoute,
-    private usersService: UsersService,
+              private activeRouter: ActivatedRoute,
+              private usersService: UsersService,
     // private telemetrySvc: TelemetryService,
-    private events: EventService,
-    private roleservice: RolesService) { }
+              private events: EventService,
+              private roleservice: RolesService) { }
 
   ngOnInit() {
     this.tabledata = {

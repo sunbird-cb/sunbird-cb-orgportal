@@ -51,7 +51,7 @@ export class ViewReportDialogComponent implements OnInit {
       this.latestData = tempData[tempData.length - 1]
       setTimeout(() => {
         this.showSpinner = false
-      }, 1000)
+      },         1000)
     }
     this.apiData = {
       getAPI: `/apis/proxies/v8/forms/getFormById?id=${this.latestData.formId}`,

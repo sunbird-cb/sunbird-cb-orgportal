@@ -29,7 +29,7 @@ export class UsersComponent implements OnInit, AfterViewInit, AfterContentChecke
   rootOrgId: any
 
   constructor(private usersSvc: UsersService, private router: Router, private activatedRoute: ActivatedRoute, private route: ActivatedRoute,
-    private profileUtilSvc: ProfileV2UtillService, private userS: UsersService2, private cdref: ChangeDetectorRef) { }
+              private profileUtilSvc: ProfileV2UtillService, private userS: UsersService2, private cdref: ChangeDetectorRef) { }
 
   ngOnInit() {
     const url = this.router.url.split('/')
