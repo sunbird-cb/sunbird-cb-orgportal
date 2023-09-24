@@ -187,7 +187,10 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
   showEditUser(roles: any): boolean {
     if (this.isMdoAdmin) {
-      return (roles.includes('PUBLIC') && roles.length === 1)
+      if (roles && roles.length > 0) {
+        return (roles.includes('PUBLIC') && roles.length === 1)
+      }
+      return false
     }
     return true
   }
