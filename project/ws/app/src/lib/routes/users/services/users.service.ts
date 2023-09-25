@@ -117,7 +117,7 @@ export class UsersService {
             rootOrgId: depId,
           },
           limit: 250,
-          offset: offsetNum
+          offset: offsetNum,
         },
       }
     } else {
