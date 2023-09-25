@@ -33,9 +33,9 @@ export class NominateUsersDialogComponent implements OnInit {
   ]
 
   constructor(public dialogRef: MatDialogRef<NominateUsersDialogComponent>,
-              private usersService: UsersService,
-              @Inject(MAT_DIALOG_DATA) public data: any, private bpService: BlendedApporvalService,
-              private snackBar: MatSnackBar) { }
+    private usersService: UsersService,
+    @Inject(MAT_DIALOG_DATA) public data: any, private bpService: BlendedApporvalService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     const filterObj = {
@@ -97,7 +97,6 @@ export class NominateUsersDialogComponent implements OnInit {
   }
 
   addLearners() {
-    const stateTobe = (this.data.wfApprovalType === 'twoStepMDOAndPCApproval') ? 'SEND_FOR_PC_APPROVAL' : 'APPROVED'
     const seletedLearner: any = []
     if (this.selection.selected.length > 0) {
       this.selection.selected.map((user: any) => {
@@ -105,7 +104,7 @@ export class NominateUsersDialogComponent implements OnInit {
           userId: user.userId,
           rootOrgId: this.data.orgId,
           actorUserId: user.userId,
-          state: stateTobe,
+          state: 'INITIATE',
           serviceName: 'blendedprogram',
           deptName: user.deptName,
           courseId: this.data.courseId, // blended program course ID
@@ -115,13 +114,9 @@ export class NominateUsersDialogComponent implements OnInit {
         seletedLearner.push(obj)
       })
       this.bpService.nominateLearners(seletedLearner).subscribe((_res: any) => {
-        if (this.data.wfApprovalType === 'twoStepMDOAndPCApproval') {
-          this.openSnackbar('Request sent to Program coordinator for approval.')
-        } else {
-          this.openSnackbar('Users are nominated successfully!')
-        }
+        this.openSnackbar('Users are nominated successfully!')
         this.dialogRef.close('done')
-      },                                                        (err: { error: any }) => {
+      }, (err: { error: any }) => {
         // tslint:disable-next-line:no-console
         console.log(err)
         this.openSnackbar('some thing went wrong, Please try after sometime.')
