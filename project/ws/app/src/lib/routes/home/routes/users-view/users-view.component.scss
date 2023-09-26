@@ -298,14 +298,11 @@ a:not([href]):not([tabindex]) {
 }
 
 .move-button{
+  background: unset;
   cursor: pointer;
-  height: auto;
-  border-radius: 4px;
   border: none;
-  width: 60px;
-  // background: #0075b7!important;
-  // color: #fff!important;
-  //font-weight: 700;
-  font-family: Lato;
-  font-size: 14px;
+}
+
+.item-icon {
+  $icon-size: 15px;
 }

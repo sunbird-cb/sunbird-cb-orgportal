@@ -38,11 +38,23 @@
           [isCreate]=true (eOnButtonClick)="clickHandler($event)" (actionsClick)="menuActions($event)"
           (searchByEnterKey)="onEnterkySearch($event)" [showEditOnCondition]=true>
         </ws-widget-org-user-table>
-        <div style="float: right;display: flex;">
-          <button class="mr-5 move-button" matTooltip="display prev 250 data"
-            [disabled]="(currentOffset > 0)? false :true" (click)="getAllUsers(250,'prev')">Prev </button>
-          <button class="move-button" matTooltip=" display next 250 data"
-            [disabled]="(currentOffset >= userDataTotalCount)? true :false" (click)="getAllUsers(250,'next')">Next
+
+        <!-- Pagination buttons -->
+        <div style="float: right;display: flex;margin-right: 0.8rem;">
+          <button class="mr-5 move-button" matTooltip="Begin" [disabled]="(currentOffset > 0)? false :true"
+            (click)="getAllUsers(0,'begin')">
+            <mat-icon class="item-icon">first_page</mat-icon>
+          </button>
+          <button class="mr-5 move-button" matTooltip="Prev" [disabled]="(currentOffset > 0)? false :true"
+            (click)="getAllUsers(250,'prev')">
+            <mat-icon class="item-icon">skip_previous</mat-icon>
+          </button>
+          <button class="move-button mr-5" matTooltip="Next" [disabled]="isPaginationEnd"
+            (click)="getAllUsers(250,'next')">
+            <mat-icon class="item-icon">skip_next</mat-icon>
+          </button>
+          <button class="move-button" matTooltip=" End" [disabled]="isPaginationEnd" (click)="getAllUsers(0,'end')">
+            <mat-icon class="item-icon">last_page</mat-icon>
           </button>
         </div>
 

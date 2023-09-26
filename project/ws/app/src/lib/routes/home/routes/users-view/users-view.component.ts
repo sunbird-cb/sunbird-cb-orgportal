@@ -64,6 +64,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
   currentOffset = 0
   userDataTotalCount = 0
+  isPaginationEnd = false
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
@@ -236,7 +237,32 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     if (functionality !== undefined && offset !== undefined) {
       if (functionality === 'next') {
         this.currentOffset = this.currentOffset + offset
-      } else { this.currentOffset = this.currentOffset - offset }
+
+        if (this.currentOffset > this.userDataTotalCount || this.currentOffset === this.userDataTotalCount) {
+          this.isPaginationEnd = true
+        } else {
+          this.isPaginationEnd = false
+        }
+      } else if (functionality === 'prev') {
+        this.currentOffset = this.currentOffset - offset
+
+        if (this.currentOffset > this.userDataTotalCount || this.currentOffset === this.userDataTotalCount) {
+          this.isPaginationEnd = true
+        } else {
+          this.isPaginationEnd = false
+        }
+      } else if (functionality === 'begin') {
+        this.currentOffset = offset
+
+        if (this.currentOffset > this.userDataTotalCount || this.currentOffset === this.userDataTotalCount) {
+          this.isPaginationEnd = true
+        } else {
+          this.isPaginationEnd = false
+        }
+      } else if (functionality === 'end') {
+        this.currentOffset = this.userDataTotalCount - 250
+        this.isPaginationEnd = true
+      }
 
       this.usersService.getAllKongUsers(rootOrgId, this.currentOffset).subscribe(data => {
         this.userDataTotalCount = data.result.response.count
