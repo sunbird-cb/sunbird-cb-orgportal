@@ -10,7 +10,7 @@
             <div class="rsearch">
               <mat-icon class="color-60 search-icon">search</mat-icon>
               <input class="search-input color-60" type="Standard" #searchText placeholder="Search by name or email"
-                autofocus="none">
+                autofocus="none" (keyup.enter)="searchUsers(searchText)">
             </div>
           </div>
         </div>
