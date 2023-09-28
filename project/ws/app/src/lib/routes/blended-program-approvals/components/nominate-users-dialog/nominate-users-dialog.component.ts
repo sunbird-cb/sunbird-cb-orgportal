@@ -118,7 +118,11 @@ export class NominateUsersDialogComponent implements OnInit {
         if (this.data.wfApprovalType === 'twoStepMDOAndPCApproval') {
           this.openSnackbar('Request sent to Program coordinator for approval.')
         } else {
-          this.openSnackbar('Users are nominated successfully!')
+          if (_res[0] && _res[0].result && _res[0].result.status === 'BAD_REQUEST') {
+            this.openSnackbar(_res[0].result.errmsg)
+          } else {
+            this.openSnackbar('Users are nominated successfully!')
+          }
         }
         this.dialogRef.close('done')
       },                                                        (err: { error: any }) => {
