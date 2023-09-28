@@ -67,6 +67,7 @@ export class UsersCardComponent implements OnInit {
       disableClose: true,
       data: {
         title: 'Please provide the reason for rejecting the user from the batch',
+        buttonText: 'Reject'
       },
     })
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -87,6 +88,7 @@ export class UsersCardComponent implements OnInit {
       disableClose: true,
       data: {
         title: 'Please provide the reason for removing the user from the batch',
+        buttonText: 'Remove'
       },
     })
     dialogRef.afterClosed().subscribe((response: any) => {
