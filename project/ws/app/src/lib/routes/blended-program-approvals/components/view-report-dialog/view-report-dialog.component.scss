@@ -48,3 +48,7 @@
 .dialog-container {
   position: relative;
 }
+
+::ng-deep .header-container label {
+  display: none !important;
+}
