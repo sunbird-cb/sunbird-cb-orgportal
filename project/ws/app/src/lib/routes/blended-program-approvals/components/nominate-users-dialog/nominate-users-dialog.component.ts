@@ -114,7 +114,15 @@ export class NominateUsersDialogComponent implements OnInit {
         seletedLearner.push(obj)
       })
       this.bpService.nominateLearners(seletedLearner).subscribe((_res: any) => {
-        this.openSnackbar('Users are nominated successfully!')
+        if (this.data.wfApprovalType === 'twoStepMDOAndPCApproval') {
+          this.openSnackbar('Request sent to Program coordinator for approval.')
+        } else {
+          if (_res[0] && _res[0].result && _res[0].result.status === 'BAD_REQUEST') {
+            this.openSnackbar(_res[0].result.errmsg)
+          } else {
+            this.openSnackbar('Users are nominated successfully!')
+          }
+        }
         this.dialogRef.close('done')
       }, (err: { error: any }) => {
         // tslint:disable-next-line:no-console
