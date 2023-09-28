@@ -43,14 +43,18 @@ export class ReportsSectionComponent implements OnInit {
       sortColumn: 'dateCreatedOn',
       sortState: 'desc',
       needUserMenus: false,
-      actions: [{ icon: 'download', label: 'Download report', name: 'DownloadFile', type: 'link', disabled: false }],
-      actionColumnName: 'Download report',
+      actions: [{ icon: '', label: 'Download', name: 'DownloadFile', type: 'Standard', disabled: false }],
+      actionColumnName: 'Action',
     }
     this.reportSectionData = []
     this.btnList.forEach((element: any) => {
       if (element.enabled) {
-        // tslint:disable-next-line:max-line-length
-        this.reportSectionData.push({ reportName: element.name, reportType: element.reportType, type: element.type, fileName: element.downloadReportFileName })
+        this.reportSectionData.push({
+          reportName: element.name,
+          reportType: element.reportType,
+          type: element.type,
+          fileName: element.downloadReportFileName,
+        })
       }
     })
     this.dataSource = new MatTableDataSource(this.reportSectionData)
@@ -69,7 +73,7 @@ export class ReportsSectionComponent implements OnInit {
     const popup = this.snackBar
     const fileName = `${reportFileName}.csv`
     const downloadUrl =
-      `${environment.mdoPath}${apiProxy}/${type}/${currentDate}/mdoid=${this.configSvc.userProfile.rootOrgId}/${fileName}`
+      `${environment.mdoPath}/${apiProxy}/${type}/${currentDate}/mdoid=${this.configSvc.userProfile.rootOrgId}/${fileName}`
     const xhr = new XMLHttpRequest()
     xhr.onreadystatechange = () => {
       if (xhr.readyState !== 4) {

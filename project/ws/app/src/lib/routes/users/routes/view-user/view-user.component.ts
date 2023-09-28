@@ -47,6 +47,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   qpPath: any
   breadcrumbs: any
   isMdoAdmin = false
+  isMdoLeader = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -92,6 +93,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
 
         if (fullProfile.unMappedUser && fullProfile.unMappedUser.roles) {
           this.isMdoAdmin = fullProfile.unMappedUser.roles.includes('MDO_ADMIN')
+          this.isMdoLeader = fullProfile.unMappedUser.roles.includes('MDO_LEADER')
         }
 
         // New code for roles
@@ -105,9 +107,13 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
                   })
                 }
               } else {
-                this.uniqueRoles.push({
-                  roleName: rolesObject, description: rolesObject,
-                })
+                if (this.isMdoLeader) {
+                  if (rolesObject !== 'MDO_LEADER') {
+                    this.uniqueRoles.push({
+                      roleName: rolesObject, description: rolesObject,
+                    })
+                  }
+                }
               }
             })
           }

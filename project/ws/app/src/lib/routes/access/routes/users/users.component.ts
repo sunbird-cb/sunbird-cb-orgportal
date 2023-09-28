@@ -101,7 +101,6 @@ export class UsersComponent implements OnInit, AfterViewInit, AfterContentChecke
     return []
   }
   getMyDepartment() {
-    // debugger
     let users: any[] = []
     if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
       users = _.map(_.compact(_.map(this.usersData.content, i => {
@@ -117,7 +116,6 @@ export class UsersComponent implements OnInit, AfterViewInit, AfterContentChecke
       })),
         // tslint:disable-next-line
         user => {
-          // debugger
           return {
             fullName: `${user.firstName}`,
             // fullName: `${user.first_name} ${user.last_name}`,
@@ -195,7 +193,6 @@ export class UsersComponent implements OnInit, AfterViewInit, AfterContentChecke
 
   onEnterkySearch(enterValue: any) {
     const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
-    // debugger
     this.usersSvc.searchUserByenter(enterValue, rootOrgId).subscribe(data => {
       this.usersData = data.result.response
 

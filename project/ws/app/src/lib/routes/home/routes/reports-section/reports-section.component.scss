@@ -7,3 +7,13 @@
   font-weight: 700;
   font-size: 14px;
 }
+
+::ng-deep .p1-btn {
+  box-shadow: none !important;
+  padding: 0 !important;
+  text-align: left !important;
+  span {
+    text-decoration: underline !important;
+    color: #0075B7 !important;
+  }
+}
