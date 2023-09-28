@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators'
 import _ from 'lodash'
 
 const API_END_POINTS = {
-  UPDATE_REQUEST: '/apis/proxies/v8/workflow/blendedprogram/update',
+  UPDATE_REQUEST: '/apis/proxies/v8/workflow/blendedprogram/update/mdo',
   // GET_PROGRAM_DETAILS: '/apis/proxies/v8/action/content/v3/hierarchy',
   GET_PROGRAM_DETAILS: '/apis/proxies/v8/action/content/v3/read',
   GET_LERANERS: '/apis/protected/v8/cohorts/course/getUsersForBatch',
