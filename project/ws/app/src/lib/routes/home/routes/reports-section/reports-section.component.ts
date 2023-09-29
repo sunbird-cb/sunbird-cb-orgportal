@@ -18,6 +18,7 @@ export class ReportsSectionComponent implements OnInit {
   tabledata!: ITableData
   dataSource: MatTableDataSource<any>
   reportSectionData: any
+  lastUpdatedOn!: any
 
   constructor(
     private activeRouter: ActivatedRoute,
@@ -32,11 +33,31 @@ export class ReportsSectionComponent implements OnInit {
 
   async ngOnInit() {
     this.btnList = await this.downloadService.fetchDownloadJson().toPromise().catch(_error => { })
+    this.downloadService.fetctReportsUpdatedOn(this.configSvc.userProfile.rootOrgId).subscribe((res: any) => {
+      this.lastUpdatedOn = res
+      this.reportSectionData = []
+      this.btnList.forEach((element: any) => {
+        const latUpdate: any = this.getLastModified(element.downloadReportFileName)
+        if (element.enabled) {
+          this.reportSectionData.push({
+            reportName: element.name,
+            reportType: element.reportType,
+            type: element.type,
+            fileName: element.downloadReportFileName,
+            reportUpdatedOn: latUpdate,
+          })
+        }
+      })
+      this.dataSource = new MatTableDataSource(this.reportSectionData)
+    },                                                                                         error => {
+    }
+    )
     this.tabledata = {
       columns: [
         // { displayName: 'Id', key: 'identifier' },
         { displayName: 'Report name', key: 'reportName' },
         { displayName: 'Report type', key: 'reportType' },
+        { displayName: 'Last Updated On', key: 'reportUpdatedOn' },
       ],
       needCheckBox: false,
       needHash: false,
@@ -46,19 +67,19 @@ export class ReportsSectionComponent implements OnInit {
       actions: [{ icon: '', label: 'Download', name: 'DownloadFile', type: 'Standard', disabled: false }],
       actionColumnName: 'Action',
     }
-    this.reportSectionData = []
-    this.btnList.forEach((element: any) => {
-      if (element.enabled) {
-        this.reportSectionData.push({
-          reportName: element.name,
-          reportType: element.reportType,
-          type: element.type,
-          fileName: element.downloadReportFileName,
-        })
-      }
-    })
-    this.dataSource = new MatTableDataSource(this.reportSectionData)
     setTimeout(() => this.dataSource.paginator = this.paginator)
+  }
+
+  getLastModified(name: any) {
+    const fname = `${name}.csv`
+    if (this.lastUpdatedOn) {
+      const hashName = this.lastUpdatedOn[`${fname}`]
+      if (hashName) {
+        return this.datePipe.transform(hashName.lastModified, 'dd/MM/yyyy, h:mm a') || ''
+      }
+      return ''
+    }
+    return ''
   }
 
   downloadFullFile(event: any) {
