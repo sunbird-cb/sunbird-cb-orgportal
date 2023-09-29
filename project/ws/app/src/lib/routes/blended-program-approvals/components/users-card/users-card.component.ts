@@ -15,6 +15,7 @@ export class UsersCardComponent implements OnInit {
   @Input() actions: any
   @Input() type?: any
   @Input() contentData?: any
+  @Input() approvalType?: any
   @Input() programData: any
   @Input() public photoUrl!: string
   @Input() public name!: string

@@ -11,6 +11,7 @@ const API_END_POINTS = {
   GET_PROGRAM_DETAILS: '/apis/proxies/v8/action/content/v3/read',
   GET_LERANERS: '/apis/protected/v8/cohorts/course/getUsersForBatch',
   GET_REQUESTS: '/apis/proxies/v8/workflow/blendedprogram/search',
+  GET_SEARCH_LIST: '/apis/proxies/v8/workflow/blendedprogram/searchV2/mdo',
   READ_USER: '/apis/proxies/v8/api/user/v2/read/',
   CERT_DOWNLOAD: `/apis/protected/v8/cohorts/course/batch/cert/download/`,
   SEARCH_FORM_WITH_USERID: 'apis/proxies/v8/forms/searchForms',
@@ -35,6 +36,10 @@ export class BlendedApporvalService {
 
   getRequests(req: any) {
     return this.http.post<any>(`${API_END_POINTS.GET_REQUESTS}`, req)
+  }
+
+  getSerchRequests(req: any) {
+    return this.http.post<any>(`${API_END_POINTS.GET_SEARCH_LIST}`, req)
   }
 
   updateBlendedRequests(req: any) {

@@ -23,6 +23,7 @@ export class BatchDetailsComponent implements OnInit {
   breadcrumbs: any
   newUsers: any = []
   rejectedUsers: any = []
+  approvalStatus: any = []
   linkData: any
   userProfile: any
   sessionDetails: any = []
@@ -30,13 +31,14 @@ export class BatchDetailsComponent implements OnInit {
   clonedRejectedUsers: any = []
   clonedApprovedUsers: any = []
   learnerCount = 0
+  clonedApprovalStatusUsers: any = []
 
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
     private bpService: BlendedApporvalService,
-              private snackBar: MatSnackBar,
-              private events: EventService,
-              private dialogue: MatDialog) {
+    private snackBar: MatSnackBar,
+    private events: EventService,
+    private dialogue: MatDialog) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
@@ -53,7 +55,7 @@ export class BatchDetailsComponent implements OnInit {
 
   ngOnInit() { }
 
-  filter(key: 'pending' | 'approved' | 'rejected' | 'sessions') {
+  filter(key: 'pending' | 'approved' | 'rejected' | 'sessions' | 'approvalStatus') {
     this.approvedUsers = []
     this.rejectedUsers = []
     this.newUsers = []
@@ -73,6 +75,10 @@ export class BatchDetailsComponent implements OnInit {
       case 'sessions':
         this.currentFilter = 'sessions'
         this.getSessionDetails()
+        break
+      case 'approvalStatus':
+        this.currentFilter = 'approvalStatus'
+        this.getApprovalStatusList()
         break
       default:
         break
@@ -158,6 +164,24 @@ export class BatchDetailsComponent implements OnInit {
     })
   }
 
+  getApprovalStatusList() {
+    const request = {
+      serviceName: ['blendedprogram'],
+      applicationStatus: ['SEND_FOR_PC_APPROVAL', 'SEND_FOR_MDO_APPROVAL', 'REJECTED', 'REMOVED'],
+      applicationIds: [this.batchData.batchId],
+      limit: 100,
+      offset: 0,
+      deptName: [this.userProfile.channel],
+    }
+    this.bpService.getSerchRequests(request).subscribe((res: any) => {
+      if (res) {
+        this.approvalStatus = res.result.data
+        this.clonedApprovalStatusUsers = res.result.data
+        this.getActionType()
+      }
+    })
+  }
+
   getSessionDetails() {
     this.sessionDetails = this.batchData.batchAttributes.sessionDetails_v2
   }
@@ -236,7 +260,7 @@ export class BatchDetailsComponent implements OnInit {
       // tslint:disable-next-line:no-console
       console.log(res)
       this.getLearnersList()
-    },                                              (err: { error: any }) => {
+    }, (err: { error: any }) => {
       // tslint:disable-next-line:no-console
       console.log('request', err)
       this.openSnackbar('Something went wrong. Please try after sometime.')
@@ -333,6 +357,18 @@ export class BatchDetailsComponent implements OnInit {
     }
   }
 
+  filterApprovalStatusUsers(searchText: string) {
+    if (searchText.length > 0) {
+      this.approvalStatus = this.approvalStatus.filter((result: any) => {
+        if (result.userInfo) {
+          return result.userInfo.first_name.toLowerCase().includes(searchText.toLowerCase())
+        }
+      })
+    } else {
+      this.approvalStatus = this.clonedApprovalStatusUsers
+    }
+  }
+
   onSearchLearners(searchText: string) {
     if (this.currentFilter === 'pending') {
       this.filterNewUsers(searchText)
@@ -340,6 +376,8 @@ export class BatchDetailsComponent implements OnInit {
       this.filterApprovedUsers(searchText)
     } else if (this.currentFilter === 'rejected') {
       this.filterRejectedUsers(searchText)
+    } else if (this.currentFilter === 'approvalStatus') {
+      this.filterApprovalStatusUsers(searchText)
     }
   }
 
@@ -350,4 +388,28 @@ export class BatchDetailsComponent implements OnInit {
     return this.learnerCount
   }
 
+  getActionType() {
+    if (this.approvalStatus && this.approvalStatus.length > 0) {
+      this.approvalStatus.forEach((element: any) => {
+        if (element && element.wfInfo.length > 0) {
+          element.wfInfo = _.sortBy(element.wfInfo, ['lastUpdatedOn'])
+          let lastModify = (element.wfInfo[element.wfInfo.length - 1].modificationHistory) ?
+            JSON.parse(element.wfInfo[element.wfInfo.length - 1].modificationHistory) : []
+          if (element.wfInfo[element.wfInfo.length - 1].currentStatus === 'REJECTED' && lastModify.length > 0) {
+            lastModify = lastModify.filter((v: any) => v.action === 'REJECT')
+            element['approvalAction'] = (lastModify[lastModify.length - 1].role === 'MDO_ADMIN') ? 'rejectedByMdo' :
+              (lastModify[lastModify.length - 1].role === 'PROGRAM_COORDINATOR') ? 'rejectedByPc' : ''
+          } else if (element.wfInfo[element.wfInfo.length - 1].currentStatus === 'SEND_FOR_MDO_APPROVAL') {
+            element['approvalAction'] = 'pendingForMdo'
+          } else if (element.wfInfo[element.wfInfo.length - 1].currentStatus === 'SEND_FOR_PC_APPROVAL') {
+            element['approvalAction'] = 'pendingForPc'
+          } else if (element.wfInfo[element.wfInfo.length - 1].currentStatus === 'REMOVED' && lastModify.length > 0) {
+            lastModify = lastModify.filter((v: any) => v.action === 'REMOVE')
+            element['approvalAction'] = (lastModify[lastModify.length - 1].role === 'MDO_ADMIN') ? 'removeByMdo' :
+              (lastModify[lastModify.length - 1].role === 'PROGRAM_COORDINATOR') ? 'removeByPc' : ''
+          }
+        }
+      })
+    }
+  }
 }

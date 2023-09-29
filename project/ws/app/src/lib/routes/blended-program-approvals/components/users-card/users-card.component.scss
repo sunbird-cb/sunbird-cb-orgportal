@@ -45,3 +45,13 @@ button {
 .remove-user[disabled] {
     opacity: 0.6;
 }
+
+.rejectedIcon {
+  padding-top: 1px;
+  color: #d13924 !important;
+}
+
+.pendingIcon {
+  padding-top: 1px;
+  color: #e99e38 !important;
+}
