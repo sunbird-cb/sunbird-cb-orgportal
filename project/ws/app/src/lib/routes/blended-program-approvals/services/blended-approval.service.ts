@@ -15,7 +15,7 @@ const API_END_POINTS = {
   CERT_DOWNLOAD: `/apis/protected/v8/cohorts/course/batch/cert/download/`,
   SEARCH_FORM_WITH_USERID: 'apis/proxies/v8/forms/searchForms',
   NOMINATE_LEARNERS: '/apis/proxies/v8/workflow/blendedprogram/admin/enrol',
-  REMOVE_LEARNER: '/apis/proxies/v8/workflow/blendedprogram/remove',
+  REMOVE_LEARNER: '/apis/proxies/v8/workflow/blendedprogram/remove/mdo',
 }
 
 @Injectable({
