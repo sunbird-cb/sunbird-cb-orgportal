@@ -39,6 +39,11 @@
               (click)="filter('rejected')" role="button">Rejected requests
               <!-- <span *ngIf="rejectedUsers" class="ws-mat-black60-text">({{rejectedUsers.length}})</span> -->
             </a>
+            <a class="filter-option cursor-pointer"
+              [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'approvalStatus',
+                                                                                    'ws-mat-accent-border font-medium':currentFilter !== 'approvalStatus'}"
+              mat-button (click)="filter('approvalStatus')" role="button">Approval Status
+            </a>
             <a class="filter-option cursor-pointer" *ngIf="batchData?.batchAttributes?.sessionDetails_v2"
               [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'sessions',
                                                                                     'ws-mat-accent-border font-medium':currentFilter !== 'sessions'}" mat-button (click)="filter('sessions')" role="button">Session
@@ -119,6 +124,29 @@
             </div>
           </div>
           <div class="b-c box" *ngIf="rejectedUsers && rejectedUsers.length == 0">
+            <p class="padding-m">No rejected requests yet</p>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="currentFilter === 'approvalStatus'">
+          <div class="flex flex-1 flex-row margin-top-l"
+            *ngIf="clonedApprovalStatusUsers && clonedApprovalStatusUsers.length > 0">
+            <div class="flex-1">
+              <div class="search">
+                <div class="rsearch">
+                  <mat-icon class="color-60 search-icon">search</mat-icon>
+                  <input class="search-input color-60" type="Standard" #searchText placeholder="Search for a learner"
+                    (input)="onSearchLearners(searchText.value)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class=" b-c box" *ngIf="approvalStatus && approvalStatus.length > 0">
+            <div *ngFor="let user of approvalStatus">
+              <ws-app-users-card [user]="user" [actions]="false" [programData]="linkData"
+                [approvalType]="true"></ws-app-users-card>
+            </div>
+          </div>
+          <div class="b-c box" *ngIf="approvalStatus && approvalStatus.length == 0">
             <p class="padding-m">No rejected requests yet</p>
           </div>
         </ng-container>
