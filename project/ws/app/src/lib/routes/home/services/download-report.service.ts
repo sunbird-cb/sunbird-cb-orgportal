@@ -13,4 +13,8 @@ export class DownloadReportService {
   fetchDownloadJson(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/feature/download-report.json`).pipe()
   }
+
+  fetctReportsUpdatedOn(orgId: string): Observable<any> {
+    return this.http.get<any>(`/apis/proxies/v8/storage/v1/reportInfo/${orgId}`).pipe()
+  }
 }
