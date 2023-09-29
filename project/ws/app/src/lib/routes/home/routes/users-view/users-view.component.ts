@@ -62,6 +62,8 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     sortState: 'asc',
     needUserMenus: true,
   }
+  currentOffset = 0
+  userDataTotalCount = 0
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
@@ -215,7 +217,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     return blockedUsersData
   }
 
-  getAllUsers() {
+  getAllUsers(offset?: number, functionality?: string) {
     this.loaderService.changeLoad.next(true)
     const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     // const filterObj = {
@@ -230,10 +232,24 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     //   this.usersData = data
     //   this.filterData()
     // })
-    this.usersService.getAllKongUsers(rootOrgId).subscribe(data => {
-      this.usersData = data.result.response
-      this.filterData()
-    })
+
+    if (functionality !== undefined && offset !== undefined) {
+      if (functionality === 'next') {
+        this.currentOffset = this.currentOffset + offset
+      } else { this.currentOffset = this.currentOffset - offset }
+
+      this.usersService.getAllKongUsers(rootOrgId, this.currentOffset).subscribe(data => {
+        this.userDataTotalCount = data.result.response.count
+        this.usersData = data.result.response
+        this.filterData()
+      })
+    } else {
+      this.usersService.getAllKongUsers(rootOrgId).subscribe(data => {
+        this.userDataTotalCount = data.result.response.count
+        this.usersData = data.result.response
+        this.filterData()
+      })
+    }
   }
 
   clickHandler(event: any) {
