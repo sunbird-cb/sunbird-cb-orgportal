@@ -49,9 +49,7 @@ export class ReportsSectionComponent implements OnInit {
         }
       })
       this.dataSource = new MatTableDataSource(this.reportSectionData)
-    },                                                                                         error => {
-    }
-    )
+    })
     this.tabledata = {
       columns: [
         // { displayName: 'Id', key: 'identifier' },
