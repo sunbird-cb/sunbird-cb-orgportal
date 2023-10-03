@@ -32,10 +32,15 @@ export class ReportsSectionComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.btnList = await this.downloadService.fetchDownloadJson().toPromise().catch(_error => { })
+    this.reportSectionData = []
     this.downloadService.fetctReportsUpdatedOn(this.configSvc.userProfile.rootOrgId).subscribe((res: any) => {
       this.lastUpdatedOn = res
-      this.reportSectionData = []
+    }, err => {
+      // tslint:disable-next-line:no-console
+      console.log(err)
+    })
+    this.downloadService.fetchDownloadJson().subscribe((result: any) => {
+      this.btnList = result
       this.btnList.forEach((element: any) => {
         const latUpdate: any = this.getLastModified(element.downloadReportFileName)
         if (element.enabled) {
@@ -50,6 +55,7 @@ export class ReportsSectionComponent implements OnInit {
       })
       this.dataSource = new MatTableDataSource(this.reportSectionData)
     })
+
     this.tabledata = {
       columns: [
         // { displayName: 'Id', key: 'identifier' },
