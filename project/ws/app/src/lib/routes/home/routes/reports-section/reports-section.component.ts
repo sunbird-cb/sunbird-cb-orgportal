@@ -31,31 +31,7 @@ export class ReportsSectionComponent implements OnInit {
     this.dataSource.paginator = this.paginator
   }
 
-  async ngOnInit() {
-    this.reportSectionData = []
-    this.downloadService.fetctReportsUpdatedOn(this.configSvc.userProfile.rootOrgId).subscribe((res: any) => {
-      this.lastUpdatedOn = res
-    }, err => {
-      // tslint:disable-next-line:no-console
-      console.log(err)
-    })
-    this.downloadService.fetchDownloadJson().subscribe((result: any) => {
-      this.btnList = result
-      this.btnList.forEach((element: any) => {
-        const latUpdate: any = this.getLastModified(element.downloadReportFileName)
-        if (element.enabled) {
-          this.reportSectionData.push({
-            reportName: element.name,
-            reportType: element.reportType,
-            type: element.type,
-            fileName: element.downloadReportFileName,
-            reportUpdatedOn: latUpdate,
-          })
-        }
-      })
-      this.dataSource = new MatTableDataSource(this.reportSectionData)
-    })
-
+  ngOnInit() {
     this.tabledata = {
       columns: [
         // { displayName: 'Id', key: 'identifier' },
@@ -71,7 +47,37 @@ export class ReportsSectionComponent implements OnInit {
       actions: [{ icon: '', label: 'Download', name: 'DownloadFile', type: 'Standard', disabled: false }],
       actionColumnName: 'Action',
     }
+
+    this.reportSectionData = []
+    this.downloadService.fetchDownloadJson().subscribe((result: any) => {
+      this.btnList = result
+      this.downloadService.fetctReportsUpdatedOn(this.configSvc.userProfile.rootOrgId).subscribe((res: any) => {
+        this.lastUpdatedOn = res
+        this.getTableData()
+      }, err => {
+        // tslint:disable-next-line:no-console
+        console.log(err)
+        this.getTableData()
+      })
+    })
     setTimeout(() => this.dataSource.paginator = this.paginator)
+  }
+
+
+  getTableData() {
+    this.btnList.forEach((element: any) => {
+      const latUpdate: any = this.getLastModified(element.downloadReportFileName)
+      if (element.enabled) {
+        this.reportSectionData.push({
+          reportName: element.name,
+          reportType: element.reportType,
+          type: element.type,
+          fileName: element.downloadReportFileName,
+          reportUpdatedOn: latUpdate,
+        })
+      }
+    })
+    this.dataSource = new MatTableDataSource(this.reportSectionData)
   }
 
   getLastModified(name: any) {
