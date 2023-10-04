@@ -54,7 +54,7 @@ export class ReportsSectionComponent implements OnInit {
       this.downloadService.fetctReportsUpdatedOn(this.configSvc.userProfile.rootOrgId).subscribe((res: any) => {
         this.lastUpdatedOn = res
         this.getTableData()
-      }, err => {
+      },                                                                                         err => {
         // tslint:disable-next-line:no-console
         console.log(err)
         this.getTableData()
@@ -62,7 +62,6 @@ export class ReportsSectionComponent implements OnInit {
     })
     setTimeout(() => this.dataSource.paginator = this.paginator)
   }
-
 
   getTableData() {
     this.btnList.forEach((element: any) => {

@@ -36,9 +36,9 @@ export class BatchDetailsComponent implements OnInit {
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
     private bpService: BlendedApporvalService,
-    private snackBar: MatSnackBar,
-    private events: EventService,
-    private dialogue: MatDialog) {
+              private snackBar: MatSnackBar,
+              private events: EventService,
+              private dialogue: MatDialog) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
@@ -260,7 +260,7 @@ export class BatchDetailsComponent implements OnInit {
       // tslint:disable-next-line:no-console
       console.log(res)
       this.getLearnersList()
-    }, (err: { error: any }) => {
+    },                                              (err: { error: any }) => {
       // tslint:disable-next-line:no-console
       console.log('request', err)
       this.openSnackbar('Something went wrong. Please try after sometime.')
