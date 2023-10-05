@@ -29,8 +29,8 @@ export class BlendedApporvalService {
     return this.http.get<any>(url)
   }
 
-  getLearners(batchId: any): Observable<any> {
-    const url = `${API_END_POINTS.GET_LERANERS}/${batchId}`
+  getLearners(batchId: any, orgName: any): Observable<any> {
+    const url = `${API_END_POINTS.GET_LERANERS}/${batchId}/${orgName}`
     return this.http.get<any>(url)
   }
 
