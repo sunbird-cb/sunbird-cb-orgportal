@@ -37,7 +37,7 @@ export class ReportsSectionComponent implements OnInit {
         // { displayName: 'Id', key: 'identifier' },
         { displayName: 'Report name', key: 'reportName' },
         { displayName: 'Report type', key: 'reportType' },
-        { displayName: 'Last Updated On', key: 'reportUpdatedOn' },
+        { displayName: 'Last updated on', key: 'reportUpdatedOn' },
       ],
       needCheckBox: false,
       needHash: false,

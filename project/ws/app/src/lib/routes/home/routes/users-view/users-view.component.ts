@@ -52,7 +52,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   tabledata: ITableData = {
     actions: [],
     columns: [
-      { displayName: 'Full Name', key: 'fullname' },
+      { displayName: 'Full name', key: 'fullname' },
       { displayName: 'Email', key: 'email' },
       { displayName: 'Roles', key: 'roles', isList: true },
     ],

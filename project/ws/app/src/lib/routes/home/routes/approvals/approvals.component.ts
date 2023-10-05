@@ -26,7 +26,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     // { name: 'Reject', label: 'Reject', icon: 'remove_red_eye', type: 'Reject' }],
     actions: [],
     columns: [
-      { displayName: 'Full Name', key: 'fullname' },
+      { displayName: 'Full name', key: 'fullname' },
       { displayName: 'Requested on', key: 'requestedon' },
       { displayName: 'Fields', key: 'fields', isList: true },
       { displayName: 'Tags', key: 'tag', isList: true },

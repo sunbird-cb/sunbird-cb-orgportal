@@ -7,7 +7,7 @@
       <div class="flex flex-row">
         <form [formGroup]="formGroup" #form class="flex">
           <button *ngIf="!fileName" type="button" (click)="fileInput.click()" (dblclick)="$event.preventDefault();"
-            class="download-btn mat-accent-border mat-button mat-button-base">Choose File</button>
+            class="download-btn mat-accent-border mat-button mat-button-base">Choose file</button>
           <label class="file-name mr-5" *ngIf="fileName">Selected file : <b>{{fileName}}</b></label>
           <input hidden type="file" #fileInput class="" (click)="fileClick($event)" (change)="onFileChange($event)"
             name="file" placeholder="Choose file" (dblclick)="$event.preventDefault();"
