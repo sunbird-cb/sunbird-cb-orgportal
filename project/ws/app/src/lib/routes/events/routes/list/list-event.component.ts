@@ -62,10 +62,10 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit() {
         this.tabledata = {
             columns: [
-                { displayName: 'Cover Picture', key: 'eventThumbnail' },
+                { displayName: 'Cover picture', key: 'eventThumbnail' },
                 { displayName: 'Title', key: 'eventName' },
                 { displayName: 'Date and time', key: 'eventStartDate' },
-                { displayName: 'Created On', key: 'eventCreatedOn' },
+                { displayName: 'Created on', key: 'eventCreatedOn' },
                 { displayName: 'Duration', key: 'eventDuration' },
                 { displayName: 'Joined', key: 'eventjoined' },
             ],

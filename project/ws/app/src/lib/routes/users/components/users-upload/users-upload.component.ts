@@ -81,9 +81,9 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
         // { displayName: 'Id', key: 'identifier' },
         { displayName: 'Name', key: 'fileName' },
         { displayName: 'Status', key: 'status' },
-        { displayName: 'Failed Records', key: 'failedRecordsCount' },
-        { displayName: 'Success Records', key: 'successfulRecordsCount' },
-        { displayName: 'Total Records', key: 'totalRecords' },
+        { displayName: 'Failed records', key: 'failedRecordsCount' },
+        { displayName: 'Success records', key: 'successfulRecordsCount' },
+        { displayName: 'Total records', key: 'totalRecords' },
         { displayName: 'Created on', key: 'dateCreatedOn' },
         { displayName: 'Updated on', key: 'dateUpdatedOn' },
       ],
@@ -92,8 +92,8 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
       sortColumn: 'dateCreatedOn',
       sortState: 'desc',
       needUserMenus: false,
-      actions: [{ icon: 'download', label: 'Download File', name: 'DownloadFile', type: 'link', disabled: false }],
-      actionColumnName: 'Download File',
+      actions: [{ icon: 'download', label: 'Download file', name: 'DownloadFile', type: 'link', disabled: false }],
+      actionColumnName: 'Download file',
     }
     this.getBulkUploadData()
   }
