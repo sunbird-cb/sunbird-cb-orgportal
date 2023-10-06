@@ -33,9 +33,9 @@ export class NominateUsersDialogComponent implements OnInit {
   ]
 
   constructor(public dialogRef: MatDialogRef<NominateUsersDialogComponent>,
-              private usersService: UsersService,
-              @Inject(MAT_DIALOG_DATA) public data: any, private bpService: BlendedApporvalService,
-              private snackBar: MatSnackBar) { }
+    private usersService: UsersService,
+    @Inject(MAT_DIALOG_DATA) public data: any, private bpService: BlendedApporvalService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     const filterObj = {
@@ -120,11 +120,11 @@ export class NominateUsersDialogComponent implements OnInit {
           if (_res[0] && _res[0].result && _res[0].result.status === 'BAD_REQUEST') {
             this.openSnackbar(_res[0].result.errmsg)
           } else {
-            this.openSnackbar('Users are nominated successfully!')
+            this.openSnackbar('User(s) nominated successfully!')
           }
         }
         this.dialogRef.close('done')
-      },                                                        (err: { error: any }) => {
+      }, (err: { error: any }) => {
         // tslint:disable-next-line:no-console
         console.log(err)
         this.openSnackbar('some thing went wrong, Please try after sometime.')
