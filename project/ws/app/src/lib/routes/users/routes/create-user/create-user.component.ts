@@ -207,38 +207,46 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         firstName: form.value.fname,
         // lastName: form.value.lname,
         channel: this.departmentName ? this.departmentName : null,
+        roles: form.value.roles,
       },
     }
 
     this.usersSvc.createUser(newobj).subscribe(res => {
       if (res) {
         this.displayLoader = false
-        const dreq = {
-          request: {
-            organisationId: this.department,
-            userId: res.userId,
-            roles: form.value.roles,
-          },
+        this.openSnackbar('User Created Successfully')
+        this.disableCreateButton = false
+        if (this.qpParam === 'MDOinfo') {
+          this.router.navigate(['/app/home/mdoinfo/leadership'])
+        } else {
+          this.router.navigate(['/app/home/users'])
         }
+        // const dreq = {
+        //   request: {
+        //     organisationId: this.department,
+        //     userId: res.userId,
+        //     roles: form.value.roles,
+        //   },
+        // }
 
-        this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
-          if (dres) {
-            this.createUserForm.reset({ fname: '', email: '', department: this.departmentName, roles: '' })
-            // this.createUserForm.reset({ fname: '', lname: '', email: '', department: this.departmentName, roles: '' })
-            this.openSnackbar('User Created Successfully')
-            this.disableCreateButton = false
-            if (this.qpParam === 'MDOinfo') {
-              this.router.navigate(['/app/home/mdoinfo/leadership'])
-            } else {
-              this.router.navigate(['/app/home/users'])
-            }
-          }
-        },
-          // tslint:disable-next-line
-          (err: any) => {
-            this.displayLoader = false
-            this.openSnackbar(err.error || err || `Some error occurred while updateing new user's role, Please try again later!`)
-          })
+        // this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
+        //   if (dres) {
+        //     this.createUserForm.reset({ fname: '', email: '', department: this.departmentName, roles: '' })
+        //     // this.createUserForm.reset({ fname: '', lname: '', email: '', department: this.departmentName, roles: '' })
+        //     this.openSnackbar('User Created Successfully')
+        //     this.disableCreateButton = false
+        //     if (this.qpParam === 'MDOinfo') {
+        //       this.router.navigate(['/app/home/mdoinfo/leadership'])
+        //     } else {
+        //       this.router.navigate(['/app/home/users'])
+        //     }
+        //   }
+        // },
+        //   // tslint:disable-next-line
+        //   (err: any) => {
+        //     this.displayLoader = false
+        //     this.openSnackbar(err.error || err || `Some error occurred while updateing new user's role, Please try again later!`)
+        //   })
       }
     },
       // tslint:disable-next-line
