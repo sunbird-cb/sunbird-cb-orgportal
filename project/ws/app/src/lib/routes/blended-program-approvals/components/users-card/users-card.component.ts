@@ -134,9 +134,8 @@ export class UsersCardComponent implements OnInit {
   }
 
   canDisableRemoveLink() {
-    return this.programData.approvalType && (
-      this.programData.approvalType === 'oneStepPCApproval' ||
-      this.programData.approvalType === 'twoStepPCAndMDOApproval')
+    return this.programData.approvalType &&
+      this.programData.approvalType === 'oneStepPCApproval'
   }
 
 }
