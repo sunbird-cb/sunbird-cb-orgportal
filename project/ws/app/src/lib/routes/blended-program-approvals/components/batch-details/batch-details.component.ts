@@ -223,7 +223,7 @@ export class BatchDetailsComponent implements OnInit {
         this.getNewRequestsList()
       } else {
         this.getLearnersList()
-        this.openSnackbar('Request is rejected successfully!')
+        this.openSnackbar('Request is removed successfully.')
         this.filter('rejected')
       }
     })
