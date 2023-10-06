@@ -136,6 +136,9 @@ export class BatchDetailsComponent implements OnInit {
     this.bpService.getRequests(request).subscribe((res: any) => {
       if (res) {
         this.newUsers = res.result.data
+        this.newUsers.sort((a: any, b: any) => {
+          return <any>new Date(b.wfInfo[0].lastUpdatedOn) - <any>new Date(a.wfInfo[0].lastUpdatedOn)
+        })
         this.clonedNewUsers = res.result.data
       }
     })
@@ -223,7 +226,7 @@ export class BatchDetailsComponent implements OnInit {
         this.getNewRequestsList()
       } else {
         this.getLearnersList()
-        this.openSnackbar('Request is rejected successfully!')
+        this.openSnackbar('Request is removed successfully.')
         this.filter('rejected')
       }
     })
