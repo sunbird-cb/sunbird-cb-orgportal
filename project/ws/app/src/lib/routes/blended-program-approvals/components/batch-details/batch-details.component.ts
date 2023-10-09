@@ -8,6 +8,7 @@ import { TelemetryEvents } from '../../../../head/_services/telemetry.event.mode
 import { EventService } from '@sunbird-cb/utils'
 import { NominateUsersDialogComponent } from '../nominate-users-dialog/nominate-users-dialog.component'
 import moment from 'moment'
+import { NsContent } from '../../../../head/_services/widget-content.model'
 @Component({
   selector: 'ws-app-batch-details',
   templateUrl: './batch-details.component.html',
@@ -36,9 +37,9 @@ export class BatchDetailsComponent implements OnInit {
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
     private bpService: BlendedApporvalService,
-              private snackBar: MatSnackBar,
-              private events: EventService,
-              private dialogue: MatDialog) {
+    private snackBar: MatSnackBar,
+    private events: EventService,
+    private dialogue: MatDialog) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
@@ -233,11 +234,15 @@ export class BatchDetailsComponent implements OnInit {
   }
 
   requestMesages() {
-    if (this.programData.wfApprovalType === 'oneStepMDOApproval') {
-      return 'Request is approved successfully'
+    if (this.programData.wfApprovalType === NsContent.WFBlendedProgramApprovalTypes.ONE_STEP_MDO ||
+      this.programData.wfApprovalType === NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_PC_MDO
+    ) {
+      return 'Request is approved successfully!'
     }
-    return 'Request is approved successfully! Further needs to be approved by program coordinator.'
-
+    if (this.programData.wfApprovalType === NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_MDO_PC) {
+      return 'Request is approved successfully! Further needs to be approved by program coordinator.'
+    }
+    return 'Request is approved successfully!'
   }
 
   removeUser(event: any) {
@@ -263,7 +268,7 @@ export class BatchDetailsComponent implements OnInit {
       // tslint:disable-next-line:no-console
       console.log(res)
       this.getLearnersList()
-    },                                              (err: { error: any }) => {
+    }, (err: { error: any }) => {
       // tslint:disable-next-line:no-console
       console.log('request', err)
       this.openSnackbar('Something went wrong. Please try after sometime.')
