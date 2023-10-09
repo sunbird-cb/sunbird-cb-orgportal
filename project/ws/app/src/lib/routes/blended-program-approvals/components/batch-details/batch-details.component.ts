@@ -37,8 +37,11 @@ export class BatchDetailsComponent implements OnInit {
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
     private bpService: BlendedApporvalService,
+    // tslint:disable-next-line:align
     private snackBar: MatSnackBar,
+    // tslint:disable-next-line:align
     private events: EventService,
+    // tslint:disable-next-line:align
     private dialogue: MatDialog) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
@@ -138,7 +141,7 @@ export class BatchDetailsComponent implements OnInit {
       if (res) {
         this.newUsers = res.result.data
         this.newUsers.sort((a: any, b: any) => {
-          return <any>new Date(b.wfInfo[0].lastUpdatedOn) - <any>new Date(a.wfInfo[0].lastUpdatedOn)
+          return <any>new Date(a.wfInfo[0].lastUpdatedOn) - <any>new Date(b.wfInfo[0].lastUpdatedOn)
         })
         this.clonedNewUsers = res.result.data
       }
@@ -268,6 +271,7 @@ export class BatchDetailsComponent implements OnInit {
       // tslint:disable-next-line:no-console
       console.log(res)
       this.getLearnersList()
+      // tslint:disable-next-line:align
     }, (err: { error: any }) => {
       // tslint:disable-next-line:no-console
       console.log('request', err)
