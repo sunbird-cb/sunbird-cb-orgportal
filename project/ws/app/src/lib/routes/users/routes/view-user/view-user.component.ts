@@ -106,6 +106,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
                     roleName: rolesObject, description: rolesObject,
                   })
                 }
+                if (rolesObject === 'MDO_DASHBOARD_USER') {
+                  this.uniqueRoles.push({
+                    roleName: rolesObject, description: rolesObject,
+                  })
+                }
               } else {
                 if (this.isMdoLeader) {
                   if (rolesObject !== 'MDO_LEADER') {

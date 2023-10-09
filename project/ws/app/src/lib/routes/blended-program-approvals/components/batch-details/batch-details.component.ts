@@ -8,6 +8,7 @@ import { TelemetryEvents } from '../../../../head/_services/telemetry.event.mode
 import { EventService } from '@sunbird-cb/utils'
 import { NominateUsersDialogComponent } from '../nominate-users-dialog/nominate-users-dialog.component'
 import moment from 'moment'
+import { NsContent } from '../../../../head/_services/widget-content.model'
 @Component({
   selector: 'ws-app-batch-details',
   templateUrl: './batch-details.component.html',
@@ -236,11 +237,15 @@ export class BatchDetailsComponent implements OnInit {
   }
 
   requestMesages() {
-    if (this.programData.wfApprovalType === 'oneStepMDOApproval') {
-      return 'Request is approved successfully'
+    if (this.programData.wfApprovalType === NsContent.WFBlendedProgramApprovalTypes.ONE_STEP_MDO ||
+      this.programData.wfApprovalType === NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_PC_MDO
+    ) {
+      return 'Request is approved successfully!'
     }
-    return 'Request is approved successfully! Further needs to be approved by program coordinator.'
-
+    if (this.programData.wfApprovalType === NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_MDO_PC) {
+      return 'Request is approved successfully! Further needs to be approved by program coordinator.'
+    }
+    return 'Request is approved successfully!'
   }
 
   removeUser(event: any) {
