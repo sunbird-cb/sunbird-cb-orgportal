@@ -233,10 +233,10 @@ export class BatchDetailsComponent implements OnInit {
         this.openSnackbar('Request is removed successfully.')
         this.filter('rejected')
       }
-    },                                                      (_err: any) => {
-      if (_err && _err.result && _err.result.errmsg) {
-        this.openSnackbar(_err.result.errmsg)
-      }
+    },                                                      (error: any) => {
+      this.openSnackbar(_.get(error, 'error.params.errmsg') ||
+        _.get(error, 'error.result.errmsg') ||
+        'Something went wrong, please try again later!')
     })
   }
 
