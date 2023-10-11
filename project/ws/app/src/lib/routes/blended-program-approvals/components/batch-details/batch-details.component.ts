@@ -123,9 +123,10 @@ export class BatchDetailsComponent implements OnInit {
       if (res && res.length > 0) {
         this.approvedUsers = res
         this.clonedApprovedUsers = res
-        this.learnerCount = res.length
+        // this.learnerCount = res.length
       }
     })
+    this.getAllLearner()
   }
 
   getNewRequestsList() {
@@ -146,8 +147,11 @@ export class BatchDetailsComponent implements OnInit {
         this.clonedNewUsers = res.result.data
       }
     })
+    this.getAllLearner()
+  }
 
-    this.bpService.getLearners(this.batchData.batchId, this.userProfile.channel).subscribe((res: any) => {
+  getAllLearner() {
+    this.bpService.getLearnersWithoutOrg(this.batchData.batchId).subscribe((res: any) => {
       if (res && res.length > 0) {
         this.learnerCount = res.length
       }
