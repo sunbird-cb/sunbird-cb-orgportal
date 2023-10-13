@@ -8,6 +8,7 @@ import { TelemetryEvents } from '../../../../head/_services/telemetry.event.mode
 import { EventService } from '@sunbird-cb/utils'
 import { NominateUsersDialogComponent } from '../nominate-users-dialog/nominate-users-dialog.component'
 import moment from 'moment'
+import { NsContent } from '../../../../head/_services/widget-content.model'
 @Component({
   selector: 'ws-app-batch-details',
   templateUrl: './batch-details.component.html',
@@ -36,9 +37,12 @@ export class BatchDetailsComponent implements OnInit {
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
     private bpService: BlendedApporvalService,
-              private snackBar: MatSnackBar,
-              private events: EventService,
-              private dialogue: MatDialog) {
+    // tslint:disable-next-line:align
+    private snackBar: MatSnackBar,
+    // tslint:disable-next-line:align
+    private events: EventService,
+    // tslint:disable-next-line:align
+    private dialogue: MatDialog) {
     const currentState = this.router.getCurrentNavigation()
     if (currentState && currentState.extras.state) {
       this.batchData = currentState.extras.state
@@ -119,9 +123,10 @@ export class BatchDetailsComponent implements OnInit {
       if (res && res.length > 0) {
         this.approvedUsers = res
         this.clonedApprovedUsers = res
-        this.learnerCount = res.length
+        // this.learnerCount = res.length
       }
     })
+    this.getAllLearner()
   }
 
   getNewRequestsList() {
@@ -137,13 +142,16 @@ export class BatchDetailsComponent implements OnInit {
       if (res) {
         this.newUsers = res.result.data
         this.newUsers.sort((a: any, b: any) => {
-          return <any>new Date(b.wfInfo[0].lastUpdatedOn) - <any>new Date(a.wfInfo[0].lastUpdatedOn)
+          return <any>new Date(a.wfInfo[0].lastUpdatedOn) - <any>new Date(b.wfInfo[0].lastUpdatedOn)
         })
         this.clonedNewUsers = res.result.data
       }
     })
+    this.getAllLearner()
+  }
 
-    this.bpService.getLearners(this.batchData.batchId, this.userProfile.channel).subscribe((res: any) => {
+  getAllLearner() {
+    this.bpService.getLearnersWithoutOrg(this.batchData.batchId).subscribe((res: any) => {
       if (res && res.length > 0) {
         this.learnerCount = res.length
       }
@@ -229,15 +237,23 @@ export class BatchDetailsComponent implements OnInit {
         this.openSnackbar('Request is removed successfully.')
         this.filter('rejected')
       }
+    },                                                      (error: any) => {
+      this.openSnackbar(_.get(error, 'error.params.errmsg') ||
+        _.get(error, 'error.result.errmsg') ||
+        'Something went wrong, please try again later!')
     })
   }
 
   requestMesages() {
-    if (this.programData.wfApprovalType === 'oneStepMDOApproval') {
-      return 'Request is approved successfully'
+    if (this.programData.wfApprovalType === NsContent.WFBlendedProgramApprovalTypes.ONE_STEP_MDO ||
+      this.programData.wfApprovalType === NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_PC_MDO
+    ) {
+      return 'Request is approved successfully!'
     }
-    return 'Request is approved successfully! Further needs to be approved by program coordinator.'
-
+    if (this.programData.wfApprovalType === NsContent.WFBlendedProgramApprovalTypes.TWO_STEP_MDO_PC) {
+      return 'Request is approved successfully! Further needs to be approved by program coordinator.'
+    }
+    return 'Request is approved successfully!'
   }
 
   removeUser(event: any) {
@@ -263,7 +279,8 @@ export class BatchDetailsComponent implements OnInit {
       // tslint:disable-next-line:no-console
       console.log(res)
       this.getLearnersList()
-    },                                              (err: { error: any }) => {
+      // tslint:disable-next-line:align
+    }, (err: { error: any }) => {
       // tslint:disable-next-line:no-console
       console.log('request', err)
       this.openSnackbar('Something went wrong. Please try after sometime.')
