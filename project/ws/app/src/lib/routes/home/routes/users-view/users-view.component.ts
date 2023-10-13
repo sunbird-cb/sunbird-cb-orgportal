@@ -67,6 +67,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   limit = 20
   pageIndex = 0
   searchQuery = ''
+  rootOrgId: any
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
@@ -97,6 +98,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     // }
   }
   ngOnInit() {
+    this.rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     this.currentFilter = this.route.snapshot.params['tab'] || 'active'
     this.searchQuery = ''
     if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.roles) {
@@ -148,11 +150,10 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
   activeUsers(query: string) {
     this.loaderService.changeLoad.next(true)
-    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     const activeUsersData: any[] = []
     const status = this.currentFilter === 'active' ? 1 : 0
     this.currentOffset = this.limit * ((this.pageIndex + 1) - 1)
-    this.usersService.getAllKongUsers(rootOrgId, status, this.limit, this.currentOffset, query).subscribe(data => {
+    this.usersService.getAllKongUsers(this.rootOrgId, status, this.limit, this.currentOffset, query).subscribe(data => {
       this.userDataTotalCount = data.result.response.count
       this.usersData = data.result.response
       if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
@@ -203,11 +204,10 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
   inActiveUsers(query: string) {
     this.loaderService.changeLoad.next(true)
-    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     const inactiveUsersData: any[] = []
     const status = this.currentFilter === 'active' ? 1 : 0
     this.currentOffset = this.limit * ((this.pageIndex + 1) - 1)
-    this.usersService.getAllKongUsers(rootOrgId, status, this.limit, this.currentOffset, query).subscribe(
+    this.usersService.getAllKongUsers(this.rootOrgId, status, this.limit, this.currentOffset, query).subscribe(
       data => {
         this.userDataTotalCount = data.result.response.count
         this.usersData = data.result.response
@@ -238,7 +238,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     //   _.filter(this.usersData.content, { isDeleted: true }).forEach((user: any) => {
     //     // tslint:disable-next-line
     //     const org = { roles: _.get(_.first(_.filter(user.organisations,
-    //{ organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') || [] }
+    // { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') || [] }
     //     inactiveUsersData.push({
     //       fullname: user ? `${user.firstName} ` : null,
     //       // fullname: user ? `${user.firstName} ${user.lastName}` : null,
