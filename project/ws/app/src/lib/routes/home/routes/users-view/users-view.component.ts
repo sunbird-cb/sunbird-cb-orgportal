@@ -8,7 +8,7 @@ import _ from 'lodash'
 /* tslint:enable */
 import { environment } from 'src/environments/environment'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
-import { MatSnackBar, PageEvent } from '@angular/material'
+import { MatSnackBar } from '@angular/material'
 import { EventService } from '@sunbird-cb/utils'
 import { NsContent } from '@sunbird-cb/collection'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
@@ -63,11 +63,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     needUserMenus: true,
   }
   currentOffset = 0
-  userDataTotalCount?: number | 0
-  limit = 20
-  pageIndex = 0
-  searchQuery = ''
-  rootOrgId: any
+  userDataTotalCount = 0
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
@@ -92,28 +88,24 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     // this.filterData()
   }
 
+  // decideAPICall() {
+  // }
   ngOnDestroy() {
     // if (this.tabs) {
     //   this.tabs.unsubscribe()
     // }
   }
   ngOnInit() {
-    this.rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     this.currentFilter = this.route.snapshot.params['tab'] || 'active'
-    this.searchQuery = ''
     if (this.configSvc.unMappedUser && this.configSvc.unMappedUser.roles) {
       this.isMdoAdmin = this.configSvc.unMappedUser.roles.includes('MDO_ADMIN')
     }
-    this.filterData('')
+    this.getAllUsers()
   }
 
   filter(filter: string) {
     this.currentFilter = filter
-    this.pageIndex = 0
-    this.currentOffset = 0
-    this.limit = 20
-    this.searchQuery = ''
-    this.filterData(this.searchQuery)
+
   }
 
   public tabTelemetry(label: string, index: number) {
@@ -140,122 +132,59 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     }
 
   }
-  filterData(query: string) {
-    if (this.currentFilter === 'active') {
-      this.activeUsers(query)
-    } else if (this.currentFilter === 'inactive') {
-      this.inActiveUsers(query)
-    }
+  filterData() {
+    this.activeUsersData = this.activeUsers
+    this.inactiveUsersData = this.inActiveUsers
   }
-
-  activeUsers(query: string) {
+  get activeUsers() {
     this.loaderService.changeLoad.next(true)
     const activeUsersData: any[] = []
-    const status = this.currentFilter === 'active' ? 1 : 0
-    this.currentOffset = this.limit * ((this.pageIndex + 1) - 1)
-    this.usersService.getAllKongUsers(this.rootOrgId, status, this.limit, this.currentOffset, query).subscribe(data => {
-      this.userDataTotalCount = data.result.response.count
-      this.usersData = data.result.response
-      if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
-        _.filter(this.usersData.content, { isDeleted: false }).forEach((user: any) => {
-          // tslint:disable-next-line
-          const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') }
-          activeUsersData.push({
-            fullname: user ? `${user.firstName}` : null,
-            // fullname: user ? `${user.firstName} ${user.lastName}` : null,
-            email: user.personalDetails && user.personalDetails.primaryEmail ?
-              this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
-            role: org.roles || [],
-            userId: user.id,
-            active: !user.isDeleted,
-            blocked: user.blocked,
-            roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
-            orgId: user.rootOrgId,
-            orgName: user.rootOrgName,
-            allowEditUser: this.showEditUser(org.roles),
-          })
+    if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
+      _.filter(this.usersData.content, { isDeleted: false }).forEach((user: any) => {
+        // tslint:disable-next-line
+        const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') }
+        activeUsersData.push({
+          fullname: user ? `${user.firstName}` : null,
+          // fullname: user ? `${user.firstName} ${user.lastName}` : null,
+          email: user.personalDetails && user.personalDetails.primaryEmail ?
+            this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
+          role: org.roles || [],
+          userId: user.id,
+          active: !user.isDeleted,
+          blocked: user.blocked,
+          roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
+          orgId: user.rootOrgId,
+          orgName: user.rootOrgName,
+          allowEditUser: this.showEditUser(org.roles),
         })
-
-      }
-      this.activeUsersData = activeUsersData
-      return this.activeUsersData
-    })
-    // if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
-    //   _.filter(this.usersData.content, { isDeleted: false }).forEach((user: any) => {
-    //     // tslint:disable-next-line
-    //     const org = { roles: _.get(_.first(_.filter(user.organisations,
-    //   { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') }
-    //     activeUsersData.push({
-    //       fullname: user ? `${user.firstName}` : null,
-    //       // fullname: user ? `${user.firstName} ${user.lastName}` : null,
-    //       email: user.personalDetails && user.personalDetails.primaryEmail ?
-    //         this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
-    //       role: org.roles || [],
-    //       userId: user.id,
-    //       active: !user.isDeleted,
-    //       blocked: user.blocked,
-    //       roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
-    //       orgId: user.rootOrgId,
-    //       orgName: user.rootOrgName,
-    //       allowEditUser: this.showEditUser(org.roles),
-    //     })
-    //   })
-    // }
+      })
+    }
+    return activeUsersData
   }
-  inActiveUsers(query: string) {
+  get inActiveUsers() {
     this.loaderService.changeLoad.next(true)
     const inactiveUsersData: any[] = []
-    const status = this.currentFilter === 'active' ? 1 : 0
-    this.currentOffset = this.limit * ((this.pageIndex + 1) - 1)
-    this.usersService.getAllKongUsers(this.rootOrgId, status, this.limit, this.currentOffset, query).subscribe(
-      data => {
-        this.userDataTotalCount = data.result.response.count
-        this.usersData = data.result.response
-        if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
-          _.filter(this.usersData.content, { isDeleted: true }).forEach((user: any) => {
-            // tslint:disable-next-line
-            const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') }
-            inactiveUsersData.push({
-              fullname: user ? `${user.firstName}` : null,
-              // fullname: user ? `${user.firstName} ${user.lastName}` : null,
-              email: user.personalDetails && user.personalDetails.primaryEmail ?
-                this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
-              role: org.roles || [],
-              userId: user.id,
-              active: !user.isDeleted,
-              blocked: user.blocked,
-              roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
-              orgId: user.rootOrgId,
-              orgName: user.rootOrgName,
-              allowEditUser: this.showEditUser(org.roles),
-            })
-          })
-        }
-        this.inactiveUsersData = inactiveUsersData
-        return this.inactiveUsersData
+    if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
+      _.filter(this.usersData.content, { isDeleted: true }).forEach((user: any) => {
+        // tslint:disable-next-line
+        const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') || [] }
+        inactiveUsersData.push({
+          fullname: user ? `${user.firstName} ` : null,
+          // fullname: user ? `${user.firstName} ${user.lastName}` : null,
+          email: user.personalDetails && user.personalDetails.primaryEmail ?
+            this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
+          role: org.roles || [],
+          userId: user.id,
+          active: !user.isDeleted,
+          blocked: user.blocked,
+          roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
+          orgId: user.rootOrgId,
+          orgName: user.rootOrgName,
+          allowEditUser: this.showEditUser(org.roles),
+        })
       })
-    // if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
-    //   _.filter(this.usersData.content, { isDeleted: true }).forEach((user: any) => {
-    //     // tslint:disable-next-line
-    //     const org = { roles: _.get(_.first(_.filter(user.organisations,
-    // { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') || [] }
-    //     inactiveUsersData.push({
-    //       fullname: user ? `${user.firstName} ` : null,
-    //       // fullname: user ? `${user.firstName} ${user.lastName}` : null,
-    //       email: user.personalDetails && user.personalDetails.primaryEmail ?
-    //         this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
-    //       role: org.roles || [],
-    //       userId: user.id,
-    //       active: !user.isDeleted,
-    //       blocked: user.blocked,
-    //       roles: _.join(_.map((org.roles || []), i => `<li>${i}</li>`), ''),
-    //       orgId: user.rootOrgId,
-    //       orgName: user.rootOrgName,
-    //       allowEditUser: this.showEditUser(org.roles),
-    //     })
-    //   })
-    // }
-    // return inactiveUsersData
+    }
+    return inactiveUsersData
   }
 
   showEditUser(roles: any): boolean {
@@ -288,41 +217,40 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     return blockedUsersData
   }
 
-  // getAllUsers(offset?: number, functionality?: string) {
-  //   this.loaderService.changeLoad.next(true)
-  //   const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
-  //   // const filterObj = {
-  //   //   request: {
-  //   //     query: '',
-  //   //     filters: {
-  //   //       rootOrgId: this.configSvc,
-  //   //     },
-  //   //   },
-  //   // }
-  //   // this.usersService.getAllUsers(filterObj).subscribe(data => {
-  //   //   this.usersData = data
-  //   //   this.filterData()
-  //   // })
-  //   let status: number
-  //   if (functionality !== undefined && offset !== undefined) {
-  //     if (functionality === 'next') {
-  //       this.currentOffset = this.currentOffset + offset
-  //     } else { this.currentOffset = this.currentOffset - offset }
-  //     status = this.currentFilter == 'active' ? 1 : 0
-  //     this.usersService.getAllKongUsers(rootOrgId, status, this.currentOffset,).subscribe(data => {
-  //       this.userDataTotalCount = data.result.response.count
-  //       this.usersData = data.result.response
-  //       this.filterData('')
-  //     })
-  //   } else {
-  //     status = this.currentFilter == 'active' ? 1 : 0
-  //     this.usersService.getAllKongUsers(rootOrgId, status).subscribe(data => {
-  //       this.userDataTotalCount = data.result.response.count
-  //       this.usersData = data.result.response
-  //       this.filterData('')
-  //     })
-  //   }
-  // }
+  getAllUsers(offset?: number, functionality?: string) {
+    this.loaderService.changeLoad.next(true)
+    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+    // const filterObj = {
+    //   request: {
+    //     query: '',
+    //     filters: {
+    //       rootOrgId: this.configSvc,
+    //     },
+    //   },
+    // }
+    // this.usersService.getAllUsers(filterObj).subscribe(data => {
+    //   this.usersData = data
+    //   this.filterData()
+    // })
+
+    if (functionality !== undefined && offset !== undefined) {
+      if (functionality === 'next') {
+        this.currentOffset = this.currentOffset + offset
+      } else { this.currentOffset = this.currentOffset - offset }
+
+      this.usersService.getAllKongUsers(rootOrgId, this.currentOffset).subscribe(data => {
+        this.userDataTotalCount = data.result.response.count
+        this.usersData = data.result.response
+        this.filterData()
+      })
+    } else {
+      this.usersService.getAllKongUsers(rootOrgId).subscribe(data => {
+        this.userDataTotalCount = data.result.response.count
+        this.usersData = data.result.response
+        this.filterData()
+      })
+    }
+  }
 
   clickHandler(event: any) {
     // tslint:disable-next-line: no-console
@@ -395,8 +323,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i))
         this.usersService.blockUser(user).subscribe(response => {
           if (response) {
-            // this.getAllUsers()
-            this.filterData('')
+            this.getAllUsers()
             this.snackBar.open(response.result.response)
           }
         })
@@ -406,8 +333,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i))
         this.usersService.blockUser(user).subscribe(response => {
           if (response) {
-            // this.getAllUsers()
-            this.filterData('')
+            this.getAllUsers()
             this.snackBar.open('Updated successfully !')
           }
         })
@@ -419,9 +345,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         this.usersService.newBlockUser(loggedInUserId, user.request.userId).subscribe(response => {
           if (_.toUpper(response.params.status) === 'SUCCESS') {
             setTimeout(() => {
-              // this.getAllUsers()
-              // this.activeUsers('')
-              this.filterData('')
+              this.getAllUsers()
 
               this.snackBar.open('Deactivated successfully!')
             },
@@ -451,8 +375,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
         this.usersService.newUnBlockUser(loggedInUserId, user.request.userId).subscribe(response => {
           if (_.toUpper(response.params.status) === 'SUCCESS') {
             setTimeout(() => {
-              // this.getAllUsers()
-              this.filterData('')
+              this.getAllUsers()
               this.snackBar.open('Activated successfully!')
               // tslint:disable-next-line: align
             }, 1500)
@@ -470,20 +393,11 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   }
 
   onEnterkySearch(enterValue: any) {
-    // const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
-    // this.usersService.searchUserByenter(enterValue, rootOrgId).subscribe(data => {
-    //   this.usersData = data.result.response
-    //   this.filterData(enterValue)
-    // })
-    this.searchQuery = enterValue
-    this.currentOffset = 0
-    this.pageIndex = 0
-    this.filterData(this.searchQuery)
-  }
+    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
 
-  onPaginateChange(event: PageEvent) {
-    this.pageIndex = event.pageIndex
-    this.limit = event.pageSize
-    this.filterData(this.searchQuery)
+    this.usersService.searchUserByenter(enterValue, rootOrgId).subscribe(data => {
+      this.usersData = data.result.response
+      this.filterData()
+    })
   }
 }
