@@ -18,6 +18,7 @@ import { RolesService } from './services/roles.service'
 import { FileService } from './services/upload.service'
 import { UsersUploadComponent } from './components/users-upload/users-upload.component'
 import { PipeEmailModule } from '../pipes/pipe-email/pipe-email.module'
+import { PipeDurationTransformModule } from '@sunbird-cb/utils'
 
 @NgModule({
   declarations: [CreateUserComponent, ViewUserComponent, UsersUploadComponent],
@@ -27,7 +28,7 @@ import { PipeEmailModule } from '../pipes/pipe-email/pipe-email.module'
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule, MatSortModule, PipeEmailModule,
-    UIORGTableModule,
+    UIORGTableModule, PipeDurationTransformModule,
   ],
   providers: [RolesService, FileService, DatePipe],
   exports: [UsersUploadComponent],
