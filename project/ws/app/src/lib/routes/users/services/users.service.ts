@@ -24,7 +24,9 @@ const API_END_POINTS = {
   NEW_USER_BLOCK_API: '/apis/proxies/v8/user/v1/block',
   NEW_USER_UN_BLOCK_API: '/apis/proxies/v8/user/v1/unblock',
   SEARCH_USER_TABLE: '/apis/proxies/v8/user/v1/search',
-
+  SEND_OTP: '/apis/proxies/v8/otp/v1/generate',
+  RESEND_OTP: '/apis/proxies/v8/otp/v1/generate',
+  VERIFY_OTP: '/apis/proxies/v8/otp/v1/verify',
   // GET_BULKUPLOAD_DATA: '/apis/protected/v8/admin/userRegistration/bulkUploadData',
 }
 
@@ -185,5 +187,36 @@ export class UsersService {
 
   checkForUserReport(url: string) {
     return this.http.get<any>(url)
+  }
+
+  sendOtp(value: any, type: string): Observable<any> {
+    const reqObj = {
+      request: {
+        type: `${type}`,
+        key: `${value}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.SEND_OTP, reqObj)
+  }
+  resendOtp(value: any, type: string) {
+    const reqObj = {
+      request: {
+        type: `${type}`,
+        key: `${value}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.RESEND_OTP, reqObj)
+
+  }
+  verifyOTP(otp: number, value: any, type: string) {
+    const reqObj = {
+      request: {
+        otp,
+        type: `${type}`,
+        key: `${value}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.VERIFY_OTP, reqObj)
+
   }
 }
