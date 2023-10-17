@@ -337,7 +337,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
         this.snackBar.open(_.get(error, 'error.params.errmsg') || 'Please try again later')
       })
     } else {
-      this.snackBar.open('Please enter a valid mobile number',)
+      this.snackBar.open('Please enter a valid mobile number')
     }
   }
 
@@ -466,7 +466,6 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   verifyOtpEmail(otp: any) {
-    console.log(otp)
     // const email = this.registrationForm.get('email')
     if (otp && otp.value) {
       if (otp && otp.value.length < 4) {
