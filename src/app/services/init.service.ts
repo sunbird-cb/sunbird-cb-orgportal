@@ -93,6 +93,10 @@ export class InitService {
       'hubs',
       domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/hubs.svg'),
     )
+    iconRegistry.addSvgIcon(
+      'verified',
+      domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/verified.svg'),
+    )
   }
 
   async init() {
@@ -298,6 +302,7 @@ export class InitService {
             userId: _.get(profileV2, 'userId') || completeProdata.userId,
             email: _.get(profileV2, 'personalDetails.primaryEmail') || completeProdata.email,
             firstName: _.get(profileV2, 'personalDetails.firstname') || completeProdata.firstName,
+            mobile: _.get(completeProdata, 'profileDetails.personalDetails.mobile ') || '',
             // surName: _.get(profileV2, 'personalDetails.surname') || completeProdata.lastName,
             // middleName: _.get(profileV2, 'personalDetails.middlename') || '',
             departmentName: _.get(profileV2, 'employmentDetails.departmentName') || completeProdata.channel,
