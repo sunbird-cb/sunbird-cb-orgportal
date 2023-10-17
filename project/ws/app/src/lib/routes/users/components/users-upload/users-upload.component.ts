@@ -113,7 +113,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
       this.registrationForm.updateValueAndValidity()
     }
     if (this.userProfileV2) {
-      this.userMobile = this.userProfileV2.mobile || 7795317335
+      this.userMobile = this.userProfileV2.mobile || ''
       this.registrationForm.patchValue({ mobile: this.userMobile })
       this.registrationForm.updateValueAndValidity()
     }
