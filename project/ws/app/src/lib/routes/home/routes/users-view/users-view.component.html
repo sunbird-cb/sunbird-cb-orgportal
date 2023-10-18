@@ -42,7 +42,7 @@
         <ws-widget-org-user-table-v2 [userId]="currentUser" [tableData]="tabledata" [data]="dataForTable"
           [isUpload]=false [isCreate]=true (eOnButtonClick)="clickHandler($event)" (actionsClick)="menuActions($event)"
           (searchByEnterKey)="onEnterkySearch($event)" (pageChangeClick)="onPaginateChange($event)"
-          [showEditOnCondition]=true [totalRecords]="userDataTotalCount">
+          [showEditOnCondition]=true [totalRecords]="userDataTotalCount" [tabChangeIndex]="pageIndex">
         </ws-widget-org-user-table-v2>
 
         <!-- <div style="float: right;display: flex;">
