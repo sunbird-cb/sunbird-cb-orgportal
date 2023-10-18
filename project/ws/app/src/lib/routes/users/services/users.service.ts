@@ -110,7 +110,6 @@ export class UsersService {
 
   getAllKongUsers(depId: string, userStatus: number, pageLimit: number = 20, offsetNum: number = 0, searchText?: string): Observable<any> {
     let reqBody
-    // if (offsetNum !== undefined) {
     reqBody = {
       request: {
         filters: {
@@ -122,17 +121,6 @@ export class UsersService {
         query: searchText,
       },
     }
-    // }
-    // else {
-    //   reqBody = {
-    //     request: {
-    //       filters: {
-    //         rootOrgId: depId,
-    //         status: status
-    //       },
-    //     },
-    //   }
-    // }
     return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody)
   }
   // getAllRoleUsers(depId: string, role: {}): Observable<any> {
