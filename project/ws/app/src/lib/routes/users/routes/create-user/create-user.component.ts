@@ -30,6 +30,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   namePatern = `^[a-zA-Z\\s\\']{1,32}$`
   department: any = {}
   departmentName = ''
+  channelName = ''
   toastSuccess: any
   rolesList: any = []
   rolesObject: any = []
@@ -70,6 +71,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         this.bindUrl(event.urlAfterRedirects.replace('/app/home/', ''))
         if (_.get(this.activeRoute.snapshot, 'data.profileData.data')) {
+
           const leftData = this.activeRoute.snapshot.data.pageData.data.menus
           _.set(leftData, 'widgetData.logo', true)
           _.set(leftData, 'widgetData.logoPath', _.get(this.activeRoute, 'snapshot.data.profileData.data.rootOrg.imgUrl'))
@@ -80,7 +82,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         } else {
           const leftData = this.activeRoute.snapshot.data.pageData.data.menus
           const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
-          _.set(leftData, 'widgetData.name', fullProfile ? fullProfile.unMappedUser.channel : '')
+          _.set(leftData, 'widgetData.name', fullProfile ? fullProfile.unMappedUser.rootOrg.orgName : '')
           this.widgetData = leftData
         }
       }
@@ -89,7 +91,8 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
         this.department = fullProfile.unMappedUser.rootOrgId
-        this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
+        this.channelName = fullProfile ? fullProfile.unMappedUser.channel : ''
+        this.departmentName = fullProfile ? fullProfile.unMappedUser.rootOrg.orgName : ''
         const orgLst = _.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList')
 
         if (this.configService.unMappedUser && this.configService.unMappedUser.roles) {
@@ -206,7 +209,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
         userName: form.value.fname,
         firstName: form.value.fname,
         // lastName: form.value.lname,
-        channel: this.departmentName ? this.departmentName : null,
+        channel: this.channelName ? this.channelName : null,
         roles: form.value.roles,
       },
     }
