@@ -8,7 +8,7 @@ import { BreadcrumbsOrgModule, ScrollspyLeftMenuModule, UIORGTableModule } from 
 import {
   MatSidenavModule, MatGridListModule, MatListModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatIconModule, MatButtonModule, MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,
-  MatPaginatorModule, MatTableModule, MatSortModule,
+  MatPaginatorModule, MatTableModule, MatSortModule, MatChipsModule,
 } from '@angular/material'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
@@ -27,7 +27,7 @@ import { PipeEmailModule } from '../pipes/pipe-email/pipe-email.module'
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule, MatSortModule, PipeEmailModule,
-    UIORGTableModule,
+    UIORGTableModule, MatChipsModule,
   ],
   providers: [RolesService, FileService, DatePipe],
   exports: [UsersUploadComponent],

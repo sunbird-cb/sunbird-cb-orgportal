@@ -24,7 +24,8 @@ const API_END_POINTS = {
   NEW_USER_BLOCK_API: '/apis/proxies/v8/user/v1/block',
   NEW_USER_UN_BLOCK_API: '/apis/proxies/v8/user/v1/unblock',
   SEARCH_USER_TABLE: '/apis/proxies/v8/user/v1/search',
-
+  getDesignation: '/apis/proxies/v8/user/v1/positions',
+  updateUserDetails: '/apis/proxies/v8/user/v1/extPatch',
   // GET_BULKUPLOAD_DATA: '/apis/protected/v8/admin/userRegistration/bulkUploadData',
 }
 
@@ -185,5 +186,13 @@ export class UsersService {
 
   checkForUserReport(url: string) {
     return this.http.get<any>(url)
+  }
+
+  getDesignations(_req: any) {
+    return this.http.get<any>(API_END_POINTS.getDesignation)
+  }
+
+  updateUserDetails(reqBody: any) {
+    return this.http.post<any>(`${API_END_POINTS.updateUserDetails}`, reqBody)
   }
 }
