@@ -88,7 +88,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         }
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
         this.department = fullProfile.unMappedUser.rootOrgId
-        this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
+        this.departmentName = fullProfile ? fullProfile.unMappedUser.rootOrg.orgName : ''
         const orgLst = _.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList')
 
         if (fullProfile.unMappedUser && fullProfile.unMappedUser.roles) {

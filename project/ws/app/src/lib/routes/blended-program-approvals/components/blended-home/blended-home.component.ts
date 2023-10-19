@@ -30,7 +30,7 @@ export class BlendedHomeComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         this.bindUrl(event.urlAfterRedirects.replace('/app/blended-approvals/', ''))
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
-        const departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
+        const departmentName = fullProfile ? fullProfile.unMappedUser.rootOrg.orgName : ''
         if (fullProfile) {
           const leftData = this.activeRoute.snapshot.data.pageData.data.menus
           _.set(leftData, 'widgetData.logo', true)
