@@ -34,22 +34,24 @@
         </div>
       </div>
       <ng-container *ngIf="usersData && currentFilter !== 'upload'">
-        <ws-widget-org-user-table [userId]="currentUser" [tableData]="tabledata" [data]="dataForTable" [isUpload]=false
+        <!-- <ws-widget-user-table-v2 [userId]="currentUser" [tableData]="tabledata" [data]="dataForTable" [isUpload]=false
           [isCreate]=true (eOnButtonClick)="clickHandler($event)" (actionsClick)="menuActions($event)"
-          (searchByEnterKey)="onEnterkySearch($event)" [showEditOnCondition]=true>
-        </ws-widget-org-user-table>
-        <div style="float: right;display: flex;">
+          (searchByEnterKey)="onEnterkySearch($event)" (pageChangeClick)="onPaginateChange($event)"
+          [showEditOnCondition]=true [totalRecords]="userDataTotalCount">
+        </ws-widget-user-table-v2> -->
+        <ws-widget-org-user-table-v2 [userId]="currentUser" [tableData]="tabledata" [data]="dataForTable"
+          [isUpload]=false [isCreate]=true (eOnButtonClick)="clickHandler($event)" (actionsClick)="menuActions($event)"
+          (searchByEnterKey)="onEnterkySearch($event)" (pageChangeClick)="onPaginateChange($event)"
+          [showEditOnCondition]=true [totalRecords]="userDataTotalCount" [tabChangeIndex]="pageIndex">
+        </ws-widget-org-user-table-v2>
+
+        <!-- <div style="float: right;display: flex;">
           <button class="mr-5 move-button" matTooltip="display prev 250 data"
             [disabled]="(currentOffset > 0)? false :true" (click)="getAllUsers(250,'prev')">Prev </button>
           <button class="move-button" matTooltip=" display next 250 data"
             [disabled]="(currentOffset >= userDataTotalCount)? true :false" (click)="getAllUsers(250,'next')">Next
           </button>
-        </div>
-
-        <!-- <ws-widget-org-user-table [tableData]="tabledata" [data]="dataForTable" [isUpload]=true [isCreate]=true
-          (eOnButtonClick)="clickHandler($event)" (eOnRowClick)="onRoleClick($event)" (actionsClick)="menuActions($event)"
-          (searchByEnterKey)="onEnterkySearch($event)">
-        </ws-widget-org-user-table> -->
+        </div> -->
       </ng-container>
       <ng-container *ngIf="currentFilter === 'upload'">
         <ws-app-users-upload></ws-app-users-upload>
