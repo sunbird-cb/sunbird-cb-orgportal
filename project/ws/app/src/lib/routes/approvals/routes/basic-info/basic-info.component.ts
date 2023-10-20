@@ -13,6 +13,7 @@ import _ from 'lodash'
 export class BasicInfoComponent implements OnInit {
   basicInfo: any
   imagePath: any
+  verifiedKarmayogi: boolean = false
   constructor(private activeRoute: ActivatedRoute, private router: Router) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
@@ -24,6 +25,7 @@ export class BasicInfoComponent implements OnInit {
         // console.log(this.activeRoute.snapshot, 'this.activeRoute.snapshot====')
         this.basicInfo = profileData.personalDetails
         this.imagePath = profileData.photo
+        this.verifiedKarmayogi = profileData.verifiedKarmayogi
       }
     })
   }
