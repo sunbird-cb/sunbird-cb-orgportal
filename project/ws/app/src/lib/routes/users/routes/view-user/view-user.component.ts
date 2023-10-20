@@ -52,6 +52,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   updateProfessionalForm: FormGroup
   public selectedtags: any[] = []
   reqbody: any
+  isTagsEdited = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -358,6 +359,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     const input = event.input
     const value = event.value as unknown
     if ((value || '')) {
+      this.isTagsEdited = true
       this.selectedtags.push(value)
     }
     if (input) {
@@ -368,14 +370,13 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
       this.updateProfessionalForm.get('tags')!.setValue(null)
     }
     this.updateProfessionalForm.controls['tags'].reset()
-    this.updateProfessionalForm.controls['tags'].markAsPristine()
-    this.updateProfessionalForm.controls['tags'].markAsUntouched()
   }
 
   removeActivity(interest: any) {
     const index = this.selectedtags.indexOf(interest)
     if (index >= 0) {
       this.selectedtags.splice(index, 1)
+      this.isTagsEdited = true
     }
   }
 

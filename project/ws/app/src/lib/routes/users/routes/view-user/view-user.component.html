@@ -428,7 +428,14 @@
                               <button mat-raised-button type="submit"
                                 (click)="onSubmit(updateProfessionalForm, 'Professional')"
                                 class="margin-top-m text-white btn-success btn-responsive"
-                                [disabled]="!updateProfessionalForm.dirty">
+                                [disabled]="!updateProfessionalForm.dirty" *ngIf="!isTagsEdited">
+                                <span class="text-white" i18n>
+                                  Update
+                                </span>
+                              </button>
+                              <button mat-raised-button type="submit"
+                                (click)="onSubmit(updateProfessionalForm, 'Professional')"
+                                class="margin-top-m text-white btn-success btn-responsive" *ngIf="isTagsEdited">
                                 <span class="text-white" i18n>
                                   Update
                                 </span>
