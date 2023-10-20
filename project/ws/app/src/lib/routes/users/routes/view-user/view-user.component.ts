@@ -51,6 +51,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   designationsMeta!: any
   updateProfessionalForm: FormGroup
   public selectedtags: any[] = []
+  reqbody: any
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -73,7 +74,6 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         // console.log(this.activeRoute.snapshot.data.profileData.data, 'this.activeRoute.snapshot.data.profileData.data')
         this.configSvc = this.activeRoute.snapshot.data.configService || {}
         const profileDataAll = this.activeRoute.snapshot.data.profileData.data || {}
-        console.log('profileDataAll', profileDataAll)
         const profileData = profileDataAll.profileDetails
         if (profileData) {
           this.userID = profileData.id || profileData.userId || profileDataAll.id
@@ -88,6 +88,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           this.skillDetails = profileData.skills
           this.interests = profileData.interests
           this.userStatus = profileDataAll.isDeleted ? 'Inactive' : 'Active'
+
+          if (this.professionalDetails) {
+            const value = this.professionalDetails.designation || this.professionalDetails.designationOther || ''
+            this.updateProfessionalForm.controls['designation'].setValue(value)
+          }
 
         }
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
@@ -249,7 +254,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     })
 
     this.updateProfessionalForm = new FormGroup({
-      designation: new FormControl('', [Validators.required]),
+      designation: new FormControl('', []),
       tags: new FormControl('', []),
     })
   }
@@ -304,9 +309,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
 
   otherDropDownChange(value: any, field: string) {
     if (field === 'designation' && value !== 'Other') {
-      console.log('value', value)
-      // this.showDesignationOther = false
-      // this.createUserForm.controls['designationOther'].setValue('')
+      this.updateProfessionalForm.controls['designation'].setValue(value)
     }
   }
 
@@ -356,7 +359,6 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     const value = event.value as unknown
     if ((value || '')) {
       this.selectedtags.push(value)
-      console.log('this.selectedtags', this.selectedtags)
     }
     if (input) {
       input.value = ''
@@ -374,21 +376,58 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     const index = this.selectedtags.indexOf(interest)
     if (index >= 0) {
       this.selectedtags.splice(index, 1)
-      console.log('this.selectedtags', this.selectedtags)
     }
+  }
 
-    checkForChange(activityList: any) {
-      const newobj: any = []
-      activityList.forEach((val: any) => {
-        const reqObj = {
-          name: val,
+  checkForChange(activityList: any) {
+    const newobj: any = []
+    activityList.forEach((val: any) => {
+      const reqObj = {
+        name: val,
+      }
+      newobj.push(reqObj)
+    })
+  }
+
+  onSubmit(form: any, ftype: any) {
+    if (ftype === 'Professional') {
+      const tags = this.professionalDetails.tags
+      if (tags !== this.selectedtags) {
+        this.reqbody = {
+          request: {
+            userId: this.userID,
+            profileDetails: {
+              professionalDetails: {
+                designation: this.updateProfessionalForm.controls['designation'].value,
+                tags: this.selectedtags,
+              },
+            },
+          },
         }
-        newobj.push(reqObj)
+      } else {
+        this.reqbody = {
+          request: {
+            userId: this.userID,
+            profileDetails: {
+              professionalDetails: {
+                designation: this.updateProfessionalForm.controls['designation'].value,
+              },
+            },
+          },
+        }
+      }
+      this.usersSvc.updateUserDetails(this.reqbody).subscribe(dres => {
+        if (dres) {
+          this.openSnackbar('User updated Successfully')
+          if (this.qpParam === 'MDOinfo') {
+            this.router.navigate(['/app/home/mdoinfo/leadership'])
+          } else {
+            this.router.navigate(['/app/home/users'])
+          }
+        }
       })
-    }
-
-    onSubmit(form: any, ftype: any) {
-      if (ftype === 'Professional') {
+    } else {
+      if (form.value.roles !== this.orguserRoles) {
         const dreq = {
           request: {
             organisationId: this.department,
@@ -409,32 +448,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           }
         })
       } else {
-        if (form.value.roles !== this.orguserRoles) {
-          const dreq = {
-            request: {
-              organisationId: this.department,
-              userId: this.userID,
-              roles: form.value.roles,
-            },
-          }
-
-          this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
-            if (dres) {
-              this.updateUserRoleForm.reset({ roles: '' })
-              this.openSnackbar('User role updated Successfully')
-              if (this.qpParam === 'MDOinfo') {
-                this.router.navigate(['/app/home/mdoinfo/leadership'])
-              } else {
-                this.router.navigate(['/app/home/users'])
-              }
-            }
-          })
-        } else {
-          this.openSnackbar('Select new roles')
-        }
+        this.openSnackbar('Select new roles')
       }
-
     }
+
+  }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
     this.snackBar.open(primaryMsg, 'X', {

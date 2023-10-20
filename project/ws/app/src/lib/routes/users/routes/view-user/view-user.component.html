@@ -299,52 +299,23 @@
                                     [value]="professionalDetails.industry || professionalDetails.industryOther || ''"
                                     class="appr-text-field">
                                 </mat-grid-tile>
+
+                                <!-- designation -->
                                 <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                   <label class="appr-text-label">Designation</label>
                                   <!-- <input type="text" [disabled]="true"
                                     [value]="professionalDetails.designation || professionalDetails.designationOther || ''"
                                     class="appr-text-field"> -->
-                                  <mat-form-field appearance="outline" class="margin-top-xs">
-                                    <mat-select #designation formControlName="designation" i18n-placeholder
-                                      placeholder="--Select--"
-                                      (selectionChange)="otherDropDownChange(designation.value, 'designation')">
-                                      <mat-option [value]="designation.name"
-                                        *ngFor="let designation of designationsMeta">
-                                        {{designation.name}}
-                                      </mat-option>
-                                      <mat-option [value]="'Other'">Other</mat-option>
-                                    </mat-select>
-                                  </mat-form-field>
+                                  <mat-select class="appr-text-field" #designation formControlName="designation"
+                                    i18n-placeholder placeholder="--Select--"
+                                    (selectionChange)="otherDropDownChange(designation.value, 'designation')">
+                                    <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
+                                      {{designation.name}}
+                                    </mat-option>
+                                    <mat-option [value]="'Other'">Other</mat-option>
+                                  </mat-select>
                                 </mat-grid-tile>
-                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                  <label class="appr-text-label">Tags</label>
-                                  <div class="left-input-div">
-                                    <mat-form-field appearance="outline" class="margin-top-xs full-width flex flex-1">
-                                      <input #tags matInput i18n-placeholder="Type the tag and press enter" rows="5"
-                                        placeholder="Type the tag and press enter" formControlName="tags"
-                                        i18n-aria-label aria-label="Enter tag" [matChipInputFor]="chipListTags"
-                                        maxlength="100" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                        (matChipInputTokenEnd)="addActivity($event)" class="w-full-imp" />
-                                    </mat-form-field>
-                                  </div>
-                                  <div class="right-input-div">
-                                    <button mat-raised-button type="button"
-                                      (click)="addActivity({input: tags, value: tags.value})"
-                                      class="text-white btn-add-activity btn-responsive">
-                                      <span class="text-white" i18n>Add tag</span>
-                                    </button>
-                                  </div>
-                                  <div class="flex flex-row justify-between margin-top-s">
-                                    <mat-hint class="text-left text_hint mat-body-2">Start adding the tags.</mat-hint>
-                                  </div>
-                                  <mat-chip-list #chipListTags>
-                                    <mat-chip *ngFor="let tag of selectedtags" [selectable]="true" [removable]="true"
-                                      (removed)="removeActivity(tag)">
-                                      {{ tag }}
-                                      <mat-icon matChipRemove>cancel</mat-icon>
-                                    </mat-chip>
-                                  </mat-chip-list>
-                                </mat-grid-tile>
+
                                 <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                   <label class="appr-text-label">Location</label>
                                   <input type="text" [disabled]="true"
@@ -428,10 +399,36 @@
                                 </mat-grid-tile>
                               </mat-grid-list>
 
+                              <div class="margin-bottom-l">
+                                <label class="appr-text-label">Tags</label>
+                                <div class="left-input-div">
+                                  <input class="appr-text-field w-full-imp" #tags matInput
+                                    i18n-placeholder="Type tag here" placeholder="Type tag here" formControlName="tags"
+                                    i18n-aria-label aria-label="Enter tag" [matChipInputFor]="chipListTags"
+                                    autocomplete="off" maxlength="100"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addActivity($event)" />
+                                </div>
+                                <div class="right-input-div">
+                                  <button mat-raised-button type="button"
+                                    (click)="addActivity({input: tags, value: tags.value})"
+                                    class="text-white btn-add-activity btn-responsive">
+                                    <span class="text-white" i18n>Add tag</span>
+                                  </button>
+                                </div>
+                                <mat-chip-list #chipListTags>
+                                  <mat-chip *ngFor="let tag of selectedtags" [selectable]="true" [removable]="true"
+                                    (removed)="removeActivity(tag)">
+                                    {{ tag }}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                  </mat-chip>
+                                </mat-chip-list>
+                              </div>
+
                               <button mat-raised-button type="submit"
                                 (click)="onSubmit(updateProfessionalForm, 'Professional')"
                                 class="margin-top-m text-white btn-success btn-responsive"
-                                [disabled]="updateProfessionalForm?.invalid">
+                                [disabled]="!updateProfessionalForm.dirty">
                                 <span class="text-white" i18n>
                                   Update
                                 </span>

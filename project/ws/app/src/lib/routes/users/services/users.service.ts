@@ -25,7 +25,7 @@ const API_END_POINTS = {
   NEW_USER_UN_BLOCK_API: '/apis/proxies/v8/user/v1/unblock',
   SEARCH_USER_TABLE: '/apis/proxies/v8/user/v1/search',
   getDesignation: '/apis/proxies/v8/user/v1/positions',
-  updateUserDetails: '/apis/proxies/v8/user/v1/extPatch',
+  updateUserDetails: '/apis/proxies/v8/user/v1/admin/extPatch',
   SEND_OTP: '/apis/proxies/v8/otp/v1/generate',
   RESEND_OTP: '/apis/proxies/v8/otp/v1/generate',
   VERIFY_OTP: '/apis/proxies/v8/otp/v1/verify',
