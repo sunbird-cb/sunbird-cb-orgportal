@@ -48,6 +48,7 @@ const routes: Routes = [
         resolve: {
           usersList: UsersListResolve,
           pageData: PageResolve,
+          configService: ConfigResolveService,
         },
         data: {
           pageId: 'users',
@@ -63,6 +64,7 @@ const routes: Routes = [
         resolve: {
           usersList: UsersListResolve,
           pageData: PageResolve,
+          configService: ConfigResolveService,
         },
         data: {
           pageId: 'users',

@@ -18,7 +18,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.png"
+              "src/favicon.png",
+              "src/mdo-assets/icons/",
+              "src/mdo-assets/images/"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

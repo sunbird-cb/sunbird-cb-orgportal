@@ -26,6 +26,9 @@ const API_END_POINTS = {
   SEARCH_USER_TABLE: '/apis/proxies/v8/user/v1/search',
   getDesignation: '/apis/proxies/v8/user/v1/positions',
   updateUserDetails: '/apis/proxies/v8/user/v1/extPatch',
+  SEND_OTP: '/apis/proxies/v8/otp/v1/generate',
+  RESEND_OTP: '/apis/proxies/v8/otp/v1/generate',
+  VERIFY_OTP: '/apis/proxies/v8/otp/v1/verify',
   // GET_BULKUPLOAD_DATA: '/apis/protected/v8/admin/userRegistration/bulkUploadData',
 }
 
@@ -109,28 +112,19 @@ export class UsersService {
     return this.http.post<any>(`${API_END_POINTS.NEW_USER_UN_BLOCK_API}`, org)
   }
 
-  getAllKongUsers(depId: string, offsetNum?: number): Observable<any> {
+  getAllKongUsers(depId: string, userStatus: number, pageLimit: number = 20, offsetNum: number = 0, searchText?: string): Observable<any> {
     let reqBody
-    if (offsetNum !== undefined) {
-      reqBody = {
-        request: {
-          filters: {
-            rootOrgId: depId,
-          },
-          limit: 250,
-          offset: offsetNum,
+    reqBody = {
+      request: {
+        filters: {
+          rootOrgId: depId,
+          status: userStatus,
         },
-      }
-    } else {
-      reqBody = {
-        request: {
-          filters: {
-            rootOrgId: depId,
-          },
-        },
-      }
+        limit: pageLimit,
+        offset: offsetNum,
+        query: searchText,
+      },
     }
-
     return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody)
   }
   // getAllRoleUsers(depId: string, role: {}): Observable<any> {
@@ -194,5 +188,36 @@ export class UsersService {
 
   updateUserDetails(reqBody: any) {
     return this.http.post<any>(`${API_END_POINTS.updateUserDetails}`, reqBody)
+  }
+
+  sendOtp(value: any, type: string): Observable<any> {
+    const reqObj = {
+      request: {
+        type: `${type}`,
+        key: `${value}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.SEND_OTP, reqObj)
+  }
+  resendOtp(value: any, type: string) {
+    const reqObj = {
+      request: {
+        type: `${type}`,
+        key: `${value}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.RESEND_OTP, reqObj)
+
+  }
+  verifyOTP(otp: number, value: any, type: string) {
+    const reqObj = {
+      request: {
+        otp,
+        type: `${type}`,
+        key: `${value}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.VERIFY_OTP, reqObj)
+
   }
 }

@@ -136,7 +136,7 @@ export class BatchDetailsComponent implements OnInit {
       applicationIds: [this.batchData.batchId],
       limit: 100,
       offset: 0,
-      deptName: this.userProfile.channel,
+      deptName: this.userProfile.rootOrg.orgName,
     }
     this.bpService.getRequests(request).subscribe((res: any) => {
       if (res) {
@@ -165,7 +165,7 @@ export class BatchDetailsComponent implements OnInit {
       applicationIds: [this.batchData.batchId],
       limit: 100,
       offset: 0,
-      deptName: this.userProfile.channel,
+      deptName: this.userProfile.rootOrg.orgName,
     }
     this.bpService.getRequests(request).subscribe((res: any) => {
       if (res) {
@@ -182,7 +182,7 @@ export class BatchDetailsComponent implements OnInit {
       applicationIds: [this.batchData.batchId],
       limit: 100,
       offset: 0,
-      deptName: [this.userProfile.channel],
+      deptName: [this.userProfile.rootOrg.orgName],
     }
     this.bpService.getSerchRequests(request).subscribe((res: any) => {
       if (res) {

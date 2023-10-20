@@ -77,6 +77,19 @@ td, th {
   line-height: 2;
 }
 
+.mobile-wrapper {
+  border: 1px dashed rgba(0,0,0,.40);
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.radio-btn{
+  border: 1px solid #ddd;
+  padding: 5px 15px;
+  border-radius: 4px;
+  margin-right: 15px;
+}
+
 ::ng-deep .bulkupload-table .mat-column-dateCreatedOn,
 ::ng-deep .bulkupload-table .mat-column-dateUpdatedOn {
   flex: 0 0 14% !important;

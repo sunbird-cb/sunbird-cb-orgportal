@@ -10,4 +10,5 @@ export const environment = {
   userBucket: (window as { [key: string]: any })['env']['userBucket'] || '',
   domainName: (window as { [key: string]: any })['env']['domainName'] || '',
   mdoPath: (window as { [key: string]: any })['env']['mdoPath'] || '',
+  resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
 }
