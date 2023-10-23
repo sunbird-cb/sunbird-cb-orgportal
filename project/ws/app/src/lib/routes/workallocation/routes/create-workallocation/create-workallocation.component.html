@@ -126,7 +126,7 @@
                                                         <label for="position" class="margin-remove-bottom form-label"
                                                             i18n="Position label|Label which explains the user to enter position"
                                                             i18n-aria-label aria-label="Position label">
-                                                            Position
+                                                            Designation
                                                         </label>
                                                         <mat-form-field appearance="outline" class="margin-top-xs">
                                                             <input type="text" id="position" matInput #position
@@ -140,7 +140,7 @@
                                                                 i18n-aria-label
                                                                 aria-label="Position Error|Explains position is required "
                                                                 *ngIf="newAllocationForm?.controls['position']?.touched && newAllocationForm?.controls['position'].errors?.required">
-                                                                Position is mandatory
+                                                                Designation is mandatory
                                                             </mat-error>
                                                         </mat-form-field>
                                                     </div>
@@ -355,7 +355,7 @@
                             will recommend similar items to avoid duplication</label>
                         <label *ngIf="nosimilarUsers && similarUsers.length === 0">No users found</label>
                         <label *ngIf="nosimilarRoles && similarRoles.length === 0">No roles found</label>
-                        <label *ngIf="nosimilarPositions && similarPositions.length === 0">No position found</label>
+                        <label *ngIf="nosimilarPositions && similarPositions.length === 0">No designation found</label>
                         <label *ngIf="nosimilarActivities && similarActivities.length === 0">No activity found</label>
                     </div>
                 </div>
