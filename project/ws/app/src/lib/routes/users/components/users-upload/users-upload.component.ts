@@ -87,7 +87,6 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     this.userProfileV2 = _.get(this.route.snapshot.parent, 'data.configService.userProfileV2')
-    console.log('userProfileV2 ', this.userProfileV2)
     this.dataSource = new MatTableDataSource(this.bulkUploadData)
     this.dataSource.paginator = this.paginator
 
@@ -114,7 +113,6 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
       this.registrationForm.updateValueAndValidity()
     }
     if (this.userProfileV2) {
-      console.log('userProfileV2 ', this.userProfileV2)
       this.userMobile = this.userProfileV2.mobile || ''
       this.registrationForm.patchValue({ mobile: this.userMobile })
       this.registrationForm.updateValueAndValidity()

@@ -406,9 +406,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
               professionalDetails: [
                 {
                   designation: this.updateProfessionalForm.controls['designation'].value,
-                  tags: this.selectedtags,
                 }
               ],
+              additionalProperties: {
+                tag: this.selectedtags,
+              }
             },
           },
         }
