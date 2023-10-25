@@ -76,6 +76,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         this.configSvc = this.activeRoute.snapshot.data.configService || {}
         const profileDataAll = this.activeRoute.snapshot.data.profileData.data || {}
         const profileData = profileDataAll.profileDetails
+        this.updateTags(profileData)
         if (profileData) {
           this.userID = profileData.id || profileData.userId || profileDataAll.id
           this.basicInfo = profileData.personalDetails
@@ -355,6 +356,10 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     this.updateUserRoleForm.controls['roles'].setValue(this.orguserRoles)
   }
 
+  updateTags(profileData: any) {
+    this.selectedtags = _.get(profileData, 'additionalProperties.tag')
+  }
+
   addActivity(event: MatChipInputEvent) {
     const input = event.input
     const value = event.value as unknown
@@ -398,10 +403,12 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           request: {
             userId: this.userID,
             profileDetails: {
-              professionalDetails: {
-                designation: this.updateProfessionalForm.controls['designation'].value,
-                tags: this.selectedtags,
-              },
+              professionalDetails: [
+                {
+                  designation: this.updateProfessionalForm.controls['designation'].value,
+                  tags: this.selectedtags,
+                }
+              ],
             },
           },
         }
@@ -410,9 +417,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           request: {
             userId: this.userID,
             profileDetails: {
-              professionalDetails: {
-                designation: this.updateProfessionalForm.controls['designation'].value,
-              },
+              professionalDetails: [
+                {
+                  designation: this.updateProfessionalForm.controls['designation'].value,
+                }
+              ],
             },
           },
         }
