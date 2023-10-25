@@ -8,7 +8,7 @@ import { BreadcrumbsOrgModule, ScrollspyLeftMenuModule, UIORGTableModule } from 
 import {
   MatSidenavModule, MatGridListModule, MatListModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatIconModule, MatButtonModule, MatRadioModule, MatDialogModule, MatSelectModule, MatProgressSpinnerModule,
-  MatPaginatorModule, MatTableModule, MatSortModule,
+  MatPaginatorModule, MatTableModule, MatSortModule, MatChipsModule,
 } from '@angular/material'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
@@ -28,7 +28,7 @@ import { PipeDurationTransformModule } from '@sunbird-cb/utils'
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
     MatRadioModule, MatDialogModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule,
     MatExpansionModule, MatDividerModule, MatPaginatorModule, MatTableModule, WidgetResolverModule, MatSortModule, PipeEmailModule,
-    UIORGTableModule, PipeDurationTransformModule,
+    UIORGTableModule, MatChipsModule, PipeDurationTransformModule,
   ],
   providers: [RolesService, FileService, DatePipe],
   exports: [UsersUploadComponent],

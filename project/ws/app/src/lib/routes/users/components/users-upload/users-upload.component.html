@@ -28,7 +28,7 @@
             <ng-container *ngIf="fileName && registrationForm.value.otpType==='email'">
               <ng-container *ngIf="userEmail && !otpEmailSend">
                 <p for="email" class=" margin-remove-bottom margin-top-s" i18n-aria-label aria-label="Email label">
-                  OTP will be sent your registered email
+                  OTP will be sent to your registered email
                 </p>
               </ng-container>
               <ng-container *ngIf="!userEmail">
@@ -40,7 +40,7 @@
             <ng-container *ngIf="fileName && registrationForm.value.otpType==='mobile'">
               <ng-container *ngIf="userMobile">
                 <p for="email" class=" margin-remove-bottom margin-top-s" i18n-aria-label aria-label="Email label">
-                  OTP will be sent your registered mobile number
+                  OTP will be sent to your registered mobile number
                 </p>
               </ng-container>
               <ng-container *ngIf="!userMobile">

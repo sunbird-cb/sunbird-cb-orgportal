@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import moment from 'moment'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { UsersService } from '../../services/users.service'
-import { MatSnackBar } from '@angular/material'
+import { MatChipInputEvent, MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { EventService } from '@sunbird-cb/utils'
@@ -48,6 +48,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   breadcrumbs: any
   isMdoAdmin = false
   isMdoLeader = false
+  designationsMeta!: any
+  updateProfessionalForm: FormGroup
+  public selectedtags: any[] = []
+  reqbody: any
+  isTagsEdited = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -71,6 +76,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         this.configSvc = this.activeRoute.snapshot.data.configService || {}
         const profileDataAll = this.activeRoute.snapshot.data.profileData.data || {}
         const profileData = profileDataAll.profileDetails
+        this.updateTags(profileData)
         if (profileData) {
           this.userID = profileData.id || profileData.userId || profileDataAll.id
           this.basicInfo = profileData.personalDetails
@@ -84,6 +90,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           this.skillDetails = profileData.skills
           this.interests = profileData.interests
           this.userStatus = profileDataAll.isDeleted ? 'Inactive' : 'Active'
+
+          if (this.professionalDetails) {
+            const value = this.professionalDetails.designation || this.professionalDetails.designationOther || ''
+            this.updateProfessionalForm.controls['designation'].setValue(value)
+          }
 
         }
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
@@ -243,9 +254,15 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     this.updateUserRoleForm = new FormGroup({
       roles: new FormControl('', [Validators.required]),
     })
+
+    this.updateProfessionalForm = new FormGroup({
+      designation: new FormControl('', []),
+      tags: new FormControl('', []),
+    })
   }
 
   ngOnInit() {
+    this.init()
     this.tabsData = [
       {
         name: 'Personal details',
@@ -277,6 +294,25 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         render: true,
         enabled: true,
       }]
+  }
+
+  async init() {
+    await this.loadDesignations()
+  }
+
+  async loadDesignations() {
+    await this.usersSvc.getDesignations({}).subscribe(
+      (data: any) => {
+        this.designationsMeta = data.responseData
+      },
+      (_err: any) => {
+      })
+  }
+
+  otherDropDownChange(value: any, field: string) {
+    if (field === 'designation' && value !== 'Other') {
+      this.updateProfessionalForm.controls['designation'].setValue(value)
+    }
   }
 
   ngAfterViewInit() {
@@ -320,20 +356,81 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     this.updateUserRoleForm.controls['roles'].setValue(this.orguserRoles)
   }
 
-  onSubmit(form: any) {
-    if (form.value.roles !== this.orguserRoles) {
-      const dreq = {
-        request: {
-          organisationId: this.department,
-          userId: this.userID,
-          roles: form.value.roles,
-        },
-      }
+  updateTags(profileData: any) {
+    this.selectedtags = _.get(profileData, 'additionalProperties.tag')
+  }
 
-      this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
+  addActivity(event: MatChipInputEvent) {
+    const input = event.input
+    const value = event.value as unknown
+    if ((value || '')) {
+      this.isTagsEdited = true
+      this.selectedtags.push(value)
+    }
+    if (input) {
+      input.value = ''
+    }
+    if (this.updateProfessionalForm.get('tags')) {
+      // tslint:disable-next-line: no-non-null-assertion
+      this.updateProfessionalForm.get('tags')!.setValue(null)
+    }
+    this.updateProfessionalForm.controls['tags'].reset()
+  }
+
+  removeActivity(interest: any) {
+    const index = this.selectedtags.indexOf(interest)
+    if (index >= 0) {
+      this.selectedtags.splice(index, 1)
+      this.isTagsEdited = true
+    }
+  }
+
+  checkForChange(activityList: any) {
+    const newobj: any = []
+    activityList.forEach((val: any) => {
+      const reqObj = {
+        name: val,
+      }
+      newobj.push(reqObj)
+    })
+  }
+
+  onSubmit(form: any, ftype: any) {
+    if (ftype === 'Professional') {
+      const tags = this.professionalDetails.tags
+      if (tags !== this.selectedtags) {
+        this.reqbody = {
+          request: {
+            userId: this.userID,
+            profileDetails: {
+              professionalDetails: [
+                {
+                  designation: this.updateProfessionalForm.controls['designation'].value,
+                }
+              ],
+              additionalProperties: {
+                tag: this.selectedtags,
+              }
+            },
+          },
+        }
+      } else {
+        this.reqbody = {
+          request: {
+            userId: this.userID,
+            profileDetails: {
+              professionalDetails: [
+                {
+                  designation: this.updateProfessionalForm.controls['designation'].value,
+                }
+              ],
+            },
+          },
+        }
+      }
+      this.usersSvc.updateUserDetails(this.reqbody).subscribe(dres => {
         if (dres) {
-          this.updateUserRoleForm.reset({ roles: '' })
-          this.openSnackbar('User role updated Successfully')
+          this.openSnackbar('User updated Successfully')
           if (this.qpParam === 'MDOinfo') {
             this.router.navigate(['/app/home/mdoinfo/leadership'])
           } else {
@@ -342,8 +439,31 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         }
       })
     } else {
-      this.openSnackbar('Select new roles')
+      if (form.value.roles !== this.orguserRoles) {
+        const dreq = {
+          request: {
+            organisationId: this.department,
+            userId: this.userID,
+            roles: form.value.roles,
+          },
+        }
+
+        this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
+          if (dres) {
+            this.updateUserRoleForm.reset({ roles: '' })
+            this.openSnackbar('User role updated Successfully')
+            if (this.qpParam === 'MDOinfo') {
+              this.router.navigate(['/app/home/mdoinfo/leadership'])
+            } else {
+              this.router.navigate(['/app/home/users'])
+            }
+          }
+        })
+      } else {
+        this.openSnackbar('Select new roles')
+      }
     }
+
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

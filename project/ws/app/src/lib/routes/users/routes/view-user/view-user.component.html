@@ -2,8 +2,6 @@
   <div class="flex flex-1 custom">
     <div class="flex-3">
       <div class="flex flex-1 margin-left-xl">
-
-
         <ws-widget-breadcrumbs-org [widgetData]="{url: 'home',titles: breadcrumbs}">
         </ws-widget-breadcrumbs-org>
       </div>
@@ -42,15 +40,15 @@
                               </mat-grid-tile>
 
                               <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                              <label class="appr-text-label">Middle Name</label>
-                              <input type="text" [disabled]="true" [value]="basicInfo.middlename" class="appr-text-field">
-                            </mat-grid-tile> -->
+                                <label class="appr-text-label">Middle Name</label>
+                                <input type="text" [disabled]="true" [value]="basicInfo.middlename" class="appr-text-field">
+                              </mat-grid-tile> -->
 
                               <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Last name</label>
-                                <input type="text" [disabled]="true" [value]="basicInfo.surname"
-                                  class="appr-text-field">
-                              </mat-grid-tile> -->
+                                  <label class="appr-text-label">Last name</label>
+                                  <input type="text" [disabled]="true" [value]="basicInfo.surname"
+                                    class="appr-text-field">
+                                </mat-grid-tile> -->
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                 <label class="appr-text-label">Date of birth (dd-mm-yy)</label>
@@ -146,7 +144,6 @@
                                 <input type="text" [disabled]="true"
                                   [value]="basicInfo.pincode ? basicInfo.pincode : ''" class="appr-text-field">
                               </mat-grid-tile>
-
                             </mat-grid-list>
                           </ng-container>
                         </div>
@@ -277,118 +274,173 @@
                       <div class="flex flex-wrap mobile-break">
                         <div class="w-full profile-cols-full bg-grey">
                           <ng-container>
-                            <mat-grid-list cols="1" rowHeight="100px">
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Type of organisation</label>
-                                <mat-radio-group [value]="professionalDetails.organisationType" [disabled]="true"
-                                  aria-label="Select an option">
-                                  <mat-radio-button value="Government" class="radio-btn">Government organisation
-                                  </mat-radio-button>
-                                  <mat-radio-button value="Non-Government" class="radio-btn">Non-government
-                                    organisation
-                                  </mat-radio-button>
-                                </mat-radio-group>
-                              </mat-grid-tile>
+                            <form [formGroup]="updateProfessionalForm">
+                              <mat-grid-list cols="1" rowHeight="100px">
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Type of organisation</label>
+                                  <mat-radio-group [value]="professionalDetails.organisationType" [disabled]="true"
+                                    aria-label="Select an option">
+                                    <mat-radio-button value="Government" class="radio-btn">Government organisation
+                                    </mat-radio-button>
+                                    <mat-radio-button value="Non-Government" class="radio-btn">Non-government
+                                      organisation
+                                    </mat-radio-button>
+                                  </mat-radio-group>
+                                </mat-grid-tile>
 
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">MDO</label>
-                                <input type="text" [disabled]="true" class="appr-text-field"
-                                  [value]="professionalDetails.name || professionalDetails.nameOther || ''">
-                              </mat-grid-tile>
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Industry</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="professionalDetails.industry || professionalDetails.industryOther || ''"
-                                  class="appr-text-field">
-                              </mat-grid-tile>
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Designation</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="professionalDetails.designation || professionalDetails.designationOther || ''"
-                                  class="appr-text-field">
-                              </mat-grid-tile>
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Location</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="professionalDetails.location ? professionalDetails.location : ''"
-                                  class="appr-text-field">
-                              </mat-grid-tile>
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Description</label>
-                                <textarea [disabled]="true" rows="3"
-                                  [value]="professionalDetails.description ? professionalDetails.description : ''"
-                                  class="appr-text-field"></textarea>
-                              </mat-grid-tile>
-                            </mat-grid-list>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">MDO</label>
+                                  <input type="text" [disabled]="true" class="appr-text-field"
+                                    [value]="professionalDetails.name || professionalDetails.nameOther || ''">
+                                </mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Industry</label>
+                                  <input type="text" [disabled]="true"
+                                    [value]="professionalDetails.industry || professionalDetails.industryOther || ''"
+                                    class="appr-text-field">
+                                </mat-grid-tile>
 
-                            <mat-grid-list cols="1" rowHeight="50px" class="margin-top-xl">
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="middle-heading">Other details for government employess (If
-                                  applicable)</label>
-                              </mat-grid-tile>
-                            </mat-grid-list>
+                                <!-- designation -->
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Designation</label>
+                                  <!-- <input type="text" [disabled]="true"
+                                    [value]="professionalDetails.designation || professionalDetails.designationOther || ''"
+                                    class="appr-text-field"> -->
+                                  <mat-select class="appr-text-field" #designation formControlName="designation"
+                                    i18n-placeholder placeholder="--Select--"
+                                    (selectionChange)="otherDropDownChange(designation.value, 'designation')">
+                                    <mat-option [value]="designation.name" *ngFor="let designation of designationsMeta">
+                                      {{designation.name}}
+                                    </mat-option>
+                                    <mat-option [value]="'Other'">Other</mat-option>
+                                  </mat-select>
+                                </mat-grid-tile>
 
-                            <mat-grid-list cols="2" rowHeight="100px">
-                              <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Pay band (grade pay)</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails && employmentDetails.payType ? employmentDetails.payType : ''"
-                                  class="appr-text-field">
-                              </mat-grid-tile>
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Service</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails && employmentDetails.service ? employmentDetails.service : ''"
-                                  class="appr-text-field">
-                              </mat-grid-tile>
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Cadre</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails && employmentDetails.cadre ? employmentDetails.cadre : ''"
-                                  class="appr-text-field">
-                              </mat-grid-tile>
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Allotment year of service</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails && employmentDetails.allotmentYearOfService ? employmentDetails.allotmentYearOfService : ''"
-                                  class="appr-text-field">
-                              </mat-grid-tile>
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Date of joining</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails && employmentDetails.dojOfService ? employmentDetails.dojOfService : ''"
-                                  class="appr-text-field">
-                              </mat-grid-tile>
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Civil list number</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails && employmentDetails.civilListNo ? employmentDetails.civilListNo : ''"
-                                  class="appr-text-field">
-                              </mat-grid-tile>
-                              <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Emplyee code</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails && employmentDetails.employeeCode ? employmentDetails.employeeCode : ''"
-                                  class="appr-text-field">
-                              </mat-grid-tile>
-                              <!-- <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Location</label>
-                                <input type="text" [disabled]="true" [value]="professionalDetails.location"
-                                  class="appr-text-field">
-                              </mat-grid-tile> -->
-                              <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Official postal address</label>
-                                <textarea [disabled]="true" rows="3"
-                                  [value]="employmentDetails && employmentDetails.officialPostalAddress ? employmentDetails.officialPostalAddress : ''"
-                                  class="appr-text-field"></textarea>
-                              </mat-grid-tile>
-                              <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Pin code</label>
-                                <input type="text" [disabled]="true"
-                                  [value]="employmentDetails && employmentDetails.pinCode ? employmentDetails.pinCode : ''"
-                                  class="appr-text-field">
-                              </mat-grid-tile>
-                            </mat-grid-list>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Location</label>
+                                  <input type="text" [disabled]="true"
+                                    [value]="professionalDetails.location ? professionalDetails.location : ''"
+                                    class="appr-text-field">
+                                </mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Description</label>
+                                  <textarea [disabled]="true" rows="3"
+                                    [value]="professionalDetails.description ? professionalDetails.description : ''"
+                                    class="appr-text-field"></textarea>
+                                </mat-grid-tile>
+                              </mat-grid-list>
+
+                              <mat-grid-list cols="1" rowHeight="50px" class="margin-top-xl">
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="middle-heading">Other details for government employess (If
+                                    applicable)</label>
+                                </mat-grid-tile>
+                              </mat-grid-list>
+
+                              <mat-grid-list cols="2" rowHeight="100px">
+                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Pay band (grade pay)</label>
+                                  <input type="text" [disabled]="true"
+                                    [value]="employmentDetails && employmentDetails.payType ? employmentDetails.payType : ''"
+                                    class="appr-text-field">
+                                </mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Service</label>
+                                  <input type="text" [disabled]="true"
+                                    [value]="employmentDetails && employmentDetails.service ? employmentDetails.service : ''"
+                                    class="appr-text-field">
+                                </mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Cadre</label>
+                                  <input type="text" [disabled]="true"
+                                    [value]="employmentDetails && employmentDetails.cadre ? employmentDetails.cadre : ''"
+                                    class="appr-text-field">
+                                </mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Allotment year of service</label>
+                                  <input type="text" [disabled]="true"
+                                    [value]="employmentDetails && employmentDetails.allotmentYearOfService ? employmentDetails.allotmentYearOfService : ''"
+                                    class="appr-text-field">
+                                </mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Date of joining</label>
+                                  <input type="text" [disabled]="true"
+                                    [value]="employmentDetails && employmentDetails.dojOfService ? employmentDetails.dojOfService : ''"
+                                    class="appr-text-field">
+                                </mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Civil list number</label>
+                                  <input type="text" [disabled]="true"
+                                    [value]="employmentDetails && employmentDetails.civilListNo ? employmentDetails.civilListNo : ''"
+                                    class="appr-text-field">
+                                </mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Emplyee code</label>
+                                  <input type="text" [disabled]="true"
+                                    [value]="employmentDetails && employmentDetails.employeeCode ? employmentDetails.employeeCode : ''"
+                                    class="appr-text-field">
+                                </mat-grid-tile>
+                                <!-- <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Location</label>
+                                  <input type="text" [disabled]="true" [value]="professionalDetails.location"
+                                    class="appr-text-field">
+                                </mat-grid-tile> -->
+                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Official postal address</label>
+                                  <textarea [disabled]="true" rows="3"
+                                    [value]="employmentDetails && employmentDetails.officialPostalAddress ? employmentDetails.officialPostalAddress : ''"
+                                    class="appr-text-field"></textarea>
+                                </mat-grid-tile>
+                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Pin code</label>
+                                  <input type="text" [disabled]="true"
+                                    [value]="employmentDetails && employmentDetails.pinCode ? employmentDetails.pinCode : ''"
+                                    class="appr-text-field">
+                                </mat-grid-tile>
+                              </mat-grid-list>
+
+                              <div class="margin-bottom-l">
+                                <label class="appr-text-label">Tags</label>
+                                <div class="left-input-div">
+                                  <input class="appr-text-field w-full-imp" #tags matInput
+                                    i18n-placeholder="Type tag here" placeholder="Type tag here" formControlName="tags"
+                                    i18n-aria-label aria-label="Enter tag" [matChipInputFor]="chipListTags"
+                                    autocomplete="off" maxlength="100"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addActivity($event)" />
+                                </div>
+                                <div class="right-input-div">
+                                  <button mat-raised-button type="button"
+                                    (click)="addActivity({input: tags, value: tags.value})"
+                                    class="text-white btn-add-activity btn-responsive">
+                                    <span class="text-white" i18n>Add tag</span>
+                                  </button>
+                                </div>
+                                <mat-chip-list #chipListTags>
+                                  <mat-chip *ngFor="let tag of selectedtags" [selectable]="true" [removable]="true"
+                                    (removed)="removeActivity(tag)">
+                                    {{ tag }}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                  </mat-chip>
+                                </mat-chip-list>
+                              </div>
+
+                              <button mat-raised-button type="submit"
+                                (click)="onSubmit(updateProfessionalForm, 'Professional')"
+                                class="margin-top-m text-white btn-success btn-responsive"
+                                [disabled]="!updateProfessionalForm.dirty" *ngIf="!isTagsEdited">
+                                <span class="text-white" i18n>
+                                  Update
+                                </span>
+                              </button>
+                              <button mat-raised-button type="submit"
+                                (click)="onSubmit(updateProfessionalForm, 'Professional')"
+                                class="margin-top-m text-white btn-success btn-responsive" *ngIf="isTagsEdited">
+                                <span class="text-white" i18n>
+                                  Update
+                                </span>
+                              </button>
+                            </form>
                           </ng-container>
                         </div>
                       </div>
@@ -482,7 +534,7 @@
                                   </mat-list-option>
                                 </mat-selection-list>
                               </div>
-                              <button mat-raised-button type="submit" (click)="onSubmit(updateUserRoleForm)"
+                              <button mat-raised-button type="submit" (click)="onSubmit(updateUserRoleForm, 'Roles')"
                                 class="margin-top-m text-white btn-success btn-responsive"
                                 [disabled]="updateUserRoleForm?.invalid">
                                 <span class="text-white" i18n>
