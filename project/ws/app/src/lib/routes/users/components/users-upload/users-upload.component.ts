@@ -65,6 +65,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   userEmail = ''
   userMobile = ''
   userProfileV2!: any
+  myRoles: any = []
 
   objDataSource = new MatTableDataSource<any>()
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | null = null
@@ -87,6 +88,9 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     this.userProfileV2 = _.get(this.route.snapshot.parent, 'data.configService.userProfileV2')
+    if (_.get(this.route.snapshot.parent, 'data.configService.userRoles')) {
+      this.myRoles = _.get(this.route.snapshot.parent, 'data.configService.userRoles')
+    }
     this.dataSource = new MatTableDataSource(this.bulkUploadData)
     this.dataSource.paginator = this.paginator
 
@@ -513,6 +517,13 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         })
     }
+  }
+
+  get getKarmayogiLink() {
+    if (this.myRoles && this.myRoles.has('public')) {
+      return `${environment.karmYogiPath}/app/user-profile/details`
+    }
+    return ''
   }
 
 }

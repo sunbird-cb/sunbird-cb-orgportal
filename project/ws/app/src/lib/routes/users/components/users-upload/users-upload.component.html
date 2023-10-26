@@ -45,7 +45,10 @@
               </ng-container>
               <ng-container *ngIf="!userMobile">
                 <p for="email" class=" margin-remove-bottom margin-top-s" i18n-aria-label aria-label="Email label">
-                  No mobile number associated with your account
+                  No mobile number associated with your account.
+                  <a *ngIf="getKarmayogiLink" [href]="getKarmayogiLink">
+                    <span i18n>Click here to update</span>
+                  </a>
                 </p>
               </ng-container>
             </ng-container>
