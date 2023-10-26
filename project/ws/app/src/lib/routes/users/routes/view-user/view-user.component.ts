@@ -50,7 +50,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   isMdoLeader = false
   designationsMeta!: any
   updateProfessionalForm: FormGroup
-  public selectedtags: any[] = []
+  selectedtags: any[] = []
   reqbody: any
   isTagsEdited = false
 
@@ -357,7 +357,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   }
 
   updateTags(profileData: any) {
-    this.selectedtags = _.get(profileData, 'additionalProperties.tag')
+    this.selectedtags = _.get(profileData, 'additionalProperties.tag') || []
   }
 
   addActivity(event: MatChipInputEvent) {
@@ -406,11 +406,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
               professionalDetails: [
                 {
                   designation: this.updateProfessionalForm.controls['designation'].value,
-                }
+                },
               ],
               additionalProperties: {
                 tag: this.selectedtags,
-              }
+              },
             },
           },
         }
@@ -422,7 +422,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
               professionalDetails: [
                 {
                   designation: this.updateProfessionalForm.controls['designation'].value,
-                }
+                },
               ],
             },
           },
