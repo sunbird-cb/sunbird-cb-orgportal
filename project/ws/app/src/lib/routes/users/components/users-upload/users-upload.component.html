@@ -192,22 +192,23 @@
           </form>
 
           <ng-container *ngIf="fileName && (isEmailVerified || isMobileVerified)">
-            <div class="flex mt-5 items-end justify-end">
+            <div class="flex mt-5 items-end justify-start">
               <div class="text-left mr-5">
                 <button mat-button class="download-btn mat-accent-border mat-button mat-button-base" type="button" i18n
                   (click)="cancelSelected()" (dblclick)="$event.preventDefault();" *ngIf="fileName">
                   <ng-container i18n>Cancel</ng-container>
                 </button>
               </div>
-              <div class="text-left ">
-                <div *ngIf="displayLoader | async" class="pr-4 flex items-center justify-center">
-                  <mat-spinner [diameter]="30"></mat-spinner>
-                </div>
+              <div class="text-left flex">
+
                 <button mat-button class="upload-btn mat-button mat-button-base mr-5" type="submit" i18n
                   [disabled]="formGroup.invalid || (displayLoader | async)" (click)="onSubmit(form)"
                   (dblclick)="$event.preventDefault();" *ngIf="fileName">
                   <ng-container i18n>Upload</ng-container>
                 </button>
+                <div *ngIf="displayLoader | async" class="pr-4 ml-4 flex items-center justify-center">
+                  <mat-spinner [diameter]="30"></mat-spinner>
+                </div>
               </div>
             </div>
           </ng-container>

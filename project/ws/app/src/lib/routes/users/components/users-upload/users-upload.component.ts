@@ -157,11 +157,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   radioChange(_event: MatRadioChange) {
     // console.log(_event.source.name, _event.value)
-    this.isEmailVerified = false
-    this.otpEmailSend = false
-    this.isMobileVerified = false
-    this.otpSend = false
-    this.disableVerifyBtn = false
+    this.resetOTPFields()
   }
 
   getBulkUploadData() {
@@ -233,13 +229,14 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
           .subscribe(
             _res => {
               // this.uplaodSuccessMsg = res
-              this.openSnackbar('File uploaded successfully..!')
+              this.openSnackbar('File uploaded successfully!')
               this.cancelSelected()
               // // tslint:disable-next-line: no-non-null-assertion
               // this.formGroup!.get('file')!.setValue(['', Validators.required])
               if (form && form.file) {
                 form.file.value = ''
               }
+              this.resetOTPFields()
               this.formGroup.reset()
               this.getBulkUploadData()
             },
@@ -253,6 +250,14 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
       this.showFileError = true
       this.openSnackbar(this.toastError.nativeElement.value)
     }
+  }
+
+  resetOTPFields() {
+    this.isEmailVerified = false
+    this.otpEmailSend = false
+    this.isMobileVerified = false
+    this.otpSend = false
+    this.disableVerifyBtn = false
   }
 
   public refreshTable() {
@@ -437,7 +442,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.userEmail) {
       this.usersSvc.sendOtp(this.userEmail, 'email').subscribe(() => {
         this.otpEmailSend = true
-        alert('An OTP has been sent to your email (valid for 15 minutes)')
+        alert('An OTP has been sent to your email address (valid for 15 minutes)')
         this.startCountDownEmail()
         // tslint:disable-next-line: align
       }, (error: any) => {
