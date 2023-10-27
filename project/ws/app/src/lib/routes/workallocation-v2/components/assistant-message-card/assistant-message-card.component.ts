@@ -150,10 +150,10 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
       result.push({ _type: 'error', type: 'officer', counts: 0, label: 'Officer name is empty' })
     }
     if (data && data.position === '' && (data.officerName !== '' || data.positionDescription !== '')) {
-      result.push({ _type: 'error', type: 'officer', counts: 0, label: 'Postion missing' })
+      result.push({ _type: 'error', type: 'officer', counts: 0, label: 'Designation missing' })
     }
     if (data && data.positionDescription === '') {
-      result.push({ _type: 'warning', type: 'officer', counts: 0, label: 'Position description missing' })
+      result.push({ _type: 'warning', type: 'officer', counts: 0, label: 'Designation description missing' })
     }
     return result
   }
