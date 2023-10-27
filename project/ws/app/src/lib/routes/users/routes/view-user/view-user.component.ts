@@ -9,6 +9,7 @@ import _ from 'lodash'
 import { EventService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import { COMMA, ENTER } from '@angular/cdk/keycodes'
 
 @Component({
   selector: 'ws-app-view-user',
@@ -53,6 +54,8 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   selectedtags: any[] = []
   reqbody: any
   isTagsEdited = false
+  separatorKeysCodes: number[] = [ENTER, COMMA]
+  namePatern = `^[a-zA-Z ]*$`
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -257,7 +260,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
 
     this.updateProfessionalForm = new FormGroup({
       designation: new FormControl('', []),
-      tags: new FormControl('', []),
+      tags: new FormControl('', [Validators.pattern(this.namePatern)]),
     })
   }
 
@@ -362,8 +365,8 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
 
   addActivity(event: MatChipInputEvent) {
     const input = event.input
-    const value = event.value as unknown
-    if ((value || '')) {
+    const value = event.value as string
+    if ((value && value.trim()) && this.updateProfessionalForm.valid) {
       this.isTagsEdited = true
       this.selectedtags.push(value)
     }

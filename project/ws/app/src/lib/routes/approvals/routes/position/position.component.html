@@ -108,6 +108,17 @@
                   <input type="text" [disabled]="true"
                     [value]="professionalDetails.industry ? professionalDetails.industry : ''" class="appr-text-field">
                 </mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
+                  <label class="appr-text-label">Tags</label>
+                  <mat-chip-list #chipListTags *ngIf="selectedtags && selectedtags.length">
+                    <mat-chip *ngFor="let tag of selectedtags" [selectable]="true" [removable]="true"
+                      (removed)="removeActivity(tag)">
+                      {{ tag }}
+                      <!-- <mat-icon matChipRemove>cancel</mat-icon> -->
+                    </mat-chip>
+                  </mat-chip-list>
+                  <p *ngIf="!selectedtags || !selectedtags.length">No tags available</p>
+                </mat-grid-tile>
               </mat-grid-list>
             </ng-container>
           </div>

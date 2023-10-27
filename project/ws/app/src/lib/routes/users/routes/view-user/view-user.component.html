@@ -402,16 +402,27 @@
                               <div class="margin-bottom-l">
                                 <label class="appr-text-label">Tags</label>
                                 <div class="left-input-div">
-                                  <input class="appr-text-field w-full-imp" #tags matInput
-                                    i18n-placeholder="Type tag here" placeholder="Type tag here" formControlName="tags"
-                                    i18n-aria-label aria-label="Enter tag" [matChipInputFor]="chipListTags"
-                                    autocomplete="off" maxlength="100"
-                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                    (matChipInputTokenEnd)="addActivity($event)" />
+                                  <div class="flex-col">
+                                    <input class="appr-text-field w-full-imp" #tags matInput
+                                      i18n-placeholder="Type tag here" placeholder="Type tag here"
+                                      formControlName="tags" i18n-aria-label aria-label="Enter tag"
+                                      [matChipInputFor]="chipListTags" autocomplete="off" maxlength="100"
+                                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                      (matChipInputTokenEnd)="addActivity($event)" />
+                                    <p class="margin-left-xs">
+                                      <mat-error class="hintErr"
+                                        *ngIf="updateProfessionalForm.controls['tags'].errors?.pattern"
+                                        i18n="name Error|Explains name is required">
+                                        Only space and alphabets are supported
+                                      </mat-error>
+                                    </p>
+                                  </div>
                                 </div>
                                 <div class="right-input-div">
                                   <button mat-raised-button type="button"
+                                    [disabled]="!tags.value || !updateProfessionalForm.valid"
                                     (click)="addActivity({input: tags, value: tags.value})"
+                                    [ngStyle]="{'opacity': updateProfessionalForm.valid? 1: 0.7}"
                                     class="text-white btn-add-activity btn-responsive">
                                     <span class="text-white" i18n>Add tag</span>
                                   </button>
