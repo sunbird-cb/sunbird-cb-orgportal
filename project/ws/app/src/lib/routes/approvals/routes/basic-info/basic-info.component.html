@@ -103,13 +103,18 @@
 
                 <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                   <label class="appr-text-label">Postal address</label>
-                  <textarea [disabled]="true" rows="3" [value]="basicInfo.postalAddress"
+                  <textarea [disabled]="true" rows="2" [value]="basicInfo.postalAddress"
                     class="appr-text-field"></textarea>
                 </mat-grid-tile>
 
                 <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                   <label class="appr-text-label">Pin code</label>
                   <input type="text" [disabled]="true" [value]="basicInfo.pincode" class="appr-text-field">
+                </mat-grid-tile>
+
+                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                  <label class="appr-text-label">Earn your Karmayogi Badge today</label>
+                  <input type="checkbox" [disabled]="true" [checked]="verifiedKarmayogi">
                 </mat-grid-tile>
 
               </mat-grid-list>
