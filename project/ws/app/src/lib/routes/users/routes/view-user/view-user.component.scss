@@ -498,20 +498,20 @@ textarea {
   display: inline-flex;
 }
 .right-input-div {
-  width: 14%;
+  // width: 14%;
   display: inline-flex;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 .btn-add-activity {
-  width: 70%;
   background: no-repeat padding-box #0074b6 !important;
   border-radius: 4px;
-  padding: 0px 0;
   box-sizing: border-box;
-  margin: 0 12px;
-  line-height: 30px;
+  margin: 4px 16px 0 16px !important;
+  line-height: 28px;
+  height: 36px;
 }
+
 .mat-chip-list {
   margin-top: 2px;
   display: flex;
