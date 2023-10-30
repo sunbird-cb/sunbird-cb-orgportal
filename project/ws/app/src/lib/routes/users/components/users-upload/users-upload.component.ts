@@ -216,6 +216,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fileName = ''
     this.fileSelected = ''
     this.formGroup.controls['file'].setValue('')
+    this.resetOTPFields()
   }
 
   public onSubmit(form: any): void {
