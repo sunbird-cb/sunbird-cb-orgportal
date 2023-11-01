@@ -35,10 +35,10 @@ export class NominateUsersDialogComponent implements OnInit {
   ]
 
   constructor(public dialogRef: MatDialogRef<NominateUsersDialogComponent>,
-              private usersService: UsersService,
-              private dialogue: MatDialog,
-              @Inject(MAT_DIALOG_DATA) public data: any, private bpService: BlendedApporvalService,
-              private snackBar: MatSnackBar) { }
+    private usersService: UsersService,
+    private dialogue: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: any, private bpService: BlendedApporvalService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     const filterObj = {
@@ -132,7 +132,7 @@ export class NominateUsersDialogComponent implements OnInit {
             }
           }
           this.dialogRef.close('done')
-        },                                                        (err: { error: any }) => {
+        }, (err: { error: any }) => {
           // tslint:disable-next-line:no-console
           console.log(err)
           this.openSnackbar('some thing went wrong, Please try after sometime.')
@@ -143,7 +143,7 @@ export class NominateUsersDialogComponent implements OnInit {
           data: {
             title: 'Nomination Limit Exceeded',
             // tslint:disable-next-line
-            body: `The maximum number of learners you can nominate for this batch, based on the current batch enrollment availability, is <b>${differenceCount}</b>. <br>Please review and adjust your nominations accordingly, and then submit.`,
+            body: `You can nominate up to <b> ${differenceCount} </b> learners for this batch, based on the current batch enrollment availability.Please review and adjust your nominations accordingly, and then submit.`,
             ok: 'OK',
             cancel: 'hide',
           },
