@@ -1,9 +1,10 @@
 import { SelectionModel } from '@angular/cdk/collections'
 import { Component, Inject, OnInit, ViewChild } from '@angular/core'
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, MatTableDataSource } from '@angular/material'
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSnackBar, MatTableDataSource } from '@angular/material'
 import { UsersService } from '../../../users/services/users.service'
 import { MatSort } from '@angular/material/sort'
 import { BlendedApporvalService } from '../../services/blended-approval.service'
+import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
 
 @Component({
   selector: 'ws-app-nominate-users-dialog',
@@ -20,6 +21,7 @@ export class NominateUsersDialogComponent implements OnInit {
   dataSource = new MatTableDataSource<any>()
   displayLoader = false
   learners: any = []
+  userscount: any
 
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
@@ -33,9 +35,10 @@ export class NominateUsersDialogComponent implements OnInit {
   ]
 
   constructor(public dialogRef: MatDialogRef<NominateUsersDialogComponent>,
-              private usersService: UsersService,
-              @Inject(MAT_DIALOG_DATA) public data: any, private bpService: BlendedApporvalService,
-              private snackBar: MatSnackBar) { }
+    private usersService: UsersService,
+    private dialogue: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: any, private bpService: BlendedApporvalService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     const filterObj = {
@@ -44,6 +47,8 @@ export class NominateUsersDialogComponent implements OnInit {
         filters: {
           rootOrgId: this.data.orgId,
         },
+        limit: 100,
+        offset: 0,
       },
     }
     this.getAllUsers(filterObj)
@@ -96,41 +101,57 @@ export class NominateUsersDialogComponent implements OnInit {
     this.getAllUsers(filterObj)
   }
 
-  addLearners() {
+  async addLearners() {
+    await this.getUsersCount()
     const seletedLearner: any = []
     if (this.selection.selected.length > 0) {
-      this.selection.selected.map((user: any) => {
-        const obj = {
-          userId: user.userId,
-          rootOrgId: this.data.orgId,
-          actorUserId: user.userId,
-          state: 'INITIATE',
-          serviceName: 'blendedprogram',
-          deptName: user.deptName,
-          courseId: this.data.courseId, // blended program course ID
-          applicationId: this.data.applicationId, // blended program batch ID
-          updateFieldValues: user.updateFieldValues,
-        }
-        seletedLearner.push(obj)
-      })
-      this.bpService.nominateLearners(seletedLearner).subscribe((_res: any) => {
-        if (this.data.wfApprovalType === 'twoStepMDOAndPCApproval') {
-          this.openSnackbar('Request sent to Program coordinator for approval.')
-        } else {
-          if (_res[0] && _res[0].result && _res[0].result.status === 'BAD_REQUEST') {
-            this.openSnackbar(_res[0].result.errmsg)
-          } else {
-            this.openSnackbar('User(s) nominated successfully!')
+      const differenceCount = this.data.totalBatchCount - this.userscount.totalApplied
+      if (this.selection.selected.length <= differenceCount) {
+        this.selection.selected.map((user: any) => {
+          const obj = {
+            userId: user.userId,
+            rootOrgId: this.data.orgId,
+            actorUserId: user.userId,
+            state: 'INITIATE',
+            serviceName: 'blendedprogram',
+            deptName: user.deptName,
+            courseId: this.data.courseId, // blended program course ID
+            applicationId: this.data.applicationId, // blended program batch ID
+            updateFieldValues: user.updateFieldValues,
           }
-        }
-        this.dialogRef.close('done')
-      },                                                        (err: { error: any }) => {
-        // tslint:disable-next-line:no-console
-        console.log(err)
-        this.openSnackbar('some thing went wrong, Please try after sometime.')
-      })
+          seletedLearner.push(obj)
+        })
+        this.bpService.nominateLearners(seletedLearner).subscribe((_res: any) => {
+          if (this.data.wfApprovalType === 'twoStepMDOAndPCApproval') {
+            this.openSnackbar('Request sent to Program coordinator for approval.')
+          } else {
+            if (_res[0] && _res[0].result && _res[0].result.status === 'BAD_REQUEST') {
+              this.openSnackbar(_res[0].result.errmsg)
+            } else {
+              this.openSnackbar('User(s) nominated successfully!')
+            }
+          }
+          this.dialogRef.close('done')
+        }, (err: { error: any }) => {
+          // tslint:disable-next-line:no-console
+          console.log(err)
+          this.openSnackbar('some thing went wrong, Please try after sometime.')
+        })
+      } else {
+        this.dialogue.open(DialogConfirmComponent, {
+          width: '35vw',
+          data: {
+            title: 'Nomination Limit Exceeded',
+            // tslint:disable-next-line
+            body: `You can nominate up to <b> ${differenceCount} </b> learners for this batch, based on the current batch enrollment availability.Please review and adjust your nominations accordingly, and then submit.`,
+            ok: 'OK',
+            cancel: 'hide',
+          },
+          disableClose: true,
+          autoFocus: false,
+        })
+      }
     }
-
   }
 
   closeDiaogBox() {
@@ -141,5 +162,34 @@ export class NominateUsersDialogComponent implements OnInit {
     this.snackBar.open(primaryMsg, 'X', {
       duration,
     })
+  }
+  async getUsersCount() {
+    if (this.data && this.data.applicationId) {
+      const req = {
+        serviceName: 'blendedprogram',
+        applicationStatus: '',
+        applicationIds: [
+          this.data.applicationId,
+        ],
+        limit: 100,
+        offset: 0,
+      }
+      this.userscount = {
+        enrolled: 0,
+        totalApplied: 0,
+        rejected: 0,
+      }
+      await this.bpService.fetchBlendedUserCount(req).then(async (res: any) => {
+        if (res.result && res.result.data) {
+          const statusToNegate = ['WITHDRAWN', 'REMOVED', 'REJECTED']
+          await res.result.data.forEach((ele: any) => {
+            if (!statusToNegate.includes(ele.currentStatus)) {
+              this.userscount.totalApplied = this.userscount.totalApplied + ele.statusCount
+            }
+          })
+          return this.userscount
+        }
+      })
+    }
   }
 }

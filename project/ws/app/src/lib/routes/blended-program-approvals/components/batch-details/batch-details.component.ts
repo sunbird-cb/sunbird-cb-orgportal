@@ -9,6 +9,7 @@ import { EventService } from '@sunbird-cb/utils'
 import { NominateUsersDialogComponent } from '../nominate-users-dialog/nominate-users-dialog.component'
 import moment from 'moment'
 import { NsContent } from '../../../../head/_services/widget-content.model'
+import { DialogConfirmComponent } from '../../../../../../../../../src/app/component/dialog-confirm/dialog-confirm.component'
 @Component({
   selector: 'ws-app-batch-details',
   templateUrl: './batch-details.component.html',
@@ -33,6 +34,7 @@ export class BatchDetailsComponent implements OnInit {
   clonedApprovedUsers: any = []
   learnerCount = 0
   clonedApprovalStatusUsers: any = []
+  userscount: any
 
   constructor(private router: Router, private activeRouter: ActivatedRoute,
     // tslint:disable-next-line:align
@@ -88,6 +90,36 @@ export class BatchDetailsComponent implements OnInit {
         break
     }
     this.raiseTelemetry(this.currentFilter, TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT)
+  }
+
+  async getUsersCount() {
+    if (this.batchData && this.batchData.batchId) {
+      const req = {
+        serviceName: 'blendedprogram',
+        applicationStatus: '',
+        applicationIds: [
+          this.batchData.batchId,
+        ],
+        limit: 100,
+        offset: 0,
+      }
+      this.userscount = {
+        enrolled: 0,
+        totalApplied: 0,
+        rejected: 0,
+      }
+      await this.bpService.fetchBlendedUserCount(req).then(async (res: any) => {
+        if (res.result && res.result.data) {
+          const statusToNegate = ['WITHDRAWN', 'REMOVED', 'REJECTED']
+          await res.result.data.forEach((ele: any) => {
+            if (!statusToNegate.includes(ele.currentStatus)) {
+              this.userscount.totalApplied = this.userscount.totalApplied + ele.statusCount
+            }
+          })
+          return this.userscount
+        }
+      })
+    }
   }
 
   getBPDetails(programID: any) {
@@ -298,27 +330,51 @@ export class BatchDetailsComponent implements OnInit {
     )
   }
 
-  onNominateUsersClick(name: string) {
+  async onNominateUsersClick(name: string) {
     this.raiseTelemetry(name, TelemetryEvents.EnumInteractSubTypes.NOMINATE_BTN)
-    const dialogRef = this.dialogue.open(NominateUsersDialogComponent, {
-      width: '950px',
-      data: {
-        orgId: this.userProfile.rootOrgId,
-        courseId: this.programID,
-        applicationId: this.batchData.batchId,
-        learners: this.approvedUsers,
-        wfApprovalType: this.programData.wfApprovalType,
-      },
-      disableClose: true,
-      autoFocus: false,
-    })
 
-    dialogRef.afterClosed().subscribe((response: any) => {
-      if (response && response === 'done') {
-        this.getLearnersList()
-      }
-    })
-
+    const batchSize = Number(this.batchData.batchAttributes.currentBatchSize)
+    const twentPercent = Math.floor(batchSize * 20 / 100)
+    const totalBatchCount = batchSize + twentPercent
+    await this.getUsersCount()
+    if (this.userscount.totalApplied < totalBatchCount) {
+      const dialogRef = this.dialogue.open(NominateUsersDialogComponent, {
+        width: '950px',
+        data: {
+          totalBatchCount,
+          orgId: this.userProfile.rootOrgId,
+          courseId: this.programID,
+          applicationId: this.batchData.batchId,
+          learners: this.approvedUsers,
+          wfApprovalType: this.programData.wfApprovalType,
+        },
+        disableClose: true,
+        autoFocus: false,
+      })
+      dialogRef.afterClosed().subscribe((response: any) => {
+        if (response && response === 'done') {
+          this.getLearnersList()
+        }
+      })
+    } else {
+      const confirmDialog = this.dialogue.open(DialogConfirmComponent, {
+        width: '35vw',
+        data: {
+          title: 'Batch Enrollment Full',
+          // tslint:disable-next-line
+          body: `This batch has currently reached its maximum enrollment limit. You can't nominate a new learner at this time.`,
+          ok: 'OK',
+          cancel: 'hide',
+        },
+        disableClose: true,
+        autoFocus: false,
+      })
+      confirmDialog.afterClosed().subscribe((response: any) => {
+        if (response && response === 'done') {
+          this.getLearnersList()
+        }
+      })
+    }
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
@@ -344,8 +400,9 @@ export class BatchDetailsComponent implements OnInit {
   filterNewUsers(searchText: string) {
     if (searchText.length > 0) {
       this.newUsers = this.newUsers.filter((result: any) => {
-        if (result.userInfo) {
-          return result.userInfo.first_name.toLowerCase().includes(searchText.toLowerCase())
+        if (result.userInfo && result.wfInfo) {
+          return result.userInfo.first_name.toLowerCase().includes(searchText.toLowerCase()) ||
+            result.wfInfo[0].deptName.toLowerCase().includes(searchText.toLowerCase())
         }
       })
     } else {
@@ -357,7 +414,8 @@ export class BatchDetailsComponent implements OnInit {
     if (searchText.length > 0) {
       this.approvedUsers = this.approvedUsers.filter((result: any) => {
         if (result.first_name) {
-          return result.first_name.toLowerCase().includes(searchText.toLowerCase())
+          return result.first_name.toLowerCase().includes(searchText.toLowerCase()) ||
+            result.department.toLowerCase().includes(searchText.toLowerCase())
         }
       })
     } else {
@@ -379,9 +437,11 @@ export class BatchDetailsComponent implements OnInit {
 
   filterApprovalStatusUsers(searchText: string) {
     if (searchText.length > 0) {
+      this.approvalStatus = this.clonedApprovalStatusUsers
       this.approvalStatus = this.approvalStatus.filter((result: any) => {
-        if (result.userInfo) {
-          return result.userInfo.first_name.toLowerCase().includes(searchText.toLowerCase())
+        if (result.userInfo && result.wfInfo) {
+          return result.userInfo.first_name.toLowerCase().includes(searchText.toLowerCase()) ||
+            result.wfInfo[0].deptName.toLowerCase().includes(searchText.toLowerCase())
         }
       })
     } else {
