@@ -46,6 +46,7 @@ export class NominateUsersDialogComponent implements OnInit {
         query: '',
         filters: {
           rootOrgId: this.data.orgId,
+          status: 1
         },
         limit: 100,
         offset: 0,
