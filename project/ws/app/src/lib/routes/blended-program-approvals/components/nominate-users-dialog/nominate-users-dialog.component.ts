@@ -95,7 +95,7 @@ export class NominateUsersDialogComponent implements OnInit {
       request: {
         query: filterValue.value ? filterValue.value.trim().toLowerCase() : '',
         filters: {
-          rootOrgId: this.data.orgId,,
+          rootOrgId: this.data.orgId,
           status: 1
         },
       },
