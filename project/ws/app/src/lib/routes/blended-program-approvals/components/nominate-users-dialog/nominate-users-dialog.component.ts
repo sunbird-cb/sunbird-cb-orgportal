@@ -124,8 +124,11 @@ export class NominateUsersDialogComponent implements OnInit {
           seletedLearner.push(obj)
         })
         this.bpService.nominateLearners(seletedLearner).subscribe((_res: any) => {
-          if (this.data.wfApprovalType === 'twoStepMDOAndPCApproval') {
+          if (_res[0] && _res[0].result && _res[0].result.status === 'OK' &&
+            this.data.wfApprovalType === 'twoStepMDOAndPCApproval') {
             this.openSnackbar('Request sent to Program coordinator for approval.')
+          } else if (_res[0] && _res[0].result && _res[0].result.status === 'NOT_ACCEPTABLE') {
+            this.openSnackbar(`Learner is already a part of batch. It can't be added here.`)
           } else {
             if (_res[0] && _res[0].result && _res[0].result.status === 'BAD_REQUEST') {
               this.openSnackbar(_res[0].result.errmsg)
