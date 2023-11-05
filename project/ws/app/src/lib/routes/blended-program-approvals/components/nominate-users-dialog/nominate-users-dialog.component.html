@@ -24,7 +24,7 @@
     </div>
     <div class="users-data">
       <table mat-table [dataSource]="dataSource" class="nominate-learners  margin-top-s" matSort matSortActive="name"
-        matSortDirection="asc" matSortDisableClear *ngIf="dataSource.filteredData.length > 0">
+        matSortDisableClear *ngIf="dataSource.filteredData.length > 0">
 
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef class="header-row">
@@ -39,7 +39,7 @@
 
         <ng-container matColumnDef="{{colname.name}}" *ngFor="let colname of tableColumns">
           <th mat-header-cell *matHeaderCellDef class="header-row" mat-sort-header> {{colname.dispalyName}} </th>
-          <td mat-cell *matCellDef="let element"> {{element[colname.name]}}</td>
+          <td mat-cell class="break-words" *matCellDef="let element"> {{element[colname.name]}}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

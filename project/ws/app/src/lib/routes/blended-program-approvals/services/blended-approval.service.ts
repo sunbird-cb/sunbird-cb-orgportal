@@ -17,6 +17,7 @@ const API_END_POINTS = {
   SEARCH_FORM_WITH_USERID: 'apis/proxies/v8/forms/searchForms',
   NOMINATE_LEARNERS: '/apis/proxies/v8/workflow/blendedprogram/admin/enrol',
   REMOVE_LEARNER: '/apis/proxies/v8/workflow/blendedprogram/remove/mdo',
+  BLENDED_USER_COUNT: `apis/proxies/v8/workflow/blendedprogram/enrol/status/count`,
 }
 
 @Injectable({
@@ -73,5 +74,11 @@ export class BlendedApporvalService {
 
   removeLearner(req: any) {
     return this.http.post<any>(`${API_END_POINTS.REMOVE_LEARNER}`, req)
+  }
+
+  fetchBlendedUserCount(req: any) {
+    return this.http
+      .post(API_END_POINTS.BLENDED_USER_COUNT, req)
+      .toPromise()
   }
 }
