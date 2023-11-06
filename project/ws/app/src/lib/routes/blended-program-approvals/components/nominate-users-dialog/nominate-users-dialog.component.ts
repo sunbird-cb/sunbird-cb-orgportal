@@ -124,18 +124,39 @@ export class NominateUsersDialogComponent implements OnInit {
           seletedLearner.push(obj)
         })
         this.bpService.nominateLearners(seletedLearner).subscribe((_res: any) => {
-          if (_res[0] && _res[0].result && _res[0].result.status === 'OK' &&
-            this.data.wfApprovalType === 'twoStepMDOAndPCApproval') {
-            this.openSnackbar('Request sent to Program coordinator for approval.')
-          } else if (_res[0] && _res[0].result && _res[0].result.status === 'NOT_ACCEPTABLE') {
-            this.openSnackbar(`Learner is already a part of batch. It can't be added here.`)
-          } else {
-            if (_res[0] && _res[0].result && _res[0].result.status === 'BAD_REQUEST') {
-              this.openSnackbar(_res[0].result.errmsg)
-            } else {
-              this.openSnackbar('User(s) nominated successfully!')
-            }
+          let successCount = 0
+          let failedCount = 0
+          if (_res && _res.length > 0) {
+            _res.forEach((ele: any) => {
+              if (ele.status === 'OK') {
+                successCount = successCount + 1
+              } else {
+                failedCount = failedCount + 1
+              }
+            })
           }
+          if (successCount > 0 || failedCount > 0) {
+            this.openSnackbar(`${successCount} learner(s) nominated successfully,
+            while ${failedCount} failed to nominate as it is part of the program.`)
+          }
+          if (successCount === _res.length) {
+            this.openSnackbar(`${successCount} learner(s) nominated successfully.`)
+          }
+          if (failedCount === _res.length) {
+            this.openSnackbar(`${failedCount} failed to nominate as it is part of the program.`)
+          }
+          // if (_res[0] && _res[0].result && _res[0].result.status === 'OK' &&
+          //   this.data.wfApprovalType === 'twoStepMDOAndPCApproval') {
+          //   this.openSnackbar('Request sent to Program coordinator for approval.')
+          // } else if (_res[0] && _res[0].result && _res[0].result.status === 'NOT_ACCEPTABLE') {
+          //   this.openSnackbar(`Learner is already a part of another batch. It can't be added here.`)
+          // } else {
+          //   if (_res[0] && _res[0].result && _res[0].result.status === 'BAD_REQUEST') {
+          //     this.openSnackbar(_res[0].result.errmsg)
+          //   } else {
+          //     this.openSnackbar('User(s) nominated successfully!')
+          //   }
+          // }
           this.dialogRef.close('done')
         }, (err: { error: any }) => {
           // tslint:disable-next-line:no-console
