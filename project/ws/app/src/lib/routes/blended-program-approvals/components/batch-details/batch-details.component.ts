@@ -269,7 +269,7 @@ export class BatchDetailsComponent implements OnInit {
         this.openSnackbar('Request is removed successfully.')
         this.filter('rejected')
       }
-    },                                                      (error: any) => {
+    }, (error: any) => {
       this.openSnackbar(_.get(error, 'error.params.errmsg') ||
         _.get(error, 'error.result.errmsg') ||
         'Something went wrong, please try again later!')
@@ -347,6 +347,7 @@ export class BatchDetailsComponent implements OnInit {
           applicationId: this.batchData.batchId,
           learners: this.approvedUsers,
           wfApprovalType: this.programData.wfApprovalType,
+          departmentName: this.userProfile.rootOrg.orgName
         },
         disableClose: true,
         autoFocus: false,
