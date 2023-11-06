@@ -170,31 +170,44 @@ export class NominateUsersDialogComponent implements OnInit {
   }
   async getUsersCount() {
     if (this.data && this.data.applicationId) {
-      const req = {
-        serviceName: 'blendedprogram',
-        applicationStatus: '',
-        applicationIds: [
-          this.data.applicationId,
-        ],
-        limit: 100,
-        offset: 0,
-      }
+      // const req = {
+      //   serviceName: 'blendedprogram',
+      //   applicationStatus: '',
+      //   applicationIds: [
+      //     this.data.applicationId,
+      //   ],
+      //   limit: 100,
+      //   offset: 0,
+      // }
       this.userscount = {
         enrolled: 0,
         totalApplied: 0,
         rejected: 0,
       }
-      await this.bpService.fetchBlendedUserCount(req).then(async (res: any) => {
-        if (res.result && res.result.data) {
-          const statusToNegate = ['WITHDRAWN', 'REMOVED', 'REJECTED']
-          await res.result.data.forEach((ele: any) => {
-            if (!statusToNegate.includes(ele.currentStatus)) {
-              this.userscount.totalApplied = this.userscount.totalApplied + ele.statusCount
-            }
-          })
-          return this.userscount
-        }
-      })
+
+      const request = {
+        serviceName: ['blendedprogram'],
+        applicationStatus: ['SEND_FOR_PC_APPROVAL', 'SEND_FOR_MDO_APPROVAL', 'APPROVED'],
+        applicationIds: [this.data.applicationId],
+        limit: 100,
+        offset: 0,
+      }
+      const resData: any = await this.bpService.getSerchRequests(request).toPromise().catch(_error => { })
+      if (resData && resData.result && resData.result.data && resData.result.data.length > 0) {
+        this.userscount.totalApplied = this.userscount.totalApplied + resData.result.data.length
+      }
+      return this.userscount
+      //  this.bpService.fetchBlendedUserCount(req).then(async (res: any) => {
+      //   if (res.result && res.result.data) {
+      //     const statusToNegate = ['WITHDRAWN', 'REMOVED', 'REJECTED', 'ADMIN_ENROLL_IS_IN_PROGRESS']
+      //     await res.result.data.forEach((ele: any) => {
+      //       if (!statusToNegate.includes(ele.currentStatus)) {
+      //         this.userscount.totalApplied = this.userscount.totalApplied + ele.statusCount
+      //       }
+      //     })
+      //
+      //   }
+      // })
     }
   }
 }
