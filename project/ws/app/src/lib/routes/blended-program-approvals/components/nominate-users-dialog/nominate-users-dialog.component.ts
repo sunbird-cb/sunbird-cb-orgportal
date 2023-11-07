@@ -46,7 +46,7 @@ export class NominateUsersDialogComponent implements OnInit {
         query: '',
         filters: {
           rootOrgId: this.data.orgId,
-          status: 1
+          status: 1,
         },
         limit: 100,
         offset: 0,
@@ -96,7 +96,7 @@ export class NominateUsersDialogComponent implements OnInit {
         query: filterValue.value ? filterValue.value.trim().toLowerCase() : '',
         filters: {
           rootOrgId: this.data.orgId,
-          status: 1
+          status: 1,
         },
       },
     }
@@ -128,7 +128,7 @@ export class NominateUsersDialogComponent implements OnInit {
           let failedCount = 0
           if (_res && _res.length > 0) {
             _res.forEach((ele: any) => {
-              if (ele.status === 'OK') {
+              if (ele.result.status === 'OK') {
                 successCount = successCount + 1
               } else {
                 failedCount = failedCount + 1
