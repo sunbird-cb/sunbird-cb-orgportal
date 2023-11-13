@@ -519,7 +519,7 @@
               </mat-card>
 
               <!-- Roles Update card -->
-              <mat-card id="roles"
+              <mat-card id="roles" *ngIf="!isMdoAdmin"
                 class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
                 <div class="flex-custom">
                   <mat-card-content class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
@@ -560,6 +560,28 @@
                                 </span>
                               </button>
                             </form>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                </div>
+              </mat-card>
+
+              <mat-card id="roles" *ngIf="isMdoAdmin"
+                class="flex flex-1 flex-column margin-top-m margin-bottom-m margin-left-m margin-right-m ws-mat-accent-border">
+                <div class="flex-custom">
+                  <mat-card-content class="margin-top-m margin-bottom-m margin-left-m margin-right-m">
+                    <span class="mat-subheading-1 flex-4 mobile-margin appr-section-heading" role="link" tabindex="0">
+                      Roles
+                    </span>
+                    <div class="margin-top-l new-mobile">
+                      <div class="flex flex-wrap mobile-break">
+                        <div class="w-full profile-cols-full bg-grey">
+                          <ng-container>
+                            <ul class="roles-list margin-0">
+                              <li *ngFor="let role of orguserRoles" class="margin-bottom-s">{{role}}</li>
+                            </ul>
                           </ng-container>
                         </div>
                       </div>
