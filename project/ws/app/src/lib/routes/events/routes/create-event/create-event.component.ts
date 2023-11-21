@@ -360,7 +360,7 @@ export class CreateEventComponent implements OnInit {
     this.eventsSvc.updateEvent(formJson).subscribe(
       res => {
         if (res || !res) {
-          this.publishEvent(identifier)
+          this.publishEvent(identifier, '')
         }
       },
       (err: any) => {
@@ -508,8 +508,9 @@ export class CreateEventComponent implements OnInit {
           this.displayLoader = false
           this.disableCreateButton = false
           const identifier = res.result.identifier
+          const versionKey = res.result.versionKey
           // this.fileSubmit(identifier)
-          this.publishEvent(identifier)
+          this.publishEvent(identifier, versionKey)
         },
         (err: any) => {
           this.displayLoader = false
@@ -538,8 +539,17 @@ export class CreateEventComponent implements OnInit {
     return minutes
   }
 
-  publishEvent(identifierkey: any) {
-    this.eventsSvc.publishEvent(identifierkey).subscribe(
+  publishEvent(identifierkey: any, versionKey: any) {
+    const reqestBody = {
+      request: {
+        event: {
+          status: "Live",
+          versionKey: versionKey,
+          identifier: identifierkey
+        }
+      }
+    }
+    this.eventsSvc.publishEvent(identifierkey, reqestBody).subscribe(
       res => {
         this.showSuccess(res)
       },
