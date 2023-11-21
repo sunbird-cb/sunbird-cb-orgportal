@@ -543,8 +543,8 @@ export class CreateEventComponent implements OnInit {
     const reqestBody = {
       request: {
         event: {
+          versionKey,
           status: "Live",
-          versionKey: versionKey,
           identifier: identifierkey
         }
       }
