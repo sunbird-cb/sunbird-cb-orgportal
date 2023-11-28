@@ -108,6 +108,71 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         if (fullProfile.unMappedUser && fullProfile.unMappedUser.roles) {
           this.isMdoAdmin = fullProfile.unMappedUser.roles.includes('MDO_ADMIN')
           this.isMdoLeader = fullProfile.unMappedUser.roles.includes('MDO_LEADER')
+          if (this.isMdoAdmin) {
+            this.tabsData = [
+              {
+                name: 'Personal details',
+                key: 'personalInfo',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Academics',
+                key: 'academics',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Professional details',
+                key: 'profdetails',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Certification and skills',
+                key: 'skills',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Roles',
+                key: 'roles',
+                render: true,
+                enabled: true,
+              }]
+          } else {
+            this.tabsData = [
+              {
+                name: 'Personal details',
+                key: 'personalInfo',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Academics',
+                key: 'academics',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Professional details',
+                key: 'profdetails',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Certification and skills',
+                key: 'skills',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Update roles',
+                key: 'roles',
+                render: true,
+                enabled: true,
+              }]
+          }
         }
 
         // New code for roles
@@ -165,6 +230,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         const usrRoles = profileDataAll.roles
         usrRoles.forEach((role: any) => {
           this.orguserRoles.push(role)
+          // console.log('orguserRoles', this.orguserRoles)
           this.modifyUserRoles(role)
         })
 
@@ -266,37 +332,6 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.init()
-    this.tabsData = [
-      {
-        name: 'Personal details',
-        key: 'personalInfo',
-        render: true,
-        enabled: true,
-      },
-      {
-        name: 'Academics',
-        key: 'academics',
-        render: true,
-        enabled: true,
-      },
-      {
-        name: 'Professional details',
-        key: 'profdetails',
-        render: true,
-        enabled: true,
-      },
-      {
-        name: 'Certification and skills',
-        key: 'skills',
-        render: true,
-        enabled: true,
-      },
-      {
-        name: 'Update roles',
-        key: 'roles',
-        render: true,
-        enabled: true,
-      }]
   }
 
   async init() {
