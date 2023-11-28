@@ -87,6 +87,26 @@
                     </div>
                   </mat-form-field>
 
+                  <!--Mobile Number field-->
+                  <label for="mobileNumber" class="margin-remove-bottom margin-top-xs form-label required"
+                    i18n="Mobile Number label|Label which explains the user to enter email" i18n-aria-label
+                    aria-label="Mobile Number label">
+                    Mobile Number
+                  </label>
+                  <mat-form-field appearance="outline" class="margin-top-xs">
+                    <input id="mobileNumber" #mobile matInput type="text" maxlength="10" autocomplete="off"
+                      (keypress)="numericOnly($event)" (paste)="numericOnly($event)" placeholder="Mobile Number"
+                      formControlName="mobileNumber" i18n-aria-label aria-label="Mobile Number input">
+                    <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
+                      *ngIf="createUserForm?.controls['mobileNumber']?.touched && createUserForm?.controls['mobileNumber'].errors?.required"
+                      i18n-aria-label aria-label="Please enter your mobile number">Please enter your mobile number
+                    </mat-error>
+                    <mat-error [hidden]="false" *ngIf="createUserForm?.controls['mobileNumber'].errors?.pattern"
+                      i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
+                      Please enter a valid 10 digit mobile number
+                    </mat-error>
+                  </mat-form-field>
+
                   <div class="input-wrapper margin-top-s">
                     <label for="department" class="margin-remove-bottom form-label required" i18n-aria-label
                       aria-label="Department label"
