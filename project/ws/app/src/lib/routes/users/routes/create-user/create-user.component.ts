@@ -287,4 +287,10 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       this.defaultSideNavBarOpenedSubscription.unsubscribe()
     }
   }
+
+  numericOnly(event: any): boolean {
+    const pattren = /^([0-9])$/
+    const result = pattren.test(event.key)
+    return result
+  }
 }
