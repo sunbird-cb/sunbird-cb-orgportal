@@ -13,7 +13,7 @@ import _ from 'lodash'
 export class BasicInfoComponent implements OnInit {
   basicInfo: any
   imagePath: any
-  verifiedKarmayogi: boolean = false
+  verifiedKarmayogi = false
   constructor(private activeRoute: ActivatedRoute, private router: Router) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {

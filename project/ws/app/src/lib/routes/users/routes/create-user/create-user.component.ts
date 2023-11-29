@@ -46,6 +46,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
   emailLengthVal = false
   isMdoAdmin = false
   isMdoLeader = false
+  phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -174,6 +175,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       fname: new FormControl('', [Validators.required]),
       // lname: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
+      mobileNumber: new FormControl('', [Validators.required, Validators.pattern(this.phoneNumberPattern), Validators.maxLength(12)]),
       department: new FormControl(''),
       roles: new FormControl('', [Validators.required]),
     })
@@ -206,6 +208,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     const newobj = {
       personalDetails: {
         email: form.value.email,
+        phone: form.value.mobileNumber,
         userName: form.value.fname,
         firstName: form.value.fname,
         // lastName: form.value.lname,
@@ -255,7 +258,19 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line
       (err: any) => {
         this.displayLoader = false
-        this.openSnackbar(err.error || err || 'Some error occurred while creating user, Please try again later!')
+        if (err.error.params.errmsg) {
+          if (err.error.params.errmsg === 'phone already exists') {
+            this.openSnackbar('Phone Number already exists')
+          } else if (err.error.params.errmsg === 'email already exists') {
+            this.openSnackbar('Email Id already exists')
+ } else if (err.error.params.errmsg === 'Invalid format for given phone.') {
+            this.openSnackbar('Please enter valid phone number')
+ } else {
+            this.openSnackbar('Some error occurred while creating user, Please try again later!')
+ }
+        } else {
+          this.openSnackbar('Some error occurred while creating user, Please try again later!')
+        }
       })
   }
 
@@ -283,5 +298,11 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     if (this.defaultSideNavBarOpenedSubscription) {
       this.defaultSideNavBarOpenedSubscription.unsubscribe()
     }
+  }
+
+  numericOnly(event: any): boolean {
+    const pattren = /^([0-9])$/
+    const result = pattren.test(event.key)
+    return result
   }
 }
