@@ -258,7 +258,19 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line
       (err: any) => {
         this.displayLoader = false
-        this.openSnackbar(err.error || err || 'Some error occurred while creating user, Please try again later!')
+        if (err.error.params.errmsg) {
+          if (err.error.params.errmsg === 'phone already exists') {
+            this.openSnackbar('Phone Number already exists')
+          } else if (err.error.params.errmsg === 'email already exists') {
+            this.openSnackbar('Email Id already exists')
+ } else if (err.error.params.errmsg === 'Invalid format for given phone.') {
+            this.openSnackbar('Please enter valid phone number')
+ } else {
+            this.openSnackbar('Some error occurred while creating user, Please try again later!')
+ }
+        } else {
+          this.openSnackbar('Some error occurred while creating user, Please try again later!')
+        }
       })
   }
 
