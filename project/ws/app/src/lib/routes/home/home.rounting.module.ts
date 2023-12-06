@@ -19,6 +19,7 @@ import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
 import { PageResolve } from '@sunbird-cb/utils'
 import { BlendedApprovalsComponent } from './routes/blended-approvals/blended-approvals.component'
 import { ReportsSectionComponent } from './routes/reports-section/reports-section.component'
+import { TrainingPlanComponent } from './routes/training-plan/training-plan.component'
 const routes: Routes = [
   {
     path: '',
@@ -131,6 +132,14 @@ const routes: Routes = [
         data: {
           pageId: 'reports-section',
           module: 'Home',
+        },
+      },
+      {
+        path: 'training-plan',
+        component: TrainingPlanComponent,
+        data: {
+          pageId: 'training-plan',
+          module: 'Training Plan',
         },
       },
     ],

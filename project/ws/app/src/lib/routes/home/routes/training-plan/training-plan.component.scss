@@ -1,0 +1,28 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.filter {
+  .filter-option {
+    margin: $size-xs $size-m;
+    /* border-bottom: darkslateblue; */
+    border-radius: 0;
+    border-bottom-width: 2px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+  }
+
+  .filter-option:first-child {
+    margin-left: 0;
+  }
+}
+
+.create-cbp-btn {
+  width: 109px;
+  background: #0075B7 !important;
+  color: white !important;
+  font-family: 'Lato';
+  font-weight: 700;
+  font-size: 14px;
+}
