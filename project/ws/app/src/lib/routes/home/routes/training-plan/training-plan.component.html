@@ -1,0 +1,27 @@
+<div class="flex flex-4 flex-column">
+  <mat-card>
+    <div class="flex flex-between mat-h2 margin-remove">Training plan
+      <button mat-button type="button" class="create-cbp-btn">Create CBP</button>
+    </div>
+    <mat-card-content>
+      <div class="flex flex-1 flex-column margin-fix">
+        <div class="flex flex-1 filter max-height-60">
+          <a routerLinkActive="router-link-active" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'live',
+                    'ws-mat-accent-border font-medium':currentFilter !== 'live'}" mat-button
+            (click)="filter('live'); tabTelemetry('live', 0)" role="button">Live</a>
+          <a routerLinkActive="router-link-active" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'draft',
+                                'ws-mat-accent-border font-medium':currentFilter !== 'draft'}" mat-button
+            (click)="filter('draft'); tabTelemetry('draft', 1)" role="button">Draft</a>
+        </div>
+      </div>
+      <ng-container class="margin-top-l">
+        <ws-widget-org-user-table [tableData]="tabledata" [data]="trainingPlanData" [isTrainingPlan]="true"
+          [trainingTagList]="tagListData" *ngIf="currentFilter === 'live'">
+        </ws-widget-org-user-table>
+        <ws-widget-org-user-table [tableData]="tabledata" [data]="trainingPlanData" [isTrainingPlan]="true"
+          [trainingTagList]="tagListData" *ngIf="currentFilter === 'draft'">
+        </ws-widget-org-user-table>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>
