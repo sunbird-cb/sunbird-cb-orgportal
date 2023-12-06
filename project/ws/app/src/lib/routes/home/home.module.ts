@@ -62,7 +62,7 @@ import { AdmintableComponent } from './components/admintable/admintable.componen
 import { UsersModule } from '../users/users.module'
 import { BlendedApprovalsComponent } from './routes/blended-approvals/blended-approvals.component'
 import { ReportsSectionComponent } from './routes/reports-section/reports-section.component'
-import { TrainingPlanComponent } from './routes/training-plan/training-plan.component'
+import { TrainingPlanDashboardComponent } from './routes/training-plan-dashboard/training-plan-dashboard.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -86,7 +86,7 @@ import { TrainingPlanComponent } from './routes/training-plan/training-plan.comp
     BudgetproofspopupComponent,
     BlendedApprovalsComponent,
     ReportsSectionComponent,
-    TrainingPlanComponent
+    TrainingPlanDashboardComponent,
   ],
   imports: [
     CommonModule,

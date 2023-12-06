@@ -52,6 +52,18 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/training-plan',
+    loadChildren: () => import('./routes/route-training-plan.module').then(u => u.RouteTrainingPlanAppModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'training-plan-home',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/roles',
     loadChildren: () => import('./routes/route-roles-access.module').then(u => u.RouteAccessAppModule),
     canActivate: [GeneralGuard],
