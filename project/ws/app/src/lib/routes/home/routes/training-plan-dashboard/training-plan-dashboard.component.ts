@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 // import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 // import { EventService } from '@sunbird-cb/utils'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
 
 @Component({
-  selector: 'ws-app-training-plan',
-  templateUrl: './training-plan.component.html',
-  styleUrls: ['./training-plan.component.scss'],
+  selector: 'ws-app-training-plan-dashboard',
+  templateUrl: './training-plan-dashboard.component.html',
+  styleUrls: ['./training-plan-dashboard.component.scss'],
 })
-export class TrainingPlanComponent implements OnInit {
+export class TrainingPlanDashboardComponent implements OnInit {
 
   currentFilter = 'live'
   pageIndex: number = 0
@@ -21,6 +22,7 @@ export class TrainingPlanComponent implements OnInit {
 
   constructor(
     // private events: EventService,
+    private router: Router
   ) {
 
   }
@@ -32,8 +34,8 @@ export class TrainingPlanComponent implements OnInit {
         { displayName: 'Plan name', key: 'planName' },
         { displayName: 'Assignee', key: 'assignee' },
         { displayName: 'Total content', key: 'totalContent' },
-        { displayName: 'Timeline', key: 'timeline' },
         { displayName: 'Content type', key: 'contentType' },
+        { displayName: 'Timeline', key: 'timeline' },
         { displayName: 'Created by', key: 'CreatedBy' },
         { displayName: 'Created on', key: 'CreatedOn' },
       ],
@@ -121,5 +123,8 @@ export class TrainingPlanComponent implements OnInit {
     })
   }
 
+  createCbp() {
+    this.router.navigate(['app', 'training-plan', 'create-plan'])
+  }
 
 }
