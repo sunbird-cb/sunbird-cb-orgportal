@@ -263,11 +263,11 @@ export class CreateUserComponent implements OnInit, OnDestroy {
             this.openSnackbar('Phone Number already exists')
           } else if (err.error.params.errmsg === 'email already exists') {
             this.openSnackbar('Email Id already exists')
- } else if (err.error.params.errmsg === 'Invalid format for given phone.') {
+          } else if (err.error.params.errmsg === 'Invalid format for given phone.') {
             this.openSnackbar('Please enter valid phone number')
- } else {
+          } else {
             this.openSnackbar('Some error occurred while creating user, Please try again later!')
- }
+          }
         } else {
           this.openSnackbar('Some error occurred while creating user, Please try again later!')
         }
@@ -304,5 +304,9 @@ export class CreateUserComponent implements OnInit, OnDestroy {
     const pattren = /^([0-9])$/
     const result = pattren.test(event.key)
     return result
+  }
+
+  navigateTo() {
+    this.router.navigate([`/app/home/users`])
   }
 }

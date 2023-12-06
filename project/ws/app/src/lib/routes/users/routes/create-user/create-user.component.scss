@@ -197,7 +197,8 @@ input[type=number] {
   .btn-success {
     background-color: #0075B7!important;
     border-radius: 4px;
-    width: 240px;
+   // width: 240px;
+    width: 160px;
     box-shadow: none;
     margin-right: 16px;
 
@@ -210,6 +211,7 @@ input[type=number] {
   .btn-success:disabled,
   .btn-success[disabled] {
     opacity: 0.6;
+    width: 160px;
   }
 
   .btn-danger {
@@ -566,3 +568,8 @@ input.mat-input-element {
   color: #f44336;
   top: 35px;
 }
+
+.mar{
+    margin-left: 16px;
+    min-width: 160px;
+  }
