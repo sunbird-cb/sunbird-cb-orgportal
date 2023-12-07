@@ -1,25 +1,52 @@
-
+.filter-overlay {
+    background: rgba(0,0,0,0.6);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
 .filter {
-    width: 363px;
-    height: auto;
+    height: 100%;
     border: 1px solid #ccc;
     position: absolute;
     right: 0;
     top: 0;
     background: #fff;
-    z-index: 1000;
+    z-index: 10000 !important;
+    top:0px;
+    position: fixed;
+    overflow-y: auto;
 }
+
 
 .filter-header {
-    margin:26px 12px;
+    margin:26px 25px;
 }
 
+.filter-content {    
+    padding: 18px 0px;
+    margin: 0px 25px;
+}
+
+.filter-content-container {
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.filter-content:last-child {
+    border:none;
+}
 .filter-footer {
-    margin:26px 12px;
+    margin:26px 25px;
+    position: fixed;
+    bottom: 0;
 }
 
 .filter-header .label {
-    width:275px;
+    width:299px;
     font-weight: 700;
 }
 
@@ -31,6 +58,7 @@
     padding: 10px;
     border-radius: 4px;
     color: #1B4CA1;
+    cursor: pointer;
 }
 
 .filter-apply {
@@ -42,4 +70,44 @@
     padding: 10px;
     border-radius: 4px;
     margin-left: 15px;
+    cursor: pointer;
+}
+
+.filter ::ng-deep .mat-expansion-panel {
+    box-shadow: none !important;
+}
+
+.filter ::ng-deep .mat-expansion-panel-header {
+    padding:0 !important;
+}
+
+.filter ::ng-deep .mat-expansion-panel-header-title {
+    font-weight: 700;
+    font-size: 14px;
+    width: 299px;
+}
+
+
+.filter ::ng-deep .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover {
+    background:none !important;
+}
+
+.filter ::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+.filter ::ng-deep .mat-expansion-panel-header {
+    height: 24px !important; 
+}
+
+.spacer {
+    height: 1px;
+    width: 250px;
+    margin-left: 25px;
+    background: rgba(0,0,0,0.16);
+}
+
+.category-item {
+    color: rgba(0,0,0,0.6);
+    padding: 12px 0;
 }

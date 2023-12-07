@@ -1,7 +1,9 @@
-<div class="flex flex-1 flex-row">
+<div class="flex flex-1 flex-row search-container">
     <div class="selectWrapper">
-        <select class="selectBox">
+        <select class="selectBox" (change)="showDialogBox()">
             <option>Designation</option>
+            <option>All Users</option>
+            <option>Custom Users</option>
         </select>
     </div>
     <div class="search">
@@ -10,9 +12,11 @@
             <input class="sinput color-60" label="" placeholder="Select" type="Standard">
         </div>
     </div>
-    <div class="filter-section">
+    <div class="filter-section" (click)="openFilter()">
         <img src="/assets/icons/filter.svg" />
         <span>Apply Filters</span>
     </div>
 </div>
-<div>
+<ng-container *ngIf="filterVisibilityFlag">
+    <ws-app-filter (toggleFilter)="hideFilter($event)"></ws-app-filter>
+</ng-container>

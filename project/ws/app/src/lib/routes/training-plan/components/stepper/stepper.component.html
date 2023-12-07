@@ -10,17 +10,24 @@
                 <span>2. Add Content
                 </span>
             </ng-template>
+            <ng-template matTabContent>
+                <ws-app-create-content></ws-app-create-content>
+            </ng-template>
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>
                 <span>3. Add Assignee</span>
             </ng-template>
             <ng-template matTabContent>
+                <ws-app-create-assignee></ws-app-create-assignee>
             </ng-template>
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>
                 <span>4. Add Timeline</span>
+            </ng-template>
+            <ng-template matTabContent>
+                <ws-app-create-timeline></ws-app-create-timeline>
             </ng-template>
         </mat-tab>
     </mat-tab-group>

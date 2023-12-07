@@ -1,0 +1,75 @@
+::ng-deep .mat-dialog-container {
+    border-radius: 8px;
+}
+.box-container {
+    width:632px;
+    padding: 24px;
+}
+.icon {
+    justify-content: center;
+}
+.title {
+    justify-content: center;
+    color: #1B4CA1;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.12px;
+    margin-top: 16px;
+    text-align: center;
+}
+.subtitle {
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.25px;
+    margin-top: 12px;
+    text-align: center;
+}
+.action {
+    justify-content: center;
+    margin-top: 16px;
+}
+.cancel {
+    color: rgb(27, 76, 161);
+    border: 1px solid rgb(27, 76, 161);
+    border-radius: 4px;
+    width: auto;
+    text-align: center;
+    padding: 10px;
+}
+
+
+.primary {
+    color: rgba(255, 255, 255);
+    border: 1px solid rgb(27, 76, 161);
+    border-radius: 4px;
+    width: auto;
+    text-align: center;
+    padding: 10px;
+    background-color: rgb(27, 76, 161);
+    margin-left: 16px;
+}
+
+.progress-title {
+    justify-content: center;
+    color: rgba(0,0,0,0.87);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.12px;
+    margin-top: 16px;
+    text-align: center;
+}
+
+.progress-subtitle {
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.25px;
+    margin-top: 16px;
+    text-align: center;
+}
+
+.progress-icon {
+    justify-content: center;
+    margin-top: 16px;
+}

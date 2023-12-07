@@ -1,3 +1,7 @@
+.search-container {
+    margin-top:20px;
+}
+
 .selectWrapper {
     border-radius: 4px;
     display: inline-block;
@@ -53,6 +57,7 @@ select {
 .filter-section {
     margin-left: 20px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .filter-section img {

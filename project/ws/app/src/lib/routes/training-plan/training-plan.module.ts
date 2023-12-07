@@ -20,6 +20,7 @@ import {
   MatRadioModule,
   MatTabsModule,
   MatCheckboxModule,
+  MatDatepickerModule
 } from '@angular/material'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatPaginatorModule } from '@angular/material/paginator'
@@ -44,6 +45,16 @@ import { StepperComponent } from './components/stepper/stepper.component'
 import { SearchComponent } from './components/search/search.component'
 import { StandardCardComponent } from './components/standard-card/standard-card.component'
 import { CompetencySummaryComponent } from './components/competency-summary/competency-summary.component'
+import { ChipComponent } from './components/chip/chip.component'
+import { CreateAssigneeComponent } from './routes/create-assignee/create-assignee.component'
+import { UserCardComponent } from './components/user-card/user-card.component'
+import { CreateTimelineComponent } from './routes/create-timeline/create-timeline.component'
+import { AddTimelineFormComponent } from './components/add-timeline-form/add-timeline-form.component'
+import { FilterComponent } from './components/filter/filter.component'
+import { ConfirmationBoxComponent } from './components/confirmation-box/confirmation.box.component'
+import { PreviewPlanComponent } from './routes/preview-plan/preview-plan.component'
+import { CreateContentComponent } from './routes/create-content/create-content.component'
+
 @NgModule({
   declarations: [
     TrainingPlanHomeComponent,
@@ -53,6 +64,15 @@ import { CompetencySummaryComponent } from './components/competency-summary/comp
     SearchComponent,
     StandardCardComponent,
     CompetencySummaryComponent,
+    ChipComponent,
+    CreateAssigneeComponent,
+    UserCardComponent,
+    CreateTimelineComponent,
+    AddTimelineFormComponent,
+    FilterComponent,
+    ConfirmationBoxComponent,
+    PreviewPlanComponent,
+    CreateContentComponent
   ],
   imports: [
     CommonModule,
@@ -101,8 +121,10 @@ import { CompetencySummaryComponent } from './components/competency-summary/comp
     MatTableModule,
     MatTooltipModule,
     MatSortModule,
+    MatDatepickerModule
   ],
   entryComponents: [
+    ConfirmationBoxComponent
   ],
   providers: [
     InitResolver,

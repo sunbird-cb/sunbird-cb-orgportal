@@ -1,17 +1,94 @@
-<div class=" filter">
-    <div class="filter-header flex flex-1">
-        <div class="flex flex-2 flex-row">
-            <div class="label">Filters</div>
-            <div class="cross-filter"><img src="assets/icons/close.svg"></div>
-        </div>
-    </div>
-    <div class="filter-footer flex flex-1">
-        <div class="flex flex-2 flex-row">
-            <div class="filter-clear">
-                Clear
+<div class="filter-overlay">
+    <div class="filter">
+        <div class="filter-header flex flex-1">
+            <div class="flex flex-2 flex-row">
+                <div class="label">Filters</div>
+                <div class="cross-filter cursor-pointer" (click)="hideFilter()"><img src="assets/icons/close.svg"></div>
             </div>
-            <div class="filter-apply">
-                Apply
+        </div>
+        <div class="filter-content-container">
+            <div class="filter-content flex flex-1">
+                <mat-accordion>
+                    <mat-expansion-panel disableRipple (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Competency Area
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="flex flex-1 flex-row category-item">
+                            <mat-checkbox disableRipple class="example-margin">Behavioural</mat-checkbox>
+                        </div>
+                        <div class="flex flex-1 flex-row category-item">
+                            <mat-checkbox disableRipple class="example-margin">Functional</mat-checkbox>
+                        </div>
+                        <div class="flex flex-1 flex-row category-item">
+                            <mat-checkbox disableRipple class="example-margin">Domain</mat-checkbox>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <div class="spacer"></div>
+            <div class="filter-content flex flex-1">
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header disableRipple>
+                            <mat-panel-title>
+                                Competency Type
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>I'm visible because I am open</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <div class="spacer"></div>
+            <div class="filter-content flex flex-1">
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header disableRipple>
+                            <mat-panel-title>
+                                Competency Theme
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>I'm visible because I am open</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <div class="spacer"></div>
+            <div class="filter-content flex flex-1">
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Competency Sub-Theme
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>I'm visible because I am open</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <div class="spacer"></div>
+            <div class="filter-content flex flex-1">
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header disableRipple>
+                            <mat-panel-title>
+                                Provider
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>I'm visible because I am open</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+        <div class="filter-footer flex flex-1">
+            <div class="flex flex-2 flex-row">
+                <div class="filter-clear" (click)="hideFilter()">
+                    Clear
+                </div>
+                <div class="filter-apply" (click)="hideFilter()">
+                    Apply
+                </div>
             </div>
         </div>
     </div>

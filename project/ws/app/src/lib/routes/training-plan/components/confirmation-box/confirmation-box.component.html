@@ -1,0 +1,51 @@
+<div class="box-container" *ngIf="data?.type === 'normal'">
+    <div class="flex flex-1 flex-row icon">
+        <img src="assets/icons/{{data?.icon}}.svg"/>
+
+    </div>
+    <div class="flex flex-1 flex-row title">
+        {{data?.title}}
+        
+    </div>
+    <div class="flex flex-1 flex-row subtitle">
+        {{data?.subTitle}}
+    </div>
+    <div mat-dialog-actions class="flex flex-1 flex-row action">
+        <div class="cancel cursor-pointer" [mat-dialog-close]="data?.secondaryAction">
+            <span>{{data?.secondaryAction}}</span>
+        </div>
+        <div class="primary cursor-pointer">
+            <span>{{data?.primaryAction}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="box-container" *ngIf="data?.type === 'progress'">   
+    <div class="flex flex-1 flex-row progress-title">
+        {{data?.title}}        
+    </div>
+    <div class="flex flex-1 flex-row progress-subtitle">
+        {{data?.subTitle}}
+    </div>
+    <div class="flex flex-1 flex-row progress-icon">
+        <img src="assets/icons/{{data?.icon}}.svg"/>
+
+    </div>
+</div>
+
+<div class="box-container" *ngIf="data?.type === 'progress-completed'">   
+    <div class="flex flex-1 flex-row progress-title">
+        {{data?.title}}        
+    </div>
+    <div class="flex flex-1 flex-row progress-subtitle">
+        {{data?.subTitle}}
+    </div>
+    <div class="flex flex-1 flex-row progress-icon">
+        <img src="assets/icons/{{data?.icon}}.svg"/>
+    </div>
+    <div mat-dialog-actions class="flex flex-1 flex-row action">       
+        <div class="primary cursor-pointer">
+            <span>{{data?.primaryAction}}</span>
+        </div>
+    </div>
+</div>
