@@ -544,10 +544,10 @@ export class CreateEventComponent implements OnInit {
       request: {
         event: {
           versionKey,
-          status: "Live",
-          identifier: identifierkey
-        }
-      }
+          status: 'Live',
+          identifier: identifierkey,
+        },
+      },
     }
     this.eventsSvc.publishEvent(identifierkey, reqestBody).subscribe(
       res => {

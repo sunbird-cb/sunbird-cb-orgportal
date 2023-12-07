@@ -1,0 +1,34 @@
+
+.competency-summary {
+    margin-top: 24px;
+    width: 494px;
+    border: 1px solid rgb(0,0,0,0.8);
+    min-height: 300px;
+    margin-left: 25px;
+    border-radius: 12px;
+    
+}
+.competency-summary-header {
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Lato';
+    letter-spacing: 0.25px;
+    color: rgb(0,0,0,0.87);
+    margin: 18px 16px 20px 16px;
+}
+
+.default-tab-content {
+    margin: 319px 65px;
+    color: rgba(0,0,0,0.6)
+}
+
+.category-card {
+    margin: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 16px;
+}
+
+.category-card label {
+    width:270px
+}

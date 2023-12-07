@@ -1,0 +1,42 @@
+.assignee-card {
+    width: 325px;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 4px;
+    padding: 16px;
+    margin-left: 20px;
+}
+
+.assignee-card:first-child {
+    margin-left: 0;
+}
+
+.avatar {
+    height: 48px;
+    width: 49px;
+    border-radius: 4px;
+    background: #306933;
+    color: #fff;
+}
+
+.avatar div {
+    padding: 14px 13.5px;
+}
+
+.assignee-desc {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+    width: 230px;
+}
+
+
+.assignee-desc p {
+    padding: 0;
+    margin: 0;
+}
+
+.check-action {
+    margin-top: 12px;
+    margin-right: 16px;
+
+}

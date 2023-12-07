@@ -1,0 +1,67 @@
+.selectWrapper {
+    border-radius: 4px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.selectBox {
+    width: 192px;
+    height: 48px;
+    border: 0px;
+    outline: none;
+    background: none;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent !important;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") !important;
+    background-repeat: no-repeat !important;
+    background-position-x: 100% !important;
+    background-position-y: 10px !important;
+    border: 1px solid rgba(0, 0, 0, 0.16) !important;
+    border-radius: 2px !important;
+    padding: 1rem !important;
+}
+
+.rsearch {
+    position: relative;
+}
+
+.search {
+    margin-left: 16px;
+
+}
+
+.search-icon {
+    position: absolute;
+    top: 16px;
+    font-size: 20px;
+    left: 10px;
+}
+
+.sinput {
+    border-radius: 4px;
+    border: 1px solid #d5d0d0;
+    padding: 15px 36px;
+    font: 400 14px Lato;
+    width: 995px;
+}
+
+.filter-section {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.filter-section img {
+    vertical-align: middle;
+}
+
+.filter-section span {
+    vertical-align: middle;
+    margin-left: 24px;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 16px;
+    font-weight: 600;
+}

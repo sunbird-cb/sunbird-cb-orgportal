@@ -39,10 +39,20 @@ import { MatSortModule } from '@angular/material/sort'
 import { TrainingPlanRoutingModule } from './training-plan.routing.module'
 import { TrainingPlanHomeComponent } from './routes/training-plan-home/training-plan-home.component'
 import { CreatePlanComponent } from './routes/create-plan/create-plan.component'
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component'
+import { StepperComponent } from './components/stepper/stepper.component'
+import { SearchComponent } from './components/search/search.component'
+import { StandardCardComponent } from './components/standard-card/standard-card.component'
+import { CompetencySummaryComponent } from './components/competency-summary/competency-summary.component'
 @NgModule({
   declarations: [
     TrainingPlanHomeComponent,
-    CreatePlanComponent
+    CreatePlanComponent,
+    BreadcrumbComponent,
+    StepperComponent,
+    SearchComponent,
+    StandardCardComponent,
+    CompetencySummaryComponent
   ],
   imports: [
     CommonModule,

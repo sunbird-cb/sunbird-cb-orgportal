@@ -1,0 +1,27 @@
+<div>
+    <mat-tab-group #tabGroup [disableRipple]=true [selectedIndex]="0" class="margin-top-m">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                1. Create a plan
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span>2. Add Content
+                </span>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span>3. Add Assignee</span>
+            </ng-template>
+            <ng-template matTabContent>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span>4. Add Timeline</span>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>

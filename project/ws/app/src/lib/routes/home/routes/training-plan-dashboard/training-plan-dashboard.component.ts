@@ -12,10 +12,10 @@ import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/in
 export class TrainingPlanDashboardComponent implements OnInit {
 
   currentFilter = 'live'
-  pageIndex: number = 0
-  currentOffset: number = 0
-  limit: number = 20
-  searchQuery: string = ''
+  pageIndex = 0
+  currentOffset = 0
+  limit = 20
+  searchQuery = ''
   tabledata!: ITableData
   trainingPlanData: any = []
   tagListData: any = ['Designation', 'All users', 'Custom users']
@@ -99,7 +99,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       contentType: 'contentType live',
       CreatedBy: 'CreatedBy live',
       CreatedOn: 'CreatedOn live',
-    }, {
+    },                         {
       planName: 'check live',
       assignee: 'assignee live',
       totalContent: 'totalContent live',
