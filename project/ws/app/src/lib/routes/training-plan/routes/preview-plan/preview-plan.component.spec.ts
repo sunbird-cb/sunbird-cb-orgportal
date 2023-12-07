@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { PreviewPlanComponent } from './preview-plan.component';
+import { PreviewPlanComponent } from './preview-plan.component'
 
 describe('PreviewPlanComponent', () => {
-  let component: PreviewPlanComponent;
-  let fixture: ComponentFixture<PreviewPlanComponent>;
+  let component: PreviewPlanComponent
+  let fixture: ComponentFixture<PreviewPlanComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PreviewPlanComponent ]
+      declarations: [PreviewPlanComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PreviewPlanComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(PreviewPlanComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

@@ -20,7 +20,7 @@ import {
   MatRadioModule,
   MatTabsModule,
   MatCheckboxModule,
-  MatDatepickerModule
+  MatDatepickerModule,
 } from '@angular/material'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatPaginatorModule } from '@angular/material/paginator'
@@ -72,7 +72,7 @@ import { CreateContentComponent } from './routes/create-content/create-content.c
     FilterComponent,
     ConfirmationBoxComponent,
     PreviewPlanComponent,
-    CreateContentComponent
+    CreateContentComponent,
   ],
   imports: [
     CommonModule,
@@ -121,10 +121,10 @@ import { CreateContentComponent } from './routes/create-content/create-content.c
     MatTableModule,
     MatTooltipModule,
     MatSortModule,
-    MatDatepickerModule
+    MatDatepickerModule,
   ],
   entryComponents: [
-    ConfirmationBoxComponent
+    ConfirmationBoxComponent,
   ],
   providers: [
     InitResolver,

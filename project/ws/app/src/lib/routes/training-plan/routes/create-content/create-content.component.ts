@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 
 @Component({
   selector: 'ws-app-create-content',
   templateUrl: './create-content.component.html',
-  styleUrls: ['./create-content.component.scss']
+  styleUrls: ['./create-content.component.scss'],
 })
 export class CreateContentComponent implements OnInit {
 

@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ConfirmationBoxComponent } from './confirmation.box.component';
+import { ConfirmationBoxComponent } from './confirmation.box.component'
 
 describe('ConfirmationBoxComponent', () => {
-  let component: ConfirmationBoxComponent;
-  let fixture: ComponentFixture<ConfirmationBoxComponent>;
+  let component: ConfirmationBoxComponent
+  let fixture: ComponentFixture<ConfirmationBoxComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfirmationBoxComponent ]
+      declarations: [ConfirmationBoxComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConfirmationBoxComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ConfirmationBoxComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
