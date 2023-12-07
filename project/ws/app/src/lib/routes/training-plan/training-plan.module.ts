@@ -52,7 +52,7 @@ import { CompetencySummaryComponent } from './components/competency-summary/comp
     StepperComponent,
     SearchComponent,
     StandardCardComponent,
-    CompetencySummaryComponent
+    CompetencySummaryComponent,
   ],
   imports: [
     CommonModule,

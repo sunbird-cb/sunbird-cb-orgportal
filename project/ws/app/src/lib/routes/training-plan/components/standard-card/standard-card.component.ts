@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 
 @Component({
   selector: 'ws-app-standard-card',
   templateUrl: './standard-card.component.html',
-  styleUrls: ['./standard-card.component.scss']
+  styleUrls: ['./standard-card.component.scss'],
 })
 export class StandardCardComponent implements OnInit {
 
