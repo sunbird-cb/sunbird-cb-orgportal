@@ -18,8 +18,8 @@ export class SearchComponent implements OnInit {
   openFilter() {
       this.filterVisibilityFlag = true
       if (this.document.getElementById('top-nav-bar')) {
-        /* eslint-disable  @typescript-eslint/no-non-null-assertion */
-        this.document.getElementById('top-nav-bar').style.zIndex = '1'
+        let ele:any = this.document.getElementById('top-nav-bar');
+        ele.style.zIndex = '1'
       }
 
   }
@@ -27,8 +27,8 @@ export class SearchComponent implements OnInit {
   hideFilter(event: any) {
     this.filterVisibilityFlag = event
     if (this.document.getElementById('top-nav-bar')) {
-      /* eslint-disable  @typescript-eslint/no-non-null-assertion */
-      this.document.getElementById('top-nav-bar').style.zIndex = '1000'
+      let ele:any = this.document.getElementById('top-nav-bar');
+      ele.style.zIndex = '1000'
     }
   }
 
