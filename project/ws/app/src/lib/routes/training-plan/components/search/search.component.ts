@@ -18,7 +18,7 @@ export class SearchComponent implements OnInit {
   openFilter() {
       this.filterVisibilityFlag = true
       if (this.document.getElementById('top-nav-bar')) {
-        let ele:any = this.document.getElementById('top-nav-bar');
+        const ele: any = this.document.getElementById('top-nav-bar')
         ele.style.zIndex = '1'
       }
 
@@ -27,7 +27,7 @@ export class SearchComponent implements OnInit {
   hideFilter(event: any) {
     this.filterVisibilityFlag = event
     if (this.document.getElementById('top-nav-bar')) {
-      let ele:any = this.document.getElementById('top-nav-bar');
+      const ele: any = this.document.getElementById('top-nav-bar')
       ele.style.zIndex = '1000'
     }
   }
