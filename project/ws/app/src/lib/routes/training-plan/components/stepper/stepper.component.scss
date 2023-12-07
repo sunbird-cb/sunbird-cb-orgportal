@@ -1,6 +1,9 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
+.stepper {
+    margin:20px 0;
+}
 .relative {
     /* min-height: auto; */
     position: absolute;
@@ -52,13 +55,13 @@
 
 
 
-::ng-deep .mat-ink-bar {
+::ng-deep .stepper .mat-ink-bar {
     display: none;
 }
 
 
 
-::ng-deep .mat-tab-label {
+::ng-deep .stepper .mat-tab-label {
     flex: 1;
     color: black;
     opacity: 1 !important;
@@ -72,7 +75,7 @@
     }
 }
 
-::ng-deep .mat-tab-label::after {
+::ng-deep .stepper .mat-tab-label::after {
     content: " ";
     position: absolute;
     width: 0px;
@@ -84,7 +87,7 @@
     border-color: transparent transparent transparent #F5F5F5;
 }
 
-::ng-deep .mat-tab-label::before {
+::ng-deep .stepper .mat-tab-label::before {
     content: " ";
     position: absolute;
     width: 0px;
@@ -96,7 +99,7 @@
 }
 
 
-::ng-deep .mat-tab-label-active {
+::ng-deep .stepper .mat-tab-label-active {
     flex: 1;
     opacity: 1 !important;
 
@@ -108,7 +111,7 @@
     }
 }
 
-::ng-deep .mat-tab-label-active::after {
+::ng-deep .stepper .mat-tab-label-active::after {
     content: " ";
     position: absolute;
     width: 0px;
@@ -120,7 +123,7 @@
     border-color: transparent transparent transparent #373434;
 }
 
-::ng-deep .mat-tab-label-active::before {
+::ng-deep .stepper .mat-tab-label-active::before {
     content: " ";
     position: absolute;
     width: 0px;

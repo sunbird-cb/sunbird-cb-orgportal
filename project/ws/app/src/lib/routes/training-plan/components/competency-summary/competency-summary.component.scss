@@ -2,7 +2,7 @@
 .competency-summary {
     margin-top: 24px;
     width: 494px;
-    border: 1px solid rgb(0,0,0,0.8);
+    border: 1px solid rgb(0,0,0,0.16);
     min-height: 300px;
     margin-left: 25px;
     border-radius: 12px;
@@ -29,6 +29,6 @@
     padding: 16px;
 }
 
-.category-card label {
-    width:270px
+.category-card .label {
+    width:90%;
 }
