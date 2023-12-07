@@ -258,6 +258,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       // tslint:disable-next-line
       (err: any) => {
         this.displayLoader = false
+        this.disableCreateButton = false
         if (err.error.params.errmsg) {
           if (err.error.params.errmsg === 'phone already exists') {
             this.openSnackbar('Phone Number already exists')
