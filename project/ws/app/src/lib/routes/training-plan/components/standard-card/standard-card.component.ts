@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 
 @Component({
   selector: 'ws-app-standard-card',
@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./standard-card.component.scss'],
 })
 export class StandardCardComponent implements OnInit {
-
+  @Input() cardSize: any;
+  @Input() checkboxVisibility:any = true;
   constructor() { }
 
   ngOnInit() {

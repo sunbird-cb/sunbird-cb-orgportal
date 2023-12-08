@@ -5,18 +5,18 @@
     <div class="mt-48">
         <div class="flex flex-row flex-2">
             <div class="mat-subheading-1 left-heading">Selected Cards</div>
-            <div class="mat-subheading-2 right-heading">Show all > </div>
+            <div (click)="showAll()" class="mat-subheading-2 right-heading cursor-pointer show-all">Show all <img src="assets/icons/forward_arrow.svg"/> </div>
         </div>
         
     </div>
-    <ws-app-standard-card></ws-app-standard-card>
+    <ws-app-standard-card [cardSize]="5" [checkboxVisibility]="false"></ws-app-standard-card>
 </ng-container>
 <ng-container>
     <div class="mt-32">
         <div class="flex flex-row flex-2">
             <div class="mat-subheading-1 left-heading">Selected Content</div>
-            <div class="mat-subheading-2 right-heading">Show all > </div>
+            <div (click)="showAll()" class="mat-subheading-2 right-heading cursor-pointer show-all">Show all <img src="assets/icons/forward_arrow.svg"/> </div>
         </div>
     </div>
-    <ws-app-user-card></ws-app-user-card>
+    <ws-app-user-card [checkboxVisibility]="false"></ws-app-user-card>
 </ng-container>

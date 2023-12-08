@@ -1,6 +1,9 @@
 <ws-app-breadcrumb [showBreadcrumbAction]="false"></ws-app-breadcrumb>
-<div class="flex flex-1 flex-row">
-    <div class="go-back">
-        <img src="assets/icons/close.svg">Go back 
+<div class="flex flex-1 flex-row mt-8">
+    <div class="go-back cursor-pointer" (click)="goBack()">
+        <img src="assets/icons/backwardArrow.svg"/><span>Go back </span>
     </div>
+</div>
+<div class="flex flex-1 flex-row mt-16">
+    <ws-app-standard-card [cardSize]="5"></ws-app-standard-card>
 </div>

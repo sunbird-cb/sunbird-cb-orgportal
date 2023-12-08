@@ -12,4 +12,8 @@ export class ChipComponent implements OnInit {
   ngOnInit() {
   }
 
+  clearAll() {
+    
+  }
+
 }

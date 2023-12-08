@@ -1,11 +1,8 @@
 <div class="flex flex-1 flex-row search-container">
-    <div class="selectWrapper">
-        <select class="selectBox" (change)="showDialogBox()">
-            <option>Designation</option>
-            <option>All Users</option>
-            <option>Custom Users</option>
-        </select>
-    </div>
+    <!-- Category Drop down -->
+    <ng-container>
+        <ws-app-category-drop-down [categoryData]="categoryData" (closeDropDown)="closeDropDown($event)"></ws-app-category-drop-down>
+    </ng-container>
     <div class="search">
         <div class="rsearch"><mat-icon
                 class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>

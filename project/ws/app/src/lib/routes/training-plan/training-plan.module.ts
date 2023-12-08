@@ -54,7 +54,8 @@ import { FilterComponent } from './components/filter/filter.component'
 import { ConfirmationBoxComponent } from './components/confirmation-box/confirmation.box.component'
 import { PreviewPlanComponent } from './routes/preview-plan/preview-plan.component'
 import { CreateContentComponent } from './routes/create-content/create-content.component'
-
+import { CategoryDropDownComponent } from './components/category-drop-down/category-drop-down.component'
+import { AddPlanInformationComponent } from './components/add-plan-information/add-plan-information.component'
 @NgModule({
   declarations: [
     TrainingPlanHomeComponent,
@@ -73,6 +74,8 @@ import { CreateContentComponent } from './routes/create-content/create-content.c
     ConfirmationBoxComponent,
     PreviewPlanComponent,
     CreateContentComponent,
+    CategoryDropDownComponent,
+    AddPlanInformationComponent
   ],
   imports: [
     CommonModule,

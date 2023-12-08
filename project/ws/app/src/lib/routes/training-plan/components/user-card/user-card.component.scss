@@ -9,6 +9,15 @@
     margin-left: 20px;
 }
 
+.assignee-card-without-checkbox {
+    background-color: rgb(240,240,240);
+    width: 325px;
+    border: none !important;
+    border-radius: 4px;
+    padding: 22px 12px !important;
+    margin-left: 20px;
+}
+
 .assignee-card:first-child {
     margin-left: 0;
 }
@@ -32,14 +41,58 @@
     width: 230px;
 }
 
+.assignee-desc .sub-heading {
+    font-size: 14px;
+    color: rgb(0,0,0,0.6);
+}
+
 
 .assignee-desc p {
     padding: 0;
     margin: 0;
 }
 
-.check-action {
+.assignee-card-container .check-action {
     margin-top: 12px;
+    margin-right: 16px;
+
+}
+
+/** Custom User **/
+
+.custom-user-card-container {
+    margin-top:20px
+}
+.custom-user-card {
+    width: 325px;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 4px;
+    padding: 24px 16px;
+    margin-left: 20px;
+}
+
+.custom-user-card.active {
+    border: 1px solid #1B4CA1;
+}
+
+.custom-user-card:first-child {
+    margin-left: 0;
+}
+
+.custom-user-desc {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+    width: 230px;
+}
+
+
+.custom-user-desc p {
+    padding: 0;
+    margin: 0;
+}
+
+.custom-user-card-container .check-action {
     margin-right: 16px;
 
 }

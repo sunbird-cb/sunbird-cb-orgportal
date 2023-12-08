@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'ws-app-create-timeline',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core'
 })
 export class CreateTimelineComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  showAll() {
+    this.router.navigateByUrl('/app/training-plan/preview-plan')
   }
 
 }

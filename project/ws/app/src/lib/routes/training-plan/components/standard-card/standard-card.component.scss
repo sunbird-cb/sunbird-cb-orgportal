@@ -11,7 +11,6 @@ $secondary-color: #EF951E;
 
 
 .card-grid-container {
-    width: 55%;
 }
 
 .card-standard-container {
@@ -218,9 +217,6 @@ $secondary-color: #EF951E;
   }
 }
 
-.card-standard-container:hover {
-  transform: scale(1.02);
-}
 .card-discussions-container {
   $card-padding: $size-m;
   $action-btn-size: 2.5 * $size-m;
@@ -523,20 +519,22 @@ $title-line-count: 2;
 }
 
 .course-card:first-child {
-    margin-left: 0;
+    margin-left: 5px;
 }
 
 .card-select-box {
     position: absolute;
-    background: gray;
+    background: rgb(255,255,255);
     border-radius: 4px;
     height: 32px;
     width: 32px;
     margin: 18px;
+    border: 1px solid rgba(0,0,0,0.16);
 }
 
 .card-select-check {
-    padding:6px;
+    padding:8px;
     height: 20px;
     width: 20px;
+    vertical-align: middle;
 }

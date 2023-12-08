@@ -1,19 +1,19 @@
 <div class="flex flex-1 flex-row breadcrumb">
     <div class="flex flex-2 flex-row left-breadcrumb">
-        <div class="home cursor-pointer">Training Plans
+        <div class="home cursor-pointer" (click)="performRoute('list')">Training Plans
             <img src="/assets/icons/arrow-forward_small.svg" />
         </div>
-        <div class="home cursor-pointer">Create CBP Plan
+        <div class="home cursor-pointer" (click)="performRoute('create-plan')">Create CBP Plan
             <img src="/assets/icons/arrow-forward_small.svg" />
         </div>
-        <div class="action cursor-pointer">Note taking - Shortand
+        <div class="action cursor-pointer">Create a Plan
         </div>
     </div>
     <div class="flex flex-1 flex-row right-breadcrumb" *ngIf="showBreadcrumbAction">
-        <div class="cancel">
+        <div class="cancel cursor-pointer" (click)="cancel()">
             <span>Cancel</span>
         </div>
-        <div class="next active">
+        <div class="next-btn cursor-pointer" (click)="nextStep()">
             <span>Next: Add Content</span>
         </div>
     </div>

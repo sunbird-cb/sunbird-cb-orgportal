@@ -13,4 +13,6 @@ export class ConfirmationBoxComponent implements OnInit {
   ngOnInit() {
   }
 
+  performAction() {
+  }
 }

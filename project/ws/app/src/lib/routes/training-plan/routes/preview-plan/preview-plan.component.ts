@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'ws-app-preview-plan',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core'
 })
 export class PreviewPlanComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/app/training-plan/create-plan')
   }
 
 }
