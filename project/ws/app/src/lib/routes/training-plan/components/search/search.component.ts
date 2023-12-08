@@ -1,14 +1,13 @@
 import { Component, Input, Inject, OnInit } from '@angular/core'
 import { DOCUMENT } from '@angular/common'
 
-
 @Component({
   selector: 'ws-app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
-  @Input() categoryData:any = [];
+  @Input() categoryData: any = []
   filterVisibilityFlag = false
   constructor(@Inject(DOCUMENT) private document: Document) { }
 

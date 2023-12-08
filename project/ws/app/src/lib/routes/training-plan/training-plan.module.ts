@@ -75,7 +75,7 @@ import { AddPlanInformationComponent } from './components/add-plan-information/a
     PreviewPlanComponent,
     CreateContentComponent,
     CategoryDropDownComponent,
-    AddPlanInformationComponent
+    AddPlanInformationComponent,
   ],
   imports: [
     CommonModule,

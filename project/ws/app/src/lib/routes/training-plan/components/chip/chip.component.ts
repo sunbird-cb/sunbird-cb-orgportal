@@ -13,7 +13,7 @@ export class ChipComponent implements OnInit {
   }
 
   clearAll() {
-    
+
   }
 
 }

@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { CategoryDropDownComponent } from './category-drop-down.component';
+import { CategoryDropDownComponent } from './category-drop-down.component'
 
 describe('CategoryDropDownComponent', () => {
-  let component: CategoryDropDownComponent;
-  let fixture: ComponentFixture<CategoryDropDownComponent>;
+  let component: CategoryDropDownComponent
+  let fixture: ComponentFixture<CategoryDropDownComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CategoryDropDownComponent ]
+      declarations: [CategoryDropDownComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CategoryDropDownComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(CategoryDropDownComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

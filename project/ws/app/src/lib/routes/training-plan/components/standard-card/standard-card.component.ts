@@ -6,8 +6,8 @@ import { Component, Input, OnInit } from '@angular/core'
   styleUrls: ['./standard-card.component.scss'],
 })
 export class StandardCardComponent implements OnInit {
-  @Input() cardSize: any;
-  @Input() checkboxVisibility:any = true;
+  @Input() cardSize: any
+  @Input() checkboxVisibility: any = true
   constructor() { }
 
   ngOnInit() {

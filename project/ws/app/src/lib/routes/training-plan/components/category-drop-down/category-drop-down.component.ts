@@ -1,97 +1,97 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component'
 @Component({
   selector: 'ws-app-category-drop-down',
   templateUrl: './category-drop-down.component.html',
-  styleUrls: ['./category-drop-down.component.scss']
+  styleUrls: ['./category-drop-down.component.scss'],
 })
 export class CategoryDropDownComponent implements OnInit {
-  @Input() categoryData:any[] = [];
-  @Output() closeDropDown:any = new EventEmitter();
-  dialogRef:any;
+  @Input() categoryData: any[] = []
+  @Output() closeDropDown: any = new EventEmitter()
+  dialogRef: any
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
 
-
-  showDialogBox(event:any) {
-    let dialogData:any = {}
-    switch(event) {
+  showDialogBox(event: any) {
+    const dialogData: any = {}
+    switch (event) {
       case 'Course':
-        dialogData['type'] = 'normal';
-        dialogData['icon'] = 'radio_on';
-        dialogData['title'] = 'You are attempting to change the selected content type?';
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`;
-        dialogData['primaryAction'] = 'I understand, change content type';
-        dialogData['secondaryAction'] = 'Cancel';
-      break;
+        // `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`
+        dialogData['type'] = 'normal'
+        dialogData['icon'] = 'radio_on'
+        dialogData['title'] = 'You are attempting to change the selected content type?'
+        dialogData['subTitle'] = 'Test'
+        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['secondaryAction'] = 'Cancel'
+      break
       case 'Program':
-        dialogData['type'] = 'normal';
-        dialogData['icon'] = 'radio_on';
-        dialogData['title'] = 'You are attempting to change the selected content type?';
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`;
-        dialogData['primaryAction'] = 'I understand, change content type';
-        dialogData['secondaryAction'] = 'Cancel';
-      break;
+        dialogData['type'] = 'normal'
+        dialogData['icon'] = 'radio_on'
+        dialogData['title'] = 'You are attempting to change the selected content type?'
+        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`
+        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['secondaryAction'] = 'Cancel'
+      break
       case 'Blended program':
-        dialogData['type'] = 'normal';
-        dialogData['icon'] = 'radio_on';
-        dialogData['title'] = 'You are attempting to change the selected content type?';
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`;
-        dialogData['primaryAction'] = 'I understand, change content type';
-        dialogData['secondaryAction'] = 'Cancel';
-      break;
+        dialogData['type'] = 'normal'
+        dialogData['icon'] = 'radio_on'
+        dialogData['title'] = 'You are attempting to change the selected content type?'
+        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`
+        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['secondaryAction'] = 'Cancel'
+      break
       case 'Curated program':
-        dialogData['type'] = 'normal';
-        dialogData['icon'] = 'radio_on';
-        dialogData['title'] = 'You are attempting to change the selected content type?';
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`;
-        dialogData['primaryAction'] = 'I understand, change content type';
-        dialogData['secondaryAction'] = 'Cancel';
-      break;
+        dialogData['type'] = 'normal'
+        dialogData['icon'] = 'radio_on'
+        dialogData['title'] = 'You are attempting to change the selected content type?'
+        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`
+        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['secondaryAction'] = 'Cancel'
+      break
       case 'Moderated Course':
-        dialogData['type'] = 'normal';
-        dialogData['icon'] = 'radio_on';
-        dialogData['title'] = 'You are attempting to change the selected content type?';
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`;
-        dialogData['primaryAction'] = 'I understand, change content type';
-        dialogData['secondaryAction'] = 'Cancel';
-      break;
+        dialogData['type'] = 'normal'
+        dialogData['icon'] = 'radio_on'
+        dialogData['title'] = 'You are attempting to change the selected content type?'
+        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`
+        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['secondaryAction'] = 'Cancel'
+      break
       case 'Designation':
-        dialogData['type'] = 'normal';
-        dialogData['icon'] = 'radio_on';
-        dialogData['title'] = 'You are attempting to change the selected user type?';
+        dialogData['type'] = 'normal'
+        dialogData['icon'] = 'radio_on'
+        dialogData['title'] = 'You are attempting to change the selected user type?'
         dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.
-        If you want to select custom users or by designation, use the above option`;
-        dialogData['primaryAction'] = 'I understand, change user type';
-        dialogData['secondaryAction'] = 'Cancel';
-      break;
+        If you want to select custom users or by designation, use the above option`
+        dialogData['primaryAction'] = 'I understand, change user type'
+        dialogData['secondaryAction'] = 'Cancel'
+      break
       case 'All Users':
-        dialogData['type'] = 'normal';
-        dialogData['icon'] = 'radio_on';
-        dialogData['title'] = 'You are attempting to change the selected user type?';
+        dialogData['type'] = 'normal'
+        dialogData['icon'] = 'radio_on'
+        dialogData['title'] = 'You are attempting to change the selected user type?'
         dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.
-        If you want to select custom users or by designation, use the above option`;
-        dialogData['primaryAction'] = 'I understand, change user type';
-        dialogData['secondaryAction'] = 'Cancel';
-      break;
+        If you want to select custom users or by designation, use the above option`
+        dialogData['primaryAction'] = 'I understand, change user type'
+        dialogData['secondaryAction'] = 'Cancel'
+      break
       case 'Custom Users':
-        dialogData['type'] = 'normal';
-        dialogData['icon'] = 'radio_on';
-        dialogData['title'] = 'You are attempting to change the selected user type?';
+        dialogData['type'] = 'normal'
+        dialogData['icon'] = 'radio_on'
+        dialogData['title'] = 'You are attempting to change the selected user type?'
         dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.
-        If you want to select custom users or by designation, use the above option`;
-        dialogData['primaryAction'] = 'I understand, change user type';
-        dialogData['secondaryAction'] = 'Cancel';
-      break;
+        If you want to select custom users or by designation, use the above option`
+        dialogData['primaryAction'] = 'I understand, change user type'
+        dialogData['secondaryAction'] = 'Cancel'
+      break
     }
 
-    this.openDialoagBox(dialogData);
+    this.openDialoagBox(dialogData)
   }
 
-  openDialoagBox(dialogData:any) {
+  openDialoagBox(dialogData: any) {
     this.dialogRef = this.dialog.open(ConfirmationBoxComponent, {
       data: {
         type: dialogData.type,
@@ -108,9 +108,9 @@ export class CategoryDropDownComponent implements OnInit {
     })
   }
 
-  hideConfirmationBox(event:any) {
-    console.log('close',event);
-    this.dialogRef.close();
+  hideConfirmationBox() {
+    // console.log('close', event)
+    this.dialogRef.close()
   }
 
 }
