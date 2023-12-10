@@ -42,7 +42,7 @@ import { CreatePlanComponent } from './routes/create-plan/create-plan.component'
 @NgModule({
   declarations: [
     TrainingPlanHomeComponent,
-    CreatePlanComponent
+    CreatePlanComponent,
   ],
   imports: [
     CommonModule,
