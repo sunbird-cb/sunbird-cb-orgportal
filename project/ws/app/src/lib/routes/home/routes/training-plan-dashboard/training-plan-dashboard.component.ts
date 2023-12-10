@@ -99,7 +99,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       contentType: 'contentType live',
       CreatedBy: 'CreatedBy live',
       CreatedOn: 'CreatedOn live',
-    }, {
+    },                         {
       planName: 'check live',
       assignee: 'assignee live',
       totalContent: 'totalContent live',

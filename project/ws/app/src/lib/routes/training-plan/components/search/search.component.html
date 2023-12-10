@@ -1,0 +1,19 @@
+<div class="flex flex-1 flex-row search-container">
+    <!-- Category Drop down -->
+    <ng-container>
+        <ws-app-category-drop-down [categoryData]="categoryData" (closeDropDown)="closeDropDown($event)"></ws-app-category-drop-down>
+    </ng-container>
+    <div class="search">
+        <div class="rsearch"><mat-icon
+                class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
+            <input class="sinput color-60" label="" placeholder="Select" type="Standard">
+        </div>
+    </div>
+    <div class="filter-section" (click)="openFilter()">
+        <img src="/assets/icons/filter.svg" />
+        <span>Apply Filters</span>
+    </div>
+</div>
+<ng-container *ngIf="filterVisibilityFlag">
+    <ws-app-filter (toggleFilter)="hideFilter($event)"></ws-app-filter>
+</ng-container>

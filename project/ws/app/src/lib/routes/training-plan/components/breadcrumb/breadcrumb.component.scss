@@ -1,0 +1,59 @@
+.breadcrumb {
+    width: 100%;
+}
+.home {
+    color: rgba(0, 0, 0, 0.6);
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    font-family: 'Montserrat';
+    letter-spacing: 0.12;
+}
+
+.home img {
+    vertical-align: middle;
+}
+
+.action {
+    color: rgba(0, 0, 0, 0.87);
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    font-family: 'Montserrat';
+    letter-spacing: 0.12;
+}
+
+.cancel {
+    color: rgb(27, 76, 161);
+    border: 1px solid rgb(27, 76, 161);
+    border-radius: 4px;
+    width: 174px;
+    text-align: center;
+    padding: 10px 0;
+}
+
+
+.next-btn {
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    width: 199px;
+    text-align: center;
+    padding: 10px 0;
+    background-color: rgb(153, 153, 153);
+    margin-left: 10px;
+}
+
+.next-btn.active {
+    background-color: rgb(61, 81, 174);
+    color: rgba(255, 255, 255)
+}
+
+.left-breadcrumb {
+    width: 80%
+}
+
+.right-breaddrumb {
+    width: 20%
+}

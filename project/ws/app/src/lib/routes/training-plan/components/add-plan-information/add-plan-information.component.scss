@@ -1,0 +1,35 @@
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+    width: 369px   
+}
+
+.form-container {
+    margin-top: 20px;
+    border: 1px solid rgba(0,0,0,0.16);
+    padding: 24px 24px 0 24px;
+    box-shadow: 2px 2px 2px 0px #EBEBEB;
+}
+
+.form-container .label {
+    color:rgba(0,0,0,0.8);
+    font-weight: 600;
+    letter-spacing:0.12;
+    font-size: 20px;
+}
+.form-element {
+    margin: 24px 0;
+}
+
+.fonm-element-label {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.25;
+    color: rgba(0,0,0,0.87);
+}
+
+.sinput {
+    border-radius: 4px;
+    border: 1px solid #d5d0d0;
+    padding: 15px 16px;
+    font: 400 14px Lato;
+    width: 95%;
+}
