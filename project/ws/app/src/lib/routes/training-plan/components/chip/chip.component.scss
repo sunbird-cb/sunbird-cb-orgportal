@@ -1,0 +1,49 @@
+.chips {
+    border-radius: 63px;
+    width: 178px;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    margin-left: 12px;
+}
+
+.chips-content {
+    margin: 10px 16px;
+}
+
+.chips-content img {
+    vertical-align: middle;
+    margin-left: 8px;
+}
+.chip-container {
+    margin-top:20px;
+}
+
+.chips span {
+    font-size: 14px;
+    letter-spacing: 0.25px;
+}
+
+.selected-item-label {
+    margin: 10px 0px;
+    font-size: 14px;
+    color: rgb(0, 0, 0, 0.87);
+    font-weight: 400;
+    letter-spacing: 0.25px;
+}
+
+.select-more-link {
+    margin: 10px 12px;
+    color: #1B4CA1;
+    font-weight: 700;
+    letter-spacing: 0.25px;
+    font-family: 'Lato';
+}
+
+.clear-all {}
+
+.left-section {
+    width: 90%;
+}
+
+.right-section {
+    width: 10%;
+}

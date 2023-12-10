@@ -1,0 +1,45 @@
+.search-container {
+    margin-top:20px;
+}
+
+.rsearch {
+    position: relative;
+}
+
+.search {
+    margin-left: 16px;
+    width: 78%;
+}
+
+.search-icon {
+    position: absolute;
+    top: 16px;
+    font-size: 20px;
+    left: 10px;
+}
+
+.sinput {
+    border-radius: 4px;
+    border: 1px solid #d5d0d0;
+    padding: 15px 36px;
+    font: 400 14px Lato;
+    width: 95%;
+}
+
+.filter-section {
+    margin-left: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.filter-section img {
+    vertical-align: middle;
+}
+
+.filter-section span {
+    vertical-align: middle;
+    margin-left: 24px;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 16px;
+    font-weight: 600;
+}

@@ -9,7 +9,7 @@ import { TrainingPlanModule } from '../../../project/ws/app/src/lib/routes/train
     TrainingPlanModule,
   ],
   exports: [
-    TrainingPlanModule
+    TrainingPlanModule,
   ],
 })
 export class RouteTrainingPlanAppModule { }
