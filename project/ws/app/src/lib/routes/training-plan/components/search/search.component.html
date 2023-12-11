@@ -1,8 +1,8 @@
 <div class="flex flex-1 flex-row search-container">
     <!-- Category Drop down -->
     <ng-container>
-        <ws-app-category-drop-down [categoryData]="categoryData"
-            (closeDropDown)="closeDropDown($event)"></ws-app-category-drop-down>
+        <ws-app-category-drop-down [categoryData]="categoryData" [from]="from"
+            (handleCategorySelection)="handleCategorySelection($event)"></ws-app-category-drop-down>
     </ng-container>
     <div class="search">
         <div class="rsearch"><mat-icon

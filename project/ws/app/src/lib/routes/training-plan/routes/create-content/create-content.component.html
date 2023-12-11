@@ -1,12 +1,12 @@
 <ng-container>
-    <ws-app-search [categoryData]="categoryData"></ws-app-search>
+    <ws-app-search [categoryData]="categoryData" [from]="from" (handleApiData)="handleApiData($event)"></ws-app-search>
 </ng-container>
 
 <ng-container>
     <div class="flex flex-row">
         <div class="flex-1">
             <ws-app-chip></ws-app-chip>
-            <ws-app-standard-card [cardSize]="3"></ws-app-standard-card>
+            <ws-app-standard-card [cardSize]="3" [contentData]="contentData"></ws-app-standard-card>
         </div>
         <div class="flex-2 margin-left-s margin-top-s">
             <ws-app-competency-summary></ws-app-competency-summary>

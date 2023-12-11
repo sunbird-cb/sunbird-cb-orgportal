@@ -1,7 +1,7 @@
 <ng-container *ngIf="cardSize === 3">
     <div>
-        <div class="flex flex-3 flex-row card-grid-container flex-evenly">
-            <div class="flex  course-card">
+        <div class="flex flex-3 flex-row card-grid-container flex-evenly flex-wrap">
+            <div class="flex course-card" *ngFor="let item of contentData">
                 <mat-card class="card-standard-container mr-5 padding-remove">
                     <div class="display-contents">
                         <ng-container>
@@ -14,7 +14,7 @@
                                                     <mat-checkbox class="card-select-check"></mat-checkbox>
                                                 </div>
                                                 <img mat-card-image loading="lazy"
-                                                    class="card-img ws-mat-primary-lite-background margin-remove" />
+                                                    class="card-img ws-mat-primary-lite-background margin-remove" [src]="item?.posterImage" />
                                             </ng-container>
                                         </div>
                                         <div class="padding-m">
@@ -22,117 +22,18 @@
                                                 <div class="flex flex-end course_v2">
                                                     <mat-icon
                                                         class="mat-icon main_icon ws-mat-default-text margin-right-xs">video_library</mat-icon>
-                                                    Course
+                                                    {{item?.contentType}}
                                                 </div>
                                             </div>
                                             <div class="mat-subheading-1 title-text ws-mat-text-block-fade-gradient">
-                                                BLENDED PROGRAM FOR ONE STEP PC APPROVAL
+                                                {{item?.description}}
                                             </div>
                                             <div class="flex w-full flex-wrap flex-middle">
                                                 <div class="course_logo_box">
-                                                    <img class="source-icon" />
+                                                    <img class="source-icon" [src]="item?.appIcon"/>
                                                 </div>
-                                                <span class="org-text">By Karmayogi Bharat</span>
-                                            </div>
-                                            <div class="flex flex-middle rating-session margin-top-m">
-                                                <div class="flex flex-middle">
-                                                    <mat-icon class="mr-1">star</mat-icon>
-                                                    <span>4.5</span>
-                                                </div>
-                                                <ng-container>
-                                                    <span class="most-enrolled-text margin-left-xs">Most enrolled</span>
-                                                </ng-container>
-                                            </div>
-                                        </div>
-                                    </mat-card-content>
-                                </ng-container>
-                            </a>
-                        </ng-container>
-                    </div>
-                </mat-card>
-            </div>
-            <div class="flex  course-card">
-                <mat-card class="card-standard-container mr-5 padding-remove">
-                    <div class="display-contents">
-                        <ng-container>
-                            <a>
-                                <ng-container>
-                                    <mat-card-content class="min-top">
-                                        <div style="position: relative; z-index: 1;">
-                                            <ng-container>
-                                                <div class="card-select-box" *ngIf="checkboxVisibility">
-                                                    <mat-checkbox class="card-select-check"></mat-checkbox>
-                                                </div>
-                                                <img mat-card-image loading="lazy"
-                                                    class="card-img ws-mat-primary-lite-background margin-remove" />
-                                            </ng-container>
-                                        </div>
-                                        <div class="padding-m">
-                                            <div class="course_widget flex margin-remove">
-                                                <div class="flex flex-end course_v2">
-                                                    <mat-icon
-                                                        class="mat-icon main_icon ws-mat-default-text margin-right-xs">video_library</mat-icon>
-                                                    Course
-                                                </div>
-                                            </div>
-                                            <div class="mat-subheading-1 title-text ws-mat-text-block-fade-gradient">
-                                                BLENDED PROGRAM FOR ONE STEP PC APPROVAL
-                                            </div>
-                                            <div class="flex w-full flex-wrap flex-middle">
-                                                <div class="course_logo_box">
-                                                    <img class="source-icon" />
-                                                </div>
-                                                <span class="org-text">By Karmayogi Bharat</span>
-                                            </div>
-                                            <div class="flex flex-middle rating-session margin-top-m">
-                                                <div class="flex flex-middle">
-                                                    <mat-icon class="mr-1">star</mat-icon>
-                                                    <span>4.5</span>
-                                                </div>
-                                                <ng-container>
-                                                    <span class="most-enrolled-text margin-left-xs">Most enrolled</span>
-                                                </ng-container>
-                                            </div>
-                                        </div>
-                                    </mat-card-content>
-                                </ng-container>
-                            </a>
-                        </ng-container>
-                    </div>
-                </mat-card>
-            </div>
-            <div class="flex  course-card">
-                <mat-card class="card-standard-container mr-5 padding-remove">
-                    <div class="display-contents">
-                        <ng-container>
-                            <a>
-                                <ng-container>
-                                    <mat-card-content class="min-top">
-                                        <div style="position: relative; z-index: 1;">
-                                            <ng-container>
-                                                <div class="card-select-box" *ngIf="checkboxVisibility">
-                                                    <mat-checkbox class="card-select-check"></mat-checkbox>
-                                                </div>
-                                                <img mat-card-image loading="lazy"
-                                                    class="card-img ws-mat-primary-lite-background margin-remove" />
-                                            </ng-container>
-                                        </div>
-                                        <div class="padding-m">
-                                            <div class="course_widget flex margin-remove">
-                                                <div class="flex flex-end course_v2">
-                                                    <mat-icon
-                                                        class="mat-icon main_icon ws-mat-default-text margin-right-xs">video_library</mat-icon>
-                                                    Course
-                                                </div>
-                                            </div>
-                                            <div class="mat-subheading-1 title-text ws-mat-text-block-fade-gradient">
-                                                BLENDED PROGRAM FOR ONE STEP PC APPROVAL
-                                            </div>
-                                            <div class="flex w-full flex-wrap flex-middle">
-                                                <div class="course_logo_box">
-                                                    <img class="source-icon" />
-                                                </div>
-                                                <span class="org-text">By Karmayogi Bharat</span>
+                                                <span class="org-text" *ngIf="item?.organisation && item?.organisation[0]">
+                                                    By {{item?.organisation[0]}}</span>
                                             </div>
                                             <div class="flex flex-middle rating-session margin-top-m">
                                                 <div class="flex flex-middle">

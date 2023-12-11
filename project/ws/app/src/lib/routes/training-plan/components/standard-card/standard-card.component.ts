@@ -8,9 +8,14 @@ import { Component, Input, OnInit } from '@angular/core'
 export class StandardCardComponent implements OnInit {
   @Input() cardSize: any
   @Input() checkboxVisibility: any = true
+  @Input() contentData:any[] = [];
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
+    console.log('contentData', this.contentData);
   }
 
 }
