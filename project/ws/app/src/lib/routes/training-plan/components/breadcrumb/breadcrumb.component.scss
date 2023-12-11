@@ -26,28 +26,21 @@
 }
 
 .cancel {
-    color: rgb(27, 76, 161);
-    border: 1px solid rgb(27, 76, 161);
+    color: #0075B7 !important;
+    border: 1px solid #0075B7;
     border-radius: 4px;
     width: 174px;
-    text-align: center;
-    padding: 10px 0;
 }
 
 
 .next-btn {
-    color: rgba(255, 255, 255, 0.7);
+    background: #0075B7 !important;
+    color: white !important;
+    font-family: 'Lato';
+    font-weight: 700;
+    font-size: 14px;
     border-radius: 4px;
-    width: 199px;
-    text-align: center;
-    padding: 10px 0;
-    background-color: rgb(153, 153, 153);
-    margin-left: 10px;
-}
-
-.next-btn.active {
-    background-color: rgb(61, 81, 174);
-    color: rgba(255, 255, 255)
+    min-width: 199px;
 }
 
 .left-breadcrumb {

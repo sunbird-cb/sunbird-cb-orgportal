@@ -11,6 +11,9 @@ import _ from 'lodash'
 
 export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  selectedTabData: string = 'createPlan'
+  nextTab: string = ''
+
   constructor() {
   }
   ngOnDestroy() {
@@ -18,6 +21,15 @@ export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngOnInit() {
   }
+
   ngAfterViewInit() {
+  }
+
+  selectedTabAction(_event: any) {
+    this.selectedTabData = _event
+  }
+
+  changeTab(_event: any) {
+    this.nextTab = _event
   }
 }

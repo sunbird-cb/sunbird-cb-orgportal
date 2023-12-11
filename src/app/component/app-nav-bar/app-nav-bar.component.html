@@ -4,7 +4,8 @@
     <ng-container *ngIf="mode === 'top'">
       <a routerLink="/app/home" class="logo-dim" role="link" title="Home" i18n-aria-title i18n-aria-label>
         <img [src]="appIcon" alt="Application Logo" class="app-logo" />
-      </a> <div><span class="vertical-seperator"></span><span>MDO portal</span></div>
+      </a> <span class="vertical-seperator"></span>
+      <div class="flex flex-middle"><span>MDO portal</span></div>
       <!-- <span class="spacer"></span> -->
       <ng-container *ngIf="primaryNavbarConfig?.mediumScreen">
         <ng-container [ngTemplateOutlet]="navbarSide" [ngTemplateOutletContext]="{ item: item }"

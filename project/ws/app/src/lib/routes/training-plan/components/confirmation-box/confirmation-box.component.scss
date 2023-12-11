@@ -4,11 +4,13 @@
 .box-container {
     width:632px;
     padding: 24px;
+    position: relative;
 }
 
 .box-container-portrait {
     width:511px;
     margin: 32px 0 20px 0;
+    position: relative;
 }
 .icon {
     justify-content: center;
@@ -87,3 +89,9 @@
     justify-content: center;
     margin-top: 16px;
 }
+
+.close-modal-container {
+    position: absolute;
+    top: -45px;
+    right: -10px;
+ }
