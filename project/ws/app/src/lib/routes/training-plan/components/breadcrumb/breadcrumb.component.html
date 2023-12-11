@@ -3,18 +3,22 @@
         <div class="home cursor-pointer" (click)="performRoute('list')">Training Plans
             <img src="/assets/icons/arrow-forward_small.svg" />
         </div>
-        <div class="home cursor-pointer" (click)="performRoute('create-plan')">Create CBP Plan
+        <!-- <div class="home cursor-pointer" (click)="performRoute('create-plan')">Create CBP Plan
             <img src="/assets/icons/arrow-forward_small.svg" />
-        </div>
-        <div class="action cursor-pointer">Create a Plan
+        </div> -->
+        <div class="action cursor-pointer">{{(tabType.CREATE_PLAN === selectedTab) ? 'Create a plan' :
+            (tabType.ADD_CONTENT === selectedTab) ? 'Add content' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add
+            assignee' : (tabType.ADD_TIMELINE === selectedTab) ? 'Add timeline' : ''}}
         </div>
     </div>
     <div class="flex flex-1 flex-row right-breadcrumb" *ngIf="showBreadcrumbAction">
-        <div class="cancel cursor-pointer" (click)="cancel()">
+        <button mat-button class="cancel" (click)="cancel()">
             <span>Cancel</span>
-        </div>
-        <div class="next-btn cursor-pointer" (click)="nextStep()">
-            <span>Next: Add Content</span>
-        </div>
+        </button>
+        <button mat-button class="next-btn margin-left-m" (click)="nextStep()"
+            *ngIf="tabType.CREATE_PLAN === selectedTab || tabType.ADD_CONTENT === selectedTab || tabType.ADD_ASSIGNEE === selectedTab">
+            <span>Next: {{(tabType.CREATE_PLAN === selectedTab) ? 'Add Content' : (tabType.ADD_CONTENT === selectedTab)
+                ? 'Add assignee' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add timeline' : ''}}</span>
+        </button>
     </div>
 </div>

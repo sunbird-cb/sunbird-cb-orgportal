@@ -127,4 +127,10 @@ export class TrainingPlanDashboardComponent implements OnInit {
     this.router.navigate(['app', 'training-plan', 'create-plan'])
   }
 
+  clickHandler($event: any) {
+    if ($event.type === 'createCbpPlan') {
+      this.createCbp()
+    }
+  }
+
 }
