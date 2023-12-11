@@ -1,13 +1,13 @@
 
 .competency-summary {
-    margin-top: 24px;
-    width: 494px;
+    // margin-top: 24px;
+    max-width: 363px;
     border: 1px solid rgb(0,0,0,0.16);
     min-height: 300px;
-    margin-left: 25px;
+    // margin-left: 25px;
     border-radius: 12px;
-    margin-left: 58%;
-    
+    // margin-left: 58%;
+
 }
 .competency-summary-header {
     font-size: 14px;
@@ -46,7 +46,7 @@
     flex: 1;
     color: black;
     opacity: 1 !important;
-    padding: 0 24px 0 46px !important;
+    // padding: 0 24px 0 46px !important;
 
     ::ng-deep .mat-tab-label-content {
         background-color: transparent;

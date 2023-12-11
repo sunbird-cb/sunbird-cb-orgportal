@@ -14,7 +14,7 @@ export class CreateTimelineComponent implements OnInit {
   }
 
   showAll() {
-    this.router.navigateByUrl('/app/training-plan/preview-plan')
+    this.router.navigate(['app', 'training-plan', 'preview-plan'])
   }
 
 }

@@ -2,24 +2,20 @@
     margin-top:20px
 }
 .assignee-card {
-    width: 325px;
+    width: 292px;
     border: 1px solid rgba(0, 0, 0, 0.16);
     border-radius: 4px;
     padding: 16px;
-    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .assignee-card-without-checkbox {
     background-color: rgb(240,240,240);
-    width: 325px;
+    width: 292px;
     border: none !important;
     border-radius: 4px;
     padding: 22px 12px !important;
     margin-left: 20px;
-}
-
-.assignee-card:first-child {
-    margin-left: 0;
 }
 
 .avatar {
@@ -64,19 +60,15 @@
     margin-top:20px
 }
 .custom-user-card {
-    width: 325px;
+    width: 292px;
     border: 1px solid rgba(0, 0, 0, 0.16);
     border-radius: 4px;
     padding: 24px 16px;
-    margin-left: 20px;
+    margin-right: 20px;
 }
 
-.custom-user-card.active {
-    border: 1px solid #1B4CA1;
-}
-
-.custom-user-card:first-child {
-    margin-left: 0;
+.custom-user-card.active-card {
+    border: 1px solid #1B4CA1 !important;
 }
 
 .custom-user-desc {

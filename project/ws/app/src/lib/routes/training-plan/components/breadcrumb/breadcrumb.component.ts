@@ -1,15 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { Router } from '@angular/router'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component'
+import { TrainingPlanContent } from '../../models/training-plan.model'
 @Component({
   selector: 'ws-app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss'],
 })
 export class BreadcrumbComponent implements OnInit {
+
   @Input() showBreadcrumbAction = true
+  @Input() selectedTab: string = ''
+  @Output() changeToNextTab = new EventEmitter<any>()
+
   public dialogRef: any
+  tabType = TrainingPlanContent.TTabLabelKey
+
   constructor(private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -20,7 +27,19 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   nextStep() {
-    this.showDialogBox('progress-completed')
+    // this.showDialogBox('progress-completed')
+    switch (this.selectedTab) {
+      case TrainingPlanContent.TTabLabelKey.CREATE_PLAN:
+        this.changeToNextTab.emit(TrainingPlanContent.TTabLabelKey.ADD_CONTENT)
+        break
+      case TrainingPlanContent.TTabLabelKey.ADD_CONTENT:
+        this.changeToNextTab.emit(TrainingPlanContent.TTabLabelKey.ADD_ASSIGNEE)
+        break
+      case TrainingPlanContent.TTabLabelKey.ADD_ASSIGNEE:
+        this.changeToNextTab.emit(TrainingPlanContent.TTabLabelKey.ADD_TIMELINE)
+        break
+    }
+
   }
 
   performRoute(route: any) {
@@ -40,22 +59,14 @@ export class BreadcrumbComponent implements OnInit {
         dialogData['icon'] = 'vega'
         dialogData['title'] = 'Processing your request'
         dialogData['subTitle'] = `Wait a second , your request is processing………`
-      break
+        break
       case 'progress-completed':
         dialogData['type'] = 'progress-completed'
         dialogData['icon'] = 'accept_icon'
         dialogData['title'] = 'Your processing has been done.'
         dialogData['subTitle'] = `Updated to Draft`
         dialogData['primaryAction'] = 'Redirecting....'
-      break
-        dialogData['type'] = 'normal'
-        dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected user type?'
-        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.
-        If you want to select custom users or by designation, use the above option`
-        dialogData['primaryAction'] = 'I understand, change user type'
-        dialogData['secondaryAction'] = 'Cancel'
-      break
+        break
     }
 
     this.openDialoagBox(dialogData)
@@ -72,6 +83,7 @@ export class BreadcrumbComponent implements OnInit {
         primaryAction: dialogData.primaryAction,
         secondaryAction: dialogData.secondaryAction,
       },
+      autoFocus: false
     })
 
     this.dialogRef.afterClosed().subscribe(() => {

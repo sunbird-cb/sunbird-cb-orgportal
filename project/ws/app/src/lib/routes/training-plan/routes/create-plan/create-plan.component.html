@@ -1,4 +1,4 @@
 <div class="plan-container">
-     <ws-app-breadcrumb></ws-app-breadcrumb>
-    <ws-app-stepper></ws-app-stepper>
+    <ws-app-breadcrumb [selectedTab]="selectedTabData" (changeToNextTab)="changeTab($event)"></ws-app-breadcrumb>
+    <ws-app-stepper (selectedTabType)="selectedTabAction($event)" [changeTabOnNext]="nextTab"></ws-app-stepper>
 </div>
