@@ -1,6 +1,10 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material'
-import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component'
+import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component';
+import { TrainingPlanService } from './../../services/traininig-plan.service';
+/* tslint:disable */
+import _ from 'lodash'
 @Component({
   selector: 'ws-app-category-drop-down',
   templateUrl: './category-drop-down.component.html',
@@ -10,9 +14,35 @@ export class CategoryDropDownComponent implements OnInit {
   @Input() categoryData: any[] = []
   @Output() closeDropDown: any = new EventEmitter()
   dialogRef: any
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private trainingPlanService: TrainingPlanService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getAllUsers();
+    this.getDesignations();
+  }
+
+  getAllUsers() {
+    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+    const filterObj = {
+      request: {
+        query: '',
+        filters: {
+          rootOrgId,
+          status: 1,
+        },
+        limit: 100,
+        offset: 0,
+      },
+    }
+    this.trainingPlanService.getAllUsers(filterObj).subscribe((res:any) => {
+        console.log('res-->', res);
+    })
+  }
+
+  getDesignations() {
+    this.trainingPlanService.getDesignations().subscribe((res:any)=>{
+      console.log('res-->', res);
+    })
   }
 
   showDialogBox(event: any) {
