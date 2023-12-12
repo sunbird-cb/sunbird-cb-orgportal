@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core'
-
+import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service';
 @Component({
   selector: 'ws-app-create-content',
   templateUrl: './create-content.component.html',
   styleUrls: ['./create-content.component.scss'],
 })
 export class CreateContentComponent implements OnInit {
-  categoryData: any[] = []
-  constructor() { }
+  categoryData: any[] = [];
+  contentData:any[] = [];
+  from = 'content';
+  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
     this.categoryData = [
@@ -37,6 +39,13 @@ export class CreateContentComponent implements OnInit {
         value: 'Moderated Course',
       },
     ]
+  }
+
+  handleApiData(event:any) {
+    if(event) {
+      console.log(this.trainingPlanDataSharingService.traingingPlanContentData);
+      this.contentData = this.trainingPlanDataSharingService.traingingPlanContentData.data.content;
+    }
   }
 
 }

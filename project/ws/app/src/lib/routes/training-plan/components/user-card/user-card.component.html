@@ -1,287 +1,31 @@
-<div class="flex flex-4 flex-row assignee-card-container">
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
+<div class="flex flex-4 flex-row assignee-card-container flex-wrap" *ngIf="assigneeData?.category === 'Custom Users'">
+    <ng-container *ngFor="let item of assigneeData?.data?.content | slice : 0 : 20">
+        <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
+            <div class="avatar">
+                <div>HG</div>
+            </div>
+            <div class="assignee-desc">
+                <p>{{item?.firstName}}</p>
+                <p class="sub-heading">{{item?.rootOrgName}}</p>
+            </div>
+            <div class="check-action" *ngIf="checkboxVisibility">
+                <mat-checkbox class="example-margin"></mat-checkbox>
+            </div>
         </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-</div>
-<div class="flex flex-4 flex-row assignee-card-container">
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-</div>
-<div class="flex flex-4 flex-row assignee-card-container">
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-</div>
-<div class="flex flex-4 flex-row assignee-card-container">
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-</div>
-<div class="flex flex-4 flex-row assignee-card-container">
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 assignee-card" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
-        <div class="avatar">
-            <div>HG</div>
-        </div>
-        <div class="assignee-desc">
-            <p>Heading</p>
-            <p class="sub-heading">Subheading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
+    </ng-container>
 </div>
 
 <!-- Custom User Card-->
 
-<div class="flex flex-4 flex-row custom-user-card-container">
-    <div class="flex flex-4 custom-user-card active-card">
-        <div class="custom-user-desc">
-            <p>Heading</p>
+<div class="flex flex-4 flex-row custom-user-card-container flex-wrap" *ngIf="assigneeData?.category === 'Designation'">
+    <ng-container *ngFor="let item of assigneeData?.data | slice : 0 : 20">
+        <div class="flex flex-4 custom-user-card active-card">
+            <div class="custom-user-desc">
+                <p>{{item?.name}}</p>
+            </div>
+            <div class="check-action" *ngIf="checkboxVisibility">
+                <mat-checkbox class="example-margin"></mat-checkbox>
+            </div>
         </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin" [checked]="true"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 custom-user-card">
-        <div class="custom-user-desc">
-            <p>Heading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 custom-user-card">
-        <div class="custom-user-desc">
-            <p>Heading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
-    <div class="flex flex-4 custom-user-card">
-        <div class="custom-user-desc">
-            <p>Heading</p>
-        </div>
-        <div class="check-action" *ngIf="checkboxVisibility">
-            <mat-checkbox class="example-margin"></mat-checkbox>
-        </div>
-    </div>
+    </ng-container>
 </div>

@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material'
-import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component'
+import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component';
+
+
 @Component({
   selector: 'ws-app-category-drop-down',
   templateUrl: './category-drop-down.component.html',
@@ -8,12 +10,30 @@ import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.c
 })
 export class CategoryDropDownComponent implements OnInit {
   @Input() categoryData: any[] = []
-  @Output() closeDropDown: any = new EventEmitter()
+  @Input() from:string = '';
+  @Output() handleCategorySelection: any = new EventEmitter()
   dialogRef: any
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
+    // console.log("this.from", this.from);
+    // if(this.from === 'content') {
+    //   this.handleCategorySelection.emit('Course');
+    // } else if(this.from === 'assignee') {
+    //   this.handleCategorySelection.emit('Designation');
+    // }
   }
+
+  ngOnChanges() {
+    console.log("this.from", this.from);
+    if(this.from === 'content') {
+      this.handleCategorySelection.emit('Course');
+    } else if(this.from === 'assignee') {
+      this.handleCategorySelection.emit('Designation');
+    }
+  }
+
+ 
 
   showDialogBox(event: any) {
     const dialogData: any = {}
@@ -87,7 +107,7 @@ export class CategoryDropDownComponent implements OnInit {
         dialogData['secondaryAction'] = 'Cancel'
       break
     }
-
+    this.handleCategorySelection.emit(event);
     this.openDialoagBox(dialogData)
   }
 
