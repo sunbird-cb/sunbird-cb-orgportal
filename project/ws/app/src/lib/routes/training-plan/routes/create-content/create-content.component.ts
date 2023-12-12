@@ -40,13 +40,29 @@ export class CreateContentComponent implements OnInit {
         name: 'Moderated Course',
         value: 'Moderated Course',
       },
-    ]
+    ];
+    
+    
   }
 
   handleApiData(event:any) {
     if(event) {
       console.log(this.trainingPlanDataSharingService.traingingPlanContentData);
-      this.contentData = this.trainingPlanDataSharingService.traingingPlanContentData.data.content;
+      if(this.trainingPlanDataSharingService.trainingPlanStepperData &&
+        this.trainingPlanDataSharingService.trainingPlanStepperData.contentList) {
+        console.log('this.trainingPlanDataSharingService.traingingPlanContentData.data.content', this.trainingPlanDataSharingService.trainingPlanStepperData.contentList);
+        this.trainingPlanDataSharingService.traingingPlanContentData.data.content.map((sitem:any)=> {
+          if(this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.indexOf(sitem.identifier) > -1) {
+            sitem['selected'] = true;
+          }
+        })
+        this.contentData = this.trainingPlanDataSharingService.traingingPlanContentData.data.content;
+        this.handleSelectedChips(true);
+      } else {
+        this.contentData = this.trainingPlanDataSharingService.traingingPlanContentData.data.content;
+      }
+      
+
     }
   }
 

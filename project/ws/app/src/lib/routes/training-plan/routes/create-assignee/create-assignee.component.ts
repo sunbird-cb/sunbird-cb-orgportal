@@ -36,7 +36,20 @@ export class CreateAssigneeComponent implements OnInit {
   handleApiData(event:any) {
     if(event) {
       console.log(this.trainingPlanDataSharingService.traingingPlanAssigneeData);
-      this.assigneeData = this.trainingPlanDataSharingService.traingingPlanAssigneeData;
+      if(this.trainingPlanDataSharingService.trainingPlanStepperData &&
+        this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo) {
+        console.log('this.trainingPlanDataSharingService.traingingPlanContentData.data.content', this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo);
+        this.trainingPlanDataSharingService.traingingPlanAssigneeData.data.map((sitem:any)=> {
+          if(this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.id) > -1) {
+            sitem['selected'] = true;
+          }
+        })
+        this.assigneeData = this.trainingPlanDataSharingService.traingingPlanAssigneeData;
+        this.handleSelectedChips(true);
+      } else {
+        this.assigneeData = this.trainingPlanDataSharingService.traingingPlanAssigneeData;
+      }
+      
     }
   }
 

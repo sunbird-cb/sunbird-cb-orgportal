@@ -105,14 +105,14 @@ export class BreadcrumbComponent implements OnInit {
 
   createPlanDraftView() {
     console.log(this.trainingPlanDataSharingService.trainingPlanStepperData);
-    // let obj = {"request": this.trainingPlanDataSharingService.trainingPlanStepperData} ;
-    // this.showDialogBox('progress');
-    // this.trainingPlanService.createPlan(obj).subscribe((data:any)=>{
-    //   console.log('data', data);
-    //   this.showDialogBox('progress-completed');
-    //   setTimeout(()=>{
-    //     this.router.navigateByUrl('app/home/training-plan-dashboard')
-    //   },1000);
-    // })  
+    let obj = {"request": this.trainingPlanDataSharingService.trainingPlanStepperData} ;
+    this.showDialogBox('progress');
+    this.trainingPlanService.createPlan(obj).subscribe((data:any)=>{
+      console.log('data', data);
+      this.showDialogBox('progress-completed');
+      setTimeout(()=>{
+        this.router.navigateByUrl('app/home/training-plan-dashboard')
+      },1000);
+    })  
   }
 }
