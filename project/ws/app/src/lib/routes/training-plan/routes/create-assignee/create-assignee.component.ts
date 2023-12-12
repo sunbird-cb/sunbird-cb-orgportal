@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core';
+import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service';
 
 @Component({
   selector: 'ws-app-create-assignee',
@@ -6,9 +7,10 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./create-assignee.component.scss'],
 })
 export class CreateAssigneeComponent implements OnInit {
-  categoryData: any[] = []
-  constructor() { }
-
+  categoryData: any[] = [];
+  assigneeData:any[] = [];
+  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+  from = 'assignee';
   ngOnInit() {
     this.categoryData = [
       {
@@ -26,7 +28,14 @@ export class CreateAssigneeComponent implements OnInit {
         name: 'Custom Users',
         value: 'Custom Users',
       },
-    ]
+    ]    
+  }
+
+  handleApiData(event:any) {
+    if(event) {
+      console.log(this.trainingPlanDataSharingService.traingingPlanAssigneeData);
+      this.assigneeData = this.trainingPlanDataSharingService.traingingPlanAssigneeData;
+    }
   }
 
 }

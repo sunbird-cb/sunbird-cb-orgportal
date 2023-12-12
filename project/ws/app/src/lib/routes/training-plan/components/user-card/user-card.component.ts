@@ -6,7 +6,8 @@ import { Component, Input, OnInit } from '@angular/core'
   styleUrls: ['./user-card.component.scss'],
 })
 export class UserCardComponent implements OnInit {
-  @Input() checkboxVisibility = true
+  @Input() checkboxVisibility = true;
+  @Input() assigneeData:any[] = [];
   constructor() { }
 
   ngOnInit() {
