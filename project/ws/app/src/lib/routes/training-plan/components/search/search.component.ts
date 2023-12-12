@@ -78,7 +78,19 @@ export class SearchComponent implements OnInit {
       };
       this.trainingPlanService.getAllContent(filterObj).subscribe((res:any) => {
         console.log('res-->', res);
-        this.trainingPlanDataSharingService.traingingPlanContentData =  {category:contentType , data: res};
+        
+        // if(this.trainingPlanDataSharingService.traingingPlanContentData &&
+        //    this.trainingPlanDataSharingService.traingingPlanContentData['data'] &&
+        //    this.trainingPlanDataSharingService.traingingPlanContentData['data']['content'] && 
+        //    this.trainingPlanDataSharingService.traingingPlanContentData['data']['content'].length 
+        //   ) {
+        //     console.log('this.trainingPlanDataSharingService.traingingPlanContentData',this.trainingPlanDataSharingService.traingingPlanContentData);
+        //     res && res.content.map((sitem:any)=> {
+        //       sitem
+        //     })
+        // } 
+
+        this.trainingPlanDataSharingService.traingingPlanContentData =  {category:contentType , data: res};        
         this.handleApiData.emit(true);
       })
     }

@@ -2,8 +2,8 @@
     <ws-app-search [categoryData]="categoryData" [from]="from" (handleApiData)="handleApiData($event)"></ws-app-search>
 </ng-container>
 <ng-container>
-    <ws-app-chip></ws-app-chip>
+    <ws-app-chip [selectedAssigneeChips]="selectedAssigneeChips" [from]="from" [selectAssigneeCount]="selectAssigneeCount"></ws-app-chip>
 </ng-container>
 <ng-container>
-    <ws-app-user-card [assigneeData]="assigneeData"></ws-app-user-card>
+    <ws-app-user-card [assigneeData]="assigneeData" (handleSelectedChips)="handleSelectedChips($event)"></ws-app-user-card>
 </ng-container>

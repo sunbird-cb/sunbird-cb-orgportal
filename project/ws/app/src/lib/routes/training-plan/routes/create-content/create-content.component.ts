@@ -9,6 +9,8 @@ export class CreateContentComponent implements OnInit {
   categoryData: any[] = [];
   contentData:any[] = [];
   from = 'content';
+  selectedContentChips:any[] = [];
+  selectContentCount:number = 0;
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
@@ -46,6 +48,22 @@ export class CreateContentComponent implements OnInit {
       console.log(this.trainingPlanDataSharingService.traingingPlanContentData);
       this.contentData = this.trainingPlanDataSharingService.traingingPlanContentData.data.content;
     }
+  }
+
+  handleSelectedChips(event:any) {
+    console.log('event', event);
+    this.selectContentCount = 0;
+    if(event) {
+      this.selectedContentChips = this.trainingPlanDataSharingService.traingingPlanContentData.data.content;
+      console.log('this.selectedContentChips', this.selectedContentChips);
+      this.selectedContentChips.map((sitem)=>{
+        if(sitem.selected) {
+          this.selectContentCount = this.selectContentCount + 1;
+          console.log('this.selectContentCount', this.selectContentCount);
+        }
+      })
+    }
+    
   }
 
 }

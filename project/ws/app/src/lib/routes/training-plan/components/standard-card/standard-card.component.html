@@ -1,4 +1,4 @@
-<ng-container *ngIf="cardSize === 3">
+<ng-container>
     <div class="flex flex-3 flex-row card-grid-container flex-wrap">
         <div class="flex course-card margin-right-xl" *ngFor="let item of contentData">
             <mat-card class="card-standard-container mr-5 padding-remove">
@@ -6,7 +6,7 @@
                     <div style="position: relative; z-index: 1;">
                         <ng-container>
                             <div class="card-select-box" *ngIf="checkboxVisibility">
-                                <mat-checkbox class="card-select-check"></mat-checkbox>
+                                <mat-checkbox class="card-select-check" [checked]="item?.selected" (change)="selectContentItem($event, item)"></mat-checkbox>
                             </div>
                             <img mat-card-image loading="lazy"
                                 class="card-img ws-mat-primary-lite-background margin-remove"

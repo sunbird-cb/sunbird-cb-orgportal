@@ -2,7 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { Router } from '@angular/router'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component'
-import { TrainingPlanContent } from '../../models/training-plan.model'
+import { TrainingPlanContent } from '../../models/training-plan.model';
+import { TrainingPlanService } from '../../services/traininig-plan.service';
+import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service';
 @Component({
   selector: 'ws-app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
@@ -17,7 +19,9 @@ export class BreadcrumbComponent implements OnInit {
   public dialogRef: any
   tabType = TrainingPlanContent.TTabLabelKey
 
-  constructor(private router: Router, public dialog: MatDialog) { }
+  constructor(private router: Router, public dialog: MatDialog, 
+    private trainingPlanDataSharingService: TrainingPlanDataSharingService,
+    private trainingPlanService: TrainingPlanService) { }
 
   ngOnInit() {
   }
@@ -28,6 +32,7 @@ export class BreadcrumbComponent implements OnInit {
 
   nextStep() {
     // this.showDialogBox('progress-completed')
+    console.log('this.selectedTab', this.selectedTab);
     switch (this.selectedTab) {
       case TrainingPlanContent.TTabLabelKey.CREATE_PLAN:
         this.changeToNextTab.emit(TrainingPlanContent.TTabLabelKey.ADD_CONTENT)
@@ -38,6 +43,9 @@ export class BreadcrumbComponent implements OnInit {
       case TrainingPlanContent.TTabLabelKey.ADD_ASSIGNEE:
         this.changeToNextTab.emit(TrainingPlanContent.TTabLabelKey.ADD_TIMELINE)
         break
+      case TrainingPlanContent.TTabLabelKey.ADD_TIMELINE:
+        this.createPlanDraftView();
+        break;
     }
 
   }
@@ -93,5 +101,18 @@ export class BreadcrumbComponent implements OnInit {
 
   hideConfirmationBox() {
     this.dialogRef.close()
+  }
+
+  createPlanDraftView() {
+    console.log(this.trainingPlanDataSharingService.trainingPlanStepperData);
+    // let obj = {"request": this.trainingPlanDataSharingService.trainingPlanStepperData} ;
+    // this.showDialogBox('progress');
+    // this.trainingPlanService.createPlan(obj).subscribe((data:any)=>{
+    //   console.log('data', data);
+    //   this.showDialogBox('progress-completed');
+    //   setTimeout(()=>{
+    //     this.router.navigateByUrl('app/home/training-plan-dashboard')
+    //   },1000);
+    // })  
   }
 }
