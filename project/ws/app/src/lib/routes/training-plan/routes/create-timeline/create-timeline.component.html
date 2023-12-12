@@ -2,20 +2,19 @@
     <ws-app-add-timeline-form></ws-app-add-timeline-form>
 </ng-container>
 <ng-container>
-    <div class="mt-48">
-        <div class="flex flex-row flex-2">
-            <div class="mat-subheading-1 left-heading">Selected Cards</div>
-            <div (click)="showAll()" class="mat-subheading-2 right-heading cursor-pointer show-all">Show all <img src="assets/icons/forward_arrow.svg"/> </div>
+    <div class="margin-top-xl">
+        <div class="flex flex-middle flex-between">
+            <div class="mat-subheading-1 margin-remove">Selected Cards</div>
+            <a mat-button (click)="showAll()" class="show-all">Show all <mat-icon>keyboard_arrow_right</mat-icon></a>
         </div>
-        
     </div>
     <ws-app-standard-card [cardSize]="5" [checkboxVisibility]="false"></ws-app-standard-card>
 </ng-container>
 <ng-container>
-    <div class="mt-32">
-        <div class="flex flex-row flex-2">
-            <div class="mat-subheading-1 left-heading">Selected Content</div>
-            <div (click)="showAll()" class="mat-subheading-2 right-heading cursor-pointer show-all">Show all <img src="assets/icons/forward_arrow.svg"/> </div>
+    <div class="margin-top-xl">
+        <div class=" flex flex-middle flex-between">
+            <div class="mat-subheading-1 margin-remove">Selected Cards</div>
+            <a mat-button (click)="showAll()" class="show-all">Show all <mat-icon>keyboard_arrow_right</mat-icon></a>
         </div>
     </div>
     <ws-app-user-card [checkboxVisibility]="false"></ws-app-user-card>
