@@ -109,9 +109,11 @@ export class BreadcrumbComponent implements OnInit {
     this.showDialogBox('progress');
     this.trainingPlanService.createPlan(obj).subscribe((data:any)=>{
       console.log('data', data);
+      this.dialogRef.close();
       this.showDialogBox('progress-completed');
       setTimeout(()=>{
-        this.router.navigateByUrl('app/home/training-plan-dashboard')
+        this.dialogRef.close();
+        this.router.navigateByUrl('app/home/training-plan-dashboard');
       },1000);
     })  
   }
