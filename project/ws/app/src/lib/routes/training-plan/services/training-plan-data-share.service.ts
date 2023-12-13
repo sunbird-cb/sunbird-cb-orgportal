@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core'
 })
 export class TrainingPlanDataSharingService {
   trainingPlanTitle: string = ''
-  traingingPlanContentData: any
-  traingingPlanAssigneeData: any
+  trainingPlanContentData: any
+  trainingPlanAssigneeData: any
   trainingPlanStepperData: any = {
     "name": "CBP Plan Name",
     "contentType": "",
