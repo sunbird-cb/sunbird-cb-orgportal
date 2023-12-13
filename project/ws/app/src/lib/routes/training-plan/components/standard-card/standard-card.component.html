@@ -9,6 +9,9 @@
                                 <mat-checkbox class="card-select-check" [checked]="item?.selected"
                                     (change)="selectContentItem($event, item)"></mat-checkbox>
                             </div>
+                            <div class="card-cross-icon" *ngIf="showDeleteFlag" (click)="deleteItem(item)">
+                                    <img class="cursor-pointer" src="assets/icons/close.svg" />
+                            </div>
                             <img mat-card-image loading="lazy"
                                 class="card-img ws-mat-primary-lite-background margin-remove"
                                 [src]="item?.posterImage" />

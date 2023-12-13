@@ -5,8 +5,11 @@
                 <div>HG</div>
             </div>
             <div class="assignee-desc">
-                <p>{{item?.firstName}}</p>
+                <p>{{item?.firstName}} </p>
                 <p class="sub-heading">{{item?.rootOrgName}}</p>
+            </div>
+            <div class="card-cross-icon" *ngIf="showDeleteFlag" (click)="deleteItem(item)">
+                <img class="cursor-pointer" src="assets/icons/close.svg" />
             </div>
             <div class="check-action" *ngIf="checkboxVisibility">
                 <mat-checkbox class="example-margin" [checked]="item?.selected" (change)="selectAssigneeItem($event, item)"></mat-checkbox>
@@ -20,9 +23,13 @@
 <div class="flex flex-4 flex-row custom-user-card-container flex-wrap" *ngIf="assigneeData?.category === 'Designation'">
     <ng-container *ngFor="let item of assigneeData?.data | slice : 0 : 20">
         <div class="flex flex-4 custom-user-card active-card">
+            <div class="card-cross-icon" *ngIf="showDeleteFlag" (click)="deleteItem(item)">
+                <img class="cursor-pointer" src="assets/icons/close.svg" />
+            </div>
             <div class="custom-user-desc">
                 <p>{{item?.name}}</p>
             </div>
+            
             <div class="check-action" *ngIf="checkboxVisibility">
                 <mat-checkbox class="example-margin" [checked]="item?.selected" (change)="selectAssigneeItem($event, item)"></mat-checkbox>
             </div>

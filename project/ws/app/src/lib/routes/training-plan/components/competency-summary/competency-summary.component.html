@@ -1,4 +1,4 @@
-<div class="competency-summary">
+<!-- <div class="competency-summary">
     <div class="competency-summary-header">Competency summary</div>
     <div class="competency-tabs">
         <mat-tab-group [selectedIndex]="0" class="margin-top-m">
@@ -65,6 +65,36 @@
                 <ng-template matTabContent>
                 </ng-template>
             </mat-tab>
+        </mat-tab-group>
+    </div>
+</div> -->
+
+<div class="competency-summary">
+    <div class="competency-summary-header">Competency summary</div>
+    <div class="competency-tabs">
+        <mat-tab-group [selectedIndex]="selectedIndex" class="margin-top-m" >
+            <ng-container *ngFor="let item of competencySummaryObj">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    {{item?.title | titlecase}} ({{item[item?.title]['count']}}) 
+                </ng-template>
+                <ng-template matTabContent>
+                    <ng-container *ngIf="item[item?.title]['listData'].length">
+                    <div class="category-card flex flex-row" *ngFor="let sitem of item[item?.title]['listData']">
+                        <div class="label">
+                            {{sitem?.competencyTheme}}
+                        </div>
+                        <div>
+                            (1)
+                        </div>
+                    </div>
+                    </ng-container>
+                    <ng-container *ngIf="!(item[item?.title]['listData'].length)">
+                        <div class="default-tab-content">There are no competency added yet</div>
+                    </ng-container>
+                </ng-template>
+            </mat-tab>        
+        </ng-container>   
         </mat-tab-group>
     </div>
 </div>

@@ -52,7 +52,7 @@ export class CreateContentComponent implements OnInit {
       if (this.trainingPlanDataSharingService.trainingPlanStepperData &&
         this.trainingPlanDataSharingService.trainingPlanStepperData.contentList) {
         console.log('this.trainingPlanDataSharingService.trainingPlanContentData.data.content', this.trainingPlanDataSharingService.trainingPlanStepperData.contentList)
-        this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
+        this.trainingPlanDataSharingService.trainingPlanContentData.data.content && this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
           if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.indexOf(sitem.identifier) > -1) {
             sitem['selected'] = true
           }
@@ -71,7 +71,7 @@ export class CreateContentComponent implements OnInit {
     if (event) {
       this.selectedContentChips = this.trainingPlanDataSharingService.trainingPlanContentData.data.content
       console.log('this.selectedContentChips', this.selectedContentChips)
-      this.selectedContentChips.map((sitem) => {
+      this.selectedContentChips && this.selectedContentChips.map((sitem) => {
         if (sitem.selected) {
           this.selectContentCount = this.selectContentCount + 1
           console.log('this.selectContentCount', this.selectContentCount)

@@ -8,7 +8,7 @@
             <a mat-button (click)="showAll()" class="show-all">Show all <mat-icon>keyboard_arrow_right</mat-icon></a>
         </div>
     </div>
-    <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentData"></ws-app-standard-card>
+    <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentData" [showDeleteFlag]="true"></ws-app-standard-card>
 </ng-container>
 <ng-container *ngIf="assigneeData && assigneeData.data.length">
     <div class="margin-top-xl">
@@ -17,5 +17,5 @@
             <a mat-button (click)="showAll()" class="show-all">Show all <mat-icon>keyboard_arrow_right</mat-icon></a>
         </div>
     </div>
-    <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData"></ws-app-user-card>
+    <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData" [showDeleteFlag]="true"></ws-app-user-card>
 </ng-container>
