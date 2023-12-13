@@ -4,9 +4,10 @@ import { Injectable } from '@angular/core'
   providedIn: 'root',
 })
 export class TrainingPlanDataSharingService {
-  traingingPlanContentData: any;
-  traingingPlanAssigneeData:any;
-  constructor() { 
-    
+  trainingPlanTitle: string = ''
+  traingingPlanContentData: any
+  traingingPlanAssigneeData: any
+  constructor() {
+
   }
 }

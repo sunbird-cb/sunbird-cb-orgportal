@@ -94,4 +94,8 @@ export class BreadcrumbComponent implements OnInit {
   hideConfirmationBox() {
     this.dialogRef.close()
   }
+
+  saveAsDraft() {
+    this.changeToNextTab.emit('saveAsDraft')
+  }
 }
