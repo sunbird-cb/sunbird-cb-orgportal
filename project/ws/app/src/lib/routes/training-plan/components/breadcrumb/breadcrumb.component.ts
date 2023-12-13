@@ -14,6 +14,7 @@ export class BreadcrumbComponent implements OnInit {
 
   @Input() showBreadcrumbAction = true
   @Input() selectedTab: string = ''
+  @Input() validationList: any
   @Output() changeToNextTab = new EventEmitter<any>()
 
   public dialogRef: any
@@ -24,6 +25,7 @@ export class BreadcrumbComponent implements OnInit {
     private trainingPlanService: TrainingPlanService) { }
 
   ngOnInit() {
+    this.checkIfDisabled()
   }
 
   cancel() {
@@ -120,5 +122,15 @@ export class BreadcrumbComponent implements OnInit {
         this.router.navigateByUrl('app/home/training-plan-dashboard')
       }, 1000)
     })
+  }
+
+  checkIfDisabled() {
+    if (this.tabType.CREATE_PLAN === this.selectedTab && this.validationList && !this.validationList.titleIsInvalid) {
+      return this.validationList.titleIsInvalid
+    }
+    if (this.tabType.ADD_CONTENT === this.selectedTab && this.validationList && !this.validationList.addContentIsInvalid) {
+      return this.validationList.addContentIsInvalid
+    }
+    return true
   }
 }

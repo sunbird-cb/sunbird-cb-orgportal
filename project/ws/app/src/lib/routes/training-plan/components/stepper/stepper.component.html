@@ -1,24 +1,25 @@
 <div class="stepper">
     <mat-tab-group #tabGroup [disableRipple]="true" [selectedIndex]="tabIndexValue" class="margin-top-m"
         (selectedTabChange)="tabSelected($event)">
-        <mat-tab [label]="tabType.CREATE_PLAN" [disabled]="true">
+        <mat-tab [label]="tabType.CREATE_PLAN" [disabled]="false">
             <ng-template mat-tab-label>
                 1. Create a plan
             </ng-template>
             <ng-template matTabContent>
-                <ws-app-add-plan-information (planTitleValid)="checkForPlanTitle($event)"></ws-app-add-plan-information>
+                <ws-app-add-plan-information
+                    (planTitleInvalid)="checkForPlanTitle($event)"></ws-app-add-plan-information>
             </ng-template>
         </mat-tab>
-        <mat-tab [label]="tabType.ADD_CONTENT" [disabled]="true">
+        <mat-tab [label]="tabType.ADD_CONTENT" [disabled]="addCotnentDisable">
             <ng-template mat-tab-label>
                 <span>2. Add Content
                 </span>
             </ng-template>
             <ng-template matTabContent>
-                <ws-app-create-content></ws-app-create-content>
+                <ws-app-create-content (addContentInvalid)="checkForaddContent($event)"></ws-app-create-content>
             </ng-template>
         </mat-tab>
-        <mat-tab [label]="tabType.ADD_ASSIGNEE" [disabled]="true">
+        <mat-tab [label]="tabType.ADD_ASSIGNEE" [disabled]="addCotnentDisable || addAssigneeDisable">
             <ng-template mat-tab-label>
                 <span>3. Add Assignee</span>
             </ng-template>

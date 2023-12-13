@@ -10,7 +10,7 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
 })
 export class AddPlanInformationComponent implements OnInit {
 
-  @Output() planTitleValid = new EventEmitter<any>()
+  @Output() planTitleInvalid = new EventEmitter<any>()
 
   contentForm!: FormGroup
 
@@ -20,14 +20,18 @@ export class AddPlanInformationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (!this.trainingPlanDataSharingSvc.trainingPlanTitle) {
+      this.planTitleInvalid.emit(true)
+    }
     this.contentForm = this.formBuilder.group({
-      name: new FormControl('', [Validators.required, Validators.minLength(10)])
+      name: new FormControl((this.trainingPlanDataSharingSvc.trainingPlanTitle)
+        ? this.trainingPlanDataSharingSvc.trainingPlanTitle : '', [Validators.required, Validators.minLength(10)])
     })
     this.contentForm.controls['name'].valueChanges.pipe(debounceTime(700)).subscribe((_ele: any) => {
       if (!this.contentForm.invalid) {
         this.trainingPlanDataSharingSvc.trainingPlanTitle = _ele
       }
-      this.planTitleValid.emit(this.contentForm.invalid)
+      this.planTitleInvalid.emit(this.contentForm.invalid)
     })
   }
 

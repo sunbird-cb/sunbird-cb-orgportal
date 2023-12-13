@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 @Component({
   selector: 'ws-app-chip',
@@ -11,6 +11,8 @@ export class ChipComponent implements OnInit {
   @Input() from: any
   @Input() selectedAssigneeChips: any[] = [];
   @Input() selectAssigneeCount: number = 0;
+  @Output() itemRemoved = new EventEmitter<any>()
+
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
@@ -32,7 +34,7 @@ export class ChipComponent implements OnInit {
       this.trainingPlanDataSharingService.trainingPlanStepperData.contentType = ''
     }
     if (this.from === 'assignee') {
-      this.selectContentCount = 0
+      this.selectAssigneeCount = 0
       console.log('this.trainingPlanDataSharingService.trainingPlanAssigneeData', this.trainingPlanDataSharingService.trainingPlanAssigneeData)
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem['selected']) {
@@ -42,7 +44,7 @@ export class ChipComponent implements OnInit {
       this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = []
       this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType = ''
     }
-
+    this.itemRemoved.emit(true)
   }
 
   removeContent(item: any) {
@@ -56,6 +58,7 @@ export class ChipComponent implements OnInit {
       let index = this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.findIndex((x: any) => x === item['identifier'])
       this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.splice(index, 1)
     }
+    this.itemRemoved.emit(true)
   }
 
   removeAssignee(item: any) {

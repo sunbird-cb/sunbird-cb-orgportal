@@ -1,5 +1,7 @@
 <div class="plan-container">
-    <ws-app-breadcrumb [selectedTab]="selectedTabData" (changeToNextTab)="changeTab($event)"></ws-app-breadcrumb>
+    <ws-app-breadcrumb [selectedTab]="selectedTabData" [validationList]="createCheck"
+        (changeToNextTab)="changeTab($event)"></ws-app-breadcrumb>
     <ws-app-stepper (selectedTabType)="selectedTabAction($event)" [changeTabOnNext]="nextTab"
-        (planTitleCheck)="planTitleValidation($event)"></ws-app-stepper>
+        (titleInvalid)="isPlanTitleInvalid($event)"
+        (addContentIsInvalid)="isAddContentInvalid($event)"></ws-app-stepper>
 </div>
