@@ -21,8 +21,8 @@ export class TrainingPlanService {
     
   }
   //reqObj:object
-  createPlan() {
-
+  createPlan(obj:any) {
+    return this.http.post<any>(`${API_END_POINTS.CREATE_PLAN}`, obj).pipe(map(res => _.get(res, 'result')))
   }
 
   updatePlan() {

@@ -6,12 +6,16 @@
 }
 
 .chips-content {
-    margin: 10px 16px;
+    margin: 12px 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
 }
 
-.chips-content img {
+.cross-icon {
     vertical-align: middle;
-    margin-left: 8px;
+    margin: 12px 16px;
 }
 .chip-container {
     margin-top:20px;
