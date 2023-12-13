@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
-
+import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service';
 @Component({
   selector: 'ws-app-confirmation-box',
   templateUrl: './confirmation-box.component.html',
@@ -10,7 +10,8 @@ export class ConfirmationBoxComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<ConfirmationBoxComponent>
+    private dialogRef: MatDialogRef<ConfirmationBoxComponent>,
+    private trainingPlanDataSharingService: TrainingPlanDataSharingService
   ) { }
 
   ngOnInit() {
@@ -20,6 +21,10 @@ export class ConfirmationBoxComponent implements OnInit {
     this.dialogRef.close()
   }
 
-  performAction() {
+  performAction(data:any) {
+    console.log(data);
+    this.dialogRef.close();
+    this.trainingPlanDataSharingService.trainingPlanCategoryChangeEvent.next(data);
+
   }
 }

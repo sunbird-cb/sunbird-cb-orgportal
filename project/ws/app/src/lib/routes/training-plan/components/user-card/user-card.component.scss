@@ -1,6 +1,7 @@
 .assignee-card-container {
-    margin-top:20px
+    margin-top: 20px
 }
+
 .assignee-card {
     width: 292px;
     border: 1px solid rgba(0, 0, 0, 0.16);
@@ -11,7 +12,7 @@
 }
 
 .assignee-card-without-checkbox {
-    background-color: rgb(240,240,240);
+    background-color: rgb(240, 240, 240);
     width: 301px;
     border: none !important;
     border-radius: 4px;
@@ -35,20 +36,20 @@
     flex-direction: column;
     padding: 0 16px;
     width: 230px;
-    white-space:nowrap;
+    white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 .assignee-desc .sub-heading {
     font-size: 14px;
-    color: rgb(0,0,0,0.6);
+    color: rgb(0, 0, 0, 0.6);
 }
 
 
 .assignee-desc p {
     padding: 0;
     margin: 0;
-    width:190px;
+    width: 190px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -62,8 +63,9 @@
 /** Custom User **/
 
 .custom-user-card-container {
-    margin-top:20px
+    margin-top: 20px
 }
+
 .custom-user-card {
     width: 292px;
     border: 1px solid rgba(0, 0, 0, 0.16);
@@ -71,6 +73,7 @@
     padding: 24px 16px;
     margin-right: 20px;
     margin-bottom: 16px;
+    position: relative;
 }
 
 .custom-user-card.active-card {
@@ -82,8 +85,8 @@
     flex-direction: column;
     padding: 0 16px;
     width: 230px;
-    white-space:nowrap;
-    
+    white-space: nowrap;
+
 }
 
 
@@ -98,4 +101,19 @@
 .custom-user-card-container .check-action {
     margin-right: 16px;
 
+}
+
+.card-cross-icon {
+    position: absolute;
+    border: 1px solid rgb(27, 76, 161);
+    background: #fff;
+    border-radius: 50%;
+    padding: 10px;
+    vertical-align: middle;
+    right: -12px;
+    top:-14px;
+}
+
+.card-cross-icon img {
+    vertical-align: middle;
 }
