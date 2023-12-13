@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component';
-
+import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service';
 
 @Component({
   selector: 'ws-app-category-drop-down',
@@ -13,7 +13,7 @@ export class CategoryDropDownComponent implements OnInit {
   @Input() from:string = '';
   @Output() handleCategorySelection: any = new EventEmitter()
   dialogRef: any
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private trainingPlanDataSharingService:TrainingPlanDataSharingService) { }
 
   ngOnInit() {
     // console.log("this.from", this.from);
@@ -27,8 +27,10 @@ export class CategoryDropDownComponent implements OnInit {
   ngOnChanges() {
     console.log("this.from", this.from);
     if(this.from === 'content') {
+      this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = 'Course';
       this.handleCategorySelection.emit('Course');
     } else if(this.from === 'assignee') {
+      this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = 'Designation';
       this.handleCategorySelection.emit('Designation');
     }
   }
@@ -40,73 +42,82 @@ export class CategoryDropDownComponent implements OnInit {
     switch (event) {
       case 'Course':
         // `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`
-        dialogData['type'] = 'normal'
-        dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected content type?'
-        dialogData['subTitle'] = 'Test'
-        dialogData['primaryAction'] = 'I understand, change content type'
-        dialogData['secondaryAction'] = 'Cancel'
+        dialogData['type'] = 'normal';
+        dialogData['icon'] = 'radio_on';
+        dialogData['title'] = 'You are attempting to change the selected content type?';
+        dialogData['subTitle'] = 'Test';
+        dialogData['primaryAction'] = 'I understand, change content type';
+        dialogData['secondaryAction'] = 'Cancel';
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
       break
       case 'Program':
-        dialogData['type'] = 'normal'
-        dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected content type?'
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`
-        dialogData['primaryAction'] = 'I understand, change content type'
-        dialogData['secondaryAction'] = 'Cancel'
+        dialogData['type'] = 'normal';
+        dialogData['icon'] = 'radio_on';
+        dialogData['title'] = 'You are attempting to change the selected content type?';
+        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`;
+        dialogData['primaryAction'] = 'I understand, change content type';
+        dialogData['secondaryAction'] = 'Cancel';
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
       break
       case 'Blended program':
-        dialogData['type'] = 'normal'
-        dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected content type?'
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`
-        dialogData['primaryAction'] = 'I understand, change content type'
-        dialogData['secondaryAction'] = 'Cancel'
+        dialogData['type'] = 'normal';
+        dialogData['icon'] = 'radio_on';
+        dialogData['title'] = 'You are attempting to change the selected content type?';
+        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`;
+        dialogData['primaryAction'] = 'I understand, change content type';
+        dialogData['secondaryAction'] = 'Cancel';
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
       break
       case 'Curated program':
-        dialogData['type'] = 'normal'
-        dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected content type?'
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`
-        dialogData['primaryAction'] = 'I understand, change content type'
-        dialogData['secondaryAction'] = 'Cancel'
+        dialogData['type'] = 'normal';
+        dialogData['icon'] = 'radio_on';
+        dialogData['title'] = 'You are attempting to change the selected content type?';
+        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`;
+        dialogData['primaryAction'] = 'I understand, change content type';
+        dialogData['secondaryAction'] = 'Cancel';
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
       break
       case 'Moderated Course':
-        dialogData['type'] = 'normal'
-        dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected content type?'
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`
-        dialogData['primaryAction'] = 'I understand, change content type'
-        dialogData['secondaryAction'] = 'Cancel'
+        dialogData['type'] = 'normal';
+        dialogData['icon'] = 'radio_on';
+        dialogData['title'] = 'You are attempting to change the selected content type?';
+        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection. It's advisable to save the current one as a draft and create a new one instead.`;
+        dialogData['primaryAction'] = 'I understand, change content type';
+        dialogData['secondaryAction'] = 'Cancel';
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
       break
       case 'Designation':
-        dialogData['type'] = 'normal'
-        dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected user type?'
-        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.
-        If you want to select custom users or by designation, use the above option`
-        dialogData['primaryAction'] = 'I understand, change user type'
-        dialogData['secondaryAction'] = 'Cancel'
+        dialogData['type'] = 'normal';
+        dialogData['icon'] = 'radio_on';
+        dialogData['title'] = 'You are attempting to change the selected user type?';
+        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.;
+        If you want to select custom users or by designation, use the above option`;
+        dialogData['primaryAction'] = 'I understand, change user type';
+        dialogData['secondaryAction'] = 'Cancel';
+        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = event;
       break
       case 'All Users':
-        dialogData['type'] = 'normal'
-        dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected user type?'
-        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.
-        If you want to select custom users or by designation, use the above option`
-        dialogData['primaryAction'] = 'I understand, change user type'
-        dialogData['secondaryAction'] = 'Cancel'
+        dialogData['type'] = 'normal';
+        dialogData['icon'] = 'radio_on';
+        dialogData['title'] = 'You are attempting to change the selected user type?';
+        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.;
+        If you want to select custom users or by designation, use the above option`;
+        dialogData['primaryAction'] = 'I understand, change user type';
+        dialogData['secondaryAction'] = 'Cancel';
+        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = event;
       break
       case 'Custom Users':
-        dialogData['type'] = 'normal'
-        dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected user type?'
-        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.
-        If you want to select custom users or by designation, use the above option`
-        dialogData['primaryAction'] = 'I understand, change user type'
-        dialogData['secondaryAction'] = 'Cancel'
+        dialogData['type'] = 'normal';
+        dialogData['icon'] = 'radio_on';
+        dialogData['title'] = 'You are attempting to change the selected user type?';
+        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.;
+        If you want to select custom users or by designation, use the above option`;
+        dialogData['primaryAction'] = 'I understand, change user type';
+        dialogData['secondaryAction'] = 'Cancel';
+        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = event;
       break
     }
+    
     this.handleCategorySelection.emit(event);
     this.openDialoagBox(dialogData)
   }

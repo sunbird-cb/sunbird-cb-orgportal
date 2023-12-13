@@ -9,7 +9,7 @@
                 <p class="sub-heading">{{item?.rootOrgName}}</p>
             </div>
             <div class="check-action" *ngIf="checkboxVisibility">
-                <mat-checkbox class="example-margin"></mat-checkbox>
+                <mat-checkbox class="example-margin" [checked]="item?.selected" (change)="selectAssigneeItem($event, item)"></mat-checkbox>
             </div>
         </div>
     </ng-container>
@@ -24,7 +24,7 @@
                 <p>{{item?.name}}</p>
             </div>
             <div class="check-action" *ngIf="checkboxVisibility">
-                <mat-checkbox class="example-margin"></mat-checkbox>
+                <mat-checkbox class="example-margin" [checked]="item?.selected" (change)="selectAssigneeItem($event, item)"></mat-checkbox>
             </div>
         </div>
     </ng-container>

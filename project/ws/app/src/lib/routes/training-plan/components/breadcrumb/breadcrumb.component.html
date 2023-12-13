@@ -16,9 +16,9 @@
             <span>Cancel</span>
         </button>
         <button mat-button class="next-btn margin-left-m" (click)="nextStep()"
-            *ngIf="tabType.CREATE_PLAN === selectedTab || tabType.ADD_CONTENT === selectedTab || tabType.ADD_ASSIGNEE === selectedTab">
+            *ngIf="tabType.CREATE_PLAN === selectedTab || tabType.ADD_CONTENT === selectedTab || tabType.ADD_ASSIGNEE === selectedTab || tabType.ADD_TIMELINE === selectedTab">
             <span>Next: {{(tabType.CREATE_PLAN === selectedTab) ? 'Add Content' : (tabType.ADD_CONTENT === selectedTab)
-                ? 'Add assignee' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add timeline' : ''}}</span>
+                ? 'Add assignee' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add timeline' : 'Draft'}}</span>
         </button>
         <button mat-button class="next-btn margin-left-m" (click)="saveAsDraft()"
             *ngIf="tabType.ADD_TIMELINE === selectedTab">

@@ -7,6 +7,7 @@
     border-radius: 4px;
     padding: 16px;
     margin-right: 20px;
+    margin-bottom: 16px;
 }
 
 .assignee-card-without-checkbox {
@@ -34,6 +35,8 @@
     flex-direction: column;
     padding: 0 16px;
     width: 230px;
+    white-space:nowrap;
+    text-overflow: ellipsis;
 }
 
 .assignee-desc .sub-heading {
@@ -45,6 +48,9 @@
 .assignee-desc p {
     padding: 0;
     margin: 0;
+    width:190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .assignee-card-container .check-action {
@@ -64,6 +70,7 @@
     border-radius: 4px;
     padding: 24px 16px;
     margin-right: 20px;
+    margin-bottom: 16px;
 }
 
 .custom-user-card.active-card {
@@ -75,12 +82,17 @@
     flex-direction: column;
     padding: 0 16px;
     width: 230px;
+    white-space:nowrap;
+    
 }
 
 
 .custom-user-desc p {
     padding: 0;
     margin: 0;
+    width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .custom-user-card-container .check-action {

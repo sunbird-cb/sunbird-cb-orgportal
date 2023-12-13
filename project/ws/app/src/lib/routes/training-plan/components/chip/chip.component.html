@@ -1,22 +1,36 @@
-<div class="flex flex-row chip-container">
+<div class="flex flex-row chip-container" *ngIf="selectContentCount > 0 && from === 'content'">
     <div class="flex flex-2 left-section flex-middle">
         <div class="selected-item-label">Selected items - </div>
-        <div class="chips">
+        <ng-container *ngFor="let item of selectedContentChips | slice : 0 : 3">
+        <div class="chips flex flex-row" *ngIf="item?.selected">
             <div class="chips-content">
-                <span class="color-60">Himanshu Gupta</span><img class="cursor-pointer" src="assets/icons/close.svg" />
+                <span class="color-60">{{item?.name}}</span>
+            </div>
+            <div class="cross-icon" (click)="removeContent(item)">
+                <img class="cursor-pointer" src="assets/icons/close.svg" />
             </div>
         </div>
-        <div class="chips">
+        </ng-container>
+        <a mat-button class="select-more-link margin-left-m" *ngIf="selectContentCount > 3">+3 more</a>
+    </div>
+    <div class="flex flex-1 flex-row right-section flex-middle">
+        <a mat-button class="select-more-link" (click)="clearAll()">Clear all</a>
+    </div>
+</div>
+<div class="flex flex-row chip-container" *ngIf="selectAssigneeCount > 0 && from === 'assignee'">
+    <div class="flex flex-2 left-section flex-middle">
+        <div class="selected-item-label">Selected items - </div>
+        <ng-container *ngFor="let item of selectedAssigneeChips | slice : 0 : 3">
+        <div class="chips flex flex-row" *ngIf="item?.selected">
             <div class="chips-content">
-                <span class="color-60">Himanshu Gupta</span><img class="cursor-pointer" src="assets/icons/close.svg" />
+                <span class="color-60">{{item?.name}}</span>                
+            </div>
+            <div class="cross-icon" (click)="removeAssignee(item)">
+                <img class="cursor-pointer" src="assets/icons/close.svg" />
             </div>
         </div>
-        <div class="chips">
-            <div class="chips-content">
-                <span class="color-60">Himanshu Gupta</span><img class="cursor-pointer" src="assets/icons/close.svg" />
-            </div>
-        </div>
-        <a mat-button class="select-more-link margin-left-m">+3 more</a>
+        </ng-container>
+        <a mat-button class="select-more-link margin-left-m" *ngIf="selectAssigneeCount > 3">+3 more</a>
     </div>
     <div class="flex flex-1 flex-row right-section flex-middle">
         <a mat-button class="select-more-link" (click)="clearAll()">Clear all</a>
