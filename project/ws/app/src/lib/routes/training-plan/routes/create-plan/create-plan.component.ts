@@ -34,6 +34,6 @@ export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   planTitleValidation(_event: any) {
-    debugger
+
   }
 }
