@@ -7,7 +7,8 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
 })
 export class UserCardComponent implements OnInit {
   @Input() checkboxVisibility = true;
-  @Input() assigneeData: any[] = [];
+  @Input() showDeleteFlag = false;
+  @Input() assigneeData: any;
   @Output() handleSelectedChips = new EventEmitter();
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
@@ -41,6 +42,25 @@ export class UserCardComponent implements OnInit {
       })
     }
     this.handleSelectedChips.emit(true)
+  }
+
+  deleteItem(item:any) {
+    console.log('item', item);
+    this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
+      if (sitem.id === item.id) {
+        sitem['selected'] = false
+      }
+    })
+    this.assigneeData.data.map((sitem: any, index:any) => {
+      if (sitem.id === item.id) {
+        this.assigneeData.data.splice(index, 1)
+      }
+    })
+    this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
+      if (identifier === item.id) {
+        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
+      }
+    })
   }
 
 }

@@ -9,6 +9,7 @@ export class StandardCardComponent implements OnInit {
   @Input() cardSize: any
   @Input() checkboxVisibility: any = true
   @Input() contentData: any[] = [];
+  @Input() showDeleteFlag = false;
   @Output() handleSelectedChips = new EventEmitter();
   selectedContent: any[] = [];
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
@@ -50,6 +51,26 @@ export class StandardCardComponent implements OnInit {
     }
     console.log(' this.trainingPlanDataSharingService.trainingPlanStepperData', this.trainingPlanDataSharingService.trainingPlanStepperData)
     this.handleSelectedChips.emit(true)
+  }
+
+  deleteItem(item:any) {
+    console.log('item', item);
+    this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
+      if (sitem.identifier === item.identifier) {
+        sitem['selected'] = false
+      }
+    })
+    this.contentData.filter((sitem: any, index:any) => {
+      if (sitem.identifier === item.identifier) {
+        this.contentData.splice(index,1);
+      }
+    })
+    console.log('result-->', this.trainingPlanDataSharingService.trainingPlanContentData.data.content);
+    this.trainingPlanDataSharingService.trainingPlanStepperData['contentList'].filter((identifier: any, index: any) => {
+      if (identifier === item.identifier) {
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentList'].splice(index, 1)
+      }
+    })
   }
 
 }
