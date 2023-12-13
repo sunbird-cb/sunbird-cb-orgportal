@@ -20,5 +20,9 @@
             <span>Next: {{(tabType.CREATE_PLAN === selectedTab) ? 'Add Content' : (tabType.ADD_CONTENT === selectedTab)
                 ? 'Add assignee' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add timeline' : 'Draft'}}</span>
         </button>
+        <button mat-button class="next-btn margin-left-m" (click)="saveAsDraft()"
+            *ngIf="tabType.ADD_TIMELINE === selectedTab">
+            <span>Save as draft</span>
+        </button>
     </div>
 </div>

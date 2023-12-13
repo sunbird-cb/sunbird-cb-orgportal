@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service';
+import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service'
 @Component({
   selector: 'ws-app-create-content',
   templateUrl: './create-content.component.html',
@@ -7,18 +7,18 @@ import { TrainingPlanDataSharingService } from './../../services/training-plan-d
 })
 export class CreateContentComponent implements OnInit {
   categoryData: any[] = [];
-  contentData:any[] = [];
+  contentData: any[] = [];
   from = 'content';
-  selectedContentChips:any[] = [];
-  selectContentCount:number = 0;
+  selectedContentChips: any[] = [];
+  selectContentCount: number = 0;
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
     this.categoryData = [
       {
-       id: 1,
-       name: 'Course',
-       value: 'Course',
+        id: 1,
+        name: 'Course',
+        value: 'Course',
       },
       {
         id: 2,
@@ -40,46 +40,46 @@ export class CreateContentComponent implements OnInit {
         name: 'Moderated Course',
         value: 'Moderated Course',
       },
-    ];
-    
-    
+    ]
+
+
   }
 
-  handleApiData(event:any) {
-    if(event) {
-      console.log(this.trainingPlanDataSharingService.traingingPlanContentData);
-      if(this.trainingPlanDataSharingService.trainingPlanStepperData &&
+  handleApiData(event: any) {
+    if (event) {
+      console.log(this.trainingPlanDataSharingService.trainingPlanContentData)
+      if (this.trainingPlanDataSharingService.trainingPlanStepperData &&
         this.trainingPlanDataSharingService.trainingPlanStepperData.contentList) {
-        console.log('this.trainingPlanDataSharingService.traingingPlanContentData.data.content', this.trainingPlanDataSharingService.trainingPlanStepperData.contentList);
-        this.trainingPlanDataSharingService.traingingPlanContentData.data.content.map((sitem:any)=> {
-          if(this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.indexOf(sitem.identifier) > -1) {
-            sitem['selected'] = true;
+        console.log('this.trainingPlanDataSharingService.trainingPlanContentData.data.content', this.trainingPlanDataSharingService.trainingPlanStepperData.contentList)
+        this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
+          if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.indexOf(sitem.identifier) > -1) {
+            sitem['selected'] = true
           }
         })
-        this.contentData = this.trainingPlanDataSharingService.traingingPlanContentData.data.content;
-        this.handleSelectedChips(true);
+        this.contentData = this.trainingPlanDataSharingService.trainingPlanContentData.data.content
+        this.handleSelectedChips(true)
       } else {
-        this.contentData = this.trainingPlanDataSharingService.traingingPlanContentData.data.content;
+        this.contentData = this.trainingPlanDataSharingService.trainingPlanContentData.data.content
       }
-      
+
 
     }
   }
 
-  handleSelectedChips(event:any) {
-    console.log('event', event);
-    this.selectContentCount = 0;
-    if(event) {
-      this.selectedContentChips = this.trainingPlanDataSharingService.traingingPlanContentData.data.content;
-      console.log('this.selectedContentChips', this.selectedContentChips);
-      this.selectedContentChips.map((sitem)=>{
-        if(sitem.selected) {
-          this.selectContentCount = this.selectContentCount + 1;
-          console.log('this.selectContentCount', this.selectContentCount);
+  handleSelectedChips(event: any) {
+    console.log('event', event)
+    this.selectContentCount = 0
+    if (event) {
+      this.selectedContentChips = this.trainingPlanDataSharingService.trainingPlanContentData.data.content
+      console.log('this.selectedContentChips', this.selectedContentChips)
+      this.selectedContentChips.map((sitem) => {
+        if (sitem.selected) {
+          this.selectContentCount = this.selectContentCount + 1
+          console.log('this.selectContentCount', this.selectContentCount)
         }
       })
     }
-    
+
   }
 
 }

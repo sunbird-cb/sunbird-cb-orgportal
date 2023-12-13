@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { debounceTime } from 'rxjs/operators'
+import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 
 @Component({
   selector: 'ws-app-add-plan-information',
@@ -7,9 +10,25 @@ import { Component, OnInit } from '@angular/core'
 })
 export class AddPlanInformationComponent implements OnInit {
 
-  constructor() { }
+  @Output() planTitleValid = new EventEmitter<any>()
+
+  contentForm!: FormGroup
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private trainingPlanDataSharingSvc: TrainingPlanDataSharingService
+  ) { }
 
   ngOnInit() {
+    this.contentForm = this.formBuilder.group({
+      name: new FormControl('', [Validators.required, Validators.minLength(10)])
+    })
+    this.contentForm.controls['name'].valueChanges.pipe(debounceTime(700)).subscribe((_ele: any) => {
+      if (!this.contentForm.invalid) {
+        this.trainingPlanDataSharingSvc.trainingPlanTitle = _ele
+      }
+      this.planTitleValid.emit(this.contentForm.invalid)
+    })
   }
 
 }

@@ -1,5 +1,5 @@
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
-    width: 369px   
+    width: 369px
 }
 
 .form-container {
@@ -32,4 +32,13 @@
     padding: 15px 16px;
     font: 400 14px Lato;
     width: 95%;
+}
+
+
+::ng-deep {
+    .plan-info {
+        .mat-form-field-appearance-outline .mat-form-field-flex{
+            width: 100%;
+        }
+    }
 }

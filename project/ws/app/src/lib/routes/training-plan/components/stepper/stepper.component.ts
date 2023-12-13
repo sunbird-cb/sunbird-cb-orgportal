@@ -10,6 +10,7 @@ export class StepperComponent implements OnInit, OnChanges {
 
   @Input() changeTabOnNext!: string
   @Output() selectedTabType = new EventEmitter<any>()
+  @Output() planTitleCheck = new EventEmitter<any>()
 
   tabType = TrainingPlanContent.TTabLabelKey
   tabIndexValue: number = 0
@@ -39,6 +40,10 @@ export class StepperComponent implements OnInit, OnChanges {
   tabSelected(_event: any) {
     const tempData = _event.tab.textLabel
     this.selectedTabType.emit(tempData)
+  }
+
+  checkForPlanTitle(_event: any) {
+    this.planTitleCheck.emit(_event)
   }
 
 }

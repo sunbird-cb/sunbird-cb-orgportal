@@ -32,4 +32,8 @@ export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
   changeTab(_event: any) {
     this.nextTab = _event
   }
+
+  planTitleValidation(_event: any) {
+
+  }
 }
