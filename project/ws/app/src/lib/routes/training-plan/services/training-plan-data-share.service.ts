@@ -10,7 +10,7 @@ export class TrainingPlanDataSharingService {
   trainingPlanContentData: any
   trainingPlanAssigneeData: any
   trainingPlanStepperData: any = {
-    "name": "CBP Plan Name",
+    "name": "",
     "contentType": "",
     "contentList": [
     ],

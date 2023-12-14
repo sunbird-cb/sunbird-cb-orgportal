@@ -11,7 +11,7 @@
             </div>
         </div>
         </ng-container>
-        <a mat-button class="select-more-link margin-left-m" *ngIf="selectContentCount > 3">+3 more</a>
+        <a mat-button class="select-more-link margin-left-m" *ngIf="selectContentCount > 3" (click)="navigateToPreviewPage()">+3 more</a>
     </div>
     <div class="flex flex-1 flex-row right-section flex-middle">
         <a mat-button class="select-more-link" (click)="clearAll()">Clear all</a>
@@ -30,7 +30,7 @@
             </div>
         </div>
         </ng-container>
-        <a mat-button class="select-more-link margin-left-m" *ngIf="selectAssigneeCount > 3">+3 more</a>
+        <a mat-button class="select-more-link margin-left-m" *ngIf="selectAssigneeCount > 3" (click)="navigateToPreviewPage()">+3 more</a>
     </div>
     <div class="flex flex-1 flex-row right-section flex-middle">
         <a mat-button class="select-more-link" (click)="clearAll()">Clear all</a>

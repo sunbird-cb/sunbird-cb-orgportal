@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
+import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service';
+import { Router } from '@angular/router'
 @Component({
   selector: 'ws-app-chip',
   templateUrl: './chip.component.html',
@@ -13,7 +14,7 @@ export class ChipComponent implements OnInit {
   @Input() selectAssigneeCount: number = 0;
   @Output() itemRemoved = new EventEmitter<any>()
 
-  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -72,6 +73,10 @@ export class ChipComponent implements OnInit {
       let index = this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.findIndex((x: any) => x === item['id'])
       this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.splice(index, 1)
     }
+  }
+
+  navigateToPreviewPage() {
+    this.router.navigate(['app', 'training-plan', 'preview-plan'], { queryParams: {from : this.from}})
   }
 
 }

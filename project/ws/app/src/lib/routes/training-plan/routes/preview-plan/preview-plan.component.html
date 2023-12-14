@@ -2,6 +2,9 @@
 <div class="flex margin-top-l">
     <button mat-stroked-button><mat-icon>arrow_back</mat-icon> Go back</button>
 </div>
-<div class="flex">
-    <ws-app-standard-card [cardSize]="5"></ws-app-standard-card>
+<div class="flex" *ngIf="from==='content'">
+    <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentData"></ws-app-standard-card>
+</div>
+<div class="flex" *ngIf="from==='assignee'">
+    <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="contentData"></ws-app-user-card>
 </div>
