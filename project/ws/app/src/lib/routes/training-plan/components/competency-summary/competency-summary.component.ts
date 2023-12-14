@@ -57,7 +57,7 @@ export class CompetencySummaryComponent implements OnInit {
       }
     }
     ];
-    this.contentData.map((item: any) => {
+    this.contentData && this.contentData.map((item: any) => {
       if (item.selected) {
         this.selectedCardData.push(item);
       }
@@ -65,7 +65,7 @@ export class CompetencySummaryComponent implements OnInit {
 
     // let competencyThemeObj = {};
 
-    this.selectedCardData.map((sitem: any) => {
+    this.selectedCardData && this.selectedCardData.map((sitem: any) => {
       sitem.competencies_v5.map((fitem: any) => {
         if (fitem.competencyArea.toLowerCase() === 'behaviroal') {
           this.competencySummaryObj[0]['behaviroal']['count'] = this.competencySummaryObj[0]['behaviroal']['count'] + 1;

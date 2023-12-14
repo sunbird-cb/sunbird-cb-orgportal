@@ -37,11 +37,20 @@ export class ChipComponent implements OnInit {
     if (this.from === 'assignee') {
       this.selectAssigneeCount = 0
       console.log('this.trainingPlanDataSharingService.trainingPlanAssigneeData', this.trainingPlanDataSharingService.trainingPlanAssigneeData)
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
-        if (sitem['selected']) {
-          sitem['selected'] = false
-        }
-      })
+      if(this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation') {
+        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
+          if (sitem['selected']) {
+            sitem['selected'] = false
+          }
+        })
+      } else if(this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users') {
+        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.map((sitem: any) => {
+          if (sitem['selected']) {
+            sitem['selected'] = false
+          }
+        })
+      }
+     
       this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = []
       this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType = ''
     }
@@ -64,15 +73,28 @@ export class ChipComponent implements OnInit {
 
   removeAssignee(item: any) {
     console.log('item', item, this.trainingPlanDataSharingService.trainingPlanAssigneeData)
-    this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
-      if (sitem['selected'] && sitem['id'] === item['id']) {
-        sitem['selected'] = false
+    if(this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation') {
+      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
+        if (sitem['selected'] && sitem['id'] === item['id']) {
+          sitem['selected'] = false
+        }
+      })
+      if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['identifier']) > -1) {
+        let index = this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['id'])
+        this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
       }
-    })
-    if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.indexOf(item['identifier']) > -1) {
-      let index = this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.findIndex((x: any) => x === item['id'])
-      this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.splice(index, 1)
+    } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users') {
+      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.map((sitem: any) => {
+        if (sitem['selected'] && sitem['userId'] === item['userId']) {
+          sitem['selected'] = false
+        }
+      })
+      if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['identifier']) > -1) {
+        let index = this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['userId'])
+        this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
+      }
     }
+    
   }
 
   navigateToPreviewPage() {
