@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service'
 
 @Component({
@@ -7,6 +7,9 @@ import { TrainingPlanDataSharingService } from './../../services/training-plan-d
   styleUrls: ['./create-assignee.component.scss'],
 })
 export class CreateAssigneeComponent implements OnInit {
+
+  @Output() addAssigneeInvalid = new EventEmitter<any>()
+
   categoryData: any[] = [];
   assigneeData: any[] = [];
   selectAssigneeCount: number = 0;
@@ -66,7 +69,11 @@ export class CreateAssigneeComponent implements OnInit {
         }
       })
     }
-
+    if (this.selectAssigneeCount <= 0) {
+      this.addAssigneeInvalid.emit(true)
+    } else {
+      this.addAssigneeInvalid.emit(false)
+    }
   }
 
 }

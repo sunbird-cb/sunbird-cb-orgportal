@@ -48,4 +48,11 @@ export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
       addContentIsInvalid: _event
     }
   }
+
+  isAddAssigneeInvalid(_event: any) {
+    this.createCheck = {
+      ...this.createCheck,
+      addAssigneeIsInvalid: _event
+    }
+  }
 }

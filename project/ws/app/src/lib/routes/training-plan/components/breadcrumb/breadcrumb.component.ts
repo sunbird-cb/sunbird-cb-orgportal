@@ -105,10 +105,6 @@ export class BreadcrumbComponent implements OnInit {
     this.dialogRef.close()
   }
 
-  saveAsDraft() {
-    this.changeToNextTab.emit('saveAsDraft')
-  }
-
   createPlanDraftView() {
     console.log(this.trainingPlanDataSharingService.trainingPlanStepperData)
     let obj = { "request": this.trainingPlanDataSharingService.trainingPlanStepperData }
@@ -130,6 +126,9 @@ export class BreadcrumbComponent implements OnInit {
     }
     if (this.tabType.ADD_CONTENT === this.selectedTab && this.validationList && !this.validationList.addContentIsInvalid) {
       return this.validationList.addContentIsInvalid
+    }
+    if (this.tabType.ADD_ASSIGNEE === this.selectedTab && this.validationList && !this.validationList.addAssigneeIsInvalid) {
+      return this.validationList.addAssigneeIsInvalid
     }
     return true
   }

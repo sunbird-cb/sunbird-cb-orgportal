@@ -24,10 +24,11 @@
                 <span>3. Add Assignee</span>
             </ng-template>
             <ng-template matTabContent>
-                <ws-app-create-assignee></ws-app-create-assignee>
+                <ws-app-create-assignee (addAssigneeInvalid)="checkForaddAssignee($event)"></ws-app-create-assignee>
             </ng-template>
         </mat-tab>
-        <mat-tab [label]="tabType.ADD_TIMELINE" [disabled]="true">
+        <mat-tab [label]="tabType.ADD_TIMELINE"
+            [disabled]="addCotnentDisable || addAssigneeDisable || addTimelineDisable">
             <ng-template mat-tab-label>
                 <span>4. Add Timeline</span>
             </ng-template>
