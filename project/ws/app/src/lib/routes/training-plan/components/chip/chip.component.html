@@ -11,13 +11,13 @@
                 </div>
             </div>
         </ng-container>
-        <a mat-button class="select-more-link margin-left-m" *ngIf="selectContentCount > 3">+3 more</a>
+        <a mat-button class="select-more-link margin-left-m" *ngIf="selectContentCount > 3" (click)="navigateToPreviewPage()">+3 more</a>
     </div>
     <div class="flex flex-1 flex-row right-section flex-middle">
         <a mat-button class="select-more-link" (click)="clearAll()">Clear all</a>
     </div>
 </div>
-<div class="flex flex-row chip-container" *ngIf="selectAssigneeCount > 0 && from === 'assignee'">
+<div class="flex flex-row chip-container" *ngIf="selectAssigneeCount > 0 && from === 'assignee' && trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation'">
     <div class="flex flex-2 left-section flex-middle">
         <div class="selected-item-label">Selected items - </div>
         <ng-container *ngFor="let item of selectedAssigneeChips | slice : 0 : 3">
@@ -31,7 +31,26 @@
                 </div>
             </div>
         </ng-container>
-        <a mat-button class="select-more-link margin-left-m" *ngIf="selectAssigneeCount > 3">+3 more</a>
+        <a mat-button class="select-more-link margin-left-m" *ngIf="selectAssigneeCount > 3" (click)="navigateToPreviewPage()">+3 more</a>
+    </div>
+    <div class="flex flex-1 flex-row right-section flex-middle">
+        <a mat-button class="select-more-link" (click)="clearAll()">Clear all</a>
+    </div>
+</div>
+<div class="flex flex-row chip-container" *ngIf="selectAssigneeCount > 0 && from === 'assignee' && trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users'">
+    <div class="flex flex-2 left-section flex-middle">
+        <div class="selected-item-label">Selected items - </div>
+        <ng-container *ngFor="let item of selectedAssigneeChips | slice : 0 : 3">
+        <div class="chips flex flex-row" *ngIf="item?.selected">
+            <div class="chips-content">
+                <span class="color-60">{{item?.firstName}}</span>                
+            </div>
+            <div class="cross-icon" (click)="removeAssignee(item)">
+                <img class="cursor-pointer" src="assets/icons/close.svg" />
+            </div>
+        </div>
+        </ng-container>
+        <a mat-button class="select-more-link margin-left-m" *ngIf="selectAssigneeCount > 3" (click)="navigateToPreviewPage()">+3 more</a>
     </div>
     <div class="flex flex-1 flex-row right-section flex-middle">
         <a mat-button class="select-more-link" (click)="clearAll()">Clear all</a>

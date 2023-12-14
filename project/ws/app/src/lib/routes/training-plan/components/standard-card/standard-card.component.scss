@@ -128,6 +128,7 @@ $secondary-color: #EF951E;
   mat-card-content {
     // margin: 0 -0.25 * $card-padding;
     background: #fff;
+    border-radius: 8px;
   }
 
   .card-img {
@@ -550,4 +551,9 @@ $title-line-count: 2;
 
 .card-cross-btn {
   background: white !important;
+}
+
+.active-card {
+  border: 1px solid #1B4CA1 !important;
+  border-radius: 8px;
 }
