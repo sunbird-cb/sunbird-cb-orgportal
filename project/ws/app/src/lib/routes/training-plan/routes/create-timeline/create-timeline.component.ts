@@ -25,7 +25,8 @@ export class CreateTimelineComponent implements OnInit {
     console.log('this.contentData', this.contentData)
     console.log('this.trainingPlanDataSharingService.trainingPlanAssigneeData', this.trainingPlanDataSharingService.trainingPlanAssigneeData)
     if (this.trainingPlanDataSharingService.trainingPlanAssigneeData &&
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data
+      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data &&
+      this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation'
     ) {
       let category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
       let assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
@@ -35,10 +36,23 @@ export class CreateTimelineComponent implements OnInit {
 
       console.log('this.assigneeData', this.assigneeData)
     }
+    if (this.trainingPlanDataSharingService.trainingPlanAssigneeData &&
+      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data &&
+      this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users'
+    ) {
+      let category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
+      let assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.filter((item: any) => {
+        return item.selected
+      })
+      this.assigneeData = { 'category': category, 'data' : {'content': assigneeData} } ;
+
+      console.log('this.assigneeData', this.assigneeData)
+    }
   }
 
-  showAll() {
-    this.router.navigate(['app', 'training-plan', 'preview-plan'])
+  showAll(from:string, tab:string) {
+    // this.router.navigate(['app', 'training-plan', 'preview-plan'])
+    this.router.navigate(['app', 'training-plan', 'preview-plan'], { queryParams: {from , tab}})
   }
 
 }

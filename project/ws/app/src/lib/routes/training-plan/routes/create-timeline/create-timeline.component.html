@@ -5,16 +5,16 @@
     <div class="margin-top-xl">
         <div class="flex flex-middle flex-between">
             <div class="mat-subheading-1 margin-remove">Selected Content</div>
-            <a mat-button (click)="showAll()" class="show-all">Show all <mat-icon>keyboard_arrow_right</mat-icon></a>
+            <a mat-button (click)="showAll('all','content')" class="show-all">Show all <mat-icon>keyboard_arrow_right</mat-icon></a>
         </div>
     </div>
     <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentData" [showDeleteFlag]="true"></ws-app-standard-card>
 </ng-container>
-<ng-container *ngIf="assigneeData && assigneeData.data.length">
+<ng-container *ngIf="assigneeData && (assigneeData?.data?.length || assigneeData?.data?.content.length)">
     <div class="margin-top-xl">
         <div class=" flex flex-middle flex-between">
             <div class="mat-subheading-1 margin-remove">Selected Cards</div>
-            <a mat-button (click)="showAll()" class="show-all">Show all <mat-icon>keyboard_arrow_right</mat-icon></a>
+            <a mat-button (click)="showAll('all','assignee')" class="show-all">Show all <mat-icon>keyboard_arrow_right</mat-icon></a>
         </div>
     </div>
     <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData" [showDeleteFlag]="true"></ws-app-user-card>
