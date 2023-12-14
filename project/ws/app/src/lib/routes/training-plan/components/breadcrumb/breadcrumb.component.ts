@@ -14,6 +14,7 @@ export class BreadcrumbComponent implements OnInit {
 
   @Input() showBreadcrumbAction = true
   @Input() selectedTab: string = ''
+  @Input() validationList: any
   @Output() changeToNextTab = new EventEmitter<any>()
 
   public dialogRef: any
@@ -24,6 +25,7 @@ export class BreadcrumbComponent implements OnInit {
     private trainingPlanService: TrainingPlanService) { }
 
   ngOnInit() {
+    this.checkIfDisabled()
   }
 
   cancel() {
@@ -103,10 +105,6 @@ export class BreadcrumbComponent implements OnInit {
     this.dialogRef.close()
   }
 
-  saveAsDraft() {
-    this.changeToNextTab.emit('saveAsDraft')
-  }
-
   createPlanDraftView() {
     console.log(this.trainingPlanDataSharingService.trainingPlanStepperData)
     let obj = { "request": this.trainingPlanDataSharingService.trainingPlanStepperData }
@@ -120,5 +118,18 @@ export class BreadcrumbComponent implements OnInit {
         this.router.navigateByUrl('app/home/training-plan-dashboard')
       }, 1000)
     })
+  }
+
+  checkIfDisabled() {
+    if (this.tabType.CREATE_PLAN === this.selectedTab && this.validationList && !this.validationList.titleIsInvalid) {
+      return this.validationList.titleIsInvalid
+    }
+    if (this.tabType.ADD_CONTENT === this.selectedTab && this.validationList && !this.validationList.addContentIsInvalid) {
+      return this.validationList.addContentIsInvalid
+    }
+    if (this.tabType.ADD_ASSIGNEE === this.selectedTab && this.validationList && !this.validationList.addAssigneeIsInvalid) {
+      return this.validationList.addAssigneeIsInvalid
+    }
+    return true
   }
 }

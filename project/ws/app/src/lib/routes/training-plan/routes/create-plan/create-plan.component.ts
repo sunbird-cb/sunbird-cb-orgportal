@@ -13,6 +13,7 @@ export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selectedTabData: string = 'createPlan'
   nextTab: string = ''
+  createCheck: any
 
   constructor() {
   }
@@ -27,13 +28,31 @@ export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selectedTabAction(_event: any) {
     this.selectedTabData = _event
+    this.nextTab = _event
   }
 
   changeTab(_event: any) {
     this.nextTab = _event
   }
 
-  planTitleValidation(_event: any) {
+  isPlanTitleInvalid(_event: any) {
+    this.createCheck = {
+      ...this.createCheck,
+      titleIsInvalid: _event
+    }
+  }
 
+  isAddContentInvalid(_event: any) {
+    this.createCheck = {
+      ...this.createCheck,
+      addContentIsInvalid: _event
+    }
+  }
+
+  isAddAssigneeInvalid(_event: any) {
+    this.createCheck = {
+      ...this.createCheck,
+      addAssigneeIsInvalid: _event
+    }
   }
 }

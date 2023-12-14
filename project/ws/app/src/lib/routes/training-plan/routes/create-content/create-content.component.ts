@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service'
 @Component({
   selector: 'ws-app-create-content',
@@ -6,6 +6,9 @@ import { TrainingPlanDataSharingService } from './../../services/training-plan-d
   styleUrls: ['./create-content.component.scss'],
 })
 export class CreateContentComponent implements OnInit {
+
+  @Output() addContentInvalid = new EventEmitter<any>()
+
   categoryData: any[] = [];
   contentData: any[] = [];
   from = 'content';
@@ -41,8 +44,6 @@ export class CreateContentComponent implements OnInit {
         value: 'Moderated Course',
       },
     ]
-
-
   }
 
   handleApiData(event: any) {
@@ -61,8 +62,6 @@ export class CreateContentComponent implements OnInit {
       } else {
         this.contentData = this.trainingPlanDataSharingService.trainingPlanContentData.data.content
       }
-
-
     }
   }
 
@@ -79,7 +78,15 @@ export class CreateContentComponent implements OnInit {
         }
       })
     }
+    if (this.selectContentCount <= 0) {
+      this.addContentInvalid.emit(true)
+    } else {
+      this.addContentInvalid.emit(false)
+    }
+  }
 
+  itemsRemovedFromChip() {
+    this.handleSelectedChips(true)
   }
 
 }

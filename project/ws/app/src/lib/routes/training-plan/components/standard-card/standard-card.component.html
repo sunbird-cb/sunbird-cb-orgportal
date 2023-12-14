@@ -6,10 +6,13 @@
                     <div style="position: relative; z-index: 1;">
                         <ng-container>
                             <div class="card-select-box" *ngIf="checkboxVisibility">
-                                <mat-checkbox class="card-select-check" [checked]="item?.selected" (change)="selectContentItem($event, item)"></mat-checkbox>
+                                <mat-checkbox class="card-select-check" [checked]="item?.selected"
+                                    (change)="selectContentItem($event, item)"></mat-checkbox>
                             </div>
-                            <div class="card-cross-icon" *ngIf="showDeleteFlag" (click)="deleteItem(item)">
-                                    <img class="cursor-pointer" src="assets/icons/close.svg" />
+                            <div class="card-cross-icon" *ngIf="showDeleteFlag">
+                                <button mat-mini-fab class="card-cross-btn" type="button" (click)="deleteItem(item)">
+                                    <mat-icon>close</mat-icon>
+                                </button>
                             </div>
                             <img mat-card-image loading="lazy"
                                 class="card-img ws-mat-primary-lite-background margin-remove"

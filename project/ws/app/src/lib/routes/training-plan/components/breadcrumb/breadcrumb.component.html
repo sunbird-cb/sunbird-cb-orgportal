@@ -10,17 +10,19 @@
             (tabType.ADD_CONTENT === selectedTab) ? 'Add content' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add
             assignee' : (tabType.ADD_TIMELINE === selectedTab) ? 'Add timeline' : ''}}
         </div>
+        {{validationList | json}}
     </div>
     <div class="flex flex-1 flex-row right-breadcrumb" *ngIf="showBreadcrumbAction">
         <button mat-button class="cancel" (click)="cancel()">
             <span>Cancel</span>
         </button>
-        <button mat-button class="next-btn margin-left-m" (click)="nextStep()"
-            *ngIf="tabType.CREATE_PLAN === selectedTab || tabType.ADD_CONTENT === selectedTab || tabType.ADD_ASSIGNEE === selectedTab || tabType.ADD_TIMELINE === selectedTab">
+        <button mat-button class="next-btn margin-left-m" (click)="nextStep()" *ngIf="tabType.CREATE_PLAN === selectedTab || tabType.ADD_CONTENT === selectedTab
+            || tabType.ADD_ASSIGNEE === selectedTab" [disabled]="checkIfDisabled()"
+            [ngClass]="{'btn-disabled': checkIfDisabled()}">
             <span>Next: {{(tabType.CREATE_PLAN === selectedTab) ? 'Add Content' : (tabType.ADD_CONTENT === selectedTab)
-                ? 'Add assignee' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add timeline' : 'Draft'}}</span>
+                ? 'Add assignee' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add timeline' : ''}}</span>
         </button>
-        <button mat-button class="next-btn margin-left-m" (click)="saveAsDraft()"
+        <button mat-button class="next-btn margin-left-m" (click)="createPlanDraftView()"
             *ngIf="tabType.ADD_TIMELINE === selectedTab">
             <span>Save as draft</span>
         </button>
