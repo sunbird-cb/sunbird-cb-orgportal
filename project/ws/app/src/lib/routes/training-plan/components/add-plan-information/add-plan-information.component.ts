@@ -30,8 +30,8 @@ export class AddPlanInformationComponent implements OnInit {
     })
     this.contentForm.controls['name'].valueChanges.pipe(debounceTime(700)).subscribe((_ele: any) => {
       if (!this.contentForm.invalid) {
-        this.trainingPlanDataSharingSvc.trainingPlanTitle = _ele;
-        this.trainingPlanDataSharingSvc.trainingPlanStepperData.name = _ele;
+        this.trainingPlanDataSharingSvc.trainingPlanTitle = _ele
+        this.trainingPlanDataSharingSvc.trainingPlanStepperData.name = _ele
       }
       this.planTitleInvalid.emit(this.contentForm.invalid)
     })

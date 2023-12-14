@@ -52,7 +52,6 @@ export class CreateAssigneeComponent implements OnInit {
       } else if (this.trainingPlanDataSharingService.trainingPlanStepperData &&
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users' &&
         this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo) {
-        console.log('this.trainingPlanDataSharingService.trainingPlanContentData.data.content', this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo)
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.map((sitem: any) => {
           if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.id) > -1) {
             sitem['selected'] = true
@@ -74,22 +73,22 @@ export class CreateAssigneeComponent implements OnInit {
     if (event) {
       if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation') {
         this.selectedAssigneeChips = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data
-        console.log('this.selectedAssigneeChips', this.selectedAssigneeChips)
-        this.selectedAssigneeChips && this.selectedAssigneeChips.map((sitem: any) => {
-          if (sitem.selected) {
-            this.selectAssigneeCount = this.selectAssigneeCount + 1
-            console.log('this.selectContentCount', this.selectAssigneeCount)
-          }
-        })
+        if (this.selectedAssigneeChips) {
+          this.selectedAssigneeChips.map((sitem: any) => {
+            if (sitem.selected) {
+              this.selectAssigneeCount = this.selectAssigneeCount + 1
+            }
+          })
+        }
       } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users') {
         this.selectedAssigneeChips = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content
-        console.log('this.selectedAssigneeChips', this.selectedAssigneeChips)
-        this.selectedAssigneeChips && this.selectedAssigneeChips.map((sitem: any) => {
-          if (sitem.selected) {
-            this.selectAssigneeCount = this.selectAssigneeCount + 1
-            console.log('this.selectContentCount', this.selectAssigneeCount)
-          }
-        })
+        if (this.selectedAssigneeChips) {
+          this.selectedAssigneeChips.map((sitem: any) => {
+            if (sitem.selected) {
+              this.selectAssigneeCount = this.selectAssigneeCount + 1
+            }
+          })
+        }
       }
 
     }

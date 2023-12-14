@@ -14,7 +14,7 @@ export class ChipComponent implements OnInit, OnChanges {
   @Input() selectAssigneeCount = 0
   @Output() itemRemoved = new EventEmitter<any>()
 
-  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private router: Router) { }
+  constructor(public trainingPlanDataSharingService: TrainingPlanDataSharingService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -35,7 +35,6 @@ export class ChipComponent implements OnInit, OnChanges {
     }
     if (this.from === 'assignee') {
       this.selectAssigneeCount = 0
-      console.log('this.trainingPlanDataSharingService.trainingPlanAssigneeData', this.trainingPlanDataSharingService.trainingPlanAssigneeData)
       if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation') {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
           if (sitem['selected']) {
@@ -70,7 +69,6 @@ export class ChipComponent implements OnInit, OnChanges {
   }
 
   removeAssignee(item: any) {
-    console.log('item', item, this.trainingPlanDataSharingService.trainingPlanAssigneeData)
     if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation') {
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem['selected'] && sitem['id'] === item['id']) {
@@ -78,7 +76,8 @@ export class ChipComponent implements OnInit, OnChanges {
         }
       })
       if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['identifier']) > -1) {
-        let index = this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['id'])
+        const index =
+          this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['id'])
         this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
       }
     } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users') {
@@ -88,7 +87,8 @@ export class ChipComponent implements OnInit, OnChanges {
         }
       })
       if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['identifier']) > -1) {
-        let index = this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['userId'])
+        const index =
+          this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['userId'])
         this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
       }
     }

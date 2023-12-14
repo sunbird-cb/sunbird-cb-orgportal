@@ -75,7 +75,6 @@ export class UserCardComponent implements OnInit {
   }
 
   deleteItem(item: any) {
-    console.log('item', item)
     if (this.assigneeData && this.assigneeData.category === 'Designation') {
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem.id === item.id) {
