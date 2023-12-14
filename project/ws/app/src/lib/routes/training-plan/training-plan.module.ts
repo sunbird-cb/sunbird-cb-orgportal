@@ -57,7 +57,8 @@ import { CreateContentComponent } from './routes/create-content/create-content.c
 import { CategoryDropDownComponent } from './components/category-drop-down/category-drop-down.component'
 import { AddPlanInformationComponent } from './components/add-plan-information/add-plan-information.component'
 
-import { TrainingPlanService } from './services/traininig-plan.service';
+import { TrainingPlanService } from './services/traininig-plan.service'
+import { LoaderService } from '../../../../../../../src/app/services/loader.service'
 @NgModule({
   declarations: [
     TrainingPlanHomeComponent,
@@ -133,7 +134,8 @@ import { TrainingPlanService } from './services/traininig-plan.service';
   ],
   providers: [
     InitResolver,
-    TrainingPlanService
+    TrainingPlanService,
+    LoaderService,
   ],
 })
 export class TrainingPlanModule {

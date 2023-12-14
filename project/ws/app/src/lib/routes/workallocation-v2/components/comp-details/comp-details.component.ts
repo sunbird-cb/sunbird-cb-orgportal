@@ -87,8 +87,6 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
     return `<ul>${(_.compact(data.split('• '))
       .map(i => { if (i) { return `<li>${i}</li>` } return null })).join('')}</ul>`
   }
-  log(a: any) {
-    // tslint:disable-next-line
-    console.log(a)
+  log(_a: any) {
   }
 }

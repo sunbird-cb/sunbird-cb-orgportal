@@ -78,7 +78,6 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
     this.activitySubscription = this.watStore.getactivitiesGroup.subscribe(groups => {
       if (groups) {
         this.groups = groups
-        // console.log(groups)
         this.updateForm()
       }
     })
@@ -167,7 +166,6 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       const previousContainerIndex = parseInt(event.previousContainer.id.replace('compe_', ''), 10)
       const targetContainerIndex = parseInt(event.container.id.replace('compe_', ''), 10)
       // tslint:disable
-      // console.log(actualIdx)
       const oldArray = (this.activityForm.get('groupsArray') as any)!.at(previousContainerIndex).get('competincies')
       const newArray = (this.activityForm.get('groupsArray') as any)!.at(targetContainerIndex).get('competincies')
 
@@ -194,7 +192,6 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       this.updateCompData()
       this.changeDetector.detectChanges()
     }
-    // console.log(this.groupList.value)
 
     this.watStore.setgetcompetencyGroup(this.groupList.value, false, true)
 
@@ -604,8 +601,6 @@ export class CompetencyLabelsComponent implements OnInit, OnDestroy, AfterViewIn
       })
     }
   }
-  log(val: any) {
-    // tslint:disable-next-line
-    console.log(val)
+  log(_val: any) {
   }
 }

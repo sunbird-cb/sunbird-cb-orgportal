@@ -21,7 +21,6 @@ export class RejectReasonDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log('this.reasonForm.value', this.reasonForm.value)
     this.dialogRef.close(this.reasonForm.value)
   }
 

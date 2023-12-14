@@ -145,7 +145,6 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
 
   calculateOfficerErrors(data: any): IWarnError[] {
     const result: IWarnError[] = []
-    // console.log('data------', data)
     if (data && data.officerName === '' && (data.position !== '' || data.positionDescription !== '')) {
       result.push({ _type: 'error', type: 'officer', counts: 0, label: 'Officer name is empty' })
     }
@@ -331,8 +330,6 @@ export class AssistantMessageCardComponent implements OnInit, OnDestroy {
         (isNaN(competencyProgress) ? 0 : competencyProgress) +
         (isNaN(compDetailsProgress) ? 0 : compDetailsProgress)) || 0
     } catch (e) {
-      // tslint:disable-next-line: no-console
-      console.log('ERROR in calculating progress')
       return 0
     }
     this.watStore.setCurrentProgress(progress)

@@ -268,9 +268,7 @@ export class BatchDetailsComponent implements OnInit {
         },
       ],
     }
-    this.bpService.updateBlendedRequests(request).subscribe((res: any) => {
-      // tslint:disable-next-line:no-console
-      console.log('res', res)
+    this.bpService.updateBlendedRequests(request).subscribe((_res: any) => {
       if (event.action === 'Approve') {
         this.newUsers = []
         if (this.programData.wfApprovalType) {
@@ -318,16 +316,12 @@ export class BatchDetailsComponent implements OnInit {
         toValue: { name: event.userData.first_name },
       }],
     }
-    this.bpService.removeLearner(request).subscribe((res: any) => {
+    this.bpService.removeLearner(request).subscribe((_res: any) => {
       this.openSnackbar('Learner is removed successfully!')
       this.filter('approved')
-      // tslint:disable-next-line:no-console
-      console.log(res)
       this.getLearnersList()
       // tslint:disable-next-line:align
-    }, (err: { error: any }) => {
-      // tslint:disable-next-line:no-console
-      console.log('request', err)
+    }, (_err: { error: any }) => {
       this.openSnackbar('Something went wrong. Please try after sometime.')
     })
   }

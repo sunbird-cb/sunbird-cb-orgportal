@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 @Component({
   selector: 'ws-app-chip',
   templateUrl: './chip.component.html',
   styleUrls: ['./chip.component.scss'],
 })
-export class ChipComponent implements OnInit {
-  @Input() selectedContentChips: any[] = [];
-  @Input() selectContentCount: number = 0;
+export class ChipComponent implements OnInit, OnChanges {
+  @Input() selectedContentChips: any[] = []
+  @Input() selectContentCount = 0
   @Input() from: any
-  @Input() selectedAssigneeChips: any[] = [];
-  @Input() selectAssigneeCount: number = 0;
+  @Input() selectedAssigneeChips: any[] = []
+  @Input() selectAssigneeCount = 0
   @Output() itemRemoved = new EventEmitter<any>()
 
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
@@ -19,7 +19,6 @@ export class ChipComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log('selectedAssigneeChips--', this.selectedAssigneeChips)
   }
 
   clearAll() {
@@ -35,7 +34,6 @@ export class ChipComponent implements OnInit {
     }
     if (this.from === 'assignee') {
       this.selectAssigneeCount = 0
-      console.log('this.trainingPlanDataSharingService.trainingPlanAssigneeData', this.trainingPlanDataSharingService.trainingPlanAssigneeData)
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem['selected']) {
           sitem['selected'] = false
@@ -48,28 +46,26 @@ export class ChipComponent implements OnInit {
   }
 
   removeContent(item: any) {
-    console.log('item', item)
     this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
       if (sitem['selected'] && sitem['identifier'] === item['identifier']) {
         sitem['selected'] = false
       }
     })
     if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.indexOf(item['identifier']) > -1) {
-      let index = this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.findIndex((x: any) => x === item['identifier'])
+      const index = this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.findIndex((x: any) => x === item['identifier'])
       this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.splice(index, 1)
     }
     this.itemRemoved.emit(true)
   }
 
   removeAssignee(item: any) {
-    console.log('item', item, this.trainingPlanDataSharingService.trainingPlanAssigneeData)
     this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
       if (sitem['selected'] && sitem['id'] === item['id']) {
         sitem['selected'] = false
       }
     })
     if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.indexOf(item['identifier']) > -1) {
-      let index = this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.findIndex((x: any) => x === item['id'])
+      const index = this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.findIndex((x: any) => x === item['id'])
       this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.splice(index, 1)
     }
   }

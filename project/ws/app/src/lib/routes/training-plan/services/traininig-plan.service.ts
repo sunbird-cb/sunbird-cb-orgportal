@@ -17,11 +17,11 @@ const API_END_POINTS = {
   providedIn: 'root',
 })
 export class TrainingPlanService {
-  constructor(private http: HttpClient) { 
-    
+  constructor(private http: HttpClient) {
+
   }
-  //reqObj:object
-  createPlan(obj:any) {
+  // reqObj:object
+  createPlan(obj: any) {
     return this.http.post<any>(`${API_END_POINTS.CREATE_PLAN}`, obj).pipe(map(res => _.get(res, 'result')))
   }
 
@@ -29,11 +29,11 @@ export class TrainingPlanService {
 
   }
 
-  getAllContent(filter:object):Observable<any> {
+  getAllContent(filter: object): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.GET_ALL_CONTENT}`, filter).pipe(map(res => _.get(res, 'result')))
   }
 
-  getAllUsers(filter: object): Observable<any> {
+  getCustomUsers(filter: object): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, filter).pipe(map(res => _.get(res, 'result.response')))
   }
 

@@ -40,7 +40,6 @@ export class BlendedApprovalsComponent implements OnInit {
   ngOnInit() {
     if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService) {
       this.userProfile = this.activeRouter.parent.snapshot.data.configService.unMappedUser
-      // console.log('this.userProfile', this.userProfile)
     }
     this.getBlendedPreogramsList()
   }

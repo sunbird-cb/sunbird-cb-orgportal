@@ -21,7 +21,6 @@ export class BatchListComponent implements OnInit {
     this.programID = this.activeRouter.snapshot.params.id
     if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService) {
       this.userProfile = this.activeRouter.parent.snapshot.data.configService.unMappedUser
-      // console.log('this.userProfile', this.userProfile)
     }
     if (currentState && currentState.extras.state) {
       this.programData = currentState.extras.state

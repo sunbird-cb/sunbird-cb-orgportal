@@ -70,7 +70,6 @@ export class AboutVideoComponent implements OnInit {
       },
     }
     // this.widgetResolverData.widgetData.url = this.introVideos[value]
-    // //console.log('TYPE: ', this.widgetResolverData)
   }
 
 }

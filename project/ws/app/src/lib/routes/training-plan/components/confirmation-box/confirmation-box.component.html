@@ -1,9 +1,9 @@
 <div class="box-container" *ngIf="data?.type === 'normal'">
-    <div class="close-modal-container">
+    <!-- <div class="close-modal-container">
         <button mat-icon-button>
             <mat-icon>more_vert</mat-icon>
         </button>
-    </div>
+    </div> -->
     <div class="flex flex-1 flex-row icon">
         <img src="assets/icons/{{data?.icon}}.svg" />
 
@@ -26,11 +26,11 @@
 </div>
 
 <div class="box-container-portrait" *ngIf="data?.type === 'progress'">
-    <div class="close-modal-container">
+    <!-- <div class="close-modal-container">
         <button mat-icon-button>
             <mat-icon>more_vert</mat-icon>
         </button>
-    </div>
+    </div> -->
     <div class="flex flex-1 flex-row progress-title">
         {{data?.title}}
     </div>
@@ -44,11 +44,11 @@
 </div>
 
 <div class="box-container-portrait" *ngIf="data?.type === 'progress-completed'">
-    <div class="close-modal-container">
+    <!-- <div class="close-modal-container">
         <button mat-icon-button type="button" (click)="dialogRef.close()">
             <mat-icon>close</mat-icon>
         </button>
-    </div>
+    </div> -->
     <div class="flex flex-1 flex-row progress-title">
         {{data?.title}}
     </div>

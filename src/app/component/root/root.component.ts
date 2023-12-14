@@ -144,14 +144,9 @@ export class RootComponent implements OnInit, AfterViewInit {
 
       if (event instanceof NavigationEnd) {
         // let snapshot = this.router.routerState.firstChild(this.activatedRoute).snapshot
-        // console.log('this.route.snapshot :: ', this.route.snapshot)
         const snapshot = this.route.snapshot
-        // console.log('root.snapshot.root.firstChild ', snapshot.root.firstChild)
-        // console.log('firstChild ', snapshot.firstChild)
         const firstChild = snapshot.root.firstChild
         this.getChildRouteData(snapshot, firstChild)
-        // tslint:disable-next-line: no-console
-        // console.log('Final currentDataRoute', this.currentRouteData)
         this.utilitySvc.setRouteData(this.currentRouteData)
         const pageContext = this.utilitySvc.routeData
         const data = {
@@ -206,7 +201,6 @@ export class RootComponent implements OnInit, AfterViewInit {
   getChildRouteData(snapshot: ActivatedRouteSnapshot, firstChild: ActivatedRouteSnapshot | null) {
     if (firstChild) {
       if (firstChild.data) {
-        // console.log('firstChild.data', firstChild.data)
         this.currentRouteData.push(firstChild.data)
       }
       if (firstChild.firstChild) {

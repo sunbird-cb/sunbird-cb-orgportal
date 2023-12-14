@@ -63,7 +63,7 @@ export class BudgetComponent implements OnInit, OnChanges {
   mdotrainingdata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
   schemewisedata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
   scehemetableDatadata!: {
-    srnumber: number; schemeName: string; trainingBudgetAllocated: number;
+    srnumber: number; schemeName: string; trainingBudgetAllocated: number
     trainingBudgetUtilization: number; budgetYear: string
   }[]
   yearsList: any = []
@@ -443,7 +443,6 @@ export class BudgetComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response) {
-        // console.log('response', response)
       }
     })
 

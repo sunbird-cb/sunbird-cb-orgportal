@@ -123,7 +123,6 @@ export class MobileAppsService {
       if (window.dispatchEventFlag) {
         document.dispatchEvent(new CustomEvent(eventName, { detail: data }))
       } else {
-        // //console.log(eventName, data)
       }
     }
   }

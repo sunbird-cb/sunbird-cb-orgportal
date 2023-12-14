@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core'
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
 })
 export class TrainingPlanDataSharingService {
-  trainingPlanCategoryChangeEvent = new Subject();
-  trainingPlanTitle: string = ''
+  trainingPlanCategoryChangeEvent = new Subject()
+  trainingPlanTitle = ''
   trainingPlanContentData: any
   trainingPlanAssigneeData: any
   trainingPlanStepperData: any = {
-    "name": "CBP Plan Name",
-    "contentType": "",
-    "contentList": [
+    name: '',
+    contentType: '',
+    contentList: [
     ],
-    "assignmentType": "",
-    "assignmentTypeInfo": [
+    assignmentType: '',
+    assignmentTypeInfo: [
     ],
-    "endDate": ""
-  };
+    endDate: '',
+  }
   constructor() {
 
   }

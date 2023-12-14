@@ -193,7 +193,6 @@ export class LeadershiptableComponent implements OnInit, OnChanges {
   }
 
   // onRowClick(e: any) {
-  //   console.log('clicked row', e)
   // }
 
   adduser() {

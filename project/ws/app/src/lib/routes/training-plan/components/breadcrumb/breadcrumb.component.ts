@@ -13,7 +13,7 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
 export class BreadcrumbComponent implements OnInit {
 
   @Input() showBreadcrumbAction = true
-  @Input() selectedTab: string = ''
+  @Input() selectedTab = ''
   @Input() validationList: any
   @Output() changeToNextTab = new EventEmitter<any>()
 
@@ -21,20 +21,19 @@ export class BreadcrumbComponent implements OnInit {
   tabType = TrainingPlanContent.TTabLabelKey
 
   constructor(private router: Router, public dialog: MatDialog,
-    private trainingPlanDataSharingService: TrainingPlanDataSharingService,
-    private trainingPlanService: TrainingPlanService) { }
+              private trainingPlanDataSharingService: TrainingPlanDataSharingService,
+              private trainingPlanService: TrainingPlanService) { }
 
   ngOnInit() {
     this.checkIfDisabled()
   }
 
   cancel() {
+    this.trainingPlanDataSharingService.trainingPlanTitle = ''
     this.router.navigateByUrl('app/home/training-plan-dashboard')
   }
 
   nextStep() {
-    // this.showDialogBox('progress-completed')
-    console.log('this.selectedTab', this.selectedTab)
     switch (this.selectedTab) {
       case TrainingPlanContent.TTabLabelKey.CREATE_PLAN:
         this.changeToNextTab.emit(TrainingPlanContent.TTabLabelKey.ADD_CONTENT)
@@ -54,9 +53,10 @@ export class BreadcrumbComponent implements OnInit {
 
   performRoute(route: any) {
     if (route === 'list') {
+      this.trainingPlanDataSharingService.trainingPlanTitle = ''
       this.router.navigateByUrl('app/home/training-plan-dashboard')
     } else {
-      this.router.navigateByUrl('app/training-plan/' + route)
+      this.router.navigateByUrl(`app/training-plan/${route}`)
     }
 
   }
@@ -93,11 +93,10 @@ export class BreadcrumbComponent implements OnInit {
         primaryAction: dialogData.primaryAction,
         secondaryAction: dialogData.secondaryAction,
       },
-      autoFocus: false
+      autoFocus: false,
     })
 
     this.dialogRef.afterClosed().subscribe(() => {
-      // console.log('The dialog was closed');
     })
   }
 
@@ -106,17 +105,17 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   createPlanDraftView() {
-    console.log(this.trainingPlanDataSharingService.trainingPlanStepperData)
-    let obj = { "request": this.trainingPlanDataSharingService.trainingPlanStepperData }
+    this.trainingPlanDataSharingService.trainingPlanStepperData.name = this.trainingPlanDataSharingService.trainingPlanTitle
+    const obj = { request: this.trainingPlanDataSharingService.trainingPlanStepperData }
     this.showDialogBox('progress')
-    this.trainingPlanService.createPlan(obj).subscribe((data: any) => {
-      console.log('data', data)
+    this.trainingPlanService.createPlan(obj).subscribe((_data: any) => {
       this.dialogRef.close()
       this.showDialogBox('progress-completed')
       setTimeout(() => {
         this.dialogRef.close()
+        this.trainingPlanDataSharingService.trainingPlanTitle = ''
         this.router.navigateByUrl('app/home/training-plan-dashboard')
-      }, 1000)
+      },         1000)
     })
   }
 
