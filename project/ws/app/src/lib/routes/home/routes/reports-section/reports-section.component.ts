@@ -54,9 +54,7 @@ export class ReportsSectionComponent implements OnInit {
       this.downloadService.fetctReportsUpdatedOn(this.configSvc.userProfile.rootOrgId).subscribe((res: any) => {
         this.lastUpdatedOn = res
         this.getTableData()
-      },                                                                                         err => {
-        // tslint:disable-next-line:no-console
-        console.log(err)
+      },                                                                                         _err => {
         this.getTableData()
       })
     })

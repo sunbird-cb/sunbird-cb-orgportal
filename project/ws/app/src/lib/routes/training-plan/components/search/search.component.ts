@@ -18,7 +18,8 @@ export class SearchComponent implements OnInit {
   constructor(@Inject(DOCUMENT) private document: Document,
     private trainingPlanService: TrainingPlanService,
     private route: ActivatedRoute,
-    private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+    private trainingPlanDataSharingService: TrainingPlanDataSharingService,
+  ) { }
 
   ngOnInit() {
     // this.handleCategorySelection('');
@@ -46,7 +47,6 @@ export class SearchComponent implements OnInit {
   }
 
   handleCategorySelection(event: any) {
-    console.log('event--', event, this.from)
     switch (this.from) {
       case 'content':
         event = !event ? 'Course' : event
@@ -57,9 +57,10 @@ export class SearchComponent implements OnInit {
         if (event === 'Designation') {
           this.getDesignations(event)
         } else if (event === 'Custom Users') {
+          this.getCustomUsers(event)
+        } else if (event === 'All Users') {
           this.getAllUsers(event)
         }
-
         break
     }
   }
@@ -94,21 +95,19 @@ export class SearchComponent implements OnInit {
           "limit": 20,
           "query": "",
           "sort_by": { "lastUpdatedOn": "desc" },
-          "fields": ["name", "appIcon", "instructions", "description", "purpose", "mimeType", 
-          "gradeLevel", "identifier", "medium", "pkgVersion", "board", "subject", "resourceType", 
-          "primaryCategory", "contentType", "channel", "organisation", "trackable", "license", "posterImage", 
-          "idealScreenSize", "learningMode", "creatorLogo", "duration", "version", "avgRating", "competencies_v5"]
+          "fields": ["name", "appIcon", "instructions", "description", "purpose", "mimeType",
+            "gradeLevel", "identifier", "medium", "pkgVersion", "board", "subject", "resourceType",
+            "primaryCategory", "contentType", "channel", "organisation", "trackable", "license", "posterImage",
+            "idealScreenSize", "learningMode", "creatorLogo", "duration", "version", "avgRating", "competencies_v5"]
         }, "query": ""
       }
       this.trainingPlanService.getAllContent(filterObj).subscribe((res: any) => {
-        console.log('res-->', res)
 
         // if(this.trainingPlanDataSharingService.trainingPlanContentData &&
         //    this.trainingPlanDataSharingService.trainingPlanContentData['data'] &&
         //    this.trainingPlanDataSharingService.trainingPlanContentData['data']['content'] &&
         //    this.trainingPlanDataSharingService.trainingPlanContentData['data']['content'].length
         //   ) {
-        //     console.log('this.trainingPlanDataSharingService.trainingPlanContentData',this.trainingPlanDataSharingService.trainingPlanContentData);
         //     res && res.content.map((sitem:any)=> {
         //       sitem
         //     })
@@ -121,8 +120,7 @@ export class SearchComponent implements OnInit {
 
   }
 
-  getAllUsers(event: any) {
-    console.log('event', event)
+  getCustomUsers(event: any) {
     const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     const filterObj = {
       request: {
@@ -135,16 +133,19 @@ export class SearchComponent implements OnInit {
         offset: 0,
       },
     }
-    this.trainingPlanService.getAllUsers(filterObj).subscribe((res: any) => {
-      console.log('res-->', res)
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res }
+    this.trainingPlanService.getCustomUsers(filterObj).subscribe((res: any) => {
+      this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res.content }
       this.handleApiData.emit(true)
     })
   }
 
+  getAllUsers(_event: any) {
+    this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: _event, data: [] }
+    this.handleApiData.emit(true)
+  }
+
   getDesignations(event: any) {
     this.trainingPlanService.getDesignations().subscribe((res: any) => {
-      console.log('res-->', res)
       this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res.responseData }
       this.handleApiData.emit(true)
     })

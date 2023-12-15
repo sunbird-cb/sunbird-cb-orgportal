@@ -60,18 +60,13 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
     public dialog: MatDialog, public eventSvc: EventService) {
     // this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     // const paramsMap = this.activeRoute.snapshot.params.tab
-    // console.log(paramsMap, '-paramsMap====')
     // if (paramsMap === 'published') {
     //   this.currentUrl = "app/home/workallocation/published"
     //   this.currentFilter = 'Published'
-    //   console.log(this.currentUrl, 'this.currentUrl published==========')
-    //   console.log(paramsMap, '- published paramsMap====')
     // }
     // if (paramsMap === 'draft') {
     //   this.currentUrl = "app/home/workallocation/draft"
     //   this.currentFilter = 'Draft'
-    //   console.log(this.currentUrl, 'this.currentUrl draft ==========')
-    //   console.log(paramsMap, '- draft paramsMap====')
     // }
   }
 

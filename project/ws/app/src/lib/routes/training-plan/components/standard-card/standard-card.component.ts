@@ -1,24 +1,23 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges } from '@angular/core'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 @Component({
   selector: 'ws-app-standard-card',
   templateUrl: './standard-card.component.html',
   styleUrls: ['./standard-card.component.scss'],
 })
-export class StandardCardComponent implements OnInit {
+export class StandardCardComponent implements OnInit, OnChanges {
   @Input() cardSize: any
   @Input() checkboxVisibility: any = true
-  @Input() contentData: any[] = [];
-  @Input() showDeleteFlag = false;
-  @Output() handleSelectedChips = new EventEmitter();
-  selectedContent: any[] = [];
+  @Input() contentData: any[] = []
+  @Input() showDeleteFlag = false
+  @Output() handleSelectedChips = new EventEmitter()
+  selectedContent: any[] = []
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
   }
 
   ngOnChanges() {
-    console.log('contentData', this.contentData)
   }
 
   selectContentItem(event: any, item: any) {
@@ -49,23 +48,20 @@ export class StandardCardComponent implements OnInit {
         }
       })
     }
-    console.log(' this.trainingPlanDataSharingService.trainingPlanStepperData', this.trainingPlanDataSharingService.trainingPlanStepperData)
     this.handleSelectedChips.emit(true)
   }
 
-  deleteItem(item:any) {
-    console.log('item', item);
+  deleteItem(item: any) {
     this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
       if (sitem.identifier === item.identifier) {
         sitem['selected'] = false
       }
     })
-    this.contentData.filter((sitem: any, index:any) => {
+    this.contentData.filter((sitem: any, index: any) => {
       if (sitem.identifier === item.identifier) {
-        this.contentData.splice(index,1);
+        this.contentData.splice(index, 1)
       }
     })
-    console.log('result-->', this.trainingPlanDataSharingService.trainingPlanContentData.data.content);
     this.trainingPlanDataSharingService.trainingPlanStepperData['contentList'].filter((identifier: any, index: any) => {
       if (identifier === item.identifier) {
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentList'].splice(index, 1)

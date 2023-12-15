@@ -316,7 +316,6 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
   saveWAT(autoSave: boolean = false, reload: boolean = false) {
     if (this.getWorkOrderId) {
       const req = this.getStrcuturedReq()
-      // console.log(req)
       if (req) {
         this.allocateSrvc.createAllocationV2(req).subscribe(res => {
           if (res) {
@@ -350,7 +349,6 @@ export class CreateWorkallocationComponent implements OnInit, AfterViewInit, OnD
     if (serverCall) {
       if (this.getWorkOrderId) {
         const req = this.getStrcuturedReqUpdate()
-        // console.log(req)
         if (req) {
           this.allocateSrvc.updateAllocationV2(req).pipe(delay(500)).subscribe(res => {
             if (res) {

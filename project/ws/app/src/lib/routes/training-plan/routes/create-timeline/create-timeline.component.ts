@@ -7,7 +7,7 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
   styleUrls: ['./create-timeline.component.scss'],
 })
 export class CreateTimelineComponent implements OnInit {
-  contentData: any[] = [];
+  contentData: any[] = []
   assigneeData: any
   constructor(private router: Router, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
@@ -21,38 +21,32 @@ export class CreateTimelineComponent implements OnInit {
       })
 
     }
-
-    console.log('this.contentData', this.contentData)
-    console.log('this.trainingPlanDataSharingService.trainingPlanAssigneeData', this.trainingPlanDataSharingService.trainingPlanAssigneeData)
     if (this.trainingPlanDataSharingService.trainingPlanAssigneeData &&
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.data &&
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation'
     ) {
-      let category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
-      let assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
+      const category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
+      const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
         return item.selected
       })
-      this.assigneeData = { 'category': category, data: assigneeData }
-
-      console.log('this.assigneeData', this.assigneeData)
+      this.assigneeData = { category, data: assigneeData }
     }
     if (this.trainingPlanDataSharingService.trainingPlanAssigneeData &&
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.data &&
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users'
     ) {
-      let category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
-      let assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.filter((item: any) => {
+      const category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
+      const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.filter((item: any) => {
         return item.selected
       })
-      this.assigneeData = { 'category': category, 'data' : {'content': assigneeData} } ;
+      this.assigneeData = { category, data: { content: assigneeData } }
 
-      console.log('this.assigneeData', this.assigneeData)
     }
   }
 
-  showAll(from:string, tab:string) {
+  showAll(from: string, tab: string) {
     // this.router.navigate(['app', 'training-plan', 'preview-plan'])
-    this.router.navigate(['app', 'training-plan', 'preview-plan'], { queryParams: {from , tab}})
+    this.router.navigate(['app', 'training-plan', 'preview-plan'], { queryParams: { from, tab } })
   }
 
 }

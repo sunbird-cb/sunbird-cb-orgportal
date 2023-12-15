@@ -158,9 +158,7 @@ export class NominateUsersDialogComponent implements OnInit {
           //   }
           // }
           this.dialogRef.close('done')
-        },                                                        (err: { error: any }) => {
-          // tslint:disable-next-line:no-console
-          console.log(err)
+        },                                                        (_err: { error: any }) => {
           this.openSnackbar('some thing went wrong, Please try after sometime.')
         })
       } else {

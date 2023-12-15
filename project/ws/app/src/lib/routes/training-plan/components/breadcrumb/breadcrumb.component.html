@@ -10,7 +10,6 @@
             (tabType.ADD_CONTENT === selectedTab) ? 'Add content' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add
             assignee' : (tabType.ADD_TIMELINE === selectedTab) ? 'Add timeline' : ''}}
         </div>
-        {{validationList | json}}
     </div>
     <div class="flex flex-1 flex-row right-breadcrumb" *ngIf="showBreadcrumbAction">
         <button mat-button class="cancel" (click)="cancel()">

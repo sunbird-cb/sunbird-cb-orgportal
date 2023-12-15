@@ -1,6 +1,7 @@
 <div class="flex flex-4 flex-row assignee-card-container flex-wrap" *ngIf="assigneeData?.category === 'Custom Users'">
     <ng-container *ngFor="let item of assigneeData?.data?.content | slice : 0 : 20">
-        <div class="flex flex-4 assignee-card" [ngClass]="item?.selected ? 'active-card':''" [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
+        <div class="flex flex-4 assignee-card" [ngClass]="item?.selected ? 'active-card':''"
+            [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
             <div class="avatar">
                 <div>HG</div>
             </div>

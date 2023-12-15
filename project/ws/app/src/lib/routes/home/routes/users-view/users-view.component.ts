@@ -326,8 +326,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   // }
 
   clickHandler(event: any) {
-    // tslint:disable-next-line: no-console
-    console.log('clickHandler :: event ', event)
     switch (event.type) {
       case 'createUser':
         this.onCreateClick()

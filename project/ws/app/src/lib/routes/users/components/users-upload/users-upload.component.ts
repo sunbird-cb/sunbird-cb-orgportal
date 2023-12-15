@@ -156,7 +156,6 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   radioChange(_event: MatRadioChange) {
-    // console.log(_event.source.name, _event.value)
     this.resetOTPFields()
   }
 
@@ -241,9 +240,7 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
               this.formGroup.reset()
               this.getBulkUploadData()
             },
-            err => {
-              // tslint:disable-next-line: no-console
-              console.log('error', err)
+            _err => {
               this.openSnackbar(this.toastError.nativeElement.value)
             })
       }
@@ -371,7 +368,6 @@ export class UsersUploadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   verifyOtp(otp: any) {
-    // console.log(otp)
     // const mob = this.registrationForm.get('mobile')
 
     if (otp && otp.value) {

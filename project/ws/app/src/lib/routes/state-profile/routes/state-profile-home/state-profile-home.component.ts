@@ -51,7 +51,6 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
     }
     this.routerSubscription = this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationStart) { // do not delete this
-        // console.log(event)
       }
       if (event instanceof NavigationEnd) {
         _.each(this.tabs, t => {
@@ -73,7 +72,6 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
   //     if (s.step === this.currentStep) {
   //       if (s.key.indexOf('currentcompetencies') !== -1 && this.configSvc.userProfileV2) {
   //         if (this.compLocalService.autoSaveCurrent.value) {
-  //           // console.log("currentcompetencies========>", this.compLocalService.currentComps.value)
   //           this.profileSvc.updateCCProfileDetails({
   //             request: {
   //               profileDetails: {
@@ -91,7 +89,6 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
   //         }
   //       } else if (s.key.indexOf('desiredcompetencies') !== -1 && this.configSvc.userProfileV2) {
   //         if (this.compLocalService.autoSaveDesired.value) {
-  //           // console.log("desiredcompetencies========>", this.compLocalService.desiredComps.value)
   //           this.profileSvc.updateDCProfileDetails({
   //             request: {
   //               profileDetails: {
@@ -120,8 +117,6 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
           },
           orgId: _.get(this.configSvc.unMappedUser, 'rootOrgId'),
         }
-        // tslint:disable-next-line: no-console
-        console.log('request: ', request)
 
         // Call API to update org profile
 
@@ -192,7 +187,6 @@ export class StateProfileHomeComponent implements OnInit, OnDestroy {
   get current() {
     const currentStep = _.first(_.filter(this.tabs, { step: this.currentStep }))
     if (currentStep !== undefined) {
-      // console.log(JSON.stringify(currentStep)+ '-- value of currentStep======-')
       return currentStep
 
     }

@@ -44,7 +44,7 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
   }
   ltdata: any = []
   admindata: any = []
-  usersData:  any = []
+  usersData: any = []
   bodyHeight = document.body.clientHeight - 125
   deptID: any
   tabData = 'MDO_LEADER'
@@ -126,9 +126,9 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
     const req = {
       request: {
         filters: {
-            rootOrgId: this.deptID,
-            'roles.role': [
-              role,
+          rootOrgId: this.deptID,
+          'roles.role': [
+            role,
           ],
         },
       },
@@ -137,7 +137,7 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
       (res: any) => {
         this.usersData = res.result.response.content
         if (this.usersData.length > 0) {
-          this.usersData.forEach((user: any, index: any)  => {
+          this.usersData.forEach((user: any, index: any) => {
             const obj = {
               fullname: `${user.firstName}`,
               email: this.profileUtilSvc.emailTransform(user.email),
@@ -153,7 +153,6 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
           })
 
           if (this.data) {
-            // console.log('this.data', this.data)
             this.dataSource.data = this.data
             this.dataSource.paginator = this.paginator
           }

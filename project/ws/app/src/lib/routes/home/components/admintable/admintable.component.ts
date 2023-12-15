@@ -191,7 +191,6 @@ export class AdmintableComponent implements OnInit, OnChanges {
   }
 
   // onRowClick(e: any) {
-  //   console.log('clicked row', e)
   // }
 
   adduser() {

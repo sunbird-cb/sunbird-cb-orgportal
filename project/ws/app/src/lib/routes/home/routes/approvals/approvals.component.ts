@@ -126,7 +126,6 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
       }
       this.apprService.getApprovals(req).subscribe(res => {
         let currentdate: Date
-        // console.log("result ", res)
         res.result.data.forEach((approval: any) => {
           let keys = ''
           approval.wfInfo.forEach((wf: any) => {
@@ -167,7 +166,6 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   }
 
   get getTableData() {
-    // console.log("table data", this.data)
     return this.data
   }
 

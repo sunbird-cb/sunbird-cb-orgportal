@@ -9,11 +9,11 @@ export class CreateContentComponent implements OnInit {
 
   @Output() addContentInvalid = new EventEmitter<any>()
 
-  categoryData: any[] = [];
-  contentData: any[] = [];
-  from = 'content';
-  selectedContentChips: any[] = [];
-  selectContentCount: number = 0;
+  categoryData: any[] = []
+  contentData: any[] = []
+  from = 'content'
+  selectedContentChips: any[] = []
+  selectContentCount = 0
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
@@ -44,19 +44,21 @@ export class CreateContentComponent implements OnInit {
         value: 'Moderated Course',
       },
     ]
+    this.handleApiData(true)
   }
 
   handleApiData(event: any) {
-    if (event) {
-      console.log(this.trainingPlanDataSharingService.trainingPlanContentData)
+    if (event && this.trainingPlanDataSharingService.trainingPlanContentData) {
       if (this.trainingPlanDataSharingService.trainingPlanStepperData &&
         this.trainingPlanDataSharingService.trainingPlanStepperData.contentList) {
-        console.log('this.trainingPlanDataSharingService.trainingPlanContentData.data.content', this.trainingPlanDataSharingService.trainingPlanStepperData.contentList)
-        this.trainingPlanDataSharingService.trainingPlanContentData.data.content && this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
-          if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.indexOf(sitem.identifier) > -1) {
-            sitem['selected'] = true
-          }
-        })
+        if (this.trainingPlanDataSharingService.trainingPlanContentData &&
+          this.trainingPlanDataSharingService.trainingPlanContentData.data.content) {
+          this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
+            if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.indexOf(sitem.identifier) > -1) {
+              sitem['selected'] = true
+            }
+          })
+        }
         this.contentData = this.trainingPlanDataSharingService.trainingPlanContentData.data.content
         this.handleSelectedChips(true)
       } else {
@@ -66,17 +68,16 @@ export class CreateContentComponent implements OnInit {
   }
 
   handleSelectedChips(event: any) {
-    console.log('event', event)
     this.selectContentCount = 0
     if (event) {
       this.selectedContentChips = this.trainingPlanDataSharingService.trainingPlanContentData.data.content
-      console.log('this.selectedContentChips', this.selectedContentChips)
-      this.selectedContentChips && this.selectedContentChips.map((sitem) => {
-        if (sitem.selected) {
-          this.selectContentCount = this.selectContentCount + 1
-          console.log('this.selectContentCount', this.selectContentCount)
-        }
-      })
+      if (this.selectedContentChips) {
+        this.selectedContentChips.map(sitem => {
+          if (sitem.selected) {
+            this.selectContentCount = this.selectContentCount + 1
+          }
+        })
+      }
     }
     if (this.selectContentCount <= 0) {
       this.addContentInvalid.emit(true)

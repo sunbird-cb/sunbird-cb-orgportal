@@ -11,8 +11,8 @@ import _ from 'lodash'
 
 export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  selectedTabData: string = 'createPlan'
-  nextTab: string = ''
+  selectedTabData = 'createPlan'
+  nextTab = ''
   createCheck: any
 
   constructor() {
@@ -38,21 +38,21 @@ export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
   isPlanTitleInvalid(_event: any) {
     this.createCheck = {
       ...this.createCheck,
-      titleIsInvalid: _event
+      titleIsInvalid: _event,
     }
   }
 
   isAddContentInvalid(_event: any) {
     this.createCheck = {
       ...this.createCheck,
-      addContentIsInvalid: _event
+      addContentIsInvalid: _event,
     }
   }
 
   isAddAssigneeInvalid(_event: any) {
     this.createCheck = {
       ...this.createCheck,
-      addAssigneeIsInvalid: _event
+      addAssigneeIsInvalid: _event,
     }
   }
 }

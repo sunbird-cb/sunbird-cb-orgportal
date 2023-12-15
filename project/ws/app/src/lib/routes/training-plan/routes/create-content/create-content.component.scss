@@ -1,0 +1,23 @@
+.no-cbp-data {
+  width: auto;
+  margin: 0 auto;
+  text-align: center;
+
+  img {
+    width: 190px;
+  }
+
+  .small-text {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.create-btn {
+  width: auto;
+  background: #0075B7 !important;
+  color: white !important;
+  font-family: 'Lato';
+  font-weight: 700;
+  font-size: 14px;
+}

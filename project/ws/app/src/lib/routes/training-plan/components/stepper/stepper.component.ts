@@ -15,10 +15,10 @@ export class StepperComponent implements OnInit, OnChanges {
   @Output() addAssigneeIsInvalid = new EventEmitter<any>()
 
   tabType = TrainingPlanContent.TTabLabelKey
-  tabIndexValue: number = 0
-  addCotnentDisable: boolean = true
-  addAssigneeDisable: boolean = true
-  addTimelineDisable: boolean = true
+  tabIndexValue = 0
+  addCotnentDisable = true
+  addAssigneeDisable = true
+  addTimelineDisable = true
 
   constructor() { }
 
@@ -61,5 +61,11 @@ export class StepperComponent implements OnInit, OnChanges {
   checkForaddAssignee(_event: any) {
     this.addTimelineDisable = _event
     this.addAssigneeIsInvalid.emit(_event)
+  }
+
+  tabChangeToTimeline(_event: any) {
+    this.addTimelineDisable = _event
+    this.addAssigneeIsInvalid.emit(_event)
+    this.tabIndexValue = 3
   }
 }

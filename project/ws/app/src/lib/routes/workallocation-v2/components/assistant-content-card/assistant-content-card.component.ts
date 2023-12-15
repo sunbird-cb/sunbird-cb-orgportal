@@ -26,8 +26,6 @@ export class AssistantContentCardComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe((val: any) => {
       if (val) {
-        // tslint:disable-next-line: no-console
-        console.log({ val })
       }
     })
   }
