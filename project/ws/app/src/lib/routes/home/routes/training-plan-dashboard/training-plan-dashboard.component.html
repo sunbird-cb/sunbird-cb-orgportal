@@ -11,7 +11,7 @@
             (click)="filter('live'); tabTelemetry('live', 0)" role="button">Live</a>
           <a routerLinkActive="router-link-active" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'draft',
                                 'ws-mat-accent-border font-medium':currentFilter !== 'draft'}" mat-button
-            (click)="filter('draft'); tabTelemetry('draft', 1)" role="button">Draft</a>
+            (click)="filter('draft'); tabTelemetry('draft', 1)" role="button">Drafts</a>
         </div>
       </div>
       <ng-container class="margin-top-l">

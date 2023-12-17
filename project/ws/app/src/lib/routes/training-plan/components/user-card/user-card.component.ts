@@ -31,11 +31,11 @@ export class UserCardComponent implements OnInit {
         }
       }
       if (this.assigneeData && this.assigneeData.category === 'Custom Users') {
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.map((sitem: any, index: any) => {
+        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any, index: any) => {
           if (sitem.userId === item.userId) {
             sitem['selected'] = true
-            this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.splice(index, 1)
-            this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.unshift(sitem)
+            this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.splice(index, 1)
+            this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.unshift(sitem)
           }
         })
         if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']) {
@@ -58,7 +58,7 @@ export class UserCardComponent implements OnInit {
         })
       }
       if (this.assigneeData && this.assigneeData.category === 'Custom Users') {
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.map((sitem: any) => {
+        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
           if (sitem.userId === item.userId) {
             sitem['selected'] = false
           }

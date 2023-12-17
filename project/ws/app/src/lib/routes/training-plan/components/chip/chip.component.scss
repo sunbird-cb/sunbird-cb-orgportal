@@ -3,19 +3,25 @@
     width: 178px;
     border: 1px solid rgba(0, 0, 0, 0.16);
     margin-left: 12px;
+    align-items: center;
 }
 
 .chips-content {
-    margin: 12px 16px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 16px;
+    width: 131px;
 }
 
 .cross-icon {
     vertical-align: middle;
-    margin: 12px 16px;
+    margin-left: 0;
+    margin-right: 16px;
+    margin-top: 6px;
 }
 .chip-container {
     margin-top:20px;
@@ -35,7 +41,7 @@
 }
 
 .select-more-link {
-    color: #0075B7 !important;
+    color: #1b4ca1 !important;
     font-weight: 700;
     letter-spacing: 0.25px;
     font-family: 'Lato';

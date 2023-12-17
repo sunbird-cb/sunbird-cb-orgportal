@@ -8,6 +8,7 @@ import _ from 'lodash'
 
 const API_END_POINTS = {
   CREATE_PLAN: 'apis/proxies/v8/cbplan/v1/create',
+  READ_PLAN:'apis/proxies/v8/cbplan/v1/read/',
   UPDATE_PLAN: 'apis/proxies/v8/cbplan/v1/update',
   GET_ALL_CONTENT: '/apis/proxies/v8/sunbirdigot/search',
   GET_ALL_USERS: '/apis/proxies/v8/user/v1/search',
@@ -23,6 +24,10 @@ export class TrainingPlanService {
   // reqObj:object
   createPlan(obj: any) {
     return this.http.post<any>(`${API_END_POINTS.CREATE_PLAN}`, obj).pipe(map(res => _.get(res, 'result')))
+  }
+
+  readPlan(planId:any) {
+    return this.http.get<any>(API_END_POINTS.GET_ALL_DESIGNATIONS+`/${planId}`);
   }
 
   updatePlan() {

@@ -74,7 +74,7 @@
     <div class="competency-tabs">
         <mat-tab-group [selectedIndex]="selectedIndex" class="margin-top-m" >
             <ng-container *ngFor="let item of competencySummaryObj">
-            <mat-tab>
+            <mat-tab [disabled]="!(item[item?.title]['count'])">
                 <ng-template mat-tab-label>
                     {{item?.title | titlecase}} ({{item[item?.title]['count']}}) 
                 </ng-template>
@@ -85,12 +85,12 @@
                             {{sitem?.competencyTheme}}
                         </div>
                         <div>
-                            (1)
+                           <span *ngIf="sitem?.count">({{sitem?.count}})</span> 
                         </div>
                     </div>
                     </ng-container>
                     <ng-container *ngIf="!(item[item?.title]['listData'].length)">
-                        <div class="default-tab-content">There are no competency added yet</div>
+                        <div class="default-tab-content">There are no competency added yet.</div>
                     </ng-container>
                 </ng-template>
             </mat-tab>        

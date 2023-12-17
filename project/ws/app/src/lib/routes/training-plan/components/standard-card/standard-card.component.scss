@@ -557,3 +557,11 @@ $title-line-count: 2;
   border: 1px solid #1B4CA1 !important;
   border-radius: 8px;
 }
+
+::ng-deep .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element, ::ng-deep .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
+  background: #1b4ca1 !important;
+}
+
+::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background: #1b4ca1 !important;
+}

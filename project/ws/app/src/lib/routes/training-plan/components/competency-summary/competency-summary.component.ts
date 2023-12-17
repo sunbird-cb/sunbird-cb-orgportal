@@ -10,8 +10,8 @@ export class CompetencySummaryComponent implements OnInit, OnChanges {
   @Input() selectContentCount: any
   selectedCardData: any[] = []
   competencySummaryObj: any = [{
-    title: 'behaviroal',
-    behaviroal: {
+    title: 'behavioural',
+    behavioural: {
       listData: [],
       count: 0,
     },
@@ -38,8 +38,8 @@ export class CompetencySummaryComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.selectedCardData = []
     this.competencySummaryObj = [{
-      title: 'behaviroal',
-      behaviroal: {
+      title: 'behavioural',
+      behavioural: {
         listData: [],
         count: 0,
       },
@@ -67,23 +67,35 @@ export class CompetencySummaryComponent implements OnInit, OnChanges {
     // let competencyThemeObj = {};
 
     if (this.selectedCardData) {
+      let fObj = {"competencyTheme": '', count: 0};
       this.selectedCardData.map((sitem: any) => {
         sitem.competencies_v5.map((fitem: any) => {
-          if (fitem.competencyArea.toLowerCase() === 'behaviroal') {
-            this.competencySummaryObj[0]['behaviroal']['count'] = this.competencySummaryObj[0]['behaviroal']['count'] + 1
-
-            // competencyThemeObj = this.checkIfThemeNameExists(this.competencySummaryObj['behaviroal']['listData'], fitem);
-            this.competencySummaryObj[0]['behaviroal']['listData'].push(fitem)
+          if (fitem.competencyArea.toLowerCase() === 'behavioural') {
+            this.competencySummaryObj[0]['behavioural']['count'] = this.competencySummaryObj[0]['behavioural']['count'] + 1
+            let result = this.checkIfThemeNameExists(this.competencySummaryObj[0]['behavioural']['listData'], fitem);
+            fObj = {"competencyTheme": fitem.competencyTheme, count: 1};
+            if(result) {
+              this.competencySummaryObj[0]['behavioural']['count'] = this.competencySummaryObj[0]['behavioural']['count'] + 1;
+              this.competencySummaryObj[0]['behavioural']['listData'].push(fObj)
+            }
             this.selectedIndex = 0
           }
-          if (fitem.competencyArea.toLowerCase() === 'functional') {
-            this.competencySummaryObj[1]['functional']['count'] = this.competencySummaryObj[1]['functional']['count'] + 1
-            this.competencySummaryObj[1]['functional']['listData'].push(fitem)
+          if (fitem.competencyArea.toLowerCase() === 'functional') {            
+            let result = this.checkIfThemeNameExists(this.competencySummaryObj[1]['functional']['listData'], fitem);
+            fObj = {"competencyTheme": fitem.competencyTheme, count: 1};
+            if(result) {
+              this.competencySummaryObj[1]['functional']['count'] = this.competencySummaryObj[1]['functional']['count'] + 1;
+              this.competencySummaryObj[1]['functional']['listData'].push(fObj)
+            }
             this.selectedIndex = 1
           }
           if (fitem.competencyArea.toLowerCase() === 'domain') {
-            this.competencySummaryObj[2]['domain']['count'] = this.competencySummaryObj[2]['domain']['count'] + 1
-            this.competencySummaryObj[2]['domain']['listData'].push(fitem)
+            let result = this.checkIfThemeNameExists(this.competencySummaryObj[2]['domain']['listData'], fitem);
+            fObj = {"competencyTheme": fitem.competencyTheme, count: 1};
+            if(result) {
+              this.competencySummaryObj[2]['domain']['count'] = this.competencySummaryObj[2]['domain']['count'] + 1;
+              this.competencySummaryObj[2]['domain']['listData'].push(fObj)
+            }
             this.selectedIndex = 2
           }
         })
@@ -91,13 +103,17 @@ export class CompetencySummaryComponent implements OnInit, OnChanges {
     }
   }
 
-  // checkIfThemeNameExists(arr:any, fitem:any):object {
-  //   arr.map((sitem:any)=>{
-  //     if(sitem.competencyTheme === fitem.competencyTheme) {
 
-  //     }
-  //   })
-  //   return {"themeName": "", "themeCount": 0};
-  // }
+
+  checkIfThemeNameExists(arr:any, fitem:any):boolean {
+    let flag = true;
+    arr.map((sitem:any)=>{
+      if(sitem.competencyTheme === fitem.competencyTheme) {
+        sitem['count'] = sitem['count']+1;
+        flag = false;
+      }
+    })
+    return flag;
+  }
 
 }
