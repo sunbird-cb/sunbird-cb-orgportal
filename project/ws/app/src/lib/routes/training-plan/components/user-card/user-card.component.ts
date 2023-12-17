@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges, ChangeDetectorRef, ViewChild } from '@angular/core'
+import { MatTableDataSource, MatPaginator, PageEvent } from '@angular/material';
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 @Component({
   selector: 'ws-app-user-card',
@@ -10,9 +11,31 @@ export class UserCardComponent implements OnInit {
   @Input() showDeleteFlag = false
   @Input() assigneeData: any
   @Output() handleSelectedChips = new EventEmitter()
-  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator | any;
+  dataSource:any;
+  startIndex= 0;
+  lastIndex = 10; 
+  pageSize = 10;
+  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private changeDetectorRef:ChangeDetectorRef) { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
+    this.changeDetectorRef.detectChanges();
+    console.log('this.contentData',this.assigneeData)
+    this.dataSource= new MatTableDataSource<any>(this.assigneeData.data);
+    this.dataSource.paginator = this.paginator;
+    console.log('this.dataSource', this.dataSource);
+  }
+
+  onChangePage(pe:PageEvent) {
+    console.log(pe.pageIndex);
+    console.log(pe.pageSize);
+    this.startIndex = pe.pageIndex* pe.pageSize;
+    this.lastIndex =(pe.pageIndex+1)*pe.pageSize ;
+    
+    // this.startIndex = this.pageIndex
   }
 
   selectAssigneeItem(event: any, item: any) {
