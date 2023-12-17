@@ -17,7 +17,7 @@ export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedTabData = 'createPlan'
   nextTab = ''
   createCheck: any
-  planId:string = '';
+  planId: string = '';
   constructor(private route: ActivatedRoute, private trainingPlanService: TrainingPlanService,
     private trainingPlanDataSharingService: TrainingPlanDataSharingService) {
   }
@@ -80,29 +80,29 @@ export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
       //       }
       //   }
       // };
-        
 
-      this.trainingPlanService.readPlan(this.planId).subscribe((response:any)=>{
-        console.log('read data', response );
-        if(response && response.result && response.result.content) {
+
+      this.trainingPlanService.readPlan(this.planId).subscribe((response: any) => {
+        console.log('read data', response);
+        if (response && response.result && response.result.content) {
           console.log('trainingPlanDataSharingService', this.trainingPlanDataSharingService);
           this.trainingPlanDataSharingService.trainingPlanTitle = response.result.content.name;
-          this.trainingPlanDataSharingService.trainingPlanContentData = {data: {content : response.result.content.contentList}};
-          if(this.trainingPlanDataSharingService.trainingPlanAssigneeData) {
-            if(response.result.content.userType === 'custom') {
+          this.trainingPlanDataSharingService.trainingPlanContentData = { data: { content: response.result.content.contentList } };
+          if (this.trainingPlanDataSharingService.trainingPlanAssigneeData) {
+            if (response.result.content.userType === 'custom') {
               this.trainingPlanDataSharingService.trainingPlanAssigneeData['category'] = 'Custom Users';
             } else {
               this.trainingPlanDataSharingService.trainingPlanAssigneeData['category'] = response.result.content.userType;
             }
-            
+
           }
-          
-          if(response.result.content.userType === 'custom') {
-            this.trainingPlanDataSharingService.trainingPlanAssigneeData = {data:{content : response.result.content.userDetails}}
-          } else {            
+
+          if (response.result.content.userType === 'custom') {
+            this.trainingPlanDataSharingService.trainingPlanAssigneeData = { data: { content: response.result.content.userDetails } }
+          } else {
             this.trainingPlanDataSharingService.trainingPlanAssigneeData = response.result.content.userDetails;
           }
-          
+
           this.trainingPlanDataSharingService.trainingPlanStepperData['endDate'] = response.result.content.endDate;
           this.trainingPlanDataSharingService.trainingPlanStepperData['status'] = response.result.content.status;
         }
@@ -141,5 +141,29 @@ export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
       ...this.createCheck,
       addAssigneeIsInvalid: _event,
     }
+  }
+
+  archivePlan() {
+    let obj = {
+      "request": {
+        "id": this.planId,
+        "comment": ""
+      }
+    }
+    this.trainingPlanService.archivePlan(obj).subscribe((data: any) => {
+      console.log('data', data);
+    })
+  }
+
+  publishPlan() {
+    let obj = {
+      "request": {
+        "id": this.planId,
+        "comment": ""
+      }
+    }
+    this.trainingPlanService.publishPlan(obj).subscribe((data: any) => {
+      console.log('data', data);
+    })
   }
 }
