@@ -3,7 +3,7 @@
         <div class="flex flex-4 assignee-card" [ngClass]="item?.selected ? 'active-card':''"
             [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
             <div class="avatar">
-                <div>HG</div>
+                <div>{{createInititals(item?.firstName)}}</div>
             </div>
             <div class="assignee-desc">
                 <p>{{item?.firstName}} </p>
@@ -45,6 +45,6 @@
     </ng-container>
 </div>
 
-<div class="flex flex-row justify-center" *ngIf="assigneeData?.category === 'Custom Users' || assigneeData?.category === 'Designation'">
+<div *ngIf="showPagination" class="flex flex-row justify-center">
     <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" [length]="contentData?.length" (page)="onChangePage($event)"></mat-paginator>
 </div>

@@ -1,4 +1,8 @@
 <div class="container-balanced">
+  <div class="moderated-course-info flex flex-2" *ngIf="showModeratedNotification">
+    <div>Only officials with the verified Karmayogi badge can receive moderated course assignments.</div>
+    <div class="cursor-pointer" (click)="removeNotification()"><img src="assets/icons/close.svg"></div>
+  </div>
   <div class="plan-container">   
     <router-outlet></router-outlet>
   </div>

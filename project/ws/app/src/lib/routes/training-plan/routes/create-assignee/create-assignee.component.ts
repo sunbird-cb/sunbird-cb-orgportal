@@ -43,7 +43,7 @@ export class CreateAssigneeComponent implements OnInit {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation' &&
         this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo) {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
-          if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.id) > -1) {
+          if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem) > -1) {
             sitem['selected'] = true
           }
         })

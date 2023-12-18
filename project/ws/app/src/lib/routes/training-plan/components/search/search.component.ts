@@ -71,29 +71,14 @@ export class SearchComponent implements OnInit {
   getContent(contentType: any) {
     this.loadingService.changeLoaderState(true)
     if (contentType) {
+      if (contentType === 'Moderated Course') {
+        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(true)
+      }
       const filterObj = {
         "request": {
+          "secureSettings": contentType === 'Moderated Course' ? true : false, // for moderated course
           "filters": {
-            "primaryCategory": ["Course"],
-            "contentType": [contentType],
-            "identifier": [
-              "do_1139104696922521601317",
-              "do_1135500940397936641158",
-              "do_1139026887251066881137",
-              "do_11374977269157888011298",
-              "do_113545216626319360174",
-              "do_1136643005068328961197",
-              "do_113694464635666432153",
-              "do_113882971081441280172",
-              "do_113882887752704000151",
-              "do_1138813223247462401116",
-              "do_113703698843983872134",
-              "do_1137468666262241281756",
-              "do_1139084314725498881268",
-              "do_113720205181059072151",
-              "do_113896199910367232144",
-              "do_11364656119311564815"
-            ]
+            "primaryCategory": [contentType === 'Moderated Course' ? 'Course' : contentType],
           },
           "offset": 0,
           "limit": 20,
@@ -102,8 +87,8 @@ export class SearchComponent implements OnInit {
           "fields": ["name", "appIcon", "instructions", "description", "purpose", "mimeType",
             "gradeLevel", "identifier", "medium", "pkgVersion", "board", "subject", "resourceType",
             "primaryCategory", "contentType", "channel", "organisation", "trackable", "license", "posterImage",
-            "idealScreenSize", "learningMode", "creatorLogo", "duration", "version", "avgRating", "competencies_v5"]
-        }
+            "idealScreenSize", "learningMode", "creatorLogo", "duration", "programDuration", "version", "avgRating", "competencies_v5"]
+        }, "query": ""
       }
       this.trainingPlanService.getAllContent(filterObj).subscribe((res: any) => {
 
@@ -147,15 +132,16 @@ export class SearchComponent implements OnInit {
     })
   }
 
-  getAllUsers(_event: any) {
-    this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: _event, data: [] }
+  getAllUsers(event: any) {
+    this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: [] }
     this.handleApiData.emit(true)
   }
 
   getDesignations(event: any) {
     this.loadingService.changeLoaderState(true)
     this.trainingPlanService.getDesignations().subscribe((res: any) => {
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res.responseData }
+      console.log('res', res)
+      this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res.result.response.content }
       this.handleApiData.emit(true)
       this.loadingService.changeLoaderState(false)
     })

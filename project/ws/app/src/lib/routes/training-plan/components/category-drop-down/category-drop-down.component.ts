@@ -50,7 +50,8 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Course'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
+        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false);
         break
       case 'Program':
         dialogData['type'] = 'normal'
@@ -61,7 +62,8 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Program'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
+        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false);
         break
       case 'Blended program':
         dialogData['type'] = 'normal'
@@ -73,6 +75,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Blended program'
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
+        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false);
         break
       case 'Curated program':
         dialogData['type'] = 'normal'
@@ -84,6 +87,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Curated program'
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
+        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false);
         break
       case 'Moderated Course':
         dialogData['type'] = 'normal'
@@ -95,6 +99,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Moderated Course'
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
+        
         break
       case 'Designation':
         dialogData['type'] = 'normal'

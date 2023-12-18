@@ -40,26 +40,26 @@ export class CreatePlanComponent implements OnInit, OnDestroy {
     this.trainingPlanService.readPlan(_id).subscribe((response: any) => {
       console.log('read data', response)
       if (response && response.result && response.result.content) {
-        console.log('trainingPlanDataSharingService', this.trainingPlanDataSharingService)
-        this.trainingPlanDataSharingService.trainingPlanTitle = response.result.content.name
-        this.trainingPlanDataSharingService.trainingPlanContentData = { data: { content: response.result.content.contentList } }
-        if (this.trainingPlanDataSharingService.trainingPlanAssigneeData) {
-          if (response.result.content.userType === 'custom') {
-            this.trainingPlanDataSharingService.trainingPlanAssigneeData['category'] = 'Custom Users'
-          } else {
-            this.trainingPlanDataSharingService.trainingPlanAssigneeData['category'] = response.result.content.userType
+        console.log('read data', response)
+        if (response && response.result && response.result.content) {
+          console.log('trainingPlanDataSharingService', this.trainingPlanDataSharingService)
+          this.trainingPlanDataSharingService.trainingPlanTitle = response.result.content.name
+          this.trainingPlanDataSharingService.trainingPlanContentData = { data: { content: response.result.content.contentList } }
+          if (this.trainingPlanDataSharingService.trainingPlanAssigneeData) {
+            if (response.result.content.userType === 'custom') {
+              this.trainingPlanDataSharingService.trainingPlanAssigneeData['category'] = 'Custom Users'
+            } else {
+              this.trainingPlanDataSharingService.trainingPlanAssigneeData['category'] = response.result.content.userType
+            }
           }
-
+          if (response.result.content.userType === 'custom') {
+            this.trainingPlanDataSharingService.trainingPlanAssigneeData = { data: { content: response.result.content.userDetails } }
+          } else {
+            this.trainingPlanDataSharingService.trainingPlanAssigneeData = response.result.content.userDetails
+          }
+          this.trainingPlanDataSharingService.trainingPlanStepperData['endDate'] = response.result.content.endDate
+          this.trainingPlanDataSharingService.trainingPlanStepperData['status'] = response.result.content.status
         }
-
-        if (response.result.content.userType === 'custom') {
-          this.trainingPlanDataSharingService.trainingPlanAssigneeData = { data: { content: response.result.content.userDetails } }
-        } else {
-          this.trainingPlanDataSharingService.trainingPlanAssigneeData = response.result.content.userDetails
-        }
-
-        this.trainingPlanDataSharingService.trainingPlanStepperData['endDate'] = response.result.content.endDate
-        this.trainingPlanDataSharingService.trainingPlanStepperData['status'] = response.result.content.status
       }
     })
   }
