@@ -65,6 +65,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
 import { PublicLogoutModule } from './routes/public/public-logout/public-logout.module'
+import { LoaderService } from './services/loader.service'
 @Injectable()
 export class HammerConfig extends GestureConfig {
   buildHammer(element: HTMLElement) {
@@ -184,6 +185,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     { provide: ErrorHandler, useClass: GlobalErrorHandlingService },
     MatDatepickerModule, MatNativeDateModule,
     { provide: 'environment', useValue: environment },
+    LoaderService
   ],
 })
 export class AppModule { }
