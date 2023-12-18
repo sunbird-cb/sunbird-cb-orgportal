@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnChanges, ChangeDetectorRef, ViewChild } from '@angular/core'
 import { MatTableDataSource, MatPaginator, PageEvent } from '@angular/material';
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
+import { SafeUrl } from '@angular/platform-browser'
 @Component({
   selector: 'ws-app-standard-card',
   templateUrl: './standard-card.component.html',
@@ -11,6 +12,7 @@ export class StandardCardComponent implements OnInit, OnChanges {
   @Input() checkboxVisibility: any = true
   @Input() contentData: any[] = []
   @Input() showDeleteFlag = false
+  @Input() showPagination = false;
   @Output() handleSelectedChips = new EventEmitter()
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator | any;
   dataSource:any;
@@ -18,6 +20,7 @@ export class StandardCardComponent implements OnInit, OnChanges {
   startIndex= 0;
   lastIndex = 10; 
   pageSize = 10;
+  defaultThumbnail: SafeUrl | null = 'assets/instances/eagle/app_logos/KarmayogiBharat_Logo.svg'
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private changeDetectorRef:ChangeDetectorRef ) { }
 
   ngOnInit() {

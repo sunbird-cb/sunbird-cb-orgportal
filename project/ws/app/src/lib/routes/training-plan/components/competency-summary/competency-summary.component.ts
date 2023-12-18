@@ -69,7 +69,7 @@ export class CompetencySummaryComponent implements OnInit, OnChanges {
     if (this.selectedCardData) {
       let fObj = {"competencyTheme": '', count: 0};
       this.selectedCardData.map((sitem: any) => {
-        sitem.competencies_v5.map((fitem: any) => {
+        sitem && sitem.competencies_v5 && sitem.competencies_v5.map((fitem: any) => {
           if (fitem.competencyArea.toLowerCase() === 'behavioural') {
             this.competencySummaryObj[0]['behavioural']['count'] = this.competencySummaryObj[0]['behavioural']['count'] + 1
             let result = this.checkIfThemeNameExists(this.competencySummaryObj[0]['behavioural']['listData'], fitem);

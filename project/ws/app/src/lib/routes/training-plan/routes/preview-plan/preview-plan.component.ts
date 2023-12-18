@@ -39,7 +39,7 @@ export class PreviewPlanComponent implements OnInit {
         const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
           return item.selected
         })
-        this.assigneeData = { category, data: { content: assigneeData } }
+        this.assigneeData = { category, data:  assigneeData }
       }
 
     } else if (this.from === 'all') {
@@ -62,7 +62,7 @@ export class PreviewPlanComponent implements OnInit {
           const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
             return item.selected
           })
-          this.assigneeData = { category, data: { content: assigneeData } }
+          this.assigneeData = { category, data: assigneeData }
         }
         if (category === 'Designation') {
           const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {

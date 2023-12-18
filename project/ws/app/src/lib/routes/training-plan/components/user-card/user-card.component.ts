@@ -6,10 +6,11 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
   templateUrl: './user-card.component.html',
   styleUrls: ['./user-card.component.scss'],
 })
-export class UserCardComponent implements OnInit {
+export class UserCardComponent implements OnInit, OnChanges {
   @Input() checkboxVisibility = true
   @Input() showDeleteFlag = false
   @Input() assigneeData: any
+  @Input() showPagination = false;
   @Output() handleSelectedChips = new EventEmitter()
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator | any;
   dataSource:any;
@@ -23,7 +24,7 @@ export class UserCardComponent implements OnInit {
 
   ngOnChanges() {
     this.changeDetectorRef.detectChanges();
-    console.log('this.contentData',this.assigneeData)
+    console.log('this.assigneeData',this.assigneeData)
     this.dataSource= new MatTableDataSource<any>(this.assigneeData.data);
     this.dataSource.paginator = this.paginator;
     console.log('this.dataSource', this.dataSource);
@@ -43,14 +44,14 @@ export class UserCardComponent implements OnInit {
       // this.selectedContent.push(item);
       if (this.assigneeData && this.assigneeData.category === 'Designation') {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any, index: any) => {
-          if (sitem.id === item.id) {
+          if (sitem.name === item.name) {
             sitem['selected'] = true
             this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.splice(index, 1)
             this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.unshift(sitem)
           }
         })
         if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']) {
-          this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].push(item.id)
+          this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].push(item.name)
         }
       }
       if (this.assigneeData && this.assigneeData.category === 'Custom Users') {
@@ -70,12 +71,12 @@ export class UserCardComponent implements OnInit {
       // this.selectedContent = this.selectedContent.filter( sitem  => sitem.identifier !== item.identifier)
       if (this.assigneeData && this.assigneeData.category === 'Designation') {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
-          if (sitem.id === item.id) {
+          if (sitem.name === item.name) {
             sitem['selected'] = false
           }
         })
         this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
-          if (identifier === item.id) {
+          if (identifier === item.name) {
             this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
           }
         })
@@ -100,17 +101,17 @@ export class UserCardComponent implements OnInit {
   deleteItem(item: any) {
     if (this.assigneeData && this.assigneeData.category === 'Designation') {
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
-        if (sitem.id === item.id) {
+        if (sitem.name === item.name) {
           sitem['selected'] = false
         }
       })
       this.assigneeData.data.map((sitem: any, index: any) => {
-        if (sitem.id === item.id) {
+        if (sitem.name === item.name) {
           this.assigneeData.data.splice(index, 1)
         }
       })
       this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
-        if (identifier === item.id) {
+        if (identifier === item.name) {
           this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
         }
       })
@@ -131,6 +132,30 @@ export class UserCardComponent implements OnInit {
         }
       })
     }
+  }
+
+  createInititals(name:string): string {
+    let initials = ''
+    const array = `${name} `.toString().split(' ')
+    if (array[0] !== 'undefined' && typeof array[1] !== 'undefined') {
+      initials += array[0].charAt(0)
+      initials += array[1].charAt(0)
+    } else {
+      for (let i = 0; i < name.length; i += 1) {
+        if (name.charAt(i) === ' ') {
+          continue
+        }
+
+        if (name.charAt(i) === name.charAt(i)) {
+          initials += name.charAt(i)
+
+          if (initials.length === 2) {
+            break
+          }
+        }
+      }
+    }
+    return initials.toUpperCase()
   }
 
 }

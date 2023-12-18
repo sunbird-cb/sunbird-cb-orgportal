@@ -6,6 +6,7 @@ import { Subject } from 'rxjs'
 })
 export class TrainingPlanDataSharingService {
   trainingPlanCategoryChangeEvent = new Subject()
+  moderatedCourseSelectStatus = new Subject()
   trainingPlanTitle = ''
   trainingPlanContentData: any
   trainingPlanAssigneeData: any
