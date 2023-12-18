@@ -134,7 +134,7 @@ export class UserCardComponent implements OnInit, OnChanges {
     }
   }
 
-  private createInititals(name:string): string {
+  createInititals(name:string): string {
     let initials = ''
     const array = `${name} `.toString().split(' ')
     if (array[0] !== 'undefined' && typeof array[1] !== 'undefined') {
