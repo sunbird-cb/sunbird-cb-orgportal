@@ -5,6 +5,7 @@ import { TrainingPlanService } from './../../services/traininig-plan.service'
 import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service'
 /* tslint:disable */
 import _ from 'lodash'
+import { LoaderService } from '../../../../../../../../../src/app/services/loader.service'
 @Component({
   selector: 'ws-app-search',
   templateUrl: './search.component.html',
@@ -14,19 +15,20 @@ export class SearchComponent implements OnInit {
   @Input() categoryData: any = []
   @Input() from: any = '';
   @Output() handleApiData = new EventEmitter();
+  searchText = ''
   filterVisibilityFlag = false
+  selectedDropDownValue: any
   constructor(@Inject(DOCUMENT) private document: Document,
     private trainingPlanService: TrainingPlanService,
     private route: ActivatedRoute,
     private trainingPlanDataSharingService: TrainingPlanDataSharingService,
+    private loadingService: LoaderService
   ) { }
 
   ngOnInit() {
-    // this.handleCategorySelection('');
   }
 
   ngOnChanges() {
-    // this.handleCategorySelection('');
   }
 
   openFilter() {
@@ -47,6 +49,7 @@ export class SearchComponent implements OnInit {
   }
 
   handleCategorySelection(event: any) {
+    this.selectedDropDownValue = event
     switch (this.from) {
       case 'content':
         event = !event ? 'Course' : event
@@ -66,6 +69,7 @@ export class SearchComponent implements OnInit {
   }
 
   getContent(contentType: any) {
+    this.loadingService.changeLoaderState(true)
     if (contentType) {
       const filterObj = {
         "request": {
@@ -93,13 +97,13 @@ export class SearchComponent implements OnInit {
           },
           "offset": 0,
           "limit": 20,
-          "query": "",
+          "query": (this.searchText) ? this.searchText : '',
           "sort_by": { "lastUpdatedOn": "desc" },
           "fields": ["name", "appIcon", "instructions", "description", "purpose", "mimeType",
             "gradeLevel", "identifier", "medium", "pkgVersion", "board", "subject", "resourceType",
             "primaryCategory", "contentType", "channel", "organisation", "trackable", "license", "posterImage",
             "idealScreenSize", "learningMode", "creatorLogo", "duration", "version", "avgRating", "competencies_v5"]
-        }, "query": ""
+        }
       }
       this.trainingPlanService.getAllContent(filterObj).subscribe((res: any) => {
 
@@ -115,12 +119,14 @@ export class SearchComponent implements OnInit {
 
         this.trainingPlanDataSharingService.trainingPlanContentData = { category: contentType, data: res }
         this.handleApiData.emit(true)
+        this.loadingService.changeLoaderState(false)
       })
     }
 
   }
 
   getCustomUsers(event: any) {
+    this.loadingService.changeLoaderState(true)
     const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     const filterObj = {
       request: {
@@ -136,6 +142,8 @@ export class SearchComponent implements OnInit {
     this.trainingPlanService.getCustomUsers(filterObj).subscribe((res: any) => {
       this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res.content }
       this.handleApiData.emit(true)
+      this.loadingService.changeLoaderState(false)
+    }, (_error: any) => {
     })
   }
 
@@ -145,12 +153,33 @@ export class SearchComponent implements OnInit {
   }
 
   getDesignations(event: any) {
+    this.loadingService.changeLoaderState(true)
     this.trainingPlanService.getDesignations().subscribe((res: any) => {
       this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res.responseData }
       this.handleApiData.emit(true)
+      this.loadingService.changeLoaderState(false)
     })
   }
 
-
+  searchData() {
+    switch (this.selectedDropDownValue) {
+      case 'Course':
+      case 'Program':
+      case 'Blended program':
+      case 'Curated program':
+      case 'Moderated Course':
+        this.getContent(this.selectedDropDownValue)
+        break
+      case 'Designation':
+        this.getDesignations(this.selectedDropDownValue)
+        break
+      case 'Custom Users':
+        this.getCustomUsers(this.selectedDropDownValue)
+        break
+      case 'All Users':
+        this.getAllUsers(this.selectedDropDownValue)
+        break
+    }
+  }
 
 }

@@ -4,15 +4,18 @@
         <ws-app-category-drop-down [categoryData]="categoryData" [from]="from"
             (handleCategorySelection)="handleCategorySelection($event)"></ws-app-category-drop-down>
     </ng-container>
-    <div class="search">
-        <div class="rsearch"><mat-icon
+    <div class="search flex w-full margin-left-xl margin-right-xl">
+        <div class="rsearch flex w-full"><mat-icon
                 class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
-            <input class="sinput color-60" label="" placeholder="Select" type="Standard">
+            <input class="sinput color-60 w-full margin-right-m" [(ngModel)]="searchText" label="" placeholder="Select"
+                type="Standard">
         </div>
+        <button mat-button type="button" class="search-btn" (click)="searchData()">Search</button>
     </div>
-    <div class="filter-section" (click)="openFilter()">
-        <img src="/assets/icons/filter.svg" />
-        <span>Apply Filters</span>
+    <div class="filter-section flex flex-end">
+        <button mat-button type="button" (click)="openFilter()" class="apply-filter">
+            <mat-icon class="margin-right-xs">filter_list</mat-icon> Apply Filters
+        </button>
     </div>
 </div>
 <ng-container *ngIf="filterVisibilityFlag">

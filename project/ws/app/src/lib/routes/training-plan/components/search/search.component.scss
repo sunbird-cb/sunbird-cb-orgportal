@@ -6,11 +6,6 @@
     position: relative;
 }
 
-.search {
-    margin-left: 16px;
-    width: 75%;
-}
-
 .search-icon {
     position: absolute;
     top: 16px;
@@ -23,22 +18,24 @@
     border: 1px solid #d5d0d0;
     padding: 15px 36px;
     font: 400 14px Lato;
-    width: 90%;
-}
-
-.filter-section {
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.filter-section img {
-    vertical-align: middle;
 }
 
 .filter-section span {
-    vertical-align: middle;
-    margin-left: 24px;
     color: rgba(0, 0, 0, 0.87);
     font-size: 16px;
     font-weight: 600;
+}
+
+.search-btn {
+    background: #1b4ca1 !important;
+    color: white !important;
+    font-family: 'Lato';
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 4px;
+    min-width: 199px;
+}
+
+.btn-disabled {
+    background: rgba(0, 0, 0, 0.16) !important;
 }

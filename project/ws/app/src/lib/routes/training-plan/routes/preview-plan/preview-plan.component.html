@@ -1,6 +1,7 @@
 <ws-app-breadcrumb [showBreadcrumbAction]="false"></ws-app-breadcrumb>
 <div class="flex margin-top-l">
-    <button mat-stroked-button><mat-icon>arrow_back</mat-icon> Go back</button>
+    <button mat-stroked-button type="button" (click)="goBack()"><mat-icon>arrow_back</mat-icon> Go
+        back</button>
 </div>
 <div class="flex" *ngIf="from==='content'">
     <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentData"></ws-app-standard-card>
@@ -10,11 +11,10 @@
 </div>
 <div class="flex content-container" *ngIf="from === 'all'">
     <mat-chip-list [multiple]="true" [selectable]="true">
-        <mat-chip *ngFor="let item of allContentChips"
-                  [selected]="selectedTab == item.tab"
-                  (click)="selectedTab = item.tab">{{item.name}}</mat-chip>
-      </mat-chip-list>
-      
+        <mat-chip *ngFor="let item of allContentChips" [selected]="selectedTab == item.tab"
+            (click)="selectedTab = item.tab">{{item.name}}</mat-chip>
+    </mat-chip-list>
+
 </div>
 <div class="content-container flex">
     <ng-container *ngIf="selectedTab === 'content'">
@@ -23,4 +23,4 @@
     <ng-container *ngIf="selectedTab === 'assignee'">
         <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData"></ws-app-user-card>
     </ng-container>
-  </div>
+</div>

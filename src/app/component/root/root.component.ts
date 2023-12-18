@@ -37,9 +37,10 @@ import { MobileAppsService } from '../../services/mobile-apps.service'
 import { RootService } from './root.service'
 import { SwUpdate } from '@angular/service-worker'
 import { environment } from '../../../environments/environment'
-import { interval, concat, timer } from 'rxjs'
+import { interval, concat, timer, Subscription } from 'rxjs'
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
 import { MatDialog } from '@angular/material'
+import { LoaderService } from '../../services/loader.service'
 // import { MatDialog } from '@angular/material'
 // import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component'
 
@@ -66,6 +67,8 @@ export class RootComponent implements OnInit, AfterViewInit {
   appStartRaised = false
   isSetupPage = false
   currentRouteData: any = []
+  isLoading = false
+  loaderSubscription!: Subscription
   constructor(
     public router: Router,
     private route: ActivatedRoute,
@@ -84,6 +87,7 @@ export class RootComponent implements OnInit, AfterViewInit {
     private utilitySvc: UtilityService,
     private eventSvc: EventService,
     public authSvc: AuthKeycloakService,
+    private loader: LoaderService,
   ) {
     this.mobileAppsSvc.init()
   }
@@ -171,6 +175,11 @@ export class RootComponent implements OnInit, AfterViewInit {
     this.rootSvc.showNavbarDisplay$.pipe(delay(500)).subscribe(display => {
       this.showNavbar = display
     })
+    this.loaderSubscription = this.loader.changeLoad.pipe(delay(200)).subscribe(
+      data => {
+        this.isLoading = data
+      },
+    )
   }
 
   raiseAppStartTelemetry() {

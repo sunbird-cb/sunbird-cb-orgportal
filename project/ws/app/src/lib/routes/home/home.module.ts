@@ -63,6 +63,7 @@ import { UsersModule } from '../users/users.module'
 import { BlendedApprovalsComponent } from './routes/blended-approvals/blended-approvals.component'
 import { ReportsSectionComponent } from './routes/reports-section/reports-section.component'
 import { TrainingPlanDashboardComponent } from './routes/training-plan-dashboard/training-plan-dashboard.component'
+import { TrainingPlanDashboardService } from './services/training-plan-dashboard.service'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -152,6 +153,7 @@ import { TrainingPlanDashboardComponent } from './routes/training-plan-dashboard
     InitResolver,
     MdoInfoService,
     UploadService,
+    TrainingPlanDashboardService,
   ],
 })
 export class HomeModule {

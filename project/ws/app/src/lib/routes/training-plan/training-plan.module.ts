@@ -58,7 +58,6 @@ import { CategoryDropDownComponent } from './components/category-drop-down/categ
 import { AddPlanInformationComponent } from './components/add-plan-information/add-plan-information.component'
 
 import { TrainingPlanService } from './services/traininig-plan.service'
-import { LoaderService } from '../../../../../../../src/app/services/loader.service'
 @NgModule({
   declarations: [
     TrainingPlanHomeComponent,
@@ -135,7 +134,6 @@ import { LoaderService } from '../../../../../../../src/app/services/loader.serv
   providers: [
     InitResolver,
     TrainingPlanService,
-    LoaderService,
   ],
 })
 export class TrainingPlanModule {
