@@ -29,6 +29,9 @@ export class StepperComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.changeTabOnNext) {
       switch (this.changeTabOnNext) {
+        case TrainingPlanContent.TTabLabelKey.CREATE_PLAN:
+          this.tabIndexValue = 0
+          break
         case TrainingPlanContent.TTabLabelKey.ADD_CONTENT:
           this.tabIndexValue = 1
           break
