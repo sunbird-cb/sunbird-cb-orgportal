@@ -1,5 +1,5 @@
 <div class="flex flex-4 flex-row assignee-card-container flex-wrap" *ngIf="assigneeData?.category === 'Custom Users'">
-    <ng-container *ngFor="let item of assigneeData?.data?.content | slice : 0 : 20">
+    <ng-container *ngFor="let item of assigneeData?.data | slice : startIndex : lastIndex">
         <div class="flex flex-4 assignee-card" [ngClass]="item?.selected ? 'active-card':''"
             [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
             <div class="avatar">
@@ -22,10 +22,11 @@
     </ng-container>
 </div>
 
+
 <!-- Custom User Card-->
 
 <div class="flex flex-4 flex-row custom-user-card-container flex-wrap" *ngIf="assigneeData?.category === 'Designation'">
-    <ng-container *ngFor="let item of assigneeData?.data | slice : 0 : 20">
+    <ng-container *ngFor="let item of assigneeData?.data | slice : startIndex : lastIndex">
         <div class="flex flex-4 custom-user-card" [ngClass]="item?.selected ? 'active-card':''">
             <div class="card-cross-icon" *ngIf="showDeleteFlag">
                 <button mat-mini-fab class="card-cross-btn" type="button" (click)="deleteItem(item)">
@@ -42,4 +43,8 @@
             </div>
         </div>
     </ng-container>
+</div>
+
+<div class="flex flex-row justify-center" *ngIf="assigneeData?.category === 'Custom Users' || assigneeData?.category === 'Designation'">
+    <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" [length]="contentData?.length" (page)="onChangePage($event)"></mat-paginator>
 </div>

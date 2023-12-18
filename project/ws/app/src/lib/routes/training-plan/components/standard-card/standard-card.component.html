@@ -1,6 +1,6 @@
 <ng-container>
     <div class="flex flex-3 flex-row card-grid-container flex-wrap">
-        <div  class="flex course-card margin-right-xl" *ngFor="let item of contentData">
+        <div  class="flex course-card margin-right-xl" *ngFor="let item of contentData | slice : startIndex : lastIndex">
             <mat-card [ngClass]="item?.selected ? 'active-card':''" class="card-standard-container mr-5 padding-remove">
                 <mat-card-content class="min-top">
                     <div style="position: relative; z-index: 1;">
@@ -50,5 +50,9 @@
                 </mat-card-content>
             </mat-card>
         </div>
+        
+    </div>
+    <div class="flex flex-row justify-center">
+        <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" [length]="contentData?.length" (page)="onChangePage($event)"></mat-paginator>
     </div>
 </ng-container>

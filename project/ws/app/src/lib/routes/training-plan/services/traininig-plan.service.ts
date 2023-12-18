@@ -8,10 +8,14 @@ import _ from 'lodash'
 
 const API_END_POINTS = {
   CREATE_PLAN: 'apis/proxies/v8/cbplan/v1/create',
+  READ_PLAN:'apis/proxies/v8/cbplan/v1/read/',
   UPDATE_PLAN: 'apis/proxies/v8/cbplan/v1/update',
+  ARCHIVE_PLAN: 'apis/proxies/v8/cbplan/v1/archive',
+  PUBLISH_PLAN: 'apis/proxies/v8/cbplan/v1/publish',
   GET_ALL_CONTENT: '/apis/proxies/v8/sunbirdigot/search',
   GET_ALL_USERS: '/apis/proxies/v8/user/v1/search',
   GET_ALL_DESIGNATIONS: '/apis/proxies/v8/user/v1/positions',
+
 }
 @Injectable({
   providedIn: 'root',
@@ -25,8 +29,20 @@ export class TrainingPlanService {
     return this.http.post<any>(`${API_END_POINTS.CREATE_PLAN}`, obj).pipe(map(res => _.get(res, 'result')))
   }
 
-  updatePlan() {
+  readPlan(planId:any) {
+    return this.http.get<any>(API_END_POINTS.GET_ALL_DESIGNATIONS+`/${planId}`);
+  }
 
+  updatePlan(obj:any) {
+    return this.http.post<any>(`${API_END_POINTS.UPDATE_PLAN}`, obj).pipe(map(res => _.get(res, 'result')))
+  }
+
+  archivePlan(obj:any) {
+    return this.http.post<any>(`${API_END_POINTS.ARCHIVE_PLAN}`, obj).pipe(map(res => _.get(res, 'result')))
+  }
+
+  publishPlan(obj:any) {
+    return this.http.post<any>(`${API_END_POINTS.PUBLISH_PLAN}`, obj).pipe(map(res => _.get(res, 'result')))
   }
 
   getAllContent(filter: object): Observable<any> {
@@ -40,4 +56,6 @@ export class TrainingPlanService {
   getDesignations() {
     return this.http.get<any>(API_END_POINTS.GET_ALL_DESIGNATIONS)
   }
+
+
 }

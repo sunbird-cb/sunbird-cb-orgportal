@@ -36,7 +36,7 @@ export class CreateTimelineComponent implements OnInit {
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users'
     ) {
       const category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
-      const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.filter((item: any) => {
+      const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
         return item.selected
       })
       this.assigneeData = { category, data: { content: assigneeData } }

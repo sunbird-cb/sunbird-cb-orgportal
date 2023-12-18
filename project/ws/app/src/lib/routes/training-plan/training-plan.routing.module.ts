@@ -27,6 +27,14 @@ const routes: Routes = [
         },
       },
       {
+        path: 'update-plan/:planId',
+        component: CreatePlanComponent,
+        data: {
+          pageId: 'update-plan',
+          module: 'Create Plan',
+        },
+      },
+      {
         path: 'preview-plan',
         component: PreviewPlanComponent,
         data: {

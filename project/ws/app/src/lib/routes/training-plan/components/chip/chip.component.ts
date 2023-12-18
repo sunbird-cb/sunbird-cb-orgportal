@@ -42,7 +42,7 @@ export class ChipComponent implements OnInit, OnChanges {
           }
         })
       } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users') {
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.map((sitem: any) => {
+        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
           if (sitem['selected']) {
             sitem['selected'] = false
           }
@@ -81,7 +81,7 @@ export class ChipComponent implements OnInit, OnChanges {
         this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
       }
     } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users') {
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.content.map((sitem: any) => {
+      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem['selected'] && sitem['userId'] === item['userId']) {
           sitem['selected'] = false
         }
