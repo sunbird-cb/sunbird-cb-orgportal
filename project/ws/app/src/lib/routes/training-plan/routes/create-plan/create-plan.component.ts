@@ -25,63 +25,8 @@ export class CreatePlanComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   ngOnInit() {
-    console.log("this.route", this.route, this.trainingPlanService);
     this.route.params.subscribe(params => {
-      console.log('parans', params);
       this.planId = params['planId'];
-      // let response  = {
-      //   "id": "api.cbplan.read.byId",
-      //   "ver": "1.0",
-      //   "ts": "2023-12-04T05:53:32.031Z",
-      //   "params": {
-      //       "resmsgid": "749690f0-9269-11ee-80e8-4dda841c8af0",
-      //       "msgid": "74879cd0-9269-11ee-82b8-cfe1f59faeaf",
-      //       "status": "successful",
-      //       "err": null,
-      //       "errmsg": null
-      //   },
-      //   "responseCode": "OK",
-      //   "result": {
-      //       "content": {
-      //           "id": 1,
-      //           "name": "CBP Plan Name",
-      //           "description": "CBP Plan Description",
-      //           "contentList": [
-      //               {
-      //                   "identifier" : "doId1",
-      //                   "name": "Course Name 1",
-      //                   "description" : "Description",
-      //                   "avgRating": 4.0,
-      //                   "competencies_v5" : []
-      //               },
-      //               {
-      //                   "identifier" : "doId2",
-      //                   "name": "Course Name 2",
-      //                   "description" : "Description",
-      //                   "avgRating": 4.0,
-      //                   "competencies_v5" : []
-      //               }
-      //           ],
-      //           "userType": "custom",
-      //           "userDetails": [
-      //               {
-      //                   "userId": "userId1",
-      //                   "firstName": "User Name"
-      //               },
-      //               {
-      //                   "userId": "userId2",
-      //                   "firstName" : "User Name"
-      //               }
-      //           ],
-      //           "endDate": "2023-12-14T10:00:00",
-      //           "status": "Draft",
-      //           "createdBy" : "adminUserId",
-      //           "createdAt" : "timeStamp"
-      //       }
-      //   }
-      // };
-
-
       this.trainingPlanService.readPlan(this.planId).subscribe((response: any) => {
         console.log('read data', response);
         if (response && response.result && response.result.content) {

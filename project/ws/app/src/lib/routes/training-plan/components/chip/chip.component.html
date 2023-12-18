@@ -18,6 +18,7 @@
         <a mat-button class="select-more-link" (click)="clearAll()">Clear all</a>
     </div>
 </div>
+hi {{selectAssigneeCount}}, {{trainingPlanDataSharingService?.trainingPlanAssigneeData?.category}}
 <div class="flex flex-row chip-container"
     *ngIf="selectAssigneeCount > 0 && from === 'assignee' && trainingPlanDataSharingService?.trainingPlanAssigneeData?.category === 'Designation'">
     <div class="flex flex-2 left-section flex-middle">

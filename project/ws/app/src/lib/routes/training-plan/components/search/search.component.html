@@ -10,7 +10,8 @@
             <input class="sinput color-60" label="" placeholder="Select" type="Standard">
         </div>
     </div>
-    <div class="filter-section" (click)="openFilter()">
+    <div class="filter-section" *ngIf="!(trainingPlanDataSharingService?.trainingPlanAssigneeData?.category === 'Designation' || 
+    trainingPlanDataSharingService?.trainingPlanAssigneeData?.category === 'All Users')" (click)="openFilter()">
         <img src="/assets/icons/filter.svg" />
         <span>Apply Filters</span>
     </div>

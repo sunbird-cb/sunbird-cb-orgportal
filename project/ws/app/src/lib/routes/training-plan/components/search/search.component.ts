@@ -139,14 +139,15 @@ export class SearchComponent implements OnInit {
     })
   }
 
-  getAllUsers(_event: any) {
-    this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: _event, data: [] }
+  getAllUsers(event: any) {
+    this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: [] }
     this.handleApiData.emit(true)
   }
 
   getDesignations(event: any) {
     this.trainingPlanService.getDesignations().subscribe((res: any) => {
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res.responseData }
+      console.log('res', res)
+      this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res.result.response.content }
       this.handleApiData.emit(true)
     })
   }

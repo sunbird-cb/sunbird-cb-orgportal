@@ -14,7 +14,7 @@ const API_END_POINTS = {
   PUBLISH_PLAN: 'apis/proxies/v8/cbplan/v1/publish',
   GET_ALL_CONTENT: '/apis/proxies/v8/sunbirdigot/search',
   GET_ALL_USERS: '/apis/proxies/v8/user/v1/search',
-  GET_ALL_DESIGNATIONS: '/apis/proxies/v8/user/v1/positions',
+  GET_ALL_DESIGNATIONS: '/apis/proxies/v8/masterData/v2/deptPosition',
 
 }
 @Injectable({
@@ -30,7 +30,7 @@ export class TrainingPlanService {
   }
 
   readPlan(planId:any) {
-    return this.http.get<any>(API_END_POINTS.GET_ALL_DESIGNATIONS+`/${planId}`);
+    return this.http.get<any>(API_END_POINTS.READ_PLAN+`/${planId}`);
   }
 
   updatePlan(obj:any) {
