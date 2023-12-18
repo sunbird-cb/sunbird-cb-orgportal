@@ -10,6 +10,7 @@ export class UserCardComponent implements OnInit, OnChanges {
   @Input() checkboxVisibility = true
   @Input() showDeleteFlag = false
   @Input() assigneeData: any
+  @Input() showPagination = false;
   @Output() handleSelectedChips = new EventEmitter()
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator | any;
   dataSource:any;
@@ -23,7 +24,7 @@ export class UserCardComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.changeDetectorRef.detectChanges();
-    console.log('this.contentData',this.assigneeData)
+    console.log('this.assigneeData',this.assigneeData)
     this.dataSource= new MatTableDataSource<any>(this.assigneeData.data);
     this.dataSource.paginator = this.paginator;
     console.log('this.dataSource', this.dataSource);
@@ -131,6 +132,30 @@ export class UserCardComponent implements OnInit, OnChanges {
         }
       })
     }
+  }
+
+  private createInititals(name:string): string {
+    let initials = ''
+    const array = `${name} `.toString().split(' ')
+    if (array[0] !== 'undefined' && typeof array[1] !== 'undefined') {
+      initials += array[0].charAt(0)
+      initials += array[1].charAt(0)
+    } else {
+      for (let i = 0; i < name.length; i += 1) {
+        if (name.charAt(i) === ' ') {
+          continue
+        }
+
+        if (name.charAt(i) === name.charAt(i)) {
+          initials += name.charAt(i)
+
+          if (initials.length === 2) {
+            break
+          }
+        }
+      }
+    }
+    return initials.toUpperCase()
   }
 
 }

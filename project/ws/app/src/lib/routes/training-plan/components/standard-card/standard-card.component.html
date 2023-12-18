@@ -18,6 +18,17 @@
                                 class="card-img ws-mat-primary-lite-background margin-remove"
                                 [src]="item?.posterImage" />
                         </ng-container>
+                        <div class="duration-box right-corner"  *ngIf="item?.duration > 0">
+                            <mat-icon class="mat-icon main_icon mr-1 notranslate material-icons mat-icon-no-color">access_time</mat-icon>
+                            <span class=" ws-mat-white-text duration"> {{ (item?.duration || 120)| pipeDurationTransform: 'hms' }} </span>
+                        </div>
+                        
+                          <div class="duration-box right-corner" *ngIf="item?.programDuration > 0">
+                            <mat-icon class="mat-icon main_icon mr-1">access_time</mat-icon>
+                            <span class=" ws-mat-white-text duration"> 
+                              {{item?.programDuration}} {{item?.programDuration === 1 ? 'day' : 'days'}}
+                            </span>
+                          </div>
                     </div>
                     <div class="padding-m">
                         <div class="course_widget flex margin-remove">
@@ -28,22 +39,33 @@
                             </div>
                         </div>
                         <div class="mat-subheading-1 title-text ws-mat-text-block-fade-gradient">
-                            {{item?.description}}
+                            {{item?.name | titlecase}}
                         </div>
                         <div class="flex w-full flex-wrap flex-middle">
                             <div class="course_logo_box">
-                                <img class="source-icon" [src]="item?.appIcon" />
+                                <img class="source-icon" [src]="item?.creatorLogo | pipePublicURL"  [alt]="item?.name" [wsUtilsDefaultThumbnail]="defaultThumbnail"/>
+                                <!-- <div *ngIf="this.data.value.content?.appIcon" class="float-left">
+                                    <img [src]="this.data.value.content?.posterImage | pipePublicURL" class="app-icon course-image"
+                                      [alt]="this.data.value.content.name || iGOT" />
+                                  </div> -->
                             </div>
                             <span class="org-text" *ngIf="item?.organisation && item?.organisation[0]">
                                 By {{item?.organisation[0]}}</span>
                         </div>
                         <div class="flex flex-middle rating-session margin-top-m">
-                            <div class="flex flex-middle">
+                            <div class="flex flex-middle" *ngIf="item?.avgRating">
                                 <mat-icon class="mr-1">star</mat-icon>
-                                <span>4.5</span>
+                                <span>{{item?.avgRating}}</span>
                             </div>
                             <ng-container>
-                                <span class="most-enrolled-text margin-left-xs">Most enrolled</span>
+                                <span class="most-enrolled-text margin-left-xs">
+                                    <ng-container *ngIf="item?.additionalTags && item?.additionalTags.includes('mostEnrolled')">
+                                        <span class="most-enrolled-text margin-left-xs">Most enrolled</span>
+                                      </ng-container>
+                                      <ng-container *ngIf="item?.additionalTags && item?.additionalTags.includes('mostTrending')">
+                                        <span class="most-enrolled-text margin-left-xs">Most trending</span>
+                                      </ng-container>
+                                </span>
                             </ng-container>
                         </div>
                     </div>
@@ -52,7 +74,7 @@
         </div>
         
     </div>
-    <div class="flex flex-row justify-center">
+    <div class="flex flex-row justify-center" *ngIf="showPagination">
         <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" [length]="contentData?.length" (page)="onChangePage($event)"></mat-paginator>
     </div>
 </ng-container>

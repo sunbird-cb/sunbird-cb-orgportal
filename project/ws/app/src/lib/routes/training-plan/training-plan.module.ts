@@ -22,6 +22,9 @@ import {
   MatCheckboxModule,
   MatDatepickerModule,
 } from '@angular/material'
+import { PipePublicURLModule } from '../pipes/pipe-public-URL/pipe-public-URL.module';
+import { PipeDurationTransformModule } from '../pipes/pipe-duration-transform/pipe-duration-transform.module';
+import { DefaultThumbnailModule } from '../directives/default-thumbnail/default-thubnail.module';
 import { MatMenuModule } from '@angular/material/menu'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatCardModule } from '@angular/material/card'
@@ -128,6 +131,9 @@ import { LoaderService } from '../../../../../../../src/app/services/loader.serv
     MatTooltipModule,
     MatSortModule,
     MatDatepickerModule,
+    PipePublicURLModule,
+    PipeDurationTransformModule,
+    DefaultThumbnailModule
   ],
   entryComponents: [
     ConfirmationBoxComponent,

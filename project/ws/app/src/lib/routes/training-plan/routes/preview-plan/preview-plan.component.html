@@ -16,7 +16,7 @@
       </mat-chip-list>
       
 </div>
-<div class="content-container flex">
+<div class="content-container flex" *ngIf="from === 'all'">
     <ng-container *ngIf="selectedTab === 'content'">
         <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentData"></ws-app-standard-card>
     </ng-container>
