@@ -3,12 +3,18 @@
         <div class="home cursor-pointer" (click)="performRoute('list')">Training Plans
             <img src="/assets/icons/arrow-forward_small.svg" />
         </div>
-        <!-- <div class="home cursor-pointer" (click)="performRoute('create-plan')">Create CBP Plan
-            <img src="/assets/icons/arrow-forward_small.svg" />
-        </div> -->
-        <div class="action cursor-pointer">{{(tabType.CREATE_PLAN === selectedTab) ? 'Create CBP plan' :
+        <div class="home cursor-pointer" (click)="changeTabFromBreadCrumb('createPlan')">
+            Create CBP Plan
+            <img src="/assets/icons/arrow-forward_small.svg"
+                *ngIf="selectedTab !== tabType.CREATE_PLAN && !validationList?.titleIsInvalid" />
+        </div>
+        <!-- <div class="action cursor-pointer">{{(tabType.CREATE_PLAN === selectedTab) ? 'Create CBP plan' :
             (tabType.ADD_CONTENT === selectedTab) ? 'Add content' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add
             assignee' : (tabType.ADD_TIMELINE === selectedTab) ? 'Add timeline' : ''}}
+        </div> -->
+        <div class="action" *ngIf="trainingPlanDataSharingService?.trainingPlanTitle &&
+        selectedTab !== tabType.CREATE_PLAN && !validationList?.titleIsInvalid">
+            {{trainingPlanDataSharingService?.trainingPlanTitle}}
         </div>
     </div>
     <div class="flex flex-1 flex-row right-breadcrumb" *ngIf="showBreadcrumbAction">

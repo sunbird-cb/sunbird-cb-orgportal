@@ -21,8 +21,8 @@ export class BreadcrumbComponent implements OnInit {
   tabType = TrainingPlanContent.TTabLabelKey
 
   constructor(private router: Router, public dialog: MatDialog,
-              private trainingPlanDataSharingService: TrainingPlanDataSharingService,
-              private trainingPlanService: TrainingPlanService) { }
+    public trainingPlanDataSharingService: TrainingPlanDataSharingService,
+    private trainingPlanService: TrainingPlanService) { }
 
   ngOnInit() {
     this.checkIfDisabled()
@@ -49,6 +49,14 @@ export class BreadcrumbComponent implements OnInit {
         break
     }
 
+  }
+
+  changeTabFromBreadCrumb(_item: string) {
+    switch (_item) {
+      case TrainingPlanContent.TTabLabelKey.CREATE_PLAN:
+        this.changeToNextTab.emit(TrainingPlanContent.TTabLabelKey.CREATE_PLAN)
+        break
+    }
   }
 
   performRoute(route: any) {
@@ -115,7 +123,7 @@ export class BreadcrumbComponent implements OnInit {
         this.dialogRef.close()
         this.trainingPlanDataSharingService.trainingPlanTitle = ''
         this.router.navigateByUrl('app/home/training-plan-dashboard')
-      },         1000)
+      }, 1000)
     })
   }
 
