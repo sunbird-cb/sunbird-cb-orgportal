@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnChanges, ChangeDetectorRef, ViewChild } from '@angular/core'
-import { MatTableDataSource, MatPaginator, PageEvent } from '@angular/material';
+import { Component, EventEmitter, Input, Output, OnInit, ChangeDetectorRef, ViewChild, OnChanges } from '@angular/core'
+import { MatTableDataSource, MatPaginator, PageEvent } from '@angular/material'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 @Component({
   selector: 'ws-app-user-card',
@@ -12,30 +12,30 @@ export class UserCardComponent implements OnInit, OnChanges {
   @Input() assigneeData: any
   @Input() showPagination = false;
   @Output() handleSelectedChips = new EventEmitter()
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator | any;
-  dataSource:any;
-  startIndex= 0;
-  lastIndex = 10; 
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | any
+  dataSource: any
+  startIndex = 0;
+  lastIndex = 10;
   pageSize = 10;
-  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private changeDetectorRef:ChangeDetectorRef) { }
+  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
   }
 
   ngOnChanges() {
-    this.changeDetectorRef.detectChanges();
-    console.log('this.assigneeData',this.assigneeData)
-    this.dataSource= new MatTableDataSource<any>(this.assigneeData.data);
-    this.dataSource.paginator = this.paginator;
-    console.log('this.dataSource', this.dataSource);
+    this.changeDetectorRef.detectChanges()
+    console.log('this.assigneeData', this.assigneeData)
+    this.dataSource = new MatTableDataSource<any>(this.assigneeData.data)
+    this.dataSource.paginator = this.paginator
+    console.log('this.dataSource', this.dataSource)
   }
 
-  onChangePage(pe:PageEvent) {
-    console.log(pe.pageIndex);
-    console.log(pe.pageSize);
-    this.startIndex = pe.pageIndex* pe.pageSize;
-    this.lastIndex =(pe.pageIndex+1)*pe.pageSize ;
-    
+  onChangePage(pe: PageEvent) {
+    console.log(pe.pageIndex)
+    console.log(pe.pageSize)
+    this.startIndex = pe.pageIndex * pe.pageSize
+    this.lastIndex = (pe.pageIndex + 1) * pe.pageSize
+
     // this.startIndex = this.pageIndex
   }
 
@@ -134,7 +134,7 @@ export class UserCardComponent implements OnInit, OnChanges {
     }
   }
 
-  createInititals(name:string): string {
+  createInititals(name: string): string {
     let initials = ''
     const array = `${name} `.toString().split(' ')
     if (array[0] !== 'undefined' && typeof array[1] !== 'undefined') {

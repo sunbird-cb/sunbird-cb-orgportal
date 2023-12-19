@@ -8,7 +8,7 @@ import _ from 'lodash'
 
 const API_END_POINTS = {
   CREATE_PLAN: 'apis/proxies/v8/cbplan/v1/create',
-  READ_PLAN:'apis/proxies/v8/cbplan/v1/read/',
+  READ_PLAN: 'apis/proxies/v8/cbplan/v1/read',
   UPDATE_PLAN: 'apis/proxies/v8/cbplan/v1/update',
   ARCHIVE_PLAN: 'apis/proxies/v8/cbplan/v1/archive',
   PUBLISH_PLAN: 'apis/proxies/v8/cbplan/v1/publish',
@@ -30,20 +30,20 @@ export class TrainingPlanService {
     return this.http.post<any>(`${API_END_POINTS.CREATE_PLAN}`, obj).pipe(map(res => _.get(res, 'result')))
   }
 
-  readPlan(planId:any) {
-    return this.http.get<any>(API_END_POINTS.READ_PLAN+`/${planId}`);
+  readPlan(planId: any) {
+    return this.http.get<any>(API_END_POINTS.READ_PLAN + `/${planId}`)
   }
 
-  updatePlan(obj:any) {
+  updatePlan(obj: any) {
     return this.http.post<any>(`${API_END_POINTS.UPDATE_PLAN}`, obj).pipe(map(res => _.get(res, 'result')))
   }
 
-  archivePlan(obj:any) {
-    return this.http.post<any>(`${API_END_POINTS.ARCHIVE_PLAN}`, obj).pipe(map(res => _.get(res, 'result')))
+  archivePlan(obj: any) {
+    return this.http.post<any>(`${API_END_POINTS.ARCHIVE_PLAN}`, obj)
   }
 
-  publishPlan(obj:any) {
-    return this.http.post<any>(`${API_END_POINTS.PUBLISH_PLAN}`, obj).pipe(map(res => _.get(res, 'result')))
+  publishPlan(obj: any) {
+    return this.http.post<any>(`${API_END_POINTS.PUBLISH_PLAN}`, obj)
   }
 
   getAllContent(filter: object): Observable<any> {
@@ -65,6 +65,5 @@ export class TrainingPlanService {
   getProviders() {
     return this.http.get<any>(API_END_POINTS.GET_PROVIDERS);
   }
-
 
 }
