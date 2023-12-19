@@ -68,7 +68,7 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  getContent(contentType: any) {
+  getContent(contentType: any, applyFilterObj?:any) {
     this.loadingService.changeLoaderState(true)
     if (contentType) {
       if (contentType === 'Moderated Course') {
@@ -79,6 +79,9 @@ export class SearchComponent implements OnInit {
           "secureSettings": contentType === 'Moderated Course' ? true : false, // for moderated course
           "filters": {
             "primaryCategory": [contentType === 'Moderated Course' ? 'Course' : contentType],
+            "competencies_v5.competencyArea": applyFilterObj && applyFilterObj['competencyArea'].length ? applyFilterObj['competencyArea'] : [],
+            "competencies_v5.competencyTheme": applyFilterObj && applyFilterObj['competencyTheme'].length ? applyFilterObj['competencyTheme'] : [],
+            "competencies_v5.competencySubTheme" : applyFilterObj && applyFilterObj['competencySubTheme'].length ? applyFilterObj['competencySubTheme'] : []
           },
           "offset": 0,
           "limit": 20,
@@ -166,6 +169,10 @@ export class SearchComponent implements OnInit {
         this.getAllUsers(this.selectedDropDownValue)
         break
     }
+  }
+
+  getFilterData(event:any) {
+    this.getContent(this.selectedDropDownValue, event);
   }
 
 }

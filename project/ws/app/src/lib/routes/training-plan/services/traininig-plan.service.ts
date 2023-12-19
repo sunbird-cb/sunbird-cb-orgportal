@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 // tslint:disable
@@ -12,10 +12,11 @@ const API_END_POINTS = {
   UPDATE_PLAN: 'apis/proxies/v8/cbplan/v1/update',
   ARCHIVE_PLAN: 'apis/proxies/v8/cbplan/v1/archive',
   PUBLISH_PLAN: 'apis/proxies/v8/cbplan/v1/publish',
-  GET_ALL_CONTENT: '/apis/proxies/v8/sunbirdigot/search',
-  GET_ALL_USERS: '/apis/proxies/v8/user/v1/search',
-  GET_ALL_DESIGNATIONS: '/apis/proxies/v8/masterData/v2/deptPosition',
-
+  GET_ALL_CONTENT: 'apis/proxies/v8/sunbirdigot/search',
+  GET_ALL_USERS: 'apis/proxies/v8/user/v1/search',
+  GET_ALL_DESIGNATIONS: 'apis/proxies/v8/masterData/v2/deptPosition',
+  GET_PROVIDERS: 'apis/proxies/v8/searchBy/provider',
+  GET_FILTER_ENTITY: 'apis/proxies/v8/competency/v4/search'
 }
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,13 @@ export class TrainingPlanService {
   }
 
   archivePlan(obj: any) {
-    return this.http.post<any>(`${API_END_POINTS.ARCHIVE_PLAN}`, obj)
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: obj,
+    };
+    return this.http.delete<any>(`${API_END_POINTS.ARCHIVE_PLAN}`, options)
   }
 
   publishPlan(obj: any) {
@@ -55,6 +62,14 @@ export class TrainingPlanService {
 
   getDesignations() {
     return this.http.get<any>(API_END_POINTS.GET_ALL_DESIGNATIONS)
+  }
+
+  getFilterEntity(filter:object): Observable<any> {
+    return this.http.post<any>(`${API_END_POINTS.GET_FILTER_ENTITY}`, filter).pipe(map(res => _.get(res, 'result.competency')))
+  }
+
+  getProviders() {
+    return this.http.get<any>(API_END_POINTS.GET_PROVIDERS);
   }
 
 }
