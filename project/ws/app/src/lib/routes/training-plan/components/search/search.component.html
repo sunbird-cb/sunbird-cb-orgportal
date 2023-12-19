@@ -20,5 +20,5 @@
     </div>
 </div>
 <ng-container *ngIf="filterVisibilityFlag">
-    <ws-app-filter (toggleFilter)="hideFilter($event)"></ws-app-filter>
+    <ws-app-filter (toggleFilter)="hideFilter($event)" (getFilterData)="getFilterData($event)"></ws-app-filter>
 </ng-container>

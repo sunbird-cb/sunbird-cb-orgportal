@@ -114,6 +114,12 @@ export class BreadcrumbComponent implements OnInit {
 
   createPlanDraftView() {
     this.trainingPlanDataSharingService.trainingPlanStepperData.name = this.trainingPlanDataSharingService.trainingPlanTitle
+    if(this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType === 'All Users') {
+      this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType = "allUsers";
+      this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = [
+        "allUsers"
+      ];
+    }
     const obj = { request: this.trainingPlanDataSharingService.trainingPlanStepperData }
     this.showDialogBox('progress')
     this.trainingPlanService.createPlan(obj).subscribe((_data: any) => {

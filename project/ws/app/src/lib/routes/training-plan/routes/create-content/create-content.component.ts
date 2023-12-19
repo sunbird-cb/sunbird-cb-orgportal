@@ -24,9 +24,9 @@ export class CreateContentComponent implements OnInit {
         value: 'Course',
       },
       {
-        id: 2,
-        name: 'Program',
-        value: 'Program',
+        id: 4,
+        name: 'Curated program',
+        value: 'Curated program',
       },
       {
         id: 3,
@@ -34,9 +34,9 @@ export class CreateContentComponent implements OnInit {
         value: 'Blended program',
       },
       {
-        id: 4,
-        name: 'Curated program',
-        value: 'Curated program',
+        id: 2,
+        name: 'Program',
+        value: 'Program',
       },
       {
         id: 5,

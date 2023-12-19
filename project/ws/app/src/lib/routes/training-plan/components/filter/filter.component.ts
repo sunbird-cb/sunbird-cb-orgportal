@@ -8,13 +8,15 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
-  @Output() toggleFilter = new EventEmitter()
+  @Output() toggleFilter = new EventEmitter() 
+  @Output() getFilterData = new EventEmitter();
   providersList: any[] = [];
   selectedProviders: any[] = [];
   competencyTypeList = [{ "id": "Behavioral", name: 'Behavioural' }, { "id": 'Functional', name: 'Functional' }, { "id": 'Domain', name: 'Domain' }];
   competencyList: any = [];
   competencyThemeList: any[] = [];
   competencySubThemeList: any[] = [];
+  filterObj:any = {"competencyArea":[], "competencyTheme": [], "competencySubTheme": []};
   searchThemeControl = new FormControl();
   constructor(private trainingPlanService: TrainingPlanService) { }
 
@@ -52,11 +54,9 @@ export class FilterComponent implements OnInit {
   checkedProviders(event: any, item: any) {
     if (event) {
       this.selectedProviders.push(item);
+      
     } else {
-      if (this.selectedProviders.indexOf(item) > -1) {
-        const index = this.selectedProviders.findIndex((x: any) => x === item)
-        this.selectedProviders.splice(index, 1)
-      }
+      
     }
   }
 
@@ -69,6 +69,7 @@ export class FilterComponent implements OnInit {
           citem.children.map((themechild: any) => {
             themechild['parent'] = ctype.id;
           })
+          this.filterObj['competencyArea'].push(citem.name);
           this.competencyThemeList = this.competencyThemeList.concat(citem.children);
           console.log('competencyThemeList', this.competencyThemeList)
         }
@@ -77,6 +78,10 @@ export class FilterComponent implements OnInit {
       this.competencyThemeList = this.competencyThemeList.filter((sitem) => {
         return sitem.parent != ctype.id
       })
+      if (this.filterObj['competencyArea'].indexOf(ctype.id) > -1) {
+        const index = this.filterObj['competencyArea'].findIndex((x: any) => x === ctype.id)
+        this.filterObj['competencyArea'].splice(index, 1);
+      }
     }
     console.log('competencyThemeList', this.competencyThemeList)
   }
@@ -91,12 +96,17 @@ export class FilterComponent implements OnInit {
             subthemechild['parent'] = csitem.name;
           })
           this.competencySubThemeList = this.competencySubThemeList.concat(csitem.children);
+          this.filterObj['competencyTheme'].push(cstype.name);
         }
       })
     } else {
       this.competencySubThemeList = this.competencySubThemeList.filter((sitem) => {
         return sitem.parent != cstype.name
       })
+      if (this.filterObj['competencyTheme'].indexOf(cstype.name) > -1) {
+        const index = this.filterObj['competencyTheme'].findIndex((x: any) => x === cstype.name)
+        this.filterObj['competencyTheme'].splice(index, 1)
+      }
     }
     console.log('this.competencySubThemeList', this.competencySubThemeList);
   }
@@ -105,5 +115,19 @@ export class FilterComponent implements OnInit {
 
   manageCompetencySubTheme(event: any, csttype: any) {
     console.log('cstype, event --', event, csttype);
+    if(event.checked) {
+      this.filterObj['competencySubTheme'].push(csttype.name);
+    } else {
+      if (this.filterObj['competencySubTheme'].indexOf(csttype.name) > -1) {
+        const index = this.filterObj['competencySubTheme'].findIndex((x: any) => x === csttype.name)
+        this.filterObj['competencySubTheme'].splice(index, 1)
+      }
+    }
+    
+  }
+
+  applyFilter() {
+    this.getFilterData.emit(this.filterObj);
+    this.toggleFilter.emit(false)
   }
 }

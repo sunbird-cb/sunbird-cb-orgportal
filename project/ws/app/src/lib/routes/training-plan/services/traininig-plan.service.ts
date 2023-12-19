@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 // tslint:disable
@@ -39,7 +39,13 @@ export class TrainingPlanService {
   }
 
   archivePlan(obj: any) {
-    return this.http.post<any>(`${API_END_POINTS.ARCHIVE_PLAN}`, obj)
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: obj,
+    };
+    return this.http.delete<any>(`${API_END_POINTS.ARCHIVE_PLAN}`, options)
   }
 
   publishPlan(obj: any) {
