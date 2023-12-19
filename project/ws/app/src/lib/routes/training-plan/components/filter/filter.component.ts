@@ -1,8 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { TrainingPlanService } from './../../services/traininig-plan.service';
-import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service';
 import { FormControl } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'ws-app-filter',
@@ -18,24 +16,11 @@ export class FilterComponent implements OnInit {
   competencyThemeList: any[] = [];
   competencySubThemeList: any[] = [];
   searchThemeControl = new FormControl();
-  constructor(private trainingPlanService: TrainingPlanService, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+  constructor(private trainingPlanService: TrainingPlanService) { }
 
   ngOnInit() {
     this.getFilterEntity();
     this.getProviders();
-    console.log('trainingPlanDataSharingService--',this.trainingPlanDataSharingService)
-    // this.searchThemeControl.valueChanges.pipe(
-    //   debounceTime(500),
-    // ).subscribe((_value: any) => {
-    //   console.log('_value', _value);
-    //   if(_value) {
-    //     this.competencyThemeList = this.competencyThemeList.filter((sitem) => {
-    //       return sitem.name.toLowerCase().includes(_value.toLowerCase());
-    //     })
-    //     console.log(this.competencyThemeList)
-    //   }
-     
-    // });
   }
 
   getFilterEntity() {
