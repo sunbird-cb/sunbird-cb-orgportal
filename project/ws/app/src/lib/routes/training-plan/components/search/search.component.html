@@ -19,6 +19,6 @@
         </button>
     </div>
 </div>
-<ng-container *ngIf="filterVisibilityFlag">
-    <ws-app-filter (toggleFilter)="hideFilter($event)" (getFilterData)="getFilterData($event)"></ws-app-filter>
-</ng-container>
+<div [hidden]="!filterVisibilityFlag">
+    <ws-app-filter (toggleFilter)="hideFilter($event)" (getFilterData)="getFilterData($event)" [clearFilterFlag]="clearFilter"></ws-app-filter>
+</div>

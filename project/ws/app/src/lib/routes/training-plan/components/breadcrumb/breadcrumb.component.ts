@@ -120,6 +120,9 @@ export class BreadcrumbComponent implements OnInit {
         "allUsers"
       ];
     }
+    if(this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType === 'Custom Users') {
+      this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType = "custom";
+    }
     const obj = { request: this.trainingPlanDataSharingService.trainingPlanStepperData }
     this.showDialogBox('progress')
     this.trainingPlanService.createPlan(obj).subscribe((_data: any) => {
