@@ -1,4 +1,4 @@
-<div class="box-container" *ngIf="data?.type === 'normal'">
+<div class="box-container" *ngIf="data?.type === 'normal' || data?.type === 'conformation'">
     <!-- <div class="close-modal-container">
         <button mat-icon-button>
             <mat-icon>more_vert</mat-icon>
@@ -16,12 +16,10 @@
         {{data?.subTitle}}
     </div>
     <div mat-dialog-actions class="flex flex-1 flex-row action">
-        <div class="cancel cursor-pointer" [mat-dialog-close]="data?.secondaryAction">
-            <span>{{data?.secondaryAction}}</span>
-        </div>
-        <div class="primary cursor-pointer" (click)="performAction(data)">
-            <span>{{data?.primaryAction}}</span>
-        </div>
+        <button mat-button class="cancel" type="button"
+            [mat-dialog-close]="data?.secondaryAction">{{data?.secondaryAction}}</button>
+        <button mat-button class="primary margin-left-m" type="button"
+            (click)="performAction(data)">{{data?.primaryAction}}</button>
     </div>
 </div>
 
@@ -59,8 +57,6 @@
         <img src="assets/icons/{{data?.icon}}.svg" />
     </div>
     <div mat-dialog-actions class="flex flex-1 flex-row action">
-        <div class="primary cursor-pointer">
-            <span>{{data?.primaryAction}}</span>
-        </div>
+        <button mat-button class="primary" type="button">{{data?.primaryAction}}</button>
     </div>
 </div>

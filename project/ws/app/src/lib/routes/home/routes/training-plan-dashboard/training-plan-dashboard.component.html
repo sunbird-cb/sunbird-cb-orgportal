@@ -16,12 +16,14 @@
       </div>
       <ng-container class="margin-top-l">
         <ws-widget-org-user-table [tableData]="tabledata" [data]="trainingPlanData" [isTrainingPlan]="true"
-          [trainingTagList]="tagListData" *ngIf="currentFilter === 'live'" (eOnButtonClick)="clickHandler($event)"
-          (actionsClick)="menuSelected($event)">
+          [trainingTagList]="tagListData" *ngIf="currentFilter === 'live' && fetchContentDone"
+          (eOnButtonClick)="clickHandler($event)" (actionsClick)="menuSelected($event)"
+          (tagSelectedData)="filterDataAsPerTab($event)">
         </ws-widget-org-user-table>
         <ws-widget-org-user-table [tableData]="tabledata" [data]="trainingPlanData" [isTrainingPlan]="true"
-          [trainingTagList]="tagListData" *ngIf="currentFilter === 'draft'" (eOnButtonClick)="clickHandler($event)"
-          (actionsClick)="menuSelected($event)">
+          [trainingTagList]="tagListData" *ngIf="currentFilter === 'draft' && fetchContentDone"
+          (eOnButtonClick)="clickHandler($event)" (actionsClick)="menuSelected($event)"
+          (tagSelectedData)="filterDataAsPerTab($event)">
         </ws-widget-org-user-table>
       </ng-container>
     </mat-card-content>

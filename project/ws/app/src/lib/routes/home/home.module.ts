@@ -64,6 +64,7 @@ import { BlendedApprovalsComponent } from './routes/blended-approvals/blended-ap
 import { ReportsSectionComponent } from './routes/reports-section/reports-section.component'
 import { TrainingPlanDashboardComponent } from './routes/training-plan-dashboard/training-plan-dashboard.component'
 import { TrainingPlanDashboardService } from './services/training-plan-dashboard.service'
+import { ConfirmationBoxComponent } from '../training-plan/components/confirmation-box/confirmation.box.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -88,6 +89,7 @@ import { TrainingPlanDashboardService } from './services/training-plan-dashboard
     BlendedApprovalsComponent,
     ReportsSectionComponent,
     TrainingPlanDashboardComponent,
+    ConfirmationBoxComponent
   ],
   imports: [
     CommonModule,
@@ -146,6 +148,7 @@ import { TrainingPlanDashboardService } from './services/training-plan-dashboard
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
+    ConfirmationBoxComponent
   ],
   providers: [
     // CKEditorService,
