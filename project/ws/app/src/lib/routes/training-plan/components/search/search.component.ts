@@ -146,7 +146,17 @@ export class SearchComponent implements OnInit {
     this.loadingService.changeLoaderState(true)
     this.trainingPlanService.getDesignations().subscribe((res: any) => {
       console.log('res', res)
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res.result.response.content }
+      if(this.searchText) {
+        let resArr = res.result.response.content.filter((ditem:any)=>{
+          if(ditem.name.includes(this.searchText)) {
+            return ditem;
+          }
+        })
+        this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: resArr }
+      } else {
+        this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res.result.response.content }
+      }
+      
       this.handleApiData.emit(true)
       this.loadingService.changeLoaderState(false)
     })

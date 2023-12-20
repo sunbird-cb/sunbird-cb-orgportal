@@ -1,5 +1,6 @@
 <div class="flex flex-4 flex-row assignee-card-container flex-wrap" *ngIf="assigneeData?.category === 'Custom Users'">
     <ng-container *ngFor="let item of assigneeData?.data | slice : startIndex : lastIndex">
+        <!-- <ng-container *ngIf="item?.roles.length"> -->
         <div class="flex flex-4 assignee-card" [ngClass]="item?.selected ? 'active-card':''"
             [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
             <div class="avatar">
@@ -19,6 +20,7 @@
                     (change)="selectAssigneeItem($event, item)"></mat-checkbox>
             </div>
         </div>
+    <!-- </ng-container> -->
     </ng-container>
 </div>
 
