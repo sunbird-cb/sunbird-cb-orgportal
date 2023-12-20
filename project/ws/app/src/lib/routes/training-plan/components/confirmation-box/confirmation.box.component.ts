@@ -22,8 +22,11 @@ export class ConfirmationBoxComponent implements OnInit {
   }
 
   performAction(data: any) {
-    this.dialogRef.close()
-    this.trainingPlanDataSharingService.trainingPlanCategoryChangeEvent.next(data)
-
+    if (data && data.type === 'conformation') {
+      this.dialogRef.close('confirmed')
+    } else {
+      this.dialogRef.close()
+      this.trainingPlanDataSharingService.trainingPlanCategoryChangeEvent.next(data)
+    }
   }
 }

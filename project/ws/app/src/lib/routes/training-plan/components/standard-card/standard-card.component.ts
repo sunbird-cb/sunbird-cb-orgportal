@@ -15,13 +15,13 @@ export class StandardCardComponent implements OnInit, OnChanges {
   @Input() showPagination = false;
   @Output() handleSelectedChips = new EventEmitter()
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator | any;
-  dataSource:any;
+  dataSource: any;
   selectedContent: any[] = []
-  startIndex= 0;
+  startIndex = 0;
   lastIndex = 10; 
   pageSize = 10;
   defaultThumbnail: SafeUrl | null = 'assets/instances/eagle/app_logos/KarmayogiBharat_Logo.svg'
-  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private changeDetectorRef:ChangeDetectorRef ) { }
+  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     
@@ -29,17 +29,17 @@ export class StandardCardComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.changeDetectorRef.detectChanges();
-    console.log('this.contentData',this.contentData)
-    this.dataSource= new MatTableDataSource<any>(this.contentData);
+    console.log('this.contentData', this.contentData)
+    this.dataSource = new MatTableDataSource<any>(this.contentData);
     this.dataSource.paginator = this.paginator;
     console.log('this.dataSource', this.dataSource);
   }
 
-  onChangePage(pe:PageEvent) {
+  onChangePage(pe: PageEvent) {
     console.log(pe.pageIndex);
     console.log(pe.pageSize);
-    this.startIndex = pe.pageIndex* pe.pageSize;
-    this.lastIndex =(pe.pageIndex+1)*pe.pageSize ;
+    this.startIndex = pe.pageIndex * pe.pageSize;
+    this.lastIndex = (pe.pageIndex + 1) * pe.pageSize ;
     
     // this.startIndex = this.pageIndex
   }

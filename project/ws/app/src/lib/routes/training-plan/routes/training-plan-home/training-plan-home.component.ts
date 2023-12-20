@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core'
 /* tslint:disable */
 import _ from 'lodash'
 /* tslint:enable */
-import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service';
+import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 @Component({
   selector: 'ws-app-training-plan-home',
   templateUrl: './training-plan-home.component.html',
@@ -12,17 +12,17 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
   /* tslint:enable */
 })
 export class TrainingPlanHomeComponent implements OnInit, AfterViewInit, OnDestroy {
-  showModeratedNotification = false;
-  constructor( private trainingPlanDataSharingService: TrainingPlanDataSharingService
+  showModeratedNotification = false
+  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService
   ) {
-    
+
   }
   ngOnInit() {
-    this.trainingPlanDataSharingService.moderatedCourseSelectStatus.subscribe((status)=>{
-      if(status) {
-          this.showModeratedNotification = true;
+    this.trainingPlanDataSharingService.moderatedCourseSelectStatus.subscribe(status => {
+      if (status) {
+          this.showModeratedNotification = true
       } else {
-        this.showModeratedNotification = false;
+        this.showModeratedNotification = false
       }
     })
   }
@@ -31,11 +31,11 @@ export class TrainingPlanHomeComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnDestroy() {
-    this.trainingPlanDataSharingService.moderatedCourseSelectStatus.unsubscribe();
+    this.trainingPlanDataSharingService.moderatedCourseSelectStatus.unsubscribe()
   }
 
   removeNotification() {
-    this.showModeratedNotification = false;
+    this.showModeratedNotification = false
   }
 
 }

@@ -37,24 +37,14 @@
     margin-top: 16px;
 }
 .cancel {
-    color: rgb(27, 76, 161);
+    color: rgb(27, 76, 161) !important;
     border: 1px solid rgb(27, 76, 161);
-    border-radius: 4px;
-    width: auto;
-    text-align: center;
-    padding: 10px;
 }
 
 
 .primary {
-    color: rgba(255, 255, 255);
-    border: 1px solid rgb(27, 76, 161);
-    border-radius: 4px;
-    width: auto;
-    text-align: center;
-    padding: 10px;
-    background-color: rgb(27, 76, 161);
-    margin-left: 16px;
+    color: rgba(255, 255, 255) !important;
+    background-color: rgb(27, 76, 161) !important;
 }
 
 .progress-title {

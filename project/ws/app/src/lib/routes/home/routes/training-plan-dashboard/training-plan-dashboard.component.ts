@@ -7,7 +7,8 @@ import { TrainingPlanDashboardService } from '../../services/training-plan-dashb
 import moment from 'moment'
 import { LoaderService } from '../../../../../../../../../src/app/services/loader.service'
 import { TrainingPlanService } from '../../../training-plan/services/traininig-plan.service'
-import { MatSnackBar } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
+import { ConfirmationBoxComponent } from '../../../training-plan/components/confirmation-box/confirmation.box.component'
 
 @Component({
   selector: 'ws-app-training-plan-dashboard',
@@ -23,7 +24,22 @@ export class TrainingPlanDashboardComponent implements OnInit {
   searchQuery = ''
   tabledata!: ITableData
   trainingPlanData: any = []
-  tagListData: any = ['Designation', 'All users', 'Custom users']
+  tagListData: any = [{
+    name: 'Designation',
+    value: 'Designation',
+    selected: true,
+  }, {
+    name: 'All users',
+    value: 'All Users',
+    selected: false,
+  }, {
+    name: 'Custom users',
+    value: 'Custom Users',
+    selected: false,
+  }]
+  fetchContentDone!: boolean
+  completeDataRes: any
+  dialogRef: any
 
   constructor(
     // private events: EventService,
@@ -32,6 +48,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
     private loaderService: LoaderService,
     private trainingPlanService: TrainingPlanService,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {
 
   }
@@ -72,6 +89,14 @@ export class TrainingPlanDashboardComponent implements OnInit {
   // }
 
   filter(filter: string) {
+    this.fetchContentDone = false
+    this.tagListData.map((item: any) => {
+      if (item.value === 'Designation') {
+        item.selected = true
+      } else {
+        item.selected = false
+      }
+    })
     this.currentFilter = filter
     this.filterData()
   }
@@ -108,7 +133,8 @@ export class TrainingPlanDashboardComponent implements OnInit {
     }
     const liveRes = await this.trainingDashboardSvc.getUserList(req).toPromise().catch(_error => { })
     if (liveRes.params && liveRes.params.status && liveRes.params.status === 'success') {
-      this.trainingPlanData = liveRes.result.content
+      this.completeDataRes = liveRes.result.content
+      this.trainingPlanData = this.completeDataRes.filter((v: any) => v.userType === 'Designation')
       this.convertDataAsPerTable()
     } else {
       this.loaderService.changeLoaderState(false)
@@ -127,7 +153,8 @@ export class TrainingPlanDashboardComponent implements OnInit {
     }
     const draftRes = await this.trainingDashboardSvc.getUserList(req).toPromise().catch(_error => { })
     if (draftRes.params && draftRes.params.status && draftRes.params.status === 'success') {
-      this.trainingPlanData = draftRes.result.content
+      this.completeDataRes = draftRes.result.content
+      this.trainingPlanData = this.completeDataRes.filter((v: any) => v.userType === 'Designation')
       this.convertDataAsPerTable()
     } else {
       this.loaderService.changeLoaderState(false)
@@ -141,6 +168,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       res.endDate = (res.endDate) ? moment(res.endDate).format('MMM DD[,] YYYY') : ''
       res.createdAt = (res.createdAt) ? moment(res.createdAt).format('MMM DD[,] YYYY') : ''
     })
+    this.fetchContentDone = true
     this.loaderService.changeLoaderState(false)
   }
 
@@ -157,10 +185,10 @@ export class TrainingPlanDashboardComponent implements OnInit {
         this.editContentData(_event.row)
         break
       case 'deleteContent':
-        this.deleteContentData(_event.row)
+        this.showConformationModal(_event.row, _event.action)
         break
       case 'publishContent':
-        this.publishContentData(_event.row)
+        this.showConformationModal(_event.row, _event.action)
         break
     }
   }
@@ -171,6 +199,32 @@ export class TrainingPlanDashboardComponent implements OnInit {
 
   editContentData(_selectedRow: any) {
     this.router.navigate(['app', 'training-plan', 'create-plan'], { queryParams: { planId: _selectedRow.id } })
+  }
+
+  showConformationModal(_selectedRow: any, _type: any) {
+    this.dialogRef = this.dialog.open(ConfirmationBoxComponent, {
+      disableClose: true,
+      data: {
+        type: 'conformation',
+        icon: 'radio_on',
+        title: (_type === 'deleteContent') ? 'Are you sure you want to delete?' :
+          (_type === 'publishContent') ? 'Are you sure you want to publish?' : '',
+        subTitle: 'You wont be able to revert this',
+        primaryAction: (_type === 'deleteContent') ? 'Delete' : (_type === 'publishContent') ? 'Publish' : '',
+        secondaryAction: 'Cancel',
+      },
+      autoFocus: false,
+    })
+
+    this.dialogRef.afterClosed().subscribe((_res: any) => {
+      if (_res === 'confirmed') {
+        if (_type === 'deleteContent') {
+          this.deleteContentData(_selectedRow)
+        } else if (_type === 'publishContent') {
+          this.publishContentData(_selectedRow)
+        }
+      }
+    })
   }
 
   deleteContentData(_selectedRow: any) {
@@ -217,6 +271,17 @@ export class TrainingPlanDashboardComponent implements OnInit {
     if (_event.type === 'createCbpPlan') {
       this.createCbp()
     }
+  }
+
+  filterDataAsPerTab(_event: any) {
+    this.tagListData.map((item: any) => {
+      if (item.value === _event) {
+        item.selected = true
+      } else {
+        item.selected = false
+      }
+    })
+    this.trainingPlanData = this.completeDataRes.filter((v: any) => v.userType === _event)
   }
 
 }
