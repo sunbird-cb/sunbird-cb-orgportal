@@ -23,6 +23,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
     // }
     this.trainingPlanDataSharingService.trainingPlanCategoryChangeEvent.subscribe((data: any) => {
       if (data && data.event) {
+        this.trainingPlanDataSharingService.trainingPlanStepperData.contentList = [];
         this.handleCategorySelection.emit(data.event)
       }
     })
@@ -52,6 +53,11 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['event'] = 'Course'
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
         this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false);
+        if(this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+          this.openDialoagBox(dialogData)
+        } else {
+          this.handleCategorySelection.emit(event);
+        }
         break
       case 'Program':
         dialogData['type'] = 'normal'
@@ -64,6 +70,11 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['event'] = 'Program'
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
         this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false);
+        if(this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+          this.openDialoagBox(dialogData)
+        } else {
+          this.handleCategorySelection.emit(event);
+        }
         break
       case 'Blended program':
         dialogData['type'] = 'normal'
@@ -76,6 +87,11 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['event'] = 'Blended program'
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
         this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false);
+        if(this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+          this.openDialoagBox(dialogData)
+        } else {
+          this.handleCategorySelection.emit(event);
+        }
         break
       case 'Curated program':
         dialogData['type'] = 'normal'
@@ -88,6 +104,11 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['event'] = 'Curated program'
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
         this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false);
+        if(this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+          this.openDialoagBox(dialogData)
+        } else {
+          this.handleCategorySelection.emit(event);
+        }
         break
       case 'Moderated Course':
         dialogData['type'] = 'normal'
@@ -98,8 +119,12 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Moderated Course'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
-        
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
+        if(this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+          this.openDialoagBox(dialogData)
+        } else {
+          this.handleCategorySelection.emit(event);
+        }        
         break
       case 'Designation':
         dialogData['type'] = 'normal'
@@ -111,6 +136,11 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Designation'
         this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = event
+        if(this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.length) {
+          this.openDialoagBox(dialogData)
+        } else {
+          this.handleCategorySelection.emit(event);
+        }
         break
       case 'All Users':
         dialogData['type'] = 'normal'
@@ -122,6 +152,11 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'All Users'
         this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = event
+        if(this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.length) {
+          this.openDialoagBox(dialogData)
+        } else {
+          this.handleCategorySelection.emit(event);
+        }
         break
       case 'Custom Users':
         dialogData['type'] = 'normal'
@@ -133,11 +168,16 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Custom Users'
         this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = event
+        if(this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.length) {
+          this.openDialoagBox(dialogData)
+        } else {
+          this.handleCategorySelection.emit(event);
+        }
         break
     }
-
+    
     // this.handleCategorySelection.emit(event);
-    this.openDialoagBox(dialogData)
+   // this.openDialoagBox(dialogData)
   }
 
   openDialoagBox(dialogData: any) {

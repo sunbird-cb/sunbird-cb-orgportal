@@ -15,8 +15,8 @@ export class UserCardComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | any
   dataSource: any
   startIndex = 0;
-  lastIndex = 10;
-  pageSize = 10;
+  lastIndex = 20;
+  pageSize = 20;
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {

@@ -238,7 +238,8 @@ export class TrainingPlanDashboardComponent implements OnInit {
     this.trainingPlanService.archivePlan(obj).subscribe((_data: any) => {
       this.snackBar.open('CBP plan deleted successfully.')
       this.loaderService.changeLoaderState(false)
-    }, _error => {
+      this.getDraftData()
+    }, (_error) => {
       this.loaderService.changeLoaderState(false)
     })
   }
