@@ -8,7 +8,8 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
   providers: [DatePipe],
 })
 export class AddTimelineFormComponent implements OnInit {
-  todayDate: Date = new Date()
+  minDate: Date = new Date();
+  todayDate = undefined;
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private datePipe: DatePipe) { }
 
   ngOnInit() {

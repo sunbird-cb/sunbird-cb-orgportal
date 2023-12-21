@@ -23,7 +23,11 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
     // }
     this.trainingPlanDataSharingService.trainingPlanCategoryChangeEvent.subscribe((data: any) => {
       if (data && data.event) {
-        this.trainingPlanDataSharingService.trainingPlanStepperData.contentList = []
+        if(data.event === 'Course' || data.event === 'Standalone Assessment' || data.event === 'Blended program' || data.event === 'Curated program' || data.event === 'Moderated Course') {
+          this.trainingPlanDataSharingService.trainingPlanStepperData.contentList = [];
+        } else if (data.event === 'Designation' || data.event === 'All Users' || data.event === 'Custom Users') {
+          this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = [];
+        } 
         this.handleCategorySelection.emit(data.event)
       }
     })
@@ -59,7 +63,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
           this.handleCategorySelection.emit(event)
         }
         break
-      case 'Program':
+      case 'Standalone Assessment':
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
         dialogData['title'] = 'You are attempting to change the selected content type?'
@@ -67,10 +71,10 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         It's advisable to save the current one as a draft and create a new one instead.`
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
-        dialogData['event'] = 'Program'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
-        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false)
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+        dialogData['event'] = 'Standalone Assessment'
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
+        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false);
+        if(this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
         } else {
           this.handleCategorySelection.emit(event)

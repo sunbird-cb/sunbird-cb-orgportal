@@ -1,18 +1,23 @@
-<ws-app-breadcrumb [showBreadcrumbAction]="false"></ws-app-breadcrumb>
+<!-- <ws-app-breadcrumb [showBreadcrumbAction]="false"></ws-app-breadcrumb> -->
 <div class="flex margin-top-l">
     <button mat-stroked-button type="button" (click)="goBack()"><mat-icon>arrow_back</mat-icon> Go
         back</button>
 </div>
 <div class="flex" *ngIf="from==='content'">
+    <div class="mat-subheading-1 margin-remove">Selected Content <span *ngIf="contentData.length">( {{contentData.length}} )</span></div>
     <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentData" [showDeleteFlag]="true"></ws-app-standard-card>
 </div>
 <div class="flex" *ngIf="from==='assignee'">
+    <div class="mat-subheading-1 margin-remove">Selected Assignee <span *ngIf="contentData.length">( {{assigneeData.length}} )</span></div>
     <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData" [showDeleteFlag]="true"></ws-app-user-card>
 </div>
 <div class="flex content-container" *ngIf="from === 'all'">
     <mat-chip-list [multiple]="true" [selectable]="true">
         <mat-chip *ngFor="let item of allContentChips" [selected]="selectedTab == item.tab"
-            (click)="selectedTab = item.tab">{{item.name}}</mat-chip>
+            (click)="selectedTab = item.tab">{{item.name}} 
+        <span *ngIf="selectedTab === 'content'">( {{contentData.length}} )</span>
+        <span *ngIf="selectedTab === 'assignee'">( {{assigneeData.length}} )</span>
+        </mat-chip>
     </mat-chip-list>
 
 </div>

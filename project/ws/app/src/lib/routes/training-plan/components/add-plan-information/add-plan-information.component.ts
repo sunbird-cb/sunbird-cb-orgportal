@@ -20,12 +20,13 @@ export class AddPlanInformationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    const noSpecialChar = new RegExp(/^[\u0900-\u097F\u0980-\u09FF\u0C00-\u0C7F\u0B80-\u0BFF\u0C80-\u0CFF\u0D00-\u0D7F\u0A80-\u0AFF\u0B00-\u0B7F\u0A00-\u0A7Fa-zA-Z0-9()$[\]\\.:,_/ -]*$/)
     if (!this.tpdsSvc.trainingPlanTitle) {
       this.planTitleInvalid.emit(true)
     }
     this.contentForm = this.formBuilder.group({
       name:
-        new FormControl('', [Validators.required, Validators.minLength(10)]),
+        new FormControl('', [Validators.required, Validators.pattern(noSpecialChar), Validators.minLength(10)]),
     })
 
     this.contentForm.controls['name'].valueChanges.pipe(debounceTime(500)).subscribe((_ele: any) => {
@@ -42,3 +43,5 @@ export class AddPlanInformationComponent implements OnInit {
   }
 
 }
+
+

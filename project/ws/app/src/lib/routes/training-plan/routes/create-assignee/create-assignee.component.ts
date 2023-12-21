@@ -43,7 +43,7 @@ export class CreateAssigneeComponent implements OnInit {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation' &&
         this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo) {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
-          if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem) > -1) {
+          if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.name) > -1) {
             sitem['selected'] = true
           }
         })
@@ -61,6 +61,7 @@ export class CreateAssigneeComponent implements OnInit {
         this.handleSelectedChips(true)
       } else {
         this.assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData
+        console.log('this.assigneeData',this.assigneeData)
       }
     }
     if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'AllUser') {

@@ -154,7 +154,7 @@ import { TrainingPlanDashboardService } from './services/training-plan-dashboard
     MdoInfoService,
     UploadService,
     TrainingPlanDashboardService,
-  ],
+  ]
 })
 export class HomeModule {
 
