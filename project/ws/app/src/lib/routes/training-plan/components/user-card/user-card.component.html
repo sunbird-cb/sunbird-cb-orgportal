@@ -1,4 +1,4 @@
-<div class="flex flex-4 flex-row assignee-card-container flex-wrap" *ngIf="assigneeData?.category === 'Custom Users'">
+<div class="flex flex-4 flex-row assignee-card-container flex-wrap" *ngIf="assigneeData?.category === 'CustomUser'">
     <ng-container *ngFor="let item of assigneeData?.data | slice : startIndex : lastIndex">
         <!-- <ng-container *ngIf="item?.roles.length"> -->
         <div class="flex flex-4 assignee-card" [ngClass]="item?.selected ? 'active-card':''"

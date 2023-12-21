@@ -57,7 +57,7 @@ const routes: Routes = [
     canActivate: [GeneralGuard],
     data: {
       pageType: 'feature',
-      pageKey: 'training-plan-home',
+      // pageKey: 'training-plan-homeeee',
     },
     resolve: {
       pageData: PageResolve,

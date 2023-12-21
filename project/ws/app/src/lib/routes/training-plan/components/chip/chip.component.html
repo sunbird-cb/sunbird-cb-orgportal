@@ -41,7 +41,7 @@
     </div>
 </div>
 <div class="flex flex-row chip-container"
-    *ngIf="selectAssigneeCount > 0 && from === 'assignee' && trainingPlanDataSharingService?.trainingPlanAssigneeData?.category === 'Custom Users'">
+    *ngIf="selectAssigneeCount > 0 && from === 'assignee' && trainingPlanDataSharingService?.trainingPlanAssigneeData?.category === 'CustomUser'">
     <div class="flex flex-2 left-section flex-middle">
         <div class="selected-item-label">Selected items - </div>
         <ng-container *ngFor="let item of selectedAssigneeChips | slice : 0 : 3">

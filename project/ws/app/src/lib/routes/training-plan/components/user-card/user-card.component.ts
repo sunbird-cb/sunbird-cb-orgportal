@@ -54,7 +54,7 @@ export class UserCardComponent implements OnInit, OnChanges {
           this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].push(item.name)
         }
       }
-      if (this.assigneeData && this.assigneeData.category === 'Custom Users') {
+      if (this.assigneeData && this.assigneeData.category === 'CustomUser') {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any, index: any) => {
           if (sitem.userId === item.userId) {
             sitem['selected'] = true
@@ -81,7 +81,7 @@ export class UserCardComponent implements OnInit, OnChanges {
           }
         })
       }
-      if (this.assigneeData && this.assigneeData.category === 'Custom Users') {
+      if (this.assigneeData && this.assigneeData.category === 'CustomUser') {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
           if (sitem.userId === item.userId) {
             sitem['selected'] = false
@@ -115,7 +115,7 @@ export class UserCardComponent implements OnInit, OnChanges {
           this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
         }
       })
-    } else if (this.assigneeData && this.assigneeData.category === 'Custom Users') {
+    } else if (this.assigneeData && this.assigneeData.category === 'CustomUser') {
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem.userId === item.userId) {
           sitem['selected'] = false

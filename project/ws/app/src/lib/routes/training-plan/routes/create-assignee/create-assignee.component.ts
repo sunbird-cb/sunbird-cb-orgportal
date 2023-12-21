@@ -26,13 +26,13 @@ export class CreateAssigneeComponent implements OnInit {
       },
       {
         id: 2,
-        name: 'All Users',
-        value: 'All Users',
+        name: 'AllUser',
+        value: 'AllUser',
       },
       {
         id: 3,
-        name: 'Custom Users',
-        value: 'Custom Users',
+        name: 'CustomUser',
+        value: 'CustomUser',
       },
     ]
   }
@@ -50,7 +50,7 @@ export class CreateAssigneeComponent implements OnInit {
         this.assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData
         this.handleSelectedChips(true)
       } else if (this.trainingPlanDataSharingService.trainingPlanStepperData &&
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users' &&
+        this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'CustomUser' &&
         this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo) {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
           if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.userId) > -1) {
@@ -64,7 +64,7 @@ export class CreateAssigneeComponent implements OnInit {
         console.log('this.assigneeData',this.assigneeData)
       }
     }
-    if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'All Users') {
+    if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'AllUser') {
       this.addAssigneeInvalid.emit(false)
     }
   }
@@ -81,8 +81,8 @@ export class CreateAssigneeComponent implements OnInit {
             }
           })
         }
-      } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users') {
-        this.selectedAssigneeChips = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data;
+      } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'CustomUser') {
+        this.selectedAssigneeChips = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data
         if (this.selectedAssigneeChips) {
           this.selectedAssigneeChips.map((sitem: any) => {
             if (sitem.selected) {

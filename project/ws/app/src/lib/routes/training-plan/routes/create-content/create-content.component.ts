@@ -14,7 +14,7 @@ export class CreateContentComponent implements OnInit {
   from = 'content'
   selectedContentChips: any[] = []
   selectContentCount = 0
-  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+  constructor(private tpdsSvc: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
     this.categoryData = [
@@ -44,25 +44,24 @@ export class CreateContentComponent implements OnInit {
         value: 'Moderated Course',
       },
     ]
-    this.handleApiData(true)
+    // this.handleApiData(true)
   }
 
   handleApiData(event: any) {
-    if (event && this.trainingPlanDataSharingService.trainingPlanContentData) {
-      if (this.trainingPlanDataSharingService.trainingPlanStepperData &&
-        this.trainingPlanDataSharingService.trainingPlanStepperData.contentList) {
-        if (this.trainingPlanDataSharingService.trainingPlanContentData &&
-          this.trainingPlanDataSharingService.trainingPlanContentData.data.content) {
-          this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
-            if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.indexOf(sitem.identifier) > -1) {
+    if (event && this.tpdsSvc.trainingPlanContentData) {
+      if (this.tpdsSvc.trainingPlanStepperData &&
+        this.tpdsSvc.trainingPlanStepperData.contentList) {
+        if (this.tpdsSvc.trainingPlanContentData.data.content) {
+          this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any) => {
+            if (this.tpdsSvc.trainingPlanStepperData.contentList.filter((v: any) => v === sitem.identifier).length > 0) {
               sitem['selected'] = true
             }
           })
         }
-        this.contentData = this.trainingPlanDataSharingService.trainingPlanContentData.data.content
+        this.contentData = this.tpdsSvc.trainingPlanContentData.data.content
         this.handleSelectedChips(true)
       } else {
-        this.contentData = this.trainingPlanDataSharingService.trainingPlanContentData.data.content
+        this.contentData = this.tpdsSvc.trainingPlanContentData.data.content
       }
     }
   }
@@ -70,7 +69,7 @@ export class CreateContentComponent implements OnInit {
   handleSelectedChips(event: any) {
     this.selectContentCount = 0
     if (event) {
-      this.selectedContentChips = this.trainingPlanDataSharingService.trainingPlanContentData.data.content
+      this.selectedContentChips = this.tpdsSvc.trainingPlanContentData.data.content
       if (this.selectedContentChips) {
         this.selectedContentChips.map(sitem => {
           if (sitem.selected) {

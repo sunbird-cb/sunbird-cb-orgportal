@@ -21,8 +21,8 @@ export class BreadcrumbComponent implements OnInit {
   tabType = TrainingPlanContent.TTabLabelKey
 
   constructor(private router: Router, public dialog: MatDialog,
-              public trainingPlanDataSharingService: TrainingPlanDataSharingService,
-              private trainingPlanService: TrainingPlanService) { }
+    public trainingPlanDataSharingService: TrainingPlanDataSharingService,
+    private trainingPlanService: TrainingPlanService) { }
 
   ngOnInit() {
     this.checkIfDisabled()
@@ -114,14 +114,10 @@ export class BreadcrumbComponent implements OnInit {
 
   createPlanDraftView() {
     this.trainingPlanDataSharingService.trainingPlanStepperData.name = this.trainingPlanDataSharingService.trainingPlanTitle
-    if(this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType === 'All Users') {
-      this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType = "allUsers";
+    if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType === 'AllUser') {
       this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = [
-        "allUsers"
-      ];
-    }
-    if(this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType === 'Custom Users') {
-      this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType = "custom";
+        "AllUser"
+      ]
     }
     const obj = { request: this.trainingPlanDataSharingService.trainingPlanStepperData }
     this.showDialogBox('progress')
@@ -132,7 +128,7 @@ export class BreadcrumbComponent implements OnInit {
         this.dialogRef.close()
         this.trainingPlanDataSharingService.trainingPlanTitle = ''
         this.router.navigateByUrl('app/home/training-plan-dashboard')
-      },         1000)
+      }, 1000)
     })
   }
 
