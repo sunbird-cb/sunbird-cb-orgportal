@@ -22,10 +22,10 @@ import {
   MatCheckboxModule,
   MatDatepickerModule,
 } from '@angular/material'
-import { PipePublicURLModule } from '../pipes/pipe-public-URL/pipe-public-URL.module';
-import { PipeDurationTransformModule } from '../pipes/pipe-duration-transform/pipe-duration-transform.module';
-import { DefaultThumbnailModule } from '../directives/default-thumbnail/default-thubnail.module';
-import { FilterSearchPipeModule } from '../pipes/filter-search/filter-search.module';
+import { PipePublicURLModule } from '../pipes/pipe-public-URL/pipe-public-URL.module'
+import { PipeDurationTransformModule } from '../pipes/pipe-duration-transform/pipe-duration-transform.module'
+import { DefaultThumbnailModule } from '../directives/default-thumbnail/default-thubnail.module'
+import { FilterSearchPipeModule } from '../pipes/filter-search/filter-search.module'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatCardModule } from '@angular/material/card'
@@ -55,13 +55,13 @@ import { UserCardComponent } from './components/user-card/user-card.component'
 import { CreateTimelineComponent } from './routes/create-timeline/create-timeline.component'
 import { AddTimelineFormComponent } from './components/add-timeline-form/add-timeline-form.component'
 import { FilterComponent } from './components/filter/filter.component'
-import { ConfirmationBoxComponent } from './components/confirmation-box/confirmation.box.component'
 import { PreviewPlanComponent } from './routes/preview-plan/preview-plan.component'
 import { CreateContentComponent } from './routes/create-content/create-content.component'
 import { CategoryDropDownComponent } from './components/category-drop-down/category-drop-down.component'
 import { AddPlanInformationComponent } from './components/add-plan-information/add-plan-information.component'
 
 import { TrainingPlanService } from './services/traininig-plan.service'
+import { UpdatePlanResolveService } from './resolvers/update-plan-resolve.service'
 @NgModule({
   declarations: [
     TrainingPlanHomeComponent,
@@ -77,7 +77,6 @@ import { TrainingPlanService } from './services/traininig-plan.service'
     CreateTimelineComponent,
     AddTimelineFormComponent,
     FilterComponent,
-    ConfirmationBoxComponent,
     PreviewPlanComponent,
     CreateContentComponent,
     CategoryDropDownComponent,
@@ -137,11 +136,11 @@ import { TrainingPlanService } from './services/traininig-plan.service'
     FilterSearchPipeModule
   ],
   entryComponents: [
-    ConfirmationBoxComponent,
   ],
   providers: [
     InitResolver,
     TrainingPlanService,
+    UpdatePlanResolveService
   ],
 })
 export class TrainingPlanModule {

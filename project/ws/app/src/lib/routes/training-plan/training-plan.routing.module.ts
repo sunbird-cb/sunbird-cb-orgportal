@@ -4,6 +4,7 @@ import { ConfigResolveService } from './resolvers/config-resolve.service'
 import { TrainingPlanHomeComponent } from './routes/training-plan-home/training-plan-home.component'
 import { CreatePlanComponent } from './routes/create-plan/create-plan.component'
 import { PreviewPlanComponent } from './routes/preview-plan/preview-plan.component'
+import { UpdatePlanResolveService } from './resolvers/update-plan-resolve.service'
 
 const routes: Routes = [
   {
@@ -33,6 +34,9 @@ const routes: Routes = [
           pageId: 'update-plan',
           module: 'Create Plan',
         },
+        resolve: {
+          contentData: UpdatePlanResolveService
+        }
       },
       {
         path: 'preview-plan',

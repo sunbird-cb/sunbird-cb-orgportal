@@ -20,10 +20,10 @@ export class StepperComponent implements OnInit, OnChanges {
   addAssigneeDisable = true
   addTimelineDisable = true
 
-  constructor() { }
+  constructor(
+  ) { }
 
   ngOnInit() {
-
   }
 
   ngOnChanges() {

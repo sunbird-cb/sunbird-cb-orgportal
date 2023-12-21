@@ -33,14 +33,14 @@ export class CreateTimelineComponent implements OnInit {
     }
     if (this.trainingPlanDataSharingService.trainingPlanAssigneeData &&
       this.trainingPlanDataSharingService.trainingPlanAssigneeData.data &&
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users'
+      this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'CustomUser'
     ) {
       const category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
       const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
         return item.selected
       })
-      this.assigneeData = { category, data:  assigneeData  }
-      console.log('this.assigneeData',this.assigneeData);
+      this.assigneeData = { category, data: assigneeData }
+      console.log('this.assigneeData', this.assigneeData)
     }
   }
 

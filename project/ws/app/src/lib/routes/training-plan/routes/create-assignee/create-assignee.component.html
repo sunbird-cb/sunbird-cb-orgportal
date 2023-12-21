@@ -2,16 +2,16 @@
     <ws-app-search [categoryData]="categoryData" [from]="from" (handleApiData)="handleApiData($event)"></ws-app-search>
 </ng-container>
 <ng-container>
-    <ws-app-chip [selectedAssigneeChips]="selectedAssigneeChips" [from]="from" 
+    <ws-app-chip [selectedAssigneeChips]="selectedAssigneeChips" [from]="from"
         [selectAssigneeCount]="selectAssigneeCount"></ws-app-chip>
 </ng-container>
 <ng-container>
     <ws-app-user-card [assigneeData]="assigneeData" (handleSelectedChips)="handleSelectedChips($event)"
-        *ngIf="assigneeData?.category === 'Designation'" [showPagination]="true" ></ws-app-user-card>
+        *ngIf="assigneeData?.category === 'Designation'" [showPagination]="true"></ws-app-user-card>
     <ws-app-user-card [assigneeData]="assigneeData" (handleSelectedChips)="handleSelectedChips($event)"
-        *ngIf="assigneeData?.category === 'Custom Users'" [showPagination]="true" ></ws-app-user-card>
+        *ngIf="assigneeData?.category === 'CustomUser'" [showPagination]="true"></ws-app-user-card>
 </ng-container>
-<ng-container *ngIf="trainingPlanDataSharingService?.trainingPlanAssigneeData?.category === 'All Users'">
+<ng-container *ngIf="trainingPlanDataSharingService?.trainingPlanAssigneeData?.category === 'AllUser'">
     <div class="no-cbp-data margin-top-xl margin-bottom-xl">
         <div><img src="/assets/icons/no-data.svg"></div>
         <div class="mat-subheading-1 margin-remove">It will assign to all users</div>

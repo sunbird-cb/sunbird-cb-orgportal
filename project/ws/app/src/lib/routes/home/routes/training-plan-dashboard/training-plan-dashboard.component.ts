@@ -30,11 +30,11 @@ export class TrainingPlanDashboardComponent implements OnInit {
     selected: true,
   }, {
     name: 'All users',
-    value: 'All Users',
+    value: 'AllUser',
     selected: false,
   }, {
     name: 'Custom users',
-    value: 'Custom Users',
+    value: 'CustomUser',
     selected: false,
   }]
   fetchContentDone!: boolean
@@ -162,9 +162,9 @@ export class TrainingPlanDashboardComponent implements OnInit {
   }
 
   convertDataAsPerTable() {
-    this.trainingPlanData.map((res: any) => {
+    this.completeDataRes.map((res: any) => {
       res.contentCount = (res.contentList) ? res.contentList.length : 0
-      res.assigneeCount = (res.userDetails) ? res.userDetails.length : 0
+      res.assigneeCount = (res.userType === 'AllUser') ? 'All Users' : (res.userDetails) ? res.userDetails.length : 0
       res.endDate = (res.endDate) ? moment(res.endDate).format('MMM DD[,] YYYY') : ''
       res.createdAt = (res.createdAt) ? moment(res.createdAt).format('MMM DD[,] YYYY') : ''
     })
@@ -198,7 +198,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
   }
 
   editContentData(_selectedRow: any) {
-    this.router.navigate(['app', 'training-plan', 'create-plan'], { queryParams: { planId: _selectedRow.id } })
+    this.router.navigate(['app', 'training-plan', 'update-plan', _selectedRow.id])
   }
 
   showConformationModal(_selectedRow: any, _type: any) {
