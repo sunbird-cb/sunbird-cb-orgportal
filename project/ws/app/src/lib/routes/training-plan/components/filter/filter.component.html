@@ -6,11 +6,9 @@
                 <div class="cross-filter cursor-pointer" (click)="hideFilter()"><img src="assets/icons/close.svg"></div>
             </div>
         </div>
-        <div class="filter-content-container">
+        <div class="filter-content-container" *ngIf="from === 'content'">
             <div class="filter-content flex flex-1">
                 <mat-accordion>
-                    <!-- (opened)="panelOpenState = true"
-                        (closed)="panelOpenState = false" -->
                     <mat-expansion-panel disableRipple [expanded]="true">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -23,24 +21,6 @@
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
-            <!-- <div class="spacer"></div>
-            <div class="filter-content flex flex-1">
-                <mat-accordion>
-                    <mat-expansion-panel disableRipple [expanded]="true">
-                        <mat-expansion-panel-header >
-                            <mat-panel-title>
-                                Competency Type
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div class="flex flex-1 flex-row category-item">
-                            <mat-checkbox disableRipple class="example-margin">Core</mat-checkbox>
-                        </div>
-                        <div class="flex flex-1 flex-row category-item">
-                            <mat-checkbox disableRipple class="example-margin">Leadership</mat-checkbox>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </div> -->
             <div class="spacer" *ngIf="competencyThemeList.length"></div>
             <div class="filter-content flex flex-1" *ngIf="competencyThemeList.length">
                 <mat-accordion>
@@ -101,6 +81,36 @@
                             <div class="flex flex-1 flex-row category-item" *ngFor="let item of providersList">
                                 <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="checkedProviders($event, item?.name)">{{item?.name}}</mat-checkbox>
                             </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+        <div class="filter-content-container" *ngIf="from === 'assignee'">
+            <div class="filter-content flex flex-1">
+                <mat-accordion>
+                    <mat-expansion-panel disableRipple [expanded]="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Groups
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="flex flex-1 flex-row category-item" *ngFor="let group of groupList">
+                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="manageSelectedGroup($event, group)">{{group?.name}}</mat-checkbox>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <div class="filter-content flex flex-1">
+                <mat-accordion>
+                    <mat-expansion-panel disableRipple [expanded]="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Designation
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="flex flex-1 flex-row category-item" *ngFor="let des of designationList">
+                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="manageSelectedDesignation($event, des)">{{des?.name}}</mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>

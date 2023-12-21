@@ -4,7 +4,7 @@
         <ng-container *ngFor="let item of selectedContentChips | slice : 0 : 3">
             <div class="chips flex flex-row" *ngIf="item?.selected">
                 <div class="chips-content">
-                    <span class="color-60">{{item?.name}}</span>
+                    <span class="color-60">{{item?.name | titlecase}}</span>
                 </div>
                 <div class="cross-icon" (click)="removeContent(item)">
                     <img class="cursor-pointer" src="assets/icons/close.svg" />
@@ -25,8 +25,8 @@
         <ng-container *ngFor="let item of selectedAssigneeChips | slice : 0 : 3">
             <div class="chips flex flex-row" *ngIf="item?.selected">
                 <div class="chips-content">
-                    <span class="color-60">{{(item?.name) ? item?.name : (item?.firstName) ? item?.firstName :
-                        ''}}</span>
+                    <span class="color-60">{{((item?.name) ? item?.name : (item?.firstName) ? item?.firstName :
+                        '') | titlecase}}</span>
                 </div>
                 <div class="cross-icon" (click)="removeAssignee(item)">
                     <img class="cursor-pointer" src="assets/icons/close.svg" />
@@ -47,7 +47,7 @@
         <ng-container *ngFor="let item of selectedAssigneeChips | slice : 0 : 3">
             <div class="chips flex flex-row" *ngIf="item?.selected">
                 <div class="chips-content">
-                    <span class="color-60">{{item?.firstName}}</span>
+                    <span class="color-60">{{item?.firstName | titlecase}}</span>
                 </div>
                 <div class="cross-icon" (click)="removeAssignee(item)">
                     <img class="cursor-pointer" src="assets/icons/close.svg" />

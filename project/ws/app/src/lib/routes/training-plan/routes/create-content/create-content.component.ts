@@ -20,27 +20,27 @@ export class CreateContentComponent implements OnInit {
     this.categoryData = [
       {
         id: 1,
-        name: 'Course',
+        name: 'Courses',
         value: 'Course',
       },
       {
         id: 4,
-        name: 'Curated program',
+        name: 'Curated programs',
         value: 'Curated program',
       },
       {
         id: 3,
-        name: 'Blended program',
+        name: 'Blended programs',
         value: 'Blended program',
       },
       {
         id: 2,
-        name: 'Program',
-        value: 'Program',
+        name: 'Standalone Assessments',
+        value: 'Standalone Assessment',
       },
       {
         id: 5,
-        name: 'Moderated Course',
+        name: 'Moderated Courses',
         value: 'Moderated Course',
       },
     ]

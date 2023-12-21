@@ -65,7 +65,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
           this.handleCategorySelection.emit(event);
         }
         break
-      case 'Program':
+      case 'Standalone Assessment':
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
         dialogData['title'] = 'You are attempting to change the selected content type?'
@@ -73,7 +73,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         It's advisable to save the current one as a draft and create a new one instead.`
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
-        dialogData['event'] = 'Program'
+        dialogData['event'] = 'Standalone Assessment'
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
         this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false);
         if(this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {

@@ -12,13 +12,13 @@
         </div>
         <button mat-button type="button" class="search-btn" (click)="searchData()">Search</button>
     </div>
-    <div class="filter-section flex flex-end" *ngIf="!(trainingPlanDataSharingService?.trainingPlanAssigneeData?.category === 'Designation'
-    || trainingPlanDataSharingService?.trainingPlanAssigneeData?.category === 'All Users')">
+    <div class="filter-section flex flex-end" *ngIf="(trainingPlanDataSharingService?.trainingPlanAssigneeData?.category !== 'Designation'
+    && trainingPlanDataSharingService?.trainingPlanAssigneeData?.category !== 'All Users') || from === 'content'">
         <button mat-button type="button" (click)="openFilter()" class="apply-filter">
             <mat-icon class="margin-right-xs">filter_list</mat-icon> Apply Filters
         </button>
     </div>
 </div>
 <div [hidden]="!filterVisibilityFlag">
-    <ws-app-filter (toggleFilter)="hideFilter($event)" (getFilterData)="getFilterData($event)" [clearFilterFlag]="clearFilter"></ws-app-filter>
+    <ws-app-filter (toggleFilter)="hideFilter($event)" [from]="from" [designationList]="designationList" (getFilterData)="getFilterData($event)" [clearFilterFlag]="clearFilter"></ws-app-filter>
 </div>

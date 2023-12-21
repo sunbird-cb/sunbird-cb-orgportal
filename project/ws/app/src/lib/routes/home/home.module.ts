@@ -64,7 +64,7 @@ import { BlendedApprovalsComponent } from './routes/blended-approvals/blended-ap
 import { ReportsSectionComponent } from './routes/reports-section/reports-section.component'
 import { TrainingPlanDashboardComponent } from './routes/training-plan-dashboard/training-plan-dashboard.component'
 import { TrainingPlanDashboardService } from './services/training-plan-dashboard.service'
-import { ConfirmationBoxComponent } from '../training-plan/components/confirmation-box/confirmation.box.component'
+// import { ConfirmationBoxComponent } from '../training-plan/components/confirmation-box/confirmation.box.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -89,7 +89,7 @@ import { ConfirmationBoxComponent } from '../training-plan/components/confirmati
     BlendedApprovalsComponent,
     ReportsSectionComponent,
     TrainingPlanDashboardComponent,
-    ConfirmationBoxComponent
+    // ConfirmationBoxComponent
   ],
   imports: [
     CommonModule,
@@ -148,7 +148,7 @@ import { ConfirmationBoxComponent } from '../training-plan/components/confirmati
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
-    ConfirmationBoxComponent
+    // ConfirmationBoxComponent
   ],
   providers: [
     // CKEditorService,
@@ -157,7 +157,7 @@ import { ConfirmationBoxComponent } from '../training-plan/components/confirmati
     MdoInfoService,
     UploadService,
     TrainingPlanDashboardService,
-  ],
+  ]
 })
 export class HomeModule {
 

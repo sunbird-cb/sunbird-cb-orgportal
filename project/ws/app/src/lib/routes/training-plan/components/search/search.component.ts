@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit {
   filterVisibilityFlag = false
   clearFilter = false;
   selectedDropDownValue: any
+  designationList:any[] = [];
   constructor(@Inject(DOCUMENT) private document: Document,
     private trainingPlanService: TrainingPlanService,
     private route: ActivatedRoute,
@@ -76,25 +77,29 @@ export class SearchComponent implements OnInit {
       if (contentType === 'Moderated Course') {
         this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(true)
       }
+      if(this.searchText) {        
+          this.trainingPlanDataSharingService.clearFilter.next(true);
+          applyFilterObj = {};
+      }
       const filterObj = {
         "request": {
           "secureSettings": contentType === 'Moderated Course' ? true : false, // for moderated course
           "filters": {
             "primaryCategory": [contentType === 'Moderated Course' ? 'Course' : contentType],
-            "organisation":  applyFilterObj && applyFilterObj['providers'].length ? applyFilterObj['providers'] : [],
-            "competencies_v5.competencyArea": applyFilterObj && applyFilterObj['competencyArea'].length ? applyFilterObj['competencyArea'] : [],
-            "competencies_v5.competencyTheme": applyFilterObj && applyFilterObj['competencyTheme'].length ? applyFilterObj['competencyTheme'] : [],
-            "competencies_v5.competencySubTheme" : applyFilterObj && applyFilterObj['competencySubTheme'].length ? applyFilterObj['competencySubTheme'] : []
+            "organisation":  applyFilterObj && applyFilterObj['providers'] && applyFilterObj['providers'].length ? applyFilterObj['providers'] : [],
+            "competencies_v5.competencyArea": applyFilterObj && applyFilterObj['competencyArea'] && applyFilterObj['competencyArea'].length ? applyFilterObj['competencyArea'] : [],
+            "competencies_v5.competencyTheme": applyFilterObj && applyFilterObj['competencyTheme'] && applyFilterObj['competencyTheme'].length ? applyFilterObj['competencyTheme'] : [],
+            "competencies_v5.competencySubTheme" : applyFilterObj && applyFilterObj['competencySubTheme'] && applyFilterObj['competencySubTheme'].length ? applyFilterObj['competencySubTheme'] : []
           },
           "offset": 0,
-          "limit": 20,
+          "limit": 500,
           "query": (this.searchText) ? this.searchText : '',
           "sort_by": { "lastUpdatedOn": "desc" },
           "fields": ["name", "appIcon", "instructions", "description", "purpose", "mimeType",
-            "gradeLevel", "identifier", "medium", "pkgVersion", "board", "subject", "resourceType",
-            "primaryCategory", "contentType", "channel", "organisation", "trackable", "license", "posterImage",
+            "gradeLevel", "identifier", "medium",  "resourceType",
+            "primaryCategory", "contentType", "channel", "organisation", "trackable", "posterImage",
             "idealScreenSize", "learningMode", "creatorLogo", "duration", "programDuration", "version", "avgRating", "competencies_v5"]
-        }, "query": ""
+        }
       }
       this.trainingPlanService.getAllContent(filterObj).subscribe((res: any) => {
 
@@ -115,17 +120,30 @@ export class SearchComponent implements OnInit {
 
   }
 
-  getCustomUsers(event: any) {
+  getCustomUsers(event: any, applyFilterObj?:any) {
     this.loadingService.changeLoaderState(true)
     const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+    if(this.searchText) {      
+        this.trainingPlanDataSharingService.clearFilter.next(true);
+        applyFilterObj = {};
+    }
     const filterObj = {
       request: {
         query: (this.searchText) ? this.searchText : '',
         filters: {
           rootOrgId,
           status: 1,
+          "profileDetails.professionalDetails.designation": applyFilterObj && applyFilterObj.designation && applyFilterObj.designation.length ? applyFilterObj.designation : [],
+          "profileDetails.professionalDetails.group": applyFilterObj && applyFilterObj.group && applyFilterObj.group.length ? applyFilterObj.group : [],
         },
-        limit: 100,
+        "fields": [
+            "userId",
+            "firstName",
+            "rootOrgName",
+            "profileDetails",
+            "organisations"
+        ],
+        limit: 500,
         offset: 0,
       },
     }
@@ -155,6 +173,7 @@ export class SearchComponent implements OnInit {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: resArr }
       } else {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData = { category: event, data: res.result.response.content }
+        this.designationList = res.result.response.content;
       }
       
       this.handleApiData.emit(true)
@@ -165,7 +184,7 @@ export class SearchComponent implements OnInit {
   searchData() {
     switch (this.selectedDropDownValue) {
       case 'Course':
-      case 'Program':
+      case 'Standalone Assessment':
       case 'Blended program':
       case 'Curated program':
       case 'Moderated Course':
@@ -184,7 +203,12 @@ export class SearchComponent implements OnInit {
   }
 
   getFilterData(event:any) {
-    this.getContent(this.selectedDropDownValue, event);
+    if(this.from == 'content') {
+      this.getContent(this.selectedDropDownValue, event);
+    } else {
+      this.getCustomUsers(this.selectedDropDownValue, event);
+    }
+    
   }
 
 }

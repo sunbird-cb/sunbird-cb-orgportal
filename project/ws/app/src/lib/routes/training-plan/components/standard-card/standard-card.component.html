@@ -16,7 +16,7 @@
                             </div>
                             <img mat-card-image loading="lazy"
                                 class="card-img ws-mat-primary-lite-background margin-remove"
-                                [src]="item?.posterImage" />
+                                [src]="item?.posterImage" [wsUtilsDefaultThumbnail]="defaultPosterImage"/>
                         </ng-container>
                         <div class="duration-box right-corner"  *ngIf="item?.duration > 0">
                             <mat-icon class="mat-icon main_icon mr-1 notranslate material-icons mat-icon-no-color">access_time</mat-icon>
@@ -75,6 +75,6 @@
         
     </div>
     <div class="flex flex-row justify-center" *ngIf="showPagination">
-        <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" [length]="contentData?.length" (page)="onChangePage($event)"></mat-paginator>
+        <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[20,30,40]" (page)="onChangePage($event)"></mat-paginator>
     </div>
 </ng-container>

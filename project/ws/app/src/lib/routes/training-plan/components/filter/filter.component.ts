@@ -12,23 +12,36 @@ export class FilterComponent implements OnInit {
   @Output() toggleFilter = new EventEmitter()
   @Output() getFilterData = new EventEmitter();
   @Input() clearFilterFlag:any;
+  @Input() from:any;
+  @Input() designationList:any;
   providersList: any[] = [];
   selectedProviders: any[] = [];
   competencyTypeList = [{ "id": "Behavioral", name: 'Behavioural' }, { "id": 'Functional', name: 'Functional' }, { "id": 'Domain', name: 'Domain' }];
+  groupList = [{ "id": "groupA", name: 'Group A' }, { "id": 'groupB', name: 'Group B' }, { "id": 'groupC', name: 'Group C' }, { "id": 'groupD', name: 'Group D' }, { "id": 'groupE', name: 'Group E' }];
   competencyList: any = [];
   competencyThemeList: any[] = [];
   competencySubThemeList: any[] = [];
   filterObj: any = { "competencyArea": [], "competencyTheme": [], "competencySubTheme": [], "providers": [] };
+  assigneeFilterObj:any = {"group": [], "designation": []}
   searchThemeControl = new FormControl();
   @ViewChildren("checkboxes") checkboxes!: QueryList<ElementRef>;
   constructor(private trainingPlanService: TrainingPlanService, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
-    this.getFilterEntity();
-    this.getProviders();
+    if(this.from === 'content') {
+      this.getFilterEntity();
+      this.getProviders();
+    } else {
+      // if(this.trainingPlanDataSharingService.trainingPlanAssigneeData && 
+      //   this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users') {
+      //   this.getDesignation();
+      // }
+      
+    }
+    
     this.trainingPlanDataSharingService.clearFilter.subscribe((result:any)=>{
       if(result) {
-        this.clearFilter();
+        this.clearFilterWhileSearch();
       }
     })
   }
@@ -140,18 +153,76 @@ export class FilterComponent implements OnInit {
   }
 
   applyFilter() {
-    this.getFilterData.emit(this.filterObj);
+    if(this.from === 'content') {
+      this.getFilterData.emit(this.filterObj);
+    } else {
+      this.getFilterData.emit(this.assigneeFilterObj);
+    }
     this.toggleFilter.emit(false)
   }
 
   clearFilter() {
     console.log('this.clearFilter', this.checkboxes);
-    this.filterObj = {};
+    if(this.from === 'content') {
+      this.filterObj = {};
+    } else {
+      this.assigneeFilterObj = {};
+    }
+    
+    if(this.from === 'content') {
+      this.getFilterData.emit(this.filterObj);
+    } else {
+      this.getFilterData.emit(this.assigneeFilterObj);
+    }
     if(this.checkboxes) {
       this.checkboxes.forEach((element: any) => {
         element['checked'] = false;
       });
     }
     
+  }
+
+  clearFilterWhileSearch() {
+    if(this.checkboxes) {
+      this.checkboxes.forEach((element: any) => {
+        element['checked'] = false;
+      });
+    }
+  }
+
+  
+
+  // getDesignation() {
+  //   this.trainingPlanService.getDesignations().subscribe((res: any) => {
+  //     console.log('res', res)
+  //     if(res && res.result && res.result.response) {
+  //       this.designationList = res.result.response.content;
+  //     }
+      
+  //   })
+  // }
+
+  manageSelectedGroup(event:any, group:any) {
+    console.log(event,group);
+    if (event) {
+      this.assigneeFilterObj['group'].push(group.name);
+    } else {
+      if (this.assigneeFilterObj['group'].indexOf(group.name) > -1) {
+        const index = this.assigneeFilterObj['group'].findIndex((x: any) => x === group.name)
+        this.assigneeFilterObj['group'].splice(index, 1)
+      }
+    }
+  }
+
+  manageSelectedDesignation(event:any, designation:any) {
+    console.log(event,designation);
+    if (event) {
+      this.assigneeFilterObj['designation'].push(designation.name);
+    } else {
+      if (this.assigneeFilterObj['designation'].indexOf(designation.name) > -1) {
+        const index = this.assigneeFilterObj['designation'].findIndex((x: any) => x === designation.name)
+        this.assigneeFilterObj['designation'].splice(index, 1)
+      }
+    }
   }
 }

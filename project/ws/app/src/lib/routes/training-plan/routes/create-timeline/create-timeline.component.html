@@ -4,7 +4,7 @@
 <ng-container *ngIf="contentData.length">
     <div class="margin-top-xl">
         <div class="flex flex-middle flex-between">
-            <div class="mat-subheading-1 margin-remove">Selected Content</div>
+            <div class="mat-subheading-1 margin-remove">Selected Content <span *ngIf="contentData.length">( {{contentData.length }})</span></div>
             <a mat-button (click)="showAll('content')" class="show-all">Show all <mat-icon>keyboard_arrow_right</mat-icon></a>
         </div>
     </div>
@@ -13,7 +13,10 @@
 <ng-container *ngIf="assigneeData && (assigneeData?.data?.length || assigneeData?.data?.content.length)">
     <div class="margin-top-xl">
         <div class=" flex flex-middle flex-between">
-            <div class="mat-subheading-1 margin-remove">Selected Cards</div>
+            <div class="mat-subheading-1 margin-remove">Selected Assignee 
+                <span *ngIf="assigneeData && (assigneeData?.data?.length || assigneeData?.data?.content.length)">
+                    ( {{(assigneeData?.data?.length) || (assigneeData?.data?.content.length)}} )
+                </span></div>
             <a mat-button (click)="showAll('assignee')" class="show-all">Show all <mat-icon>keyboard_arrow_right</mat-icon></a>
         </div>
     </div>

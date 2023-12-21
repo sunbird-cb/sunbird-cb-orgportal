@@ -141,19 +141,22 @@ export class UserCardComponent implements OnInit, OnChanges {
       initials += array[0].charAt(0)
       initials += array[1].charAt(0)
     } else {
-      for (let i = 0; i < name.length; i += 1) {
-        if (name.charAt(i) === ' ') {
-          continue
-        }
-
-        if (name.charAt(i) === name.charAt(i)) {
-          initials += name.charAt(i)
-
-          if (initials.length === 2) {
-            break
+      if(name) {
+        for (let i = 0; i < name.length; i += 1) {
+          if (name.charAt(i) === ' ') {
+            continue
+          }
+  
+          if (name.charAt(i) === name.charAt(i)) {
+            initials += name.charAt(i)
+  
+            if (initials.length === 2) {
+              break
+            }
           }
         }
       }
+      
     }
     return initials.toUpperCase()
   }

@@ -18,8 +18,9 @@ export class StandardCardComponent implements OnInit, OnChanges {
   dataSource: any;
   selectedContent: any[] = []
   startIndex = 0;
-  lastIndex = 10; 
-  pageSize = 10;
+  lastIndex = 20; 
+  pageSize = 20;
+  defaultPosterImage: SafeUrl | null = '/assets/instances/eagle/app_logos/default.png';
   defaultThumbnail: SafeUrl | null = 'assets/instances/eagle/app_logos/KarmayogiBharat_Logo.svg'
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private changeDetectorRef: ChangeDetectorRef) { }
 
