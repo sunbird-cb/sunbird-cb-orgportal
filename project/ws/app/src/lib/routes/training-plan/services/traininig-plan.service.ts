@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, retry } from 'rxjs/operators'
 // tslint:disable
 import _ from 'lodash'
 // tslint:enable
@@ -44,7 +44,7 @@ export class TrainingPlanService {
         'Content-Type': 'application/json',
       }),
       body: obj,
-    };
+    }
     return this.http.delete<any>(`${API_END_POINTS.ARCHIVE_PLAN}`, options)
   }
 
@@ -53,7 +53,7 @@ export class TrainingPlanService {
   }
 
   getAllContent(filter: object): Observable<any> {
-    return this.http.post<any>(`${API_END_POINTS.GET_ALL_CONTENT}`, filter).pipe(map(res => _.get(res, 'result')))
+    return this.http.post<any>(`${API_END_POINTS.GET_ALL_CONTENT}`, filter).pipe(map(res => _.get(res, 'result')), retry(1))
   }
 
   getCustomUsers(filter: object): Observable<any> {
@@ -64,12 +64,12 @@ export class TrainingPlanService {
     return this.http.get<any>(API_END_POINTS.GET_ALL_DESIGNATIONS)
   }
 
-  getFilterEntity(filter:object): Observable<any> {
+  getFilterEntity(filter: object): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.GET_FILTER_ENTITY}`, filter).pipe(map(res => _.get(res, 'result.competency')))
   }
 
   getProviders() {
-    return this.http.get<any>(API_END_POINTS.GET_PROVIDERS);
+    return this.http.get<any>(API_END_POINTS.GET_PROVIDERS)
   }
 
 }

@@ -1,7 +1,6 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { TrainingPlanService } from '../../services/traininig-plan.service'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 /* tslint:disable */
 import _ from 'lodash'
@@ -20,8 +19,7 @@ export class CreatePlanComponent implements OnInit, OnDestroy {
   planId = ''
   constructor(
     private route: ActivatedRoute,
-    private trainingPlanService: TrainingPlanService,
-    private trainingPlanDataSharingService: TrainingPlanDataSharingService) {
+    private tpdsSvc: TrainingPlanDataSharingService) {
   }
 
   ngOnDestroy() {
@@ -29,39 +27,23 @@ export class CreatePlanComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((_res: any) => {
-      if (_res && _res.planId) {
-        this.getContentData(_res.planId)
+    const contentData = this.route.snapshot.data['contentData']
+    if (contentData) {
+      this.tpdsSvc.trainingPlanTitle = contentData.name
+      this.tpdsSvc.trainingPlanContentData = { data: { content: contentData.contentList } }
+      if (contentData.assignmentType === 'CustomUser') {
+        this.tpdsSvc.trainingPlanAssigneeData = { data: { content: contentData.assignmentTypeInfo } }
+      } else {
+        this.tpdsSvc.trainingPlanAssigneeData = contentData.assignmentTypeInfo
       }
-    })
-  }
-
-  getContentData(_id: string) {
-    this.trainingPlanService.readPlan(_id).subscribe((response: any) => {
-      console.log('read data', response)
-      if (response && response.result && response.result.content) {
-        console.log('read data', response)
-        if (response && response.result && response.result.content) {
-          console.log('trainingPlanDataSharingService', this.trainingPlanDataSharingService)
-          this.trainingPlanDataSharingService.trainingPlanTitle = response.result.content.name
-          this.trainingPlanDataSharingService.trainingPlanContentData = { data: { content: response.result.content.contentList } }
-          if (this.trainingPlanDataSharingService.trainingPlanAssigneeData) {
-            if (response.result.content.userType === 'custom') {
-              this.trainingPlanDataSharingService.trainingPlanAssigneeData['category'] = 'Custom Users'
-            } else {
-              this.trainingPlanDataSharingService.trainingPlanAssigneeData['category'] = response.result.content.userType
-            }
-          }
-          if (response.result.content.userType === 'custom') {
-            this.trainingPlanDataSharingService.trainingPlanAssigneeData = { data: { content: response.result.content.userDetails } }
-          } else {
-            this.trainingPlanDataSharingService.trainingPlanAssigneeData = response.result.content.userDetails
-          }
-          this.trainingPlanDataSharingService.trainingPlanStepperData['endDate'] = response.result.content.endDate
-          this.trainingPlanDataSharingService.trainingPlanStepperData['status'] = response.result.content.status
-        }
+      if (contentData.contentList && contentData.contentList.length > 0) {
+        contentData.contentList.forEach((ele: any) => {
+          this.tpdsSvc.trainingPlanStepperData['contentList'].push(ele.identifier)
+        })
       }
-    })
+      this.tpdsSvc.trainingPlanStepperData['endDate'] = contentData.endDate
+      this.tpdsSvc.trainingPlanStepperData['status'] = contentData.status
+    }
   }
 
   selectedTabAction(_event: any) {

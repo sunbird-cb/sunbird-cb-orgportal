@@ -1,4 +1,4 @@
-<div class="flex flex-4 flex-row assignee-card-container flex-wrap" *ngIf="assigneeData?.category === 'Custom Users'">
+<div class="flex flex-4 flex-row assignee-card-container flex-wrap" *ngIf="assigneeData?.category === 'CustomUser'">
     <ng-container *ngFor="let item of assigneeData?.data | slice : startIndex : lastIndex">
         <div class="flex flex-4 assignee-card" [ngClass]="item?.selected ? 'active-card':''"
             [ngClass]="!checkboxVisibility ? 'assignee-card-without-checkbox' : ''">
@@ -46,5 +46,6 @@
 </div>
 
 <div *ngIf="showPagination" class="flex flex-row justify-center">
-    <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" [length]="contentData?.length" (page)="onChangePage($event)"></mat-paginator>
+    <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" [length]="contentData?.length"
+        (page)="onChangePage($event)"></mat-paginator>
 </div>

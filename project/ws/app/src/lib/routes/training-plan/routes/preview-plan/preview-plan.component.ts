@@ -35,11 +35,11 @@ export class PreviewPlanComponent implements OnInit {
           return item.selected
         })
         this.assigneeData = { category, data: assigneeData }
-      } else if (category === 'Custom Users') {
+      } else if (category === 'CustomUser') {
         const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
           return item.selected
         })
-        this.assigneeData = { category, data:  assigneeData }
+        this.assigneeData = { category, data: assigneeData }
       }
 
     } else if (this.from === 'all') {
@@ -58,7 +58,7 @@ export class PreviewPlanComponent implements OnInit {
       this.allContentChips = arr
       if (this.trainingPlanDataSharingService.trainingPlanAssigneeData) {
         const category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
-        if (category === 'Custom Users') {
+        if (category === 'CustomUser') {
           const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
             return item.selected
           })

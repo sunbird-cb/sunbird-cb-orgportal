@@ -16,26 +16,29 @@ export class AddPlanInformationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private trainingPlanDataSharingSvc: TrainingPlanDataSharingService
+    private tpdsSvc: TrainingPlanDataSharingService
   ) { }
 
   ngOnInit() {
-    if (!this.trainingPlanDataSharingSvc.trainingPlanTitle) {
+    if (!this.tpdsSvc.trainingPlanTitle) {
       this.planTitleInvalid.emit(true)
     }
     this.contentForm = this.formBuilder.group({
       name:
-        new FormControl((this.trainingPlanDataSharingSvc.trainingPlanTitle) ? this.trainingPlanDataSharingSvc.trainingPlanTitle : '',
-                        [Validators.required, Validators.minLength(10)]),
+        new FormControl('', [Validators.required, Validators.minLength(10)]),
     })
-    
-    this.contentForm.controls['name'].valueChanges.pipe(debounceTime(200)).subscribe((_ele: any) => {
+
+    this.contentForm.controls['name'].valueChanges.pipe(debounceTime(500)).subscribe((_ele: any) => {
       if (!this.contentForm.invalid) {
-        this.trainingPlanDataSharingSvc.trainingPlanTitle = _ele
-        this.trainingPlanDataSharingSvc.trainingPlanStepperData.name = _ele
+        this.tpdsSvc.trainingPlanTitle = _ele
+        this.tpdsSvc.trainingPlanStepperData.name = _ele
       }
       this.planTitleInvalid.emit(this.contentForm.invalid)
     })
+
+    if (this.tpdsSvc.trainingPlanTitle) {
+      this.contentForm.controls['name'].setValue(this.tpdsSvc.trainingPlanTitle)
+    }
   }
 
 }
