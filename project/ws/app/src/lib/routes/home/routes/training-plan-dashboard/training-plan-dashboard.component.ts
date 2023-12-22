@@ -194,7 +194,8 @@ export class TrainingPlanDashboardComponent implements OnInit {
   }
 
   previewData(_selectedRow: any) {
-    this.loaderService.changeLoaderState(true)
+    // this.loaderService.changeLoaderState(true)
+    this.router.navigate(['app', 'training-plan', 'preview-plan-for-dashboard', _selectedRow.id])
   }
 
   editContentData(_selectedRow: any) {

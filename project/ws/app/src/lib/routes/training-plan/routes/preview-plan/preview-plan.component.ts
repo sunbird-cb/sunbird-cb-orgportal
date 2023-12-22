@@ -7,7 +7,7 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
   styleUrls: ['./preview-plan.component.scss'],
 })
 export class PreviewPlanComponent implements OnInit {
-  contentData: any = []
+  contentList: any = []
   assigneeData: any = []
   from: any = ''
   tab: any = ''
@@ -19,12 +19,60 @@ export class PreviewPlanComponent implements OnInit {
     private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
-    this.from = this.route.snapshot.queryParams['from']
-    this.tab = this.selectedTab = this.route.snapshot.queryParams['tab']
-    if (this.from === 'content') {
+    this.from = this.route.snapshot.queryParams['from']    
+    const contentData = this.route.snapshot.data['contentData']
+    const category = contentData.assignmentType
+    if (contentData) {
+      this.from = 'all';
+      console.log('contentData-->', contentData);
+      const arr = [];      
+      this.tab = this.selectedTab = 'content';
+      if (contentData.assignmentTypeInfo) {        
+        if (category === 'custom') {
+          const assigneeData = contentData.assignmentTypeInfo;
+          this.assigneeData = { category, data: assigneeData }
+        }
+        if (category === 'Designation') {
+          let assignmentDataArr:any = [];
+           contentData.assignmentTypeInfo.map((item: any) => {
+            assignmentDataArr.push({name:item})
+          })
+          this.assigneeData = { category, data: assignmentDataArr }
+        }
+      }
+
+      if (contentData &&
+        contentData.contentList) {
+          this.contentList = contentData.contentList;
+        console.log(this.contentList, contentData.contentList);
+      }
+      if(category.toLowerCase() !== 'alluser') {
+        arr.push({
+          name: contentData.contentType,
+          tab: 'content',
+          selected: (this.tab === 'content' ? true : false),
+          count: this.contentList.length
+        })
+        arr.push({
+          name: contentData.assignmentType,
+          tab: 'assignee',
+          selected: (this.tab === 'assignee' ? true : false),
+          count: this.assigneeData.data.length
+        })
+        this.allContentChips = arr
+      } else {
+        arr.push({
+          name: contentData.contentType,
+          tab: 'content',
+          selected: (this.tab === 'content' ? true : false),
+          count: this.contentList.length
+        })
+        this.allContentChips = arr
+      }
+    } else  if (this.from === 'content') {
       if (this.trainingPlanDataSharingService.trainingPlanContentData &&
         this.trainingPlanDataSharingService.trainingPlanContentData.data) {
-        this.contentData = this.trainingPlanDataSharingService.trainingPlanContentData.data.content.filter((item: any) => {
+        this.contentList = this.trainingPlanDataSharingService.trainingPlanContentData.data.content.filter((item: any) => {
           return item.selected
         })
       }
@@ -42,45 +90,7 @@ export class PreviewPlanComponent implements OnInit {
         this.assigneeData = { category, data: assigneeData }
       }
 
-    } else if (this.from === 'all') {
-      const arr = []
-      arr.push({
-        name: this.trainingPlanDataSharingService.trainingPlanStepperData.contentType,
-        tab: 'content',
-        selected: (this.tab === 'content' ? true : false),
-      })
-      this.allContentChips = arr
-      arr.push({
-        name: this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType,
-        tab: 'assignee',
-        selected: (this.tab === 'assignee' ? true : false),
-      })
-      this.allContentChips = arr
-      if (this.trainingPlanDataSharingService.trainingPlanAssigneeData) {
-        const category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
-        if (category === 'CustomUser') {
-          const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
-            return item.selected
-          })
-          this.assigneeData = { category, data: assigneeData }
-        }
-        if (category === 'Designation') {
-          const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
-            return item.selected
-          })
-          this.assigneeData = { category, data: assigneeData }
-        }
-      }
-
-      if (this.trainingPlanDataSharingService.trainingPlanContentData &&
-        this.trainingPlanDataSharingService.trainingPlanContentData.data) {
-        this.contentData = this.trainingPlanDataSharingService.trainingPlanContentData.data.content.filter((item: any) => {
-          return item.selected
-        })
-      }
-
     }
-
   }
 
   goBack() {

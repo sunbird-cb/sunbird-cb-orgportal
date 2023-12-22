@@ -13,17 +13,15 @@
 </div>
 <div class="flex content-container" *ngIf="from === 'all'">
     <mat-chip-list [multiple]="true" [selectable]="true">
-        <mat-chip *ngFor="let item of allContentChips" [selected]="selectedTab == item.tab"
-            (click)="selectedTab = item.tab">{{item.name}} 
-        <span *ngIf="selectedTab === 'content'">( {{contentData.length}} )</span>
-        <span *ngIf="selectedTab === 'assignee'">( {{assigneeData.length}} )</span>
+        <mat-chip [ngClass]="selectedTab == item.tab ? 'select-tab': ''" *ngFor="let item of allContentChips" [selected]="selectedTab == item.tab"
+            (click)="selectedTab = item.tab">{{item.name}} <span>( {{item?.count}} )</span>
         </mat-chip>
     </mat-chip-list>
 
 </div>
 <div class="content-container flex" *ngIf="from === 'all'">
     <ng-container *ngIf="selectedTab === 'content'">
-        <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentData"></ws-app-standard-card>
+        <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentList"></ws-app-standard-card>
     </ng-container>
     <ng-container *ngIf="selectedTab === 'assignee'">
         <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData"></ws-app-user-card>

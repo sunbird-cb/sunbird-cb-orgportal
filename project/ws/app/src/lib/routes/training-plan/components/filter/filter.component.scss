@@ -110,9 +110,14 @@
 .category-item {
     color: rgba(0,0,0,0.6);
     padding: 12px 0;
+    width: 318px;
+    overflow: hidden;
 }
 
-
+::ng-deep .mat-checkbox-label {
+    width: 300px;
+    white-space: pre-wrap;
+}
 /** Search **/
 
 .rsearch {

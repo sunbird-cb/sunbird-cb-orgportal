@@ -46,6 +46,17 @@ const routes: Routes = [
           module: 'Preview Plan',
         },
       },
+      {
+        path: 'preview-plan-for-dashboard/:planId',
+        component: PreviewPlanComponent,
+        data: {
+          pageId: 'preview-plan',
+          module: 'Preview Plan',
+        },
+        resolve: {
+          contentData: UpdatePlanResolveService
+        }
+      },
     ],
   },
 ]

@@ -102,7 +102,7 @@ export class SearchComponent implements OnInit {
         }
       }
       this.trainingPlanService.getAllContent(filterObj).subscribe((res: any) => {
-        if (this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data.content) {
+        if (this.tpdsSvc.trainingPlanContentData && this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data.content) {
           this.tpdsSvc.trainingPlanContentData = {
             category: contentType,
             data: { content: _.uniqBy(_.concat(this.tpdsSvc.trainingPlanContentData.data.content, res.content), 'identifier') }
