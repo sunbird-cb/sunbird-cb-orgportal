@@ -30,7 +30,7 @@ export class PreviewPlanComponent implements OnInit {
       if (contentData.assignmentTypeInfo) {        
         if (category === 'CustomUser') {
           let assignmentDataArr:any = [];
-          contentData.userDetails.map((item:any)=>{
+          contentData && contentData.userDetails && contentData.userDetails.map((item:any)=>{
             item['profileDetails']['professionalDetails'][0] = item.designation;
             assignmentDataArr.push(item);
           })
