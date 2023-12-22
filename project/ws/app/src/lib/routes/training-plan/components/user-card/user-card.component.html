@@ -8,7 +8,8 @@
             </div>
             <div class="assignee-desc">
                 <p>{{item?.firstName}} </p>
-                <p class="sub-heading">{{item?.rootOrgName}}</p>
+                <p class="sub-heading" *ngIf="item?.profileDetails?.professionalDetails && item?.profileDetails?.professionalDetails[0]">{{item?.profileDetails?.professionalDetails
+[0]?.designation }}</p>
             </div>
             <div class="card-cross-icon" *ngIf="showDeleteFlag">
                 <button mat-mini-fab class="card-cross-btn" type="button" (click)="deleteItem(item)">

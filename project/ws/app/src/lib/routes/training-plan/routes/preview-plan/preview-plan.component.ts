@@ -29,16 +29,15 @@ export class PreviewPlanComponent implements OnInit {
       this.tab = this.selectedTab = 'content';
       if (contentData.assignmentTypeInfo) {        
         if (category === 'custom') {
-          const assigneeData = contentData.assignmentTypeInfo.filter((item: any) => {
-            return item.selected
-          })
+          const assigneeData = contentData.assignmentTypeInfo;
           this.assigneeData = { category, data: assigneeData }
         }
         if (category === 'Designation') {
-          const assigneeData = contentData.assignmentTypeInfo.filter((item: any) => {
-            return item.selected
+          let assignmentDataArr:any = [];
+           contentData.assignmentTypeInfo.map((item: any) => {
+            assignmentDataArr.push({name:item})
           })
-          this.assigneeData = { category, data: assigneeData }
+          this.assigneeData = { category, data: assignmentDataArr }
         }
       }
 
