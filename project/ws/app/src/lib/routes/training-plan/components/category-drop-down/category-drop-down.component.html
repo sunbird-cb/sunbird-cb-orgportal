@@ -1,5 +1,5 @@
 <div class="selectWrapper">
-    <select  #select class="selectBox" (change)="showDialogBox(select?.value)">
+    <select #select class="selectBox" (change)="showDialogBox(select?.value)" [(ngModel)]="selectedValue">
         <option *ngFor="let item of categoryData" [value]="item?.value">{{item?.name}}</option>
     </select>
 </div>

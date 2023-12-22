@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, OnInit, OnChanges } from '@angu
 import { MatDialog } from '@angular/material'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
+import { debounceTime } from 'rxjs/operators'
 
 @Component({
   selector: 'ws-app-category-drop-down',
@@ -13,6 +14,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
   @Input() from = ''
   @Output() handleCategorySelection: any = new EventEmitter()
   dialogRef: any
+  selectedValue: any
   constructor(public dialog: MatDialog, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
@@ -21,13 +23,13 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
     // } else if(this.from === 'assignee') {
     //   this.handleCategorySelection.emit('Designation');
     // }
-    this.trainingPlanDataSharingService.trainingPlanCategoryChangeEvent.subscribe((data: any) => {
+    this.trainingPlanDataSharingService.trainingPlanCategoryChangeEvent.pipe(debounceTime(700)).subscribe((data: any) => {
       if (data && data.event) {
-        if(data.event === 'Course' || data.event === 'Standalone Assessment' || data.event === 'Blended program' || data.event === 'Curated program' || data.event === 'Moderated Course') {
-          this.trainingPlanDataSharingService.trainingPlanStepperData.contentList = [];
+        if (data.event === 'Course' || data.event === 'Standalone Assessment' || data.event === 'Blended program' || data.event === 'Curated program' || data.event === 'Moderated Course') {
+          this.trainingPlanDataSharingService.trainingPlanStepperData.contentList = []
         } else if (data.event === 'Designation' || data.event === 'All Users' || data.event === 'Custom Users') {
-          this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = [];
-        } 
+          this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = []
+        }
         this.handleCategorySelection.emit(data.event)
       }
     })
@@ -38,8 +40,13 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = 'Course'
       this.handleCategorySelection.emit('Course')
     } else if (this.from === 'assignee') {
-      this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = 'Designation'
-      this.handleCategorySelection.emit('Designation')
+      if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType']) {
+        this.selectedValue = this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType']
+        this.handleCategorySelection.emit(this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'])
+      } else {
+        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = 'Designation'
+        this.handleCategorySelection.emit('Designation')
+      }
     }
   }
 
@@ -72,9 +79,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Standalone Assessment'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event;
-        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false);
-        if(this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
+        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false)
+        if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
         } else {
           this.handleCategorySelection.emit(event)
