@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component'
 import { TrainingPlanContent } from '../../models/training-plan.model'
 import { TrainingPlanService } from '../../services/traininig-plan.service'
@@ -20,7 +20,10 @@ export class BreadcrumbComponent implements OnInit {
   public dialogRef: any
   tabType = TrainingPlanContent.TTabLabelKey
 
-  constructor(private router: Router, public dialog: MatDialog,
+  constructor(
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    public dialog: MatDialog,
     public tpdsSvc: TrainingPlanDataSharingService,
     private tpSvc: TrainingPlanService) { }
 
@@ -154,6 +157,23 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   updatePlan() {
-
+    this.tpdsSvc.trainingPlanStepperData.name = this.tpdsSvc.trainingPlanTitle
+    if (this.tpdsSvc.trainingPlanStepperData.assignmentType === 'AllUser') {
+      this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = [
+        "AllUser"
+      ]
+    }
+    const obj: any = { request: { ...this.tpdsSvc.trainingPlanStepperData, id: this.activeRoute.snapshot.data['contentData'].id } }
+    delete obj.request.status
+    this.showDialogBox('progress')
+    this.tpSvc.updatePlan(obj).subscribe((_data: any) => {
+      this.dialogRef.close()
+      this.showDialogBox('progress-completed')
+      setTimeout(() => {
+        this.dialogRef.close()
+        this.tpdsSvc.trainingPlanTitle = ''
+        this.router.navigateByUrl('app/home/training-plan-dashboard')
+      }, 1000)
+    })
   }
 }
