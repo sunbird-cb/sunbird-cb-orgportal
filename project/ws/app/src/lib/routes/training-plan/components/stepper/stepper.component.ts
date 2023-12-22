@@ -52,23 +52,31 @@ export class StepperComponent implements OnInit, OnChanges {
   }
 
   checkForPlanTitle(_event: any) {
-    this.addCotnentDisable = _event
-    this.titleInvalid.emit(_event)
+    setTimeout(() => {
+      this.addCotnentDisable = _event
+      this.titleInvalid.emit(_event)
+    }, 0)
   }
 
   checkForaddContent(_event: any) {
-    this.addAssigneeDisable = _event
-    this.addContentIsInvalid.emit(_event)
+    setTimeout(() => {
+      this.addAssigneeDisable = _event
+      this.addContentIsInvalid.emit(_event)
+    }, 0)
   }
 
   checkForaddAssignee(_event: any) {
-    this.addTimelineDisable = _event
-    this.addAssigneeIsInvalid.emit(_event)
+    setTimeout(() => {
+      this.addTimelineDisable = _event
+      this.addAssigneeIsInvalid.emit(_event)
+    }, 0)
   }
 
   tabChangeToTimeline(_event: any) {
-    this.addTimelineDisable = _event
-    this.addAssigneeIsInvalid.emit(_event)
+    setTimeout(() => {
+      this.addTimelineDisable = _event
+      this.addAssigneeIsInvalid.emit(_event)
+    }, 0)
     this.tabIndexValue = 3
   }
 }

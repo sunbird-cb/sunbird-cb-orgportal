@@ -34,13 +34,15 @@ export class CreatePlanComponent implements OnInit, OnDestroy {
       if (contentData.assignmentType === 'CustomUser') {
         this.tpdsSvc.trainingPlanAssigneeData = { data: { content: contentData.assignmentTypeInfo } }
       } else {
-        this.tpdsSvc.trainingPlanAssigneeData = contentData.assignmentTypeInfo
+        this.tpdsSvc.trainingPlanAssigneeData = { category: contentData.assignmentType, data: [contentData.assignmentTypeInfo] }
       }
       if (contentData.contentList && contentData.contentList.length > 0) {
         contentData.contentList.forEach((ele: any) => {
           this.tpdsSvc.trainingPlanStepperData['contentList'].push(ele.identifier)
         })
       }
+      this.tpdsSvc.trainingPlanStepperData['assignmentType'] = contentData.assignmentType
+      this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'] = contentData.assignmentTypeInfo
       this.tpdsSvc.trainingPlanStepperData['endDate'] = contentData.endDate
       this.tpdsSvc.trainingPlanStepperData['status'] = contentData.status
     }

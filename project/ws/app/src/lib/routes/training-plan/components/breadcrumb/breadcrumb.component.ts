@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatDialog } from '@angular/material'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component'
 import { TrainingPlanContent } from '../../models/training-plan.model'
 import { TrainingPlanService } from '../../services/traininig-plan.service'
@@ -20,16 +20,19 @@ export class BreadcrumbComponent implements OnInit {
   public dialogRef: any
   tabType = TrainingPlanContent.TTabLabelKey
 
-  constructor(private router: Router, public dialog: MatDialog,
-    public trainingPlanDataSharingService: TrainingPlanDataSharingService,
-    private trainingPlanService: TrainingPlanService) { }
+  constructor(
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    public dialog: MatDialog,
+    public tpdsSvc: TrainingPlanDataSharingService,
+    private tpSvc: TrainingPlanService) { }
 
   ngOnInit() {
     this.checkIfDisabled()
   }
 
   cancel() {
-    this.trainingPlanDataSharingService.trainingPlanTitle = ''
+    this.tpdsSvc.trainingPlanTitle = ''
     this.router.navigateByUrl('app/home/training-plan-dashboard')
   }
 
@@ -61,7 +64,7 @@ export class BreadcrumbComponent implements OnInit {
 
   performRoute(route: any) {
     if (route === 'list') {
-      this.trainingPlanDataSharingService.trainingPlanTitle = ''
+      this.tpdsSvc.trainingPlanTitle = ''
       this.router.navigateByUrl('app/home/training-plan-dashboard')
     } else {
       this.router.navigateByUrl(`app/training-plan/${route}`)
@@ -113,20 +116,20 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   createPlanDraftView() {
-    this.trainingPlanDataSharingService.trainingPlanStepperData.name = this.trainingPlanDataSharingService.trainingPlanTitle
-    if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType === 'AllUser') {
-      this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = [
+    this.tpdsSvc.trainingPlanStepperData.name = this.tpdsSvc.trainingPlanTitle
+    if (this.tpdsSvc.trainingPlanStepperData.assignmentType === 'AllUser') {
+      this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = [
         "AllUser"
       ]
     }
-    const obj = { request: this.trainingPlanDataSharingService.trainingPlanStepperData }
+    const obj = { request: this.tpdsSvc.trainingPlanStepperData }
     this.showDialogBox('progress')
-    this.trainingPlanService.createPlan(obj).subscribe((_data: any) => {
+    this.tpSvc.createPlan(obj).subscribe((_data: any) => {
       this.dialogRef.close()
       this.showDialogBox('progress-completed')
       setTimeout(() => {
         this.dialogRef.close()
-        this.trainingPlanDataSharingService.trainingPlanTitle = ''
+        this.tpdsSvc.trainingPlanTitle = ''
         this.router.navigateByUrl('app/home/training-plan-dashboard')
       }, 1000)
     })
@@ -143,5 +146,34 @@ export class BreadcrumbComponent implements OnInit {
       return this.validationList.addAssigneeIsInvalid
     }
     return true
+  }
+
+  checkForDraftStatus() {
+    if (this.tpdsSvc.trainingPlanStepperData && this.tpdsSvc.trainingPlanStepperData.status
+      && this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'draft') {
+      return true
+    }
+    return false
+  }
+
+  updatePlan() {
+    this.tpdsSvc.trainingPlanStepperData.name = this.tpdsSvc.trainingPlanTitle
+    if (this.tpdsSvc.trainingPlanStepperData.assignmentType === 'AllUser') {
+      this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = [
+        "AllUser"
+      ]
+    }
+    const obj: any = { request: { ...this.tpdsSvc.trainingPlanStepperData, id: this.activeRoute.snapshot.data['contentData'].id } }
+    delete obj.request.status
+    this.showDialogBox('progress')
+    this.tpSvc.updatePlan(obj).subscribe((_data: any) => {
+      this.dialogRef.close()
+      this.showDialogBox('progress-completed')
+      setTimeout(() => {
+        this.dialogRef.close()
+        this.tpdsSvc.trainingPlanTitle = ''
+        this.router.navigateByUrl('app/home/training-plan-dashboard')
+      }, 1000)
+    })
   }
 }

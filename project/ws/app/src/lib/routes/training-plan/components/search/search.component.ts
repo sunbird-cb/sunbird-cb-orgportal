@@ -19,7 +19,7 @@ export class SearchComponent implements OnInit {
   filterVisibilityFlag = false
   clearFilter = false;
   selectedDropDownValue: any
-  designationList:any[] = [];
+  designationList: any[] = [];
   constructor(@Inject(DOCUMENT) private document: Document,
     private trainingPlanService: TrainingPlanService,
     private route: ActivatedRoute,
@@ -77,26 +77,26 @@ export class SearchComponent implements OnInit {
       if (contentType === 'Moderated Course') {
         this.tpdsSvc.moderatedCourseSelectStatus.next(true)
       }
-      if(this.searchText) {        
-          this.tpdsSvc.clearFilter.next(true);
-          applyFilterObj = {};
+      if (this.searchText) {
+        this.tpdsSvc.clearFilter.next(true)
+        applyFilterObj = {}
       }
       const filterObj = {
         "request": {
           "secureSettings": contentType === 'Moderated Course' ? true : false, // for moderated course
           "filters": {
             "primaryCategory": [contentType === 'Moderated Course' ? 'Course' : contentType],
-            "organisation":  applyFilterObj && applyFilterObj['providers'] && applyFilterObj['providers'].length ? applyFilterObj['providers'] : [],
+            "organisation": applyFilterObj && applyFilterObj['providers'] && applyFilterObj['providers'].length ? applyFilterObj['providers'] : [],
             "competencies_v5.competencyArea": applyFilterObj && applyFilterObj['competencyArea'] && applyFilterObj['competencyArea'].length ? applyFilterObj['competencyArea'] : [],
             "competencies_v5.competencyTheme": applyFilterObj && applyFilterObj['competencyTheme'] && applyFilterObj['competencyTheme'].length ? applyFilterObj['competencyTheme'] : [],
-            "competencies_v5.competencySubTheme" : applyFilterObj && applyFilterObj['competencySubTheme'] && applyFilterObj['competencySubTheme'].length ? applyFilterObj['competencySubTheme'] : []
+            "competencies_v5.competencySubTheme": applyFilterObj && applyFilterObj['competencySubTheme'] && applyFilterObj['competencySubTheme'].length ? applyFilterObj['competencySubTheme'] : []
           },
           "offset": 0,
           "limit": 500,
           "query": (this.searchText) ? this.searchText : '',
           "sort_by": { "lastUpdatedOn": "desc" },
           "fields": ["name", "appIcon", "instructions", "description", "purpose", "mimeType",
-            "gradeLevel", "identifier", "medium",  "resourceType",
+            "gradeLevel", "identifier", "medium", "resourceType",
             "primaryCategory", "contentType", "channel", "organisation", "trackable", "posterImage",
             "idealScreenSize", "learningMode", "creatorLogo", "duration", "programDuration", "version", "avgRating", "competencies_v5"]
         }
@@ -117,12 +117,12 @@ export class SearchComponent implements OnInit {
 
   }
 
-  getCustomUsers(event: any, applyFilterObj?:any) {
+  getCustomUsers(event: any, applyFilterObj?: any) {
     this.loadingService.changeLoaderState(true)
     const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
-    if(this.searchText) {      
-        this.tpdsSvc.clearFilter.next(true);
-        applyFilterObj = {};
+    if (this.searchText) {
+      this.tpdsSvc.clearFilter.next(true)
+      applyFilterObj = {}
     }
     const filterObj = {
       request: {
@@ -134,11 +134,11 @@ export class SearchComponent implements OnInit {
           "profileDetails.professionalDetails.group": applyFilterObj && applyFilterObj.group && applyFilterObj.group.length ? applyFilterObj.group : [],
         },
         "fields": [
-            "userId",
-            "firstName",
-            "rootOrgName",
-            "profileDetails",
-            "organisations"
+          "userId",
+          "firstName",
+          "rootOrgName",
+          "profileDetails",
+          "organisations"
         ],
         limit: 500,
         offset: 0,
@@ -152,8 +152,8 @@ export class SearchComponent implements OnInit {
     })
   }
 
-  getAllUsers(event: any) {
-    this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: [] }
+  getAllUsers(_event: any) {
+    // this.tpdsSvc.trainingPlanAssigneeData = { category: _event, data: [_event] }
     this.handleApiData.emit(true)
   }
 
@@ -161,18 +161,18 @@ export class SearchComponent implements OnInit {
     this.loadingService.changeLoaderState(true)
     this.trainingPlanService.getDesignations().subscribe((res: any) => {
       console.log('res', res)
-      if(this.searchText) {
-        let resArr = res.result.response.content.filter((ditem:any)=>{
-          if(ditem.name.includes(this.searchText)) {
-            return ditem;
+      if (this.searchText) {
+        let resArr = res.result.response.content.filter((ditem: any) => {
+          if (ditem.name.includes(this.searchText)) {
+            return ditem
           }
         })
         this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: resArr }
       } else {
         this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.result.response.content }
-        this.designationList = res.result.response.content;
+        this.designationList = res.result.response.content
       }
-      
+
       this.handleApiData.emit(true)
       this.loadingService.changeLoaderState(false)
     })
@@ -199,13 +199,13 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  getFilterData(event:any) {
-    if(this.from == 'content') {
-      this.getContent(this.selectedDropDownValue, event);
+  getFilterData(event: any) {
+    if (this.from == 'content') {
+      this.getContent(this.selectedDropDownValue, event)
     } else {
-      this.getCustomUsers(this.selectedDropDownValue, event);
+      this.getCustomUsers(this.selectedDropDownValue, event)
     }
-    
+
   }
 
 }

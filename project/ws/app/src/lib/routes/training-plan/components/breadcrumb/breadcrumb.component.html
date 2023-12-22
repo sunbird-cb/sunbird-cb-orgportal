@@ -28,8 +28,12 @@
                 ? 'Add assignee' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add timeline' : ''}}</span>
         </button>
         <button mat-button class="next-btn margin-left-m" (click)="createPlanDraftView()"
-            *ngIf="tabType.ADD_TIMELINE === selectedTab">
+            *ngIf="tabType.ADD_TIMELINE === selectedTab && !checkForDraftStatus()">
             <span>Save as draft</span>
+        </button>
+        <button mat-button class="next-btn margin-left-m" (click)="updatePlan()"
+            *ngIf="tabType.ADD_TIMELINE === selectedTab && checkForDraftStatus()">
+            <span>Update Content</span>
         </button>
     </div>
 </div>
