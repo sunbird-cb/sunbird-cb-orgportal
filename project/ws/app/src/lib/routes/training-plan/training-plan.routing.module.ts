@@ -5,6 +5,7 @@ import { TrainingPlanHomeComponent } from './routes/training-plan-home/training-
 import { CreatePlanComponent } from './routes/create-plan/create-plan.component'
 import { PreviewPlanComponent } from './routes/preview-plan/preview-plan.component'
 import { UpdatePlanResolveService } from './resolvers/update-plan-resolve.service'
+import { ResetDataSharingResolveService } from './resolvers/reset-data-sharing-resolve.service'
 
 const routes: Routes = [
   {
@@ -26,6 +27,9 @@ const routes: Routes = [
           pageId: 'create-plan',
           module: 'Create Plan',
         },
+        resolve: {
+          tpdsSvcReset: ResetDataSharingResolveService
+        }
       },
       {
         path: 'update-plan/:planId',
@@ -35,6 +39,7 @@ const routes: Routes = [
           module: 'Create Plan',
         },
         resolve: {
+          tpdsSvcReset: ResetDataSharingResolveService,
           contentData: UpdatePlanResolveService
         }
       },

@@ -98,18 +98,18 @@ export class SearchComponent implements OnInit {
           "fields": ["name", "appIcon", "instructions", "description", "purpose", "mimeType",
             "gradeLevel", "identifier", "medium", "resourceType",
             "primaryCategory", "contentType", "channel", "organisation", "trackable", "posterImage",
-            "idealScreenSize", "learningMode", "creatorLogo", "duration", "programDuration", "version", "avgRating", "competencies_v5"]
+            "idealScreenSize", "learningMode", "creatorLogo", "duration", "programDuration", "version", "avgRating", "competencies_v5", "secureSettings"]
         }
       }
       this.trainingPlanService.getAllContent(filterObj).subscribe((res: any) => {
-        if (this.tpdsSvc.trainingPlanContentData && this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data.content) {
-          this.tpdsSvc.trainingPlanContentData = {
-            category: contentType,
-            data: { content: _.uniqBy(_.concat(this.tpdsSvc.trainingPlanContentData.data.content, res.content), 'identifier') }
-          }
-        } else {
-          this.tpdsSvc.trainingPlanContentData = { category: contentType, data: res }
-        }
+        // if (this.tpdsSvc.trainingPlanContentData && this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data.content) {
+        //   this.tpdsSvc.trainingPlanContentData = {
+        //     category: contentType,
+        //     data: { content: _.uniqBy(_.concat(this.tpdsSvc.trainingPlanContentData.data.content, res.content), 'identifier') }
+        //   }
+        // } else {
+        this.tpdsSvc.trainingPlanContentData = { category: contentType, data: res }
+        // }
         this.handleApiData.emit(true)
         this.loadingService.changeLoaderState(false)
       })
