@@ -28,9 +28,23 @@ export class PreviewPlanComponent implements OnInit {
       const arr = [];      
       this.tab = this.selectedTab = 'content';
       if (contentData.assignmentTypeInfo) {        
-        if (category === 'custom') {
-          const assigneeData = contentData.assignmentTypeInfo;
-          this.assigneeData = { category, data: assigneeData }
+        if (category === 'CustomUser') {
+          let assignmentDataArr:any = [];
+
+          let obj:any = {
+            "firstName": "",
+            "userId": "",
+            "profileDetails": {"professionalDetails": [{designation: ""}]
+          }};
+          contentData && contentData.userDetails && contentData.userDetails.map((item:any)=>{
+            obj.firstName = item.firstName;
+            obj.profileDetails.professionalDetails[0]['designation']= item.designation;
+            obj.userId = item.userId;
+            assignmentDataArr.push(obj);
+          })
+          console.log('assignmentDataArr',assignmentDataArr)
+          // const assigneeData = contentData.userDetails;
+          this.assigneeData = { category, data: assignmentDataArr }
         }
         if (category === 'Designation') {
           let assignmentDataArr:any = [];
@@ -57,7 +71,7 @@ export class PreviewPlanComponent implements OnInit {
           name: contentData.assignmentType,
           tab: 'assignee',
           selected: (this.tab === 'assignee' ? true : false),
-          count: this.assigneeData.data.length
+          count: this.assigneeData.data ? this.assigneeData.data.length : 0
         })
         this.allContentChips = arr
       } else {
