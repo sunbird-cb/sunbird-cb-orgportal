@@ -15,6 +15,7 @@ export class AddPlanInformationComponent implements OnInit {
 
   contentForm!: FormGroup
   private subscr:Subscription = new Subscription();
+  specialCharList = `( a-z/A-Z , 0-9 . _ - $ / \ : [ ]' ' !)`
   constructor(
     private formBuilder: FormBuilder,
     private tpdsSvc: TrainingPlanDataSharingService

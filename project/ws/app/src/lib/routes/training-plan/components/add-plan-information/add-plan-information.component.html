@@ -8,13 +8,19 @@
                 <div class="fonm-element-label">Plan title <span class="required"></span></div>
                 <mat-form-field appearance="outline" class="w-full" fxFlex="40">
                     <input class="w-full" matInput placeholder="Enter Plan title" formControlName="name" maxlength="70">
-                    <mat-hint align="end">{{ contentForm.controls['name'].value.length }} / 70</mat-hint>
-                    <mat-error *ngIf="contentForm.controls['name'].hasError('minlength')">
-                        Minimum 10 characters are required
-                    </mat-error>
+                    <mat-hint align="end">{{ contentForm.controls['name'].value.length }} / 70</mat-hint>                    
                     <mat-error *ngIf="contentForm.controls['name'].hasError('required')">
                         Plan title is mandatory
                     </mat-error>
+                    <mat-error
+                    *ngIf="contentForm.controls['name'].hasError('minlength') && !contentForm.controls['name'].errors?.pattern"
+                    i18n="name Error|Explains name is required">
+                    Minimum characters left to create {{10 - contentForm.controls['name'].value.length}}
+                  </mat-error>
+                  <mat-error *ngIf="contentForm.controls['name'].errors?.pattern"
+                    i18n="name Error|Explains name is required">
+                    Only {{specialCharList}} characters are supported
+                  </mat-error>
                 </mat-form-field>
             </div>
         </form>
