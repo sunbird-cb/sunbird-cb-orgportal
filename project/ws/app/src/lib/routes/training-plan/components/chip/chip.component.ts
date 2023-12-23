@@ -20,6 +20,12 @@ export class ChipComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.selectedContentChips.map((sitem: any, index: any) => {
+      if (sitem.selected) {
+        this.selectedContentChips.splice(index, 1)
+        this.selectedContentChips.unshift(sitem)
+      }
+    })
     this.selectedAssigneeChips.map((sitem: any, index: any) => {
       if (sitem.selected) {
         this.selectedAssigneeChips.splice(index, 1)

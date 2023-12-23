@@ -57,6 +57,12 @@ export class CreateContentComponent implements OnInit {
               sitem['selected'] = true
             }
           })
+          this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any, index: any) => {
+            if (sitem.selected) {
+              this.tpdsSvc.trainingPlanContentData.data.content.splice(index, 1)
+              this.tpdsSvc.trainingPlanContentData.data.content.unshift(sitem)
+            }
+          })
         }
         this.contentData = this.tpdsSvc.trainingPlanContentData.data.content
         this.handleSelectedChips(true)
