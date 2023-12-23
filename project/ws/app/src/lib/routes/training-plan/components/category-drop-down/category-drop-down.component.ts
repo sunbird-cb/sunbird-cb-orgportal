@@ -38,6 +38,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.from === 'content') {
       this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = 'Course'
+      this.selectedValue = 'Course'
       this.handleCategorySelection.emit('Course')
     } else if (this.from === 'assignee') {
       if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType']) {
@@ -45,6 +46,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         this.handleCategorySelection.emit(this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'])
       } else {
         this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = 'Designation'
+        this.selectedValue = 'Designation'
         this.handleCategorySelection.emit('Designation')
       }
     }

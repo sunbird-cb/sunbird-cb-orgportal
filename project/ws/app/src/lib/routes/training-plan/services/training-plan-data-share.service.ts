@@ -11,7 +11,7 @@ export class TrainingPlanDataSharingService {
   trainingPlanTitle = ''
   trainingPlanContentData: any
   trainingPlanAssigneeData: any
-  selectedTabType:any = '';
+  selectedTabType: any = '';
   trainingPlanStepperData: any = {
     name: '',
     contentType: '',
@@ -24,5 +24,22 @@ export class TrainingPlanDataSharingService {
   }
   constructor() {
 
+  }
+
+  resetAllObjects() {
+    this.trainingPlanTitle = ''
+    this.trainingPlanContentData = {}
+    this.trainingPlanAssigneeData = {}
+    this.selectedTabType = ''
+    this.trainingPlanStepperData = {
+      name: '',
+      contentType: '',
+      contentList: [
+      ],
+      assignmentType: '',
+      assignmentTypeInfo: [
+      ],
+      endDate: '',
+    }
   }
 }

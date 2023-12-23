@@ -30,7 +30,7 @@ export class CreatePlanComponent implements OnInit, OnDestroy {
     const contentData = this.route.snapshot.data['contentData']
     if (contentData) {
       this.tpdsSvc.trainingPlanTitle = contentData.name
-      this.tpdsSvc.trainingPlanContentData = { data: { content: contentData.contentList } }
+      // this.tpdsSvc.trainingPlanContentData = { data: { content: contentData.contentList } }
       if (contentData.assignmentType === 'CustomUser') {
         this.tpdsSvc.trainingPlanAssigneeData = { data: { content: contentData.assignmentTypeInfo } }
       } else {

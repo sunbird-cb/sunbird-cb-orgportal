@@ -62,6 +62,7 @@ import { AddPlanInformationComponent } from './components/add-plan-information/a
 
 import { TrainingPlanService } from './services/traininig-plan.service'
 import { UpdatePlanResolveService } from './resolvers/update-plan-resolve.service'
+import { ResetDataSharingResolveService } from './resolvers/reset-data-sharing-resolve.service'
 @NgModule({
   declarations: [
     TrainingPlanHomeComponent,
@@ -140,7 +141,8 @@ import { UpdatePlanResolveService } from './resolvers/update-plan-resolve.servic
   providers: [
     InitResolver,
     TrainingPlanService,
-    UpdatePlanResolveService
+    UpdatePlanResolveService,
+    ResetDataSharingResolveService
   ],
 })
 export class TrainingPlanModule {
