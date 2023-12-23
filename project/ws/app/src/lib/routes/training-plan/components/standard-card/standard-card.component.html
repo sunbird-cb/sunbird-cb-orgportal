@@ -75,6 +75,6 @@
         
     </div>
     <div class="flex flex-row justify-center" *ngIf="showPagination">
-        <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[20,30,40]" (page)="onChangePage($event)"></mat-paginator>
+        <mat-paginator [pageSize]="pageSize" [length]="240"  [pageSizeOptions]="[20,30,40]" (page)="onChangePage($event)"></mat-paginator>
     </div>
 </ng-container>
