@@ -1,16 +1,16 @@
 <div class="flex flex-1 flex-column form-container plan-info">
     <div class="label">
-        Plan information
+        Plan Information
     </div>
     <div class="form-element">
         <form [formGroup]="contentForm">
             <div class="title-name">
-                <div class="fonm-element-label">Plan title <span class="required"></span></div>
+                <div class="fonm-element-label">Plan Title <span class="required"></span></div>
                 <mat-form-field appearance="outline" class="w-full" fxFlex="40">
-                    <input class="w-full" matInput placeholder="Enter Plan title" formControlName="name" maxlength="70">
+                    <input class="w-full" matInput placeholder="Enter Plan Title" formControlName="name" maxlength="70">
                     <mat-hint align="end">{{ contentForm.controls['name'].value.length }} / 70</mat-hint>                    
                     <mat-error *ngIf="contentForm.controls['name'].hasError('required')">
-                        Plan title is mandatory
+                        Plan Title is Mandatory
                     </mat-error>
                     <mat-error
                     *ngIf="contentForm.controls['name'].hasError('minlength') && !contentForm.controls['name'].errors?.pattern"

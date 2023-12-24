@@ -25,12 +25,17 @@ export class CreateContentComponent implements OnInit {
       },
       {
         id: 4,
-        name: 'Curated programs',
+        name: 'Curated Programs',
         value: 'Curated program',
       },
       {
+        id: 6,
+        name: 'Programs',
+        value: 'Program',
+      },
+      {
         id: 3,
-        name: 'Blended programs',
+        name: 'Blended Programs',
         value: 'Blended program',
       },
       {

@@ -182,6 +182,7 @@ export class SearchComponent implements OnInit {
     switch (this.selectedDropDownValue) {
       case 'Course':
       case 'Standalone Assessment':
+      case 'Program':
       case 'Blended program':
       case 'Curated program':
       case 'Moderated Course':

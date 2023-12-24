@@ -19,7 +19,7 @@ export class BreadcrumbComponent implements OnInit {
 
   public dialogRef: any
   tabType = TrainingPlanContent.TTabLabelKey
-
+  editState = false;
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
@@ -28,6 +28,7 @@ export class BreadcrumbComponent implements OnInit {
     private tpSvc: TrainingPlanService) { }
 
   ngOnInit() {
+    this.editState = this.activeRoute.snapshot.data['contentData'] ? true :  false
     this.checkIfDisabled()
   }
 

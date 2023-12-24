@@ -11,6 +11,7 @@
     <ws-app-user-card [assigneeData]="assigneeData" (handleSelectedChips)="handleSelectedChips($event)"
         *ngIf="assigneeData?.category === 'CustomUser'" [showPagination]="true"></ws-app-user-card>
 </ng-container>
+
 <ng-container *ngIf="trainingPlanDataSharingService?.trainingPlanAssigneeData?.category === 'AllUser'">
     <div class="no-cbp-data margin-top-xl margin-bottom-xl">
         <div><img src="/assets/icons/no-data.svg"></div>

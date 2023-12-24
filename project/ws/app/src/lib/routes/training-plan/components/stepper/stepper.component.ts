@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core'
 import { TrainingPlanContent } from '../../models/training-plan.model'
-
+import { ActivatedRoute } from '@angular/router'
 @Component({
   selector: 'ws-app-stepper',
   templateUrl: './stepper.component.html',
@@ -19,11 +19,12 @@ export class StepperComponent implements OnInit, OnChanges {
   addCotnentDisable = true
   addAssigneeDisable = true
   addTimelineDisable = true
-
-  constructor(
+  editState = false;
+  constructor( private route : ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.editState = this.route.snapshot.data['contentData'] ? true :  false
   }
 
   ngOnChanges() {
