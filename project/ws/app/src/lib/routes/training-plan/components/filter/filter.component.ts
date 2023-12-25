@@ -1,12 +1,13 @@
-import { Component, Input, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChildren } from '@angular/core'
+import { Component, Input, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChildren, ChangeDetectionStrategy } from '@angular/core'
 import { TrainingPlanService } from './../../services/traininig-plan.service';
 import { FormControl } from '@angular/forms';
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service';
-
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'ws-app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterComponent implements OnInit {
   @Output() toggleFilter = new EventEmitter()
@@ -26,7 +27,7 @@ export class FilterComponent implements OnInit {
   searchThemeControl = new FormControl();
   searchSubThemeControl = new FormControl();
   @ViewChildren("checkboxes") checkboxes!: QueryList<ElementRef>;
-  constructor(private trainingPlanService: TrainingPlanService, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+  constructor(private cdref: ChangeDetectorRef, private trainingPlanService: TrainingPlanService, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
     if(this.from === 'content') {
@@ -46,6 +47,10 @@ export class FilterComponent implements OnInit {
       }
     })
   }
+
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+ }
 
   getFilterEntity() {
     let filterObj = {

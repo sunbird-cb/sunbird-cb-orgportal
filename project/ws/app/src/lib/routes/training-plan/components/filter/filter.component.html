@@ -16,7 +16,7 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="flex flex-1 flex-row category-item" *ngFor="let ctype of competencyTypeList">
-                            <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="ctype?.selected" (change)="getCompetencyTheme($event, ctype)">{{ctype?.name}}</mat-checkbox>
+                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="getCompetencyTheme($event, ctype)">{{ctype?.name}}</mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
