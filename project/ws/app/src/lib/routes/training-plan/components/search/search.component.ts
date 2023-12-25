@@ -108,6 +108,7 @@ export class SearchComponent implements OnInit {
         //     data: { content: _.uniqBy(_.concat(this.tpdsSvc.trainingPlanContentData.data.content, res.content), 'identifier') }
         //   }
         // } else {
+          console.log('this.tpdsSvc',this.tpdsSvc);
         this.tpdsSvc.trainingPlanContentData = { category: contentType, data: res }
         // }
         this.handleApiData.emit(true)

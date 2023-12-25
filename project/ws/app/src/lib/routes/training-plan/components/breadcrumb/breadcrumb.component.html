@@ -12,9 +12,9 @@
             (tabType.ADD_CONTENT === selectedTab) ? 'Add content' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add
             assignee' : (tabType.ADD_TIMELINE === selectedTab) ? 'Add timeline' : ''}}
         </div> -->
-        <div class="action" *ngIf="trainingPlanDataSharingService?.trainingPlanTitle &&
+        <div class="action" *ngIf="tpdsSvc?.trainingPlanTitle &&
         selectedTab !== tabType.CREATE_PLAN && !validationList?.titleIsInvalid">
-            {{trainingPlanDataSharingService?.trainingPlanTitle}}
+            {{tpdsSvc?.trainingPlanTitle}}
         </div>
     </div>
     <div class="flex flex-1 flex-row right-breadcrumb" *ngIf="showBreadcrumbAction">
