@@ -6,7 +6,7 @@
         <div class="flex-1">
             <ws-app-chip [selectedContentChips]="selectedContentChips" [from]="from"
                 [selectContentCount]="selectContentCount" (itemRemoved)="itemsRemovedFromChip()"></ws-app-chip>
-            <ws-app-standard-card [cardSize]="3" [contentData]="contentData" [showPagination]="true" 
+            <ws-app-standard-card [cardSize]="3" [contentData]="contentData" [showPagination]="true" [count]="count"
                 (handleSelectedChips)="handleSelectedChips($event)"></ws-app-standard-card>
         </div>
         <div class="flex-2 margin-left-s margin-top-s">

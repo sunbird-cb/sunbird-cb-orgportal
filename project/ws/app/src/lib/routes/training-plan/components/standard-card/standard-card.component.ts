@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnChanges, ChangeDetectorRef, ViewChild } from '@angular/core'
-import { MatTableDataSource, MatPaginator, PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material';
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 import { SafeUrl } from '@angular/platform-browser'
 
@@ -13,7 +13,8 @@ export class StandardCardComponent implements OnInit, OnChanges {
   @Input() checkboxVisibility: any = true
   @Input() contentData: any[] = []
   @Input() showDeleteFlag = false
-  @Input() showPagination = false;
+  @Input() showPagination = false;  
+  @Input() count = 0;
   @Output() handleSelectedChips = new EventEmitter()
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator | any;
   dataSource: any;
@@ -26,23 +27,25 @@ export class StandardCardComponent implements OnInit, OnChanges {
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
-   
+    this.trainingPlanDataSharingService.clearFilter.subscribe(()=>{
+      this.resetPageIndex();
+    })
   }
 
   ngOnChanges() {
     this.changeDetectorRef.detectChanges();
     console.log('this.contentData', this.contentData)
-    this.dataSource = new MatTableDataSource<any>(this.contentData);
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource = new MatTableDataSource<any>(this.contentData);
+    // this.dataSource.paginator = this.paginator;
     console.log('this.dataSource', this.dataSource);
   }
 
   onChangePage(pe: PageEvent) {
     console.log(pe.pageIndex);
     console.log(pe.pageSize);
-    this.startIndex = pe.pageIndex * pe.pageSize;
+    this.startIndex = (pe.pageIndex) * pe.pageSize;
     this.lastIndex = (pe.pageIndex + 1) * pe.pageSize ;
-    
+    this.trainingPlanDataSharingService.handleContentPageChange.next({pageIndex: this.startIndex, pageSize: this.lastIndex});
     // this.startIndex = this.pageIndex
   }
 
@@ -93,6 +96,14 @@ export class StandardCardComponent implements OnInit, OnChanges {
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentList'].splice(index, 1)
       }
     })
+  }
+
+  resetPageIndex() {
+    this.startIndex = 0;
+    this.lastIndex = 20;
+    this.pageSize = 20;
+    this.paginator.pageIndex = 0;
+    this.paginator.pageSize = 20;
   }
 
 }
