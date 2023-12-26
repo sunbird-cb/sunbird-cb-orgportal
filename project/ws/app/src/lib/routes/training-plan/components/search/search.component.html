@@ -7,7 +7,7 @@
     <div class="search flex w-full margin-left-xl margin-right-xl">
         <div class="rsearch flex w-full"><mat-icon
                 class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
-            <input class="sinput color-60 w-full margin-right-m" [(ngModel)]="searchText" label="" placeholder="Select"
+            <input class="sinput color-60 w-full margin-right-m" [(ngModel)]="searchText" (keyup.enter)="searchData()" label="" placeholder="Select"
                 type="Standard">
         </div>
         <button mat-button type="button" class="search-btn" (click)="searchData()">Search</button>

@@ -3,7 +3,7 @@
         (selectedTabChange)="tabSelected($event)">
         <mat-tab [label]="tabType.CREATE_PLAN" [disabled]="false">
             <ng-template mat-tab-label>
-                1. Create a plan
+                1. <span *ngIf="!editState">Create</span><span *ngIf="editState">Edit</span>&nbsp; a Plan
             </ng-template>
             <ng-template matTabContent>
                 <ws-app-add-plan-information
@@ -12,7 +12,7 @@
         </mat-tab>
         <mat-tab [label]="tabType.ADD_CONTENT" [disabled]="addCotnentDisable">
             <ng-template mat-tab-label>
-                <span>2. Add Content
+                <span>2. <span *ngIf="!editState">Add</span><span *ngIf="editState">Edit</span> Content
                 </span>
             </ng-template>
             <ng-template matTabContent>
@@ -21,7 +21,7 @@
         </mat-tab>
         <mat-tab [label]="tabType.ADD_ASSIGNEE" [disabled]="addCotnentDisable || addAssigneeDisable">
             <ng-template mat-tab-label>
-                <span>3. Add Assignee</span>
+                <span>3.  <span *ngIf="!editState">Add</span><span *ngIf="editState">Edit</span> Assignee</span>
             </ng-template>
             <ng-template matTabContent>
                 <ws-app-create-assignee (addAssigneeInvalid)="checkForaddAssignee($event)"
@@ -31,7 +31,7 @@
         <mat-tab [label]="tabType.ADD_TIMELINE"
             [disabled]="addCotnentDisable || addAssigneeDisable || addTimelineDisable">
             <ng-template mat-tab-label>
-                <span>4. Add Timeline</span>
+                <span>4.  <span *ngIf="!editState">Add</span><span *ngIf="editState">Edit</span> Timeline</span>
             </ng-template>
             <ng-template matTabContent>
                 <ws-app-create-timeline></ws-app-create-timeline>

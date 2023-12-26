@@ -61,12 +61,14 @@ export class CreateAssigneeComponent implements OnInit {
         this.handleSelectedChips(true)
       } else {
         this.assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData
-        console.log('this.assigneeData',this.assigneeData)
+        this.addAssigneeInvalid.emit(false)
+      }
+    } else {      
+      if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'AllUser') {
+        this.addAssigneeInvalid.emit(false)
       }
     }
-    if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'AllUser') {
-      this.addAssigneeInvalid.emit(false)
-    }
+    
   }
 
   handleSelectedChips(event: any) {

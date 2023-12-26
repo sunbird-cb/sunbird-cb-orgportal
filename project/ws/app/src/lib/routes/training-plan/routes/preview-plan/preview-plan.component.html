@@ -3,18 +3,18 @@
     <button mat-stroked-button type="button" (click)="goBack()"><mat-icon>arrow_back</mat-icon> Go
         back</button>
 </div>
-<div class="flex" *ngIf="from==='content'">
-    <div class="mat-subheading-1 margin-remove">Selected Content <span *ngIf="contentData.length">( {{contentData.length}} )</span></div>
-    <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentData" [showDeleteFlag]="true"></ws-app-standard-card>
+<div class="flex mt-10 flex-col" *ngIf="from==='content'">
+    <div class="mat-subheading-1 margin-remove">Selected Content <span *ngIf="contentList?.length"> ( {{contentList?.length}} )</span></div>
+    <div class="mt-10 flex flex-row justify-center"><ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentList" [showDeleteFlag]="true"></ws-app-standard-card></div>
 </div>
-<div class="flex" *ngIf="from==='assignee'">
-    <div class="mat-subheading-1 margin-remove">Selected Assignee <span *ngIf="contentData.length">( {{assigneeData.length}} )</span></div>
-    <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData" [showDeleteFlag]="true"></ws-app-user-card>
+<div class="flex mt-10 flex-col" *ngIf="from==='assignee'">
+    <div class="mat-subheading-1 margin-remove">Selected Assignee <span *ngIf="assigneeData?.data?.length"> ( {{assigneeData?.data?.length}} )</span></div>
+    <div class="mt-10 flex flex-row justify-center"><ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData" [showDeleteFlag]="true"></ws-app-user-card></div>
 </div>
 <div class="flex content-container" *ngIf="from === 'all'">
     <mat-chip-list [multiple]="true" [selectable]="true">
         <mat-chip [ngClass]="selectedTab == item.tab ? 'select-tab': ''" *ngFor="let item of allContentChips" [selected]="selectedTab == item.tab"
-            (click)="selectedTab = item.tab">{{item.name}} <span *ngIf="item?.count">( {{item?.count}} )</span>
+            (click)="selectedTab = item.tab"><span *ngIf="item?.count > 1">{{item.name | titlecase}}s</span> <span *ngIf="item?.count === 1">{{item.name | titlecase}}</span> <span *ngIf="item?.count"> &nbsp;&nbsp;({{item?.count}})</span>
         </mat-chip>
     </mat-chip-list>
 

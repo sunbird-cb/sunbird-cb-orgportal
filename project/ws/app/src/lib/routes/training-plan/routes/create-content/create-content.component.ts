@@ -14,6 +14,9 @@ export class CreateContentComponent implements OnInit {
   from = 'content'
   selectedContentChips: any[] = []
   selectContentCount = 0
+  pageIndex:any;
+  pageSize:any;
+  count = 0;
   constructor(private tpdsSvc: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
@@ -25,12 +28,17 @@ export class CreateContentComponent implements OnInit {
       },
       {
         id: 4,
-        name: 'Curated programs',
+        name: 'Curated Programs',
         value: 'Curated program',
       },
       {
+        id: 6,
+        name: 'Programs',
+        value: 'Program',
+      },
+      {
         id: 3,
-        name: 'Blended programs',
+        name: 'Blended Programs',
         value: 'Blended program',
       },
       {
@@ -65,9 +73,11 @@ export class CreateContentComponent implements OnInit {
           })
         }
         this.contentData = this.tpdsSvc.trainingPlanContentData.data.content
+        this.count = this.tpdsSvc.trainingPlanContentData.data.count;
         this.handleSelectedChips(true)
       } else {
         this.contentData = this.tpdsSvc.trainingPlanContentData.data.content
+        this.count = this.tpdsSvc.trainingPlanContentData.data.count;
       }
     }
   }
@@ -90,6 +100,7 @@ export class CreateContentComponent implements OnInit {
       this.addContentInvalid.emit(false)
     }
   }
+
 
   itemsRemovedFromChip() {
     this.handleSelectedChips(true)

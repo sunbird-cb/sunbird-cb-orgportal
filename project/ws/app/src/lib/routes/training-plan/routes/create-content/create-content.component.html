@@ -1,13 +1,12 @@
 <ng-container>
     <ws-app-search [categoryData]="categoryData" [from]="from" (handleApiData)="handleApiData($event)"></ws-app-search>
 </ng-container>
-
 <ng-container>
     <div class="flex flex-row" *ngIf="contentData?.length > 0">
         <div class="flex-1">
             <ws-app-chip [selectedContentChips]="selectedContentChips" [from]="from"
                 [selectContentCount]="selectContentCount" (itemRemoved)="itemsRemovedFromChip()"></ws-app-chip>
-            <ws-app-standard-card [cardSize]="3" [contentData]="contentData" [showPagination]="true" 
+            <ws-app-standard-card [cardSize]="3" [contentData]="contentData" [showPagination]="true" [count]="count"
                 (handleSelectedChips)="handleSelectedChips($event)"></ws-app-standard-card>
         </div>
         <div class="flex-2 margin-left-s margin-top-s">
@@ -15,7 +14,7 @@
                 [selectContentCount]="selectContentCount"></ws-app-competency-summary>
         </div>
     </div>
-    <div class="no-cbp-data margin-top-xl margin-bottom-xl" *ngIf="contentData?.length === 0">
+    <div class="no-cbp-data margin-top-xl margin-bottom-xl" *ngIf="!(contentData) || !(contentData?.length)">
         <div><img src="/assets/icons/no-data.svg"></div>
         <div class="mat-subheading-1 margin-remove">No content avaliable.</div>
         <!-- <div>Create a content in CBP portal to get the contents.</div> -->

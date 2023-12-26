@@ -20,9 +20,9 @@ export class PreviewPlanComponent implements OnInit {
 
   ngOnInit() {
     this.from = this.route.snapshot.queryParams['from']    
-    const contentData = this.route.snapshot.data['contentData']
-    const category = contentData.assignmentType
+    const contentData = this.route.snapshot.data['contentData'];    
     if (contentData) {
+      const category = contentData.assignmentType
       this.from = 'all';
       console.log('contentData-->', contentData);
       const arr = [];      
@@ -91,18 +91,21 @@ export class PreviewPlanComponent implements OnInit {
         })
       }
     } else if (this.from === 'assignee') {
-      const category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
-      if (category === 'Designation') {
-        const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
-          return item.selected
-        })
-        this.assigneeData = { category, data: assigneeData }
-      } else if (category === 'CustomUser') {
-        const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
-          return item.selected
-        })
-        this.assigneeData = { category, data: assigneeData }
+      if(this.trainingPlanDataSharingService.trainingPlanAssigneeData) {
+        const category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
+        if (category === 'Designation') {
+          const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
+            return item.selected
+          })
+          this.assigneeData = { category, data: assigneeData }
+        } else if (category === 'CustomUser') {
+          const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
+            return item.selected
+          })
+          this.assigneeData = { category, data: assigneeData }
+        }
       }
+      
 
     }
   }

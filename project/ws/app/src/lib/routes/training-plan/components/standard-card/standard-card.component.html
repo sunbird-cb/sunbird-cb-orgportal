@@ -64,11 +64,11 @@
                                 <span class="most-enrolled-text margin-left-xs">
                                     <ng-container
                                         *ngIf="item?.additionalTags && item?.additionalTags.includes('mostEnrolled')">
-                                        <span class="most-enrolled-text margin-left-xs">Most enrolled</span>
+                                        <span class="most-enrolled-text margin-left-xs">Most Enrolled</span>
                                     </ng-container>
                                     <ng-container
                                         *ngIf="item?.additionalTags && item?.additionalTags.includes('mostTrending')">
-                                        <span class="most-enrolled-text margin-left-xs">Most trending</span>
+                                        <span class="most-enrolled-text margin-left-xs">Most Trending</span>
                                     </ng-container>
                                 </span>
                             </ng-container>
@@ -80,7 +80,7 @@
 
     </div>
     <div class="flex flex-row justify-center" *ngIf="showPagination">
-        <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[20,30,40]"
+        <mat-paginator [pageSize]="pageSize" [length]="count" [pageSizeOptions]="[20,30,40]"
             (page)="onChangePage($event)"></mat-paginator>
     </div>
 </ng-container>
