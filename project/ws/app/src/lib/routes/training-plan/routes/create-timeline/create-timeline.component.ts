@@ -13,6 +13,7 @@ export class CreateTimelineComponent implements OnInit {
   constructor(private router: Router, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
+    console.log(this.trainingPlanDataSharingService.trainingPlanContentData);
     if (this.trainingPlanDataSharingService.trainingPlanStepperData.status &&
       this.trainingPlanDataSharingService.trainingPlanStepperData.status.toLowerCase() === 'live') {
       this.isContentLive = true

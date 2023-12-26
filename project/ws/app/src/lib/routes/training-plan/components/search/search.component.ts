@@ -66,15 +66,23 @@ export class SearchComponent implements OnInit {
   }
 
   handleCategorySelection(event: any) {
+      
     this.selectedDropDownValue = event
     this.tpdsSvc.clearFilter.next(true)
     this.resetPageIndex()
     switch (this.from) {
       case 'content':
+        if(this.tpdsSvc.trainingPlanContentData && this.tpdsSvc.trainingPlanContentData.data) {
+          this.tpdsSvc.trainingPlanContentData.data = []
+        } 
         event = !event ? 'Course' : event
         this.getContent(event)
         break
       case 'assignee':
+        if(this.tpdsSvc.trainingPlanAssigneeData && this.tpdsSvc.trainingPlanAssigneeData.data) {
+          this.tpdsSvc.trainingPlanAssigneeData.data = []
+          this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']=[]
+        } 
         event = !event ? 'Designation' : event
         if (event === 'Designation') {
           this.getDesignations(event)
@@ -124,14 +132,20 @@ export class SearchComponent implements OnInit {
         //     data: { content: _.uniqBy(_.concat(this.tpdsSvc.trainingPlanContentData.data.content, res.content), 'identifier') }
         //   }
         // } else {
-        console.log('res', res, this.pageIndex)
-        if (this.pageIndex) {
-          let result = { count: res.count, content: this.tpdsSvc.trainingPlanContentData.data.content.concat(res.content) }
+        let finResult = [];
+        if(this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data.content) {
+          finResult = this.tpdsSvc.trainingPlanContentData.data.content.filter((sitem:any)=>{
+            return sitem.selected
+          })
+        }
+        console.log('finResult', finResult);
+          let result = { count: res.count, content: _.uniqBy(_.concat(finResult, res.content), 'identifier') }
           console.log(result)
           this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
-        } else {
-          this.tpdsSvc.trainingPlanContentData = { category: contentType, data: res, count: res.count }
-        }
+        
+        // else {
+        //   this.tpdsSvc.trainingPlanContentData = { category: contentType, data: res, count: res.count }
+        // }
         console.log(this.tpdsSvc.trainingPlanContentData)
         // }
         this.handleApiData.emit(true)
@@ -191,7 +205,19 @@ export class SearchComponent implements OnInit {
             return ditem
           }
         })
-        this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: resArr }
+        console.log(this.tpdsSvc.trainingPlanAssigneeData.data);
+        if(this.tpdsSvc.trainingPlanAssigneeData.data) {
+          let finArr = this.tpdsSvc.trainingPlanAssigneeData.data.filter((sitem:any)=>{
+            if(sitem.selected) {
+              return sitem
+            }            
+          })
+          console.log(finArr,resArr );
+          this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: _.concat(finArr, resArr)}  
+        } else {
+          this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: resArr}
+        }
+        
       } else {
         this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.result.response.content }
         this.designationList = res.result.response.content
