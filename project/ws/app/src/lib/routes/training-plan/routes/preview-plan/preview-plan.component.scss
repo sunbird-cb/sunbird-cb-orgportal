@@ -20,3 +20,7 @@
     background: rgba(0,116,182,.05)!important;
     color: #1b4ca1!important;
 }
+
+::ng-deep .mat-standard-chip {
+    cursor: pointer !important;
+}
