@@ -142,3 +142,9 @@
 .overflow-none {
     overflow: unset !important;
 }
+
+.disable {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: none;
+}

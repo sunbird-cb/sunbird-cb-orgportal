@@ -37,9 +37,14 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.from === 'content') {
-      this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = 'Course'
-      this.selectedValue = 'Course'
-      this.handleCategorySelection.emit('Course')
+      if (this.trainingPlanDataSharingService.trainingPlanStepperData['contentType']) {
+        this.selectedValue = this.trainingPlanDataSharingService.trainingPlanStepperData['contentType']
+        this.handleCategorySelection.emit(this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'])
+      } else {
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = 'Course'
+        this.selectedValue = 'Course'
+        this.handleCategorySelection.emit('Course')
+      }
     } else if (this.from === 'assignee') {
       if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType']) {
         this.selectedValue = this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType']
@@ -181,7 +186,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change user type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'AllUser'
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.category = 'AllUser';
+        this.trainingPlanDataSharingService.trainingPlanAssigneeData.category = 'AllUser'
         this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = event
         if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.length) {
           this.openDialoagBox(dialogData)

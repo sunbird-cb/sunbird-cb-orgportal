@@ -28,7 +28,7 @@ export class BreadcrumbComponent implements OnInit {
     private tpSvc: TrainingPlanService) { }
 
   ngOnInit() {
-    this.editState = this.activeRoute.snapshot.data['contentData'] ? true :  false
+    this.editState = this.activeRoute.snapshot.data['contentData'] ? true : false
     this.checkIfDisabled()
   }
 
@@ -65,8 +65,16 @@ export class BreadcrumbComponent implements OnInit {
 
   performRoute(route: any) {
     if (route === 'list') {
-      this.tpdsSvc.trainingPlanTitle = ''
-      this.router.navigateByUrl('app/home/training-plan-dashboard')
+      if (this.editState) {
+        this.router.navigate(['app', 'home', 'training-plan-dashboard'], {
+          queryParams: {
+            type: this.tpdsSvc.trainingPlanStepperData.status.toLowerCase(),
+            tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType
+          }
+        })
+      } else {
+        this.router.navigate(['app', 'home', 'training-plan-dashboard'])
+      }
     } else {
       this.router.navigateByUrl(`app/training-plan/${route}`)
     }
@@ -131,7 +139,12 @@ export class BreadcrumbComponent implements OnInit {
       setTimeout(() => {
         this.dialogRef.close()
         this.tpdsSvc.trainingPlanTitle = ''
-        this.router.navigateByUrl('app/home/training-plan-dashboard')
+        this.router.navigate(['app', 'home', 'training-plan-dashboard'], {
+          queryParams: {
+            type: 'draft',
+            tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType
+          }
+        })
       }, 1000)
     })
   }
@@ -149,14 +162,6 @@ export class BreadcrumbComponent implements OnInit {
     return true
   }
 
-  checkForDraftStatus() {
-    if (this.tpdsSvc.trainingPlanStepperData && this.tpdsSvc.trainingPlanStepperData.status
-      && this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'draft') {
-      return true
-    }
-    return false
-  }
-
   updatePlan() {
     this.tpdsSvc.trainingPlanStepperData.name = this.tpdsSvc.trainingPlanTitle
     if (this.tpdsSvc.trainingPlanStepperData.assignmentType === 'AllUser') {
@@ -165,6 +170,11 @@ export class BreadcrumbComponent implements OnInit {
       ]
     }
     const obj: any = { request: { ...this.tpdsSvc.trainingPlanStepperData, id: this.activeRoute.snapshot.data['contentData'].id } }
+    if (obj.request.status.toLowerCase() === 'live') {
+      delete obj.request.contentList
+      delete obj.request.contentType
+      delete obj.request.assignmentType
+    }
     delete obj.request.status
     this.showDialogBox('progress')
     this.tpSvc.updatePlan(obj).subscribe((_data: any) => {
@@ -173,7 +183,12 @@ export class BreadcrumbComponent implements OnInit {
       setTimeout(() => {
         this.dialogRef.close()
         this.tpdsSvc.trainingPlanTitle = ''
-        this.router.navigateByUrl('app/home/training-plan-dashboard')
+        this.router.navigate(['app', 'home', 'training-plan-dashboard'], {
+          queryParams: {
+            type: this.tpdsSvc.trainingPlanStepperData.status.toLowerCase(),
+            tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType
+          }
+        })
       }, 1000)
     })
   }

@@ -2,18 +2,21 @@
     <!-- Category Drop down -->
     <ng-container>
         <ws-app-category-drop-down [categoryData]="categoryData" [from]="from"
-            (handleCategorySelection)="handleCategorySelection($event)"></ws-app-category-drop-down>
+            (handleCategorySelection)="handleCategorySelection($event)"
+            [ngClass]="{'disable': isContentLive}"></ws-app-category-drop-down>
     </ng-container>
-    <div class="search flex w-full margin-left-xl margin-right-xl">
+    <div class="search flex w-full margin-left-xl margin-right-xl" [ngClass]="{'disable': isContentLive}">
         <div class="rsearch flex w-full"><mat-icon
                 class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
-            <input class="sinput color-60 w-full margin-right-m" [(ngModel)]="searchText" (keyup.enter)="searchData()" label="" placeholder="Select"
-                type="Standard">
+            <input class="sinput color-60 w-full margin-right-m" [(ngModel)]="searchText" (keyup.enter)="searchData()"
+                label="" placeholder="Select" type="Standard" [ngClass]="{'disable': isContentLive}">
         </div>
-        <button mat-button type="button" class="search-btn" (click)="searchData()">Search</button>
+        <button mat-button type="button" class="search-btn" (click)="searchData()"
+            [ngClass]="{'disable': isContentLive}">Search</button>
     </div>
     <div class="filter-section flex flex-end" *ngIf="!(tpdsSvc?.trainingPlanAssigneeData?.category === 'Designation'
-    || tpdsSvc?.trainingPlanAssigneeData?.category === 'AllUser') || from === 'content'">
+    || tpdsSvc?.trainingPlanAssigneeData?.category === 'AllUser') || from === 'content'"
+        [ngClass]="{'disable': isContentLive}">
         <button mat-button type="button" (click)="openFilter()" class="apply-filter">
             <mat-icon class="margin-right-xs">filter_list</mat-icon> Apply Filters
         </button>
