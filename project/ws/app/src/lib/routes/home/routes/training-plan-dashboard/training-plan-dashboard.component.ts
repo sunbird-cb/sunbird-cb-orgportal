@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 // import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 // import { EventService } from '@sunbird-cb/utils'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
@@ -40,10 +40,13 @@ export class TrainingPlanDashboardComponent implements OnInit {
   fetchContentDone!: boolean
   completeDataRes: any
   dialogRef: any
+  conficSvc: any
+  pageConfig: any
 
   constructor(
     // private events: EventService,
     private router: Router,
+    private activeRoute: ActivatedRoute,
     private trainingDashboardSvc: TrainingPlanDashboardService,
     private loaderService: LoaderService,
     private trainingPlanService: TrainingPlanService,
@@ -54,6 +57,9 @@ export class TrainingPlanDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.conficSvc = this.activeRoute.snapshot.data['configService']
+    this.pageConfig = this.activeRoute.snapshot.data['pageData']
+    this.hasAccess()
     this.tabledata = {
       columns: [
         // { displayName: 'Id', key: 'identifier' },
@@ -283,6 +289,14 @@ export class TrainingPlanDashboardComponent implements OnInit {
       }
     })
     this.trainingPlanData = this.completeDataRes.filter((v: any) => v.userType === _event)
+  }
+
+  hasAccess() {
+    if (this.pageConfig && this.pageConfig.data && this.pageConfig.data.actionMenu) {
+      this.pageConfig.data.actionMenu.map((_v: any) => {
+        debugger
+      })
+    }
   }
 
 }

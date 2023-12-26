@@ -153,7 +153,7 @@ export class SearchComponent implements OnInit {
   }
 
   getAllUsers(_event: any) {
-    // this.tpdsSvc.trainingPlanAssigneeData = { category: _event, data: [_event] }
+    this.tpdsSvc.trainingPlanAssigneeData = { category: _event, data: [_event] }
     this.handleApiData.emit(true)
   }
 

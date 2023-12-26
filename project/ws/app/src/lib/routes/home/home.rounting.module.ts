@@ -139,9 +139,14 @@ const routes: Routes = [
         path: 'training-plan-dashboard',
         component: TrainingPlanDashboardComponent,
         data: {
-          pageId: 'training-plan',
-          module: 'Training Plan',
+          pageId: 'training-plan-dashboard',
+          pageType: 'feature',
+          pageKey: 'training-plan-dashboard',
         },
+        resolve: {
+          configService: ConfigResolveService,
+          pageData: PageResolve,
+        }
       },
     ],
   },
