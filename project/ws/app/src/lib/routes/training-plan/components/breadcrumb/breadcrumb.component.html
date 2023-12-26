@@ -14,7 +14,7 @@
         </div> -->
         <div class="action" *ngIf="tpdsSvc?.trainingPlanTitle &&
         selectedTab !== tabType.CREATE_PLAN && !validationList?.titleIsInvalid">
-            {{tpdsSvc?.trainingPlanTitle}}
+            {{tpdsSvc?.trainingPlanTitle | titlecase}}
         </div>
     </div>
     <div class="flex flex-1 flex-row right-breadcrumb" *ngIf="showBreadcrumbAction">

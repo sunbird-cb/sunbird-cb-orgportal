@@ -79,7 +79,7 @@
                     {{item?.title | titlecase}} ({{item[item?.title]['count']}}) 
                 </ng-template>
                 <ng-template matTabContent>
-                    <ng-container *ngIf="item[item?.title]['listData'].length">
+                    <ng-container *ngIf="item[item?.title]['listData']?.length">
                     <div class="category-card flex flex-row" *ngFor="let sitem of item[item?.title]['listData']">
                         <div class="label">
                             {{sitem?.competencyTheme}}
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     </ng-container>
-                    <ng-container *ngIf="!(item[item?.title]['listData'].length)">
+                    <ng-container *ngIf="!(item[item?.title]['listData']?.length)">
                         <div class="default-tab-content">There are no competency added yet.</div>
                     </ng-container>
                 </ng-template>

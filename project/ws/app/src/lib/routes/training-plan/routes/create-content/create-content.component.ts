@@ -66,7 +66,7 @@ export class CreateContentComponent implements OnInit {
             }
           })
           this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any, index: any) => {
-            if (sitem.selected) {
+            if (sitem && sitem.selected) {
               this.tpdsSvc.trainingPlanContentData.data.content.splice(index, 1)
               this.tpdsSvc.trainingPlanContentData.data.content.unshift(sitem)
             }
@@ -88,7 +88,7 @@ export class CreateContentComponent implements OnInit {
       this.selectedContentChips = this.tpdsSvc.trainingPlanContentData.data.content
       if (this.selectedContentChips) {
         this.selectedContentChips.map(sitem => {
-          if (sitem.selected) {
+          if (sitem && sitem.selected) {
             this.selectContentCount = this.selectContentCount + 1
           }
         })

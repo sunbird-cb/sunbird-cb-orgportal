@@ -16,13 +16,13 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="flex flex-1 flex-row category-item" *ngFor="let ctype of competencyTypeList">
-                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="getCompetencyTheme($event, ctype)">{{ctype?.name}}</mat-checkbox>
+                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="getCompetencyTheme($event, ctype)">{{ctype?.name | titlecase }}</mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
             <div class="spacer" *ngIf="competencyThemeList.length"></div>
-            <div class="filter-content flex flex-1" *ngIf="competencyThemeList.length">
+            <div class="filter-content flex flex-1" *ngIf="competencyThemeList?.length">
                 <mat-accordion>
                     <mat-expansion-panel disableRipple [expanded]="true">
                         <mat-expansion-panel-header>
@@ -38,7 +38,7 @@
                             </div>
                             <div class="category-content">
                                 <div class="flex flex-1 flex-row category-item" *ngFor="let ctitem of competencyThemeList | filterSearch: searchInput.value">
-                                    <mat-checkbox #checkboxes disableRipple class="example-margin"  [checked]="ctitem?.selected"  (change)="getCompetencySubTheme($event, ctitem)">{{ctitem?.name}}</mat-checkbox>
+                                    <mat-checkbox #checkboxes disableRipple class="example-margin"  [checked]="ctitem?.selected"  (change)="getCompetencySubTheme($event, ctitem)">{{ctitem?.name | titlecase}}</mat-checkbox>
                                 </div>                               
                             </div>
                         
@@ -46,7 +46,7 @@
                 </mat-accordion>
             </div>
             <div class="spacer"  *ngIf="competencySubThemeList.length"></div>
-            <div class="filter-content flex flex-1" *ngIf="competencySubThemeList.length">
+            <div class="filter-content flex flex-1" *ngIf="competencySubThemeList?.length">
                 <mat-accordion>
                     <mat-expansion-panel disableRipple [expanded]="true">
                         <mat-expansion-panel-header>
@@ -62,14 +62,14 @@
                         </div>
                         <div class="category-content">
                             <div class="flex flex-1 flex-row category-item" *ngFor="let cstitem of competencySubThemeList | filterSearch: searchThemeInput.value">
-                                <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="cstitem?.selected"  (change)="manageCompetencySubTheme($event, cstitem)">{{cstitem?.name}}</mat-checkbox>
+                                <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="cstitem?.selected"  (change)="manageCompetencySubTheme($event, cstitem)">{{cstitem?.name | titlecase}}</mat-checkbox>
                             </div> 
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
             <div class="spacer" *ngIf="providersList.length"></div>
-            <div class="filter-content flex flex-1" *ngIf="providersList.length">
+            <div class="filter-content flex flex-1" *ngIf="providersList?.length">
                 <mat-accordion>
                     <mat-expansion-panel disableRipple [expanded]="true">
                         <mat-expansion-panel-header>
@@ -79,7 +79,7 @@
                         </mat-expansion-panel-header>
                         <div class="category-content">
                             <div class="flex flex-1 flex-row category-item" *ngFor="let item of providersList">
-                                <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="checkedProviders($event, item?.name)">{{item?.name}}</mat-checkbox>
+                                <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="checkedProviders($event, item?.name)">{{item?.name | titlecase}}</mat-checkbox>
                             </div>
                         </div>
                     </mat-expansion-panel>
@@ -96,7 +96,7 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="flex flex-1 flex-row category-item" *ngFor="let group of groupList">
-                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="manageSelectedGroup($event, group)">{{group?.name}}</mat-checkbox>
+                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="manageSelectedGroup($event, group)">{{group?.name | titlecase}}</mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -110,7 +110,7 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="flex flex-1 flex-row category-item" *ngFor="let des of designationList">
-                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="manageSelectedDesignation($event, des)">{{des?.name}}</mat-checkbox>
+                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="manageSelectedDesignation($event, des)">{{des?.name | titlecase}}</mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>

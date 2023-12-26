@@ -102,8 +102,11 @@ export class StandardCardComponent implements OnInit, OnChanges {
     this.startIndex = 0;
     this.lastIndex = 20;
     this.pageSize = 20;
-    this.paginator.pageIndex = 0;
-    this.paginator.pageSize = 20;
+    if(this.paginator) {
+      this.paginator.pageIndex = 0;
+      this.paginator.pageSize = 20;
+    }
+   
   }
 
 }

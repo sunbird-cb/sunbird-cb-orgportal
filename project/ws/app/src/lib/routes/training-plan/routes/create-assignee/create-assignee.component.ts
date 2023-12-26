@@ -26,12 +26,12 @@ export class CreateAssigneeComponent implements OnInit {
       },
       {
         id: 2,
-        name: 'AllUser',
+        name: 'All User',
         value: 'AllUser',
       },
       {
         id: 3,
-        name: 'CustomUser',
+        name: 'Custom User',
         value: 'CustomUser',
       },
     ]
