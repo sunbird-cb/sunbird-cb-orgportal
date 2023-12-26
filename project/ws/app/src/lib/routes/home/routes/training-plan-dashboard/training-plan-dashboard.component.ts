@@ -61,7 +61,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.configSvc = this.activeRoute.snapshot.data['configService']
-    this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
+    this.currentUser = this.configSvc.userProfileV2 && this.configSvc.userProfileV2.userId
     this.activeRoute.queryParams.subscribe((res: any) => {
       this.urlQueryParams = res
     })
@@ -193,7 +193,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       res.assigneeCount = (res.userType === 'AllUser') ? 'All Users' : (res.userDetails) ? res.userDetails.length : 0
       res.endDate = (res.endDate) ? moment(res.endDate).format('MMM DD[,] YYYY') : ''
       res.updatedAt = (res.updatedAt) ? moment(res.updatedAt).format('MMM DD[,] YYYY') : ''
-      res.createdByName = (res.createdBy === this.configSvc.userProfileV2.userId) ? 'You' : res.createdByName
+      res.createdByName = (res.createdBy === this.currentUser) ? 'You' : res.createdByName
     })
     this.fetchContentDone = true
     this.loaderService.changeLoaderState(false)
@@ -320,18 +320,17 @@ export class TrainingPlanDashboardComponent implements OnInit {
         _v.enabledFor.forEach((ele: any) => {
           if (this.configSvc.userRoles.has(ele)) {
             flag = true
+            if (ele === 'mdo_leader') {
+              _v.isMdoLeader = true
+            }
+            if (ele === 'mdo_admin') {
+              _v.isMdoAdmin = true
+            }
           }
         })
         _v.userAccess = flag
       })
     }
-  }
-
-  checkIfEnaled() {
-    if (this.configSvc.userRoles.has('mdo_leader')) {
-      return true
-    }
-    return false
   }
 
   tabNavigate(_item: any, _tabSelected?: any) {
