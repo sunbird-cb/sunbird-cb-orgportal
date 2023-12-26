@@ -33,7 +33,7 @@
         </button>
         <ng-container *ngIf="!editState">
             <button mat-button class="next-btn margin-left-m" (click)="createPlanDraftView()"
-                *ngIf="tabType.ADD_TIMELINE === selectedTab && !checkForDraftStatus()">
+                *ngIf="tabType.ADD_TIMELINE === selectedTab">
                 <span>Save as Draft</span>
             </button>
         </ng-container>
