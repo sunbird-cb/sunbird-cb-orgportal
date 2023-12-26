@@ -13,8 +13,8 @@
 </div>
 <div class="flex content-container" *ngIf="from === 'all'">
     <mat-chip-list [multiple]="true" [selectable]="true">
-        <mat-chip [ngClass]="selectedTab == item.tab ? 'select-tab': ''" *ngFor="let item of allContentChips" [selected]="selectedTab == item.tab"
-            (click)="selectedTab = item.tab"><span *ngIf="item?.count > 1">{{item.name | titlecase}}s</span> <span *ngIf="item?.count === 1">{{item.name | titlecase}}</span> <span *ngIf="item?.count"> &nbsp;&nbsp;({{item?.count}})</span>
+        <mat-chip [ngClass]="selectedTab == item?.tab ? 'select-tab ': ''" *ngFor="let item of allContentChips" [selected]="selectedTab == item.tab"
+            (click)="selectedTab = item.tab"><span *ngIf="item?.count > 1">{{item?.name | titlecase}}s</span> <span *ngIf="item?.count === 1">{{item.name | titlecase}}</span> <span *ngIf="item?.count"> &nbsp;&nbsp;({{item?.count}})</span>
         </mat-chip>
     </mat-chip-list>
 

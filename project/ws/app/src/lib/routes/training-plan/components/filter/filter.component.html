@@ -22,7 +22,7 @@
                 </mat-accordion>
             </div>
             <div class="spacer" *ngIf="competencyThemeList.length"></div>
-            <div class="filter-content flex flex-1" *ngIf="competencyThemeList.length">
+            <div class="filter-content flex flex-1" *ngIf="competencyThemeList?.length">
                 <mat-accordion>
                     <mat-expansion-panel disableRipple [expanded]="true">
                         <mat-expansion-panel-header>
@@ -46,7 +46,7 @@
                 </mat-accordion>
             </div>
             <div class="spacer"  *ngIf="competencySubThemeList.length"></div>
-            <div class="filter-content flex flex-1" *ngIf="competencySubThemeList.length">
+            <div class="filter-content flex flex-1" *ngIf="competencySubThemeList?.length">
                 <mat-accordion>
                     <mat-expansion-panel disableRipple [expanded]="true">
                         <mat-expansion-panel-header>
@@ -69,7 +69,7 @@
                 </mat-accordion>
             </div>
             <div class="spacer" *ngIf="providersList.length"></div>
-            <div class="filter-content flex flex-1" *ngIf="providersList.length">
+            <div class="filter-content flex flex-1" *ngIf="providersList?.length">
                 <mat-accordion>
                     <mat-expansion-panel disableRipple [expanded]="true">
                         <mat-expansion-panel-header>
