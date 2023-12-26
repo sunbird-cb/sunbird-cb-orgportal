@@ -38,10 +38,13 @@ export class PreviewPlanComponent implements OnInit {
               "userId": "",
               "profileDetails": {"professionalDetails": [{designation: ""}]
             }};
-            obj.firstName = item.firstName;
-            obj.profileDetails.professionalDetails[0]['designation']= item.designation;
-            obj.userId = item.userId;
-            assignmentDataArr.push(obj);
+            if(item) {
+              obj.firstName = item.firstName;
+              obj.profileDetails.professionalDetails[0]['designation']= item.designation;
+              obj.userId = item.userId;
+              assignmentDataArr.push(obj);
+            }
+            
           })
           console.log('assignmentDataArr',assignmentDataArr)
           // const assigneeData = contentData.userDetails;
