@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core'
 import { TrainingPlanContent } from '../../models/training-plan.model'
 import { ActivatedRoute } from '@angular/router'
+import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 @Component({
   selector: 'ws-app-stepper',
   templateUrl: './stepper.component.html',
@@ -20,11 +21,16 @@ export class StepperComponent implements OnInit, OnChanges {
   addAssigneeDisable = true
   addTimelineDisable = true
   editState = false;
-  constructor( private route : ActivatedRoute
+  isContentLive: boolean = false
+  constructor(private route: ActivatedRoute,
+    private tpdsSvc: TrainingPlanDataSharingService
   ) { }
 
   ngOnInit() {
-    this.editState = this.route.snapshot.data['contentData'] ? true :  false
+    this.editState = this.route.snapshot.data['contentData'] ? true : false
+    if (this.tpdsSvc.trainingPlanStepperData.status && this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'live') {
+      this.isContentLive = true
+    }
   }
 
   ngOnChanges() {

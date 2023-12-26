@@ -22,6 +22,7 @@ export class SearchComponent implements OnInit {
   designationList: any[] = [];
   pageIndex = 0;
   pageSize = 20;
+  isContentLive: boolean = false
   constructor(@Inject(DOCUMENT) private document: Document,
     private trainingPlanService: TrainingPlanService,
     private route: ActivatedRoute,
@@ -30,18 +31,21 @@ export class SearchComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tpdsSvc.handleContentPageChange.subscribe((pageData:any)=>{
-      if(pageData) {
-        this.pageIndex = pageData.pageIndex;
-        this.pageSize = pageData.pageSize;
-        this.getContent(this.selectedDropDownValue);
+    this.tpdsSvc.handleContentPageChange.subscribe((pageData: any) => {
+      if (pageData) {
+        this.pageIndex = pageData.pageIndex
+        this.pageSize = pageData.pageSize
+        this.getContent(this.selectedDropDownValue)
       }
-      
+
     })
+    if (this.tpdsSvc.trainingPlanStepperData.status && this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'live') {
+      this.isContentLive = true
+    }
   }
 
   ngOnChanges() {
-    
+
   }
 
   openFilter() {
@@ -64,7 +68,7 @@ export class SearchComponent implements OnInit {
   handleCategorySelection(event: any) {
     this.selectedDropDownValue = event
     this.tpdsSvc.clearFilter.next(true)
-    this.resetPageIndex();
+    this.resetPageIndex()
     switch (this.from) {
       case 'content':
         event = !event ? 'Course' : event
@@ -120,15 +124,15 @@ export class SearchComponent implements OnInit {
         //     data: { content: _.uniqBy(_.concat(this.tpdsSvc.trainingPlanContentData.data.content, res.content), 'identifier') }
         //   }
         // } else {
-          console.log('res', res, this.pageIndex);
-          if(this.pageIndex) {
-            let result = { count: res.count , content : this.tpdsSvc.trainingPlanContentData.data.content.concat(res.content) };
-            console.log(result);
-            this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
-          } else {
-            this.tpdsSvc.trainingPlanContentData = { category: contentType, data: res, count: res.count }
-          }
-          console.log(this.tpdsSvc.trainingPlanContentData)
+        console.log('res', res, this.pageIndex)
+        if (this.pageIndex) {
+          let result = { count: res.count, content: this.tpdsSvc.trainingPlanContentData.data.content.concat(res.content) }
+          console.log(result)
+          this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
+        } else {
+          this.tpdsSvc.trainingPlanContentData = { category: contentType, data: res, count: res.count }
+        }
+        console.log(this.tpdsSvc.trainingPlanContentData)
         // }
         this.handleApiData.emit(true)
         this.loadingService.changeLoaderState(false)
@@ -230,8 +234,8 @@ export class SearchComponent implements OnInit {
   }
 
   resetPageIndex() {
-    this.pageIndex = 0;
-    this.pageSize = 20;
+    this.pageIndex = 0
+    this.pageSize = 20
   }
 
 }

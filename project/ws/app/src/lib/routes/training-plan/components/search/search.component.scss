@@ -39,3 +39,9 @@
 .btn-disabled {
     background: rgba(0, 0, 0, 0.16) !important;
 }
+
+.disable {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: none;
+}

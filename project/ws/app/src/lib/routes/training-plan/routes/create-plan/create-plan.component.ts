@@ -41,6 +41,7 @@ export class CreatePlanComponent implements OnInit, OnDestroy {
           this.tpdsSvc.trainingPlanStepperData['contentList'].push(ele.identifier)
         })
       }
+      this.tpdsSvc.trainingPlanStepperData['contentType'] = contentData.contentType
       this.tpdsSvc.trainingPlanStepperData['assignmentType'] = contentData.assignmentType
       this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'] = contentData.assignmentTypeInfo
       this.tpdsSvc.trainingPlanStepperData['endDate'] = contentData.endDate

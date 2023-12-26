@@ -9,9 +9,14 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
 export class CreateTimelineComponent implements OnInit {
   contentData: any[] = []
   assigneeData: any
+  isContentLive: boolean = false
   constructor(private router: Router, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
+    if (this.trainingPlanDataSharingService.trainingPlanStepperData.status &&
+      this.trainingPlanDataSharingService.trainingPlanStepperData.status.toLowerCase() === 'live') {
+      this.isContentLive = true
+    }
     if (this.trainingPlanDataSharingService.trainingPlanContentData &&
       this.trainingPlanDataSharingService.trainingPlanContentData.data &&
       this.trainingPlanDataSharingService.trainingPlanContentData.data.content

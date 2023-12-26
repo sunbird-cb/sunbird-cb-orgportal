@@ -27,7 +27,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
   tagListData: any = [{
     name: 'Designation',
     value: 'Designation',
-    selected: true,
+    selected: false,
   }, {
     name: 'All users',
     value: 'AllUser',
@@ -40,8 +40,11 @@ export class TrainingPlanDashboardComponent implements OnInit {
   fetchContentDone!: boolean
   completeDataRes: any
   dialogRef: any
-  conficSvc: any
+  configSvc: any
   pageConfig: any
+  currentUser: any
+  urlQueryParams: any
+  currentTab = 'Designation'
 
   constructor(
     // private events: EventService,
@@ -57,7 +60,14 @@ export class TrainingPlanDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.conficSvc = this.activeRoute.snapshot.data['configService']
+    this.configSvc = this.activeRoute.snapshot.data['configService']
+    this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
+    this.activeRoute.queryParams.subscribe((res: any) => {
+      this.urlQueryParams = res
+    })
+    if (Object.keys(this.urlQueryParams).length) {
+      this.currentFilter = this.urlQueryParams.type
+    }
     this.pageConfig = this.activeRoute.snapshot.data['pageData']
     this.hasAccess()
     this.tabledata = {
@@ -80,7 +90,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       actionColumnName: 'Action',
       cbpPlanMenu: true,
     }
-    this.filter('live')
+    this.filter(this.currentFilter)
   }
 
   tabSelected(item: string) {
@@ -96,13 +106,23 @@ export class TrainingPlanDashboardComponent implements OnInit {
 
   filter(filter: string) {
     this.fetchContentDone = false
-    this.tagListData.map((item: any) => {
-      if (item.value === 'Designation') {
-        item.selected = true
-      } else {
-        item.selected = false
-      }
-    })
+    if (Object.keys(this.urlQueryParams).length) {
+      this.tagListData.map((ele: any) => {
+        ele.selected = false
+        if (this.urlQueryParams.tabSelected === ele.value) {
+          this.currentTab = ele.value
+          ele.selected = true
+        }
+      })
+    } else {
+      this.tagListData.map((item: any) => {
+        if (item.value === this.currentTab) {
+          item.selected = true
+        } else {
+          item.selected = false
+        }
+      })
+    }
     this.currentFilter = filter
     this.filterData()
   }
@@ -160,7 +180,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
     const draftRes = await this.trainingDashboardSvc.getUserList(req).toPromise().catch(_error => { })
     if (draftRes.params && draftRes.params.status && draftRes.params.status === 'success') {
       this.completeDataRes = draftRes.result.content
-      this.trainingPlanData = this.completeDataRes.filter((v: any) => v.userType === 'Designation')
+      this.trainingPlanData = this.completeDataRes.filter((v: any) => v.userType === this.currentTab)
       this.convertDataAsPerTable()
     } else {
       this.loaderService.changeLoaderState(false)
@@ -173,6 +193,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       res.assigneeCount = (res.userType === 'AllUser') ? 'All Users' : (res.userDetails) ? res.userDetails.length : 0
       res.endDate = (res.endDate) ? moment(res.endDate).format('MMM DD[,] YYYY') : ''
       res.updatedAt = (res.updatedAt) ? moment(res.updatedAt).format('MMM DD[,] YYYY') : ''
+      res.createdByName = (res.createdBy === this.configSvc.userProfileV2.userId) ? 'You' : res.createdByName
     })
     this.fetchContentDone = true
     this.loaderService.changeLoaderState(false)
@@ -252,7 +273,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
   }
 
   publishContentData(_selectedRow: any) {
-    this.loaderService.changeLoaderState(false)
+    this.loaderService.changeLoaderState(true)
     const obj = {
       request: {
         id: _selectedRow.id,
@@ -263,7 +284,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       if (data && data.params && data.params.status && data.params.status.toLowerCase() === 'success') {
         this.snackBar.open('CBP plan published successfully.')
         this.loaderService.changeLoaderState(false)
-        this.filterData()
+        this.tabNavigate('live', _selectedRow.assignmentType)
       } else {
         this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
         this.loaderService.changeLoaderState(false)
@@ -292,11 +313,34 @@ export class TrainingPlanDashboardComponent implements OnInit {
   }
 
   hasAccess() {
+    let flag = false
     if (this.pageConfig && this.pageConfig.data && this.pageConfig.data.actionMenu) {
       this.pageConfig.data.actionMenu.map((_v: any) => {
-        debugger
+        flag = false
+        _v.enabledFor.forEach((ele: any) => {
+          if (this.configSvc.userRoles.has(ele)) {
+            flag = true
+          }
+        })
+        _v.userAccess = flag
       })
     }
   }
 
+  checkIfEnaled() {
+    if (this.configSvc.userRoles.has('mdo_leader')) {
+      return true
+    }
+    return false
+  }
+
+  tabNavigate(_item: any, _tabSelected?: any) {
+    this.router.navigate(['app', 'home', 'training-plan-dashboard'], {
+      queryParams: {
+        type: _item,
+        tabSelected: _tabSelected
+      }
+    })
+    this.filter(_item)
+  }
 }

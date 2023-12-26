@@ -24,22 +24,24 @@
         <button mat-button class="next-btn margin-left-m" (click)="nextStep()" *ngIf="tabType.CREATE_PLAN === selectedTab || tabType.ADD_CONTENT === selectedTab
             || tabType.ADD_ASSIGNEE === selectedTab" [disabled]="checkIfDisabled()"
             [ngClass]="{'btn-disabled': checkIfDisabled()}">
-            <span *ngIf="!editState">Next: {{(tabType.CREATE_PLAN === selectedTab) ? 'Add Content' : (tabType.ADD_CONTENT === selectedTab)
+            <span *ngIf="!editState">Next: {{(tabType.CREATE_PLAN === selectedTab) ? 'Add Content' :
+                (tabType.ADD_CONTENT === selectedTab)
                 ? 'Add Assignee' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add Timeline' : ''}}</span>
-            <span *ngIf="editState">Next: {{(tabType.CREATE_PLAN === selectedTab) ? 'Edit Content' : (tabType.ADD_CONTENT === selectedTab)
-                    ? 'Edit Assignee' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Edit Timeline' : ''}}</span>
+            <span *ngIf="editState">Next: {{(tabType.CREATE_PLAN === selectedTab) ? 'Edit Content' :
+                (tabType.ADD_CONTENT === selectedTab)
+                ? 'Edit Assignee' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Edit Timeline' : ''}}</span>
         </button>
         <ng-container *ngIf="!editState">
-        <button mat-button class="next-btn margin-left-m" (click)="createPlanDraftView()"
-            *ngIf="tabType.ADD_TIMELINE === selectedTab && !checkForDraftStatus()">
-            <span>Save as Draft</span>
-        </button>
-    </ng-container>
-    <ng-container *ngIf="editState">
-        <button mat-button class="next-btn margin-left-m" (click)="updatePlan()"
-            *ngIf="tabType.ADD_TIMELINE === selectedTab && checkForDraftStatus()">
-            <span>Update Draft</span>
-        </button>
-    </ng-container>
+            <button mat-button class="next-btn margin-left-m" (click)="createPlanDraftView()"
+                *ngIf="tabType.ADD_TIMELINE === selectedTab && !checkForDraftStatus()">
+                <span>Save as Draft</span>
+            </button>
+        </ng-container>
+        <ng-container *ngIf="editState">
+            <button mat-button class="next-btn margin-left-m" (click)="updatePlan()"
+                *ngIf="tabType.ADD_TIMELINE === selectedTab">
+                <span>Update Draft</span>
+            </button>
+        </ng-container>
     </div>
 </div>
