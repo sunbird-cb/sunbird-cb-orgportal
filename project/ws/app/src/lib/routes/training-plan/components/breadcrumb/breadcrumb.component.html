@@ -33,13 +33,15 @@
         </button>
         <ng-container *ngIf="!editState">
             <button mat-button class="next-btn margin-left-m" (click)="createPlanDraftView()"
-                *ngIf="tabType.ADD_TIMELINE === selectedTab">
+                *ngIf="tabType.ADD_TIMELINE === selectedTab" [ngClass]="{'btn-disabled': checkIfValid()}"
+                [disabled]="checkIfValid()">
                 <span>Save as Draft</span>
             </button>
         </ng-container>
         <ng-container *ngIf="editState">
             <button mat-button class="next-btn margin-left-m" (click)="updatePlan()"
-                *ngIf="tabType.ADD_TIMELINE === selectedTab">
+                *ngIf="tabType.ADD_TIMELINE === selectedTab" [ngClass]="{'btn-disabled': checkIfValid()}"
+                [disabled]="checkIfValid()">
                 <span>Update Draft</span>
             </button>
         </ng-container>

@@ -192,6 +192,9 @@ export class SearchComponent implements OnInit {
 
   getAllUsers(_event: any) {
     this.tpdsSvc.trainingPlanAssigneeData = { category: _event, data: [_event] }
+    this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = [
+      "AllUser"
+    ]
     this.handleApiData.emit(true)
   }
 

@@ -149,7 +149,6 @@ export class TrainingPlanDashboardComponent implements OnInit {
   async getLiveData() {
     this.loaderService.changeLoaderState(true)
     this.trainingPlanData = []
-    this.trainingPlanData = []
     const req = {
       request: {
         filters: {
@@ -160,7 +159,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
     const liveRes = await this.trainingDashboardSvc.getUserList(req).toPromise().catch(_error => { })
     if (liveRes.params && liveRes.params.status && liveRes.params.status === 'success') {
       this.completeDataRes = liveRes.result.content
-      this.trainingPlanData = this.completeDataRes.filter((v: any) => v.userType === 'Designation')
+      this.trainingPlanData = this.completeDataRes.filter((v: any) => v.userType === this.currentTab)
       this.convertDataAsPerTable()
     } else {
       this.loaderService.changeLoaderState(false)
