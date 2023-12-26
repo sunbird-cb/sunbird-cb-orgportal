@@ -63,6 +63,7 @@ import { AddPlanInformationComponent } from './components/add-plan-information/a
 import { TrainingPlanService } from './services/traininig-plan.service'
 import { UpdatePlanResolveService } from './resolvers/update-plan-resolve.service'
 import { ResetDataSharingResolveService } from './resolvers/reset-data-sharing-resolve.service'
+import { PreviewDialogBoxComponent } from './components/preview-dialog-box/preview-dialog-box.component'
 @NgModule({
   declarations: [
     TrainingPlanHomeComponent,
@@ -82,6 +83,7 @@ import { ResetDataSharingResolveService } from './resolvers/reset-data-sharing-r
     CreateContentComponent,
     CategoryDropDownComponent,
     AddPlanInformationComponent,
+    PreviewDialogBoxComponent
   ],
   imports: [
     CommonModule,
@@ -137,6 +139,7 @@ import { ResetDataSharingResolveService } from './resolvers/reset-data-sharing-r
     FilterSearchPipeModule
   ],
   entryComponents: [
+    PreviewDialogBoxComponent
   ],
   providers: [
     InitResolver,

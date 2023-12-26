@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
+import { MatDialog } from '@angular/material'
+import { PreviewDialogBoxComponent } from '../../components/preview-dialog-box/preview-dialog-box.component'
 @Component({
   selector: 'ws-app-create-timeline',
   templateUrl: './create-timeline.component.html',
@@ -10,7 +11,11 @@ export class CreateTimelineComponent implements OnInit {
   contentData: any[] = []
   assigneeData: any
   isContentLive: boolean = false
-  constructor(private router: Router, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+  dialogRef: any
+  totalAssigneeCount: any = 0
+  constructor(
+    private trainingPlanDataSharingService: TrainingPlanDataSharingService,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     if (this.trainingPlanDataSharingService.trainingPlanStepperData.status &&
@@ -34,6 +39,8 @@ export class CreateTimelineComponent implements OnInit {
       const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
         return item.selected
       })
+      this.totalAssigneeCount = assigneeData.length
+      assigneeData.slice(0, 4)
       this.assigneeData = { category, data: assigneeData }
     }
     if (this.trainingPlanDataSharingService.trainingPlanAssigneeData &&
@@ -44,14 +51,23 @@ export class CreateTimelineComponent implements OnInit {
       const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
         return item.selected
       })
+      this.totalAssigneeCount = assigneeData.length
+      assigneeData.slice(0, 4)
       this.assigneeData = { category, data: assigneeData }
       console.log('this.assigneeData', this.assigneeData)
     }
   }
 
-  showAll(from: string, tab: string) {
+  showAll(from: string) {
+    this.dialogRef = this.dialog.open(PreviewDialogBoxComponent, {
+      disableClose: true,
+      data: {
+        from: from
+      },
+      autoFocus: false,
+    })
     // this.router.navigate(['app', 'training-plan', 'preview-plan'])
-    this.router.navigate(['app', 'training-plan', 'preview-plan'], { queryParams: { from, tab } })
+    // this.router.navigate(['app', 'training-plan', 'preview-plan'], { queryParams: { from, tab } })
   }
 
 }

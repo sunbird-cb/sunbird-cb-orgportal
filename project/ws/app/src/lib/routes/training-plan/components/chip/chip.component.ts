@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
-import { Router } from '@angular/router'
+import { MatDialog } from '@angular/material'
+import { PreviewDialogBoxComponent } from '../preview-dialog-box/preview-dialog-box.component'
 @Component({
   selector: 'ws-app-chip',
   templateUrl: './chip.component.html',
@@ -14,7 +15,12 @@ export class ChipComponent implements OnInit, OnChanges {
   @Input() selectAssigneeCount = 0
   @Output() itemRemoved = new EventEmitter<any>()
 
-  constructor(public trainingPlanDataSharingService: TrainingPlanDataSharingService, private router: Router) { }
+  dialogRef: any
+
+  constructor(
+    public tpdsSvc: TrainingPlanDataSharingService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit() {
   }
@@ -37,78 +43,85 @@ export class ChipComponent implements OnInit, OnChanges {
   clearAll() {
     if (this.from === 'content') {
       this.selectContentCount = 0
-      this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
+      this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any) => {
         if (sitem['selected']) {
           sitem['selected'] = false
         }
       })
-      this.trainingPlanDataSharingService.trainingPlanStepperData.contentList = []
-      this.trainingPlanDataSharingService.trainingPlanStepperData.contentType = ''
+      this.tpdsSvc.trainingPlanStepperData.contentList = []
+      this.tpdsSvc.trainingPlanStepperData.contentType = ''
     }
     if (this.from === 'assignee') {
       this.selectAssigneeCount = 0
-      if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation') {
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
+      if (this.tpdsSvc.trainingPlanAssigneeData.category === 'Designation') {
+        this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
           if (sitem['selected']) {
             sitem['selected'] = false
           }
         })
-      } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'CustomUser') {
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
+      } else if (this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser') {
+        this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
           if (sitem['selected']) {
             sitem['selected'] = false
           }
         })
       }
 
-      this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = []
-      this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentType = ''
+      this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = []
+      this.tpdsSvc.trainingPlanStepperData.assignmentType = ''
     }
     this.itemRemoved.emit(true)
   }
 
   removeContent(item: any) {
-    this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
+    this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any) => {
       if (sitem['selected'] && sitem['identifier'] === item['identifier']) {
         sitem['selected'] = false
       }
     })
-    if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.indexOf(item['identifier']) > -1) {
-      const index = this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.findIndex((x: any) => x === item['identifier'])
-      this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.splice(index, 1)
+    if (this.tpdsSvc.trainingPlanStepperData.contentList.indexOf(item['identifier']) > -1) {
+      const index = this.tpdsSvc.trainingPlanStepperData.contentList.findIndex((x: any) => x === item['identifier'])
+      this.tpdsSvc.trainingPlanStepperData.contentList.splice(index, 1)
     }
     this.itemRemoved.emit(true)
   }
 
   removeAssignee(item: any) {
-    if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation') {
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
+    if (this.tpdsSvc.trainingPlanAssigneeData.category === 'Designation') {
+      this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem['selected'] && sitem['id'] === item['id']) {
           sitem['selected'] = false
         }
       })
-      if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['identifier']) > -1) {
+      if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['identifier']) > -1) {
         const index =
-          this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['id'])
-        this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
+          this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['id'])
+        this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
       }
-    } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'CustomUser') {
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
+    } else if (this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser') {
+      this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem['selected'] && sitem['userId'] === item['userId']) {
           sitem['selected'] = false
         }
       })
-      if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['identifier']) > -1) {
+      if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['identifier']) > -1) {
         const index =
-          this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['userId'])
-        this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
+          this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['userId'])
+        this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
       }
     }
 
   }
 
   navigateToPreviewPage() {
-    this.router.navigate(['app', 'training-plan', 'preview-plan'], { queryParams: { from: this.from } })
+    this.dialogRef = this.dialog.open(PreviewDialogBoxComponent, {
+      disableClose: true,
+      data: {
+        from: this.from
+      },
+      autoFocus: false,
+    })
+    // this.router.navigate(['app', 'training-plan', 'preview-plan'], { queryParams: { from: this.from } })
   }
 
 }

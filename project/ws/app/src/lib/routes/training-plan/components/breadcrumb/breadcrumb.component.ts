@@ -126,11 +126,6 @@ export class BreadcrumbComponent implements OnInit {
 
   createPlanDraftView() {
     this.tpdsSvc.trainingPlanStepperData.name = this.tpdsSvc.trainingPlanTitle
-    if (this.tpdsSvc.trainingPlanStepperData.assignmentType === 'AllUser') {
-      this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = [
-        "AllUser"
-      ]
-    }
     const obj = { request: this.tpdsSvc.trainingPlanStepperData }
     this.showDialogBox('progress')
     this.tpSvc.createPlan(obj).subscribe((_data: any) => {
@@ -191,5 +186,15 @@ export class BreadcrumbComponent implements OnInit {
         })
       }, 1000)
     })
+  }
+
+  checkIfValid() {
+    if (this.tpdsSvc.trainingPlanStepperData.contentList.length === 0 ||
+      this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.length === 0 ||
+      !this.tpdsSvc.trainingPlanStepperData.endDate
+    ) {
+      return true
+    }
+    return false
   }
 }

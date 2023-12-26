@@ -24,3 +24,8 @@
 ::ng-deep .mat-standard-chip {
     cursor: pointer !important;
 }
+
+.max-height-400 {
+    max-height: 400px;
+    overflow: auto;
+}
