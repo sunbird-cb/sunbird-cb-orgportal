@@ -66,8 +66,6 @@ export class PreviewPlanComponent implements OnInit {
         })
         this.assigneeData = { category, data: assignmentDataArr }
       }
-
-
       if (contentData &&
         contentData.contentList) {
         this.contentList = contentData.contentList

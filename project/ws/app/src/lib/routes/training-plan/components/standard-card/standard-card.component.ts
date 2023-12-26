@@ -63,7 +63,7 @@ export class StandardCardComponent implements OnInit, OnChanges {
       if (this.trainingPlanDataSharingService.trainingPlanStepperData['contentList']) {
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentList'].push(item.identifier)
       }
-
+      console.log(this.trainingPlanDataSharingService.trainingPlanContentData)
     } else {
       // this.selectedContent = this.selectedContent.filter( sitem  => sitem.identifier !== item.identifier)
       this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
