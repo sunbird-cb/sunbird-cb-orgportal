@@ -69,11 +69,11 @@ export class TrainingPlanDashboardComponent implements OnInit {
         { displayName: 'Content type', key: 'contentType' },
         { displayName: 'Timeline', key: 'endDate' },
         { displayName: 'Created by', key: 'createdByName' },
-        { displayName: 'Created on', key: 'createdAt' },
+        { displayName: 'Created on', key: 'updatedAt' },
       ],
       needCheckBox: false,
       needHash: false,
-      sortColumn: 'dateCreatedOn',
+      sortColumn: 'updatedAt',
       sortState: 'desc',
       needUserMenus: false,
       actions: [],
@@ -172,7 +172,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       res.contentCount = (res.contentList) ? res.contentList.length : 0
       res.assigneeCount = (res.userType === 'AllUser') ? 'All Users' : (res.userDetails) ? res.userDetails.length : 0
       res.endDate = (res.endDate) ? moment(res.endDate).format('MMM DD[,] YYYY') : ''
-      res.createdAt = (res.createdAt) ? moment(res.createdAt).format('MMM DD[,] YYYY') : ''
+      res.updatedAt = (res.updatedAt) ? moment(res.updatedAt).format('MMM DD[,] YYYY') : ''
     })
     this.fetchContentDone = true
     this.loaderService.changeLoaderState(false)
@@ -245,7 +245,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
     this.trainingPlanService.archivePlan(obj).subscribe((_data: any) => {
       this.snackBar.open('CBP plan deleted successfully.')
       this.loaderService.changeLoaderState(false)
-      this.getDraftData()
+      this.filterData()
     }, (_error) => {
       this.loaderService.changeLoaderState(false)
     })
@@ -263,7 +263,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       if (data && data.params && data.params.status && data.params.status.toLowerCase() === 'success') {
         this.snackBar.open('CBP plan published successfully.')
         this.loaderService.changeLoaderState(false)
-        this.getDraftData()
+        this.filterData()
       } else {
         this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
         this.loaderService.changeLoaderState(false)

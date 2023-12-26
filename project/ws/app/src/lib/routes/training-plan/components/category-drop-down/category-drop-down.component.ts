@@ -25,7 +25,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
     // }
     this.trainingPlanDataSharingService.trainingPlanCategoryChangeEvent.pipe(debounceTime(700)).subscribe((data: any) => {
       if (data && data.event) {
-        if (data.event === 'Course' || data.event === 'Standalone Assessment' || data.event === 'Blended program' || data.event === 'Curated program' || data.event === 'Moderated Course') {
+        if (data.event === 'Course' || data.event === 'Standalone Assessment' || data.event === 'Program' || data.event === 'Blended program' || data.event === 'Curated program' || data.event === 'Moderated Course') {
           this.trainingPlanDataSharingService.trainingPlanStepperData.contentList = []
         } else if (data.event === 'Designation' || data.event === 'All Users' || data.event === 'Custom Users') {
           this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = []
@@ -81,6 +81,23 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Standalone Assessment'
+        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
+        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false)
+        if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+          this.openDialoagBox(dialogData)
+        } else {
+          this.handleCategorySelection.emit(event)
+        }
+        break
+      case 'Program':
+        dialogData['type'] = 'normal'
+        dialogData['icon'] = 'radio_on'
+        dialogData['title'] = 'You are attempting to change the selected content type?'
+        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection.
+        It's advisable to save the current one as a draft and create a new one instead.`
+        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['secondaryAction'] = 'Cancel'
+        dialogData['event'] = 'Program'
         this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
         this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false)
         if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
@@ -164,6 +181,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change user type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'AllUser'
+        this.trainingPlanDataSharingService.trainingPlanAssigneeData.category = 'AllUser';
         this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = event
         if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.length) {
           this.openDialoagBox(dialogData)

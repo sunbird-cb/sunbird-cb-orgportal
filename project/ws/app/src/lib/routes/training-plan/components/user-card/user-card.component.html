@@ -7,7 +7,7 @@
                 <div>{{createInititals(item?.firstName)}}</div>
             </div>
             <div class="assignee-desc">
-                <p>{{item?.firstName}} </p>
+                <p>{{item?.firstName | titlecase}} </p>
                 <p class="sub-heading" *ngIf="item?.profileDetails?.professionalDetails && item?.profileDetails?.professionalDetails[0]">{{item?.profileDetails?.professionalDetails
 [0]?.designation }}</p>
             </div>
@@ -37,7 +37,7 @@
                 </button>
             </div>
             <div class="custom-user-desc">
-                <p>{{item?.name}}</p>
+                <p>{{item?.name | titlecase}}</p>
             </div>
 
             <div class="check-action" *ngIf="checkboxVisibility">

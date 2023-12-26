@@ -1,12 +1,13 @@
-import { Component, Input, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChildren } from '@angular/core'
+import { Component, Input, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChildren, ChangeDetectionStrategy } from '@angular/core'
 import { TrainingPlanService } from './../../services/traininig-plan.service';
 import { FormControl } from '@angular/forms';
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service';
-
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'ws-app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterComponent implements OnInit {
   @Output() toggleFilter = new EventEmitter()
@@ -24,8 +25,9 @@ export class FilterComponent implements OnInit {
   filterObj: any = { "competencyArea": [], "competencyTheme": [], "competencySubTheme": [], "providers": [] };
   assigneeFilterObj:any = {"group": [], "designation": []}
   searchThemeControl = new FormControl();
+  searchSubThemeControl = new FormControl();
   @ViewChildren("checkboxes") checkboxes!: QueryList<ElementRef>;
-  constructor(private trainingPlanService: TrainingPlanService, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+  constructor(private cdref: ChangeDetectorRef, private trainingPlanService: TrainingPlanService, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
     if(this.from === 'content') {
@@ -45,6 +47,10 @@ export class FilterComponent implements OnInit {
       }
     })
   }
+
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+ }
 
   getFilterEntity() {
     let filterObj = {
@@ -89,6 +95,7 @@ export class FilterComponent implements OnInit {
     if (event.checked) {
       this.competencyList.map((citem: any) => {
         if (citem.name === ctype.id) {
+          citem['selected'] = true;
           console.log(citem.name, ctype.name, citem.children)
           citem.children.map((themechild: any) => {
             themechild['parent'] = ctype.id;
@@ -100,7 +107,12 @@ export class FilterComponent implements OnInit {
           console.log('competencyThemeList', this.competencyThemeList)
         }
       })
-    } else {     
+    } else {  
+      this.competencyList.map((citem: any) => {
+        if (citem.name === ctype.id) {
+          citem['selected'] = false;
+        }
+      });   
       this.competencyThemeList = this.competencyThemeList.filter((sitem) => {
         return sitem.parent != ctype.id
       })
@@ -117,6 +129,7 @@ export class FilterComponent implements OnInit {
     if (event.checked) {
       this.competencyThemeList.map((csitem: any) => {
         if (csitem.name === cstype.name) {
+          csitem['selected'] = true;
           csitem.children.map((subthemechild: any) => {
             subthemechild['parentType'] = csitem.parent;
             subthemechild['parent'] = csitem.name;
@@ -126,6 +139,11 @@ export class FilterComponent implements OnInit {
         }
       })
     } else {
+      this.competencyThemeList.map((csitem: any) => {
+        if (csitem.name === cstype.name) {
+          csitem['selected'] = false;
+        }
+      });
       this.competencySubThemeList = this.competencySubThemeList.filter((sitem) => {
         return sitem.parent != cstype.name
       })
@@ -142,8 +160,18 @@ export class FilterComponent implements OnInit {
   manageCompetencySubTheme(event: any, csttype: any) {
     console.log('cstype, event --', event, csttype);
     if (event.checked) {
+      this.competencySubThemeList.map((cstlitem:any)=>{
+        if (csttype.name === cstlitem.name) {
+          cstlitem['selected'] = true;
+        }
+      })
       this.filterObj['competencySubTheme'].push(csttype.name);
     } else {
+      this.competencySubThemeList.map((cstlitem:any)=>{
+        if (csttype.name === cstlitem.name) {
+          cstlitem['selected'] = false;
+        }
+      })
       if (this.filterObj['competencySubTheme'].indexOf(csttype.name) > -1) {
         const index = this.filterObj['competencySubTheme'].findIndex((x: any) => x === csttype.name)
         this.filterObj['competencySubTheme'].splice(index, 1)

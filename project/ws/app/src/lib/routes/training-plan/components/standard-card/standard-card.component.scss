@@ -57,7 +57,10 @@ $secondary-color: #EF951E;
   
     &.right-corner {
       right: 4px;
-      bottom: 4px;
+      bottom: 0px;
+      min-height: 30px;
+      min-width: 79px;
+      justify-content: right;
     }
     .mat-icon {
       vertical-align: middle;
@@ -67,7 +70,7 @@ $secondary-color: #EF951E;
       font-size: 14px;
     }
     .duration{
-      font: 700 12px/16px Lato;
+      font: 700 14px/16px Lato;
       display: inline-block;
       margin: 0;
       padding: 0;
@@ -166,8 +169,8 @@ $secondary-color: #EF951E;
   }
 
   .card-img {
-    min-width: 307px;
-    max-width: 307px;
+    min-width: 305px;
+    max-width: 305px;
     max-height: 140px;
     min-height: 140px;
     display: block;
@@ -598,4 +601,8 @@ $title-line-count: 2;
 
 ::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
   background: #1b4ca1 !important;
+}
+
+::ng-deep .card-select-box .mat-checkbox-layout {
+  width: 16px;
 }

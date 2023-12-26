@@ -20,6 +20,8 @@ export class SearchComponent implements OnInit {
   clearFilter = false;
   selectedDropDownValue: any
   designationList: any[] = [];
+  pageIndex = 0;
+  pageSize = 20;
   constructor(@Inject(DOCUMENT) private document: Document,
     private trainingPlanService: TrainingPlanService,
     private route: ActivatedRoute,
@@ -28,9 +30,18 @@ export class SearchComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.tpdsSvc.handleContentPageChange.subscribe((pageData:any)=>{
+      if(pageData) {
+        this.pageIndex = pageData.pageIndex;
+        this.pageSize = pageData.pageSize;
+        this.getContent(this.selectedDropDownValue);
+      }
+      
+    })
   }
 
   ngOnChanges() {
+    
   }
 
   openFilter() {
@@ -53,6 +64,7 @@ export class SearchComponent implements OnInit {
   handleCategorySelection(event: any) {
     this.selectedDropDownValue = event
     this.tpdsSvc.clearFilter.next(true)
+    this.resetPageIndex();
     switch (this.from) {
       case 'content':
         event = !event ? 'Course' : event
@@ -91,8 +103,8 @@ export class SearchComponent implements OnInit {
             "competencies_v5.competencyTheme": applyFilterObj && applyFilterObj['competencyTheme'] && applyFilterObj['competencyTheme'].length ? applyFilterObj['competencyTheme'] : [],
             "competencies_v5.competencySubTheme": applyFilterObj && applyFilterObj['competencySubTheme'] && applyFilterObj['competencySubTheme'].length ? applyFilterObj['competencySubTheme'] : []
           },
-          "offset": 0,
-          "limit": 500,
+          "offset": this.pageIndex,
+          "limit": this.pageSize,
           "query": (this.searchText) ? this.searchText : '',
           "sort_by": { "lastUpdatedOn": "desc" },
           "fields": ["name", "appIcon", "instructions", "description", "purpose", "mimeType",
@@ -108,7 +120,15 @@ export class SearchComponent implements OnInit {
         //     data: { content: _.uniqBy(_.concat(this.tpdsSvc.trainingPlanContentData.data.content, res.content), 'identifier') }
         //   }
         // } else {
-        this.tpdsSvc.trainingPlanContentData = { category: contentType, data: res }
+          console.log('res', res, this.pageIndex);
+          if(this.pageIndex) {
+            let result = { count: res.count , content : this.tpdsSvc.trainingPlanContentData.data.content.concat(res.content) };
+            console.log(result);
+            this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
+          } else {
+            this.tpdsSvc.trainingPlanContentData = { category: contentType, data: res, count: res.count }
+          }
+          console.log(this.tpdsSvc.trainingPlanContentData)
         // }
         this.handleApiData.emit(true)
         this.loadingService.changeLoaderState(false)
@@ -182,6 +202,7 @@ export class SearchComponent implements OnInit {
     switch (this.selectedDropDownValue) {
       case 'Course':
       case 'Standalone Assessment':
+      case 'Program':
       case 'Blended program':
       case 'Curated program':
       case 'Moderated Course':
@@ -206,6 +227,11 @@ export class SearchComponent implements OnInit {
       this.getCustomUsers(this.selectedDropDownValue, event)
     }
 
+  }
+
+  resetPageIndex() {
+    this.pageIndex = 0;
+    this.pageSize = 20;
   }
 
 }
