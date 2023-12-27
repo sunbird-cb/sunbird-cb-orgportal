@@ -99,7 +99,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     DialogConfirmComponent,
     LoginRootComponent,
     LoginRootDirective,
-    ConfirmationBoxComponent
+    ConfirmationBoxComponent,
   ],
   imports: [
     FormsModule,
@@ -152,7 +152,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
   entryComponents: [
     DialogConfirmComponent,
     LoginComponent,
-    ConfirmationBoxComponent
+    ConfirmationBoxComponent,
   ],
   providers: [
     {
@@ -188,7 +188,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     { provide: ErrorHandler, useClass: GlobalErrorHandlingService },
     MatDatepickerModule, MatNativeDateModule,
     { provide: 'environment', useValue: environment },
-    LoaderService
+    LoaderService,
   ],
 })
 export class AppModule { }

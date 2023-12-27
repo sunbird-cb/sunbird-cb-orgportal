@@ -117,7 +117,7 @@ export class ChipComponent implements OnInit, OnChanges {
     this.dialogRef = this.dialog.open(PreviewDialogBoxComponent, {
       disableClose: true,
       data: {
-        from: this.from
+        from: this.from,
       },
       autoFocus: false,
     })

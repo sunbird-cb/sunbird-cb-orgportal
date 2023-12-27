@@ -83,7 +83,7 @@ import { PreviewDialogBoxComponent } from './components/preview-dialog-box/previ
     CreateContentComponent,
     CategoryDropDownComponent,
     AddPlanInformationComponent,
-    PreviewDialogBoxComponent
+    PreviewDialogBoxComponent,
   ],
   imports: [
     CommonModule,
@@ -136,16 +136,16 @@ import { PreviewDialogBoxComponent } from './components/preview-dialog-box/previ
     PipePublicURLModule,
     PipeDurationTransformModule,
     DefaultThumbnailModule,
-    FilterSearchPipeModule
+    FilterSearchPipeModule,
   ],
   entryComponents: [
-    PreviewDialogBoxComponent
+    PreviewDialogBoxComponent,
   ],
   providers: [
     InitResolver,
     TrainingPlanService,
     UpdatePlanResolveService,
-    ResetDataSharingResolveService
+    ResetDataSharingResolveService,
   ],
 })
 export class TrainingPlanModule {

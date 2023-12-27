@@ -16,7 +16,7 @@ const API_END_POINTS = {
   GET_ALL_USERS: 'apis/proxies/v8/user/v1/search',
   GET_ALL_DESIGNATIONS: 'apis/proxies/v8/masterData/v2/deptPosition',
   GET_PROVIDERS: 'apis/proxies/v8/searchBy/provider',
-  GET_FILTER_ENTITY: 'apis/proxies/v8/competency/v4/search'
+  GET_FILTER_ENTITY: 'apis/proxies/v8/competency/v4/search',
 }
 @Injectable({
   providedIn: 'root',

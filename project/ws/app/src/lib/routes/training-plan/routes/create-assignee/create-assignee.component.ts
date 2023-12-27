@@ -63,12 +63,12 @@ export class CreateAssigneeComponent implements OnInit {
         this.assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData
         this.addAssigneeInvalid.emit(false)
       }
-    } else {      
+    } else {
       if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'AllUser') {
         this.addAssigneeInvalid.emit(false)
       }
     }
-    
+
   }
 
   handleSelectedChips(event: any) {
@@ -85,6 +85,7 @@ export class CreateAssigneeComponent implements OnInit {
         }
       } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'CustomUser') {
         this.selectedAssigneeChips = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data
+
         if (this.selectedAssigneeChips) {
           this.selectedAssigneeChips.map((sitem: any) => {
             if (sitem.selected) {

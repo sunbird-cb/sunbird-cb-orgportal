@@ -15,6 +15,6 @@ export class UpdatePlanResolveService
   ): Observable<any> {
     return this.tpSvc.readPlan(_route.paramMap.get('planId')).pipe(map((_res: any) => {
       return _res.result.content
-    }), retry(1))
+    }),                                                            retry(1))
   }
 }

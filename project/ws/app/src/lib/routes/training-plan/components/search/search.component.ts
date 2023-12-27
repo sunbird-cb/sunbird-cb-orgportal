@@ -72,17 +72,17 @@ export class SearchComponent implements OnInit {
     this.resetPageIndex()
     switch (this.from) {
       case 'content':
-        if(this.tpdsSvc.trainingPlanContentData && this.tpdsSvc.trainingPlanContentData.data) {
-          this.tpdsSvc.trainingPlanContentData.data = []
-        } 
+        // if(this.tpdsSvc.trainingPlanContentData && this.tpdsSvc.trainingPlanContentData.data) {
+        //   this.tpdsSvc.trainingPlanContentData.data = []
+        // } 
         event = !event ? 'Course' : event
         this.getContent(event)
         break
       case 'assignee':
-        if(this.tpdsSvc.trainingPlanAssigneeData && this.tpdsSvc.trainingPlanAssigneeData.data) {
-          this.tpdsSvc.trainingPlanAssigneeData.data = []
-          this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']=[]
-        } 
+        // if(this.tpdsSvc.trainingPlanAssigneeData && this.tpdsSvc.trainingPlanAssigneeData.data) {
+        //   this.tpdsSvc.trainingPlanAssigneeData.data = []
+        //   this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']=[]
+        // } 
         event = !event ? 'Designation' : event
         if (event === 'Designation') {
           this.getDesignations(event)
@@ -183,6 +183,7 @@ export class SearchComponent implements OnInit {
       },
     }
     this.trainingPlanService.getCustomUsers(filterObj).subscribe((res: any) => {
+      console.log(this.tpdsSvc.trainingPlanAssigneeData);
       this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.content }
       this.handleApiData.emit(true)
       this.loadingService.changeLoaderState(false)

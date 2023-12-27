@@ -28,8 +28,8 @@ const routes: Routes = [
           module: 'Create Plan',
         },
         resolve: {
-          tpdsSvcReset: ResetDataSharingResolveService
-        }
+          tpdsSvcReset: ResetDataSharingResolveService,
+        },
       },
       {
         path: 'update-plan/:planId',
@@ -40,8 +40,8 @@ const routes: Routes = [
         },
         resolve: {
           tpdsSvcReset: ResetDataSharingResolveService,
-          contentData: UpdatePlanResolveService
-        }
+          contentData: UpdatePlanResolveService,
+        },
       },
       {
         path: 'preview-plan',
@@ -59,8 +59,8 @@ const routes: Routes = [
           module: 'Preview Plan',
         },
         resolve: {
-          contentData: UpdatePlanResolveService
-        }
+          contentData: UpdatePlanResolveService,
+        },
       },
     ],
   },

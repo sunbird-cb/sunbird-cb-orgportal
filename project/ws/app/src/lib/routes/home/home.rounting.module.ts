@@ -146,7 +146,7 @@ const routes: Routes = [
         resolve: {
           configService: ConfigResolveService,
           pageData: PageResolve,
-        }
+        },
       },
     ],
   },

@@ -5,14 +5,14 @@ import { Subject } from 'rxjs'
   providedIn: 'root',
 })
 export class TrainingPlanDataSharingService {
-  clearFilter = new Subject();
+  clearFilter = new Subject()
   trainingPlanCategoryChangeEvent = new Subject()
   moderatedCourseSelectStatus = new Subject()
-  handleContentPageChange = new Subject();
+  handleContentPageChange = new Subject()
   trainingPlanTitle = ''
   trainingPlanContentData: any
   trainingPlanAssigneeData: any
-  selectedTabType: any = '';
+  selectedTabType: any = ''
   trainingPlanStepperData: any = {
     name: '',
     contentType: '',
