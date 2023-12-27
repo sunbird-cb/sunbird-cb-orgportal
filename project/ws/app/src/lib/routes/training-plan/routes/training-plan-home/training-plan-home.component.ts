@@ -15,14 +15,14 @@ import { Subscription } from 'rxjs'
 export class TrainingPlanHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   showModeratedNotification = false
   private subscr: Subscription = new Subscription()
-  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService
+  constructor(private tpdsSvc: TrainingPlanDataSharingService
   ) {
 
   }
   ngOnInit() {
-    this.subscr = this.subscr.add(this.trainingPlanDataSharingService.moderatedCourseSelectStatus.subscribe(status => {
+    this.subscr = this.subscr.add(this.tpdsSvc.moderatedCourseSelectStatus.subscribe(status => {
       if (status) {
-          this.showModeratedNotification = true
+        this.showModeratedNotification = true
       } else {
         this.showModeratedNotification = false
       }

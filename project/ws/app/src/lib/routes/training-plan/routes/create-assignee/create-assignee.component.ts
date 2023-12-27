@@ -15,7 +15,7 @@ export class CreateAssigneeComponent implements OnInit {
   assigneeData: any
   selectAssigneeCount = 0
   selectedAssigneeChips: any[] = []
-  constructor(public trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+  constructor(public tpdsSvc: TrainingPlanDataSharingService) { }
   from = 'assignee'
   ngOnInit() {
     this.categoryData = [
@@ -38,33 +38,33 @@ export class CreateAssigneeComponent implements OnInit {
   }
 
   handleApiData(event: any) {
-    if (event && this.trainingPlanDataSharingService.trainingPlanAssigneeData) {
-      if (this.trainingPlanDataSharingService.trainingPlanStepperData &&
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation' &&
-        this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo) {
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
-          if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.name) > -1) {
+    if (event && this.tpdsSvc.trainingPlanAssigneeData) {
+      if (this.tpdsSvc.trainingPlanStepperData &&
+        this.tpdsSvc.trainingPlanAssigneeData.category === 'Designation' &&
+        this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo) {
+        this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
+          if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.name) > -1) {
             sitem['selected'] = true
           }
         })
-        this.assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData
+        this.assigneeData = this.tpdsSvc.trainingPlanAssigneeData
         this.handleSelectedChips(true)
-      } else if (this.trainingPlanDataSharingService.trainingPlanStepperData &&
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'CustomUser' &&
-        this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo) {
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
-          if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.userId) > -1) {
+      } else if (this.tpdsSvc.trainingPlanStepperData &&
+        this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser' &&
+        this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo) {
+        this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
+          if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.userId) > -1) {
             sitem['selected'] = true
           }
         })
-        this.assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData
+        this.assigneeData = this.tpdsSvc.trainingPlanAssigneeData
         this.handleSelectedChips(true)
       } else {
-        this.assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData
+        this.assigneeData = this.tpdsSvc.trainingPlanAssigneeData
         this.addAssigneeInvalid.emit(false)
       }
     } else {
-      if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'AllUser') {
+      if (this.tpdsSvc.trainingPlanAssigneeData.category === 'AllUser') {
         this.addAssigneeInvalid.emit(false)
       }
     }
@@ -74,8 +74,8 @@ export class CreateAssigneeComponent implements OnInit {
   handleSelectedChips(event: any) {
     this.selectAssigneeCount = 0
     if (event) {
-      if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation') {
-        this.selectedAssigneeChips = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data
+      if (this.tpdsSvc.trainingPlanAssigneeData.category === 'Designation') {
+        this.selectedAssigneeChips = this.tpdsSvc.trainingPlanAssigneeData.data
         if (this.selectedAssigneeChips) {
           this.selectedAssigneeChips.map((sitem: any) => {
             if (sitem.selected) {
@@ -83,8 +83,8 @@ export class CreateAssigneeComponent implements OnInit {
             }
           })
         }
-      } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'CustomUser') {
-        this.selectedAssigneeChips = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data
+      } else if (this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser') {
+        this.selectedAssigneeChips = this.tpdsSvc.trainingPlanAssigneeData.data
 
         if (this.selectedAssigneeChips) {
           this.selectedAssigneeChips.map((sitem: any) => {

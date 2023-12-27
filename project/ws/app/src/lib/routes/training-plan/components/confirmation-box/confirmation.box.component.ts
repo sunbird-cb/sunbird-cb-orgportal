@@ -11,7 +11,7 @@ export class ConfirmationBoxComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ConfirmationBoxComponent>,
-    private trainingPlanDataSharingService: TrainingPlanDataSharingService
+    private tpdsSvc: TrainingPlanDataSharingService
   ) { }
 
   ngOnInit() {
@@ -26,7 +26,7 @@ export class ConfirmationBoxComponent implements OnInit {
       this.dialogRef.close('confirmed')
     } else {
       this.dialogRef.close()
-      this.trainingPlanDataSharingService.trainingPlanCategoryChangeEvent.next(data)
+      this.tpdsSvc.trainingPlanCategoryChangeEvent.next(data)
     }
   }
 }

@@ -19,7 +19,7 @@ export class PreviewPlanComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+    private tpdsSvc: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
     // this.from = this.route.snapshot.queryParams['from']
@@ -92,22 +92,22 @@ export class PreviewPlanComponent implements OnInit {
         this.allContentChips = arr
       }
     } else if (this.form === 'content') {
-      if (this.trainingPlanDataSharingService.trainingPlanContentData &&
-        this.trainingPlanDataSharingService.trainingPlanContentData.data) {
-        this.contentList = this.trainingPlanDataSharingService.trainingPlanContentData.data.content.filter((item: any) => {
+      if (this.tpdsSvc.trainingPlanContentData &&
+        this.tpdsSvc.trainingPlanContentData.data) {
+        this.contentList = this.tpdsSvc.trainingPlanContentData.data.content.filter((item: any) => {
           return item.selected
         })
       }
     } else if (this.form === 'assignee') {
-      if (this.trainingPlanDataSharingService.trainingPlanAssigneeData) {
-        const category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
+      if (this.tpdsSvc.trainingPlanAssigneeData) {
+        const category = this.tpdsSvc.trainingPlanAssigneeData.category
         if (category === 'Designation') {
-          const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
+          const assigneeData = this.tpdsSvc.trainingPlanAssigneeData.data.filter((item: any) => {
             return item.selected
           })
           this.assigneeData = { category, data: assigneeData }
         } else if (category === 'CustomUser') {
-          const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
+          const assigneeData = this.tpdsSvc.trainingPlanAssigneeData.data.filter((item: any) => {
             return item.selected
           })
           this.assigneeData = { category, data: assigneeData }
