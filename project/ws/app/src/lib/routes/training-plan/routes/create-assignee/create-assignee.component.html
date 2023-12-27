@@ -9,7 +9,7 @@
     <ws-app-user-card [assigneeData]="assigneeData" (handleSelectedChips)="handleSelectedChips($event)"
         *ngIf="assigneeData?.category === 'Designation' && assigneeData?.data?.length !== 0"
         [showPagination]="true"></ws-app-user-card>
-        
+
     <ws-app-user-card [assigneeData]="assigneeData" (handleSelectedChips)="handleSelectedChips($event)"
         *ngIf="assigneeData?.category === 'CustomUser' && assigneeData?.data?.length !== 0"
         [showPagination]="true"></ws-app-user-card>
@@ -24,7 +24,7 @@
     </div>
 </ng-container>
 
-<ng-container *ngIf="trainingPlanDataSharingService?.trainingPlanAssigneeData?.category === 'AllUser'">
+<ng-container *ngIf="tpdsSvc?.trainingPlanAssigneeData?.category === 'AllUser'">
     <div class="no-cbp-data margin-top-xl margin-bottom-xl">
         <div><img src="/assets/images/no-content-data.svg"></div>
         <div class="mat-subheading-1 margin-remove">It will assign to all users</div>

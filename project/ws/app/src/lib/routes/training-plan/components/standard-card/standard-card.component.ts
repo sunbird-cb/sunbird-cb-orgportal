@@ -24,10 +24,13 @@ export class StandardCardComponent implements OnInit, OnChanges {
   pageSize = 20
   defaultPosterImage: SafeUrl | null = '/assets/instances/eagle/app_logos/default.png'
   defaultThumbnail: SafeUrl | null = 'assets/instances/eagle/app_logos/KarmayogiBharat_Logo.svg'
-  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    private tpdsSvc: TrainingPlanDataSharingService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
-    this.trainingPlanDataSharingService.clearFilter.subscribe(() => {
+    this.tpdsSvc.clearFilter.subscribe(() => {
       this.resetPageIndex()
     })
   }
@@ -42,34 +45,34 @@ export class StandardCardComponent implements OnInit, OnChanges {
   onChangePage(pe: PageEvent) {
     this.startIndex = (pe.pageIndex) * pe.pageSize
     this.lastIndex = (pe.pageIndex + 1) * pe.pageSize
-    this.trainingPlanDataSharingService.handleContentPageChange.next({ pageIndex: this.startIndex, pageSize: this.lastIndex })
+    this.tpdsSvc.handleContentPageChange.next({ pageIndex: this.startIndex, pageSize: this.lastIndex })
     // this.startIndex = this.pageIndex
   }
 
   selectContentItem(event: any, item: any) {
     if (event.checked) {
       // this.selectedContent.push(item);
-      this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any, index: any) => {
+      this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any, index: any) => {
         if (sitem.identifier === item.identifier) {
           sitem['selected'] = true
-          this.trainingPlanDataSharingService.trainingPlanContentData.data.content.splice(index, 1)
-          this.trainingPlanDataSharingService.trainingPlanContentData.data.content.unshift(sitem)
+          this.tpdsSvc.trainingPlanContentData.data.content.splice(index, 1)
+          this.tpdsSvc.trainingPlanContentData.data.content.unshift(sitem)
         }
       })
 
-      if (this.trainingPlanDataSharingService.trainingPlanStepperData['contentList']) {
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentList'].push(item.identifier)
+      if (this.tpdsSvc.trainingPlanStepperData['contentList']) {
+        this.tpdsSvc.trainingPlanStepperData['contentList'].push(item.identifier)
       }
     } else {
       // this.selectedContent = this.selectedContent.filter( sitem  => sitem.identifier !== item.identifier)
-      this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
+      this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any) => {
         if (sitem.identifier === item.identifier) {
           sitem['selected'] = false
         }
       })
-      this.trainingPlanDataSharingService.trainingPlanStepperData['contentList'].filter((identifier: any, index: any) => {
+      this.tpdsSvc.trainingPlanStepperData['contentList'].filter((identifier: any, index: any) => {
         if (identifier === item.identifier) {
-          this.trainingPlanDataSharingService.trainingPlanStepperData['contentList'].splice(index, 1)
+          this.tpdsSvc.trainingPlanStepperData['contentList'].splice(index, 1)
         }
       })
     }
@@ -77,7 +80,7 @@ export class StandardCardComponent implements OnInit, OnChanges {
   }
 
   deleteItem(item: any) {
-    this.trainingPlanDataSharingService.trainingPlanContentData.data.content.map((sitem: any) => {
+    this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any) => {
       if (sitem.identifier === item.identifier) {
         sitem['selected'] = false
       }
@@ -87,9 +90,9 @@ export class StandardCardComponent implements OnInit, OnChanges {
         this.contentData.splice(index, 1)
       }
     })
-    this.trainingPlanDataSharingService.trainingPlanStepperData['contentList'].filter((identifier: any, index: any) => {
+    this.tpdsSvc.trainingPlanStepperData['contentList'].filter((identifier: any, index: any) => {
       if (identifier === item.identifier) {
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentList'].splice(index, 1)
+        this.tpdsSvc.trainingPlanStepperData['contentList'].splice(index, 1)
       }
     })
   }

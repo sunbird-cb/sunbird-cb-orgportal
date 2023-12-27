@@ -10,18 +10,18 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
 export class AddTimelineFormComponent implements OnInit {
   minDate: Date = new Date()
   todayDate: any
-  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private datePipe: DatePipe) { }
+  constructor(private tpdsSvc: TrainingPlanDataSharingService, private datePipe: DatePipe) { }
 
   ngOnInit() {
-    if (this.trainingPlanDataSharingService.trainingPlanStepperData['endDate']) {
-      this.todayDate = new Date(this.trainingPlanDataSharingService.trainingPlanStepperData['endDate'])
+    if (this.tpdsSvc.trainingPlanStepperData['endDate']) {
+      this.todayDate = new Date(this.tpdsSvc.trainingPlanStepperData['endDate'])
     } else {
-      this.trainingPlanDataSharingService.trainingPlanStepperData['endDate'] = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd')
+      this.tpdsSvc.trainingPlanStepperData['endDate'] = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd')
     }
   }
 
   changeTimeline(timeline: any) {
-    this.trainingPlanDataSharingService.trainingPlanStepperData['endDate'] = this.datePipe.transform(timeline, 'yyyy-MM-dd')
+    this.tpdsSvc.trainingPlanStepperData['endDate'] = this.datePipe.transform(timeline, 'yyyy-MM-dd')
   }
 
 }

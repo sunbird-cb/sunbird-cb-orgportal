@@ -17,7 +17,10 @@ export class UserCardComponent implements OnInit, OnChanges {
   startIndex = 0
   lastIndex = 20
   pageSize = 20
-  constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    private tpdsSvc: TrainingPlanDataSharingService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
   }
@@ -39,57 +42,57 @@ export class UserCardComponent implements OnInit, OnChanges {
     if (event.checked) {
       // this.selectedContent.push(item);
       if (this.assigneeData && this.assigneeData.category === 'Designation') {
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any, index: any) => {
+        this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any, index: any) => {
           if (sitem.name === item.name) {
             sitem['selected'] = true
-            this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.splice(index, 1)
-            this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.unshift(sitem)
+            this.tpdsSvc.trainingPlanAssigneeData.data.splice(index, 1)
+            this.tpdsSvc.trainingPlanAssigneeData.data.unshift(sitem)
           }
         })
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']) {
-          this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].push(item.name)
+        if (this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']) {
+          this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'].push(item.name)
         }
       }
       if (this.assigneeData && this.assigneeData.category === 'CustomUser') {
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any, index: any) => {
+        this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any, index: any) => {
           if (sitem.userId === item.userId) {
             sitem['selected'] = true
-            this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.splice(index, 1)
-            this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.unshift(sitem)
+            this.tpdsSvc.trainingPlanAssigneeData.data.splice(index, 1)
+            this.tpdsSvc.trainingPlanAssigneeData.data.unshift(sitem)
           }
         })
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']) {
-          this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].push(item.userId)
+        if (this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']) {
+          this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'].push(item.userId)
         }
       }
 
     } else {
       // this.selectedContent = this.selectedContent.filter( sitem  => sitem.identifier !== item.identifier)
       if (this.assigneeData && this.assigneeData.category === 'Designation') {
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
+        this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
           if (sitem.name === item.name) {
             sitem['selected'] = false
           }
         })
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'] && this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']) {
-          this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
+        if (this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'] && this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']) {
+          this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
             if (identifier === item.name) {
-              this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
+              this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
             }
           })
         }
 
       }
       if (this.assigneeData && this.assigneeData.category === 'CustomUser') {
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
+        this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
           if (sitem.userId === item.userId) {
             sitem['selected'] = false
           }
         })
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']) {
-          this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
+        if (this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']) {
+          this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
             if (identifier === item.userId) {
-              this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
+              this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
             }
           })
         }
@@ -102,7 +105,7 @@ export class UserCardComponent implements OnInit, OnChanges {
 
   deleteItem(item: any) {
     if (this.assigneeData && this.assigneeData.category === 'Designation') {
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
+      this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem.name === item.name) {
           sitem['selected'] = false
         }
@@ -112,15 +115,15 @@ export class UserCardComponent implements OnInit, OnChanges {
           this.assigneeData.data.splice(index, 1)
         }
       })
-      if(this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']) {
-        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
+      if (this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']) {
+        this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
           if (identifier === item.name) {
-            this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
+            this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
           }
         })
       }
     } else if (this.assigneeData && this.assigneeData.category === 'CustomUser') {
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
+      this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem.userId === item.userId) {
           sitem['selected'] = false
         }
@@ -130,10 +133,10 @@ export class UserCardComponent implements OnInit, OnChanges {
           this.assigneeData.data.splice(index, 1)
         }
       })
-      if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']) {
-        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
+      if (this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']) {
+        this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
           if (identifier === item.userId) {
-            this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
+            this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
           }
         })
       }

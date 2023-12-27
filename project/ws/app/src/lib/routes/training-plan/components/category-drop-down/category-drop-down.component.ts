@@ -15,7 +15,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
   @Output() handleCategorySelection: any = new EventEmitter()
   dialogRef: any
   selectedValue: any
-  constructor(public dialog: MatDialog, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+  constructor(public dialog: MatDialog, private tpdsSvc: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
     // if(this.from === 'content') {
@@ -23,15 +23,21 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
     // } else if(this.from === 'assignee') {
     //   this.handleCategorySelection.emit('Designation');
     // }
-    this.trainingPlanDataSharingService.trainingPlanCategoryChangeEvent.pipe(debounceTime(700)).subscribe((data: any) => {
+    this.tpdsSvc.trainingPlanCategoryChangeEvent.pipe(debounceTime(700)).subscribe((data: any) => {
       if (data && data.event) {
-        if (data.event === 'Course' || data.event === 'Standalone Assessment' || data.event === 'Program' || data.event === 'Blended program' || data.event === 'Curated program' || data.event === 'Moderated Course') {
-          this.trainingPlanDataSharingService.trainingPlanStepperData.contentList = []
-          this.trainingPlanDataSharingService.trainingPlanContentData.data = []
+        if (data.event === 'Course' ||
+          data.event === 'Standalone Assessment' ||
+          data.event === 'Program' ||
+          data.event === 'Blended program' ||
+          data.event === 'Curated program' ||
+          data.event === 'Moderated Course'
+        ) {
+          this.tpdsSvc.trainingPlanStepperData.contentList = []
+          this.tpdsSvc.trainingPlanContentData.data = []
         } else if (data.event === 'Designation' || data.event === 'All Users' || data.event === 'Custom Users') {
-          this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = []
-          this.trainingPlanDataSharingService.trainingPlanAssigneeData.data = []
-          this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'] = []
+          this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = []
+          this.tpdsSvc.trainingPlanAssigneeData.data = []
+          this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'] = []
         }
         this.handleCategorySelection.emit(data.event)
       }
@@ -40,20 +46,20 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.from === 'content') {
-      if (this.trainingPlanDataSharingService.trainingPlanStepperData['contentType']) {
-        this.selectedValue = this.trainingPlanDataSharingService.trainingPlanStepperData['contentType']
-        this.handleCategorySelection.emit(this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'])
+      if (this.tpdsSvc.trainingPlanStepperData['contentType']) {
+        this.selectedValue = this.tpdsSvc.trainingPlanStepperData['contentType']
+        this.handleCategorySelection.emit(this.tpdsSvc.trainingPlanStepperData['contentType'])
       } else {
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = 'Course'
+        this.tpdsSvc.trainingPlanStepperData['contentType'] = 'Course'
         this.selectedValue = 'Course'
         this.handleCategorySelection.emit('Course')
       }
     } else if (this.from === 'assignee') {
-      if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType']) {
-        this.selectedValue = this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType']
-        this.handleCategorySelection.emit(this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'])
+      if (this.tpdsSvc.trainingPlanStepperData['assignmentType']) {
+        this.selectedValue = this.tpdsSvc.trainingPlanStepperData['assignmentType']
+        this.handleCategorySelection.emit(this.tpdsSvc.trainingPlanStepperData['assignmentType'])
       } else {
-        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = 'Designation'
+        this.tpdsSvc.trainingPlanStepperData['assignmentType'] = 'Designation'
         this.selectedValue = 'Designation'
         this.handleCategorySelection.emit('Designation')
       }
@@ -72,9 +78,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Course'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
-        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false)
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
+        this.tpdsSvc.moderatedCourseSelectStatus.next(false)
+        if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
         } else {
           this.handleCategorySelection.emit(event)
@@ -89,9 +95,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Standalone Assessment'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
-        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false)
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
+        this.tpdsSvc.moderatedCourseSelectStatus.next(false)
+        if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
         } else {
           this.handleCategorySelection.emit(event)
@@ -106,9 +112,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Program'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
-        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false)
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
+        this.tpdsSvc.moderatedCourseSelectStatus.next(false)
+        if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
         } else {
           this.handleCategorySelection.emit(event)
@@ -123,9 +129,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Blended program'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
-        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false)
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
+        this.tpdsSvc.moderatedCourseSelectStatus.next(false)
+        if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
         } else {
           this.handleCategorySelection.emit(event)
@@ -140,9 +146,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Curated program'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
-        this.trainingPlanDataSharingService.moderatedCourseSelectStatus.next(false)
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
+        this.tpdsSvc.moderatedCourseSelectStatus.next(false)
+        if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
         } else {
           this.handleCategorySelection.emit(event)
@@ -157,8 +163,8 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Moderated Course'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['contentType'] = event
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData.contentList.length) {
+        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
+        if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
         } else {
           this.handleCategorySelection.emit(event)
@@ -173,8 +179,8 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change user type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Designation'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = event
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.length) {
+        this.tpdsSvc.trainingPlanStepperData['assignmentType'] = event
+        if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.length) {
           this.openDialoagBox(dialogData)
         } else {
           this.handleCategorySelection.emit(event)
@@ -189,9 +195,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change user type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'AllUser'
-        this.trainingPlanDataSharingService.trainingPlanAssigneeData.category = 'AllUser'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = event
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.length) {
+        this.tpdsSvc.trainingPlanAssigneeData.category = 'AllUser'
+        this.tpdsSvc.trainingPlanStepperData['assignmentType'] = event
+        if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.length) {
           this.openDialoagBox(dialogData)
         } else {
           this.handleCategorySelection.emit(event)
@@ -206,8 +212,8 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change user type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'CustomUser'
-        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentType'] = event
-        if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.length) {
+        this.tpdsSvc.trainingPlanStepperData['assignmentType'] = event
+        if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.length) {
           this.openDialoagBox(dialogData)
         } else {
           this.handleCategorySelection.emit(event)
