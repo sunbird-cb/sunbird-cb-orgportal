@@ -134,12 +134,22 @@
                   </div>
                 </div>
               </div>
-              <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)"
+              <!-- <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)"
                 class="text-white btn-success btn-responsive"
                 [disabled]="createUserForm?.invalid || disableCreateButton">
                 <span class="text-white" i18n>
                   Create user
                 </span>
+              </button> -->
+
+              <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)" class="text-white btn-success"
+                [disabled]="createUserForm?.invalid || disableCreateButton">
+                <span class="text-white" i18n>
+                  Create user
+                </span>
+              </button>
+              <button mat-raised-button type="button" class="flex-auto-display mar" (click)="navigateTo()">
+                <span class="ws-mat-default-text" i18n>Cancel</span>
               </button>
               <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
                 <mat-spinner [diameter]="30"></mat-spinner>

@@ -66,6 +66,9 @@ export class CreateEventComponent implements OnInit {
     { value: '22:00' }, { value: '22:30' }, { value: '23:00' }, { value: '23:30' },
   ]
 
+  hoursList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+  minsList = [0, 15, 30, 45, 59]
+
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   @ViewChild(MatSort, { static: true }) sort?: MatSort
 
