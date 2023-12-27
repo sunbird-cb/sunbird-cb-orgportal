@@ -31,6 +31,11 @@
                     [value]="professionalDetails.industry ? professionalDetails.industry : ''" class="appr-text-field">
                 </mat-grid-tile>
                 <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
+                  <label class="appr-text-label">Group</label>
+                  <input type="text" [disabled]="true" [value]="professionalDetails.group ? professionalDetails.group : ''"
+                    class="appr-text-field">
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                   <label class="appr-text-label">Designation</label>
                   <input type="text" [disabled]="true"
                     [value]="professionalDetails.designation ? professionalDetails.designation : ''"
