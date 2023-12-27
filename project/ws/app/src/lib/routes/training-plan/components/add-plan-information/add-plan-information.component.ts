@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { debounceTime } from 'rxjs/operators'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
@@ -9,12 +9,12 @@ import { Subscription } from 'rxjs'
   templateUrl: './add-plan-information.component.html',
   styleUrls: ['./add-plan-information.component.scss'],
 })
-export class AddPlanInformationComponent implements OnInit {
+export class AddPlanInformationComponent implements OnInit, OnDestroy {
 
   @Output() planTitleInvalid = new EventEmitter<any>()
 
   contentForm!: FormGroup
-  private subscr:Subscription = new Subscription();
+  private subscr: Subscription = new Subscription()
   specialCharList = `( a-z/A-Z , 0-9 . _ - $ / \ : [ ]' ' !)`
   constructor(
     private formBuilder: FormBuilder,
@@ -22,7 +22,7 @@ export class AddPlanInformationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
     const noSpecialChar = new RegExp(/^[\u0900-\u097F\u0980-\u09FF\u0C00-\u0C7F\u0B80-\u0BFF\u0C80-\u0CFF\u0D00-\u0D7F\u0A80-\u0AFF\u0B00-\u0B7F\u0A00-\u0A7Fa-zA-Z0-9()$[\]\\.:,_/ -]*$/)
     if (!this.tpdsSvc.trainingPlanTitle) {
       this.planTitleInvalid.emit(true)
@@ -38,7 +38,7 @@ export class AddPlanInformationComponent implements OnInit {
         this.tpdsSvc.trainingPlanStepperData.name = _ele
       }
       this.planTitleInvalid.emit(this.contentForm.invalid)
-    }));
+    }))
 
     if (this.tpdsSvc.trainingPlanTitle) {
       this.contentForm.controls['name'].setValue(this.tpdsSvc.trainingPlanTitle)
@@ -46,12 +46,10 @@ export class AddPlanInformationComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if(this.subscr) {
-      this.subscr.unsubscribe();
+    if (this.subscr) {
+      this.subscr.unsubscribe()
     }
-    
+
   }
 
 }
-
-

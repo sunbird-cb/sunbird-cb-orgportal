@@ -31,7 +31,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         } else if (data.event === 'Designation' || data.event === 'All Users' || data.event === 'Custom Users') {
           this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = []
           this.trainingPlanDataSharingService.trainingPlanAssigneeData.data = []
-          this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']=[]
+          this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'] = []
         }
         this.handleCategorySelection.emit(data.event)
       }

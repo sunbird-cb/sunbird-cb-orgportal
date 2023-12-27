@@ -10,7 +10,7 @@ import { PreviewDialogBoxComponent } from '../../components/preview-dialog-box/p
 export class CreateTimelineComponent implements OnInit {
   contentData: any[] = []
   assigneeData: any
-  isContentLive: boolean = false
+  isContentLive = false
   dialogRef: any
   totalAssigneeCount: any = 0
   constructor(
@@ -18,7 +18,6 @@ export class CreateTimelineComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit() {
-    console.log(this.trainingPlanDataSharingService.trainingPlanContentData);
     if (this.trainingPlanDataSharingService.trainingPlanStepperData.status &&
       this.trainingPlanDataSharingService.trainingPlanStepperData.status.toLowerCase() === 'live') {
       this.isContentLive = true
@@ -55,7 +54,6 @@ export class CreateTimelineComponent implements OnInit {
       this.totalAssigneeCount = assigneeData.length
       assigneeData.slice(0, 4)
       this.assigneeData = { category, data: assigneeData }
-      console.log('this.assigneeData', this.assigneeData)
     }
   }
 
@@ -63,7 +61,7 @@ export class CreateTimelineComponent implements OnInit {
     this.dialogRef = this.dialog.open(PreviewDialogBoxComponent, {
       disableClose: true,
       data: {
-        from: from
+        from,
       },
       autoFocus: false,
     })

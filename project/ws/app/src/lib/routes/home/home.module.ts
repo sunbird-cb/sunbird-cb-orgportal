@@ -87,7 +87,7 @@ import { TrainingPlanDashboardService } from './services/training-plan-dashboard
     BudgetproofspopupComponent,
     BlendedApprovalsComponent,
     ReportsSectionComponent,
-    TrainingPlanDashboardComponent
+    TrainingPlanDashboardComponent,
   ],
   imports: [
     CommonModule,
@@ -145,7 +145,7 @@ import { TrainingPlanDashboardService } from './services/training-plan-dashboard
     AdduserpopupComponent,
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
-    BudgetproofspopupComponent
+    BudgetproofspopupComponent,
   ],
   providers: [
     // CKEditorService,
@@ -154,7 +154,7 @@ import { TrainingPlanDashboardService } from './services/training-plan-dashboard
     MdoInfoService,
     UploadService,
     TrainingPlanDashboardService,
-  ]
+  ],
 })
 export class HomeModule {
 

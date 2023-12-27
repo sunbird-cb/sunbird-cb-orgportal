@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core'
 import _ from 'lodash'
 /* tslint:enable */
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs'
 @Component({
   selector: 'ws-app-training-plan-home',
   templateUrl: './training-plan-home.component.html',
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class TrainingPlanHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   showModeratedNotification = false
-  private subscr:Subscription = new Subscription();
+  private subscr: Subscription = new Subscription()
   constructor(private trainingPlanDataSharingService: TrainingPlanDataSharingService
   ) {
 
@@ -26,7 +26,7 @@ export class TrainingPlanHomeComponent implements OnInit, AfterViewInit, OnDestr
       } else {
         this.showModeratedNotification = false
       }
-    }));
+    }))
   }
 
   ngAfterViewInit() {

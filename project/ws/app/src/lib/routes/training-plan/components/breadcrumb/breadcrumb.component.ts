@@ -19,7 +19,7 @@ export class BreadcrumbComponent implements OnInit {
 
   public dialogRef: any
   tabType = TrainingPlanContent.TTabLabelKey
-  editState = false;
+  editState = false
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
@@ -69,8 +69,8 @@ export class BreadcrumbComponent implements OnInit {
         this.router.navigate(['app', 'home', 'training-plan-dashboard'], {
           queryParams: {
             type: this.tpdsSvc.trainingPlanStepperData.status.toLowerCase(),
-            tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType
-          }
+            tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
+          },
         })
       } else {
         this.router.navigate(['app', 'home', 'training-plan-dashboard'])
@@ -137,10 +137,10 @@ export class BreadcrumbComponent implements OnInit {
         this.router.navigate(['app', 'home', 'training-plan-dashboard'], {
           queryParams: {
             type: 'draft',
-            tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType
-          }
+            tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
+          },
         })
-      }, 1000)
+      },         1000)
     })
   }
 
@@ -161,7 +161,7 @@ export class BreadcrumbComponent implements OnInit {
     this.tpdsSvc.trainingPlanStepperData.name = this.tpdsSvc.trainingPlanTitle
     if (this.tpdsSvc.trainingPlanStepperData.assignmentType === 'AllUser') {
       this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = [
-        "AllUser"
+        'AllUser',
       ]
     }
     const obj: any = { request: { ...this.tpdsSvc.trainingPlanStepperData, id: this.activeRoute.snapshot.data['contentData'].id } }
@@ -181,10 +181,10 @@ export class BreadcrumbComponent implements OnInit {
         this.router.navigate(['app', 'home', 'training-plan-dashboard'], {
           queryParams: {
             type: this.tpdsSvc.trainingPlanStepperData.status.toLowerCase(),
-            tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType
-          }
+            tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
+          },
         })
-      }, 1000)
+      },         1000)
     })
   }
 

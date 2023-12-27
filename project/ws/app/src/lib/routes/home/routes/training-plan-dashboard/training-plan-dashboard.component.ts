@@ -266,7 +266,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       this.snackBar.open('CBP plan deleted successfully.')
       this.loaderService.changeLoaderState(false)
       this.filterData()
-    }, (_error) => {
+    },                                                  _error => {
       this.loaderService.changeLoaderState(false)
     })
   }
@@ -288,7 +288,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
         this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
         this.loaderService.changeLoaderState(false)
       }
-    }, (_error: any) => {
+    },                                                  (_error: any) => {
       this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
       this.loaderService.changeLoaderState(false)
     })
@@ -336,8 +336,8 @@ export class TrainingPlanDashboardComponent implements OnInit {
     this.router.navigate(['app', 'home', 'training-plan-dashboard'], {
       queryParams: {
         type: _item,
-        tabSelected: _tabSelected
-      }
+        tabSelected: _tabSelected,
+      },
     })
     this.filter(_item)
   }
