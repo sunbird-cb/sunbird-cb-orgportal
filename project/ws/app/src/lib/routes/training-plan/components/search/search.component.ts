@@ -26,7 +26,7 @@ export class SearchComponent implements OnInit {
   constructor(@Inject(DOCUMENT) private document: Document,
     private trainingPlanService: TrainingPlanService,
     private route: ActivatedRoute,
-    private tpdsSvc: TrainingPlanDataSharingService,
+    public tpdsSvc: TrainingPlanDataSharingService,
     private loadingService: LoaderService
   ) { }
 
@@ -66,7 +66,7 @@ export class SearchComponent implements OnInit {
   }
 
   handleCategorySelection(event: any) {
-      
+
     this.selectedDropDownValue = event
     this.tpdsSvc.clearFilter.next(true)
     this.resetPageIndex()
@@ -74,7 +74,7 @@ export class SearchComponent implements OnInit {
       case 'content':
         // if(this.tpdsSvc.trainingPlanContentData && this.tpdsSvc.trainingPlanContentData.data) {
         //   this.tpdsSvc.trainingPlanContentData.data = []
-        // } 
+        // }
         event = !event ? 'Course' : event
         this.getContent(event)
         break
@@ -82,7 +82,7 @@ export class SearchComponent implements OnInit {
         // if(this.tpdsSvc.trainingPlanAssigneeData && this.tpdsSvc.trainingPlanAssigneeData.data) {
         //   this.tpdsSvc.trainingPlanAssigneeData.data = []
         //   this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']=[]
-        // } 
+        // }
         event = !event ? 'Designation' : event
         if (event === 'Designation') {
           this.getDesignations(event)
@@ -132,17 +132,17 @@ export class SearchComponent implements OnInit {
         //     data: { content: _.uniqBy(_.concat(this.tpdsSvc.trainingPlanContentData.data.content, res.content), 'identifier') }
         //   }
         // } else {
-        let finResult = [];
-        if(this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data.content) {
-          finResult = this.tpdsSvc.trainingPlanContentData.data.content.filter((sitem:any)=>{
+        let finResult = []
+        if (this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data.content) {
+          finResult = this.tpdsSvc.trainingPlanContentData.data.content.filter((sitem: any) => {
             return sitem.selected
           })
         }
-        console.log('finResult', finResult);
-          let result = { count: res.count, content: _.uniqBy(_.concat(finResult, res.content), 'identifier') }
-          console.log(result)
-          this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
-        
+        console.log('finResult', finResult)
+        let result = { count: res.count, content: _.uniqBy(_.concat(finResult, res.content), 'identifier') }
+        console.log(result)
+        this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
+
         // else {
         //   this.tpdsSvc.trainingPlanContentData = { category: contentType, data: res, count: res.count }
         // }
@@ -183,17 +183,8 @@ export class SearchComponent implements OnInit {
       },
     }
     this.trainingPlanService.getCustomUsers(filterObj).subscribe((res: any) => {
-      if(this.tpdsSvc.trainingPlanAssigneeData.data && this.tpdsSvc.trainingPlanAssigneeData.data.content) {
-        let finArr = this.tpdsSvc.trainingPlanAssigneeData.data.content.map((sitem:any)=>{
-          if(sitem) {
-            sitem['selected'] = true;
-          }            
-        })
-        this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: _.concat(finArr, res.content)}  
-      } else {
-        this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.content }
-      }
-      
+      console.log(this.tpdsSvc.trainingPlanAssigneeData)
+      this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.content }
       this.handleApiData.emit(true)
       this.loadingService.changeLoaderState(false)
     }, (_error: any) => {
@@ -217,17 +208,18 @@ export class SearchComponent implements OnInit {
             return ditem
           }
         })
-        if(this.tpdsSvc.trainingPlanAssigneeData.data) {
-          let finArr = this.tpdsSvc.trainingPlanAssigneeData.data.filter((sitem:any)=>{
-            if(sitem.selected) {
+        console.log(this.tpdsSvc.trainingPlanAssigneeData.data)
+        if (this.tpdsSvc.trainingPlanAssigneeData.data) {
+          let finArr = this.tpdsSvc.trainingPlanAssigneeData.data.filter((sitem: any) => {
+            if (sitem && sitem.selected) {
               return sitem
-            }            
+            }
           })
-          this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: _.concat(finArr, resArr)}  
+          this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: _.concat(finArr, resArr) }
         } else {
-          this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: resArr}
+          this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: resArr }
         }
-        
+
       } else {
         this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.result.response.content }
         this.designationList = res.result.response.content

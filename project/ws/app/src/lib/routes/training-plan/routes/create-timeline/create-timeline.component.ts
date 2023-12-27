@@ -14,41 +14,41 @@ export class CreateTimelineComponent implements OnInit {
   dialogRef: any
   totalAssigneeCount: any = 0
   constructor(
-    private trainingPlanDataSharingService: TrainingPlanDataSharingService,
+    private tpdsSvc: TrainingPlanDataSharingService,
     public dialog: MatDialog) { }
 
   ngOnInit() {
-    if (this.trainingPlanDataSharingService.trainingPlanStepperData.status &&
-      this.trainingPlanDataSharingService.trainingPlanStepperData.status.toLowerCase() === 'live') {
+    if (this.tpdsSvc.trainingPlanStepperData.status &&
+      this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'live') {
       this.isContentLive = true
     }
-    if (this.trainingPlanDataSharingService.trainingPlanContentData &&
-      this.trainingPlanDataSharingService.trainingPlanContentData.data &&
-      this.trainingPlanDataSharingService.trainingPlanContentData.data.content
+    if (this.tpdsSvc.trainingPlanContentData &&
+      this.tpdsSvc.trainingPlanContentData.data &&
+      this.tpdsSvc.trainingPlanContentData.data.content
     ) {
-      this.contentData = this.trainingPlanDataSharingService.trainingPlanContentData.data.content.filter((item: any) => {
+      this.contentData = this.tpdsSvc.trainingPlanContentData.data.content.filter((item: any) => {
         return item.selected
       })
 
     }
-    if (this.trainingPlanDataSharingService.trainingPlanAssigneeData &&
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data &&
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation'
+    if (this.tpdsSvc.trainingPlanAssigneeData &&
+      this.tpdsSvc.trainingPlanAssigneeData.data &&
+      this.tpdsSvc.trainingPlanAssigneeData.category === 'Designation'
     ) {
-      const category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
-      const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
+      const category = this.tpdsSvc.trainingPlanAssigneeData.category
+      const assigneeData = this.tpdsSvc.trainingPlanAssigneeData.data.filter((item: any) => {
         return item.selected
       })
       this.totalAssigneeCount = assigneeData.length
       assigneeData.slice(0, 4)
       this.assigneeData = { category, data: assigneeData }
     }
-    if (this.trainingPlanDataSharingService.trainingPlanAssigneeData &&
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.data &&
-      this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'CustomUser'
+    if (this.tpdsSvc.trainingPlanAssigneeData &&
+      this.tpdsSvc.trainingPlanAssigneeData.data &&
+      this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser'
     ) {
-      const category = this.trainingPlanDataSharingService.trainingPlanAssigneeData.category
-      const assigneeData = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.filter((item: any) => {
+      const category = this.tpdsSvc.trainingPlanAssigneeData.category
+      const assigneeData = this.tpdsSvc.trainingPlanAssigneeData.data.filter((item: any) => {
         return item.selected
       })
       this.totalAssigneeCount = assigneeData.length

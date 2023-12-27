@@ -16,8 +16,18 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   @Input() designationList: any = []
   providersList: any[] = []
   selectedProviders: any[] = []
-  competencyTypeList = [{ id: 'Behavioral', name: 'Behavioural' }, { id: 'Functional', name: 'Functional' }, { id: 'Domain', name: 'Domain' }]
-  groupList = [{ id: 'groupA', name: 'Group A' }, { id: 'groupB', name: 'Group B' }, { id: 'groupC', name: 'Group C' }, { id: 'groupD', name: 'Group D' }, { id: 'groupE', name: 'Group E' }]
+  competencyTypeList = [
+    { id: 'Behavioral', name: 'Behavioural' },
+    { id: 'Functional', name: 'Functional' },
+    { id: 'Domain', name: 'Domain' },
+  ]
+  groupList = [
+    { id: 'groupA', name: 'Group A' },
+    { id: 'groupB', name: 'Group B' },
+    { id: 'groupC', name: 'Group C' },
+    { id: 'groupD', name: 'Group D' },
+    { id: 'groupE', name: 'Group E' },
+  ]
   competencyList: any = []
   competencyThemeList: any[] = []
   competencySubThemeList: any[] = []
@@ -26,15 +36,18 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   searchThemeControl = new FormControl()
   searchSubThemeControl = new FormControl()
   @ViewChildren('checkboxes') checkboxes!: QueryList<ElementRef>
-  constructor(private cdref: ChangeDetectorRef, private trainingPlanService: TrainingPlanService, private trainingPlanDataSharingService: TrainingPlanDataSharingService) { }
+  constructor(
+    private cdref: ChangeDetectorRef,
+    private trainingPlanService: TrainingPlanService,
+    private tpdsSvc: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
     if (this.from === 'content') {
       this.getFilterEntity()
       this.getProviders()
     } else {
-      // if(this.trainingPlanDataSharingService.trainingPlanAssigneeData &&
-      //   this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users') {
+      // if(this.tpdsSvc.trainingPlanAssigneeData &&
+      //   this.tpdsSvc.trainingPlanAssigneeData.category === 'Custom Users') {
       //   this.getDesignation();
       // }
       if (!this.designationList.length) {
@@ -43,7 +56,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
 
     }
 
-    this.trainingPlanDataSharingService.clearFilter.subscribe((result: any) => {
+    this.tpdsSvc.clearFilter.subscribe((result: any) => {
       if (result) {
         this.clearFilterWhileSearch()
       }
@@ -52,7 +65,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
 
   ngAfterContentChecked() {
     this.cdref.detectChanges()
- }
+  }
 
   getFilterEntity() {
     const filterObj = {

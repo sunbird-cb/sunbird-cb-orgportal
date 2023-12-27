@@ -31,7 +31,7 @@ export class TrainingPlanService {
   }
 
   readPlan(planId: any) {
-    return this.http.get<any>(API_END_POINTS.READ_PLAN + `/${planId}`)
+    return this.http.get<any>(`${API_END_POINTS.READ_PLAN}/${planId}`)
   }
 
   updatePlan(obj: any) {
