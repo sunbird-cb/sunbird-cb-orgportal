@@ -202,7 +202,6 @@ export class SearchComponent implements OnInit {
   getDesignations(event: any) {
     this.loadingService.changeLoaderState(true)
     this.trainingPlanService.getDesignations().subscribe((res: any) => {
-      console.log('res', res)
       if (this.searchText) {
         let resArr = res.result.response.content.filter((ditem: any) => {
           if (ditem.name.includes(this.searchText)) {
@@ -212,11 +211,10 @@ export class SearchComponent implements OnInit {
         console.log(this.tpdsSvc.trainingPlanAssigneeData.data)
         if (this.tpdsSvc.trainingPlanAssigneeData.data) {
           let finArr = this.tpdsSvc.trainingPlanAssigneeData.data.filter((sitem: any) => {
-            if (sitem.selected) {
+            if (sitem && sitem.selected) {
               return sitem
             }
           })
-          console.log(finArr, resArr)
           this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: _.concat(finArr, resArr) }
         } else {
           this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: resArr }
