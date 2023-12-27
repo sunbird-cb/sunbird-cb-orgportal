@@ -5,6 +5,7 @@ import { TrainingPlanService } from './../../services/traininig-plan.service'
 import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service'
 /* tslint:disable */
 import _ from 'lodash'
+/* tslint:enable */
 import { LoaderService } from '../../../../../../../../../src/app/services/loader.service'
 @Component({
   selector: 'ws-app-search',
@@ -126,28 +127,14 @@ export class SearchComponent implements OnInit {
         }
       }
       this.trainingPlanService.getAllContent(filterObj).subscribe((res: any) => {
-        // if (this.tpdsSvc.trainingPlanContentData && this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data.content) {
-        //   this.tpdsSvc.trainingPlanContentData = {
-        //     category: contentType,
-        //     data: { content: _.uniqBy(_.concat(this.tpdsSvc.trainingPlanContentData.data.content, res.content), 'identifier') }
-        //   }
-        // } else {
         let finResult = []
         if (this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data.content) {
           finResult = this.tpdsSvc.trainingPlanContentData.data.content.filter((sitem: any) => {
             return sitem.selected
           })
         }
-        console.log('finResult', finResult)
-        let result = { count: res.count, content: _.uniqBy(_.concat(finResult, res.content), 'identifier') }
-        console.log(result)
+        let result = { count: res.count, content: _.uniqBy(_.concat(finResult, (res.content) ? res.content : []), 'identifier') }
         this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
-
-        // else {
-        //   this.tpdsSvc.trainingPlanContentData = { category: contentType, data: res, count: res.count }
-        // }
-        console.log(this.tpdsSvc.trainingPlanContentData)
-        // }
         this.handleApiData.emit(true)
         this.loadingService.changeLoaderState(false)
       })
@@ -183,7 +170,6 @@ export class SearchComponent implements OnInit {
       },
     }
     this.trainingPlanService.getCustomUsers(filterObj).subscribe((res: any) => {
-      console.log(this.tpdsSvc.trainingPlanAssigneeData)
       this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.content }
       this.handleApiData.emit(true)
       this.loadingService.changeLoaderState(false)
@@ -208,7 +194,6 @@ export class SearchComponent implements OnInit {
             return ditem
           }
         })
-        console.log(this.tpdsSvc.trainingPlanAssigneeData.data)
         if (this.tpdsSvc.trainingPlanAssigneeData.data) {
           let finArr = this.tpdsSvc.trainingPlanAssigneeData.data.filter((sitem: any) => {
             if (sitem && sitem.selected) {
