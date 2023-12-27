@@ -112,7 +112,7 @@ export class UserCardComponent implements OnInit, OnChanges {
           this.assigneeData.data.splice(index, 1)
         }
       })
-      if(this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']) {
+      if (this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']) {
         this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
           if (identifier === item.name) {
             this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)

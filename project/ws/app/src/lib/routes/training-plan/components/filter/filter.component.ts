@@ -13,7 +13,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   @Output() getFilterData = new EventEmitter()
   @Input() clearFilterFlag: any
   @Input() from: any
-  @Input() designationList: any
+  @Input() designationList: any = []
   providersList: any[] = []
   selectedProviders: any[] = []
   competencyTypeList = [{ id: 'Behavioral', name: 'Behavioural' }, { id: 'Functional', name: 'Functional' }, { id: 'Domain', name: 'Domain' }]
@@ -37,6 +37,9 @@ export class FilterComponent implements OnInit, AfterContentChecked {
       //   this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Custom Users') {
       //   this.getDesignation();
       // }
+      if (!this.designationList.length) {
+        this.getDesignation()
+      }
 
     }
 
@@ -175,7 +178,6 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     } else {
       this.getFilterData.emit(this.assigneeFilterObj)
     }
-    this.toggleFilter.emit(false)
   }
 
   clearFilter() {
@@ -195,7 +197,6 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         element['checked'] = false
       })
     }
-
   }
 
   clearFilterWhileSearch() {
@@ -206,15 +207,14 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  // getDesignation() {
-  //   this.trainingPlanService.getDesignations().subscribe((res: any) => {
-  //     console.log('res', res)
-  //     if(res && res.result && res.result.response) {
-  //       this.designationList = res.result.response.content;
-  //     }
+  getDesignation() {
+    this.trainingPlanService.getDesignations().subscribe((res: any) => {
+      if (res && res.result && res.result.response) {
+        this.designationList = res.result.response.content
+      }
 
-  //   })
-  // }
+    })
+  }
 
   manageSelectedGroup(event: any, group: any) {
     if (event) {

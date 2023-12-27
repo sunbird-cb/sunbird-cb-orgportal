@@ -27,13 +27,13 @@ export class ChipComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.selectedContentChips.map((sitem: any, index: any) => {
-      if (sitem.selected) {
+      if (sitem && sitem.selected) {
         this.selectedContentChips.splice(index, 1)
         this.selectedContentChips.unshift(sitem)
       }
     })
     this.selectedAssigneeChips.map((sitem: any, index: any) => {
-      if (sitem.selected) {
+      if (sitem && sitem.selected) {
         this.selectedAssigneeChips.splice(index, 1)
         this.selectedAssigneeChips.unshift(sitem)
       }
@@ -44,7 +44,7 @@ export class ChipComponent implements OnInit, OnChanges {
     if (this.from === 'content') {
       this.selectContentCount = 0
       this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any) => {
-        if (sitem['selected']) {
+        if (sitem && sitem['selected']) {
           sitem['selected'] = false
         }
       })
@@ -75,7 +75,7 @@ export class ChipComponent implements OnInit, OnChanges {
 
   removeContent(item: any) {
     this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any) => {
-      if (sitem['selected'] && sitem['identifier'] === item['identifier']) {
+      if (sitem && sitem['selected'] && sitem['identifier'] === item['identifier']) {
         sitem['selected'] = false
       }
     })
@@ -100,7 +100,7 @@ export class ChipComponent implements OnInit, OnChanges {
       }
     } else if (this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser') {
       this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
-        if (sitem['selected'] && sitem['userId'] === item['userId']) {
+        if (sitem && sitem['selected'] && sitem['userId'] === item['userId']) {
           sitem['selected'] = false
         }
       })

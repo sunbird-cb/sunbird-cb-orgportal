@@ -183,8 +183,17 @@ export class SearchComponent implements OnInit {
       },
     }
     this.trainingPlanService.getCustomUsers(filterObj).subscribe((res: any) => {
-      console.log(this.tpdsSvc.trainingPlanAssigneeData);
-      this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.content }
+      if(this.tpdsSvc.trainingPlanAssigneeData.data && this.tpdsSvc.trainingPlanAssigneeData.data.content) {
+        let finArr = this.tpdsSvc.trainingPlanAssigneeData.data.content.map((sitem:any)=>{
+          if(sitem) {
+            sitem['selected'] = true;
+          }            
+        })
+        this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: _.concat(finArr, res.content)}  
+      } else {
+        this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.content }
+      }
+      
       this.handleApiData.emit(true)
       this.loadingService.changeLoaderState(false)
     }, (_error: any) => {
@@ -202,21 +211,18 @@ export class SearchComponent implements OnInit {
   getDesignations(event: any) {
     this.loadingService.changeLoaderState(true)
     this.trainingPlanService.getDesignations().subscribe((res: any) => {
-      console.log('res', res)
       if (this.searchText) {
         let resArr = res.result.response.content.filter((ditem: any) => {
           if (ditem.name.includes(this.searchText)) {
             return ditem
           }
         })
-        console.log(this.tpdsSvc.trainingPlanAssigneeData.data);
         if(this.tpdsSvc.trainingPlanAssigneeData.data) {
           let finArr = this.tpdsSvc.trainingPlanAssigneeData.data.filter((sitem:any)=>{
             if(sitem.selected) {
               return sitem
             }            
           })
-          console.log(finArr,resArr );
           this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: _.concat(finArr, resArr)}  
         } else {
           this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: resArr}

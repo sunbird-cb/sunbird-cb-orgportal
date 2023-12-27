@@ -43,7 +43,7 @@ export class CreateAssigneeComponent implements OnInit {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'Designation' &&
         this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo) {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
-          if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.name) > -1) {
+          if (sitem && this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.name) > -1) {
             sitem['selected'] = true
           }
         })
@@ -53,7 +53,7 @@ export class CreateAssigneeComponent implements OnInit {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'CustomUser' &&
         this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo) {
         this.trainingPlanDataSharingService.trainingPlanAssigneeData.data.map((sitem: any) => {
-          if (this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.userId) > -1) {
+          if (sitem && this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.userId) > -1) {
             sitem['selected'] = true
           }
         })
@@ -78,7 +78,7 @@ export class CreateAssigneeComponent implements OnInit {
         this.selectedAssigneeChips = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data
         if (this.selectedAssigneeChips) {
           this.selectedAssigneeChips.map((sitem: any) => {
-            if (sitem.selected) {
+            if (sitem && sitem.selected) {
               this.selectAssigneeCount = this.selectAssigneeCount + 1
             }
           })
@@ -88,7 +88,7 @@ export class CreateAssigneeComponent implements OnInit {
 
         if (this.selectedAssigneeChips) {
           this.selectedAssigneeChips.map((sitem: any) => {
-            if (sitem.selected) {
+            if (sitem && sitem.selected) {
               this.selectAssigneeCount = this.selectAssigneeCount + 1
             }
           })
