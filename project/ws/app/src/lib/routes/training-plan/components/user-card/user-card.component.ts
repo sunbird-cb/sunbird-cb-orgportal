@@ -75,7 +75,7 @@ export class UserCardComponent implements OnInit, OnChanges {
             sitem['selected'] = false
           }
         })
-        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
+        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'] && this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
           if (identifier === item.name) {
             this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
           }
@@ -87,7 +87,7 @@ export class UserCardComponent implements OnInit, OnChanges {
             sitem['selected'] = false
           }
         })
-        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
+        this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'] && this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
           if (identifier === item.userId) {
             this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
           }
@@ -110,7 +110,7 @@ export class UserCardComponent implements OnInit, OnChanges {
           this.assigneeData.data.splice(index, 1)
         }
       })
-      this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
+      this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'] && this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
         if (identifier === item.name) {
           this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
         }
@@ -126,7 +126,7 @@ export class UserCardComponent implements OnInit, OnChanges {
           this.assigneeData.data.splice(index, 1)
         }
       })
-      this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
+      this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'] && this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].filter((identifier: any, index: any) => {
         if (identifier === item.userId) {
           this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo'].splice(index, 1)
         }

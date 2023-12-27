@@ -85,6 +85,7 @@ export class CreateAssigneeComponent implements OnInit {
         }
       } else if (this.trainingPlanDataSharingService.trainingPlanAssigneeData.category === 'CustomUser') {
         this.selectedAssigneeChips = this.trainingPlanDataSharingService.trainingPlanAssigneeData.data
+        console.log('this.trainingPlanDataSharingService.trainingPlanAssigneeData',this.trainingPlanDataSharingService.trainingPlanAssigneeData)
         if (this.selectedAssigneeChips) {
           this.selectedAssigneeChips.map((sitem: any) => {
             if (sitem.selected) {

@@ -27,8 +27,11 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       if (data && data.event) {
         if (data.event === 'Course' || data.event === 'Standalone Assessment' || data.event === 'Program' || data.event === 'Blended program' || data.event === 'Curated program' || data.event === 'Moderated Course') {
           this.trainingPlanDataSharingService.trainingPlanStepperData.contentList = []
+          this.trainingPlanDataSharingService.trainingPlanContentData.data = []
         } else if (data.event === 'Designation' || data.event === 'All Users' || data.event === 'Custom Users') {
           this.trainingPlanDataSharingService.trainingPlanStepperData.assignmentTypeInfo = []
+          this.trainingPlanDataSharingService.trainingPlanAssigneeData.data = []
+          this.trainingPlanDataSharingService.trainingPlanStepperData['assignmentTypeInfo']=[]
         }
         this.handleCategorySelection.emit(data.event)
       }

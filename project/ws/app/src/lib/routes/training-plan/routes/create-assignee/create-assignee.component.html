@@ -9,6 +9,7 @@
     <ws-app-user-card [assigneeData]="assigneeData" (handleSelectedChips)="handleSelectedChips($event)"
         *ngIf="assigneeData?.category === 'Designation' && assigneeData?.data?.length !== 0"
         [showPagination]="true"></ws-app-user-card>
+        
     <ws-app-user-card [assigneeData]="assigneeData" (handleSelectedChips)="handleSelectedChips($event)"
         *ngIf="assigneeData?.category === 'CustomUser' && assigneeData?.data?.length !== 0"
         [showPagination]="true"></ws-app-user-card>
