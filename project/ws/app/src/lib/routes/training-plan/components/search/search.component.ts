@@ -14,21 +14,21 @@ import { LoaderService } from '../../../../../../../../../src/app/services/loade
 })
 export class SearchComponent implements OnInit {
   @Input() categoryData: any = []
-  @Input() from: any = '';
-  @Output() handleApiData = new EventEmitter();
+  @Input() from: any = ''
+  @Output() handleApiData = new EventEmitter()
   searchText = ''
   filterVisibilityFlag = false
-  clearFilter = false;
+  clearFilter = false
   selectedDropDownValue: any
-  designationList: any[] = [];
-  pageIndex = 0;
-  pageSize = 20;
-  isContentLive: boolean = false
+  designationList: any[] = []
+  pageIndex = 0
+  pageSize = 20
+  isContentLive = false
   constructor(@Inject(DOCUMENT) private document: Document,
-    private trainingPlanService: TrainingPlanService,
-    private route: ActivatedRoute,
-    public tpdsSvc: TrainingPlanDataSharingService,
-    private loadingService: LoaderService
+              private trainingPlanService: TrainingPlanService,
+              private route: ActivatedRoute,
+              public tpdsSvc: TrainingPlanDataSharingService,
+              private loadingService: LoaderService
   ) { }
 
   ngOnInit() {
@@ -43,10 +43,6 @@ export class SearchComponent implements OnInit {
     if (this.tpdsSvc.trainingPlanStepperData.status && this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'live') {
       this.isContentLive = true
     }
-  }
-
-  ngOnChanges() {
-
   }
 
   openFilter() {
@@ -76,7 +72,9 @@ export class SearchComponent implements OnInit {
         // if(this.tpdsSvc.trainingPlanContentData && this.tpdsSvc.trainingPlanContentData.data) {
         //   this.tpdsSvc.trainingPlanContentData.data = []
         // }
+        /* tslint:disable */
         event = !event ? 'Course' : event
+        /* tslint:enable */
         this.getContent(event)
         break
       case 'assignee':
@@ -84,7 +82,9 @@ export class SearchComponent implements OnInit {
         //   this.tpdsSvc.trainingPlanAssigneeData.data = []
         //   this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']=[]
         // }
+        /* tslint:disable */
         event = !event ? 'Designation' : event
+        /* tslint:enable */
         if (event === 'Designation') {
           this.getDesignations(event)
         } else if (event === 'CustomUser') {
@@ -104,36 +104,43 @@ export class SearchComponent implements OnInit {
       }
       if (this.searchText) {
         this.tpdsSvc.clearFilter.next(true)
+        /* tslint:disable */
         applyFilterObj = {}
+        /* tslint:enable */
       }
       const filterObj = {
-        "request": {
-          "secureSettings": contentType === 'Moderated Course' ? true : false, // for moderated course
-          "filters": {
-            "primaryCategory": [contentType === 'Moderated Course' ? 'Course' : contentType],
-            "organisation": applyFilterObj && applyFilterObj['providers'] && applyFilterObj['providers'].length ? applyFilterObj['providers'] : [],
-            "competencies_v5.competencyArea": applyFilterObj && applyFilterObj['competencyArea'] && applyFilterObj['competencyArea'].length ? applyFilterObj['competencyArea'] : [],
-            "competencies_v5.competencyTheme": applyFilterObj && applyFilterObj['competencyTheme'] && applyFilterObj['competencyTheme'].length ? applyFilterObj['competencyTheme'] : [],
-            "competencies_v5.competencySubTheme": applyFilterObj && applyFilterObj['competencySubTheme'] && applyFilterObj['competencySubTheme'].length ? applyFilterObj['competencySubTheme'] : []
+        request: {
+          secureSettings: contentType === 'Moderated Course' ? true : false, // for moderated course
+          filters: {
+            primaryCategory: [contentType === 'Moderated Course' ? 'Course' : contentType],
+            /* tslint:disable */
+            organisation: applyFilterObj && applyFilterObj['providers'] && applyFilterObj['providers'].length ? applyFilterObj['providers'] : [],
+            'competencies_v5.competencyArea': applyFilterObj && applyFilterObj['competencyArea'] && applyFilterObj['competencyArea'].length ? applyFilterObj['competencyArea'] : [],
+            'competencies_v5.competencyTheme': applyFilterObj && applyFilterObj['competencyTheme'] && applyFilterObj['competencyTheme'].length ? applyFilterObj['competencyTheme'] : [],
+            'competencies_v5.competencySubTheme': applyFilterObj && applyFilterObj['competencySubTheme'] && applyFilterObj['competencySubTheme'].length ? applyFilterObj['competencySubTheme'] : [],
+            /* tslint:enable */
           },
-          "offset": this.pageIndex,
-          "limit": this.pageSize,
-          "query": (this.searchText) ? this.searchText : '',
-          "sort_by": { "lastUpdatedOn": "desc" },
-          "fields": ["name", "appIcon", "instructions", "description", "purpose", "mimeType",
-            "gradeLevel", "identifier", "medium", "resourceType",
-            "primaryCategory", "contentType", "channel", "organisation", "trackable", "posterImage",
-            "idealScreenSize", "learningMode", "creatorLogo", "duration", "programDuration", "version", "avgRating", "competencies_v5", "secureSettings"]
-        }
+          offset: this.pageIndex,
+          limit: this.pageSize,
+          query: (this.searchText) ? this.searchText : '',
+          sort_by: { lastUpdatedOn: 'desc' },
+          fields: ['name', 'appIcon', 'instructions', 'description', 'purpose', 'mimeType',
+            'gradeLevel', 'identifier', 'medium', 'resourceType',
+            'primaryCategory', 'contentType', 'channel', 'organisation', 'trackable', 'posterImage',
+            'idealScreenSize', 'learningMode', 'creatorLogo', 'duration', 'programDuration',
+            'version', 'avgRating', 'competencies_v5', 'secureSettings'],
+        },
       }
       this.trainingPlanService.getAllContent(filterObj).subscribe((res: any) => {
         let finResult = []
-        if (this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data.content) {
+        if (this.tpdsSvc.trainingPlanContentData.data
+          && this.tpdsSvc.trainingPlanContentData.data
+          && this.tpdsSvc.trainingPlanContentData.data.content) {
           finResult = this.tpdsSvc.trainingPlanContentData.data.content.filter((sitem: any) => {
             return sitem.selected
           })
         }
-        let result = { count: res.count, content: _.uniqBy(_.concat(finResult, (res.content) ? res.content : []), 'identifier') }
+        const result = { count: res.count, content: _.uniqBy(_.concat(finResult, (res.content) ? res.content : []), 'identifier') }
         this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
         this.handleApiData.emit(true)
         this.loadingService.changeLoaderState(false)
@@ -147,7 +154,9 @@ export class SearchComponent implements OnInit {
     const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     if (this.searchText) {
       this.tpdsSvc.clearFilter.next(true)
+      /* tslint:disable */
       applyFilterObj = {}
+      /* tslint:enable */
     }
     const filterObj = {
       request: {
@@ -155,15 +164,17 @@ export class SearchComponent implements OnInit {
         filters: {
           rootOrgId,
           status: 1,
-          "profileDetails.professionalDetails.designation": applyFilterObj && applyFilterObj.designation && applyFilterObj.designation.length ? applyFilterObj.designation : [],
-          "profileDetails.professionalDetails.group": applyFilterObj && applyFilterObj.group && applyFilterObj.group.length ? applyFilterObj.group : [],
+          /* tslint:disable */
+          'profileDetails.professionalDetails.designation': applyFilterObj && applyFilterObj.designation && applyFilterObj.designation.length ? applyFilterObj.designation : [],
+          'profileDetails.professionalDetails.group': applyFilterObj && applyFilterObj.group && applyFilterObj.group.length ? applyFilterObj.group : [],
+          /* tslint:disable */
         },
-        "fields": [
-          "userId",
-          "firstName",
-          "rootOrgName",
-          "profileDetails",
-          "organisations"
+        fields: [
+          'userId',
+          'firstName',
+          'rootOrgName',
+          'profileDetails',
+          'organisations',
         ],
         limit: 500,
         offset: 0,
@@ -173,14 +184,14 @@ export class SearchComponent implements OnInit {
       this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.content }
       this.handleApiData.emit(true)
       this.loadingService.changeLoaderState(false)
-    }, (_error: any) => {
+    },                                                           (_error: any) => {
     })
   }
 
   getAllUsers(_event: any) {
     this.tpdsSvc.trainingPlanAssigneeData = { category: _event, data: [_event] }
     this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = [
-      "AllUser"
+      'AllUser',
     ]
     this.handleApiData.emit(true)
   }
@@ -189,13 +200,13 @@ export class SearchComponent implements OnInit {
     this.loadingService.changeLoaderState(true)
     this.trainingPlanService.getDesignations().subscribe((res: any) => {
       if (this.searchText) {
-        let resArr = res.result.response.content.filter((ditem: any) => {
+        const resArr = res.result.response.content.filter((ditem: any) => {
           if (ditem.name.includes(this.searchText)) {
             return ditem
           }
         })
         if (this.tpdsSvc.trainingPlanAssigneeData.data) {
-          let finArr = this.tpdsSvc.trainingPlanAssigneeData.data.filter((sitem: any) => {
+          const finArr = this.tpdsSvc.trainingPlanAssigneeData.data.filter((sitem: any) => {
             if (sitem && sitem.selected) {
               return sitem
             }
@@ -238,7 +249,7 @@ export class SearchComponent implements OnInit {
   }
 
   getFilterData(event: any) {
-    if (this.from == 'content') {
+    if (this.from === 'content') {
       this.getContent(this.selectedDropDownValue, event)
     } else {
       this.getCustomUsers(this.selectedDropDownValue, event)
