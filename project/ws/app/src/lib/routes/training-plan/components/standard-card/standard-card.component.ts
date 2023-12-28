@@ -33,6 +33,9 @@ export class StandardCardComponent implements OnInit, OnChanges {
     this.tpdsSvc.clearFilter.subscribe(() => {
       this.resetPageIndex()
     })
+    if (this.tpdsSvc.trainingPlanStepperData.status && this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'live') {
+      this.showDeleteFlag = false
+    }
   }
 
   ngOnChanges() {

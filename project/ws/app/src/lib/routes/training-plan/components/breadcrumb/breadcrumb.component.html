@@ -40,9 +40,14 @@
         </ng-container>
         <ng-container *ngIf="editState">
             <button mat-button class="next-btn margin-left-m" (click)="updatePlan()"
-                *ngIf="tabType.ADD_TIMELINE === selectedTab" [ngClass]="{'btn-disabled': checkIfValid()}"
-                [disabled]="checkIfValid()">
+                *ngIf="tabType.ADD_TIMELINE === selectedTab && !isLiveContent"
+                [ngClass]="{'btn-disabled': checkIfValid()}" [disabled]="checkIfValid()">
                 <span>Update Draft</span>
+            </button>
+            <button mat-button class="next-btn margin-left-m" (click)="updatePlan()"
+                *ngIf="tabType.ADD_TIMELINE === selectedTab && isLiveContent"
+                [ngClass]="{'btn-disabled': checkIfValid()}" [disabled]="checkIfValid()">
+                <span>Update and publish</span>
             </button>
         </ng-container>
     </div>

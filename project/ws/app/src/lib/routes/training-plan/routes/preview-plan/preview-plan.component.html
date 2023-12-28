@@ -9,11 +9,10 @@
     <div class="flex flex-row justify-center max-height-400"><ws-app-standard-card [checkboxVisibility]="false"
             [contentData]="contentList" [showDeleteFlag]="true"></ws-app-standard-card></div>
 </div>
-<div class="flex mt-10 flex-col" *ngIf="form==='assignee'">
-    <div class="mat-subheading-1 margin-remove margin-bottom-m">Selected Assignee <span
-            *ngIf="assigneeData?.data?.length"> (
+<div class="flex flex-col" *ngIf="form==='assignee'">
+    <div class="mat-subheading-1 margin-remove">Selected Assignee <span *ngIf="assigneeData?.data?.length"> (
             {{assigneeData?.data?.length}} )</span></div>
-    <div class="mt-10 flex flex-row justify-center"><ws-app-user-card [checkboxVisibility]="false"
+    <div class="mt-4 flex flex-row justify-center"><ws-app-user-card [checkboxVisibility]="false"
             [assigneeData]="assigneeData" [showDeleteFlag]="true"></ws-app-user-card></div>
 </div>
 <div class="flex content-container" *ngIf="form === 'all'">

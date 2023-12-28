@@ -36,24 +36,24 @@ export class CreateTimelineComponent implements OnInit {
       this.tpdsSvc.trainingPlanAssigneeData.category === 'Designation'
     ) {
       const category = this.tpdsSvc.trainingPlanAssigneeData.category
-      const assigneeData = this.tpdsSvc.trainingPlanAssigneeData.data.filter((item: any) => {
+      let assigneeDataSelected = this.tpdsSvc.trainingPlanAssigneeData.data.filter((item: any) => {
         return item.selected
       })
-      this.totalAssigneeCount = assigneeData.length
-      assigneeData.slice(0, 4)
-      this.assigneeData = { category, data: assigneeData }
+      this.totalAssigneeCount = assigneeDataSelected.length
+      assigneeDataSelected = assigneeDataSelected.slice(0, 4)
+      this.assigneeData = { category, data: assigneeDataSelected }
     }
     if (this.tpdsSvc.trainingPlanAssigneeData &&
       this.tpdsSvc.trainingPlanAssigneeData.data &&
       this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser'
     ) {
       const category = this.tpdsSvc.trainingPlanAssigneeData.category
-      const assigneeData = this.tpdsSvc.trainingPlanAssigneeData.data.filter((item: any) => {
+      let assigneeDataSelected = this.tpdsSvc.trainingPlanAssigneeData.data.filter((item: any) => {
         return item.selected
       })
-      this.totalAssigneeCount = assigneeData.length
-      assigneeData.slice(0, 4)
-      this.assigneeData = { category, data: assigneeData }
+      this.totalAssigneeCount = assigneeDataSelected.length
+      assigneeDataSelected = assigneeDataSelected.slice(0, 4)
+      this.assigneeData = { category, data: assigneeDataSelected }
     }
   }
 

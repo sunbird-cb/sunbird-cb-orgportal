@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { MatDialog } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component'
 import { TrainingPlanContent } from '../../models/training-plan.model'
@@ -20,15 +20,25 @@ export class BreadcrumbComponent implements OnInit {
   public dialogRef: any
   tabType = TrainingPlanContent.TTabLabelKey
   editState = false
+  isLiveContent = false
+  contentData: any
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
     public dialog: MatDialog,
     public tpdsSvc: TrainingPlanDataSharingService,
-    private tpSvc: TrainingPlanService) { }
+    private tpSvc: TrainingPlanService,
+    private snackBar: MatSnackBar,
+  ) { }
 
   ngOnInit() {
     this.editState = this.activeRoute.snapshot.data['contentData'] ? true : false
+    this.contentData = this.activeRoute.snapshot.data['contentData']
+    if (this.contentData) {
+      if (this.contentData.status.toLowerCase() === 'live') {
+        this.isLiveContent = true
+      }
+    }
     this.checkIfDisabled()
   }
 
@@ -140,7 +150,7 @@ export class BreadcrumbComponent implements OnInit {
             tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
           },
         })
-      },         1000)
+      }, 1000)
     })
   }
 
@@ -174,17 +184,51 @@ export class BreadcrumbComponent implements OnInit {
     this.showDialogBox('progress')
     this.tpSvc.updatePlan(obj).subscribe((_data: any) => {
       this.dialogRef.close()
-      this.showDialogBox('progress-completed')
-      setTimeout(() => {
+      if (this.isLiveContent) {
+        this.publishPlan()
+      } else {
+        this.showDialogBox('progress-completed')
+        setTimeout(() => {
+          this.dialogRef.close()
+          this.tpdsSvc.trainingPlanTitle = ''
+          this.router.navigate(['app', 'home', 'training-plan-dashboard'], {
+            queryParams: {
+              type: this.tpdsSvc.trainingPlanStepperData.status.toLowerCase(),
+              tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
+            },
+          })
+        }, 1000)
+      }
+    })
+  }
+
+  publishPlan() {
+    const obj = {
+      request: {
+        id: this.contentData.id,
+        comment: 'CBP plan approved',
+      },
+    }
+    this.tpSvc.publishPlan(obj).subscribe((data: any) => {
+      if (data && data.params && data.params.status && data.params.status.toLowerCase() === 'success') {
+        this.showDialogBox('progress-completed')
+        setTimeout(() => {
+          this.dialogRef.close()
+          this.tpdsSvc.trainingPlanTitle = ''
+          this.router.navigate(['app', 'home', 'training-plan-dashboard'], {
+            queryParams: {
+              type: this.tpdsSvc.trainingPlanStepperData.status.toLowerCase(),
+              tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
+            },
+          })
+        }, 1000)
+      } else {
+        this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
         this.dialogRef.close()
-        this.tpdsSvc.trainingPlanTitle = ''
-        this.router.navigate(['app', 'home', 'training-plan-dashboard'], {
-          queryParams: {
-            type: this.tpdsSvc.trainingPlanStepperData.status.toLowerCase(),
-            tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
-          },
-        })
-      },         1000)
+      }
+    }, (_error: any) => {
+      this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
+      this.dialogRef.close()
     })
   }
 
