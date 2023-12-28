@@ -83,7 +83,12 @@ export class ChipComponent implements OnInit, OnChanges {
       const index = this.tpdsSvc.trainingPlanStepperData.contentList.findIndex((x: any) => x === item['identifier'])
       this.tpdsSvc.trainingPlanStepperData.contentList.splice(index, 1)
     }
+    if(this.selectContentCount) {
+      this.selectContentCount = this.selectContentCount - 1;
+    }
+    
     this.itemRemoved.emit(true)
+    
   }
 
   removeAssignee(item: any) {
@@ -110,7 +115,10 @@ export class ChipComponent implements OnInit, OnChanges {
         this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
       }
     }
-
+    if(this.selectAssigneeCount) {
+      this.selectAssigneeCount = this.selectAssigneeCount - 1;
+    }
+    
   }
 
   navigateToPreviewPage() {
