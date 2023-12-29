@@ -1,15 +1,17 @@
 #addcontent {
+  .additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+  }
+  .select-container{
+    margin-top:10px;
+  }
+
   .full-width {
     width: 100% !important;
   }
   .ws-mat-accent-border.mat-radio-checked {
       border-color: rgb(27, 76, 161) !important;
-  }
-
-  .theme-igot.day-mode .ws-mat-accent-border {
-      border: 1px solid rgba(0, 0, 0, 0.16);
-      padding: 8px 12px !important;
-      border-radius: 4px !important;
   }
 
   .complabels {
@@ -44,4 +46,21 @@
   .mat-form-field-appearance-outline .mat-form-field-flex, .mat-form-field-flex {
     width: 100% !important;
   }
+}
+::ng-deep.mat-pseudo-checkbox-checked {
+  background: #0074b6 !important;
+}
+
+::ng-deep.mat-radio-inner-circle {
+    background-color: #0074b6!important;
+}
+
+::ng-deep.ws-mat-accent-border {
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    padding: 8px 12px !important;
+    border-radius: 4px !important;
+}
+
+::ng-deep.mat-option.mat-selected:not(.mat-option-disabled) {
+  color: rgba(0, 0, 0, 0.87) !important;
 }

@@ -20,8 +20,8 @@
         <p class="mat-subheading-2 required">Competency theme</p>
         <div>
           <span class="display-inline-block complabels mat-caption cursor-pointer"
-            [ngClass]="{active: (seletedCompetencyTheme && option.id === seletedCompetencyTheme.id)}"
-            (click)="compThemeSelected(option)" *ngFor="let option of allCompetencyTheme">{{option.name}}</span>
+            [ngClass]="{active: (option.selected === true)}" (click)="compThemeSelected(option)"
+            *ngFor="let option of allCompetencyTheme">{{option.name}}</span>
         </div>
       </div>
 
@@ -29,13 +29,13 @@
         <p class="mat-subheading-2 required">Competency sub theme</p>
         <div>
           <span class="display-inline-block complabels mat-caption cursor-pointer"
-            [ngClass]="{active: (seletedCompetencySubTheme && option.id === seletedCompetencySubTheme.id)}"
-            (click)="compSubThemeSelected(option)" *ngFor="let option of allCompetencySubtheme">{{option.name}}</span>
+            [ngClass]="{active: (option.selected === true)}" (click)="compSubThemeSelected(option)"
+            *ngFor="let option of allCompetencySubtheme">{{option.name}}</span>
         </div>
       </div>
     </div>
 
-    <div class="margin-bottom-m">
+    <!-- <div class="margin-bottom-m">
       <label class="mat-subheading-2 required">List of Providers</label>
       <mat-form-field appearance="outline" class="margin-top-s full-width">
         <input id="provider" matInput tab-directive type="text" placeholder="Select your provider"
@@ -49,17 +49,48 @@
           {{ option.name }}
         </mat-option>
       </mat-autocomplete>
+    </div> -->
+
+    <div class="margin-bottom-m">
+      <label class="mat-subheading-2 required">List of Providers</label>
+      <mat-form-field class="full-width">
+        <mat-select (openedChange)="openedChange($event)" placeholder="Select" formControlName="provider" multiple>
+          <!-- <mat-select-trigger>{{provider.value ? provider.value[0] : ''}}
+            <span *ngIf="provider.value?.length > 1" class="additional-selection">
+              (+{{provider.value.length - 1}} {{provider.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger> -->
+          <div class="select-container">
+            <mat-optgroup>
+              <mat-form-field>
+                <input #search autocomplete="off" placeholder="Search" aria-label="Search"
+                  formControlName="providerText" matInput>
+                <button [disableRipple]="true" *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="clearSearch($event)"><mat-icon>close</mat-icon></button>
+              </mat-form-field>
+            </mat-optgroup>
+            <mat-optgroup *ngIf="(providersList).length == 0">
+              <div>No results found!</div>
+            </mat-optgroup>
+            <mat-option (onSelectionChange)="selectionChange($event, option)" *ngFor="let option of providersList"
+              [value]="option.name">{{option.name}}
+            </mat-option>
+          </div>
+        </mat-select>
+      </mat-form-field>
+      <!-- <div *ngIf="provider.value">{{ 'You have choosen ' + provider.value }}</div> -->
     </div>
 
     <div class="margin-bottom-m">
       <label class="flex mat-subheading-2 required">Description of the requested content</label>
       <textarea class="full-width margin-top-xs" formControlName="contentdescription" id="" cols="30"
-        rows="10"></textarea>
+        rows="4"></textarea>
     </div>
 
     <div class="flex flex-end margin-top-l">
       <button mat-button class="close-btn margin-right-xs" type="button" (click)="closeModal()">Close</button>
-      <button mat-button class="submit-btn" type="button" (click)="submit()">Send mail</button>
+      <button mat-button class="submit-btn" type="button" (click)="submit()" [disabled]="contentForm.invalid">Send
+        mail</button>
     </div>
   </form>
 </div>

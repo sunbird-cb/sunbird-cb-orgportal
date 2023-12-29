@@ -17,6 +17,7 @@ const API_END_POINTS = {
   GET_ALL_DESIGNATIONS: 'apis/proxies/v8/masterData/v2/deptPosition',
   GET_PROVIDERS: 'apis/proxies/v8/searchBy/provider',
   GET_FILTER_ENTITY: 'apis/proxies/v8/competency/v4/search',
+  CREATE_NEWCONTENT: 'apis/proxies/v8/workflow/requestcbplancontent'
 }
 @Injectable({
   providedIn: 'root',
@@ -70,6 +71,10 @@ export class TrainingPlanService {
 
   getProviders() {
     return this.http.get<any>(API_END_POINTS.GET_PROVIDERS)
+  }
+
+  createNewContentrequest(obj: any) {
+    return this.http.post<any>(`${API_END_POINTS.CREATE_NEWCONTENT}`, obj).pipe(map(res => _.get(res, 'result')))
   }
 
 }
