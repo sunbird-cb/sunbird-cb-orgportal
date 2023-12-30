@@ -34,7 +34,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         ) {
           this.tpdsSvc.trainingPlanStepperData.contentList = []
           this.tpdsSvc.trainingPlanContentData.data = []
-        } else if (data.event === 'Designation' || data.event === 'All Users' || data.event === 'Custom Users') {
+        } else if (data.event === 'Designation' || data.event === 'AllUser' || data.event === 'CustomUser') {
           this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = []
           this.tpdsSvc.trainingPlanAssigneeData.data = []
           this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'] = []
