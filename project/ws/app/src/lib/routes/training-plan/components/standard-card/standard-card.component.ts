@@ -39,6 +39,7 @@ export class StandardCardComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    console.log('this.contentData', this.contentData);
     this.changeDetectorRef.detectChanges()
 
     // this.dataSource = new MatTableDataSource<any>(this.contentData);
@@ -47,8 +48,8 @@ export class StandardCardComponent implements OnInit, OnChanges {
 
   onChangePage(pe: PageEvent) {
     this.startIndex = (pe.pageIndex) * pe.pageSize
-    this.lastIndex = (pe.pageIndex + 1) * pe.pageSize
-    this.tpdsSvc.handleContentPageChange.next({ pageIndex: this.startIndex, pageSize: this.lastIndex })
+    this.lastIndex = pe.pageSize
+    this.tpdsSvc.handleContentPageChange.next({ pageIndex: this.startIndex, pageSize: pe.pageSize})
     // this.startIndex = this.pageIndex
   }
 

@@ -40,6 +40,15 @@ export class SearchComponent implements OnInit {
       }
 
     })
+
+    this.tpdsSvc.getFilterDataObject.subscribe((event)=>{
+      console.log('filterObj' , event);
+      if (this.from === 'content') {
+        this.getContent(this.selectedDropDownValue, event)
+      } else {
+        this.getCustomUsers(this.selectedDropDownValue, event)
+      }
+    })
     if (this.tpdsSvc.trainingPlanStepperData.status && this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'live') {
       this.isContentLive = true
     }
@@ -47,19 +56,21 @@ export class SearchComponent implements OnInit {
 
   openFilter() {
     this.filterVisibilityFlag = true
-    if (this.document.getElementById('top-nav-bar')) {
-      const ele: any = this.document.getElementById('top-nav-bar')
-      ele.style.zIndex = '1'
-    }
+    this.tpdsSvc.filterToggle.next({from:this.from,status: true});
+    // if (this.document.getElementById('top-nav-bar')) {
+    //   const ele: any = this.document.getElementById('top-nav-bar')
+    //   ele.style.zIndex = '1'
+    // }
 
   }
 
   hideFilter(event: any) {
     this.filterVisibilityFlag = event
-    if (this.document.getElementById('top-nav-bar')) {
-      const ele: any = this.document.getElementById('top-nav-bar')
-      ele.style.zIndex = '1000'
-    }
+    this.tpdsSvc.filterToggle.next({from:'',status:false});
+    // if (this.document.getElementById('top-nav-bar')) {
+    //   const ele: any = this.document.getElementById('top-nav-bar')
+    //   ele.style.zIndex = '1000'
+    // }
   }
 
   handleCategorySelection(event: any) {
@@ -139,8 +150,8 @@ export class SearchComponent implements OnInit {
           finResult = this.tpdsSvc.trainingPlanContentData.data.content.filter((sitem: any) => {
             return sitem.selected
           })
-        }
-        const result = { count: res.count, content: _.uniqBy(_.concat(finResult, (res.content) ? res.content : []), 'identifier') }
+        }         
+        const result = { count: res.count, content: _.uniqBy(_.concat(finResult, res.content), 'identifier') }
         this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
         this.handleApiData.emit(true)
         this.loadingService.changeLoaderState(false)
@@ -248,14 +259,13 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  getFilterData(event: any) {
-    if (this.from === 'content') {
-      this.getContent(this.selectedDropDownValue, event)
-    } else {
-      this.getCustomUsers(this.selectedDropDownValue, event)
-    }
-
-  }
+  // getFilterData(event: any) {
+  //   if (this.from === 'content') {
+  //     this.getContent(this.selectedDropDownValue, event)
+  //   } else {
+  //     this.getCustomUsers(this.selectedDropDownValue, event)
+  //   }
+  // }
 
   resetPageIndex() {
     this.pageIndex = 0

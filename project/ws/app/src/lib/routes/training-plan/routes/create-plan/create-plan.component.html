@@ -5,3 +5,6 @@
         (titleInvalid)="isPlanTitleInvalid($event)" (addContentIsInvalid)="isAddContentInvalid($event)"
         (addAssigneeIsInvalid)="isAddAssigneeInvalid($event)"></ws-app-stepper>
 </div>
+<div [hidden]="!filterVisibilityFlag">
+    <ws-app-filter (toggleFilter)="hideFilter($event)" [from]="from"></ws-app-filter>
+</div>
