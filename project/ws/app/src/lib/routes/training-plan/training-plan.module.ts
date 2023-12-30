@@ -21,6 +21,7 @@ import {
   MatTabsModule,
   MatCheckboxModule,
   MatDatepickerModule,
+  MatAutocompleteModule,
 } from '@angular/material'
 import { PipePublicURLModule } from '../pipes/pipe-public-URL/pipe-public-URL.module'
 import { PipeDurationTransformModule } from '../pipes/pipe-duration-transform/pipe-duration-transform.module'
@@ -64,6 +65,7 @@ import { TrainingPlanService } from './services/traininig-plan.service'
 import { UpdatePlanResolveService } from './resolvers/update-plan-resolve.service'
 import { ResetDataSharingResolveService } from './resolvers/reset-data-sharing-resolve.service'
 import { PreviewDialogBoxComponent } from './components/preview-dialog-box/preview-dialog-box.component'
+import { AddContentDialogComponent } from './components/add-content-dialog/add-content-dialog.component'
 @NgModule({
   declarations: [
     TrainingPlanHomeComponent,
@@ -84,13 +86,13 @@ import { PreviewDialogBoxComponent } from './components/preview-dialog-box/previ
     CategoryDropDownComponent,
     AddPlanInformationComponent,
     PreviewDialogBoxComponent,
+    AddContentDialogComponent,
   ],
   imports: [
     CommonModule,
     Ng2SearchPipeModule,
     UIORGTableModule,
     WidgetResolverModule,
-    ReactiveFormsModule,
     TrainingPlanRoutingModule,
     LeftMenuModule,
     FormsModule,
@@ -137,9 +139,11 @@ import { PreviewDialogBoxComponent } from './components/preview-dialog-box/previ
     PipeDurationTransformModule,
     DefaultThumbnailModule,
     FilterSearchPipeModule,
+    MatAutocompleteModule,
   ],
   entryComponents: [
     PreviewDialogBoxComponent,
+    AddContentDialogComponent,
   ],
   providers: [
     InitResolver,
