@@ -25,10 +25,10 @@ export class SearchComponent implements OnInit {
   pageSize = 20
   isContentLive = false
   constructor(@Inject(DOCUMENT) private document: Document,
-              private trainingPlanService: TrainingPlanService,
-              private route: ActivatedRoute,
-              public tpdsSvc: TrainingPlanDataSharingService,
-              private loadingService: LoaderService
+    private trainingPlanService: TrainingPlanService,
+    private route: ActivatedRoute,
+    public tpdsSvc: TrainingPlanDataSharingService,
+    private loadingService: LoaderService
   ) { }
 
   ngOnInit() {
@@ -74,7 +74,6 @@ export class SearchComponent implements OnInit {
   }
 
   handleCategorySelection(event: any) {
-
     this.selectedDropDownValue = event
     this.tpdsSvc.clearFilter.next(true)
     this.resetPageIndex()
@@ -195,7 +194,7 @@ export class SearchComponent implements OnInit {
       this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.content }
       this.handleApiData.emit(true)
       this.loadingService.changeLoaderState(false)
-    },                                                           (_error: any) => {
+    }, (_error: any) => {
     })
   }
 

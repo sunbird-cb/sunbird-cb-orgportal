@@ -85,7 +85,6 @@ export class CreateAssigneeComponent implements OnInit {
         }
       } else if (this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser') {
         this.selectedAssigneeChips = this.tpdsSvc.trainingPlanAssigneeData.data
-
         if (this.selectedAssigneeChips) {
           this.selectedAssigneeChips.map((sitem: any) => {
             if (sitem && sitem.selected) {
@@ -101,6 +100,10 @@ export class CreateAssigneeComponent implements OnInit {
     } else {
       this.addAssigneeInvalid.emit(false)
     }
+  }
+
+  itemsRemovedFromChip() {
+    this.handleSelectedChips(true)
   }
 
   changeTab() {

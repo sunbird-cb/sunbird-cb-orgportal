@@ -12,6 +12,7 @@ export class UserCardComponent implements OnInit, OnChanges {
   @Input() assigneeData: any
   @Input() showPagination = false
   @Output() handleSelectedChips = new EventEmitter()
+  @Output() userRemoved = new EventEmitter<any>()
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | any
   dataSource: any
   startIndex = 0
@@ -141,6 +142,7 @@ export class UserCardComponent implements OnInit, OnChanges {
         })
       }
     }
+    this.userRemoved.emit(true)
   }
 
   createInititals(name: string): string {

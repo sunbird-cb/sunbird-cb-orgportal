@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core'
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core'
 import { TrainingPlanContent } from '../../models/training-plan.model'
 import { ActivatedRoute } from '@angular/router'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
@@ -7,7 +7,7 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.scss'],
 })
-export class StepperComponent implements OnInit, OnChanges {
+export class StepperComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() changeTabOnNext!: string
   @Output() selectedTabType = new EventEmitter<any>()
@@ -17,13 +17,13 @@ export class StepperComponent implements OnInit, OnChanges {
 
   tabType = TrainingPlanContent.TTabLabelKey
   tabIndexValue = 0
-  addCotnentDisable = true
-  addAssigneeDisable = true
-  addTimelineDisable = true
+  addCotnentDisable!: boolean
+  addAssigneeDisable!: boolean
+  addTimelineDisable!: boolean
   editState = false
   isContentLive = false
   constructor(private route: ActivatedRoute,
-              private tpdsSvc: TrainingPlanDataSharingService
+    private tpdsSvc: TrainingPlanDataSharingService
   ) { }
 
   ngOnInit() {
@@ -31,6 +31,12 @@ export class StepperComponent implements OnInit, OnChanges {
     if (this.tpdsSvc.trainingPlanStepperData.status && this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'live') {
       this.isContentLive = true
     }
+  }
+
+  ngAfterViewInit() {
+    this.addCotnentDisable = true
+    this.addAssigneeDisable = true
+    this.addTimelineDisable = true
   }
 
   ngOnChanges() {
@@ -62,28 +68,28 @@ export class StepperComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.addCotnentDisable = _event
       this.titleInvalid.emit(_event)
-    },         0)
+    }, 0)
   }
 
   checkForaddContent(_event: any) {
     setTimeout(() => {
       this.addAssigneeDisable = _event
       this.addContentIsInvalid.emit(_event)
-    },         0)
+    }, 0)
   }
 
   checkForaddAssignee(_event: any) {
     setTimeout(() => {
       this.addTimelineDisable = _event
       this.addAssigneeIsInvalid.emit(_event)
-    },         0)
+    }, 0)
   }
 
   tabChangeToTimeline(_event: any) {
     setTimeout(() => {
       this.addTimelineDisable = _event
       this.addAssigneeIsInvalid.emit(_event)
-    },         0)
+    }, 0)
     this.tabIndexValue = 3
   }
 }

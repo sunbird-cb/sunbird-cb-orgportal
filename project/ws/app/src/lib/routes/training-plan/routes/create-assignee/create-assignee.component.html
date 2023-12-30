@@ -3,7 +3,7 @@
 </ng-container>
 <ng-container>
     <ws-app-chip [selectedAssigneeChips]="selectedAssigneeChips" [from]="from"
-        [selectAssigneeCount]="selectAssigneeCount"></ws-app-chip>
+        [selectAssigneeCount]="selectAssigneeCount" (itemRemoved)="itemsRemovedFromChip()"></ws-app-chip>
 </ng-container>
 <ng-container>
     <ws-app-user-card [assigneeData]="assigneeData" (handleSelectedChips)="handleSelectedChips($event)"

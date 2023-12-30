@@ -16,6 +16,7 @@ export class StandardCardComponent implements OnInit, OnChanges {
   @Input() showPagination = false
   @Input() count = 0
   @Output() handleSelectedChips = new EventEmitter()
+  @Output() selectedContentRemoved = new EventEmitter<any>()
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | any
   dataSource: any
   selectedContent: any[] = []
@@ -41,9 +42,6 @@ export class StandardCardComponent implements OnInit, OnChanges {
   ngOnChanges() {
     console.log('this.contentData', this.contentData);
     this.changeDetectorRef.detectChanges()
-
-    // this.dataSource = new MatTableDataSource<any>(this.contentData);
-    // this.dataSource.paginator = this.paginator;
   }
 
   onChangePage(pe: PageEvent) {
@@ -99,6 +97,7 @@ export class StandardCardComponent implements OnInit, OnChanges {
         this.tpdsSvc.trainingPlanStepperData['contentList'].splice(index, 1)
       }
     })
+    this.selectedContentRemoved.emit(true)
   }
 
   resetPageIndex() {

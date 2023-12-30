@@ -10,8 +10,9 @@
                                     (change)="selectContentItem($event, item)"></mat-checkbox>
                             </div>
                             <div class="card-cross-icon" *ngIf="showDeleteFlag">
-                                <button mat-mini-fab class="card-cross-btn" type="button" (click)="deleteItem(item)">
-                                    <mat-icon>close</mat-icon>
+                                <button mat-mini-fab class="card-cross-btn flex flex-middle flex-center" type="button"
+                                    (click)="deleteItem(item)">
+                                    <mat-icon class="font-size-20">close</mat-icon>
                                 </button>
                             </div>
                             <img mat-card-image loading="lazy"

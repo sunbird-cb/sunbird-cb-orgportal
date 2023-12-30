@@ -10,7 +10,7 @@
                     (planTitleInvalid)="checkForPlanTitle($event)"></ws-app-add-plan-information>
             </ng-template>
         </mat-tab>
-        <mat-tab [label]="tabType.ADD_CONTENT" [disabled]="addCotnentDisable">
+        <mat-tab [label]="tabType.ADD_CONTENT" [disabled]="addCotnentDisable" class="disable">
             <ng-template mat-tab-label>
                 <span>2. <span *ngIf="!editState">Add</span><span *ngIf="editState">Edit</span> Content
                 </span>

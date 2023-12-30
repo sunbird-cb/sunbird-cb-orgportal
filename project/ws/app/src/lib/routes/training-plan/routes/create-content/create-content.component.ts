@@ -1,12 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service'
+import { MatDialog } from '@angular/material'
+import { AddContentDialogComponent } from '../../components/add-content-dialog/add-content-dialog.component'
 @Component({
   selector: 'ws-app-create-content',
   templateUrl: './create-content.component.html',
   styleUrls: ['./create-content.component.scss'],
 })
 export class CreateContentComponent implements OnInit {
-
   @Output() addContentInvalid = new EventEmitter<any>()
 
   categoryData: any[] = []
@@ -17,7 +18,7 @@ export class CreateContentComponent implements OnInit {
   pageIndex: any
   pageSize: any
   count = 0
-  constructor(private tpdsSvc: TrainingPlanDataSharingService) { }
+  constructor(private tpdsSvc: TrainingPlanDataSharingService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.categoryData = [
@@ -106,4 +107,14 @@ export class CreateContentComponent implements OnInit {
     this.handleSelectedChips(true)
   }
 
+  showAddContentDialog() {
+    const dialogRef = this.dialog.open(AddContentDialogComponent, {
+      maxHeight: 'auto',
+      height: '75%',
+      width: '60%',
+    })
+    dialogRef.afterClosed().subscribe((res: any) => {
+      console.log('res', res)
+    })
+  }
 }
