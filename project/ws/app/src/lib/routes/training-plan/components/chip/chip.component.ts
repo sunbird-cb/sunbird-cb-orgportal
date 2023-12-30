@@ -83,7 +83,12 @@ export class ChipComponent implements OnInit, OnChanges {
       const index = this.tpdsSvc.trainingPlanStepperData.contentList.findIndex((x: any) => x === item['identifier'])
       this.tpdsSvc.trainingPlanStepperData.contentList.splice(index, 1)
     }
+    if (this.selectContentCount) {
+      this.selectContentCount = this.selectContentCount - 1
+    }
+
     this.itemRemoved.emit(true)
+
   }
 
   removeAssignee(item: any) {
