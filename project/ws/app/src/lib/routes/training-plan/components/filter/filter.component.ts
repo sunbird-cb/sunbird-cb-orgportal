@@ -191,6 +191,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     } else {
       this.getFilterData.emit(this.assigneeFilterObj)
     }
+    this.hideFilter()
   }
 
   clearFilter() {

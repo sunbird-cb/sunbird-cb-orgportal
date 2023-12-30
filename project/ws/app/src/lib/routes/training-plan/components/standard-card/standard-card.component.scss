@@ -9,10 +9,6 @@ $secondary-color: #EF951E;
     width:100%;
 }
 
-
-.card-grid-container {
-}
-
 .card-standard-container {
   $card-padding: $size-m;
   $action-btn-size: 2.5 * $size-m;
@@ -54,7 +50,7 @@ $secondary-color: #EF951E;
     align-items: center;
     padding: 4px;
     border-radius: 4px;
-  
+
     &.right-corner {
       right: 4px;
       bottom: 0px;
@@ -588,6 +584,8 @@ $title-line-count: 2;
 
 .card-cross-btn {
   background: white !important;
+  width: 35px !important;
+  height: 35px !important;
 }
 
 .active-card {
@@ -605,4 +603,8 @@ $title-line-count: 2;
 
 ::ng-deep .card-select-box .mat-checkbox-layout {
   width: 16px;
+}
+
+.font-size-20 {
+    font-size: 20px;
 }

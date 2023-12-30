@@ -8,12 +8,15 @@
             </div>
             <div class="assignee-desc">
                 <p>{{item?.firstName | titlecase}} </p>
-                <p class="sub-heading" *ngIf="item?.profileDetails?.professionalDetails && item?.profileDetails?.professionalDetails[0]">{{item?.profileDetails?.professionalDetails
-[0]?.designation }}</p>
+                <p class="sub-heading"
+                    *ngIf="item?.profileDetails?.professionalDetails && item?.profileDetails?.professionalDetails[0]">
+                    {{item?.profileDetails?.professionalDetails
+                    [0]?.designation }}</p>
             </div>
             <div class="card-cross-icon" *ngIf="showDeleteFlag">
-                <button mat-mini-fab class="card-cross-btn" type="button" (click)="deleteItem(item)">
-                    <mat-icon>close</mat-icon>
+                <button mat-mini-fab class="card-cross-btn flex flex-middle flex-center" type="button"
+                    (click)="deleteItem(item)">
+                    <mat-icon class="font-size-20">close</mat-icon>
                 </button>
             </div>
             <div class="check-action" *ngIf="checkboxVisibility">
@@ -21,7 +24,7 @@
                     (change)="selectAssigneeItem($event, item)"></mat-checkbox>
             </div>
         </div>
-    <!-- </ng-container> -->
+        <!-- </ng-container> -->
     </ng-container>
 </div>
 
@@ -32,8 +35,9 @@
     <ng-container *ngFor="let item of assigneeData?.data | slice : startIndex : lastIndex">
         <div class="flex flex-4 custom-user-card" [ngClass]="item?.selected ? 'active-card':''">
             <div class="card-cross-icon" *ngIf="showDeleteFlag">
-                <button mat-mini-fab class="card-cross-btn" type="button" (click)="deleteItem(item)">
-                    <mat-icon>close</mat-icon>
+                <button mat-mini-fab class="card-cross-btn flex flex-middle flex-center" type="button"
+                    (click)="deleteItem(item)">
+                    <mat-icon class="font-size-20">close</mat-icon>
                 </button>
             </div>
             <div class="custom-user-desc">

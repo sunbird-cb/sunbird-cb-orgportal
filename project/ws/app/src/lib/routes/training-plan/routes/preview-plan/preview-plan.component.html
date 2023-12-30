@@ -4,16 +4,34 @@
         back</button>
 </div>
 <div class="flex flex-col" *ngIf="form==='content'">
-    <div class="mat-subheading-1 margin-remove margin-bottom-m">Selected Content <span *ngIf="contentList?.length"> (
+    <div class="mat-subheading-1 margin-remove margin-bottom-m" *ngIf="contentList?.length">Selected Content <span> (
             {{contentList?.length}} )</span></div>
-    <div class="flex flex-row justify-center max-height-400"><ws-app-standard-card [checkboxVisibility]="false"
-            [contentData]="contentList" [showDeleteFlag]="true"></ws-app-standard-card></div>
+    <div class="flex flex-row justify-center max-height-400">
+        <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentList" [showDeleteFlag]="true"
+            [showPagination]="(contentList?.length > 20) ? true : false">
+        </ws-app-standard-card>
+    </div>
+    <div class="no-cbp-data margin-top-xl margin-bottom-xl text-center"
+        *ngIf="!(contentList) || !(contentList?.length)">
+        <div><img src="/assets/images/no-content-data.svg"></div>
+        <div class="mat-subheading-1 margin-remove">No content avaliable.</div>
+        <!-- <div>Create a content in CBP portal to get the contents.</div> -->
+    </div>
 </div>
 <div class="flex flex-col" *ngIf="form==='assignee'">
-    <div class="mat-subheading-1 margin-remove">Selected Assignee <span *ngIf="assigneeData?.data?.length"> (
-            {{assigneeData?.data?.length}} )</span></div>
-    <div class="mt-4 flex flex-row justify-center"><ws-app-user-card [checkboxVisibility]="false"
-            [assigneeData]="assigneeData" [showDeleteFlag]="true"></ws-app-user-card></div>
+    <div class="mat-subheading-1 margin-remove" *ngIf="assigneeData?.data?.length">Selected Assignee <span> (
+            {{assigneeData?.data?.length}} )</span>
+    </div>
+    <div class="mt-4 flex flex-row justify-center max-height-400" *ngIf="assigneeData?.data?.length">
+        <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData" [showDeleteFlag]="true"
+            [showPagination]="(assigneeData?.data?.length > 20) ? true : false">
+        </ws-app-user-card>
+    </div>
+    <div class="no-cbp-data margin-top-xl margin-bottom-xl text-center" *ngIf="!assigneeData?.data?.length">
+        <div><img src="/assets/images/no-content-data.svg"></div>
+        <div class="mat-subheading-1 margin-remove">No assignee avaliable.</div>
+        <!-- <div>Create a content in CBP portal to get the contents.</div> -->
+    </div>
 </div>
 <div class="flex content-container" *ngIf="form === 'all'">
     <mat-chip-list [multiple]="true" [selectable]="true">

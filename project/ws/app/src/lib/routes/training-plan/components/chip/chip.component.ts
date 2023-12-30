@@ -89,15 +89,16 @@ export class ChipComponent implements OnInit, OnChanges {
   removeAssignee(item: any) {
     if (this.tpdsSvc.trainingPlanAssigneeData.category === 'Designation') {
       this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
-        if (sitem['selected'] && sitem['id'] === item['id']) {
+        if (sitem.name === item.name && sitem['selected']) {
           sitem['selected'] = false
         }
       })
-      if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['identifier']) > -1) {
+      if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['name']) > -1) {
         const index =
-          this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['id'])
+          this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['name'])
         this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
       }
+      this.itemRemoved.emit(true)
     } else if (this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser') {
       this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem && sitem['selected'] && sitem['userId'] === item['userId']) {
@@ -109,8 +110,8 @@ export class ChipComponent implements OnInit, OnChanges {
           this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['userId'])
         this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
       }
+      this.itemRemoved.emit(true)
     }
-
   }
 
   navigateToPreviewPage() {
@@ -120,6 +121,10 @@ export class ChipComponent implements OnInit, OnChanges {
         from: this.from,
       },
       autoFocus: false,
+      width: '90%'
+    })
+    this.dialogRef.afterClosed().subscribe(() => {
+      this.itemRemoved.emit(true)
     })
     // this.router.navigate(['app', 'training-plan', 'preview-plan'], { queryParams: { from: this.from } })
   }

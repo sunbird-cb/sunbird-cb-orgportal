@@ -13,6 +13,7 @@ export class CreateTimelineComponent implements OnInit {
   isContentLive = false
   dialogRef: any
   totalAssigneeCount: any = 0
+  totalContentCount: any
   constructor(
     private tpdsSvc: TrainingPlanDataSharingService,
     public dialog: MatDialog) { }
@@ -22,15 +23,32 @@ export class CreateTimelineComponent implements OnInit {
       this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'live') {
       this.isContentLive = true
     }
+    this.getContentData()
+    switch (this.tpdsSvc.trainingPlanStepperData.assignmentType) {
+      case 'Designation':
+        this.getDesignationData()
+        break
+      case 'CustomUser':
+        this.getCustomUserData()
+        break
+    }
+  }
+
+  getContentData() {
     if (this.tpdsSvc.trainingPlanContentData &&
       this.tpdsSvc.trainingPlanContentData.data &&
       this.tpdsSvc.trainingPlanContentData.data.content
     ) {
-      this.contentData = this.tpdsSvc.trainingPlanContentData.data.content.filter((item: any) => {
+      let contentDataSelected = this.tpdsSvc.trainingPlanContentData.data.content.filter((item: any) => {
         return item.selected
       })
-
+      this.totalContentCount = contentDataSelected.length
+      contentDataSelected = contentDataSelected.slice(0, 4)
+      this.contentData = contentDataSelected
     }
+  }
+
+  getDesignationData() {
     if (this.tpdsSvc.trainingPlanAssigneeData &&
       this.tpdsSvc.trainingPlanAssigneeData.data &&
       this.tpdsSvc.trainingPlanAssigneeData.category === 'Designation'
@@ -43,6 +61,9 @@ export class CreateTimelineComponent implements OnInit {
       assigneeDataSelected = assigneeDataSelected.slice(0, 4)
       this.assigneeData = { category, data: assigneeDataSelected }
     }
+  }
+
+  getCustomUserData() {
     if (this.tpdsSvc.trainingPlanAssigneeData &&
       this.tpdsSvc.trainingPlanAssigneeData.data &&
       this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser'
@@ -64,9 +85,34 @@ export class CreateTimelineComponent implements OnInit {
         from,
       },
       autoFocus: false,
+      width: '90%'
     })
-    // this.router.navigate(['app', 'training-plan', 'preview-plan'])
-    // this.router.navigate(['app', 'training-plan', 'preview-plan'], { queryParams: { from, tab } })
+    this.dialogRef.afterClosed().subscribe(() => {
+      this.getContentData()
+      switch (this.tpdsSvc.trainingPlanStepperData.assignmentType) {
+        case 'Designation':
+          this.getDesignationData()
+          break
+        case 'CustomUser':
+          this.getCustomUserData()
+          break
+      }
+    })
+  }
+
+  contentRemoved() {
+    this.getContentData()
+  }
+
+  selectedUserRemoved() {
+    switch (this.tpdsSvc.trainingPlanStepperData.assignmentType) {
+      case 'Designation':
+        this.getDesignationData()
+        break
+      case 'CustomUser':
+        this.getCustomUserData()
+        break
+    }
   }
 
 }
