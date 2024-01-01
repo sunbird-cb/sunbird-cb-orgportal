@@ -41,7 +41,6 @@ export class SearchComponent implements OnInit {
     })
 
     this.tpdsSvc.getFilterDataObject.subscribe((event)=>{
-      console.log('filterObj' , event);
       if (this.from === 'content') {
         this.getContent(this.selectedDropDownValue, event)
       } else {
