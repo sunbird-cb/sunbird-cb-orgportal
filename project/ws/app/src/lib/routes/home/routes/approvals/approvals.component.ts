@@ -4,26 +4,27 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { ApprovalsService } from '../../services/approvals.service'
 // import moment from 'moment'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
-import { MatSnackBar } from '@angular/material'
+import { MatSnackBar, PageEvent } from '@angular/material'
 /* tslint:disable */
 import _ from 'lodash'
 import { EventService } from '@sunbird-cb/utils'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
-// import { DatePipe } from '@angular/common'
-// import moment from 'moment'
 /* tslint:enable */
 @Component({
   selector: 'ws-app-approvals',
   templateUrl: './approvals.component.html',
   styleUrls: ['./approvals.component.scss'],
-  // providers: [CustomeDatePipePipe],
 })
 export class ApprovalsComponent implements OnInit, OnDestroy {
-  data: any[] = []
+  data: any = []
   currentFilter = 'toapprove'
   discussionList!: any
   discussProfileData!: any
   departName = ''
+  approvalTotalCount = 0
+  limit = 20
+  pageIndex = 0
+  currentOffset = 0
   tabledata: ITableData = {
     // actions: [{ name: 'Approve', label: 'Approve', icon: 'remove_red_eye', type: 'Approve' },
     // { name: 'Reject', label: 'Reject', icon: 'remove_red_eye', type: 'Reject' }],
@@ -48,19 +49,16 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     private activeRouter: ActivatedRoute,
     private route: ActivatedRoute,
     private events: EventService,
-    // private datePipe: DatePipe,
-    // private telemetrySvc: TelemetryService,
     private snackbar: MatSnackBar) {
     this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService.unMappedUser.channel
     ) {
       this.departName = _.get(this.activeRouter, 'parent.snapshot.data.configService.unMappedUser.channel')
     }
-    this.fetchApprovals()
   }
 
   ngOnInit() {
-
+    this.fetchApprovals()
   }
 
   filter(key: string | 'timestamp' | 'best' | 'saved') {
@@ -126,13 +124,15 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
         serviceName: 'profile',
         applicationStatus: 'SEND_FOR_APPROVAL',
         deptName: this.departName,
-        offset: 0,
-        limit: 100,
+        offset: this.currentOffset,
+        limit: this.limit,
       }
       this.apprService.getApprovals(req).subscribe(res => {
+        this.data = []
         let currentdate: Date
-        // console.log("result ", res)
-        res.result.data.forEach((approval: any) => {
+        this.approvalTotalCount = res.result.count
+        const resData = res.result.data
+        resData.forEach((approval: any) => {
           let keys = ''
           approval.wfInfo.forEach((wf: any) => {
             currentdate = new Date(wf.createdOn)
@@ -176,16 +176,20 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   }
 
   get getTableData() {
-    // console.log("table data++++++", this.data)
     if (this.data.length > 0) {
-      this.data.forEach(element => {
+      this.data.forEach((element: any) => {
         // element.requestedon = this.datePipe.transform(element.requestedon, 'dd MMM y')
         element.requestedon = element.requestedon
       })
     }
-    // console.log("table data--------", this.data)
-    // requestedon: this.datePipe.transform(currentdate, 'dd MMM y'),
     return this.data
+  }
+
+  onPaginateChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex
+    this.limit = event.pageSize
+    this.currentOffset = event.pageIndex
+    this.fetchApprovals()
   }
 
   ngOnDestroy(): void { }
