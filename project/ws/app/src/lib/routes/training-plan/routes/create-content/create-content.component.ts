@@ -113,8 +113,6 @@ export class CreateContentComponent implements OnInit {
       height: '75%',
       width: '60%',
     })
-    dialogRef.afterClosed().subscribe((res: any) => {
-      console.log('res', res)
-    })
+    dialogRef.afterClosed().subscribe()
   }
 }

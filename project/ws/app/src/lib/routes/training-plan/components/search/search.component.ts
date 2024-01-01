@@ -24,10 +24,10 @@ export class SearchComponent implements OnInit {
   pageSize = 20
   isContentLive = false
   constructor(
-    private trainingPlanService: TrainingPlanService,
-    private route: ActivatedRoute,
-    public tpdsSvc: TrainingPlanDataSharingService,
-    private loadingService: LoaderService
+              private trainingPlanService: TrainingPlanService,
+              private route: ActivatedRoute,
+              public tpdsSvc: TrainingPlanDataSharingService,
+              private loadingService: LoaderService
   ) { }
 
   ngOnInit() {

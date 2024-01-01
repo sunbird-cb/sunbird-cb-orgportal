@@ -23,7 +23,7 @@ export class AddContentDialogComponent implements OnInit {
   seletedCompetencySubTheme: any = []
   providersList: any = []
   filteredProviders: any = []
-  selectedValues = [];
+  selectedValues = []
 
   checkedList: any = []
   currentSelected: any
@@ -61,16 +61,16 @@ export class AddContentDialogComponent implements OnInit {
     this.filteredProviders = this.contentForm.controls['providerText'].valueChanges
       .pipe(
         startWith<string>(''),
-        map((name: any) => this._filter(name))
+        map((name: any) => this.filter(name))
       )
   }
 
-  private _filter(name: string): String[] {
+  filter(name: string): String[] {
     const filterValue = name.toLowerCase()
     // Set selected values to retain the selected checkbox state
     this.setSelectedValues()
     this.contentForm.controls['provider'].patchValue(this.selectedValues)
-    let filteredList = this.data.filter((option: any) => option.toLowerCase().indexOf(filterValue) === 0)
+    const filteredList = this.data.filter((option: any) => option.toLowerCase().indexOf(filterValue) === 0)
     return filteredList
   }
 
@@ -161,11 +161,10 @@ export class AddContentDialogComponent implements OnInit {
   }
 
   openedChange(e: any) {
-    console.log('e', e)
     // Set search textbox value as empty while opening selectbox
     this.contentForm.controls['providerText'].patchValue('')
     // Focus to search textbox while clicking on selectbox
-    if (e == true) {
+    if (e === true) {
       // this.contentForm.value.provider.focus()
     }
   }
@@ -178,7 +177,7 @@ export class AddContentDialogComponent implements OnInit {
   setSelectedValues() {
     if (this.contentForm.value.provider && this.contentForm.value.provider.length > 0) {
       this.contentForm.value.provider.forEach((e: any) => {
-        if (this.contentForm.value.provider.indexOf(e) == -1) {
+        if (this.contentForm.value.provider.indexOf(e) === -1) {
           this.contentForm.value.provider.push(e)
           this.selectedProvidersList.push(e)
         }
@@ -187,9 +186,8 @@ export class AddContentDialogComponent implements OnInit {
   }
 
   selectionChange(event: any, option: any) {
-    console.log('event', event)
     if (event.isUserInput) {
-      let index = this.selectedProvidersList.findIndex((object: any) => object.id === option.orgId)
+      const index = this.selectedProvidersList.findIndex((object: any) => object.id === option.orgId)
       if (index === -1) {
         this.selectedProvidersList.push(option)
       } else {
@@ -226,12 +224,9 @@ export class AddContentDialogComponent implements OnInit {
         competencySubTheme: subthemeNames,
         competencySubThemeId: subthemeIds,
         listOfProviders: providersIds,
-        descriptionOfTheContent: this.contentForm.value.contentdescription || ''
+        descriptionOfTheContent: this.contentForm.value.contentdescription || '',
       }
-      console.log('req', req)
-      this.trainingplanSvc.createNewContentrequest(req).subscribe((result: any) => {
-        console.log('result', result)
-      })
+      this.trainingplanSvc.createNewContentrequest(req).subscribe()
     }
 
   }
