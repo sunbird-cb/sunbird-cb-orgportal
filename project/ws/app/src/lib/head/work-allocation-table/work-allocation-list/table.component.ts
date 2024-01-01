@@ -49,7 +49,13 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
   }
   downloaddata: any = []
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
-  @ViewChild(MatSort, { static: true }) sort?: MatSort
+  // @ViewChild(MatSort, { static: true }) sort?: MatSort
+  @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
+    if (!this.dataSource.sort) {
+      this.dataSource.sort = sort
+    }
+  }
+
   selection = new SelectionModel<any>(true, [])
   constructor(
     private router: Router, public dialog: MatDialog,
@@ -70,7 +76,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
     }
     this.dataSource.data = this.data
     this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
+    // this.dataSource.sort = this.sort
     this.viewPaginator = true
     this.activatedRoute.params.subscribe(params => {
       this.departmentRole = params['currentDept']
