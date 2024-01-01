@@ -2,18 +2,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ApprovalsService } from '../../services/approvals.service'
-import moment from 'moment'
+// import moment from 'moment'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
 import { MatSnackBar } from '@angular/material'
 /* tslint:disable */
 import _ from 'lodash'
 import { EventService } from '@sunbird-cb/utils'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+// import { DatePipe } from '@angular/common'
+// import moment from 'moment'
 /* tslint:enable */
 @Component({
   selector: 'ws-app-approvals',
   templateUrl: './approvals.component.html',
   styleUrls: ['./approvals.component.scss'],
+  // providers: [CustomeDatePipePipe],
 })
 export class ApprovalsComponent implements OnInit, OnDestroy {
   data: any[] = []
@@ -45,6 +48,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     private activeRouter: ActivatedRoute,
     private route: ActivatedRoute,
     private events: EventService,
+    // private datePipe: DatePipe,
     // private telemetrySvc: TelemetryService,
     private snackbar: MatSnackBar) {
     this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
@@ -56,6 +60,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
   }
 
   filter(key: string | 'timestamp' | 'best' | 'saved') {
@@ -147,14 +152,18 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
           })
 
           this.data.push({
+
             fullname: approval.userInfo ? `${approval.userInfo.first_name}` : '--',
             // fullname: approval.userInfo ? `${approval.userInfo.first_name} ${approval.userInfo.last_name}` : '--',
-            requestedon: `${currentdate.getDate()}
-          ${moment(currentdate.getMonth() + 1, 'MM').format('MMM')}
-          ${currentdate.getFullYear()}
-          ${currentdate.getHours()} :
-          ${currentdate.getMinutes()} :
-          ${currentdate.getSeconds()}`,
+            // requestedon: `${currentdate.getDate()}
+            //   requestedon: `${currentdate.getDate()}
+            // ${moment(currentdate.getMonth() + 1, 'MM').format('MMM')}
+            // ${currentdate.getFullYear()}
+            // ${currentdate.getHours()} :
+            // ${currentdate.getMinutes()} :
+            // ${currentdate.getSeconds()}`,
+            // requestedon: this.datePipe.transform(currentdate, 'dd MMM y'),
+            requestedon: currentdate,
             fields: keys.slice(0, -1),
             userWorkflow: approval,
             tag: (approval.userInfo && approval.userInfo.tag) ? `${approval.userInfo.tag}` : '',
@@ -167,7 +176,15 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   }
 
   get getTableData() {
-    // console.log("table data", this.data)
+    // console.log("table data++++++", this.data)
+    if (this.data.length > 0) {
+      this.data.forEach(element => {
+        // element.requestedon = this.datePipe.transform(element.requestedon, 'dd MMM y')
+        element.requestedon = element.requestedon
+      })
+    }
+    // console.log("table data--------", this.data)
+    // requestedon: this.datePipe.transform(currentdate, 'dd MMM y'),
     return this.data
   }
 
