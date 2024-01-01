@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Inject, Output, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { DOCUMENT } from '@angular/common'
 import { TrainingPlanService } from './../../services/traininig-plan.service'
 import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service'
 /* tslint:disable */
@@ -24,7 +23,7 @@ export class SearchComponent implements OnInit {
   pageIndex = 0
   pageSize = 20
   isContentLive = false
-  constructor(@Inject(DOCUMENT) private document: Document,
+  constructor(
     private trainingPlanService: TrainingPlanService,
     private route: ActivatedRoute,
     public tpdsSvc: TrainingPlanDataSharingService,
@@ -211,7 +210,7 @@ export class SearchComponent implements OnInit {
     this.trainingPlanService.getDesignations().subscribe((res: any) => {
       if (this.searchText) {
         const resArr = res.result.response.content.filter((ditem: any) => {
-          if (ditem.name.includes(this.searchText)) {
+          if (ditem.name.toLowerCase().includes(this.searchText.toLowerCase())) {
             return ditem
           }
         })
