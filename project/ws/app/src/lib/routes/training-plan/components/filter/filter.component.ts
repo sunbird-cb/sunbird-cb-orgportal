@@ -100,10 +100,12 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   checkedProviders(event: any, item: any) {
     if (event) {
       this.selectedProviders.push(item)
+      item['selected'] = true;
       this.filterObj['providers'].push(item.name)
     } else {
       if (this.filterObj['provider'].indexOf(item.name) > -1) {
         const index = this.filterObj['providers'].findIndex((x: any) => x === item.name)
+        item['selected'] = false;
         this.filterObj['providers'].splice(index, 1)
       }
     }
