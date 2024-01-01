@@ -226,8 +226,7 @@ export class AddContentDialogComponent implements OnInit {
         listOfProviders: providersIds,
         descriptionOfTheContent: this.contentForm.value.contentdescription || '',
       }
-      this.trainingplanSvc.createNewContentrequest(req).subscribe((result: any) => {
-      })
+      this.trainingplanSvc.createNewContentrequest(req).subscribe()
     }
 
   }
