@@ -14,11 +14,15 @@
         <div class="flex flex-wrap mobile-break">
           <div class="w-full profile-cols-full bg-grey" *ngIf="needApprovalList.length>0">
             <ng-container *ngFor="let field of needApprovalList">
-              <div class="appr-label">
+              <div class="appr-label" *ngIf="field.fieldKey !== 'verifiedKarmayogi'">
                 <label class="appr-text-label">{{field.label}}</label>
               </div>
-              <div>
-                <input type="text" class="appr-text-field" [value]="field.value">
+              <div [class.mt-4]="field.fieldKey === 'verifiedKarmayogi'">
+                <span [hidden]="field.fieldKey === 'verifiedKarmayogi'">
+                  <input type="text" class="appr-text-field" [value]="field.value">
+                </span>
+                <label class="appr-text-label mt-2" *ngIf="field.fieldKey === 'verifiedKarmayogi'">{{field.label}}
+                </label>
                 <button mat-icon-button aria-label="Reject" id="reject" (click)="onClickHandleWorkflow(field,'REJECT')">
                   <mat-icon class="reject">close</mat-icon>
                 </button>
