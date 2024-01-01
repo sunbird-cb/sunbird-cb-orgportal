@@ -85,7 +85,7 @@ export class CreateTimelineComponent implements OnInit {
         from,
       },
       autoFocus: false,
-      width: '90%'
+      width: '90%',
     })
     this.dialogRef.afterClosed().subscribe(() => {
       this.getContentData()

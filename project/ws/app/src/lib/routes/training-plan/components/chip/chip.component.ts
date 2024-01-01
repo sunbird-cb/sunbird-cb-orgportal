@@ -126,7 +126,7 @@ export class ChipComponent implements OnInit, OnChanges {
         from: this.from,
       },
       autoFocus: false,
-      width: '90%'
+      width: '90%',
     })
     this.dialogRef.afterClosed().subscribe(() => {
       this.itemRemoved.emit(true)
