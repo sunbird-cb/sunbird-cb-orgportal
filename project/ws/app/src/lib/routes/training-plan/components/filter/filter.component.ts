@@ -34,6 +34,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   assigneeFilterObj: any = { group: [], designation: [] }
   searchThemeControl = new FormControl()
   searchSubThemeControl = new FormControl()
+  searchProviderControl = new FormControl();
   @ViewChildren('checkboxes') checkboxes!: QueryList<ElementRef>
   constructor(
     private cdref: ChangeDetectorRef,
@@ -116,7 +117,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     console.log(this.filterObj);
   }
 
-  getCompetencyTheme(event: any, ctype: any) {
+  getCompetencyTheme(event: any, ctype: any) {    
     if (event.checked) {
       this.competencyList.map((citem: any) => {
         if (citem.name === ctype.id) {
@@ -153,6 +154,8 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         const index = this.filterObj['competencyArea'].findIndex((x: any) => x === ctype.id)
         this.filterObj['competencyArea'].splice(index, 1)
       }
+      this.searchThemeControl.reset();
+      this.searchSubThemeControl.reset();
     }
   }
 
@@ -187,6 +190,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         const index = this.filterObj['competencyTheme'].findIndex((x: any) => x === cstype.name)
         this.filterObj['competencyTheme'].splice(index, 1)
       }
+      this.searchSubThemeControl.reset();
     }
   }
 
