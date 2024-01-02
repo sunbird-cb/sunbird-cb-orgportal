@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Inject, Output, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { DOCUMENT } from '@angular/common'
 import { TrainingPlanService } from './../../services/traininig-plan.service'
 import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service'
 /* tslint:disable */
@@ -24,7 +23,7 @@ export class SearchComponent implements OnInit {
   pageIndex = 0
   pageSize = 20
   isContentLive = false
-  constructor(@Inject(DOCUMENT) private document: Document,
+  constructor(
               private trainingPlanService: TrainingPlanService,
               private route: ActivatedRoute,
               public tpdsSvc: TrainingPlanDataSharingService,
@@ -40,6 +39,14 @@ export class SearchComponent implements OnInit {
       }
 
     })
+
+    this.tpdsSvc.getFilterDataObject.subscribe((event)=>{
+      if (this.from === 'content') {
+        this.getContent(this.selectedDropDownValue, event)
+      } else {
+        this.getCustomUsers(this.selectedDropDownValue, event)
+      }
+    })
     if (this.tpdsSvc.trainingPlanStepperData.status && this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'live') {
       this.isContentLive = true
     }
@@ -47,19 +54,21 @@ export class SearchComponent implements OnInit {
 
   openFilter() {
     this.filterVisibilityFlag = true
-    if (this.document.getElementById('top-nav-bar')) {
-      const ele: any = this.document.getElementById('top-nav-bar')
-      ele.style.zIndex = '1'
-    }
+    this.tpdsSvc.filterToggle.next({from:this.from,status: true});
+    // if (this.document.getElementById('top-nav-bar')) {
+    //   const ele: any = this.document.getElementById('top-nav-bar')
+    //   ele.style.zIndex = '1'
+    // }
 
   }
 
   hideFilter(event: any) {
     this.filterVisibilityFlag = event
-    if (this.document.getElementById('top-nav-bar')) {
-      const ele: any = this.document.getElementById('top-nav-bar')
-      ele.style.zIndex = '1000'
-    }
+    this.tpdsSvc.filterToggle.next({from:'',status:false});
+    // if (this.document.getElementById('top-nav-bar')) {
+    //   const ele: any = this.document.getElementById('top-nav-bar')
+    //   ele.style.zIndex = '1000'
+    // }
   }
 
   handleCategorySelection(event: any) {
@@ -138,8 +147,8 @@ export class SearchComponent implements OnInit {
           finResult = this.tpdsSvc.trainingPlanContentData.data.content.filter((sitem: any) => {
             return sitem.selected
           })
-        }
-        const result = { count: res.count, content: _.uniqBy(_.concat(finResult, (res.content) ? res.content : []), 'identifier') }
+        }         
+        const result = { count: res.count, content: _.uniqBy(_.concat(finResult, res.content), 'identifier') }
         this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
         this.handleApiData.emit(true)
         this.loadingService.changeLoaderState(false)
@@ -200,7 +209,7 @@ export class SearchComponent implements OnInit {
     this.trainingPlanService.getDesignations().subscribe((res: any) => {
       if (this.searchText) {
         const resArr = res.result.response.content.filter((ditem: any) => {
-          if (ditem.name.includes(this.searchText)) {
+          if (ditem.name.toLowerCase().includes(this.searchText.toLowerCase())) {
             return ditem
           }
         })
@@ -247,14 +256,13 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  getFilterData(event: any) {
-    if (this.from === 'content') {
-      this.getContent(this.selectedDropDownValue, event)
-    } else {
-      this.getCustomUsers(this.selectedDropDownValue, event)
-    }
-
-  }
+  // getFilterData(event: any) {
+  //   if (this.from === 'content') {
+  //     this.getContent(this.selectedDropDownValue, event)
+  //   } else {
+  //     this.getCustomUsers(this.selectedDropDownValue, event)
+  //   }
+  // }
 
   resetPageIndex() {
     this.pageIndex = 0

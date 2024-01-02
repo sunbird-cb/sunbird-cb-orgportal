@@ -43,11 +43,14 @@ export class ChipComponent implements OnInit, OnChanges {
   clearAll() {
     if (this.from === 'content') {
       this.selectContentCount = 0
+      let selectedIndex:any = [];
       this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any) => {
         if (sitem && sitem['selected']) {
+          selectedIndex.push(sitem['identifier'])
           sitem['selected'] = false
         }
       })
+      
       this.tpdsSvc.trainingPlanStepperData.contentList = []
       this.tpdsSvc.trainingPlanStepperData.contentType = ''
     }

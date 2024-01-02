@@ -10,10 +10,9 @@ import { TrainingPlanDataSharingService } from '../../services/training-plan-dat
 })
 export class FilterComponent implements OnInit, AfterContentChecked {
   @Output() toggleFilter = new EventEmitter()
-  @Output() getFilterData = new EventEmitter()
-  @Input() clearFilterFlag: any
+  // @Output() getFilterData = new EventEmitter()
   @Input() from: any
-  @Input() designationList: any = []
+  designationList: any = []
   providersList: any[] = []
   selectedProviders: any[] = []
   competencyTypeList = [
@@ -42,19 +41,24 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     private tpdsSvc: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
-    if (this.from === 'content') {
-      this.getFilterEntity()
-      this.getProviders()
-    } else {
-      // if(this.tpdsSvc.trainingPlanAssigneeData &&
-      //   this.tpdsSvc.trainingPlanAssigneeData.category === 'Custom Users') {
-      //   this.getDesignation();
-      // }
-      if (!this.designationList.length) {
-        this.getDesignation()
+    this.tpdsSvc.filterToggle.subscribe((data:any)=>{
+      if(data && data.status) {
+        if (data.from === 'content') {
+          this.getFilterEntity()
+          this.getProviders()
+        } else {
+          // if(this.tpdsSvc.trainingPlanAssigneeData &&
+          //   this.tpdsSvc.trainingPlanAssigneeData.category === 'Custom Users') {
+          //   this.getDesignation();
+          // }
+          if (!this.designationList.length) {
+            this.getDesignation()
+          }
+    
+        }
       }
-
-    }
+    });
+   
 
     this.tpdsSvc.clearFilter.subscribe((result: any) => {
       if (result) {
@@ -89,16 +93,19 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   }
 
   hideFilter() {
-    this.toggleFilter.emit(false)
+    // this.toggleFilter.emit(false)
+    this.tpdsSvc.filterToggle.next({from:'',status: false});
   }
 
   checkedProviders(event: any, item: any) {
     if (event) {
       this.selectedProviders.push(item)
+      item['selected'] = true;
       this.filterObj['providers'].push(item.name)
     } else {
       if (this.filterObj['provider'].indexOf(item.name) > -1) {
         const index = this.filterObj['providers'].findIndex((x: any) => x === item.name)
+        item['selected'] = false;
         this.filterObj['providers'].splice(index, 1)
       }
     }
@@ -125,9 +132,19 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         }
       })
       this.competencyThemeList = this.competencyThemeList.filter(sitem => {
+        if(sitem.parent === ctype.id) {
+          sitem['selected'] = false;
+        }        
         return sitem.parent !== ctype.id
       })
-      if (this.filterObj['competencyArea'].indexOf(ctype.id) > -1) {
+      this.competencySubThemeList  = this.competencySubThemeList.filter(pitem=> {
+        if(pitem.parentType === ctype.id) {
+          pitem['selected'] = false;
+        }
+        return pitem.parentType !== ctype.id 
+      })
+      if (this.filterObj['competencyArea'] && 
+          this.filterObj['competencyArea'].indexOf(ctype.id) > -1) {
         const index = this.filterObj['competencyArea'].findIndex((x: any) => x === ctype.id)
         this.filterObj['competencyArea'].splice(index, 1)
       }
@@ -144,7 +161,10 @@ export class FilterComponent implements OnInit, AfterContentChecked {
             subthemechild['parent'] = csitem.name
           })
           this.competencySubThemeList = this.competencySubThemeList.concat(csitem.children)
-          this.filterObj['competencyTheme'].push(cstype.name)
+          if(this.filterObj['competencyTheme']) {
+            this.filterObj['competencyTheme'].push(cstype.name)
+          }
+          
         }
       })
     } else {
@@ -153,10 +173,12 @@ export class FilterComponent implements OnInit, AfterContentChecked {
           csitem['selected'] = false
         }
       })
+      
       this.competencySubThemeList = this.competencySubThemeList.filter(sitem => {
         return sitem.parent !== cstype.name
       })
-      if (this.filterObj['competencyTheme'].indexOf(cstype.name) > -1) {
+      if (this.filterObj['competencyTheme'] && 
+          this.filterObj['competencyTheme'].indexOf(cstype.name) > -1) {
         const index = this.filterObj['competencyTheme'].findIndex((x: any) => x === cstype.name)
         this.filterObj['competencyTheme'].splice(index, 1)
       }
@@ -170,14 +192,18 @@ export class FilterComponent implements OnInit, AfterContentChecked {
           cstlitem['selected'] = true
         }
       })
-      this.filterObj['competencySubTheme'].push(csttype.name)
+      if(this.filterObj['competencySubTheme']) {
+        this.filterObj['competencySubTheme'].push(csttype.name)
+      }
+      
     } else {
       this.competencySubThemeList.map((cstlitem: any) => {
         if (csttype.name === cstlitem.name) {
           cstlitem['selected'] = false
         }
       })
-      if (this.filterObj['competencySubTheme'].indexOf(csttype.name) > -1) {
+      if (this.filterObj['competencySubTheme'] &&
+         this.filterObj['competencySubTheme'].indexOf(csttype.name) > -1) {
         const index = this.filterObj['competencySubTheme'].findIndex((x: any) => x === csttype.name)
         this.filterObj['competencySubTheme'].splice(index, 1)
       }
@@ -187,24 +213,28 @@ export class FilterComponent implements OnInit, AfterContentChecked {
 
   applyFilter() {
     if (this.from === 'content') {
-      this.getFilterData.emit(this.filterObj)
+      // this.getFilterData.emit(this.filterObj)      
+      this.tpdsSvc.getFilterDataObject.next(this.filterObj);
     } else {
-      this.getFilterData.emit(this.assigneeFilterObj)
+      this.tpdsSvc.getFilterDataObject.next(this.assigneeFilterObj);
+      // this.getFilterData.emit(this.assigneeFilterObj)
     }
-    this.hideFilter()
+    this.tpdsSvc.filterToggle.next({from:'',status: false});
   }
 
   clearFilter() {
     if (this.from === 'content') {
-      this.filterObj = {}
+      this.filterObj = { competencyArea: [], competencyTheme: [], competencySubTheme: [], providers: [] }
     } else {
-      this.assigneeFilterObj = {}
+      this.assigneeFilterObj = { group: [], designation: [] }
     }
 
     if (this.from === 'content') {
-      this.getFilterData.emit(this.filterObj)
+      // this.getFilterData.emit(this.filterObj)
+      this.tpdsSvc.getFilterDataObject.next(this.filterObj);
     } else {
-      this.getFilterData.emit(this.assigneeFilterObj)
+      // this.getFilterData.emit(this.assigneeFilterObj)
+      this.tpdsSvc.getFilterDataObject.next(this.assigneeFilterObj);
     }
     if (this.checkboxes) {
       this.checkboxes.forEach((element: any) => {
@@ -234,7 +264,8 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     if (event) {
       this.assigneeFilterObj['group'].push(group.name)
     } else {
-      if (this.assigneeFilterObj['group'].indexOf(group.name) > -1) {
+      if (this.assigneeFilterObj['group'] && 
+          this.assigneeFilterObj['group'].indexOf(group.name) > -1) {
         const index = this.assigneeFilterObj['group'].findIndex((x: any) => x === group.name)
         this.assigneeFilterObj['group'].splice(index, 1)
       }
@@ -245,7 +276,8 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     if (event) {
       this.assigneeFilterObj['designation'].push(designation.name)
     } else {
-      if (this.assigneeFilterObj['designation'].indexOf(designation.name) > -1) {
+      if (this.assigneeFilterObj['designation'] && 
+          this.assigneeFilterObj['designation'].indexOf(designation.name) > -1) {
         const index = this.assigneeFilterObj['designation'].findIndex((x: any) => x === designation.name)
         this.assigneeFilterObj['designation'].splice(index, 1)
       }

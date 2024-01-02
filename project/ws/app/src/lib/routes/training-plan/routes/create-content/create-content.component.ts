@@ -80,6 +80,7 @@ export class CreateContentComponent implements OnInit {
         this.contentData = this.tpdsSvc.trainingPlanContentData.data.content
         this.count = this.tpdsSvc.trainingPlanContentData.data.count
       }
+      console.log('this.contentData',this.contentData)
     }
   }
 

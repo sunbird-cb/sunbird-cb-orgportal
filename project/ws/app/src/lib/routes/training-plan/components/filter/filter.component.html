@@ -77,9 +77,15 @@
                                 Provider
                             </mat-panel-title>
                         </mat-expansion-panel-header>
+                        <div class="search-container">
+                            <div class="rsearch"><mat-icon
+                                class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
+                            <input #searchProviderInput id="searchProviderInput" class="sinput color-60" label="" [formControl]='searchThemeControl' placeholder="Enter Provider" type="Standard">
+                            </div>
+                        </div>
                         <div class="category-content">
-                            <div class="flex flex-1 flex-row category-item" *ngFor="let item of providersList">
-                                <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="checkedProviders($event, item?.name)">{{item?.name | titlecase}}</mat-checkbox>
+                            <div class="flex flex-1 flex-row category-item" *ngFor="let item of providersList | filterSearch: searchProviderInput.value">
+                                <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="item?.selected" (change)="checkedProviders($event, item?.name)">{{item?.name | titlecase}}</mat-checkbox>
                             </div>
                         </div>
                     </mat-expansion-panel>
@@ -127,3 +133,4 @@
             </div>
         </div>
     </div>
+</div>
