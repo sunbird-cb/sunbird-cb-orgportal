@@ -16,7 +16,8 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="flex flex-1 flex-row category-item" *ngFor="let ctype of competencyTypeList">
-                            <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="ctype?.selected" (change)="getCompetencyTheme($event, ctype)">{{ctype?.name | titlecase }}</mat-checkbox>
+                            <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="ctype?.selected"
+                                (change)="getCompetencyTheme($event, ctype)">{{ctype?.name | titlecase }}</mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -30,22 +31,28 @@
                                 Competency Theme
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                            <div class="search-container">
-                                <div class="rsearch"><mat-icon
+                        <div class="search-container">
+                            <div class="rsearch"><mat-icon
                                     class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
-                                <input #searchInput id="searchInput" class="sinput color-60" label="" [formControl]='searchThemeControl' placeholder="Enter Competency Theme" type="Standard">
-                                </div>
+                                <input #searchInput id="searchInput" class="sinput color-60" label=""
+                                    [formControl]='searchThemeControl' placeholder="Enter Competency Theme"
+                                    type="Standard">
                             </div>
-                            <div class="category-content">
-                                <div class="flex flex-1 flex-row category-item" *ngFor="let ctitem of competencyThemeList | filterSearch: searchInput.value">
-                                    <mat-checkbox #checkboxes disableRipple class="example-margin"  [checked]="ctitem?.selected"  (change)="getCompetencySubTheme($event, ctitem)">{{ctitem?.name | titlecase}}</mat-checkbox>
-                                </div>                               
+                        </div>
+                        <div class="category-content">
+                            <div class="flex flex-1 flex-row category-item"
+                                *ngFor="let ctitem of competencyThemeList | filterSearch: searchInput.value">
+                                <mat-checkbox #checkboxes disableRipple class="example-margin"
+                                    [checked]="ctitem?.selected"
+                                    (change)="getCompetencySubTheme($event, ctitem)">{{ctitem?.name |
+                                    titlecase}}</mat-checkbox>
                             </div>
-                        
+                        </div>
+
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
-            <div class="spacer"  *ngIf="competencySubThemeList.length"></div>
+            <div class="spacer" *ngIf="competencySubThemeList.length"></div>
             <div class="filter-content flex flex-1" *ngIf="competencySubThemeList?.length">
                 <mat-accordion>
                     <mat-expansion-panel disableRipple [expanded]="true">
@@ -56,14 +63,20 @@
                         </mat-expansion-panel-header>
                         <div class="search-container">
                             <div class="rsearch"><mat-icon
-                                class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
-                            <input #searchThemeInput id="searchThemeInput" class="sinput color-60" label="" [formControl]='searchSubThemeControl' placeholder="Enter Competency Sub-Theme" type="Standard">
+                                    class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
+                                <input #searchThemeInput id="searchThemeInput" class="sinput color-60" label=""
+                                    [formControl]='searchSubThemeControl' placeholder="Enter Competency Sub-Theme"
+                                    type="Standard">
                             </div>
                         </div>
                         <div class="category-content">
-                            <div class="flex flex-1 flex-row category-item" *ngFor="let cstitem of competencySubThemeList | filterSearch: searchThemeInput.value">
-                                <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="cstitem?.selected"  (change)="manageCompetencySubTheme($event, cstitem)">{{cstitem?.name | titlecase}}</mat-checkbox>
-                            </div> 
+                            <div class="flex flex-1 flex-row category-item"
+                                *ngFor="let cstitem of competencySubThemeList | filterSearch: searchThemeInput.value">
+                                <mat-checkbox #checkboxes disableRipple class="example-margin"
+                                    [checked]="cstitem?.selected"
+                                    (change)="manageCompetencySubTheme($event, cstitem)">{{cstitem?.name |
+                                    titlecase}}</mat-checkbox>
+                            </div>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -79,13 +92,17 @@
                         </mat-expansion-panel-header>
                         <div class="search-container">
                             <div class="rsearch"><mat-icon
-                                class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
-                            <input #searchProviderInput id="searchProviderInput" class="sinput color-60" label="" [formControl]='searchProviderControl' placeholder="Enter Provider" type="Standard">
+                                    class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
+                                <input #searchProviderInput id="searchProviderInput" class="sinput color-60" label=""
+                                    [formControl]='searchProviderControl' placeholder="Enter Provider" type="Standard">
                             </div>
                         </div>
-                        <div class="category-content">                    
-                            <div class="flex flex-1 flex-row category-item" *ngFor="let item of providersList | filterSearch: searchProviderInput.value">
-                                <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="item?.selected" (change)="checkedProviders($event, item)">{{item?.name | titlecase}}</mat-checkbox>
+                        <div class="category-content">
+                            <div class="flex flex-1 flex-row category-item"
+                                *ngFor="let item of providersList | filterSearch: searchProviderInput.value">
+                                <mat-checkbox #checkboxes disableRipple class="example-margin"
+                                    [checked]="item?.selected" (change)="checkedProviders($event, item)">{{item?.name |
+                                    titlecase}}</mat-checkbox>
                             </div>
                         </div>
                     </mat-expansion-panel>
@@ -102,7 +119,8 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="flex flex-1 flex-row category-item" *ngFor="let group of groupList">
-                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="manageSelectedGroup($event, group)">{{group?.name | titlecase}}</mat-checkbox>
+                            <mat-checkbox #checkboxes disableRipple class="example-margin"
+                                (change)="manageSelectedGroup($event, group)">{{group?.name | titlecase}}</mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -116,7 +134,9 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="flex flex-1 flex-row category-item" *ngFor="let des of designationList">
-                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="manageSelectedDesignation($event, des)">{{des?.name | titlecase}}</mat-checkbox>
+                            <mat-checkbox #checkboxes disableRipple class="example-margin"
+                                (change)="manageSelectedDesignation($event, des)">{{des?.name |
+                                titlecase}}</mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
