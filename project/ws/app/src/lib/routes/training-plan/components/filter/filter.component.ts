@@ -126,7 +126,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
           pitem['selected'] = false;
         }         
       })
-      if (this.filterObj['provider'].indexOf(item.name) > -1) {
+      if (this.filterObj['providers'].indexOf(item.name) > -1) {
         const index = this.filterObj['providers'].findIndex((x: any) => x === item.name)
         item['selected'] = false;
         this.filterObj['providers'].splice(index, 1)
