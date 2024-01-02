@@ -41,9 +41,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     private trainingPlanService: TrainingPlanService,
     private tpdsSvc: TrainingPlanDataSharingService) { }
 
-  ngOnInit() {
-    // this.filterObj = [];
-    // this.assigneeFilterObj = [];
+  ngOnInit() {    
     this.tpdsSvc.filterToggle.subscribe((data:any)=>{
       if(data && data.status) {
         if (data.from === 'content') {
@@ -68,6 +66,8 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         this.clearFilterWhileSearch()
       }
     })
+
+    this.resetFilter();
   }
 
   ngAfterContentChecked() {
@@ -92,7 +92,15 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   getProviders() {
     this.trainingPlanService.getProviders().subscribe((res: any) => {
       this.providersList = res
+      this.providersList.map((pitem:any)=>{
+        if(this.filterObj['providers'] && pitem && this.filterObj['providers'].indexOf(pitem.name) > -1) {
+          pitem['selected'] = true;        
+        } else {
+          pitem['selected'] = false;        
+        }         
+      })
     })
+    
   }
 
   hideFilter() {
@@ -101,24 +109,34 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   }
 
   checkedProviders(event: any, item: any) {
-    if (event) {
-      this.selectedProviders.push(item.name)
-      item['selected'] = true;
+    if (event.checked) {
+      item['checked'] = true;
+      this.providersList.map((pitem:any)=>{
+        if(item.name === pitem.name) {
+          pitem['selected'] = true;        } 
+        
+      })
       if(this.filterObj['providers']) {
         this.filterObj['providers'].push(item.name)
       }      
     } else {
+      item['checked'] = false;
+      this.providersList.map((pitem:any)=>{
+        if(item.name === pitem.name) {
+          pitem['selected'] = false;
+        }         
+      })
       if (this.filterObj['provider'].indexOf(item.name) > -1) {
         const index = this.filterObj['providers'].findIndex((x: any) => x === item.name)
         item['selected'] = false;
         this.filterObj['providers'].splice(index, 1)
       }
     }
-    console.log(this.filterObj);
   }
 
   getCompetencyTheme(event: any, ctype: any) {    
     if (event.checked) {
+      ctype['selected'] = true;
       this.competencyList.map((citem: any) => {
         if (citem.name === ctype.id) {
           citem['selected'] = true
@@ -132,6 +150,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         }
       })
     } else {
+      ctype['selected'] = false;
       this.competencyList.map((citem: any) => {
         if (citem.name === ctype.id) {
           citem['selected'] = false
@@ -291,5 +310,37 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         this.assigneeFilterObj['designation'].splice(index, 1)
       }
     }
+  }
+
+  resetFilter() {
+    if(this.competencyTypeList) {
+      this.competencyTypeList.map((citem:any)=>{
+        if(citem && citem['selected']) {
+          citem['selected'] = false;
+        }
+      })
+    }
+    if(this.competencyThemeList) {
+      this.competencyThemeList.map((titem:any)=>{
+        if(titem && titem['selected']) {
+          titem['selected'] = false;
+        }
+      })
+    }
+    if(this.competencySubThemeList) {
+      this.competencySubThemeList.map((sitem:any)=>{
+        if(sitem && sitem['selected']) {
+          sitem['selected'] = false;
+        }
+      })
+    }
+    if(this.providersList) {
+      this.providersList.map((pitem:any)=>{
+        if(pitem && pitem['selected']) {
+          pitem['selected'] = false;
+        }
+      })
+    }
+    
   }
 }

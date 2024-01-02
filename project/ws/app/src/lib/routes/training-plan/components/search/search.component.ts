@@ -145,12 +145,20 @@ export class SearchComponent implements OnInit {
           && this.tpdsSvc.trainingPlanContentData.data
           && this.tpdsSvc.trainingPlanContentData.data.content) {
           finResult = this.tpdsSvc.trainingPlanContentData.data.content.filter((sitem: any) => {
-            return sitem.selected
+            if(sitem) {
+              return sitem.selected
+            }            
           })
         }         
-        const result = { count: res.count, content: _.uniqBy(_.concat(finResult, res.content), 'identifier') }
-        this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
-        this.handleApiData.emit(true)
+        if(res && res.content ) {
+          const result = { count: res.count, content: _.uniqBy(_.concat(finResult, res.content), 'identifier') }       
+          this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
+                   
+        } else {
+          const result = { count: res.count, content: _.uniqBy(_.concat(finResult, []), 'identifier') }       
+          this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
+        }
+        this.handleApiData.emit(true) 
         this.loadingService.changeLoaderState(false)
       })
     }
