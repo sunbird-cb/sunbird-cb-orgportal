@@ -72,7 +72,7 @@
 <div class="competency-summary">
     <div class="competency-summary-header">Competency summary</div>
     <div class="competency-tabs">
-        <mat-tab-group [selectedIndex]="selectedIndex" class="margin-top-m" >
+        <!-- <mat-tab-group [selectedIndex]="selectedIndex" class="margin-top-m" >
             <ng-container *ngFor="let item of competencySummaryObj">
             <mat-tab [disabled]="!(item[item?.title]['count'])">
                 <ng-template mat-tab-label>
@@ -95,6 +95,35 @@
                 </ng-template>
             </mat-tab>        
         </ng-container>   
-        </mat-tab-group>
+        </mat-tab-group> -->
+        <div class="filter-content flex flex-1 flex-col">
+            <ng-container *ngFor="let item of competencySummaryObj">
+                <mat-accordion>
+                    <mat-expansion-panel disableRipple [disabled]="!(item[item?.title]['count'])" [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{item?.title | titlecase}} ({{item[item?.title]['count']}}) 
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>                    
+                        <div class="category-content">                    
+                            <ng-container *ngIf="item[item?.title]['listData']?.length">
+                                <div class="category-card flex flex-row" *ngFor="let sitem of item[item?.title]['listData']">
+                                    <div class="label">
+                                        {{sitem?.competencyTheme}}
+                                    </div>
+                                    <div>
+                                    <span class="count" *ngIf="sitem?.count">({{sitem?.count}})</span> 
+                                    </div>
+                                </div>
+                                </ng-container>
+                                <ng-container *ngIf="!(item[item?.title]['listData']?.length)">
+                                    <div class="default-tab-content">There are no competency added yet.</div>
+                                </ng-container>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <div class="spacer"></div>
+            </ng-container>
+        </div>
     </div>
 </div>

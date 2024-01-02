@@ -34,6 +34,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   assigneeFilterObj: any = { group: [], designation: [] }
   searchThemeControl = new FormControl()
   searchSubThemeControl = new FormControl()
+  searchProviderControl = new FormControl();
   @ViewChildren('checkboxes') checkboxes!: QueryList<ElementRef>
   constructor(
     private cdref: ChangeDetectorRef,
@@ -65,6 +66,8 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         this.clearFilterWhileSearch()
       }
     })
+
+    this.resetFilter()
   }
 
   ngAfterContentChecked() {
@@ -89,12 +92,11 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   getProviders() {
     this.trainingPlanService.getProviders().subscribe((res: any) => {
       this.providersList = res
-      this.providersList.map((ele: any) => {
-        if (this.selectedProviders.length > 0 &&
-          this.selectedProviders.filter((v: any) => v.name.toLowerCase() === ele.name.toLowerCase() && v.selected).length > 0) {
-          ele.selected = true
+      this.providersList.map((pitem: any) => {
+        if (this.filterObj['providers'] && pitem && this.filterObj['providers'].indexOf(pitem.name) > -1) {
+          pitem['selected'] = true
         } else {
-          ele.selected = false
+          pitem['selected'] = false
         }
       })
     })
@@ -107,34 +109,35 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   }
 
   checkedProviders(event: any, item: any) {
-    let tempData: any
     if (event.checked) {
-      tempData = {
-        name: item,
-        selected: event.checked
+      item['checked'] = true
+      this.providersList.map((pitem: any) => {
+        if (item.name === pitem.name) {
+          pitem['selected'] = true
+        }
+
+      })
+      if (this.filterObj['providers']) {
+        this.filterObj['providers'].push(item.name)
       }
-      this.selectedProviders.push(tempData)
-      this.filterObj['providers'].push(tempData.name)
     } else {
-      tempData = {
-        name: item,
-        selected: event.checked
+      item['checked'] = false
+      this.providersList.map((pitem: any) => {
+        if (item.name === pitem.name) {
+          pitem['selected'] = false
+        }
+      })
+      if (this.filterObj['providers'].indexOf(item.name) > -1) {
+        const index = this.filterObj['providers'].findIndex((x: any) => x === item.name)
+        item['selected'] = false
+        this.filterObj['providers'].splice(index, 1)
       }
-      if (this.selectedProviders && this.selectedProviders.length > 0) {
-        this.selectedProviders.map((v: any) => {
-          if (v.name.toLowerCase() === tempData.name.toLowerCase()) {
-            v.selected = tempData.selected
-          }
-        })
-      }
-      const index = this.filterObj['providers'].findIndex((x: any) => x === tempData.name)
-      this.filterObj['providers'].splice(index, 1)
     }
   }
 
   getCompetencyTheme(event: any, ctype: any) {
-    debugger
     if (event.checked) {
+      ctype['selected'] = true
       this.competencyList.map((citem: any) => {
         if (citem.name === ctype.id) {
           citem['selected'] = true
@@ -148,6 +151,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         }
       })
     } else {
+      ctype['selected'] = false
       this.competencyList.map((citem: any) => {
         if (citem.name === ctype.id) {
           citem['selected'] = false
@@ -170,6 +174,8 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         const index = this.filterObj['competencyArea'].findIndex((x: any) => x === ctype.id)
         this.filterObj['competencyArea'].splice(index, 1)
       }
+      this.searchThemeControl.reset()
+      this.searchSubThemeControl.reset()
     }
   }
 
@@ -204,6 +210,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         const index = this.filterObj['competencyTheme'].findIndex((x: any) => x === cstype.name)
         this.filterObj['competencyTheme'].splice(index, 1)
       }
+      this.searchSubThemeControl.reset()
     }
   }
 
@@ -305,5 +312,37 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         this.assigneeFilterObj['designation'].splice(index, 1)
       }
     }
+  }
+
+  resetFilter() {
+    if (this.competencyTypeList) {
+      this.competencyTypeList.map((citem: any) => {
+        if (citem && citem['selected']) {
+          citem['selected'] = false
+        }
+      })
+    }
+    if (this.competencyThemeList) {
+      this.competencyThemeList.map((titem: any) => {
+        if (titem && titem['selected']) {
+          titem['selected'] = false
+        }
+      })
+    }
+    if (this.competencySubThemeList) {
+      this.competencySubThemeList.map((sitem: any) => {
+        if (sitem && sitem['selected']) {
+          sitem['selected'] = false
+        }
+      })
+    }
+    if (this.providersList) {
+      this.providersList.map((pitem: any) => {
+        if (pitem && pitem['selected']) {
+          pitem['selected'] = false
+        }
+      })
+    }
+
   }
 }

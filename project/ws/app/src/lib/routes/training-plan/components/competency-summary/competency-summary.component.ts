@@ -59,7 +59,7 @@ export class CompetencySummaryComponent implements OnInit, OnChanges {
     ]
     if (this.contentData) {
       this.contentData.map((item: any) => {
-        if (item.selected) {
+        if (item && item.selected) {
           this.selectedCardData.push(item)
         }
       })
