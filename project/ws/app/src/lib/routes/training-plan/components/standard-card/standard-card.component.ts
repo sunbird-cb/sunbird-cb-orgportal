@@ -17,7 +17,7 @@ export class StandardCardComponent implements OnInit, OnChanges {
   @Input() count = 0
   @Output() handleSelectedChips = new EventEmitter()
   @Output() selectedContentRemoved = new EventEmitter<any>()
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | any
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | any
   dataSource: any
   selectedContent: any[] = []
   startIndex = 0
