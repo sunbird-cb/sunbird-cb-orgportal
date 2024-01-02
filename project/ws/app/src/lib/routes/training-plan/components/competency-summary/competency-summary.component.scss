@@ -1,7 +1,8 @@
 
 .competency-summary {
     // margin-top: 24px;
-    max-width: 363px;
+    // max-width: 363px;
+    width: 363px;
     border: 1px solid rgb(0,0,0,0.16);
     min-height: 300px;
     // margin-left: 25px;
@@ -25,14 +26,16 @@
 }
 
 .category-card {
-    margin: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 16px;
+    margin: 8px 0 0 8px;
+    // border: 1px solid #ccc;
+    // border-radius: 4px;
+    padding: 8px;
 }
 
 .category-card .label {
     width:90%;
+    font-size: 14px;
+    font-family: 'Lato';
 }
 
 
@@ -97,4 +100,51 @@
 
 ::ng-deep .competency-tabs .mat-tab-label-active::before {
     display: none;
+}
+
+.spacer {
+    height: 1px;
+    margin: 16px;
+    background: rgba(0,0,0,0.16);
+}
+
+::ng-deep .mat-expansion-panel {
+    box-shadow: none !important;
+}
+
+::ng-deep .mat-expansion-panel-header {
+    padding:0 !important;
+}
+
+::ng-deep .mat-expansion-panel-header-title {
+    font-weight: 700;
+    font-size: 14px;
+    width: 250px;
+    margin-left: 16px;
+    font-family: 'Lato';
+}
+
+
+::ng-deep .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-keyboard-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]).cdk-program-focused, .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover {
+    background:none !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+::ng-deep .mat-expansion-panel-header {
+    height: 24px !important; 
+}
+
+.competency-tabs {
+    margin-right: 16px;
+}
+
+.count {
+    font-weight: 700;
+    font-size: 14px;
+    width: 250px;
+    margin-left: 16px;
+    font-family: 'Lato';
 }

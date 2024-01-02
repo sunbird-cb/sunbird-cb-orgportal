@@ -66,8 +66,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         this.clearFilterWhileSearch()
       }
     })
-
-    this.resetFilter();
+    
   }
 
   ngAfterContentChecked() {
