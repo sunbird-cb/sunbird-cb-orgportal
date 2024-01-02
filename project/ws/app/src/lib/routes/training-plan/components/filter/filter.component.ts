@@ -41,6 +41,8 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     private tpdsSvc: TrainingPlanDataSharingService) { }
 
   ngOnInit() {
+    // this.filterObj = [];
+    // this.assigneeFilterObj = [];
     this.tpdsSvc.filterToggle.subscribe((data:any)=>{
       if(data && data.status) {
         if (data.from === 'content') {
@@ -99,9 +101,11 @@ export class FilterComponent implements OnInit, AfterContentChecked {
 
   checkedProviders(event: any, item: any) {
     if (event) {
-      this.selectedProviders.push(item)
+      this.selectedProviders.push(item.name)
       item['selected'] = true;
-      this.filterObj['providers'].push(item.name)
+      if(this.filterObj['providers']) {
+        this.filterObj['providers'].push(item.name)
+      }      
     } else {
       if (this.filterObj['provider'].indexOf(item.name) > -1) {
         const index = this.filterObj['providers'].findIndex((x: any) => x === item.name)
@@ -109,6 +113,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         this.filterObj['providers'].splice(index, 1)
       }
     }
+    console.log(this.filterObj);
   }
 
   getCompetencyTheme(event: any, ctype: any) {

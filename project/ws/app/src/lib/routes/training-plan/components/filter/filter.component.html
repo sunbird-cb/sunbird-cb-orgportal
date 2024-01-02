@@ -85,7 +85,7 @@
                         </div>
                         <div class="category-content">
                             <div class="flex flex-1 flex-row category-item" *ngFor="let item of providersList | filterSearch: searchProviderInput.value">
-                                <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="item?.selected" (change)="checkedProviders($event, item?.name)">{{item?.name | titlecase}}</mat-checkbox>
+                                <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="item?.selected" (change)="checkedProviders($event, item)">{{item?.name | titlecase}}</mat-checkbox>
                             </div>
                         </div>
                     </mat-expansion-panel>

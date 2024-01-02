@@ -40,7 +40,6 @@ export class StandardCardComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log('this.contentData', this.contentData);
     this.changeDetectorRef.detectChanges()
   }
 
