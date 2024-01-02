@@ -9,16 +9,22 @@
                 </div>
                 <span class="spacer"></span>
                 <div class="flex flex-3 custom button-row-inline margin-top-xs">
-                    <button mat-stroked-button color="accent" type="button" class="mat-accent-border flex-auto-display"
-                        (click)="goToList()">
-                        <span i18n>Cancel</span>
-                    </button>
-                    <button mat-button class="create-btn" type="button" (click)="onSubmit()"
-                        [disabled]="!createEventForm.valid">
-                        <span i18n>Save and Publish</span>
-                    </button>
+                    <div>
+                        <button mat-stroked-button color="accent" type="button"
+                            class="mat-accent-border flex-auto-display" (click)="goToList()">
+                            <span i18n>Cancel</span>
+                        </button>
+                        <button mat-button class="create-btn btn-success" type="button" (click)="onSubmit()"
+                            [disabled]="!createEventForm.valid || disableCreateButton">
+                            <span i18n>Save and Publish</span>
+                        </button>
+                    </div>
+                    <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
+                        <mat-spinner [diameter]="30"></mat-spinner>
+                    </div>
 
                 </div>
+
             </div>
             <div class="flex flex-4 flex-column">
                 <div class="flex flex-1 custom">
@@ -77,7 +83,7 @@
                                                         formControlName="eventTitle" i18n-placeholder
                                                         placeholder="Type here" i18n-aria-label
                                                         aria-label="Event Title input" class="form-input"
-                                                        (keypress)="omit_special_char($event)" />
+                                                        (keypress)="omit_special_char($event)" maxlength="500" />
                                                     <mat-error [hidden]="false"
                                                         i18n="Event title Error|Explains event title is required"
                                                         i18n-aria-label
@@ -99,8 +105,8 @@
                                                 <mat-form-field appearance="outline" class="margin-top-xs">
                                                     <textarea id="summary" matInput #summary formControlName="summary"
                                                         i18n-placeholder placeholder="Type here" i18n-aria-label
-                                                        aria-label="Summary input" class="form-input" rows="8"
-                                                        cols="40"></textarea>
+                                                        aria-label="Summary input" class="form-input" rows="8" cols="40"
+                                                        maxlength="2000"></textarea>
                                                     <mat-error [hidden]="false"
                                                         i18n="Summary Error|Explains summary is required"
                                                         i18n-aria-label
@@ -126,7 +132,7 @@
                                                         formControlName="description" i18n-placeholder
                                                         placeholder="Type here" i18n-aria-label
                                                         aria-label="description input" class="form-input" rows="8"
-                                                        cols="40"></textarea>
+                                                        cols="40" maxlength="2000"></textarea>
                                                     <mat-error [hidden]="false"
                                                         i18n="description Error|Explains description is required"
                                                         i18n-aria-label
@@ -148,8 +154,8 @@
                                                 <mat-form-field appearance="outline" class="margin-top-xs">
                                                     <textarea id="agenda" matInput #agenda formControlName="agenda"
                                                         i18n-placeholder placeholder="Type here" i18n-aria-label
-                                                        aria-label="agenda input" class="form-input" rows="8"
-                                                        cols="40"></textarea>
+                                                        aria-label="agenda input" class="form-input" rows="8" cols="40"
+                                                        maxlength="2000"></textarea>
                                                     <mat-error [hidden]="false"
                                                         i18n="agenda Error|Explains agenda is required" i18n-aria-label
                                                         aria-label="agenda Error|Explains agenda is required "
@@ -262,7 +268,7 @@
                                                     <mat-form-field appearance="outline"
                                                         class="margin-right-l width-250 maxwidth-150">
                                                         <mat-select formControlName="eventDurationHours" #eventDuration>
-                                                            <mat-option *ngFor="let hourObj of [0,1,2,3,4,5,6,7,8,9,10]"
+                                                            <mat-option *ngFor="let hourObj of hoursList"
                                                                 [value]="hourObj">
                                                                 {{hourObj}}
                                                             </mat-option>
@@ -278,7 +284,7 @@
                                                     <mat-form-field appearance="outline" class="maxwidth-150">
                                                         <mat-select formControlName="eventDurationMinutes"
                                                             #eventDuration>
-                                                            <mat-option *ngFor="let minObj of [0,15,30,45,60]"
+                                                            <mat-option *ngFor="let minObj of minsList"
                                                                 [value]="minObj">
                                                                 {{minObj}}
                                                             </mat-option>
@@ -309,7 +315,7 @@
                                                         formControlName="conferenceLink" i18n-placeholder
                                                         placeholder="Type here" i18n-aria-label
                                                         aria-label="conferenceLink input" class="form-input" rows="4"
-                                                        cols="40" />
+                                                        cols="40" maxlength="500" />
                                                     <mat-error [hidden]="false"
                                                         i18n="conferenceLink Error|Explains conferenceLink is required"
                                                         i18n-aria-label
@@ -349,7 +355,8 @@
                                                             <td>Type</td>
                                                         </tr>
                                                         <tr *ngFor="let row of participantsArr">
-                                                            <td>{{ row.firstname }} {{ row.lastname }}</td>
+                                                            <td>{{ row.firstname }} </td>
+                                                            <!-- <td>{{ row.firstname }} {{ row.lastname }}</td> -->
                                                             <td>{{ row.email }}</td>
                                                             <td>{{ row.type }}</td>
                                                         </tr>

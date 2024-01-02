@@ -1,6 +1,11 @@
 @import 'ws-vars';
 @import 'ws-mixins';
 
+// for main left sidebar fix in all pages
+::ng-deep .mat-nav-list.custom-class {
+  max-height: 100% !important;
+}
+
 %background-image-center {
   background-repeat: no-repeat;
   background-size: cover;

@@ -1,0 +1,62 @@
+<div class="box-container" *ngIf="data?.type === 'normal' || data?.type === 'conformation'">
+    <!-- <div class="close-modal-container">
+        <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </div> -->
+    <div class="flex flex-1 flex-row icon">
+        <img src="assets/icons/{{data?.icon}}.svg" />
+
+    </div>
+    <div class="flex flex-1 flex-row title">
+        {{data?.title}}
+
+    </div>
+    <div class="flex flex-1 flex-row subtitle">
+        {{data?.subTitle}}
+    </div>
+    <div mat-dialog-actions class="flex flex-1 flex-row action">
+        <button mat-button class="cancel" type="button"
+            [mat-dialog-close]="data?.secondaryAction">{{data?.secondaryAction}}</button>
+        <button mat-button class="primary margin-left-m" type="button"
+            (click)="performAction(data)">{{data?.primaryAction}}</button>
+    </div>
+</div>
+
+<div class="box-container-portrait" *ngIf="data?.type === 'progress'">
+    <!-- <div class="close-modal-container">
+        <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </div> -->
+    <div class="flex flex-1 flex-row progress-title">
+        {{data?.title}}
+    </div>
+    <div class="flex flex-1 flex-row progress-subtitle">
+        {{data?.subTitle}}
+    </div>
+    <div class="flex flex-1 flex-row progress-icon">
+        <img src="assets/icons/{{data?.icon}}.svg" />
+
+    </div>
+</div>
+
+<div class="box-container-portrait" *ngIf="data?.type === 'progress-completed'">
+    <!-- <div class="close-modal-container">
+        <button mat-icon-button type="button" (click)="dialogRef.close()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div> -->
+    <div class="flex flex-1 flex-row progress-title">
+        {{data?.title}}
+    </div>
+    <div class="flex flex-1 flex-row progress-subtitle-16">
+        {{data?.subTitle}}
+    </div>
+    <div class="flex flex-1 flex-row progress-icon">
+        <img src="assets/icons/{{data?.icon}}.svg" />
+    </div>
+    <div mat-dialog-actions class="flex flex-1 flex-row action">
+        <button mat-button class="primary" type="button">{{data?.primaryAction}}</button>
+    </div>
+</div>

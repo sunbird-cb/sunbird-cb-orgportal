@@ -1,0 +1,42 @@
+<div class="stepper">
+    <mat-tab-group #tabGroup [disableRipple]="true" [selectedIndex]="tabIndexValue" class="margin-top-m"
+        (selectedTabChange)="tabSelected($event)">
+        <mat-tab [label]="tabType.CREATE_PLAN" [disabled]="false">
+            <ng-template mat-tab-label>
+                1. <span *ngIf="!editState">Create</span><span *ngIf="editState">Edit</span>&nbsp; a Plan
+            </ng-template>
+            <ng-template matTabContent>
+                <ws-app-add-plan-information
+                    (planTitleInvalid)="checkForPlanTitle($event)"></ws-app-add-plan-information>
+            </ng-template>
+        </mat-tab>
+        <mat-tab [label]="tabType.ADD_CONTENT" [disabled]="addCotnentDisable" class="disable">
+            <ng-template mat-tab-label>
+                <span>2. <span *ngIf="!editState">Add</span><span *ngIf="editState">Edit</span> Content
+                </span>
+            </ng-template>
+            <ng-template matTabContent>
+                <ws-app-create-content (addContentInvalid)="checkForaddContent($event)"
+                    [ngClass]="{'disable': isContentLive}"></ws-app-create-content>
+            </ng-template>
+        </mat-tab>
+        <mat-tab [label]="tabType.ADD_ASSIGNEE" [disabled]="addCotnentDisable || addAssigneeDisable">
+            <ng-template mat-tab-label>
+                <span>3. <span *ngIf="!editState">Add</span><span *ngIf="editState">Edit</span> Assignee</span>
+            </ng-template>
+            <ng-template matTabContent>
+                <ws-app-create-assignee (addAssigneeInvalid)="checkForaddAssignee($event)"
+                    (changeTabToTimeline)="tabChangeToTimeline($event)"></ws-app-create-assignee>
+            </ng-template>
+        </mat-tab>
+        <mat-tab [label]="tabType.ADD_TIMELINE"
+            [disabled]="addCotnentDisable || addAssigneeDisable || addTimelineDisable">
+            <ng-template mat-tab-label>
+                <span>4. <span *ngIf="!editState">Add</span><span *ngIf="editState">Edit</span> Timeline</span>
+            </ng-template>
+            <ng-template matTabContent>
+                <ws-app-create-timeline></ws-app-create-timeline>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>

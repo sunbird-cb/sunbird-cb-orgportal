@@ -1,0 +1,54 @@
+@import 'ws-mixins';
+@import 'ws-vars';
+@import 'ws-common';
+
+::ng-deep.view-report .main-lib-body {
+  margin: 10px;
+}
+
+::ng-deep.view-report .main-container {
+  width: auto !important;
+  overflow-y: auto !important;
+  max-height: auto !important;
+}
+
+::ng-deep.view-report .lib-container {
+  height: 100% !important;
+}
+
+::ng-deep.view-report .lib-container-2 {
+  height: auto;
+  min-height: unset !important;
+  padding: 0 !important;
+}
+
+.view-report {
+  width: 88%;
+}
+
+.survey-container {
+  display: flex !important;
+}
+
+.close-btn {
+  width: auto;
+  border: 1px solid #0075B7;
+  border-radius: 4px;
+  color: #0075B7 !important;
+}
+
+.display-center {
+  position: relative;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  margin: 10px;
+}
+
+.dialog-container {
+  position: relative;
+}
+
+::ng-deep .header-container label {
+  display: none !important;
+}

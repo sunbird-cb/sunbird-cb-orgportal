@@ -3,12 +3,13 @@ import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router'
 import moment from 'moment'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { UsersService } from '../../services/users.service'
-import { MatSnackBar } from '@angular/material'
+import { MatChipInputEvent, MatSnackBar } from '@angular/material'
 // tslint:disable-next-line
 import _ from 'lodash'
 import { EventService } from '@sunbird-cb/utils'
 import { Subscription } from 'rxjs'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import { COMMA, ENTER } from '@angular/cdk/keycodes'
 
 @Component({
   selector: 'ws-app-view-user',
@@ -34,6 +35,8 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   department: any = {}
   departmentName = ''
   rolesList: any = []
+  rolesObject: any = []
+  uniqueRoles: any = []
   configSvc: any
   userID: any
   public userRoles: Set<string> = new Set()
@@ -44,6 +47,15 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   qpParam: any
   qpPath: any
   breadcrumbs: any
+  isMdoAdmin = false
+  isMdoLeader = false
+  designationsMeta!: any
+  updateProfessionalForm: FormGroup
+  selectedtags: any[] = []
+  reqbody: any
+  isTagsEdited = false
+  separatorKeysCodes: number[] = [ENTER, COMMA]
+  namePatern = `^[a-zA-Z ]*$`
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -65,11 +77,13 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         this.configSvc = this.activeRoute.snapshot.data.configService || {}
         const profileDataAll = this.activeRoute.snapshot.data.profileData.data || {}
         const profileData = profileDataAll.profileDetails
+        this.updateTags(profileData)
         if (profileData) {
           this.userID = profileData.id || profileData.userId || profileDataAll.id
           this.basicInfo = profileData.personalDetails
           if (this.basicInfo) {
-            this.fullname = `${this.basicInfo.firstname} ${this.basicInfo.surname}`
+            // this.fullname = `${this.basicInfo.firstname} ${this.basicInfo.surname}`
+            this.fullname = `${this.basicInfo.firstname}`
           }
           this.academicDetails = profileData.academics
           this.professionalDetails = profileData.professionalDetails ? profileData.professionalDetails[0] : []
@@ -77,32 +91,146 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           this.skillDetails = profileData.skills
           this.interests = profileData.interests
           this.userStatus = profileDataAll.isDeleted ? 'Inactive' : 'Active'
+
+          if (this.professionalDetails) {
+            const value = this.professionalDetails.designation || this.professionalDetails.designationOther || ''
+            this.updateProfessionalForm.controls['designation'].setValue(value)
+          }
+
         }
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
         this.department = fullProfile.unMappedUser.rootOrgId
-        this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
+        this.departmentName = fullProfile ? fullProfile.unMappedUser.rootOrg.orgName : ''
         const orgLst = _.get(this.activeRoute.snapshot, 'data.rolesList.data.orgTypeList')
-        const filteredDept = _.compact(_.map(orgLst, ls => {
-          const f = _.filter(ls.flags, (fl: any) => fullProfile.unMappedUser.rootOrg[fl])
-          if (f && f.length > 0) {
-            return ls
-          }
-          return null
-        }))
-        /* tslint:disable-next-line */
-        const rolesListFull = _.uniq(_.map(_.compact(_.flatten(_.map(filteredDept, 'roles'))), rol => ({ roleName: rol, description: rol })))
 
-        rolesListFull.forEach((role: any) => {
+        if (fullProfile.unMappedUser && fullProfile.unMappedUser.roles) {
+          this.isMdoAdmin = fullProfile.unMappedUser.roles.includes('MDO_ADMIN')
+          this.isMdoLeader = fullProfile.unMappedUser.roles.includes('MDO_LEADER')
+          if (this.isMdoAdmin) {
+            this.tabsData = [
+              {
+                name: 'Personal details',
+                key: 'personalInfo',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Academics',
+                key: 'academics',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Professional details',
+                key: 'profdetails',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Certification and skills',
+                key: 'skills',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Roles',
+                key: 'roles',
+                render: true,
+                enabled: true,
+              }]
+          } else {
+            this.tabsData = [
+              {
+                name: 'Personal details',
+                key: 'personalInfo',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Academics',
+                key: 'academics',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Professional details',
+                key: 'profdetails',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Certification and skills',
+                key: 'skills',
+                render: true,
+                enabled: true,
+              },
+              {
+                name: 'Update roles',
+                key: 'roles',
+                render: true,
+                enabled: true,
+              }]
+          }
+        }
+
+        // New code for roles
+        for (let i = 0; i < orgLst.length; i += 1) {
+          if (orgLst[i].name === 'MDO') {
+            _.each(orgLst[i].roles, rolesObject => {
+              if (this.isMdoAdmin) {
+                if (rolesObject === 'PUBLIC') {
+                  this.uniqueRoles.push({
+                    roleName: rolesObject, description: rolesObject,
+                  })
+                }
+                if (rolesObject === 'MDO_DASHBOARD_USER') {
+                  this.uniqueRoles.push({
+                    roleName: rolesObject, description: rolesObject,
+                  })
+                }
+              } else {
+                if (this.isMdoLeader) {
+                  if (rolesObject !== 'MDO_LEADER') {
+                    this.uniqueRoles.push({
+                      roleName: rolesObject, description: rolesObject,
+                    })
+                  }
+                }
+              }
+            })
+          }
+        }
+
+        this.uniqueRoles.forEach((role: any) => {
           if (!this.rolesList.some((item: any) => item.roleName === role.roleName)) {
             this.rolesList.push(role)
           }
         })
+
+        // Old code
+        // const filteredDept = _.compact(_.map(orgLst, ls => {
+        //   const f = _.filter(ls.flags, (fl: any) => fullProfile.unMappedUser.rootOrg[fl])
+        //   if (f && f.length > 0) {
+        //     return ls
+        //   }
+        //   return null
+        // }))
+
+        /* tslint:disable-next-line */
+        // const rolesListFull = _.uniq(_.map(_.compact(_.flatten(_.map(filteredDept, 'roles'))), rol => ({ roleName: rol, description: rol })))
+
+        // rolesListFull.forEach((role: any) => {
+        //   if (!this.rolesList.some((item: any) => item.roleName === role.roleName)) {
+        //     this.rolesList.push(role)
+        //   }
+        // })
 
         const usrRoles = profileDataAll.roles
         usrRoles.forEach((role: any) => {
           this.orguserRoles.push(role)
           this.modifyUserRoles(role)
         })
+
         // if (this.department.active_users && this.department.active_users.length > 0) {
         //   this.department.active_users.forEach((user: any) => {
         //     if (this.userID === user.userId) {
@@ -149,7 +277,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
             this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: this.userStatus, url: 'none' }, { title: 'MDO information', url: '/app/home/mdoinfo/leadership' }, { title: this.fullname, url: 'none' }] }
           } else {
             // tslint:disable-next-line:max-line-length
-            this.breadcrumbs = { titles: [{ title: 'Users', url: '/app/home/users' }, { title: this.userStatus, url: 'none' }, { title: this.fullname, url: 'none' }] }
+            this.breadcrumbs = [{ title: 'Users', url: '/app/home/users/active' }, { title: this.userStatus, url: `/app/home/users/${this.userStatus.toLowerCase()}` }, { title: this.fullname, url: 'none' }]
           }
         })
 
@@ -192,40 +320,34 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     this.updateUserRoleForm = new FormGroup({
       roles: new FormControl('', [Validators.required]),
     })
+
+    this.updateProfessionalForm = new FormGroup({
+      designation: new FormControl('', []),
+      tags: new FormControl('', [Validators.pattern(this.namePatern)]),
+    })
   }
 
   ngOnInit() {
-    this.tabsData = [
-      {
-        name: 'Personal details',
-        key: 'personalInfo',
-        render: true,
-        enabled: true,
+    this.init()
+  }
+
+  async init() {
+    await this.loadDesignations()
+  }
+
+  async loadDesignations() {
+    await this.usersSvc.getDesignations({}).subscribe(
+      (data: any) => {
+        this.designationsMeta = data.responseData
       },
-      {
-        name: 'Academics',
-        key: 'academics',
-        render: true,
-        enabled: true,
-      },
-      {
-        name: 'Professional details',
-        key: 'profdetails',
-        render: true,
-        enabled: true,
-      },
-      {
-        name: 'Certification and skills',
-        key: 'skills',
-        render: true,
-        enabled: true,
-      },
-      {
-        name: 'Update roles',
-        key: 'roles',
-        render: true,
-        enabled: true,
-      }]
+      (_err: any) => {
+      })
+  }
+
+  otherDropDownChange(value: any, field: string) {
+    if (field === 'designation' && value !== 'Other') {
+      this.updateProfessionalForm.controls['designation'].setValue(value)
+    }
   }
 
   ngAfterViewInit() {
@@ -269,20 +391,81 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     this.updateUserRoleForm.controls['roles'].setValue(this.orguserRoles)
   }
 
-  onSubmit(form: any) {
-    if (form.value.roles !== this.orguserRoles) {
-      const dreq = {
-        request: {
-          organisationId: this.department,
-          userId: this.userID,
-          roles: form.value.roles,
-        },
-      }
+  updateTags(profileData: any) {
+    this.selectedtags = _.get(profileData, 'additionalProperties.tag') || []
+  }
 
-      this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
+  addActivity(event: MatChipInputEvent) {
+    const input = event.input
+    const value = event.value as string
+    if ((value && value.trim()) && this.updateProfessionalForm.valid) {
+      this.isTagsEdited = true
+      this.selectedtags.push(value)
+    }
+    if (input) {
+      input.value = ''
+    }
+    if (this.updateProfessionalForm.get('tags')) {
+      // tslint:disable-next-line: no-non-null-assertion
+      this.updateProfessionalForm.get('tags')!.setValue(null)
+    }
+    this.updateProfessionalForm.controls['tags'].reset()
+  }
+
+  removeActivity(interest: any) {
+    const index = this.selectedtags.indexOf(interest)
+    if (index >= 0) {
+      this.selectedtags.splice(index, 1)
+      this.isTagsEdited = true
+    }
+  }
+
+  checkForChange(activityList: any) {
+    const newobj: any = []
+    activityList.forEach((val: any) => {
+      const reqObj = {
+        name: val,
+      }
+      newobj.push(reqObj)
+    })
+  }
+
+  onSubmit(form: any, ftype: any) {
+    if (ftype === 'Professional') {
+      const tags = this.professionalDetails.tags
+      if (tags !== this.selectedtags) {
+        this.reqbody = {
+          request: {
+            userId: this.userID,
+            profileDetails: {
+              professionalDetails: [
+                {
+                  designation: this.updateProfessionalForm.controls['designation'].value,
+                },
+              ],
+              additionalProperties: {
+                tag: this.selectedtags,
+              },
+            },
+          },
+        }
+      } else {
+        this.reqbody = {
+          request: {
+            userId: this.userID,
+            profileDetails: {
+              professionalDetails: [
+                {
+                  designation: this.updateProfessionalForm.controls['designation'].value,
+                },
+              ],
+            },
+          },
+        }
+      }
+      this.usersSvc.updateUserDetails(this.reqbody).subscribe(dres => {
         if (dres) {
-          this.updateUserRoleForm.reset({ roles: '' })
-          this.openSnackbar('User role updated Successfully')
+          this.openSnackbar('User updated Successfully')
           if (this.qpParam === 'MDOinfo') {
             this.router.navigate(['/app/home/mdoinfo/leadership'])
           } else {
@@ -291,8 +474,31 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
         }
       })
     } else {
-      this.openSnackbar('Select new roles')
+      if (form.value.roles !== this.orguserRoles) {
+        const dreq = {
+          request: {
+            organisationId: this.department,
+            userId: this.userID,
+            roles: form.value.roles,
+          },
+        }
+
+        this.usersSvc.addUserToDepartment(dreq).subscribe(dres => {
+          if (dres) {
+            this.updateUserRoleForm.reset({ roles: '' })
+            this.openSnackbar('User role updated Successfully')
+            if (this.qpParam === 'MDOinfo') {
+              this.router.navigate(['/app/home/mdoinfo/leadership'])
+            } else {
+              this.router.navigate(['/app/home/users'])
+            }
+          }
+        })
+      } else {
+        this.openSnackbar('Select new roles')
+      }
     }
+
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {

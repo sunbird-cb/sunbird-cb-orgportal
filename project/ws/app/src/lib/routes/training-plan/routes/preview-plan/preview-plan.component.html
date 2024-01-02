@@ -1,0 +1,53 @@
+<!-- <ws-app-breadcrumb [showBreadcrumbAction]="false"></ws-app-breadcrumb> -->
+<div class="flex margin-top-l">
+    <button mat-stroked-button type="button" (click)="goBack()" *ngIf="showBackBtn"><mat-icon>arrow_back</mat-icon> Go
+        back</button>
+</div>
+<div class="flex flex-col" *ngIf="form==='content'">
+    <div class="mat-subheading-1 margin-remove margin-bottom-m" *ngIf="contentList?.length">Selected Content <span> (
+            {{contentList?.length}} )</span></div>
+    <div class="flex flex-row justify-center max-height-400">
+        <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentList" [showDeleteFlag]="true"
+            [showPagination]="(contentList?.length > 20) ? true : false">
+        </ws-app-standard-card>
+    </div>
+    <div class="no-cbp-data margin-top-xl margin-bottom-xl text-center"
+        *ngIf="!(contentList) || !(contentList?.length)">
+        <div><img src="/assets/images/no-content-data.svg"></div>
+        <div class="mat-subheading-1 margin-remove">No content avaliable.</div>
+        <!-- <div>Create a content in CBP portal to get the contents.</div> -->
+    </div>
+</div>
+<div class="flex flex-col" *ngIf="form==='assignee'">
+    <div class="mat-subheading-1 margin-remove" *ngIf="assigneeData?.data?.length">Selected Assignee <span> (
+            {{assigneeData?.data?.length}} )</span>
+    </div>
+    <div class="mt-4 flex flex-row justify-center max-height-400" *ngIf="assigneeData?.data?.length">
+        <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData" [showDeleteFlag]="true"
+            [showPagination]="(assigneeData?.data?.length > 20) ? true : false">
+        </ws-app-user-card>
+    </div>
+    <div class="no-cbp-data margin-top-xl margin-bottom-xl text-center" *ngIf="!assigneeData?.data?.length">
+        <div><img src="/assets/images/no-content-data.svg"></div>
+        <div class="mat-subheading-1 margin-remove">No assignee avaliable.</div>
+        <!-- <div>Create a content in CBP portal to get the contents.</div> -->
+    </div>
+</div>
+<div class="flex content-container" *ngIf="form === 'all'">
+    <mat-chip-list [multiple]="true" [selectable]="true">
+        <mat-chip [ngClass]="selectedTab == item?.tab ? 'select-tab ': ''" *ngFor="let item of allContentChips"
+            [selected]="selectedTab == item.tab" (click)="selectedTab = item.tab"><span
+                *ngIf="item?.count > 1">{{item?.name | titlecase}}s</span> <span *ngIf="item?.count === 1">{{item.name |
+                titlecase}}</span> <span *ngIf="item?.count"> &nbsp;&nbsp;({{item?.count}})</span>
+        </mat-chip>
+    </mat-chip-list>
+
+</div>
+<div class="content-container flex" *ngIf="form === 'all'">
+    <ng-container *ngIf="selectedTab === 'content'">
+        <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentList"></ws-app-standard-card>
+    </ng-container>
+    <ng-container *ngIf="selectedTab === 'assignee'">
+        <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData"></ws-app-user-card>
+    </ng-container>
+</div>

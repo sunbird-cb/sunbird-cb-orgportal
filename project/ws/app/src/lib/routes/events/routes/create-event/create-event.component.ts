@@ -13,6 +13,7 @@ import * as moment from 'moment'
 /* tslint:disable */
 import _ from 'lodash'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import { ProfileV2UtillService } from '../../../home/services/home-utill.service'
 /* tslint:enable */
 @Component({
   selector: 'ws-app-create-event',
@@ -65,6 +66,9 @@ export class CreateEventComponent implements OnInit {
     { value: '22:00' }, { value: '22:30' }, { value: '23:00' }, { value: '23:30' },
   ]
 
+  hoursList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+  minsList = [0, 15, 30, 45, 59]
+
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   @ViewChild(MatSort, { static: true }) sort?: MatSort
 
@@ -91,12 +95,14 @@ export class CreateEventComponent implements OnInit {
     value: string
   }[]
   newtimearray: any = []
+  disableCreateButton = false
+  displayLoader = false
 
   constructor(private snackBar: MatSnackBar, private eventsSvc: EventsService, private matDialog: MatDialog,
     // tslint:disable-next-line:align
     private router: Router, private configSvc: ConfigurationsService, private changeDetectorRefs: ChangeDetectorRef,
     // tslint:disable-next-line:align
-    private activeRoute: ActivatedRoute, private events: EventService,
+    private activeRoute: ActivatedRoute, private events: EventService, private profileUtilSvc: ProfileV2UtillService
   ) {
 
     if (this.configSvc.userProfile) {
@@ -241,13 +247,13 @@ export class CreateEventComponent implements OnInit {
       const obj = responseObj.data[index]
       const setSelectedPresentersObj = {
         firstname: obj.firstName || obj.firstname,
-        lastname: obj.lastName || obj.lastname,
-        email: obj.email,
+        email: this.profileUtilSvc.emailTransform(obj.profileDetails.personalDetails.primaryEmail),
         type: 'Karmayogi User',
       }
       const contactsObj = {
         id: obj.id,
-        name: `${obj.firstName || obj.firstname} ${obj.lastName || obj.lastname}`,
+        name: `${obj.firstName || obj.firstname}`,
+        // name: `${obj.firstName || obj.firstname} ${obj.lastName || obj.lastname}`,
       }
       this.presentersArr.push(contactsObj)
       this.participantsArr.push(setSelectedPresentersObj)
@@ -357,7 +363,7 @@ export class CreateEventComponent implements OnInit {
     this.eventsSvc.updateEvent(formJson).subscribe(
       res => {
         if (res || !res) {
-          this.publishEvent(identifier)
+          this.publishEvent(identifier, '')
         }
       },
       (err: any) => {
@@ -387,6 +393,8 @@ export class CreateEventComponent implements OnInit {
   }
 
   onSubmit() {
+    this.disableCreateButton = true
+    this.displayLoader = true
     const eventDurationMinutes = this.addMinutes(
       this.createEventForm.controls['eventDurationHours'].value,
       this.createEventForm.controls['eventDurationMinutes'].value
@@ -494,15 +502,22 @@ export class CreateEventComponent implements OnInit {
     }
     // const formJson = this.encodeToBase64(form)
     if (eventDurationMinutes === 0) {
+      this.displayLoader = false
+      this.disableCreateButton = false
       this.openSnackbar('Duration cannot be zero')
     } else {
       this.eventsSvc.createEvent(form).subscribe(
         res => {
+          this.displayLoader = false
+          this.disableCreateButton = false
           const identifier = res.result.identifier
+          const versionKey = res.result.versionKey
           // this.fileSubmit(identifier)
-          this.publishEvent(identifier)
+          this.publishEvent(identifier, versionKey)
         },
         (err: any) => {
+          this.displayLoader = false
+          this.disableCreateButton = false
           this.openSnackbar(err.error.split(':')[1])
         }
       )
@@ -527,8 +542,17 @@ export class CreateEventComponent implements OnInit {
     return minutes
   }
 
-  publishEvent(identifierkey: any) {
-    this.eventsSvc.publishEvent(identifierkey).subscribe(
+  publishEvent(identifierkey: any, versionKey: any) {
+    const reqestBody = {
+      request: {
+        event: {
+          versionKey,
+          status: 'Live',
+          identifier: identifierkey,
+        },
+      },
+    }
+    this.eventsSvc.publishEvent(identifierkey, reqestBody).subscribe(
       res => {
         this.showSuccess(res)
       },

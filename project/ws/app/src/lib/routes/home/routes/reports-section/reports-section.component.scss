@@ -1,0 +1,19 @@
+.upload-btn {
+  //width: 150px;
+  border: 1px solid #DEDEDE;
+  border-radius: 4px;
+  color: #848484 !important;
+  font-family: 'Lato';
+  font-weight: 700;
+  font-size: 14px;
+}
+
+::ng-deep .p1-btn {
+  box-shadow: none !important;
+  padding: 0 !important;
+  text-align: left !important;
+  span {
+    text-decoration: underline !important;
+    color: #0075B7 !important;
+  }
+}

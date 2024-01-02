@@ -1,0 +1,16 @@
+<!-- <h1 mat-dialog-title>User Survey Report</h1> -->
+<div mat-dialog-content class="dialog-container">
+  <div class="content-inner-box flex flex-1 flex-col">
+    <div class="content-card flex flex-1 flex-col">
+      <section #fullScreenContainer class="survey-container" *ngIf="latestData">
+        <lib-micro-survey class="view-report" [apiData]="apiData" [isReadOnly]="isReadOnly"
+          [surveyId]="latestData.formId" [applicationId]="latestData.applicationId"
+          [courseId]="latestData.dataObject.courseId"></lib-micro-survey>
+      </section>
+    </div>
+  </div>
+  <mat-spinner class="display-center" *ngIf="showSpinner"></mat-spinner>
+</div>
+<div mat-dialog-actions class="flex-end">
+  <button mat-button mat-dialog-close class="close-btn" (click)="onClose()">Close</button>
+</div>

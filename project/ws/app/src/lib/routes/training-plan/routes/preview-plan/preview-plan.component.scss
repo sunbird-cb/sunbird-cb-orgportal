@@ -1,0 +1,31 @@
+.go-back {
+    width:119px;
+    padding:14px 20px;
+    color: rgba(0,0,0,0.6);
+    font-weight:700;
+    border: 1px solid rgba(0,0,0,0.16);
+}
+
+.go-back img {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.content-container {
+    justify-content: center;
+}
+
+.select-tab {
+    border: 1px solid #1b4ca1;
+    background: rgba(0,116,182,.05)!important;
+    color: #1b4ca1!important;
+}
+
+::ng-deep .mat-standard-chip {
+    cursor: pointer !important;
+}
+
+.max-height-400 {
+    max-height: 400px;
+    overflow: auto;
+}

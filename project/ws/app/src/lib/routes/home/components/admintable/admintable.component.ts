@@ -9,6 +9,7 @@ import { AdduserpopupComponent } from '../adduserpopup/adduserpopup.component'
 import { MdoInfoService } from '../../services/mdoinfo.service'
 // import { ConfigurationsService } from '@sunbird-cb/utils'
 import { Router } from '@angular/router'
+import { ProfileV2UtillService } from '../../services/home-utill.service'
 
 @Component({
   selector: 'ws-app-admintable',
@@ -49,7 +50,9 @@ export class AdmintableComponent implements OnInit, OnChanges {
     }
   }
 
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private mdoinfoSrvc: MdoInfoService, private router: Router) {
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,
+              private mdoinfoSrvc: MdoInfoService, private router: Router,
+              private profileUtilSvc: ProfileV2UtillService) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
 
@@ -138,8 +141,9 @@ export class AdmintableComponent implements OnInit, OnChanges {
               }
               const obj = {
                 srnumber: index + 1,
-                fullname: `${user.firstName} ${user.lastName}`,
-                email: user.email,
+                fullname: `${user.firstName}`,
+                // fullname: `${user.firstName} ${user.lastName}`,
+                email: this.profileUtilSvc.emailTransform(user.email),
                 position: pos,
                 id: user.id,
               }
@@ -187,7 +191,6 @@ export class AdmintableComponent implements OnInit, OnChanges {
   }
 
   // onRowClick(e: any) {
-  //   console.log('clicked row', e)
   // }
 
   adduser() {

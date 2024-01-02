@@ -5,7 +5,7 @@
 .container-balanced {
   @extend %page-center;
   height: auto;
-  min-height: 75vh;
+  min-height: 85vh;
   padding: 15px;
 }
 
@@ -19,7 +19,10 @@
 }
 
 .left-nav {
-  min-width: 240px;
+  // min-width: 240px;
+  // overflow: hidden!important;
+  // height: 85vh;
+  // box-sizing: border-box;
   // max-width: 240px;
 
   // ::ng-deep.mat-drawer-inner-container {
@@ -84,10 +87,11 @@
 }
 
 .nav-container {
-  position: relative;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  min-height: calc(100vh - 164px);
+  // position: relative;
+  // top: 0;
+  // bottom: 0;
+  // left: 0;
+  // right: 0;
+  // min-height: calc(100vh - 164px);
+  min-height: calc(100vh - 115px);
 }

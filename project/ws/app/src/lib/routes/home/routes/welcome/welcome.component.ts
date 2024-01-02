@@ -26,7 +26,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   getDashboardForKM =
     '/apis/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi'
   getDashboardForProfile =
-    '/apis/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi'
+    '/apis/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi?realm=mdo'
   getChartV2 =
     '/apis/proxies/v8/dashboard/analytics/getChartV2/Karmayogi'
 
@@ -41,8 +41,11 @@ export class WelcomeComponent implements OnInit, AfterViewInit, OnDestroy {
   currentDashboard: any = []
   dashboardEmpty = dashboardEmptyData
 
-  constructor(@Inject(DOCUMENT) private document: Document, private homeResolver: ProfileV2Service, private router: Router,
-              private events: EventService) {
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private homeResolver: ProfileV2Service,
+    private router: Router,
+    private events: EventService) {
   }
   filterR(type: string) {
     this.resolutionFilter = type

@@ -77,11 +77,9 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   get groupList(): FormArray {
-    // console.log(this.activityForm.get('groupsArray'))
     return this.activityForm.get('groupsArray') as FormArray
   }
   get grpArray(): FormArray | null {
-    // console.log(this.activityForm.get('groupsArray'))
     return this.activityForm ? this.activityForm.get('groupsArray') as FormArray : null
   }
   get getControls(): AbstractControl[] {
@@ -142,7 +140,6 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       const previousContainerIndex = parseInt(event.previousContainer.id.replace('groups_', ''), 10)
       const targetContainerIndex = parseInt(event.container.id.replace('groups_', ''), 10)
       // tslint:disable
-      // console.log(actualIdx)
       const oldArray = (this.activityForm.get('groupsArray') as any)!.at(previousContainerIndex).get('activities')
       const newArray = (this.activityForm.get('groupsArray') as any)!.at(targetContainerIndex).get('activities')
       // tslint:enable
@@ -153,11 +150,7 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
       // this.addNewGroupActivityCustom(previousContainerIndex, oldArray.value)
       // this.activityForm.reset()
       this.changeDetector.detectChanges()
-      // console.log(this.watStore.getactivitiesGroup)
-
-      // console.log(oldArray, newArray)
     }
-    // console.log(this.groupList.value)
 
     this.watStore.setgetactivitiesGroup(this.groupList.value, false, true)
   }
@@ -180,7 +173,6 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
   log(value: any) {
     if (value) {
-      // console.log(value)
     }
   }
   setlabelsValues(val: any) {
@@ -383,7 +375,6 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
   }
   submitResult(qualityForm: any) {
     if (qualityForm) { }
-    // console.log(qualityForm)
   }
   public async filterUsers(value: string) {
     // if (value && value.length > 3) {
@@ -472,7 +463,6 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
               { activityDescription: item.activityDescription }
             )
           )
-          // console.log(newValues)
           const unselectVals =
             _.reject(_.get(lst.get('activities'), 'value'), item =>
               _.find(val.data, { activityDescription: item.activityDescription }))
@@ -560,7 +550,8 @@ export class ActivityLabelsComponent implements OnInit, OnDestroy, AfterViewInit
             assignedToEmail = ''
         } else {
           // tslint:disable-next-line: prefer-template
-          assignedTo = _.get(event, 'option.value.firstName') + ' ' + _.get(event, 'option.value.lastName')
+          // assignedTo = _.get(event, 'option.value.firstName') + ' ' + _.get(event, 'option.value.lastName')
+          assignedTo = _.get(event, 'option.value.firstName')
           assignedToId = _.get(event, 'option.value.userId'),
             assignedToEmail = _.get(event, 'option.value.profileDetails.personalDetails.primaryEmail')
         }

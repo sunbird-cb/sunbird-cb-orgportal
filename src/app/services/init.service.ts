@@ -93,6 +93,10 @@ export class InitService {
       'hubs',
       domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/hubs.svg'),
     )
+    iconRegistry.addSvgIcon(
+      'verified',
+      domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/verified.svg'),
+    )
   }
 
   async init() {
@@ -268,7 +272,7 @@ export class InitService {
             givenName: completeProdata.firstName,
             userId: completeProdata.userId,
             firstName: completeProdata.firstName,
-            lastName: completeProdata.lastName,
+            // lastName: completeProdata.lastName,
             userName: completeProdata.userName,
             // tslint:disable-next-line: max-line-length
             // userName: `${completeProdata.firstName ? completeProdata.firstName : ' '}${completeProdata.lastName ? completeProdata.lastName : ' '}`,
@@ -298,8 +302,9 @@ export class InitService {
             userId: _.get(profileV2, 'userId') || completeProdata.userId,
             email: _.get(profileV2, 'personalDetails.primaryEmail') || completeProdata.email,
             firstName: _.get(profileV2, 'personalDetails.firstname') || completeProdata.firstName,
-            surName: _.get(profileV2, 'personalDetails.surname') || completeProdata.lastName,
-            middleName: _.get(profileV2, 'personalDetails.middlename') || '',
+            mobile: _.get(completeProdata, 'profileDetails.personalDetails.mobile') || '',
+            // surName: _.get(profileV2, 'personalDetails.surname') || completeProdata.lastName,
+            // middleName: _.get(profileV2, 'personalDetails.middlename') || '',
             departmentName: _.get(profileV2, 'employmentDetails.departmentName') || completeProdata.channel,
             // tslint:disable-next-line: max-line-length
             // userName: `${_.get(profileV2, 'personalDetails.firstname') ? _.get(profileV2, 'personalDetails.firstname') : ''}${_.get(profileV2, 'personalDetails.surname') ? _.get(profileV2, 'personalDetails.surname') : ''}`,
@@ -309,7 +314,6 @@ export class InitService {
             isManager: false,
           }
           if (completeProdata.rootOrg && completeProdata.rootOrg.isInstitute) {
-            // console.log('inside is institute ---- calling org profile')
             try {
               const orgProfile = await this.http
                 .get<any>(endpoint.orgProfile(completeProdata.rootOrgId))
@@ -322,7 +326,6 @@ export class InitService {
               this.configSvc.unMappedUser.orgProfile = null
             }
           } else {
-            // console.log('outside is institute ---- NOT calling org profile')
             this.configSvc.unMappedUser.orgProfile = null
           }
 

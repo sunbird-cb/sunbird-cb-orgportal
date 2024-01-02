@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, retry } from 'rxjs/operators'
 // tslint:disable
 import _ from 'lodash'
 // tslint:enable
@@ -24,7 +24,11 @@ const API_END_POINTS = {
   NEW_USER_BLOCK_API: '/apis/proxies/v8/user/v1/block',
   NEW_USER_UN_BLOCK_API: '/apis/proxies/v8/user/v1/unblock',
   SEARCH_USER_TABLE: '/apis/proxies/v8/user/v1/search',
-
+  getDesignation: '/apis/proxies/v8/user/v1/positions',
+  updateUserDetails: '/apis/proxies/v8/user/v1/admin/extPatch',
+  SEND_OTP: '/apis/proxies/v8/otp/v1/generate',
+  RESEND_OTP: '/apis/proxies/v8/otp/v1/generate',
+  VERIFY_OTP: '/apis/proxies/v8/otp/v1/verify',
   // GET_BULKUPLOAD_DATA: '/apis/protected/v8/admin/userRegistration/bulkUploadData',
 }
 
@@ -108,15 +112,57 @@ export class UsersService {
     return this.http.post<any>(`${API_END_POINTS.NEW_USER_UN_BLOCK_API}`, org)
   }
 
-  getAllKongUsers(depId: string): Observable<any> {
+  getAllKongUsers(depId: string, userStatus: number, pageLimit: number = 20, offsetNum: number = 0, searchText?: string): Observable<any> {
+    let reqBody
+    reqBody = {
+      request: {
+        filters: {
+          rootOrgId: depId,
+          status: userStatus,
+        },
+        limit: pageLimit,
+        offset: offsetNum,
+        query: searchText,
+      },
+    }
+    return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody)
+  }
+  // getAllRoleUsers(depId: string, role: {}): Observable<any> {
+  getAllRoleUsers(depId: string, role: string): Observable<any> {
     const reqBody = {
       request: {
         filters: {
           rootOrgId: depId,
+          status: 1,
+          'organisations.roles':
+            [role],
+
         },
+        limit: 1,
       },
     }
-    return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody)
+    return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody).pipe(
+      retry(1),
+      map(
+        (data: any) => ({ role, count: _.get(data, 'result.response.count') })))
+  }
+  getTotalRoleUsers(depId: string, role: string): Observable<any> {
+    const reqBody = {
+      request: {
+        filters: {
+          rootOrgId: depId,
+          // status: 1,
+          'organisations.roles':
+            [role],
+
+        },
+        // limit: 1,
+      },
+    }
+    return this.http.post<any>(`${API_END_POINTS.GET_ALL_USERS}`, reqBody).pipe(
+      retry(1),
+      map(
+        (data: any) => ({ role, count: _.get(data, 'result.response') })))
   }
 
   searchUserByenter(value: string, rootOrgId: string) {
@@ -130,5 +176,48 @@ export class UsersService {
     }
 
     return this.http.post<any>(`${API_END_POINTS.SEARCH_USER_TABLE}`, reqBody)
+  }
+
+  checkForUserReport(url: string) {
+    return this.http.get<any>(url)
+  }
+
+  getDesignations(_req: any) {
+    return this.http.get<any>(API_END_POINTS.getDesignation)
+  }
+
+  updateUserDetails(reqBody: any) {
+    return this.http.post<any>(`${API_END_POINTS.updateUserDetails}`, reqBody)
+  }
+
+  sendOtp(value: any, type: string): Observable<any> {
+    const reqObj = {
+      request: {
+        type: `${type}`,
+        key: `${value}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.SEND_OTP, reqObj)
+  }
+  resendOtp(value: any, type: string) {
+    const reqObj = {
+      request: {
+        type: `${type}`,
+        key: `${value}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.RESEND_OTP, reqObj)
+
+  }
+  verifyOTP(otp: number, value: any, type: string) {
+    const reqObj = {
+      request: {
+        otp,
+        type: `${type}`,
+        key: `${value}`,
+      },
+    }
+    return this.http.post(API_END_POINTS.VERIFY_OTP, reqObj)
+
   }
 }

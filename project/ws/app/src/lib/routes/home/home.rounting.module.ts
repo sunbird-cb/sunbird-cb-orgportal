@@ -16,6 +16,10 @@ import { LeadershipComponent } from './routes/leadership/leadership.component'
 import { StaffComponent } from './routes/staff/staff.component'
 import { BudgetComponent } from './routes/budget/budget.component'
 import { MdoinfoComponent } from './routes/mdoinfo/mdoinfo.component'
+import { PageResolve } from '@sunbird-cb/utils'
+import { BlendedApprovalsComponent } from './routes/blended-approvals/blended-approvals.component'
+import { ReportsSectionComponent } from './routes/reports-section/reports-section.component'
+import { TrainingPlanDashboardComponent } from './routes/training-plan-dashboard/training-plan-dashboard.component'
 
 const routes: Routes = [
   {
@@ -37,18 +41,38 @@ const routes: Routes = [
         component: WelcomeComponent,
         data: {
           pageId: 'welcome',
-          module: 'home',
+          module: 'Home',
+        },
+      },
+      {
+        path: 'users/:tab',
+        component: UsersViewComponent,
+        resolve: {
+          usersList: UsersListResolve,
+          pageData: PageResolve,
+          configService: ConfigResolveService,
+        },
+        data: {
+          pageId: 'users',
+          module: 'User',
+          pageType: 'feature',
+          pageKey: 'users-view',
         },
       },
       {
         path: 'users',
+        redirectTo: 'users/active',
         component: UsersViewComponent,
         resolve: {
           usersList: UsersListResolve,
+          pageData: PageResolve,
+          configService: ConfigResolveService,
         },
         data: {
           pageId: 'users',
-          module: 'home',
+          module: 'User',
+          pageType: 'feature',
+          pageKey: 'users-view',
         },
       },
       {
@@ -56,7 +80,7 @@ const routes: Routes = [
         component: AboutComponent,
         data: {
           pageId: 'about',
-          module: 'home',
+          module: 'Home',
         },
       },
       {
@@ -64,7 +88,7 @@ const routes: Routes = [
         component: RolesAccessComponent,
         data: {
           pageId: 'roles-access',
-          module: 'home',
+          module: 'Roles',
         },
         resolve: {
           usersList: UsersListResolve,
@@ -75,16 +99,54 @@ const routes: Routes = [
         component: ApprovalsComponent,
         data: {
           pageId: 'approvals',
-          module: 'home',
+          module: 'Approvals',
         },
       },
       {
-        path: 'workallocation',
+        path: 'workallocation/:tab',
         data: {
           pageId: 'workallocation',
-          module: 'home',
+          module: 'Work Allocation',
         },
         component: WorkallocationComponent,
+      },
+      {
+        path: 'workallocation',
+        redirectTo: 'workallocation/draft', pathMatch: 'full',
+        data: {
+          pageId: 'workallocation',
+          module: 'Work Allocation',
+        },
+        component: WorkallocationComponent,
+      },
+      {
+        path: 'blended-approvals',
+        component: BlendedApprovalsComponent,
+        data: {
+          pageId: 'blended-approvals',
+          module: 'Home',
+        },
+      },
+      {
+        path: 'reports-section',
+        component: ReportsSectionComponent,
+        data: {
+          pageId: 'reports-section',
+          module: 'Home',
+        },
+      },
+      {
+        path: 'training-plan-dashboard',
+        component: TrainingPlanDashboardComponent,
+        data: {
+          pageId: 'training-plan-dashboard',
+          pageType: 'feature',
+          pageKey: 'training-plan-dashboard',
+        },
+        resolve: {
+          configService: ConfigResolveService,
+          pageData: PageResolve,
+        },
       },
     ],
   },
@@ -93,7 +155,7 @@ const routes: Routes = [
     component: MdoinfoComponent,
     data: {
       pageId: 'mdoinfo',
-      module: 'home',
+      module: 'Home',
     },
     resolve: {
       configService: ConfigResolveService,
@@ -104,7 +166,7 @@ const routes: Routes = [
         component: LeadershipComponent,
         data: {
           pageId: 'leadership',
-          module: 'home',
+          module: 'Home',
         },
         resolve: {
           configService: ConfigResolveService,
@@ -115,7 +177,7 @@ const routes: Routes = [
         component: StaffComponent,
         data: {
           pageId: 'staff',
-          module: 'home',
+          module: 'Home',
         },
         resolve: {
           configService: ConfigResolveService,
@@ -126,7 +188,7 @@ const routes: Routes = [
         component: BudgetComponent,
         data: {
           pageId: 'budget',
-          module: 'home',
+          module: 'Home',
         },
         resolve: {
           configService: ConfigResolveService,

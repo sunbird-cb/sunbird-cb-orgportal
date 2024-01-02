@@ -197,7 +197,8 @@ input[type=number] {
   .btn-success {
     background-color: #0075B7!important;
     border-radius: 4px;
-    width: 240px;
+   // width: 240px;
+    width: 160px;
     box-shadow: none;
     margin-right: 16px;
 
@@ -210,6 +211,7 @@ input[type=number] {
   .btn-success:disabled,
   .btn-success[disabled] {
     opacity: 0.6;
+    width: 160px;
   }
 
   .btn-danger {
@@ -550,3 +552,24 @@ input.mat-input-element {
   margin-left: 260px;
   background: #ffff;
 }
+::ng-deep.mat-progress-spinner {
+    display: block;
+    position: fixed!important;
+    top: 0;
+    margin-top: 30%;
+    left: 0;
+    margin-left: 45%;
+    z-index: 1;
+}
+
+.email-error {
+  position: absolute;
+  font-size: 10px;
+  color: #f44336;
+  top: 35px;
+}
+
+.mar{
+    margin-left: 16px;
+    min-width: 160px;
+  }

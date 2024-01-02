@@ -1,6 +1,6 @@
-<div class="flex flex-4 flex-column">
-  <mat-card class="flex-custom ws-mat-accent-border">
-    <mat-card-header class="flex-custom-m">
+<div class="flex flex-4 flex-column main-flex-box">
+  <mat-card class="ws-mat-accent-border">
+    <!-- <mat-card-header class="flex-custom-m">
       <div class="flex-1" role="link" tabindex="0">
         <div class="flex flex-1">
           <mat-card-title class="flex-4 mobile-margin text-capitalize">
@@ -8,29 +8,53 @@
           </mat-card-title>
         </div>
       </div>
-    </mat-card-header>
+    </mat-card-header> -->
+    <mat-card-title class="flex-4 mobile-margin text-capitalize">
+      <span class="h-600-s-20-m color-87">Users</span>
+    </mat-card-title>
     <mat-card-content>
       <div class="flex flex-1 flex-column margin-fix">
         <div class="flex flex-1 filter max-height-60">
           <!-- <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'underreview',
               'ws-mat-accent-border font-medium':currentFilter !== 'underreview'}" mat-button
             (click)="filter('underreview')" role="button">Under review</a> -->
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'active',
-              'ws-mat-accent-border font-medium':currentFilter !== 'active'}"
-            mat-button (click)="filter('active'); tabTelemetry('active', 0)" role="button">Active</a>
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'inactive',
-                          'ws-mat-accent-border font-medium':currentFilter !== 'inactive'}"
-            mat-button (click)="filter('inactive'); tabTelemetry('inactive', 1)" role="button">Inactive</a>
+          <a routerLink="/app/home/users/active" routerLinkActive="router-link-active" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'active',
+              'ws-mat-accent-border font-medium':currentFilter !== 'active'}" mat-button
+            (click)="filter('active'); tabTelemetry('active', 0)" role="button">Active</a>
+          <a routerLink="/app/home/users/inactive" routerLinkActive="router-link-active" class="filter-option"
+            [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'inactive',
+                          'ws-mat-accent-border font-medium':currentFilter !== 'inactive'}" mat-button
+            (click)="filter('inactive'); tabTelemetry('inactive', 1)" role="button">Inactive</a>
           <!-- <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'blocked',
                           'ws-mat-accent-border font-medium':currentFilter !== 'blocked'}" mat-button
             (click)="filter('blocked')" role="button">Blocked</a> -->
+          <a routerLink="/app/home/users/upload" routerLinkActive="router-link-active" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'upload',
+                                      'ws-mat-accent-border font-medium':currentFilter !== 'upload'}" mat-button
+            (click)="filter('upload'); tabTelemetry('upload', 2)" role="button">File uploads</a>
         </div>
       </div>
-      <ng-container *ngIf="usersData">
-        <ws-widget-org-user-table [tableData]="tabledata" [data]="dataForTable" [isUpload]=fasle [isCreate]=true
-          (eOnCreateClick)="onCreateClick()" (eOnRowClick)="onRoleClick($event)" (actionsClick)="menuActions($event)"
-          (searchByEnterKey)="onEnterkySearch($event)">
-        </ws-widget-org-user-table>
+      <ng-container *ngIf="usersData && currentFilter !== 'upload'">
+        <!-- <ws-widget-user-table-v2 [userId]="currentUser" [tableData]="tabledata" [data]="dataForTable" [isUpload]=false
+          [isCreate]=true (eOnButtonClick)="clickHandler($event)" (actionsClick)="menuActions($event)"
+          (searchByEnterKey)="onEnterkySearch($event)" (pageChangeClick)="onPaginateChange($event)"
+          [showEditOnCondition]=true [totalRecords]="userDataTotalCount">
+        </ws-widget-user-table-v2> -->
+        <ws-widget-org-user-table-v2 [userId]="currentUser" [tableData]="tabledata" [data]="dataForTable"
+          [isUpload]=false [isCreate]=true (eOnButtonClick)="clickHandler($event)" (actionsClick)="menuActions($event)"
+          (searchByEnterKey)="onEnterkySearch($event)" (pageChangeClick)="onPaginateChange($event)"
+          [showEditOnCondition]=true [totalRecords]="userDataTotalCount" [tabChangeIndex]="pageIndex">
+        </ws-widget-org-user-table-v2>
+
+        <!-- <div style="float: right;display: flex;">
+          <button class="mr-5 move-button" matTooltip="display prev 250 data"
+            [disabled]="(currentOffset > 0)? false :true" (click)="getAllUsers(250,'prev')">Prev </button>
+          <button class="move-button" matTooltip=" display next 250 data"
+            [disabled]="(currentOffset >= userDataTotalCount)? true :false" (click)="getAllUsers(250,'next')">Next
+          </button>
+        </div> -->
+      </ng-container>
+      <ng-container *ngIf="currentFilter === 'upload'">
+        <ws-app-users-upload></ws-app-users-upload>
       </ng-container>
     </mat-card-content>
   </mat-card>

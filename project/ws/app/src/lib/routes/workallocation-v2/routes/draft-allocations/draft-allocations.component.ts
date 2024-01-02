@@ -26,7 +26,7 @@ export class DraftAllocationsComponent implements OnInit {
   departmentName: any
   departmentID: any
   bdtitles = [{ title: 'Work allocation tool', url: '/app/home/workallocation' },
-  { title: 'Drafts', url: '/app/home/workallocation' }]
+  { title: 'Drafts', url: '/app/home/workallocation/draft' }]
 
   userslist: any[] = []
   downloaddata: any = []
@@ -84,7 +84,6 @@ export class DraftAllocationsComponent implements OnInit {
   // buttonClick(action: string, row: any) {
   // this.downloaddata = []
   // if (action === 'Download') {
-  //   console.log('row data', row)
   //   this.downloaddata.push(row)
   //   this.exportAsService.save(this.config, 'WorkAllocation').subscribe(() => {
   //     // save started

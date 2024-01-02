@@ -1,10 +1,14 @@
-import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core'
+import { AfterViewInit, Component, OnInit, OnDestroy, ChangeDetectorRef, AfterContentChecked } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { UsersService } from '../../services/users.service'
+import { UsersService as UsersService2 } from '../../../users/services/users.service'
+
 /* tslint:disable */
 import _ from 'lodash'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
+import { ProfileV2UtillService } from '../../../home/services/home-utill.service'
+
 /* tslint:enable */
 @Component({
   selector: 'ws-app-users',
@@ -12,7 +16,7 @@ import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/in
   styleUrls: ['./users.component.scss'],
 })
 
-export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
+export class UsersComponent implements OnInit, AfterViewInit, AfterContentChecked, OnDestroy {
   tabledata!: ITableData
   configSvc: any
   data: any = []
@@ -20,22 +24,32 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   data2: any
   role: any
   roleName: string | undefined
+  currentRole: any
   private defaultSideNavBarOpenedSubscription: any
+  rootOrgId: any
 
-  constructor(private usersSvc: UsersService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private usersSvc: UsersService, private router: Router, private activatedRoute: ActivatedRoute, private route: ActivatedRoute,
+              private profileUtilSvc: ProfileV2UtillService, private userS: UsersService2, private cdref: ChangeDetectorRef) { }
+
   ngOnInit() {
     const url = this.router.url.split('/')
     this.role = url[url.length - 2]
     this.roleName = this.role.replace('%20', ' ')
     this.configSvc = _.get(this.route, 'snapshot.parent.data.configService') || {}
+    this.rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+
     // int left blank
+    this.activatedRoute.params.subscribe(params => {
+      this.currentRole = params['role']
+    })
     this.tabledata = {
-      actions: [{ name: 'Details', label: 'Details', icon: 'remove_red_eye', type: 'link' }],
+      // actions: [{ name: 'Details', label: 'Details', icon: 'remove_red_eye', type: 'link' }],
+      actions: [],
       columns: [
         { displayName: 'Full name', key: 'fullName' },
-        { displayName: 'Email', key: 'email' },
+        { displayName: 'Email id', key: 'email' },
         // { displayName: 'Position', key: 'position' },
-        { displayName: 'Role', key: 'role', isList: true },
+        { displayName: 'Role acc', key: 'role', isList: true },
       ],
       needCheckBox: false,
       needHash: false,
@@ -43,12 +57,24 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       sortState: 'asc',
       needUserMenus: false,
     }
-    this.usersData = _.get(this.route, 'snapshot.data.usersList.data') || {}
-    this.getMyDepartment()
+    this.fetchAllUsersWithRole()
+  }
+
+  fetchAllUsersWithRole() {
+    this.userS.getTotalRoleUsers(this.rootOrgId, this.currentRole).subscribe((data: any) => {
+      this.usersData = data.count
+      this.getMyDepartment()
+    })
   }
 
   ngAfterViewInit() {
-    // this.elementPosition = this.menuElement.nativeElement.parentElement.offsetTop
+    // setTimeout(() => {
+    //   this.cdref.detectChanges() /*cdRef injected in constructor*/
+    // }, 0)
+  }
+
+  ngAfterContentChecked(): void {
+    this.cdref.detectChanges()
   }
 
   /* API call to get all roles*/
@@ -57,8 +83,9 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
       this.data2 = res
       this.data = res.users.map((user: any) => {
         return {
-          fullName: `${user.first_name} ${user.last_name}`,
-          email: user.email,
+          fullName: `${user.first_name}`,
+          // fullName: `${user.first_name} ${user.last_name}`,
+          email: this.profileUtilSvc.emailTransform(user.email),
           position: user.department_name,
           role: this.role,
           wid: user.wid,
@@ -90,8 +117,10 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
         // tslint:disable-next-line
         user => {
           return {
-            fullName: `${user.firstName} ${user.lastName}`,
-            email: _.get(user, 'profileDetails.personalDetails.primaryEmail') || user.email,
+            fullName: `${user.firstName}`,
+            // fullName: `${user.first_name} ${user.last_name}`,
+            email: this.profileUtilSvc.emailTransform(_.get(user, 'profileDetails.personalDetails.primaryEmail'))
+              || this.profileUtilSvc.emailTransform(user.email),
             position: user.department_name,
             role: this.getRoleList(user),
             wid: user.userId,
@@ -183,8 +212,10 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
           // tslint:disable-next-line
           user => {
             return {
-              fullName: `${user.firstName} ${user.lastName}`,
-              email: _.get(user, 'profileDetails.personalDetails.primaryEmail') || user.email,
+              fullName: `${user.firstName}`,
+              // fullName: `${user.firstName} ${user.lastName}`,
+              email: this.profileUtilSvc.emailTransform(_.get(user, 'profileDetails.personalDetails.primaryEmail'))
+                || this.profileUtilSvc.emailTransform(user.email),
               position: user.department_name,
               role: this.getRoleList(user),
               wid: user.userId,

@@ -1,7 +1,8 @@
 <div>
-  <ws-widget-breadcrumbs-org
-    [widgetData]="breadcrumbs">
-  </ws-widget-breadcrumbs-org>
+  <div class="flex margin-left-xl">
+    <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs">
+    </ws-widget-breadcrumbs-org>
+  </div>
 
   <mat-sidenav-container class="sticky" autosize name="discuss-menu">
     <mat-sidenav [(opened)]="sideNavBarOpened" class="left-nav">
@@ -27,15 +28,16 @@
                   <label for="fname" class="margin-remove-bottom form-label required"
                     i18n="First Name label|Label which explains the user to enter first name" i18n-aria-label
                     aria-label="First name label">
-                    First name
+                    Full name
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
                     <input id="fname" matInput #fname formControlName="fname" i18n-placeholder placeholder="Type here"
-                      i18n-aria-label aria-label="First name input" class="form-input" autocomplete="off" />
+                      i18n-aria-label aria-label="First name input" class="form-input" autocomplete="off"
+                      maxlength="150" />
                     <mat-error [hidden]="false" i18n="First name Error|Explains name is required" i18n-aria-label
                       aria-label="First name Error|Explains name is required "
                       *ngIf="createUserForm?.controls['fname']?.touched && createUserForm?.controls['fname'].errors?.required">
-                      First name is mandatory
+                      Full name is mandatory
                     </mat-error>
                     <mat-error [hidden]="false" *ngIf="createUserForm?.controls['fname'].errors?.pattern"
                       i18n-aria-label
@@ -44,25 +46,23 @@
                     </mat-error>
                   </mat-form-field>
 
-                  <label for="lname" class="margin-remove-bottom margin-top-xs form-label required"
-                    i18n="Last name label|Label which explains the user to enter last name" i18n-aria-label
-                    aria-label="Last name label">
+                  <!-- <label for="lname" class="margin-remove-bottom margin-top-xs form-label required"
+                    i18n="Last name label|Label which explains the user to enter last name" i18n-aria-label aria-label="Last name label">
                     Last name
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
-                    <input id="lname" matInput #lname formControlName="lname" i18n-placeholder placeholder="Type here"
-                      i18n-aria-label aria-label="Last name input" class="form-input" autocomplete="off" />
+                    <input id="lname" matInput #lname formControlName="lname" i18n-placeholder placeholder="Type here" i18n-aria-label
+                      aria-label="Last name input" class="form-input" autocomplete="off" maxlength="150" />
                     <mat-error [hidden]="false" i18n="Last name Error|Explains name is required" i18n-aria-label
                       aria-label="Last name Error|Explains name is required "
                       *ngIf="createUserForm?.controls['lname']?.touched && createUserForm?.controls['lname'].errors?.required">
                       Last name is mandatory
                     </mat-error>
-                    <mat-error [hidden]="false" *ngIf="createUserForm?.controls['lname'].errors?.pattern"
-                      i18n-aria-label
+                    <mat-error [hidden]="false" *ngIf="createUserForm?.controls['lname'].errors?.pattern" i18n-aria-label
                       aria-label="Last name Error|Name fields cannot contain numbers and special characters except ">
                       Last name fields cannot contain numbers and special characters except '
                     </mat-error>
-                  </mat-form-field>
+                  </mat-form-field> -->
 
                   <label for="email" class="margin-remove-bottom margin-top-xs form-label required"
                     i18n="Email label|Label which explains the user to enter email" i18n-aria-label
@@ -71,7 +71,8 @@
                   </label>
                   <mat-form-field appearance="outline" class="margin-top-xs">
                     <input id="email" matInput #email formControlName="email" i18n-placeholder placeholder="Type here"
-                      i18n-aria-label aria-label="Email input" class="form-input" autocomplete="off" />
+                      i18n-aria-label aria-label="Email input" class="form-input" autocomplete="off" maxlength="320"
+                      (input)="emailVerification($event.target.value)" />
                     <mat-error [hidden]="false" i18n="Email Error|Explains name is required" i18n-aria-label
                       aria-label="Email Error|Explains name is required "
                       *ngIf="createUserForm?.controls['email']?.touched && createUserForm?.controls['email'].errors?.required">
@@ -80,6 +81,29 @@
                     <mat-error [hidden]="false" *ngIf="createUserForm?.controls['email'].errors?.invalid"
                       i18n-aria-label aria-label="Email Error|Name fields not valid ">
                       Email field is not valid
+                    </mat-error>
+                    <div *ngIf="emailLengthVal" class="email-error" i18n="Email Error|Explains character validation">
+                      Max 64 characters before "@" & 255 characters after "@" are valid.
+                    </div>
+                  </mat-form-field>
+
+                  <!--Mobile Number field-->
+                  <label for="mobileNumber" class="margin-remove-bottom margin-top-xs form-label required"
+                    i18n="Mobile Number label|Label which explains the user to enter email" i18n-aria-label
+                    aria-label="Mobile Number label">
+                    Mobile Number
+                  </label>
+                  <mat-form-field appearance="outline" class="margin-top-xs">
+                    <input id="mobileNumber" #mobile matInput type="text" maxlength="10" autocomplete="off"
+                      (keypress)="numericOnly($event)" (paste)="numericOnly($event)" placeholder="Mobile Number"
+                      formControlName="mobileNumber" i18n-aria-label aria-label="Mobile Number input">
+                    <mat-error [hidden]="false" i18n="Mobile Number Error|Explains Mobile no is required"
+                      *ngIf="createUserForm?.controls['mobileNumber']?.touched && createUserForm?.controls['mobileNumber'].errors?.required"
+                      i18n-aria-label aria-label="Please enter your mobile number">Please enter your mobile number
+                    </mat-error>
+                    <mat-error [hidden]="false" *ngIf="createUserForm?.controls['mobileNumber'].errors?.pattern"
+                      i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
+                      Please enter a valid 10 digit mobile number
                     </mat-error>
                   </mat-form-field>
 
@@ -92,7 +116,7 @@
                     <mat-form-field appearance="outline" class="w-full margin-top-xs">
                       <input id="department" class="form-input" [(ngModel)]="departmentName" type="text" matInput
                         placeholder="Type here" formControlName="department" i18n-aria-label
-                        aria-label="Department input filed" readonly>
+                        aria-label="Department input filed" readonly maxlength="250">
                     </mat-form-field>
                   </div>
 
@@ -110,12 +134,26 @@
                   </div>
                 </div>
               </div>
-              <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)"
-                class="text-white btn-success btn-responsive" [disabled]="createUserForm?.invalid || disableCreateButton">
+              <!-- <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)"
+                class="text-white btn-success btn-responsive"
+                [disabled]="createUserForm?.invalid || disableCreateButton">
+                <span class="text-white" i18n>
+                  Create user
+                </span>
+              </button> -->
+
+              <button mat-raised-button type="submit" (click)="onSubmit(createUserForm)" class="text-white btn-success"
+                [disabled]="createUserForm?.invalid || disableCreateButton">
                 <span class="text-white" i18n>
                   Create user
                 </span>
               </button>
+              <button mat-raised-button type="button" class="flex-auto-display mar" (click)="navigateTo()">
+                <span class="ws-mat-default-text" i18n>Cancel</span>
+              </button>
+              <div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
+                <mat-spinner [diameter]="30"></mat-spinner>
+              </div>
             </form>
           </div>
         </div>

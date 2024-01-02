@@ -1,0 +1,38 @@
+<ng-container>
+    <ws-app-search [categoryData]="categoryData" [from]="from" (handleApiData)="handleApiData($event)"></ws-app-search>
+</ng-container>
+<ng-container>
+    <ws-app-chip [selectedAssigneeChips]="selectedAssigneeChips" [from]="from"
+        [selectAssigneeCount]="selectAssigneeCount" (itemRemoved)="itemsRemovedFromChip()"></ws-app-chip>
+</ng-container>
+<ng-container>
+    <ws-app-user-card [assigneeData]="assigneeData" (handleSelectedChips)="handleSelectedChips($event)"
+        *ngIf="assigneeData?.category === 'Designation' && assigneeData?.data?.length !== 0"
+        [showPagination]="true"></ws-app-user-card>
+
+    <ws-app-user-card [assigneeData]="assigneeData" (handleSelectedChips)="handleSelectedChips($event)"
+        *ngIf="assigneeData?.category === 'CustomUser' && assigneeData?.data?.length !== 0"
+        [showPagination]="true"></ws-app-user-card>
+</ng-container>
+
+<ng-container *ngIf="(assigneeData?.category === 'Designation' && assigneeData?.data?.length === 0) ||
+    (assigneeData?.category === 'CustomUser' && assigneeData?.data?.length === 0)">
+    <div class="no-cbp-data margin-top-xl margin-bottom-xl">
+        <div><img src="/assets/images/no-content-data.svg"></div>
+        <div class="mat-subheading-1 margin-remove">No assignee avaliable.</div>
+        <!-- <div>Create a content in CBP portal to get the contents.</div> -->
+    </div>
+</ng-container>
+
+<ng-container *ngIf="tpdsSvc?.trainingPlanAssigneeData?.category === 'AllUser'">
+    <div class="no-cbp-data margin-top-xl margin-bottom-xl">
+        <div><img src="/assets/images/no-content-data.svg"></div>
+        <div class="mat-subheading-1 margin-remove">It will assign to all users</div>
+        <div>By selecting all users, you've selected all the users from your Department of fisheries.</div>
+        <div class="margin-top-m">
+            <button mat-button type="button" class="create-btn" (click)="changeTab()">
+                Next: Add timeline
+            </button>
+        </div>
+    </div>
+</ng-container>

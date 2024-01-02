@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         // if (_.get(this.activeRoute.snapshot, 'data.department.data')) {
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
         this.department = fullProfile.unMappedUser.rootOrgId
-        this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
+        this.departmentName = fullProfile ? fullProfile.unMappedUser.rootOrg.orgName : ''
         if (fullProfile) {
           const leftData = this.activeRoute.snapshot.data.pageData.data.menus
           _.set(leftData, 'widgetData.logo', true)

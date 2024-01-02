@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, Output, EventEmitter, ViewChild,
-  AfterViewInit, OnChanges, SimpleChanges, Inject,
+  AfterViewInit, OnChanges, SimpleChanges, Inject, ChangeDetectorRef, AfterViewChecked,
 } from '@angular/core'
 import { SelectionModel } from '@angular/cdk/collections'
 import { MatTableDataSource } from '@angular/material/table'
@@ -24,7 +24,7 @@ export interface IContentShareData {
   templateUrl: './event-list-view.component.html',
   styleUrls: ['./event-list-view.component.scss'],
 })
-export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges {
+export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges, AfterViewChecked {
 
   @Input() tableData!: ITableData | undefined
   @Input() data?: []
@@ -48,10 +48,20 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
   pageSize = 5
   pageSizeOptions = [5, 10, 20]
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
-  @ViewChild(MatSort, { static: true }) sort?: MatSort
+  @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
+
+    if (!this.dataSource.sort) {
+
+      this.dataSource.sort = sort
+
+    }
+
+  }
+  // @ViewChild(MatSort, { static: true }) sort?: MatSort
   selection = new SelectionModel<any>(true, [])
   dialogRef: any
   configSvc: any
+  searchColumn!: string
 
   constructor(
     private router: Router,
@@ -59,6 +69,7 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
     private events: EventService,
     // private telemetrySvc: TelemetryService,
     private route: ActivatedRoute,
+    private cd: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public content: IContentShareData,
   ) {
     this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
@@ -73,16 +84,25 @@ export class EventListViewComponent implements OnInit, AfterViewInit, OnChanges 
       this.displayedColumns = this.tableData.columns
     }
     this.dataSource.data = this.data
-    this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
   }
 
   ngOnChanges(data: SimpleChanges) {
     this.dataSource.data = _.get(data, 'data.currentValue')
     this.length = this.dataSource.data.length
+    this.paginator.firstPage()
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator
+    // this.dataSource.sort = this.sort
+    this.dataSource.filterPredicate = function (data: any, filter: string): boolean {
+      return data.eventName.toLowerCase().includes(filter)
+    }
+  }
+
+  ngAfterViewChecked() {
+    this.cd.detectChanges()
+  }
 
   applyFilter(filterValue: any) {
     if (filterValue) {

@@ -59,6 +59,11 @@ import { BudgetschemepopupComponent } from './components/budgetschemepopup/budge
 import { BudgetproofspopupComponent } from './components/budgetproofspopup/budgetproofspopup.component'
 import { UploadService } from './services/upload.service'
 import { AdmintableComponent } from './components/admintable/admintable.component'
+import { UsersModule } from '../users/users.module'
+import { BlendedApprovalsComponent } from './routes/blended-approvals/blended-approvals.component'
+import { ReportsSectionComponent } from './routes/reports-section/reports-section.component'
+import { TrainingPlanDashboardComponent } from './routes/training-plan-dashboard/training-plan-dashboard.component'
+import { TrainingPlanDashboardService } from './services/training-plan-dashboard.service'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -80,6 +85,9 @@ import { AdmintableComponent } from './components/admintable/admintable.componen
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
+    BlendedApprovalsComponent,
+    ReportsSectionComponent,
+    TrainingPlanDashboardComponent,
   ],
   imports: [
     CommonModule,
@@ -131,6 +139,7 @@ import { AdmintableComponent } from './components/admintable/admintable.componen
     MatTableModule,
     MatTooltipModule,
     MatSortModule,
+    UsersModule,
   ],
   entryComponents: [
     AdduserpopupComponent,
@@ -144,6 +153,7 @@ import { AdmintableComponent } from './components/admintable/admintable.componen
     InitResolver,
     MdoInfoService,
     UploadService,
+    TrainingPlanDashboardService,
   ],
 })
 export class HomeModule {

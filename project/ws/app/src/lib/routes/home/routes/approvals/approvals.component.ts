@@ -26,9 +26,10 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     // { name: 'Reject', label: 'Reject', icon: 'remove_red_eye', type: 'Reject' }],
     actions: [],
     columns: [
-      { displayName: 'Full Name', key: 'fullname' },
+      { displayName: 'Full name', key: 'fullname' },
       { displayName: 'Requested on', key: 'requestedon' },
       { displayName: 'Fields', key: 'fields', isList: true },
+      { displayName: 'Tags', key: 'tag', isList: true },
     ],
     needCheckBox: false,
     needHash: false,
@@ -125,7 +126,6 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
       }
       this.apprService.getApprovals(req).subscribe(res => {
         let currentdate: Date
-        // console.log("result ", res)
         res.result.data.forEach((approval: any) => {
           let keys = ''
           approval.wfInfo.forEach((wf: any) => {
@@ -146,7 +146,8 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
           })
 
           this.data.push({
-            fullname: approval.userInfo ? `${approval.userInfo.first_name} ${approval.userInfo.last_name}` : '--',
+            fullname: approval.userInfo ? `${approval.userInfo.first_name}` : '--',
+            // fullname: approval.userInfo ? `${approval.userInfo.first_name} ${approval.userInfo.last_name}` : '--',
             requestedon: `${currentdate.getDate()}
           ${moment(currentdate.getMonth() + 1, 'MM').format('MMM')}
           ${currentdate.getFullYear()}
@@ -155,6 +156,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
           ${currentdate.getSeconds()}`,
             fields: keys.slice(0, -1),
             userWorkflow: approval,
+            tag: (approval.userInfo && approval.userInfo.tag) ? `${approval.userInfo.tag}` : '',
           })
         })
       })
@@ -164,7 +166,6 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   }
 
   get getTableData() {
-    // console.log("table data", this.data)
     return this.data
   }
 

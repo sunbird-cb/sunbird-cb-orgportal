@@ -30,6 +30,7 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
   @Output() clicked?: EventEmitter<any>
   @Output() actionsClick?: EventEmitter<any>
   @Output() eOnRowClick = new EventEmitter<any>()
+  @Input() currentFilter!: any
   bodyHeight = document.body.clientHeight - 125
   displayedColumns: IColums[] | undefined
   viewPaginator = false
@@ -40,8 +41,8 @@ export class WorkAllocationTableComponent implements OnInit, OnChanges {
   length!: number
   departmentRole!: string
   departmentId!: string | undefined
-  pageSize = 10
-  pageSizeOptions = [10, 20]
+  pageSize = 20
+  pageSizeOptions = [20, 30]
   config: ExportAsConfig = {
     type: 'pdf',
     elementIdOrContent: 'downloadtemplate',

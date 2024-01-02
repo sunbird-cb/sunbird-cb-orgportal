@@ -1,0 +1,56 @@
+.breadcrumb {
+    width: 100%;
+}
+.home {
+    color: rgba(0, 0, 0, 0.6);
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    font-family: 'Montserrat';
+    letter-spacing: 0.12;
+}
+
+.home img {
+    vertical-align: middle;
+}
+
+.action {
+    color: rgba(0, 0, 0, 0.87);
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    font-family: 'Montserrat';
+    letter-spacing: 0.12;
+}
+
+.cancel {
+    color: #1b4ca1 !important;
+    border: 1px solid #1b4ca1;
+    border-radius: 4px;
+    width: 174px;
+}
+
+
+.next-btn {
+    background: #1b4ca1 !important;
+    color: white !important;
+    font-family: 'Lato';
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 4px;
+    min-width: 199px;
+}
+
+.left-breadcrumb {
+    width: 80%
+}
+
+.right-breaddrumb {
+    width: 20%
+}
+
+.btn-disabled {
+    background: #999999 !important
+}

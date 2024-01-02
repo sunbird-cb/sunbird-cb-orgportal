@@ -12,6 +12,7 @@
         <div class="flex-4">
           <ws-widget-breadcrumbs-org [widgetData]="{titles: bdtitles }">
           </ws-widget-breadcrumbs-org>
+
         </div>
         <div class="flex-2">
           <!-- <button type="button" mat-button class="print-btn" *ngIf="data && data.length > 0">
@@ -23,8 +24,9 @@
           <button type="button" mat-button class="allocation-btn mat-accent-border" (click)="onNewAllocationClick()">
             New officer
           </button>
-          <button mat-stroked-button color="accent" type="button" class="publish-btn mat-accent-border flex-auto-display"
-            (click)="publishWorkOrder()" id="publishbtn" *ngIf="data && data.length > 0">
+          <button mat-stroked-button color="accent" type="button"
+            class="publish-btn mat-accent-border flex-auto-display" (click)="publishWorkOrder()" id="publishbtn"
+            *ngIf="data && data.length > 0">
             <span i18n>Publish</span>
           </button>
         </div>
@@ -78,14 +80,15 @@
               <div class="search margin-top-l">
                 <div class=rsearch>
                   <mat-icon class="color-60 search-icon">search</mat-icon>
-                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal" [(ngModel)]="term"
-                    placeholder="Search">
+                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal"
+                    [(ngModel)]="term" placeholder="Search" maxlength="200">
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <table class="allocation-table margin-bottom-l mat-body-2" id="allocation-table" cell-spacing='0' cell-padding='0'>
+        <table class="allocation-table margin-bottom-l mat-body-2" id="allocation-table" cell-spacing='0'
+          cell-padding='0'>
           <tr>
             <th>Name and designation <mat-icon class="sort-icon">arrow_upward</mat-icon>
             </th>
@@ -153,7 +156,8 @@
                                 <mat-icon class="ws-mat-default-text veralign-btm">sports_score</mat-icon>
                               </span>
                               <span class="initials" *ngIf="a.submittedFromId">
-                                <ws-app-initial-avatar *ngIf="a.submittedFromName !== null" [name]="a.submittedFromName">
+                                <ws-app-initial-avatar *ngIf="a.submittedFromName !== null"
+                                  [name]="a.submittedFromName">
                                 </ws-app-initial-avatar>
                               </span>
                               {{a.submittedFromName}}

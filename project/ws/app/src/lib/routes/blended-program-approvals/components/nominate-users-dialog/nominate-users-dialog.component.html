@@ -1,0 +1,63 @@
+<div id="loader" *ngIf="displayLoader"></div>
+<div class="nominate-dialog">
+  <h2 mat-dialog-title>Nominate learners</h2>
+
+  <div class="example-table-container">
+    <div class="container-balanced">
+      <div class="flex flex-1 flex-row">
+        <div class="flex-1">
+          <div class="search">
+            <div class="rsearch">
+              <mat-icon class="color-60 search-icon">search</mat-icon>
+              <input class="search-input color-60" type="Standard" #searchText placeholder="Search by name or email"
+                autofocus="none" (keyup.enter)="searchUsers(searchText)">
+            </div>
+          </div>
+        </div>
+        <div class="flex-2 margin-left-m">
+          <button class="text-white ws-mat-primary-background" mat-raised-button color="primary" type="submit" i18n
+            (click)="searchUsers(searchText)">
+            <span class="text-white">Search</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="users-data">
+      <table mat-table [dataSource]="dataSource" class="nominate-learners  margin-top-s" matSort matSortActive="name"
+        matSortDisableClear *ngIf="dataSource.filteredData.length > 0">
+
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef class="header-row">
+
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="{{colname.name}}" *ngFor="let colname of tableColumns">
+          <th mat-header-cell *matHeaderCellDef class="header-row" mat-sort-header> {{colname.dispalyName}} </th>
+          <td mat-cell class="break-words" *matCellDef="let element"> {{element[colname.name]}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+        </tr>
+      </table>
+      <mat-card class="flex-1" role="none" *ngIf="dataSource.filteredData.length === 0">
+        <span class="mat-subtitle">No data found</span>
+      </mat-card>
+    </div>
+
+    <div mat-dialog-actions class="margin-top-m mat-dialog-actions">
+      <button mat-raised-button type="button"
+        class="flex-auto-display mat-button-base margin-right-m ws-mat-default-text" i18n
+        (click)="closeDiaogBox()">Cancel</button>
+      <button class="text-white ws-mat-primary-background margin-right-m" mat-raised-button color="primary"
+        type="submit" i18n [disabled]="this.selection.selected.length === 0" (click)="addLearners()"><span
+          class="text-white">Nominate</span></button>
+    </div>
+  </div>
+</div>
