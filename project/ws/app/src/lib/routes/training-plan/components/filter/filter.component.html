@@ -97,7 +97,7 @@
                                     [formControl]='searchProviderControl' placeholder="Enter Provider" type="Standard">
                             </div>
                         </div>
-                        <div class="category-content">
+                        <div [ngClass]="(!(competencyThemeList?.length) && !(competencySubThemeList?.length)) ? 'category-content-without-theme': 'category-content'">
                             <div class="flex flex-1 flex-row category-item"
                                 *ngFor="let item of providersList | filterSearch: searchProviderInput.value">
                                 <mat-checkbox #checkboxes disableRipple class="example-margin"
