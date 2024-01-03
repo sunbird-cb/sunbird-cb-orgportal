@@ -46,7 +46,7 @@ export class StandardCardComponent implements OnInit, OnChanges {
   onChangePage(pe: PageEvent) {
     this.startIndex = (pe.pageIndex) * pe.pageSize
     this.lastIndex = pe.pageSize
-    this.tpdsSvc.handleContentPageChange.next({ pageIndex: this.startIndex, pageSize: pe.pageSize})
+    this.tpdsSvc.handleContentPageChange.next({ pageIndex: this.startIndex, pageSize: pe.pageSize })
     // this.startIndex = this.pageIndex
   }
 

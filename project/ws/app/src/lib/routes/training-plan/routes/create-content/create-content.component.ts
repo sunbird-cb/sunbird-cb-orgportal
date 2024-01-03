@@ -62,7 +62,7 @@ export class CreateContentComponent implements OnInit {
         this.tpdsSvc.trainingPlanStepperData.contentList) {
         if (this.tpdsSvc.trainingPlanContentData.data.content) {
           this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any) => {
-            if (this.tpdsSvc.trainingPlanStepperData.contentList.filter((v: any) => v === sitem.identifier).length > 0) {
+            if (this.tpdsSvc.trainingPlanStepperData.contentList.filter((v: any) => (sitem && v === sitem.identifier)).length > 0) {
               sitem['selected'] = true
             }
           })
@@ -80,7 +80,6 @@ export class CreateContentComponent implements OnInit {
         this.contentData = this.tpdsSvc.trainingPlanContentData.data.content
         this.count = this.tpdsSvc.trainingPlanContentData.data.count
       }
-      console.log('this.contentData',this.contentData)
     }
   }
 
