@@ -54,6 +54,15 @@ export class FilterComponent implements OnInit, AfterContentChecked {
           // }
           if (!this.designationList.length) {
             this.getDesignation()
+          } else {
+            console.log(this.assigneeFilterObj, this.designationList);
+            this.designationList.map((pitem:any)=>{
+              if(pitem && this.assigneeFilterObj['designation'] && this.assigneeFilterObj['designation'].indexOf(pitem.name) > -1) {
+                pitem['selected'] = true;        
+              } else {
+                pitem['selected'] = false;        
+              }         
+            })
           }
     
         }
@@ -244,6 +253,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
       // this.getFilterData.emit(this.filterObj)      
       this.tpdsSvc.getFilterDataObject.next(this.filterObj);
     } else {
+      console.log('this.assigneeFilterObj',this.assigneeFilterObj);
       this.tpdsSvc.getFilterDataObject.next(this.assigneeFilterObj);
       // this.getFilterData.emit(this.assigneeFilterObj)
     }
@@ -289,7 +299,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   }
 
   manageSelectedGroup(event: any, group: any) {
-    if (event) {
+    if (event.checked) {
       this.assigneeFilterObj['group'].push(group.name)
     } else {
       if (this.assigneeFilterObj['group'] && 
@@ -301,9 +311,20 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   }
 
   manageSelectedDesignation(event: any, designation: any) {
-    if (event) {
+    if (event.checked) {
+      this.designationList.map((ditem:any)=>{
+        if(ditem && ditem['name'] === designation.name) {
+          ditem['selected'] = true;
+        }
+      })
+      
       this.assigneeFilterObj['designation'].push(designation.name)
     } else {
+      this.designationList.map((ditem:any)=>{
+        if(ditem && ditem['name'] === designation.name) {
+          ditem['selected'] = false;
+        }
+      })
       if (this.assigneeFilterObj['designation'] && 
           this.assigneeFilterObj['designation'].indexOf(designation.name) > -1) {
         const index = this.assigneeFilterObj['designation'].findIndex((x: any) => x === designation.name)

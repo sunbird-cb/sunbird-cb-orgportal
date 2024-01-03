@@ -116,7 +116,7 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="flex flex-1 flex-row category-item" *ngFor="let des of designationList">
-                            <mat-checkbox #checkboxes disableRipple class="example-margin" (change)="manageSelectedDesignation($event, des)">{{des?.name | titlecase}}</mat-checkbox>
+                            <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="des?.selected" (change)="manageSelectedDesignation($event, des)">{{des?.name | titlecase}}</mat-checkbox>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
