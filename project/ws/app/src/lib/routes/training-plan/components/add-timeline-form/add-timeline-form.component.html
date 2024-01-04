@@ -5,14 +5,15 @@
     <div class="form-element">
         <div class="fonm-element-label">Timeline <span class="required"></span></div>
         <div class="calender">
-        <mat-form-field appearance="outline">
-            <mat-label>Select date</mat-label>
-            <input matInput #ref [matDatepicker]="picker" [min]="minDate" [(ngModel)]="todayDate" (dateChange)="changeTimeline(ref.value)">
-            <mat-datepicker-toggle matSuffix [for]="picker">
-                <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Select date</mat-label>
+                <input matInput #ref [matDatepicker]="picker" [min]="minDate" [(ngModel)]="todayDate"
+                    (dateChange)="changeTimeline(ref.value)" disabled>
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>calendar_today</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker disabled="false"></mat-datepicker>
+            </mat-form-field>
         </div>
     </div>
 </div>

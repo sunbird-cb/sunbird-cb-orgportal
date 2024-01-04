@@ -55,7 +55,7 @@ export class CreateTimelineComponent implements OnInit {
     ) {
       const category = this.tpdsSvc.trainingPlanAssigneeData.category
       let assigneeDataSelected = this.tpdsSvc.trainingPlanAssigneeData.data.filter((item: any) => {
-        return item.selected
+        return (item && item.selected) ? item.selected : false
       })
       this.totalAssigneeCount = assigneeDataSelected.length
       assigneeDataSelected = assigneeDataSelected.slice(0, 4)
@@ -70,7 +70,7 @@ export class CreateTimelineComponent implements OnInit {
     ) {
       const category = this.tpdsSvc.trainingPlanAssigneeData.category
       let assigneeDataSelected = this.tpdsSvc.trainingPlanAssigneeData.data.filter((item: any) => {
-        return item.selected
+        return (item && item.selected) ? item.selected : false
       })
       this.totalAssigneeCount = assigneeDataSelected.length
       assigneeDataSelected = assigneeDataSelected.slice(0, 4)
