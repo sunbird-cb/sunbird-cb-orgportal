@@ -47,6 +47,12 @@ export class CreateAssigneeComponent implements OnInit {
             sitem['selected'] = true
           }
         })
+        this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = []
+        this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
+          if (sitem && sitem.selected) {
+            this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.push(sitem.name)
+          }
+        })
         this.assigneeData = this.tpdsSvc.trainingPlanAssigneeData
         this.handleSelectedChips(true)
       } else if (this.tpdsSvc.trainingPlanStepperData &&
@@ -55,6 +61,12 @@ export class CreateAssigneeComponent implements OnInit {
         this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
           if (sitem && this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.indexOf(sitem.userId) > -1) {
             sitem['selected'] = true
+          }
+        })
+        this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = []
+        this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
+          if (sitem && sitem.selected) {
+            this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.push(sitem.userId)
           }
         })
         this.assigneeData = this.tpdsSvc.trainingPlanAssigneeData
