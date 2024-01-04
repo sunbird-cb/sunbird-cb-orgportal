@@ -32,11 +32,11 @@ export class CreateContentComponent implements OnInit {
         name: 'Curated Programs',
         value: 'Curated program',
       },
-      {
-        id: 6,
-        name: 'Programs',
-        value: 'Program',
-      },
+      // {
+      //   id: 6,
+      //   name: 'Programs',
+      //   value: 'Program',
+      // },
       {
         id: 3,
         name: 'Blended Programs',
