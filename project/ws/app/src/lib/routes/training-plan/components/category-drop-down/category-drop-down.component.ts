@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 import { debounceTime } from 'rxjs/operators'
+import { D } from '@angular/cdk/keycodes'
 
 @Component({
   selector: 'ws-app-category-drop-down',
@@ -32,10 +33,11 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
           data.event === 'Curated program' ||
           data.event === 'Moderated Course'
         ) {
+          this.tpdsSvc.trainingPlanStepperData['contentType'] = data.event
           this.tpdsSvc.trainingPlanStepperData.contentList = []
           this.tpdsSvc.trainingPlanContentData.data = []
         } else if (data.event === 'Designation' || data.event === 'AllUser' || data.event === 'CustomUser') {
-          this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = []
+          this.tpdsSvc.trainingPlanStepperData['assignmentType'] = data.event
           this.tpdsSvc.trainingPlanAssigneeData.data = []
           this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo'] = []
         }
@@ -45,6 +47,10 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.checkForContent()
+  }
+
+  checkForContent() {
     if (this.from === 'content') {
       if (this.tpdsSvc.trainingPlanStepperData['contentType']) {
         this.selectedValue = this.tpdsSvc.trainingPlanStepperData['contentType']
@@ -78,7 +84,6 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Course'
-        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
         this.tpdsSvc.moderatedCourseSelectStatus.next(false)
         if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
@@ -95,7 +100,6 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Standalone Assessment'
-        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
         this.tpdsSvc.moderatedCourseSelectStatus.next(false)
         if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
@@ -112,7 +116,6 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Program'
-        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
         this.tpdsSvc.moderatedCourseSelectStatus.next(false)
         if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
@@ -129,7 +132,6 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Blended program'
-        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
         this.tpdsSvc.moderatedCourseSelectStatus.next(false)
         if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
@@ -146,7 +148,6 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Curated program'
-        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
         this.tpdsSvc.moderatedCourseSelectStatus.next(false)
         if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
@@ -163,7 +164,6 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change content type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Moderated Course'
-        this.tpdsSvc.trainingPlanStepperData['contentType'] = event
         if (this.tpdsSvc.trainingPlanStepperData.contentList.length) {
           this.openDialoagBox(dialogData)
         } else {
@@ -179,7 +179,6 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change user type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Designation'
-        this.tpdsSvc.trainingPlanStepperData['assignmentType'] = event
         if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.length) {
           this.openDialoagBox(dialogData)
         } else {
@@ -196,7 +195,6 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'AllUser'
         this.tpdsSvc.trainingPlanAssigneeData.category = 'AllUser'
-        this.tpdsSvc.trainingPlanStepperData['assignmentType'] = event
         if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.length) {
           this.openDialoagBox(dialogData)
         } else {
@@ -212,7 +210,6 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['primaryAction'] = 'I understand, change user type'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'CustomUser'
-        this.tpdsSvc.trainingPlanStepperData['assignmentType'] = event
         if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.length) {
           this.openDialoagBox(dialogData)
         } else {
@@ -238,7 +235,10 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       },
     })
 
-    this.dialogRef.afterClosed().subscribe(() => {
+    this.dialogRef.afterClosed().subscribe((res: any) => {
+      if (res && res.toLowerCase() === 'cancel') {
+        this.checkForContent()
+      }
     })
   }
 
