@@ -34,7 +34,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   assigneeFilterObj: any = { group: [], designation: [] }
   searchThemeControl = new FormControl()
   searchSubThemeControl = new FormControl()
-  searchProviderControl = new FormControl();
+  searchProviderControl = new FormControl()
   @ViewChildren('checkboxes') checkboxes!: QueryList<ElementRef>
   constructor(
     private cdref: ChangeDetectorRef,
@@ -67,7 +67,6 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         }
       }
     })
-
 
     this.tpdsSvc.clearFilter.subscribe((result: any) => {
       if (result) {
