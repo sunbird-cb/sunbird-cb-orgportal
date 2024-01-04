@@ -55,12 +55,12 @@ export class FilterComponent implements OnInit, AfterContentChecked {
           if (!this.designationList.length) {
             this.getDesignation()
           } else {
-            this.designationList.map((pitem:any)=>{
-              if(pitem && this.assigneeFilterObj['designation'] && this.assigneeFilterObj['designation'].indexOf(pitem.name) > -1) {
-                pitem['selected'] = true;        
+            this.designationList.map((pitem: any) => {
+              if (pitem && this.assigneeFilterObj['designation'] && this.assigneeFilterObj['designation'].indexOf(pitem.name) > -1) {
+                pitem['selected'] = true
               } else {
-                pitem['selected'] = false;        
-              }         
+                pitem['selected'] = false
+              }
             })
           }
 
@@ -165,7 +165,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
           citem['selected'] = false
         }
       })
-      
+
       if (this.filterObj['competencyArea'] &&
         this.filterObj['competencyArea'].indexOf(ctype.id) > -1) {
         const index = this.filterObj['competencyArea'].findIndex((x: any) => x === ctype.id)
@@ -174,8 +174,8 @@ export class FilterComponent implements OnInit, AfterContentChecked {
       if (this.filterObj['competencyTheme']) {
         this.competencyThemeList.map(sitem => {
           if (sitem.parent === ctype.id) {
-            if(this.filterObj['competencyTheme'].indexOf(sitem.name) > -1) {
-              const index = this.filterObj['competencyTheme'].findIndex((x: any) => x === sitem.name) 
+            if (this.filterObj['competencyTheme'].indexOf(sitem.name) > -1) {
+              const index = this.filterObj['competencyTheme'].findIndex((x: any) => x === sitem.name)
               this.filterObj['competencyTheme'].splice(index, 1)
             }
           }
@@ -184,8 +184,8 @@ export class FilterComponent implements OnInit, AfterContentChecked {
       if (this.filterObj['competencySubTheme']) {
         this.competencySubThemeList.map(ssitem => {
           if (ssitem.parentType === ctype.id) {
-            if(this.filterObj['competencySubTheme'].indexOf(ssitem.name) > -1) {
-              const index = this.filterObj['competencySubTheme'].findIndex((x: any) => x === ssitem.name) 
+            if (this.filterObj['competencySubTheme'].indexOf(ssitem.name) > -1) {
+              const index = this.filterObj['competencySubTheme'].findIndex((x: any) => x === ssitem.name)
               this.filterObj['competencySubTheme'].splice(index, 1)
             }
           }
@@ -284,6 +284,9 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     if (this.from === 'content') {
       this.filterObj = { competencyArea: [], competencyTheme: [], competencySubTheme: [], providers: [] }
       this.selectedProviders = []
+      this.competencyThemeList = []
+      this.competencySubThemeList = []
+      this.resetFilter()
     } else {
       this.assigneeFilterObj = { group: [], designation: [] }
     }
@@ -333,21 +336,21 @@ export class FilterComponent implements OnInit, AfterContentChecked {
 
   manageSelectedDesignation(event: any, designation: any) {
     if (event.checked) {
-      this.designationList.map((ditem:any)=>{
-        if(ditem && ditem['name'] === designation.name) {
-          ditem['selected'] = true;
+      this.designationList.map((ditem: any) => {
+        if (ditem && ditem['name'] === designation.name) {
+          ditem['selected'] = true
         }
       })
-      
+
       this.assigneeFilterObj['designation'].push(designation.name)
     } else {
-      this.designationList.map((ditem:any)=>{
-        if(ditem && ditem['name'] === designation.name) {
-          ditem['selected'] = false;
+      this.designationList.map((ditem: any) => {
+        if (ditem && ditem['name'] === designation.name) {
+          ditem['selected'] = false
         }
       })
-      if (this.assigneeFilterObj['designation'] && 
-          this.assigneeFilterObj['designation'].indexOf(designation.name) > -1) {
+      if (this.assigneeFilterObj['designation'] &&
+        this.assigneeFilterObj['designation'].indexOf(designation.name) > -1) {
         const index = this.assigneeFilterObj['designation'].findIndex((x: any) => x === designation.name)
         this.assigneeFilterObj['designation'].splice(index, 1)
       }

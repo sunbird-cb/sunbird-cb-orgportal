@@ -83,7 +83,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
         { displayName: 'Content type', key: 'contentType' },
         { displayName: 'Timeline', key: 'endDate' },
         { displayName: 'Created by', key: 'createdByName' },
-        { displayName: 'Created on', key: 'updatedAt' }
+        { displayName: 'Created on', key: 'updatedAt' },
       ],
       needCheckBox: false,
       needHash: false,
@@ -92,7 +92,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       needUserMenus: false,
       actions: [],
       actionColumnName: 'Action',
-      cbpPlanMenu: true
+      cbpPlanMenu: true,
     }
   }
 
@@ -196,7 +196,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       res.endDate = (res.endDate) ? moment(res.endDate).format('MMM DD[,] YYYY') : ''
       res.updatedAt = (res.updatedAt) ? moment(res.updatedAt).format('MMM DD[,] YYYY') : ''
       res.createdByName = (res.createdBy === this.currentUser) ? 'You' : res.createdByName
-      let compyData: any = []
+      const compyData: any = []
       if (res.contentList && res.contentList.length > 0) {
         res.contentList.forEach((contentEle: any) => {
           if (contentEle.competencies_v5 && contentEle.competencies_v5.length > 0) {
@@ -207,8 +207,8 @@ export class TrainingPlanDashboardComponent implements OnInit {
         })
         res.competencies = _.uniq(compyData)
       }
-      let userName: any = []
-      let userDesignation: any = []
+      const userName: any = []
+      const userDesignation: any = []
       if (res.userType === 'CustomUser' && res.userDetails && res.userDetails.length > 0) {
         res.userDetails.forEach((ele: any) => {
           userName.push((ele && ele.firstName) ? ele.firstName : '')
@@ -290,7 +290,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       this.snackBar.open('CBP plan deleted successfully.')
       this.loaderService.changeLoaderState(false)
       this.tabNavigate(_selectedRow.status.toLowerCase(), _selectedRow.userType)
-    }, _error => {
+    },                                                  _error => {
       this.loaderService.changeLoaderState(false)
     })
   }
@@ -312,7 +312,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
         this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
         this.loaderService.changeLoaderState(false)
       }
-    }, (_error: any) => {
+    },                                                  (_error: any) => {
       this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
       this.loaderService.changeLoaderState(false)
     })

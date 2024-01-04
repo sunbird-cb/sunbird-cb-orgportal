@@ -43,14 +43,14 @@ export class ChipComponent implements OnInit, OnChanges {
   clearAll() {
     if (this.from === 'content') {
       this.selectContentCount = 0
-      let selectedIndex:any = [];
+      const selectedIndex: any = []
       this.tpdsSvc.trainingPlanContentData.data.content.map((sitem: any) => {
         if (sitem && sitem['selected']) {
           selectedIndex.push(sitem['identifier'])
           sitem['selected'] = false
         }
       })
-      
+
       this.tpdsSvc.trainingPlanStepperData.contentList = []
       this.tpdsSvc.trainingPlanStepperData.contentType = ''
     }
@@ -107,7 +107,7 @@ export class ChipComponent implements OnInit, OnChanges {
         this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
       }
       this.itemRemoved.emit(true)
-    } else if (this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser') {      
+    } else if (this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser') {
       this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem && sitem['selected'] && sitem['userId'] === item['userId']) {
           sitem['selected'] = false
