@@ -107,13 +107,13 @@ export class ChipComponent implements OnInit, OnChanges {
         this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
       }
       this.itemRemoved.emit(true)
-    } else if (this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser') {
+    } else if (this.tpdsSvc.trainingPlanAssigneeData.category === 'CustomUser') {      
       this.tpdsSvc.trainingPlanAssigneeData.data.map((sitem: any) => {
         if (sitem && sitem['selected'] && sitem['userId'] === item['userId']) {
           sitem['selected'] = false
         }
       })
-      if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['identifier']) > -1) {
+      if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.indexOf(item['userId']) > -1) {
         const index =
           this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.findIndex((x: any) => x === item['userId'])
         this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.splice(index, 1)
