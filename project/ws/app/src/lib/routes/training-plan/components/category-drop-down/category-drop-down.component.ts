@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material'
 import { ConfirmationBoxComponent } from '../confirmation-box/confirmation.box.component'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 import { debounceTime } from 'rxjs/operators'
-import { D } from '@angular/cdk/keycodes'
 
 @Component({
   selector: 'ws-app-category-drop-down',
