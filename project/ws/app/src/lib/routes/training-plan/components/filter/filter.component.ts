@@ -165,6 +165,32 @@ export class FilterComponent implements OnInit, AfterContentChecked {
           citem['selected'] = false
         }
       })
+      
+      if (this.filterObj['competencyArea'] &&
+        this.filterObj['competencyArea'].indexOf(ctype.id) > -1) {
+        const index = this.filterObj['competencyArea'].findIndex((x: any) => x === ctype.id)
+        this.filterObj['competencyArea'].splice(index, 1)
+      }
+      if (this.filterObj['competencyTheme']) {
+        this.competencyThemeList.map(sitem => {
+          if (sitem.parent === ctype.id) {
+            if(this.filterObj['competencyTheme'].indexOf(sitem.name) > -1) {
+              const index = this.filterObj['competencyTheme'].findIndex((x: any) => x === sitem.name) 
+              this.filterObj['competencyTheme'].splice(index, 1)
+            }
+          }
+        })
+      }
+      if (this.filterObj['competencySubTheme']) {
+        this.competencySubThemeList.map(ssitem => {
+          if (ssitem.parentType === ctype.id) {
+            if(this.filterObj['competencySubTheme'].indexOf(ssitem.name) > -1) {
+              const index = this.filterObj['competencySubTheme'].findIndex((x: any) => x === ssitem.name) 
+              this.filterObj['competencySubTheme'].splice(index, 1)
+            }
+          }
+        })
+      }
       this.competencyThemeList = this.competencyThemeList.filter(sitem => {
         if (sitem.parent === ctype.id) {
           sitem['selected'] = false
@@ -177,11 +203,6 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         }
         return pitem.parentType !== ctype.id
       })
-      if (this.filterObj['competencyArea'] &&
-        this.filterObj['competencyArea'].indexOf(ctype.id) > -1) {
-        const index = this.filterObj['competencyArea'].findIndex((x: any) => x === ctype.id)
-        this.filterObj['competencyArea'].splice(index, 1)
-      }
       this.searchThemeControl.reset()
       this.searchSubThemeControl.reset()
     }
