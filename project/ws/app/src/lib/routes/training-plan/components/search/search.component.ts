@@ -83,6 +83,7 @@ export class SearchComponent implements OnInit {
         /* tslint:disable */
         event = !event ? 'Course' : event
         /* tslint:enable */
+        this.searchText = '';
         this.getContent(event)
         break
       case 'assignee':
