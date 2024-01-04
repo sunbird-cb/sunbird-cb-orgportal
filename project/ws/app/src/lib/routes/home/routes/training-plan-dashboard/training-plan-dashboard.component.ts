@@ -67,10 +67,11 @@ export class TrainingPlanDashboardComponent implements OnInit {
     this.currentUser = this.configSvc.userProfileV2 && this.configSvc.userProfileV2.userId
     this.activeRoute.queryParams.subscribe((res: any) => {
       this.urlQueryParams = res
+      if (Object.keys(this.urlQueryParams).length) {
+        this.currentFilter = this.urlQueryParams.type
+      }
+      this.filter(this.currentFilter)
     })
-    if (Object.keys(this.urlQueryParams).length) {
-      this.currentFilter = this.urlQueryParams.type
-    }
     this.pageConfig = this.activeRoute.snapshot.data['pageData']
     this.hasAccess()
     this.tabledata = {
@@ -93,7 +94,6 @@ export class TrainingPlanDashboardComponent implements OnInit {
       actionColumnName: 'Action',
       cbpPlanMenu: true
     }
-    this.filter(this.currentFilter)
   }
 
   tabSelected(item: string) {
@@ -289,7 +289,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
     this.trainingPlanService.archivePlan(obj).subscribe((_data: any) => {
       this.snackBar.open('CBP plan deleted successfully.')
       this.loaderService.changeLoaderState(false)
-      this.filterData()
+      this.tabNavigate(_selectedRow.status.toLowerCase(), _selectedRow.userType)
     }, _error => {
       this.loaderService.changeLoaderState(false)
     })
@@ -307,7 +307,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       if (data && data.params && data.params.status && data.params.status.toLowerCase() === 'success') {
         this.snackBar.open('CBP plan published successfully.')
         this.loaderService.changeLoaderState(false)
-        this.tabNavigate('live', _selectedRow.assignmentType)
+        this.tabNavigate('live', _selectedRow.userType)
       } else {
         this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
         this.loaderService.changeLoaderState(false)
@@ -363,6 +363,5 @@ export class TrainingPlanDashboardComponent implements OnInit {
         tabSelected: _tabSelected,
       },
     })
-    this.filter(_item)
   }
 }

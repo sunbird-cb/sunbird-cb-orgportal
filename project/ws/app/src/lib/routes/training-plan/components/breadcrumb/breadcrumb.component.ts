@@ -180,7 +180,6 @@ export class BreadcrumbComponent implements OnInit {
       delete obj.request.contentType
       delete obj.request.assignmentType
     }
-    debugger
     delete obj.request.status
     this.showDialogBox('progress')
     this.tpSvc.updatePlan(obj).subscribe((_data: any) => {
