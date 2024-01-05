@@ -6,7 +6,7 @@
 <div class="category-box">
 <mat-form-field appearance="outline">
     <mat-select 
-        [(ngModel)]="selectedValue">
+        [(ngModel)]="selectedValue" (selectionChange)="showDialogBox($event.value)">
         <mat-option *ngFor="let item of categoryData"
             [value]="item?.value">
             {{item?.name}}
