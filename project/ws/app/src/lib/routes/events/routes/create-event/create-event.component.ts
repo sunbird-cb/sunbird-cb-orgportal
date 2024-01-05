@@ -14,28 +14,17 @@ import * as moment from 'moment'
 import _ from 'lodash'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 import { ProfileV2UtillService } from '../../../home/services/home-utill.service'
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core'
-import { MomentDateAdapter } from '@angular/material-moment-adapter'
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core'
+import { AppDateAdapter, APP_DATE_FORMATS } from '../format-datepicker'
 /* tslint:enable */
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'DD-MM-YYYY',
-    monthYearLabel: 'YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'YYYY',
-  },
-}
 
 @Component({
   selector: 'ws-app-create-event',
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.scss'],
   providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
   ],
 })
 
