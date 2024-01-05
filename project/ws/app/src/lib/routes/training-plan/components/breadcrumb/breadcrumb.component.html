@@ -1,10 +1,11 @@
 <div class="flex flex-1 flex-row breadcrumb">
     <div class="flex flex-2 flex-row left-breadcrumb">
-        <div class="home cursor-pointer" (click)="performRoute('list')">Training Plans
+        <div class="home cursor-pointer" (click)="performRoute('list')">Training plans
             <img src="/assets/icons/arrow-forward_small.svg" />
         </div>
-        <div class="home cursor-pointer" (click)="changeTabFromBreadCrumb('createPlan')">
-            <span *ngIf="!editState">Create</span> <span *ngIf="editState">Edit</span> CBP Plan
+        <div class="home cursor-pointer" (click)="changeTabFromBreadCrumb('createPlan')"
+            [ngClass]="{'action': selectedTab === tabType.CREATE_PLAN}">
+            <span *ngIf="!editState">Create</span> <span *ngIf="editState">Edit</span> CBP plan
             <img src="/assets/icons/arrow-forward_small.svg"
                 *ngIf="selectedTab !== tabType.CREATE_PLAN && !validationList?.titleIsInvalid" />
         </div>
