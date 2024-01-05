@@ -1,33 +1,29 @@
-.selectWrapper {
-    border-radius: 4px;
+.category-box {
     display: inline-block;
     width: 11%;
+    min-height: 48px;
 }
 
-.selectBox {
+.category-box ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
     width: 192px;
+    min-height: 48px;
+}
+
+.category-box ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    padding: 0;
+    margin: 0;
     height: 48px;
-    border: 0px;
-    outline: none;
-    background: none;
 }
 
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: transparent !important;
-    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") !important;
-    background-repeat: no-repeat !important;
-    background-position-x: 100% !important;
-    background-position-y: 10px !important;
-    border: 1px solid rgba(0, 0, 0, 0.16) !important;
-    border-radius: 2px !important;
-    padding: 1rem !important;
+.category-box ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.25em 0 0.75em 0 !important;
 }
 
-.selectBox option {
-    font-size: 14px !important;
-    font-family: 'Lato';
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.87);
+.category-box ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix .mat-select-arrow-wrapper {
+    vertical-align: inherit !important;
+}
+
+.category-box  ::ng-deep .mat-form-field-flex {
+    min-height: 48px;
+    border-radius: 4px;
 }
