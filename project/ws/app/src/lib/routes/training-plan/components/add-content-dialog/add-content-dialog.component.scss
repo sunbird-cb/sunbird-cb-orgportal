@@ -64,3 +64,6 @@
 ::ng-deep.mat-option.mat-selected:not(.mat-option-disabled) {
   color: rgba(0, 0, 0, 0.87) !important;
 }
+.mat-button[disabled] {
+  opacity: 0.6;
+}

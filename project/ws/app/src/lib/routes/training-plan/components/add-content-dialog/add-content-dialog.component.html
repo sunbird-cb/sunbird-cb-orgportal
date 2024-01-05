@@ -52,14 +52,10 @@
     </div> -->
 
     <div class="margin-bottom-m">
-      <label class="mat-subheading-2 required">List of Providers</label>
-      <mat-form-field class="full-width">
-        <mat-select (openedChange)="openedChange($event)" placeholder="Select" formControlName="provider" multiple>
-          <!-- <mat-select-trigger>{{provider.value ? provider.value[0] : ''}}
-            <span *ngIf="provider.value?.length > 1" class="additional-selection">
-              (+{{provider.value.length - 1}} {{provider.value?.length === 2 ? 'other' : 'others'}})
-            </span>
-          </mat-select-trigger> -->
+      <mat-label class="mat-subheading-2 required">List of Providers</mat-label>
+      <mat-form-field class="full-width" floatLabel="never">
+        <mat-select (openedChange)="openedChange($event)" placeholder="List of providers" formControlName="provider"
+          multiple>
           <div class="select-container">
             <mat-optgroup>
               <mat-form-field>
@@ -78,7 +74,6 @@
           </div>
         </mat-select>
       </mat-form-field>
-      <!-- <div *ngIf="provider.value">{{ 'You have choosen ' + provider.value }}</div> -->
     </div>
 
     <div class="margin-bottom-m">

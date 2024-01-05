@@ -28,6 +28,7 @@ export class AddContentDialogComponent implements OnInit {
   checkedList: any = []
   currentSelected: any
   selectedProvidersList: any = []
+  competencyObj: any
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -37,7 +38,7 @@ export class AddContentDialogComponent implements OnInit {
     this.contentForm = new FormGroup({
       competencyArea: new FormControl('', Validators.required),
       provider: new FormControl('', Validators.required),
-      providerText: new FormControl('', Validators.required),
+      providerText: new FormControl(''),
       contentdescription: new FormControl('', Validators.required),
     })
   }
@@ -45,19 +46,6 @@ export class AddContentDialogComponent implements OnInit {
   ngOnInit() {
     this.getCompetencies()
     this.getProviders()
-    // this.contentForm = this.data.from
-    // this.competencyArea.valueChanges.subscribe((newValue: any) => {
-    //   if (newValue) {
-    //     this.filteredallCompetencies = this.allCompetencies
-    //   }
-    // })
-    // this.competencyTheme.valueChanges.subscribe((newValue: any) => {
-    //   this.filteredallCompetencyTheme = this.filterValues(newValue, this.allCompetencyTheme)
-    // })
-    // this.competencySubtheme.valueChanges.subscribe((newValue: any) => {
-    //   this.filteredallCompetencySubtheme = this.filterValues(newValue, this.allCompetencySubtheme)
-    // })
-
     this.filteredProviders = this.contentForm.controls['providerText'].valueChanges
       .pipe(
         startWith<string>(''),
@@ -108,6 +96,7 @@ export class AddContentDialogComponent implements OnInit {
   }
 
   compAreaSelected(option: any) {
+    this.allCompetencyTheme = []
     this.resetCompSubfields()
     this.allCompetencies.forEach((val: any) => {
       if (option.name === val.name) {
@@ -123,27 +112,47 @@ export class AddContentDialogComponent implements OnInit {
 
   compThemeSelected(option: any) {
     this.enableCompetencyAdd = false
-    this.allCompetencyTheme.forEach((val: any) => {
-      if (option.name === val.name) {
-        val.selected = true
-        this.seletedCompetencyTheme.push(val)
-        // this.allCompetencySubtheme = val.children
-        val.children.forEach((item: any) => {
-          item.selected = false
-          this.allCompetencySubtheme.push(item)
-        })
-      }
-    })
+    const index = this.seletedCompetencyTheme.findIndex((object: any) => object.name === option.name)
+    if (index === -1) {
+      this.allCompetencyTheme.forEach((val: any) => {
+        if (option.name === val.name) {
+          val.selected = true
+          this.seletedCompetencyTheme.push(val)
+          // this.allCompetencySubtheme = val.children
+          val.children.forEach((item: any) => {
+            item.selected = false
+            item.compThemeID = val.id
+            this.allCompetencySubtheme.push(item)
+          })
+        }
+      })
+    } else {
+      this.seletedCompetencyTheme[index].selected = false
+      this.seletedCompetencyTheme.splice(index, 1)
+
+      const id = this.seletedCompetencyTheme[index].id
+      this.allCompetencySubtheme.forEach((item: any, i: any) => {
+        if (item.compThemeID === id) {
+          this.allCompetencySubtheme.splice(i, 1)
+        }
+      })
+    }
   }
 
   compSubThemeSelected(option: any) {
     this.enableCompetencyAdd = true
-    this.allCompetencySubtheme.forEach((val: any) => {
-      if (option.name === val.name) {
-        val.selected = true
-        this.seletedCompetencySubTheme.push(val)
-      }
-    })
+    const index = this.seletedCompetencySubTheme.findIndex((object: any) => object.name === option.name)
+    if (index === -1) {
+      this.allCompetencySubtheme.forEach((val: any) => {
+        if (option.name === val.name) {
+          val.selected = true
+          this.seletedCompetencySubTheme.push(val)
+        }
+      })
+    } else {
+      this.seletedCompetencySubTheme[index].selected = false
+      this.seletedCompetencySubTheme.splice(index, 1)
+    }
   }
 
   resetCompfields() {
@@ -198,35 +207,60 @@ export class AddContentDialogComponent implements OnInit {
   }
 
   submit() {
-    const themeNames: any[] = []
-    const themeIds: any[] = []
-    const subthemeNames: any[] = []
-    const subthemeIds: any[] = []
     const providersIds: any[] = []
-    this.seletedCompetencyTheme.forEach((item: any) => {
-      themeNames.push(item.name)
-      themeIds.push(item.id)
-    })
-
-    this.seletedCompetencySubTheme.forEach((item: any) => {
-      subthemeNames.push(item.name)
-      subthemeIds.push(item.id)
-    })
     this.selectedProvidersList.forEach((item: any) => {
       providersIds.push(item.orgId)
     })
-    if (this.contentForm && this.contentForm.value) {
-      const req = {
-        competencyArea: this.seletedCompetencyArea.name,
-        competencyAreaId: this.seletedCompetencyArea.id,
-        competencyTheme: themeNames,
-        competencyThemeId: themeIds,
-        competencySubTheme: subthemeNames,
-        competencySubThemeId: subthemeIds,
-        listOfProviders: providersIds,
-        descriptionOfTheContent: this.contentForm.value.contentdescription || '',
+
+    this.competencyObj = {
+      id: this.seletedCompetencyArea.id,
+      type: this.seletedCompetencyArea.type,
+      name: this.seletedCompetencyArea.name,
+      children: []
+    }
+    const compTheme: any[] = []
+    this.seletedCompetencyTheme.forEach((item: any) => {
+      const obj = {
+        id: item.id,
+        type: item.type,
+        name: item.name,
+        children: []
       }
-      this.trainingplanSvc.createNewContentrequest(req).subscribe()
+      compTheme.push(obj)
+    })
+    this.competencyObj.children = compTheme
+
+    this.competencyObj.children.forEach((item: any) => {
+      this.seletedCompetencySubTheme.forEach((subitem: any) => {
+        if (subitem.compThemeID === item.id) {
+          const subobj = {
+            id: subitem.id,
+            type: subitem.type,
+            name: subitem.name,
+          }
+          item.children.push(subobj)
+        }
+      })
+    })
+
+    if (this.contentForm && this.contentForm.valid) {
+      const req = {
+        request: {
+          competency: this.competencyObj,
+          providerList: providersIds,
+          description: this.contentForm.value.contentdescription || '',
+        }
+      }
+      console.log('----------------', req)
+      this.trainingplanSvc.createNewContentrequest(req).subscribe((response: any) => {
+        if (response) {
+          console.log('========', response)
+
+          this.dialogRef.close({ event: 'close', data: response })
+        } else {
+          this.closeModal()
+        }
+      })
     }
 
   }
