@@ -14,14 +14,21 @@ import * as moment from 'moment'
 import _ from 'lodash'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 import { ProfileV2UtillService } from '../../../home/services/home-utill.service'
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core'
+import { AppDateAdapter, APP_DATE_FORMATS } from '../format-datepicker'
 /* tslint:enable */
+
 @Component({
   selector: 'ws-app-create-event',
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+  ],
 })
-export class CreateEventComponent implements OnInit {
 
+export class CreateEventComponent implements OnInit {
   artifactURL: any
   participantsArr: any = []
   presentersArr: any = []
@@ -87,7 +94,6 @@ export class CreateEventComponent implements OnInit {
   username: any
   minDate: any
   maxDate: any
-  todayDate: any
   todayTime: any
   eventimageURL: any
   departmentID: any
@@ -130,7 +136,7 @@ export class CreateEventComponent implements OnInit {
       description: new FormControl('', [Validators.required]),
       agenda: new FormControl('', [Validators.required]),
       eventType: new FormControl('', [Validators.required]),
-      eventDate: new FormControl('', [Validators.required]),
+      eventDate: new FormControl(moment(), [Validators.required]),
       eventTime: new FormControl('', [Validators.required]),
       eventDurationHours: new FormControl('', [Validators.required]),
       eventDurationMinutes: new FormControl('', [Validators.required]),
@@ -145,7 +151,6 @@ export class CreateEventComponent implements OnInit {
     const maxNewDate = new Date()
     this.minDate = minCurrentDate
     this.maxDate = maxNewDate.setMonth(maxNewDate.getMonth() + 1)
-    this.todayDate = new Date((new Date().getTime()))
     this.todayTime = '00:00'
   }
 
