@@ -284,6 +284,11 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     if (this.from === 'content') {
       this.filterObj = { competencyArea: [], competencyTheme: [], competencySubTheme: [], providers: [] }
       this.selectedProviders = []
+      this.competencyThemeList = [];
+      this.competencySubThemeList = [];
+      this.searchThemeControl.reset();
+      this.searchSubThemeControl.reset();
+      this.searchProviderControl.reset();
     } else {
       this.assigneeFilterObj = { group: [], designation: [] }
     }

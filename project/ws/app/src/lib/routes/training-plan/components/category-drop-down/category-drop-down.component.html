@@ -1,5 +1,16 @@
-<div class="selectWrapper">
+<!-- <div class="selectWrapper">
     <select #select class="selectBox" (change)="showDialogBox(select?.value)" [(ngModel)]="selectedValue">
         <option *ngFor="let item of categoryData" [value]="item?.value">{{item?.name}}</option>
     </select>
+</div> -->
+<div class="category-box">
+<mat-form-field appearance="outline">
+    <mat-select 
+        [(ngModel)]="selectedValue">
+        <mat-option *ngFor="let item of categoryData"
+            [value]="item?.value">
+            {{item?.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
 </div>
