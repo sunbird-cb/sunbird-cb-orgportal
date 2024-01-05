@@ -150,7 +150,7 @@ export class BreadcrumbComponent implements OnInit {
             tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
           },
         })
-      }, 1000)
+      },         1000)
     })
   }
 
@@ -197,7 +197,7 @@ export class BreadcrumbComponent implements OnInit {
               tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
             },
           })
-        }, 1000)
+        },         1000)
       }
     })
   }
@@ -221,12 +221,12 @@ export class BreadcrumbComponent implements OnInit {
               tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
             },
           })
-        }, 1000)
+        },         1000)
       } else {
         this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
         this.dialogRef.close()
       }
-    }, (_error: any) => {
+    },                                    (_error: any) => {
       this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
       this.dialogRef.close()
     })
