@@ -17,8 +17,8 @@ export class CreatePlanComponent implements OnInit, OnDestroy {
   nextTab = ''
   createCheck: any
   planId = ''
-  filterVisibilityFlag = false;
-  from = '';
+  filterVisibilityFlag = false
+  from = ''
   constructor(
     private route: ActivatedRoute,
     private tpdsSvc: TrainingPlanDataSharingService) {
@@ -57,12 +57,12 @@ export class CreatePlanComponent implements OnInit, OnDestroy {
       this.tpdsSvc.trainingPlanStepperData['status'] = contentData.status
     }
 
-    this.tpdsSvc.filterToggle.subscribe((data:any)=>{
-      if(data) {
-        this.filterVisibilityFlag = data.status;
-        this.from = data.from;
+    this.tpdsSvc.filterToggle.subscribe((data: any) => {
+      if (data) {
+        this.filterVisibilityFlag = data.status
+        this.from = data.from
       }
-      
+
     })
   }
 

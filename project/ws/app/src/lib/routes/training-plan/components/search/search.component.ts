@@ -24,10 +24,10 @@ export class SearchComponent implements OnInit {
   pageSize = 20
   isContentLive = false
   constructor(
-              private trainingPlanService: TrainingPlanService,
-              private route: ActivatedRoute,
-              public tpdsSvc: TrainingPlanDataSharingService,
-              private loadingService: LoaderService
+    private trainingPlanService: TrainingPlanService,
+    private route: ActivatedRoute,
+    public tpdsSvc: TrainingPlanDataSharingService,
+    private loadingService: LoaderService
   ) { }
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class SearchComponent implements OnInit {
 
     })
 
-    this.tpdsSvc.getFilterDataObject.subscribe((event)=>{
+    this.tpdsSvc.getFilterDataObject.subscribe(event => {
       if (this.from === 'content') {
         this.getContent(this.selectedDropDownValue, event)
       } else {
@@ -54,7 +54,7 @@ export class SearchComponent implements OnInit {
 
   openFilter() {
     this.filterVisibilityFlag = true
-    this.tpdsSvc.filterToggle.next({from:this.from,status: true});
+    this.tpdsSvc.filterToggle.next({ from: this.from, status: true })
     // if (this.document.getElementById('top-nav-bar')) {
     //   const ele: any = this.document.getElementById('top-nav-bar')
     //   ele.style.zIndex = '1'
@@ -64,7 +64,7 @@ export class SearchComponent implements OnInit {
 
   hideFilter(event: any) {
     this.filterVisibilityFlag = event
-    this.tpdsSvc.filterToggle.next({from:'',status:false});
+    this.tpdsSvc.filterToggle.next({ from: '', status: false })
     // if (this.document.getElementById('top-nav-bar')) {
     //   const ele: any = this.document.getElementById('top-nav-bar')
     //   ele.style.zIndex = '1000'
@@ -83,7 +83,7 @@ export class SearchComponent implements OnInit {
         /* tslint:disable */
         event = !event ? 'Course' : event
         /* tslint:enable */
-        this.searchText = '';
+        this.searchText = ''
         this.getContent(event)
         break
       case 'assignee':
@@ -92,6 +92,7 @@ export class SearchComponent implements OnInit {
         //   this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']=[]
         // }
         /* tslint:disable */
+        this.searchText = ''
         event = !event ? 'Designation' : event
         /* tslint:enable */
         if (event === 'Designation') {
@@ -146,20 +147,20 @@ export class SearchComponent implements OnInit {
           && this.tpdsSvc.trainingPlanContentData.data
           && this.tpdsSvc.trainingPlanContentData.data.content) {
           finResult = this.tpdsSvc.trainingPlanContentData.data.content.filter((sitem: any) => {
-            if(sitem) {
+            if (sitem) {
               return sitem.selected
-            }            
+            }
           })
-        }         
-        if(res && res.content ) {
-          const result = { count: res.count, content: _.uniqBy(_.concat(finResult, res.content), 'identifier') }       
+        }
+        if (res && res.content) {
+          const result = { count: res.count, content: _.uniqBy(_.concat(finResult, res.content), 'identifier') }
           this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
-                   
+
         } else {
-          const result = { count: res.count, content: _.uniqBy(_.concat(finResult, []), 'identifier') }       
+          const result = { count: res.count, content: _.uniqBy(_.concat(finResult, []), 'identifier') }
           this.tpdsSvc.trainingPlanContentData = { category: contentType, data: result, count: res.count }
         }
-        this.handleApiData.emit(true) 
+        this.handleApiData.emit(true)
         this.loadingService.changeLoaderState(false)
       })
     }

@@ -9,8 +9,8 @@ export class TrainingPlanDataSharingService {
   trainingPlanCategoryChangeEvent = new Subject()
   moderatedCourseSelectStatus = new Subject()
   handleContentPageChange = new Subject()
-  filterToggle = new Subject();
-  getFilterDataObject = new Subject();
+  filterToggle = new Subject()
+  getFilterDataObject = new Subject()
   trainingPlanTitle = ''
   trainingPlanContentData: any
   trainingPlanAssigneeData: any

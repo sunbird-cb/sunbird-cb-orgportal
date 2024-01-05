@@ -45,6 +45,10 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.checkForContent()
+  }
+
+  checkForContent() {
     if (this.from === 'content') {
       if (this.tpdsSvc.trainingPlanStepperData['contentType']) {
         this.selectedValue = this.tpdsSvc.trainingPlanStepperData['contentType']
@@ -238,7 +242,17 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       },
     })
 
-    this.dialogRef.afterClosed().subscribe(() => {
+    this.dialogRef.afterClosed().subscribe((res: any) => {
+      if (res && res.toLowerCase() === 'cancel') {
+        if (this.from === 'content') {
+          this.selectedValue = this.tpdsSvc.trainingPlanContentData.category
+          this.tpdsSvc.trainingPlanStepperData['contentType'] = this.selectedValue
+        } else if (this.from === 'assignee') {
+          this.selectedValue = this.tpdsSvc.trainingPlanAssigneeData.category
+          this.tpdsSvc.trainingPlanStepperData['assignmentType'] = this.selectedValue
+        }
+
+      }
     })
   }
 
