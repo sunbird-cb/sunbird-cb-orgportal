@@ -54,3 +54,10 @@
 .btn-disabled {
     background: #999999 !important
 }
+
+.title-txt-ellipsis {
+    max-width: 250px;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+}

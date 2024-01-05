@@ -150,7 +150,7 @@ export class BreadcrumbComponent implements OnInit {
             tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
           },
         })
-      },         1000)
+      }, 1000)
     })
   }
 
@@ -197,7 +197,7 @@ export class BreadcrumbComponent implements OnInit {
               tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
             },
           })
-        },         1000)
+        }, 1000)
       }
     })
   }
@@ -221,12 +221,12 @@ export class BreadcrumbComponent implements OnInit {
               tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
             },
           })
-        },         1000)
+        }, 1000)
       } else {
         this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
         this.dialogRef.close()
       }
-    },                                    (_error: any) => {
+    }, (_error: any) => {
       this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
       this.dialogRef.close()
     })
@@ -240,5 +240,65 @@ export class BreadcrumbComponent implements OnInit {
       return true
     }
     return false
+  }
+
+  showConformationPopUp(_type: string) {
+    switch (_type) {
+      case 'saveToDraft':
+        this.dialogRef = this.dialog.open(ConfirmationBoxComponent, {
+          disableClose: true,
+          data: {
+            type: 'conformation',
+            icon: 'radio_on',
+            title: 'Are you sure you want to save as draft?',
+            // subTitle: 'You wont be able to revert this',
+            primaryAction: 'Save',
+            secondaryAction: 'Cancel',
+          },
+          autoFocus: false,
+        })
+        break
+      case 'update':
+        this.dialogRef = this.dialog.open(ConfirmationBoxComponent, {
+          disableClose: true,
+          data: {
+            type: 'conformation',
+            icon: 'radio_on',
+            title: 'Are you sure you want to update the content?',
+            // subTitle: 'You wont be able to revert this',
+            primaryAction: 'Update',
+            secondaryAction: 'Cancel',
+          },
+          autoFocus: false,
+        })
+        break
+      case 'updateAndPublish':
+        this.dialogRef = this.dialog.open(ConfirmationBoxComponent, {
+          disableClose: true,
+          data: {
+            type: 'conformation',
+            icon: 'radio_on',
+            title: 'Are you sure you want to update and publish the content?',
+            // subTitle: 'You wont be able to revert this',
+            primaryAction: 'Update and publish',
+            secondaryAction: 'Cancel',
+          },
+          autoFocus: false,
+        })
+        break
+    }
+    this.dialogRef.afterClosed().subscribe((_res: any) => {
+      if (_res === 'confirmed') {
+        switch (_type) {
+          case 'saveToDraft':
+            this.createPlanDraftView()
+            break
+          case 'update':
+          case 'updateAndPublish':
+            this.updatePlan()
+            break
+        }
+      }
+    })
   }
 }
