@@ -117,14 +117,10 @@ export class AddContentDialogComponent implements OnInit {
       })
     } else {
       this.seletedCompetencyTheme[index].selected = false
-      this.seletedCompetencyTheme.splice(index, 1)
 
       const id = this.seletedCompetencyTheme[index].id
-      this.allCompetencySubtheme.forEach((item: any, i: any) => {
-        if (item.compThemeID === id) {
-          this.allCompetencySubtheme.splice(i, 1)
-        }
-      })
+      this.seletedCompetencyTheme.splice(index, 1)
+      this.allCompetencySubtheme = this.allCompetencySubtheme.filter((item: any) => item.compThemeID !== id)
     }
   }
 
