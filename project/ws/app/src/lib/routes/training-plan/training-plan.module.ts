@@ -66,6 +66,7 @@ import { UpdatePlanResolveService } from './resolvers/update-plan-resolve.servic
 import { ResetDataSharingResolveService } from './resolvers/reset-data-sharing-resolve.service'
 import { PreviewDialogBoxComponent } from './components/preview-dialog-box/preview-dialog-box.component'
 import { AddContentDialogComponent } from './components/add-content-dialog/add-content-dialog.component'
+import { PipeAcsendingOrderModule } from '../pipes/pipe-ascendingorder/pipe-ascendingorder.module'
 @NgModule({
   declarations: [
     TrainingPlanHomeComponent,
@@ -140,6 +141,7 @@ import { AddContentDialogComponent } from './components/add-content-dialog/add-c
     DefaultThumbnailModule,
     FilterSearchPipeModule,
     MatAutocompleteModule,
+    PipeAcsendingOrderModule,
   ],
   entryComponents: [
     PreviewDialogBoxComponent,

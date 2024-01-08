@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { TrainingPlanDataSharingService } from './../../services/training-plan-data-share.service'
-import { MatDialog } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { AddContentDialogComponent } from '../../components/add-content-dialog/add-content-dialog.component'
 @Component({
   selector: 'ws-app-create-content',
@@ -18,7 +18,7 @@ export class CreateContentComponent implements OnInit {
   pageIndex: any
   pageSize: any
   count = 0
-  constructor(private tpdsSvc: TrainingPlanDataSharingService, public dialog: MatDialog) { }
+  constructor(private tpdsSvc: TrainingPlanDataSharingService, public dialog: MatDialog, private snackbar: MatSnackBar) { }
 
   ngOnInit() {
     this.categoryData = [
@@ -112,6 +112,14 @@ export class CreateContentComponent implements OnInit {
       height: '75%',
       width: '60%',
     })
-    dialogRef.afterClosed().subscribe()
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (response) {
+        if (response.data.responseCode === 'OK') {
+          this.snackbar.open('Request shared successfully')
+        } else {
+          this.snackbar.open('Something went wrong please try again later!!')
+        }
+      }
+    })
   }
 }
