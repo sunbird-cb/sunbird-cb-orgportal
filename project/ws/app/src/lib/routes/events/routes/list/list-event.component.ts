@@ -6,6 +6,8 @@ import * as moment from 'moment'
 /* tslint:disable */
 import _ from 'lodash'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import { DatePipe } from '@angular/common'
+
 /* tslint:enable */
 @Component({
     selector: 'ws-app-list-event',
@@ -34,7 +36,8 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         private eventSvc: EventsService,
         private configSvc: ConfigurationsService,
         private activeRoute: ActivatedRoute,
-        private events: EventService
+        private events: EventService,
+        private datePipe: DatePipe
     ) {
         this.math = Math
         this.configService = this.activeRoute.snapshot.data.configService
@@ -132,7 +135,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
                     const creatorDetails = str && str.length > 0 ? JSON.parse(str) : creatordata
                     const eventDataObj = {
                         eventName: obj.name.substring(0, 100),
-                        eventStartDate: this.customDateFormat(obj.startDate, obj.startTime),
+                        eventStartDate: this.customDateFormat(this.datePipe.transform(obj.startDate, 'MMM dd, yyyy'), obj.startTime),
                         eventCreatedOn: this.allEventDateFormat(obj.createdOn),
                         eventDuration: duration,
                         eventjoined: (creatorDetails !== undefined && creatorDetails.length > 0) ?
@@ -221,7 +224,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         const formatedDate = new Date(year, month, date, hours, minutes, seconds, 0)
         // let format = 'YYYY-MM-DD hh:mm a'
         // if (!timeAllow) {
-        const format = 'YYYY-MM-DD'
+        const format = 'MMM DD, yyyy'
         // }
         const readableDateMonth = moment(formatedDate).format(format)
         const finalDateTimeValue = `${readableDateMonth}`
