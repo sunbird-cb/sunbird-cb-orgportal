@@ -113,10 +113,12 @@ export class CreateContentComponent implements OnInit {
       width: '60%',
     })
     dialogRef.afterClosed().subscribe((response: any) => {
-      if (response && response.data.responseCode === 'OK') {
-        this.snackbar.open('Request shared successfully')
-      } else {
-        this.snackbar.open('Something went wrong please try again later!!')
+      if (response) {
+        if (response.data.responseCode === 'OK') {
+          this.snackbar.open('Request shared successfully')
+        } else {
+          this.snackbar.open('Something went wrong please try again later!!')
+        }
       }
     })
   }
