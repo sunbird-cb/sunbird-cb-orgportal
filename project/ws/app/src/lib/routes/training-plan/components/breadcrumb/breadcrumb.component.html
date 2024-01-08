@@ -1,10 +1,11 @@
 <div class="flex flex-1 flex-row breadcrumb">
     <div class="flex flex-2 flex-row left-breadcrumb">
-        <div class="home cursor-pointer" (click)="performRoute('list')">Training Plans
+        <div class="home cursor-pointer" (click)="performRoute('list')">Training plans
             <img src="/assets/icons/arrow-forward_small.svg" />
         </div>
-        <div class="home cursor-pointer" (click)="changeTabFromBreadCrumb('createPlan')">
-            <span *ngIf="!editState">Create</span> <span *ngIf="editState">Edit</span> CBP Plan
+        <div class="home cursor-pointer" (click)="changeTabFromBreadCrumb('createPlan')"
+            [ngClass]="{'action': selectedTab === tabType.CREATE_PLAN}">
+            <span *ngIf="!editState">Create</span> <span *ngIf="editState">Edit</span> CBP plan
             <img src="/assets/icons/arrow-forward_small.svg"
                 *ngIf="selectedTab !== tabType.CREATE_PLAN && !validationList?.titleIsInvalid" />
         </div>
@@ -12,7 +13,7 @@
             (tabType.ADD_CONTENT === selectedTab) ? 'Add content' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Add
             assignee' : (tabType.ADD_TIMELINE === selectedTab) ? 'Add timeline' : ''}}
         </div> -->
-        <div class="action" *ngIf="tpdsSvc?.trainingPlanTitle &&
+        <div class="action title-txt-ellipsis" *ngIf="tpdsSvc?.trainingPlanTitle &&
         selectedTab !== tabType.CREATE_PLAN && !validationList?.titleIsInvalid">
             {{tpdsSvc?.trainingPlanTitle | titlecase}}
         </div>
@@ -32,19 +33,19 @@
                 ? 'Edit Assignee' : (tabType.ADD_ASSIGNEE === selectedTab) ? 'Edit Timeline' : ''}}</span>
         </button>
         <ng-container *ngIf="!editState">
-            <button mat-button class="next-btn margin-left-m" (click)="createPlanDraftView()"
+            <button mat-button class="next-btn margin-left-m" (click)="showConformationPopUp('saveToDraft')"
                 *ngIf="tabType.ADD_TIMELINE === selectedTab" [ngClass]="{'btn-disabled': checkIfValid()}"
                 [disabled]="checkIfValid()">
                 <span>Save as Draft</span>
             </button>
         </ng-container>
         <ng-container *ngIf="editState">
-            <button mat-button class="next-btn margin-left-m" (click)="updatePlan()"
+            <button mat-button class="next-btn margin-left-m" (click)="showConformationPopUp('update')"
                 *ngIf="tabType.ADD_TIMELINE === selectedTab && !isLiveContent"
                 [ngClass]="{'btn-disabled': checkIfValid()}" [disabled]="checkIfValid()">
                 <span>Update Draft</span>
             </button>
-            <button mat-button class="next-btn margin-left-m" (click)="updatePlan()"
+            <button mat-button class="next-btn margin-left-m" (click)="showConformationPopUp('updateAndPublish')"
                 *ngIf="tabType.ADD_TIMELINE === selectedTab && isLiveContent"
                 [ngClass]="{'btn-disabled': checkIfValid()}" [disabled]="checkIfValid()">
                 <span>Update and publish</span>
