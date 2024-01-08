@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
 import { TrainingPlanService } from '../../services/traininig-plan.service'
-import { map, startWith } from 'rxjs/operators'
 @Component({
   selector: 'ws-app-add-content-dialog',
   templateUrl: './add-content-dialog.component.html',
@@ -41,30 +40,19 @@ export class AddContentDialogComponent implements OnInit {
       providerText: new FormControl(''),
       contentdescription: new FormControl('', Validators.required),
     })
+    this.contentForm.markAsPristine()
   }
 
   ngOnInit() {
     this.getCompetencies()
     this.getProviders()
-    this.filteredProviders = this.contentForm.controls['providerText'].valueChanges
-      .pipe(
-        startWith<string>(''),
-        map((name: any) => this.filter(name))
-      )
-  }
-
-  filter(name: string): String[] {
-    const filterValue = name.toLowerCase()
-    // Set selected values to retain the selected checkbox state
-    this.setSelectedValues()
-    this.contentForm.controls['provider'].patchValue(this.selectedValues)
-    const filteredList = this.data.filter((option: any) => option.toLowerCase().indexOf(filterValue) === 0)
-    return filteredList
+    this.contentForm.controls['providerText'].valueChanges.subscribe((newValue: any) => {
+      this.filteredProviders = this.filterValues(newValue, this.providersList)
+    })
   }
 
   filterValues(searchValue: string, array: any) {
     return array.filter((value: any) =>
-      // value.name.toLowerCase().indexOf(searchValue.toLowerCase()) === 0)
       value.name.toLowerCase().includes(searchValue.toLowerCase()))
   }
 
@@ -92,6 +80,7 @@ export class AddContentDialogComponent implements OnInit {
       this.providersList.forEach((val: any) => {
         val.checked = false
       })
+      this.filteredProviders = this.providersList
     })
   }
 
@@ -259,6 +248,5 @@ export class AddContentDialogComponent implements OnInit {
         }
       })
     }
-
   }
 }

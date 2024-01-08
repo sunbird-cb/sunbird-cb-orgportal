@@ -67,3 +67,23 @@
 .mat-button[disabled] {
   opacity: 0.6;
 }
+
+::ng-deep.mat-select-panel-wrap {
+    flex-basis: 92%;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+::ng-deep.mat-select-panel .mat-optgroup-label {
+  margin-top: 10px;
+}
+
+::ng-deep.select-container .mat-form-field {
+  width: 100%;
+}
+
+::ng-deep.select-container .mat-form-field-infix {
+    padding: 0.4375em 0;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16) !important;
+}

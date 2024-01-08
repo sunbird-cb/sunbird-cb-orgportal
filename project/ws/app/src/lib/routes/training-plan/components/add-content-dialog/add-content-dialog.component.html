@@ -58,17 +58,17 @@
           multiple>
           <div class="select-container">
             <mat-optgroup>
-              <mat-form-field>
-                <input #search autocomplete="off" placeholder="Search" aria-label="Search"
-                  formControlName="providerText" matInput>
+              <mat-form-field floatLabel="never">
+                <input #search autocomplete="off" placeholder="Search" formControlName="providerText" matInput>
                 <button [disableRipple]="true" *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
                   (click)="clearSearch($event)"><mat-icon>close</mat-icon></button>
               </mat-form-field>
             </mat-optgroup>
-            <mat-optgroup *ngIf="(providersList).length == 0">
+            <mat-optgroup *ngIf="filteredProviders.length == 0">
               <div>No results found!</div>
             </mat-optgroup>
-            <mat-option (onSelectionChange)="selectionChange($event, option)" *ngFor="let option of providersList"
+            <mat-option (onSelectionChange)="selectionChange($event, option)"
+              *ngFor="let option of filteredProviders | acsendingOrder:'asc':'name'"
               [value]="option.name">{{option.name}}
             </mat-option>
           </div>
