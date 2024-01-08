@@ -251,11 +251,8 @@ export class AddContentDialogComponent implements OnInit {
           description: this.contentForm.value.contentdescription || '',
         }
       }
-      console.log('----------------', req)
       this.trainingplanSvc.createNewContentrequest(req).subscribe((response: any) => {
         if (response) {
-          console.log('========', response)
-
           this.dialogRef.close({ event: 'close', data: response })
         } else {
           this.closeModal()

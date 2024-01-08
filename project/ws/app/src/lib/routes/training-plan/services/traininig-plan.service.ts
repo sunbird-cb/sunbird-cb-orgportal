@@ -75,7 +75,7 @@ export class TrainingPlanService {
   }
 
   createNewContentrequest(obj: any) {
-    return this.http.post<any>(`${API_END_POINTS.CREATE_NEWCONTENT}`, obj).pipe(map(res => _.get(res, 'result')))
+    return this.http.post<any>(`${API_END_POINTS.CREATE_NEWCONTENT}`, obj)
   }
 
 }
