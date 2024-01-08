@@ -21,6 +21,7 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   tabs: any
   currentUser!: string | null
   tabledata!: ITableData
+  tabledataPublished!: ITableData
   data: any = []
   term!: string | null
   length!: number
@@ -73,6 +74,21 @@ export class WorkallocationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // this.getdeptUsers()
     this.tabledata = {
+      actions: [],
+      columns: [
+        { displayName: 'Work order', key: 'workorders' },
+        { displayName: 'Officers', key: 'officers' },
+        { displayName: 'Last updated on', key: 'lastupdatedon' },
+        { displayName: 'Last updated by', key: 'lastupdatedby' },
+
+      ],
+      needCheckBox: false,
+      needHash: false,
+      sortColumn: 'workorders',
+      sortState: 'asc',
+      needUserMenus: true,
+    }
+    this.tabledataPublished = {
       actions: [],
       columns: [
         { displayName: 'Work order', key: 'workorders' },

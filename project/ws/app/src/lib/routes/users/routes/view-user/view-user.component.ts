@@ -479,7 +479,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
           request: {
             organisationId: this.department,
             userId: this.userID,
-            roles: form.value.roles,
+            roles: Array.from(this.userRoles),
           },
         }
 
