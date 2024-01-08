@@ -61,8 +61,18 @@
           </div>
         </div>
         <div id="loader"></div>
-        <ws-work-allocation-table [tableData]='tabledata' [data]='getTableData' *ngIf="currentFilter !== 'Archived'"
+        <!-- <ws-work-allocation-table [tableData]='tabledata' [data]='getTableData' *ngIf="currentFilter !== 'Archived'"
           (eOnRowClick)="onRoleClick($event)" [needAddAdmin]='false' [needCreateUser]='false'>
+        </ws-work-allocation-table> -->
+
+        <ws-work-allocation-table [tableData]='tabledata' [data]='getTableData'
+          *ngIf="currentFilter !== 'Archived' && currentFilter !== 'Published'" (eOnRowClick)="onRoleClick($event)"
+          [needAddAdmin]='false' [needCreateUser]='false'>
+        </ws-work-allocation-table>
+
+        <ws-work-allocation-table [tableData]='tabledataPublished' [data]='getTableData'
+          *ngIf="currentFilter !== 'Archived' && currentFilter !== 'Draft'" (eOnRowClick)="onRoleClick($event)"
+          [needAddAdmin]='false' [needCreateUser]='false'>
         </ws-work-allocation-table>
         <div class="text-center margin-m" *ngIf="currentFilter === 'Archived'">
           <img class="block mx-auto mb-3" src="/assets/instances/eagle/app_logos/allocation_empty.svg"
