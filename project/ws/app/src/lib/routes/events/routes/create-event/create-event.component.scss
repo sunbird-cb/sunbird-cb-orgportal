@@ -746,3 +746,7 @@ input.mat-input-element {
     margin-left: 45%;
     z-index: 1;
 }
+
+::ng-deep .mat-button[disabled][disabled]{
+  opacity: 0.6 !important;
+}
