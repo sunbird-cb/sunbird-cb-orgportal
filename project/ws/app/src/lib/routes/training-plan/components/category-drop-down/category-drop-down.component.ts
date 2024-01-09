@@ -178,7 +178,8 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
         dialogData['title'] = 'You are attempting to change the selected user type?'
-        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.;
+        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of
+         ${(this.tpdsSvc.currentUserDepartment) ? this.tpdsSvc.currentUserDepartment : ''}.
         If you want to select custom users or by designation, use the above option`
         dialogData['primaryAction'] = 'I understand, change user type'
         dialogData['secondaryAction'] = 'Cancel'
@@ -194,7 +195,8 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
         dialogData['title'] = 'You are attempting to change the selected user type?'
-        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.;
+        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of
+        ${(this.tpdsSvc.currentUserDepartment) ? this.tpdsSvc.currentUserDepartment : ''}.
         If you want to select custom users or by designation, use the above option`
         dialogData['primaryAction'] = 'I understand, change user type'
         dialogData['secondaryAction'] = 'Cancel'
@@ -211,7 +213,8 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
         dialogData['title'] = 'You are attempting to change the selected user type?'
-        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of fisheries.;
+        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of
+        ${(this.tpdsSvc.currentUserDepartment) ? this.tpdsSvc.currentUserDepartment : ''}.
         If you want to select custom users or by designation, use the above option`
         dialogData['primaryAction'] = 'I understand, change user type'
         dialogData['secondaryAction'] = 'Cancel'

@@ -4,6 +4,7 @@ import _ from 'lodash'
 /* tslint:enable */
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 import { Subscription } from 'rxjs'
+import { ActivatedRoute } from '@angular/router'
 @Component({
   selector: 'ws-app-training-plan-home',
   templateUrl: './training-plan-home.component.html',
@@ -15,11 +16,18 @@ import { Subscription } from 'rxjs'
 export class TrainingPlanHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   showModeratedNotification = false
   private subscr: Subscription = new Subscription()
-  constructor(private tpdsSvc: TrainingPlanDataSharingService
+  configSvc: any
+  constructor(
+    private tpdsSvc: TrainingPlanDataSharingService,
+    private activeRoute: ActivatedRoute,
   ) {
 
   }
   ngOnInit() {
+    this.configSvc = this.activeRoute.snapshot.data['configService']
+    this.tpdsSvc.currentUserDepartment = (this.configSvc &&
+      this.configSvc.userProfileV2 &&
+      this.configSvc.userProfileV2.departmentName) ? this.configSvc.userProfileV2.departmentName : ''
     this.subscr = this.subscr.add(this.tpdsSvc.moderatedCourseSelectStatus.subscribe(status => {
       if (status) {
         this.showModeratedNotification = true
