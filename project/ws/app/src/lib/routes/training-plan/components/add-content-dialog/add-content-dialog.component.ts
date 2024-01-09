@@ -201,7 +201,7 @@ export class AddContentDialogComponent implements OnInit {
       id: this.seletedCompetencyArea.id,
       type: this.seletedCompetencyArea.type,
       name: this.seletedCompetencyArea.name,
-      children: []
+      children: [],
     }
     const compTheme: any[] = []
     this.seletedCompetencyTheme.forEach((item: any) => {
@@ -209,7 +209,7 @@ export class AddContentDialogComponent implements OnInit {
         id: item.id,
         type: item.type,
         name: item.name,
-        children: []
+        children: [],
       }
       compTheme.push(obj)
     })
@@ -234,7 +234,7 @@ export class AddContentDialogComponent implements OnInit {
           competency: this.competencyObj,
           providerList: providersIds,
           description: this.contentForm.value.contentdescription || '',
-        }
+        },
       }
       this.trainingplanSvc.createNewContentrequest(req).subscribe((response: any) => {
         if (response) {

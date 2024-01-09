@@ -29,7 +29,7 @@ export class UserCardComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.changeDetectorRef.detectChanges()
     this.dataSource = new MatTableDataSource<any>(this.assigneeData.data)
-    this.dataSource.paginator = this.paginator
+    this.dataSource.paginator = this.paginator    
   }
 
   onChangePage(pe: PageEvent) {
