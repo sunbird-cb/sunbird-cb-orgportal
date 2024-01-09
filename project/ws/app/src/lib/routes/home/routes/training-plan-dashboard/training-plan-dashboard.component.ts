@@ -199,7 +199,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       const compyData: any = []
       if (res.contentList && res.contentList.length > 0) {
         res.contentList.forEach((contentEle: any) => {
-          if (contentEle.competencies_v5 && contentEle.competencies_v5.length > 0) {
+          if (contentEle && contentEle.competencies_v5 && contentEle.competencies_v5.length > 0) {
             contentEle.competencies_v5.forEach((compeEle: any) => {
               compyData.push(compeEle.competencyArea)
             })
@@ -290,7 +290,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       this.snackBar.open('CBP plan deleted successfully.')
       this.loaderService.changeLoaderState(false)
       this.tabNavigate(_selectedRow.status.toLowerCase(), _selectedRow.userType)
-    },                                                  _error => {
+    }, _error => {
       this.loaderService.changeLoaderState(false)
     })
   }
@@ -312,7 +312,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
         this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
         this.loaderService.changeLoaderState(false)
       }
-    },                                                  (_error: any) => {
+    }, (_error: any) => {
       this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
       this.loaderService.changeLoaderState(false)
     })

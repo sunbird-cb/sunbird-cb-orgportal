@@ -15,6 +15,7 @@ export class TrainingPlanDataSharingService {
   trainingPlanContentData: any
   trainingPlanAssigneeData: any
   selectedTabType: any = ''
+  currentUserDepartment = ''
   trainingPlanStepperData: any = {
     name: '',
     contentType: '',
