@@ -80,8 +80,8 @@
         </div>
 
     </div>
-    <div class="flex flex-row justify-center" *ngIf="showPagination">
+    <div class="flex flex-row justify-center" [hidden]="!contentData.length">
         <mat-paginator [pageSize]="pageSize" [length]="count" [pageSizeOptions]="[20,30,40]"
-            (page)="onChangePage($event)"></mat-paginator>
+            (page)="pageEvent = onChangePage($event)" showFirstLastButtons="false"></mat-paginator>
     </div>
 </ng-container>

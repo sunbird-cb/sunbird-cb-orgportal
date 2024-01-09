@@ -20,7 +20,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     { id: 'Functional', name: 'Functional' },
     { id: 'Domain', name: 'Domain' },
   ]
-  groupList:any = [
+  groupList: any = [
     { id: 'groupA', name: 'Group A' },
     { id: 'groupB', name: 'Group B' },
     { id: 'groupC', name: 'Group C' },
@@ -326,13 +326,13 @@ export class FilterComponent implements OnInit, AfterContentChecked {
 
   manageSelectedGroup(event: any, group: any) {
     if (event.checked) {
-      this.groupList.map((grp:any, index:any)=>{
-        if(grp && grp.name === group.name) {
-          this.groupList[index]['selected'] = true;
+      this.groupList.map((grp: any, index: any) => {
+        if (grp && grp.name === group.name) {
+          this.groupList[index]['selected'] = true
         }
       })
-      if(group) {
-        group['selected'] = true;
+      if (group) {
+        group['selected'] = true
       }
       this.assigneeFilterObj['group'].push(group.name)
     } else {
@@ -341,13 +341,13 @@ export class FilterComponent implements OnInit, AfterContentChecked {
         const index = this.assigneeFilterObj['group'].findIndex((x: any) => x === group.name)
         this.assigneeFilterObj['group'].splice(index, 1)
       }
-      this.groupList.map((grp:any, index:any)=>{
-        if(grp && grp.name === group.name) {
-          this.groupList[index]['selected'] = false;
+      this.groupList.map((grp: any, index: any) => {
+        if (grp && grp.name === group.name) {
+          this.groupList[index]['selected'] = false
         }
       })
-      if(group) {
-        group['selected'] = false;
+      if (group) {
+        group['selected'] = false
       }
     }
   }
