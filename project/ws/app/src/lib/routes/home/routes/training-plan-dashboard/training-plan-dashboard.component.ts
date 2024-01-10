@@ -258,10 +258,10 @@ export class TrainingPlanDashboardComponent implements OnInit {
       data: {
         type: 'conformation',
         icon: 'radio_on',
-        title: (_type === 'deleteContent') ? 'Are you sure you want to delete?' :
-          (_type === 'publishContent') ? 'Are you sure you want to publish?' : '',
+        title: (_type === 'deleteContent') ? 'Are you sure you want to delete the plan?' :
+          (_type === 'publishContent') ? 'Are you sure you want to publish the plan?' : '',
         subTitle: 'You wont be able to revert this',
-        primaryAction: (_type === 'deleteContent') ? 'Delete' : (_type === 'publishContent') ? 'Publish' : '',
+        primaryAction: 'Confirm',
         secondaryAction: 'Cancel',
       },
       autoFocus: false,
@@ -290,7 +290,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
       this.snackBar.open('CBP plan deleted successfully.')
       this.loaderService.changeLoaderState(false)
       this.tabNavigate(_selectedRow.status.toLowerCase(), _selectedRow.userType)
-    },                                                  _error => {
+    }, _error => {
       this.loaderService.changeLoaderState(false)
     })
   }
@@ -312,7 +312,7 @@ export class TrainingPlanDashboardComponent implements OnInit {
         this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
         this.loaderService.changeLoaderState(false)
       }
-    },                                                  (_error: any) => {
+    }, (_error: any) => {
       this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
       this.loaderService.changeLoaderState(false)
     })
