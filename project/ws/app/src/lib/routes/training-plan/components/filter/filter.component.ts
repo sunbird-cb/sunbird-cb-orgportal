@@ -25,7 +25,8 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     { id: 'groupB', name: 'Group B' },
     { id: 'groupC', name: 'Group C' },
     { id: 'groupD', name: 'Group D' },
-    { id: 'groupE', name: 'Group E' },
+    { id: 'contractualStaff', name: 'Contractual Staff' },
+    { id: 'Others', name: 'Others' },
   ]
   competencyList: any = []
   competencyThemeList: any[] = []
