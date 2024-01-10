@@ -119,7 +119,7 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="flex flex-1 flex-row category-item" *ngFor="let group of groupList">
-                            <mat-checkbox #checkboxes disableRipple class="example-margin"
+                            <mat-checkbox #checkboxes disableRipple class="example-margin" [checked]="group?.selected"
                                 (change)="manageSelectedGroup($event, group)">{{group?.name | titlecase}}</mat-checkbox>
                         </div>
                     </mat-expansion-panel>
