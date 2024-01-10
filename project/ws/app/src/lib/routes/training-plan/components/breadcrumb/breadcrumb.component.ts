@@ -150,7 +150,7 @@ export class BreadcrumbComponent implements OnInit {
             tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
           },
         })
-      },         1000)
+      }, 1000)
     })
   }
 
@@ -197,7 +197,7 @@ export class BreadcrumbComponent implements OnInit {
               tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
             },
           })
-        },         1000)
+        }, 1000)
       }
     })
   }
@@ -221,12 +221,12 @@ export class BreadcrumbComponent implements OnInit {
               tabSelected: this.tpdsSvc.trainingPlanStepperData.assignmentType,
             },
           })
-        },         1000)
+        }, 1000)
       } else {
         this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
         this.dialogRef.close()
       }
-    },                                    (_error: any) => {
+    }, (_error: any) => {
       this.snackBar.open('Something went wrong while publishing CBP plan. Try again later')
       this.dialogRef.close()
     })
@@ -250,9 +250,9 @@ export class BreadcrumbComponent implements OnInit {
           data: {
             type: 'conformation',
             icon: 'radio_on',
-            title: 'Are you sure you want to save as draft?',
+            title: 'Are you sure you want to save the plan?',
             // subTitle: 'You wont be able to revert this',
-            primaryAction: 'Save',
+            primaryAction: 'Confirm',
             secondaryAction: 'Cancel',
           },
           autoFocus: false,
@@ -264,9 +264,9 @@ export class BreadcrumbComponent implements OnInit {
           data: {
             type: 'conformation',
             icon: 'radio_on',
-            title: 'Are you sure you want to update the content?',
+            title: 'Are you sure you want to update the plan?',
             // subTitle: 'You wont be able to revert this',
-            primaryAction: 'Update',
+            primaryAction: 'Confirm',
             secondaryAction: 'Cancel',
           },
           autoFocus: false,
@@ -278,9 +278,9 @@ export class BreadcrumbComponent implements OnInit {
           data: {
             type: 'conformation',
             icon: 'radio_on',
-            title: 'Are you sure you want to update and publish the content?',
+            title: 'Are you sure you want to update and publish the plan?',
             // subTitle: 'You wont be able to revert this',
-            primaryAction: 'Update and publish',
+            primaryAction: 'Confirm',
             secondaryAction: 'Cancel',
           },
           autoFocus: false,
