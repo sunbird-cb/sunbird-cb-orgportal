@@ -8,7 +8,7 @@
             {{contentList?.length}} )</span></div>
     <div class="flex flex-row justify-center max-height-400">
         <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentList" [showDeleteFlag]="true"
-            [showPagination]="(contentList?.length > 20) ? true : false">
+            [showPagination]="false">
         </ws-app-standard-card>
     </div>
     <div class="no-cbp-data margin-top-xl margin-bottom-xl text-center"
@@ -24,7 +24,7 @@
     </div>
     <div class="mt-4 flex flex-row justify-center max-height-400" *ngIf="assigneeData?.data?.length">
         <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData" [showDeleteFlag]="true"
-            [showPagination]="(assigneeData?.data?.length > 20) ? true : false">
+            [showPagination]="false">
         </ws-app-user-card>
     </div>
     <div class="no-cbp-data margin-top-xl margin-bottom-xl text-center" *ngIf="!assigneeData?.data?.length">
