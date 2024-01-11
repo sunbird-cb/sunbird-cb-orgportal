@@ -441,6 +441,10 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
               professionalDetails: [
                 {
                   designation: this.updateProfessionalForm.controls['designation'].value,
+                  ...(this.professionalDetails.group ? { group: this.professionalDetails.group } : null),
+                  ...(this.professionalDetails.description ? { description: this.professionalDetails.description } : null),
+                  ...(this.professionalDetails.location ? { location: this.professionalDetails.location } : null),
+                  ...(this.professionalDetails.industry ? { industry: this.professionalDetails.industry } : null),
                 },
               ],
               additionalProperties: {
