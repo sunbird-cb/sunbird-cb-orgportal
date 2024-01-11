@@ -76,7 +76,7 @@ export class PreviewPlanComponent implements OnInit {
           count: this.contentList.length,
         })
         arr.push({
-          name: contentData.assignmentType,
+          name: contentData.assignmentType && contentData.assignmentType.toLowerCase() === 'customuser' ? 'Custom User': contentData.assignmentType,
           tab: 'assignee',
           selected: (this.tab === 'assignee' ? true : false),
           count: this.assigneeData.data ? this.assigneeData.data.length : 0,

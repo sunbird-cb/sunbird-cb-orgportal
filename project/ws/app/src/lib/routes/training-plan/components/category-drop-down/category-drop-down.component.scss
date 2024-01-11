@@ -21,9 +21,14 @@
 
 .category-box ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix .mat-select-arrow-wrapper {
     vertical-align: inherit !important;
+    transform: translateY(2%) !important;
 }
 
 .category-box  ::ng-deep .mat-form-field-flex {
     min-height: 48px;
     border-radius: 4px;
+}
+
+.category-box ::ng-deep.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: rgba(0, 0, 0, 0.54) !important;
 }
