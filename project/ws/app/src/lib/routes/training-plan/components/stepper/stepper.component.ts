@@ -23,7 +23,7 @@ export class StepperComponent implements OnInit, OnChanges, AfterViewInit {
   editState = false
   isContentLive = false
   constructor(private route: ActivatedRoute,
-              private tpdsSvc: TrainingPlanDataSharingService
+    private tpdsSvc: TrainingPlanDataSharingService
   ) { }
 
   ngOnInit() {
@@ -34,9 +34,15 @@ export class StepperComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.addCotnentDisable = true
-    this.addAssigneeDisable = true
-    this.addTimelineDisable = true
+    if (!this.editState) {
+      this.addCotnentDisable = true
+      this.addAssigneeDisable = true
+      this.addTimelineDisable = true
+    } else {
+      this.addCotnentDisable = false
+      this.addAssigneeDisable = false
+      this.addTimelineDisable = false
+    }
   }
 
   ngOnChanges() {
@@ -68,28 +74,28 @@ export class StepperComponent implements OnInit, OnChanges, AfterViewInit {
     setTimeout(() => {
       this.addCotnentDisable = _event
       this.titleInvalid.emit(_event)
-    },         0)
+    }, 0)
   }
 
   checkForaddContent(_event: any) {
     setTimeout(() => {
       this.addAssigneeDisable = _event
       this.addContentIsInvalid.emit(_event)
-    },         0)
+    }, 0)
   }
 
   checkForaddAssignee(_event: any) {
     setTimeout(() => {
       this.addTimelineDisable = _event
       this.addAssigneeIsInvalid.emit(_event)
-    },         0)
+    }, 0)
   }
 
   tabChangeToTimeline(_event: any) {
     setTimeout(() => {
       this.addTimelineDisable = _event
       this.addAssigneeIsInvalid.emit(_event)
-    },         0)
+    }, 0)
     this.tabIndexValue = 3
   }
 }
