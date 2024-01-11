@@ -199,7 +199,16 @@ export class SearchComponent implements OnInit {
       },
     }
     this.trainingPlanService.getCustomUsers(filterObj).subscribe((res: any) => {
-      this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.content }
+      if (this.tpdsSvc.trainingPlanAssigneeData.data) {
+        const finArr = this.tpdsSvc.trainingPlanAssigneeData.data.filter((sitem: any) => {
+          if (sitem && sitem.selected) {
+            return sitem
+          }
+        })
+        this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: _.uniqBy(_.concat(finArr, res.content), 'userId') }
+      } else {
+        this.tpdsSvc.trainingPlanAssigneeData = { category: event, data: res.content }
+      }
       this.handleApiData.emit(true)
       this.loadingService.changeLoaderState(false)
     }, (_error: any) => {
