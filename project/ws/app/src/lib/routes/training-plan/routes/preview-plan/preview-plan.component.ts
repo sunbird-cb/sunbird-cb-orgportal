@@ -76,7 +76,9 @@ export class PreviewPlanComponent implements OnInit {
           count: this.contentList.length,
         })
         arr.push({
-          name: contentData.assignmentType && contentData.assignmentType.toLowerCase() === 'customuser' ? 'Custom User': contentData.assignmentType,
+          /* tslint:disable */
+          name: contentData.assignmentType && contentData.assignmentType.toLowerCase() === 'customuser' ? 'Custom User' : contentData.assignmentType,
+          /* tslint:enable */
           tab: 'assignee',
           selected: (this.tab === 'assignee' ? true : false),
           count: this.assigneeData.data ? this.assigneeData.data.length : 0,
