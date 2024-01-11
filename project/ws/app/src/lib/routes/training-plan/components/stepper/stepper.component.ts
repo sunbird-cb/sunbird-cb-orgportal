@@ -34,15 +34,9 @@ export class StepperComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.editState) {
-      this.addCotnentDisable = true
-      this.addAssigneeDisable = true
-      this.addTimelineDisable = true
-    } else {
-      this.addCotnentDisable = false
-      this.addAssigneeDisable = false
-      this.addTimelineDisable = false
-    }
+    this.addCotnentDisable = true
+    this.addAssigneeDisable = true
+    this.addTimelineDisable = true
   }
 
   ngOnChanges() {
