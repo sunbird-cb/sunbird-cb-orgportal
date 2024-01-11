@@ -28,7 +28,8 @@
     <div class="no-cbp-data margin-top-xl margin-bottom-xl">
         <div><img src="/assets/images/no-content-data.svg"></div>
         <div class="mat-subheading-1 margin-remove">It will assign to all users</div>
-        <div>By selecting all users, you've selected all the users from your Department of fisheries.</div>
+        <div>By selecting all users, you've selected all the users from your Department of
+            {{tpdsSvc.currentUserDepartment}}.</div>
         <div class="margin-top-m">
             <button mat-button type="button" class="create-btn" (click)="changeTab()">
                 Next: Add timeline

@@ -31,14 +31,12 @@ export const MY_FORMATS = {
 export class AddTimelineFormComponent implements OnInit {
 
   minDate: Date = new Date()
-  todayDate: Date = new Date()
+  todayDate: any
   constructor(private tpdsSvc: TrainingPlanDataSharingService, private datePipe: DatePipe) { }
 
   ngOnInit() {
     if (this.tpdsSvc.trainingPlanStepperData['endDate']) {
       this.todayDate = new Date(this.tpdsSvc.trainingPlanStepperData['endDate'])
-    } else {
-      this.tpdsSvc.trainingPlanStepperData['endDate'] = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd')
     }
   }
 
