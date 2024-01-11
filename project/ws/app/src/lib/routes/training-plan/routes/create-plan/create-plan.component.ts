@@ -34,7 +34,7 @@ export class CreatePlanComponent implements OnInit, OnDestroy {
       this.tpdsSvc.trainingPlanTitle = contentData.name
       // this.tpdsSvc.trainingPlanContentData = { data: { content: contentData.contentList } }
       if (contentData.assignmentType === 'CustomUser') {
-        this.tpdsSvc.trainingPlanAssigneeData = { data: { content: contentData.userDetails } }
+        this.tpdsSvc.trainingPlanAssigneeData = { data: contentData.userDetails }
         const arr: any = []
         contentData.userDetails.map((sitem: any) => {
           if (sitem && sitem.userId) {
