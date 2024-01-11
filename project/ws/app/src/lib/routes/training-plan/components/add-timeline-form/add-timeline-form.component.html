@@ -8,7 +8,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Select date</mat-label>
                 <input matInput #ref [matDatepicker]="picker" [min]="minDate" [(ngModel)]="todayDate"
-                    (dateChange)="changeTimeline(ref.value)" disabled>
+                    (dateChange)="changeTimeline(ref.value)" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker">
                     <mat-icon matDatepickerToggleIcon *ngIf="todayDate">event</mat-icon>
                     <mat-icon matDatepickerToggleIcon *ngIf="!todayDate">date_range</mat-icon>
