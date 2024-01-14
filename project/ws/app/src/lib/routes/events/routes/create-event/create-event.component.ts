@@ -506,27 +506,29 @@ export class CreateEventComponent implements OnInit {
       },
     }
     // const formJson = this.encodeToBase64(form)
-    if (eventDurationMinutes === 0) {
-      this.displayLoader = false
-      this.disableCreateButton = false
-      this.openSnackbar('Duration cannot be zero')
-    } else {
-      this.eventsSvc.createEvent(form).subscribe(
-        res => {
-          this.displayLoader = false
-          this.disableCreateButton = false
-          const identifier = res.result.identifier
-          const versionKey = res.result.versionKey
-          // this.fileSubmit(identifier)
-          this.publishEvent(identifier, versionKey)
-        },
-        (err: any) => {
-          this.displayLoader = false
-          this.disableCreateButton = false
-          this.openSnackbar(err.error.split(':')[1])
-        }
-      )
-    }
+
+    // if (eventDurationMinutes === 0) {
+    //   this.displayLoader = false
+    //   this.disableCreateButton = false
+    //   this.openSnackbar('Duration cannot be zero')
+    // } else {
+    // }
+
+    this.eventsSvc.createEvent(form).subscribe(
+      res => {
+        this.displayLoader = false
+        this.disableCreateButton = false
+        const identifier = res.result.identifier
+        const versionKey = res.result.versionKey
+        // this.fileSubmit(identifier)
+        this.publishEvent(identifier, versionKey)
+      },
+      (err: any) => {
+        this.displayLoader = false
+        this.disableCreateButton = false
+        this.openSnackbar(err.error.split(':')[1])
+      }
+    )
   }
 
   encodeToBase64(body: any) {
