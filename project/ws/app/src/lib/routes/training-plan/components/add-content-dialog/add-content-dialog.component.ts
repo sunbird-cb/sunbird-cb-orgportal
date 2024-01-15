@@ -38,7 +38,7 @@ export class AddContentDialogComponent implements OnInit {
       competencyArea: new FormControl('', Validators.required),
       provider: new FormControl('', Validators.required),
       providerText: new FormControl(''),
-      contentdescription: new FormControl('', Validators.required),
+      contentdescription: new FormControl('', [Validators.required, Validators.maxLength(1000)]),
     })
     this.contentForm.markAsPristine()
   }
@@ -245,4 +245,13 @@ export class AddContentDialogComponent implements OnInit {
       })
     }
   }
+
+  isFormInValid() {
+    if (this.contentForm.invalid || !this.seletedCompetencyArea ||
+      this.seletedCompetencyTheme.length === 0 || this.seletedCompetencySubTheme.length === 0) {
+      return true
+    }
+    return false
+  }
+
 }
