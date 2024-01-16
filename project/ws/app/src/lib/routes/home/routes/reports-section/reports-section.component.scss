@@ -17,3 +17,15 @@
     color: #0075B7 !important;
   }
 }
+
+::ng-deep .reports-section .cdk-column-reportName .textclass {
+  cursor: default!important;
+}
+
+::ng-deep .reports-section .cdk-column-reportType .textclass {
+  cursor: default!important;
+}
+
+::ng-deep .reports-section .cdk-column-reportUpdatedOn .textclass {
+  cursor: default!important;
+}

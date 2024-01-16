@@ -38,9 +38,10 @@ export class AddContentDialogComponent implements OnInit {
       competencyArea: new FormControl('', Validators.required),
       provider: new FormControl('', Validators.required),
       providerText: new FormControl(''),
-      contentdescription: new FormControl('', Validators.required),
+      contentdescription: new FormControl('', [Validators.required, Validators.maxLength(1000)]),
     })
     this.contentForm.markAsPristine()
+    this.contentForm.markAsUntouched()
   }
 
   ngOnInit() {
@@ -120,7 +121,11 @@ export class AddContentDialogComponent implements OnInit {
 
       const id = this.seletedCompetencyTheme[index].id
       this.seletedCompetencyTheme.splice(index, 1)
+      if (this.seletedCompetencyTheme.length === 0) {
+        this.seletedCompetencySubTheme = []
+      }
       this.allCompetencySubtheme = this.allCompetencySubtheme.filter((item: any) => item.compThemeID !== id)
+      this.seletedCompetencySubTheme = this.seletedCompetencySubTheme.filter((item: any) => item.compThemeID !== id)
     }
   }
 
@@ -245,4 +250,13 @@ export class AddContentDialogComponent implements OnInit {
       })
     }
   }
+
+  isFormInValid() {
+    if (this.contentForm.invalid || !this.seletedCompetencyArea ||
+      this.seletedCompetencyTheme.length === 0 || this.seletedCompetencySubTheme.length === 0) {
+      return true
+    }
+    return false
+  }
+
 }
