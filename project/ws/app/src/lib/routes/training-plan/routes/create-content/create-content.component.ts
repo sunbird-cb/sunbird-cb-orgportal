@@ -109,7 +109,7 @@ export class CreateContentComponent implements OnInit {
   showAddContentDialog() {
     const dialogRef = this.dialog.open(AddContentDialogComponent, {
       maxHeight: 'auto',
-      height: '75%',
+      height: '60%',
       width: '60%',
     })
     dialogRef.afterClosed().subscribe((response: any) => {
