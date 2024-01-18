@@ -76,10 +76,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       case 'Course':
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected content type?'
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection.
-        It's advisable to save the current one as a draft and create a new one instead.`
-        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['title'] = 'Are you sure you want to alter the content type?'
+        dialogData['subTitle'] = `This action will result in the loss of your currently selected content.`
+        dialogData['primaryAction'] = 'Confirm'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Course'
         this.tpdsSvc.trainingPlanStepperData['contentType'] = event
@@ -93,10 +92,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       case 'Standalone Assessment':
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected content type?'
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection.
-        It's advisable to save the current one as a draft and create a new one instead.`
-        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['title'] = 'Are you sure you want to alter the content type?'
+        dialogData['subTitle'] = `This action will result in the loss of your currently selected content.`
+        dialogData['primaryAction'] = 'Confirm'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Standalone Assessment'
         this.tpdsSvc.trainingPlanStepperData['contentType'] = event
@@ -110,10 +108,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       case 'Program':
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected content type?'
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection.
-        It's advisable to save the current one as a draft and create a new one instead.`
-        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['title'] = 'Are you sure you want to alter the content type?'
+        dialogData['subTitle'] = `This action will result in the loss of your currently selected content.`
+        dialogData['primaryAction'] = 'Confirm'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Program'
         this.tpdsSvc.trainingPlanStepperData['contentType'] = event
@@ -127,10 +124,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       case 'Blended program':
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected content type?'
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection.
-        It's advisable to save the current one as a draft and create a new one instead.`
-        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['title'] = 'Are you sure you want to alter the content type?'
+        dialogData['subTitle'] = `This action will result in the loss of your currently selected content.`
+        dialogData['primaryAction'] = 'Confirm'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Blended program'
         this.tpdsSvc.trainingPlanStepperData['contentType'] = event
@@ -144,10 +140,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       case 'Curated program':
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected content type?'
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection.
-         It's advisable to save the current one as a draft and create a new one instead.`
-        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['title'] = 'Are you sure you want to alter the content type?'
+        dialogData['subTitle'] = `This action will result in the loss of your currently selected content.`
+        dialogData['primaryAction'] = 'Confirm'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Curated program'
         this.tpdsSvc.trainingPlanStepperData['contentType'] = event
@@ -161,10 +156,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       case 'Moderated Course':
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected content type?'
-        dialogData['subTitle'] = `Changing it now will result in the loss of your current selection.
-        It's advisable to save the current one as a draft and create a new one instead.`
-        dialogData['primaryAction'] = 'I understand, change content type'
+        dialogData['title'] = 'Are you sure you want to alter the content type?'
+        dialogData['subTitle'] = `This action will result in the loss of your currently selected content.`
+        dialogData['primaryAction'] = 'Confirm'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Moderated Course'
         this.tpdsSvc.trainingPlanStepperData['contentType'] = event
@@ -177,11 +171,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       case 'Designation':
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected user type?'
-        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of
-         ${(this.tpdsSvc.currentUserDepartment) ? this.tpdsSvc.currentUserDepartment : ''}.
-        If you want to select custom users or by designation, use the above option`
-        dialogData['primaryAction'] = 'I understand, change user type'
+        dialogData['title'] = 'Are you sure you want to alter the type?'
+        dialogData['subTitle'] = `This action will result in the loss of your currently selected content.`
+        dialogData['primaryAction'] = 'Confirm'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'Designation'
         this.tpdsSvc.trainingPlanStepperData['assignmentType'] = event
@@ -194,14 +186,11 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       case 'AllUser':
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected user type?'
-        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of
-        ${(this.tpdsSvc.currentUserDepartment) ? this.tpdsSvc.currentUserDepartment : ''}.
-        If you want to select custom users or by designation, use the above option`
-        dialogData['primaryAction'] = 'I understand, change user type'
+        dialogData['title'] = 'Are you sure you want to alter the type?'
+        dialogData['subTitle'] = `This action will result in the loss of your currently selected content.`
+        dialogData['primaryAction'] = 'Confirm'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'AllUser'
-        this.tpdsSvc.trainingPlanAssigneeData.category = 'AllUser'
         this.tpdsSvc.trainingPlanStepperData['assignmentType'] = event
         if (this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo.length) {
           this.openDialoagBox(dialogData)
@@ -212,11 +201,9 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
       case 'CustomUser':
         dialogData['type'] = 'normal'
         dialogData['icon'] = 'radio_on'
-        dialogData['title'] = 'You are attempting to change the selected user type?'
-        dialogData['subTitle'] = `By selecting all users, you've selected all the users from your Department of
-        ${(this.tpdsSvc.currentUserDepartment) ? this.tpdsSvc.currentUserDepartment : ''}.
-        If you want to select custom users or by designation, use the above option`
-        dialogData['primaryAction'] = 'I understand, change user type'
+        dialogData['title'] = 'Are you sure you want to alter the type?'
+        dialogData['subTitle'] = `This action will result in the loss of your currently selected content.`
+        dialogData['primaryAction'] = 'Confirm'
         dialogData['secondaryAction'] = 'Cancel'
         dialogData['event'] = 'CustomUser'
         this.tpdsSvc.trainingPlanStepperData['assignmentType'] = event
@@ -243,6 +230,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         secondaryAction: dialogData.secondaryAction,
         event: dialogData.event,
       },
+      autoFocus: false
     })
 
     this.dialogRef.afterClosed().subscribe((res: any) => {
@@ -254,7 +242,6 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
           this.selectedValue = this.tpdsSvc.trainingPlanAssigneeData.category
           this.tpdsSvc.trainingPlanStepperData['assignmentType'] = this.selectedValue
         }
-
       }
     })
   }
