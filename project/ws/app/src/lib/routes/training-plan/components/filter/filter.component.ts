@@ -70,8 +70,9 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     })
 
     this.tpdsSvc.clearFilter.subscribe((result: any) => {
-      if (result) {
-        this.clearFilterWhileSearch()
+      if (result && result.status) {
+        this.from = result.from;
+        this.clearFilter()
       }
     })
 
@@ -280,7 +281,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     this.tpdsSvc.filterToggle.next({ from: '', status: false })
   }
 
-  clearFilter() {
+  clearFilter() {    
     if (this.from === 'content') {
       this.filterObj = { competencyArea: [], competencyTheme: [], competencySubTheme: [], providers: [] }
       this.selectedProviders = []
@@ -301,6 +302,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
       // this.getFilterData.emit(this.assigneeFilterObj)
       this.tpdsSvc.getFilterDataObject.next(this.assigneeFilterObj)
     }
+    
     if (this.checkboxes) {
       this.checkboxes.forEach((element: any) => {
         element['checked'] = false
