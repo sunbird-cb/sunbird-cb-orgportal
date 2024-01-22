@@ -59,7 +59,6 @@ export class StepperComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   tabSelected(_event: any) {
-    alert(1)
     this.tabIndexValue = _event.index
     const tempData = _event.tab.textLabel
     this.selectedTabType.emit(tempData)
