@@ -16,7 +16,7 @@ export class FilterComponent implements OnInit, AfterContentChecked {
   providersList: any[] = []
   selectedProviders: any[] = []
   competencyTypeList = [
-    { id: 'Behavioral', name: 'Behavioural' },
+    { id: 'Behavioural', name: 'Behavioural' },
     { id: 'Functional', name: 'Functional' },
     { id: 'Domain', name: 'Domain' },
   ]
