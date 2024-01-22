@@ -89,7 +89,7 @@ export class SearchComponent implements OnInit {
         /* tslint:disable */
         event = !event ? 'Course' : event
         /* tslint:enable */
-        this.searchText = ''
+        this.searchText = '';
         this.tpdsSvc.clearFilter.next({from:'content', status: true})
         this.resetPageIndex()
         this.getContent(event)
@@ -100,7 +100,7 @@ export class SearchComponent implements OnInit {
         //   this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']=[]
         // }
         /* tslint:disable */
-        this.tpdsSvc.clearFilter.next({from:'assignee', status: true})
+        this.tpdsSvc.clearFilter.next({from:'assignee', status: true})        
         this.resetPageIndex()
         this.searchText = ''
         event = !event ? 'Designation' : event
