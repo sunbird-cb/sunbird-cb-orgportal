@@ -210,7 +210,7 @@ export class SearchComponent implements OnInit {
           'profileDetails',
           'organisations',
         ],
-        limit: 100000,
+        limit: 10000,
         offset: 0,
       },
     }
