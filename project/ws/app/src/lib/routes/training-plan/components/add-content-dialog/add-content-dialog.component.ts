@@ -78,6 +78,7 @@ export class AddContentDialogComponent implements OnInit {
   getProviders() {
     this.trainingplanSvc.getProviders().subscribe((res: any) => {
       this.providersList = res
+      this.providersList = this.providersList.filter((ele: any) => ele.orgId)
       this.providersList.forEach((val: any) => {
         val.checked = false
       })
