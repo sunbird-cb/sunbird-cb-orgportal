@@ -445,6 +445,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
                   ...(this.professionalDetails.description ? { description: this.professionalDetails.description } : null),
                   ...(this.professionalDetails.location ? { location: this.professionalDetails.location } : null),
                   ...(this.professionalDetails.industry ? { industry: this.professionalDetails.industry } : null),
+                  ...(this.professionalDetails.doj ? { doj: this.professionalDetails.doj } : null),
                 },
               ],
               additionalProperties: {
