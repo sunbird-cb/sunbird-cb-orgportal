@@ -52,7 +52,7 @@ export class ChipComponent implements OnInit, OnChanges {
       })
 
       this.tpdsSvc.trainingPlanStepperData.contentList = []
-      this.tpdsSvc.trainingPlanStepperData.contentType = ''
+      // this.tpdsSvc.trainingPlanStepperData.contentType = ''
     }
     if (this.from === 'assignee') {
       this.selectAssigneeCount = 0
@@ -71,7 +71,7 @@ export class ChipComponent implements OnInit, OnChanges {
       }
 
       this.tpdsSvc.trainingPlanStepperData.assignmentTypeInfo = []
-      this.tpdsSvc.trainingPlanStepperData.assignmentType = ''
+      // this.tpdsSvc.trainingPlanStepperData.assignmentType = ''
     }
     this.itemRemoved.emit(true)
   }
