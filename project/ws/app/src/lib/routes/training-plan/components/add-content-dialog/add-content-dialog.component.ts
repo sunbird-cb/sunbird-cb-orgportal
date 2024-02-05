@@ -187,7 +187,7 @@ export class AddContentDialogComponent implements OnInit {
 
   selectionChange(event: any, option: any) {
     if (event.isUserInput) {
-      const index = this.selectedProvidersList.findIndex((object: any) => object.id === option.orgId)
+      const index = this.selectedProvidersList.findIndex((object: any) => object.orgId === option.orgId)
       if (index === -1) {
         this.selectedProvidersList.push(option)
       } else {
