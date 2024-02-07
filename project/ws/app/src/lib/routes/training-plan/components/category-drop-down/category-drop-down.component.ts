@@ -230,7 +230,7 @@ export class CategoryDropDownComponent implements OnInit, OnChanges {
         secondaryAction: dialogData.secondaryAction,
         event: dialogData.event,
       },
-      autoFocus: false
+      autoFocus: false,
     })
 
     this.dialogRef.afterClosed().subscribe((res: any) => {
