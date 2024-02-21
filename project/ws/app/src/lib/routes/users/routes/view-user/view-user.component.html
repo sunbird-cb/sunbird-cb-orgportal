@@ -93,14 +93,14 @@
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Domicile medium (Mother tongue)</label>
+                                <label class="appr-text-label">Mother tongue</label>
                                 <input type="text" [disabled]="true"
                                   [value]="basicInfo.domicileMedium ? basicInfo.domicileMedium : ''"
                                   class="appr-text-field">
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Other languages known</label>
+                                <label class="appr-text-label">Other Known Languages</label>
                                 <input type="text" [disabled]="true"
                                   [value]="basicInfo.knownLanguages ? basicInfo.knownLanguages : ''"
                                   class="appr-text-field">
@@ -140,7 +140,7 @@
                               </mat-grid-tile>
 
                               <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                                <label class="appr-text-label">Pin code</label>
+                                <label class="appr-text-label">Pin Code</label>
                                 <input type="text" [disabled]="true"
                                   [value]="basicInfo.pincode ? basicInfo.pincode : ''" class="appr-text-field">
                               </mat-grid-tile>
@@ -324,7 +324,7 @@
                                 </mat-grid-tile>
                                 <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
                                   <label class="appr-text-label">Description</label>
-                                  <textarea [disabled]="true" rows="3"
+                                  <textarea [disabled]="true" rows="2"
                                     [value]="professionalDetails.description ? professionalDetails.description : ''"
                                     class="appr-text-field"></textarea>
                                 </mat-grid-tile>
@@ -385,14 +385,14 @@
                                   <input type="text" [disabled]="true" [value]="professionalDetails.location"
                                     class="appr-text-field">
                                 </mat-grid-tile> -->
-                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
-                                  <label class="appr-text-label">Official postal address</label>
+                                <mat-grid-tile rowHeight="110px" [colspan]="2" [rowspan]="1" class="input-wrapper">
+                                  <label class="appr-text-label">Office Postal Address</label>
                                   <textarea [disabled]="true" rows="3"
                                     [value]="employmentDetails && employmentDetails.officialPostalAddress ? employmentDetails.officialPostalAddress : ''"
                                     class="appr-text-field"></textarea>
                                 </mat-grid-tile>
                                 <mat-grid-tile [colspan]="2" [rowspan]="1" class="input-wrapper">
-                                  <label class="appr-text-label">Pin code</label>
+                                  <label class="appr-text-label">Office Pin Code</label>
                                   <input type="text" [disabled]="true"
                                     [value]="employmentDetails && employmentDetails.pinCode ? employmentDetails.pinCode : ''"
                                     class="appr-text-field">
