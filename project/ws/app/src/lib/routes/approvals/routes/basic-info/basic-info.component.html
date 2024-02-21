@@ -68,13 +68,13 @@
                 </mat-grid-tile>
 
                 <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                  <label class="appr-text-label">Domicile medium (Mother tongue)</label>
+                  <label class="appr-text-label">Mother tongue</label>
                   <input type="text" [disabled]="true"
                     [value]="basicInfo.domicileMedium ? basicInfo.domicileMedium : ''" class="appr-text-field">
                 </mat-grid-tile>
 
                 <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                  <label class="appr-text-label">Other languages known</label>
+                  <label class="appr-text-label">Other Known Languages</label>
                   <input type="text" [disabled]="true"
                     [value]="basicInfo.knownLanguages ? basicInfo.knownLanguages : ''" class="appr-text-field">
                 </mat-grid-tile>
@@ -102,13 +102,13 @@
                 </mat-grid-tile>
 
                 <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                  <label class="appr-text-label">Postal address</label>
+                  <label class="appr-text-label">Official Postal address</label>
                   <textarea [disabled]="true" rows="2" [value]="basicInfo.postalAddress"
                     class="appr-text-field"></textarea>
                 </mat-grid-tile>
 
-                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper">
-                  <label class="appr-text-label">Pin code</label>
+                <mat-grid-tile [colspan]="1" [rowspan]="1" class="input-wrapper mt-1">
+                  <label class="appr-text-label">Pin Code</label>
                   <input type="text" [disabled]="true" [value]="basicInfo.pincode" class="appr-text-field">
                 </mat-grid-tile>
 
