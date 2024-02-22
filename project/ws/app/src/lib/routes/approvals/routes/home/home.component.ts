@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   profileData: any[] = []
   profileDataKeys: any[] = []
   configSvc: any
+  isChangeLog = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {

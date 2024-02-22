@@ -41,11 +41,19 @@ export class SearchComponent implements OnInit {
     })
 
     this.tpdsSvc.getFilterDataObject.subscribe(event => {
-      if (this.from === 'content') {
+      if (this.selectedDropDownValue === 'Course' ||
+        this.selectedDropDownValue === 'Standalone Assessment' ||
+        this.selectedDropDownValue === 'Program' ||
+        this.selectedDropDownValue === 'Blended program' ||
+        this.selectedDropDownValue === 'Curated program' ||
+        this.selectedDropDownValue === 'Moderated Course'
+      ) {
         this.getContent(this.selectedDropDownValue, event)
-      } else {
+      }
+      if (this.selectedDropDownValue === 'CustomUser') {
         this.getCustomUsers(this.selectedDropDownValue, event)
       }
+
     })
     if (this.tpdsSvc.trainingPlanStepperData.status && this.tpdsSvc.trainingPlanStepperData.status.toLowerCase() === 'live') {
       this.isContentLive = true
@@ -73,8 +81,6 @@ export class SearchComponent implements OnInit {
 
   handleCategorySelection(event: any) {
     this.selectedDropDownValue = event
-    this.tpdsSvc.clearFilter.next(true)
-    this.resetPageIndex()
     switch (this.from) {
       case 'content':
         // if(this.tpdsSvc.trainingPlanContentData && this.tpdsSvc.trainingPlanContentData.data) {
@@ -84,6 +90,8 @@ export class SearchComponent implements OnInit {
         event = !event ? 'Course' : event
         /* tslint:enable */
         this.searchText = ''
+        this.tpdsSvc.clearFilter.next({ from: 'content', status: true })
+        this.resetPageIndex()
         this.getContent(event)
         break
       case 'assignee':
@@ -92,6 +100,8 @@ export class SearchComponent implements OnInit {
         //   this.tpdsSvc.trainingPlanStepperData['assignmentTypeInfo']=[]
         // }
         /* tslint:disable */
+        this.tpdsSvc.clearFilter.next({ from: 'assignee', status: true })
+        this.resetPageIndex()
         this.searchText = ''
         event = !event ? 'Designation' : event
         /* tslint:enable */
@@ -112,8 +122,11 @@ export class SearchComponent implements OnInit {
       if (contentType === 'Moderated Course') {
         this.tpdsSvc.moderatedCourseSelectStatus.next(true)
       }
+      if (applyFilterObj && Object.keys(applyFilterObj).length) {
+        this.searchText = ''
+      }
       if (this.searchText) {
-        this.tpdsSvc.clearFilter.next(true)
+        this.tpdsSvc.clearFilter.next({ from: 'content', status: true })
         /* tslint:disable */
         applyFilterObj = {}
         /* tslint:enable */
@@ -170,8 +183,11 @@ export class SearchComponent implements OnInit {
   getCustomUsers(event: any, applyFilterObj?: any) {
     this.loadingService.changeLoaderState(true)
     const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
+    if (applyFilterObj && Object.keys(applyFilterObj).length) {
+      this.searchText = ''
+    }
     if (this.searchText) {
-      this.tpdsSvc.clearFilter.next(true)
+      this.tpdsSvc.clearFilter.next({ from: 'assignee', status: true })
       /* tslint:disable */
       applyFilterObj = {}
       /* tslint:enable */
@@ -194,7 +210,7 @@ export class SearchComponent implements OnInit {
           'profileDetails',
           'organisations',
         ],
-        limit: 500,
+        limit: 10000,
         offset: 0,
       },
     }

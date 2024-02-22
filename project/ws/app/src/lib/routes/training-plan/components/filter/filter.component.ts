@@ -70,8 +70,9 @@ export class FilterComponent implements OnInit, AfterContentChecked {
     })
 
     this.tpdsSvc.clearFilter.subscribe((result: any) => {
-      if (result) {
-        this.clearFilterWhileSearch()
+      if (result && result.status) {
+        this.from = result.from
+        this.clearFilter()
       }
     })
 
@@ -292,15 +293,17 @@ export class FilterComponent implements OnInit, AfterContentChecked {
       this.resetFilter()
     } else {
       this.assigneeFilterObj = { group: [], designation: [] }
+      this.resetAssigneeFilter()
     }
 
     if (this.from === 'content') {
       // this.getFilterData.emit(this.filterObj)
-      this.tpdsSvc.getFilterDataObject.next(this.filterObj)
+      // this.tpdsSvc.getFilterDataObject.next(this.filterObj)
     } else {
       // this.getFilterData.emit(this.assigneeFilterObj)
-      this.tpdsSvc.getFilterDataObject.next(this.assigneeFilterObj)
+      // this.tpdsSvc.getFilterDataObject.next(this.assigneeFilterObj)
     }
+
     if (this.checkboxes) {
       this.checkboxes.forEach((element: any) => {
         element['checked'] = false
@@ -406,5 +409,23 @@ export class FilterComponent implements OnInit, AfterContentChecked {
       })
     }
 
+  }
+
+  resetAssigneeFilter() {
+    if (this.groupList) {
+      this.groupList.map((pitem: any) => {
+        if (pitem && pitem['selected']) {
+          pitem['selected'] = false
+        }
+      })
+    }
+
+    if (this.designationList) {
+      this.designationList.map((pitem: any) => {
+        if (pitem && pitem['selected']) {
+          pitem['selected'] = false
+        }
+      })
+    }
   }
 }
