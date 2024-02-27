@@ -17,7 +17,6 @@ export class BatchListComponent implements OnInit {
   batchesList: any = []
   arcBatchList: any = []
 
-
   constructor(private router: Router, private activeRouter: ActivatedRoute, private bpService: BlendedApporvalService) {
     const currentState = this.router.getCurrentNavigation()
     this.programID = this.activeRouter.snapshot.params.id
