@@ -119,6 +119,20 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   }
 
   fetchApprovals() {
+    const conditions = [
+      ['location', 'Country'],
+      ['designation', 'Designation'],
+      ['group', 'Group'],
+      ['name', 'Organisation Name'],
+      ['orgNameOther', 'Other Organisation Name'],
+      ['industry', 'Industry'],
+      ['industryOther', 'Other Industry'],
+      ['doj', 'Date of Joining'],
+      ['organisationType', 'Type of Organisation'],
+      ['orgDesc', 'Organisation Description'],
+      ['verifiedKarmayogi', 'Verified Karmayogi'],
+    ]
+
     if (this.departName) {
       const req = {
         serviceName: 'profile',
@@ -163,8 +177,9 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
             // ${currentdate.getMinutes()} :
             // ${currentdate.getSeconds()}`,
             // requestedon: this.datePipe.transform(currentdate, 'dd MMM y'),
+            // fields: keys.slice(0, -1),
             requestedon: currentdate,
-            fields: keys.slice(0, -1),
+            fields: this.replaceWords(keys, conditions),
             userWorkflow: approval,
             tag: (approval.userInfo && approval.userInfo.tag) ? `${approval.userInfo.tag}` : '',
           })
@@ -183,6 +198,12 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
       })
     }
     return this.data
+  }
+
+  replaceWords(inputString: any, wordConditions: any) {
+    return wordConditions.reduce((acc: any, [word, condition]: any) => {
+      return acc.replace(new RegExp(word, 'gi'), condition)
+    },                           inputString)
   }
 
   onPaginateChange(event: PageEvent) {
