@@ -48,7 +48,10 @@ export class CreatePlanComponent implements OnInit, OnDestroy {
       if (contentData.contentList && contentData.contentList.length > 0) {
         contentData.contentList.forEach((ele: any) => {
           this.tpdsSvc.trainingPlanStepperData['contentList'].push(ele.identifier)
+          ele.selected = true
         })
+        this.tpdsSvc.trainingPlanContentData = { data: { content: contentData.contentList } }
+
       }
       this.tpdsSvc.trainingPlanStepperData['contentType'] = contentData.contentType
       this.tpdsSvc.trainingPlanStepperData['assignmentType'] = contentData.assignmentType

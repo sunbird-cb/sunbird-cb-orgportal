@@ -156,9 +156,7 @@ export class SearchComponent implements OnInit {
       }
       this.trainingPlanService.getAllContent(filterObj).subscribe((res: any) => {
         let finResult = []
-        if (this.tpdsSvc.trainingPlanContentData.data
-          && this.tpdsSvc.trainingPlanContentData.data
-          && this.tpdsSvc.trainingPlanContentData.data.content) {
+        if (this.tpdsSvc.trainingPlanContentData.data && this.tpdsSvc.trainingPlanContentData.data.content) {
           finResult = this.tpdsSvc.trainingPlanContentData.data.content.filter((sitem: any) => {
             if (sitem) {
               return sitem.selected

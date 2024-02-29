@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnChanges, ChangeDetectorRef, ViewChild } from '@angular/core'
+import { Component, EventEmitter, Input, Output, OnInit, ChangeDetectorRef, ViewChild, AfterViewChecked } from '@angular/core'
 import { MatPaginator, PageEvent } from '@angular/material'
 import { TrainingPlanDataSharingService } from '../../services/training-plan-data-share.service'
 import { SafeUrl } from '@angular/platform-browser'
@@ -8,7 +8,7 @@ import { SafeUrl } from '@angular/platform-browser'
   templateUrl: './standard-card.component.html',
   styleUrls: ['./standard-card.component.scss'],
 })
-export class StandardCardComponent implements OnInit, OnChanges {
+export class StandardCardComponent implements OnInit, AfterViewChecked {
   @Input() cardSize: any
   @Input() checkboxVisibility: any = true
   @Input() contentData: any[] = []
@@ -17,7 +17,7 @@ export class StandardCardComponent implements OnInit, OnChanges {
   @Input() count = 0
   @Output() handleSelectedChips = new EventEmitter()
   @Output() selectedContentRemoved = new EventEmitter<any>()
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | any
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | any
   dataSource: any
   selectedContent: any[] = []
   startIndex = 0
@@ -39,7 +39,7 @@ export class StandardCardComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges() {
+  ngAfterViewChecked(): void {
     this.changeDetectorRef.detectChanges()
   }
 
