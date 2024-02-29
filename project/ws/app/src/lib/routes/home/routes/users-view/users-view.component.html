@@ -20,7 +20,7 @@
             (click)="filter('underreview')" role="button">Under review</a> -->
           <a routerLink="/app/home/users/active" routerLinkActive="router-link-active" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'active',
               'ws-mat-accent-border font-medium':currentFilter !== 'active'}" mat-button
-            (click)="filter('active'); tabTelemetry('active', 0)" role="button">Active</a>
+            (click)="filter('active'); tabTelemetry('active', 0)" role="button">Registered</a>
           <a routerLink="/app/home/users/inactive" routerLinkActive="router-link-active" class="filter-option"
             [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'inactive',
                           'ws-mat-accent-border font-medium':currentFilter !== 'inactive'}" mat-button
