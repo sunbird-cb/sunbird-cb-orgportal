@@ -28,6 +28,7 @@ export class NeedsApprovalComponent implements OnInit {
   profile!: NSProfileDataV2.IProfile
   profileData: any[] = []
   comment = ''
+  listupdateFieldValues: any[] = []
 
   constructor(
     private needApprService: NeedApprovalsService,
@@ -134,4 +135,75 @@ export class NeedsApprovalComponent implements OnInit {
   private openSnackBar(message: string) {
     this.matSnackBar.open(message)
   }
+
+  onClickAllHandleWorkflow(approvalList: any[], action: string) {
+    if (action === 'APPROVEALL') {
+      const dialogRef = this.dialog.open(this.approveDialog, {
+        width: '770px',
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.onApproveOrRejectClick(req)
+        } else {
+          dialogRef.close()
+        }
+      })
+    } else {
+      const dialogRef = this.dialog.open(this.rejectDialog, {
+        width: '770px',
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.onApproveOrRejectClick(req)
+        } else {
+          dialogRef.close()
+        }
+      })
+    }
+
+    if (approvalList.length > 0) {
+      approvalList.forEach((approvalAttribute: any) => {
+        this.listupdateFieldValues.push(
+          JSON.parse(approvalAttribute.wf.updateFieldValues)[0]
+        )
+      })
+    }
+
+    let user1Id = ''
+    const application1Id = ''
+    const wfId1 = ''
+
+    if (approvalList && approvalList.length > 0) {
+      approvalList.forEach(approvalItem => {
+        user1Id = approvalItem.wf.userId
+        application1Id: approvalItem.wf.applicationId
+        wfId1: approvalItem.wf.wfId
+      })
+    }
+
+    const req = {
+      action,
+      state: 'SEND_FOR_APPROVAL',
+      userId: user1Id,
+      applicationId: application1Id,
+      actorUserId: this.userwfData.userInfo.wid,
+      wfId: wfId1,
+      serviceName: 'profile',
+      updateFieldValues: this.listupdateFieldValues,
+    }
+
+    this.events.raiseInteractTelemetry(
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      },
+      {
+        id: application1Id,
+        type: TelemetryEvents.EnumIdtype.APPLICATION,
+
+      }
+    )
+
+  }
+
 }
