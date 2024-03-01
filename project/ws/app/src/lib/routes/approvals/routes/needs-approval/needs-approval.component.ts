@@ -170,14 +170,14 @@ export class NeedsApprovalComponent implements OnInit {
     }
 
     let user1Id = ''
-    const application1Id = ''
-    const wfId1 = ''
+    let application1Id = ''
+    let wfId1 = ''
 
     if (approvalList && approvalList.length > 0) {
       approvalList.forEach(approvalItem => {
         user1Id = approvalItem.wf.userId
-        application1Id: approvalItem.wf.applicationId
-        wfId1: approvalItem.wf.wfId
+        application1Id = approvalItem.wf.applicationId
+        wfId1 = approvalItem.wf.wfId
       })
     }
 
