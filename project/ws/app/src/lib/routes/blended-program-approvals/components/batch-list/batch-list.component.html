@@ -45,11 +45,10 @@
         </div>
         <div class="batches-lsit" *ngIf="programData && arcBatchList && arcBatchList.length > 0">
           <div class="grey-box ws-mat-accent-border cursor-pointer margin-bottom-m margin-right-l demo-section"
-            (click)="viewDetails(batch)" *ngFor="let batch of arcBatchList" [matBadge]="batch.newrequestsCount"
-            matBadgeColor="warn">
+            (click)="viewDetails(batch)" *ngFor="let batch of arcBatchList">
             <div class="padding-left-s padding-right-s padding-top-s margin-remove title-div">
               <span class="float-left mat-subheading-1 margin-remove">
-                <span *ngIf="batch.newrequestsCount > 0" class="circle"></span>
+                <!-- <span *ngIf="batch.newrequestsCount > 0" class="circle"></span> -->
                 {{batch.name}}
               </span>
 
