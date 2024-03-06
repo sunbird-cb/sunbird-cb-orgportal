@@ -191,7 +191,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
           })
         })
         this.loaderService.changeLoad.next(false)
-      }, (error: any) => {
+      },                                           (error: any) => {
         this.snackbar.open(_.get(error, 'error.result.errmsg') ||
           'Something went wrong, please try again later!')
       })
@@ -213,7 +213,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   replaceWords(inputString: any, wordConditions: any) {
     return wordConditions.reduce((acc: any, [word, condition]: any) => {
       return acc.replace(new RegExp(word, 'gi'), condition)
-    }, inputString)
+    },                           inputString)
   }
 
   onPaginateChange(event: PageEvent) {
