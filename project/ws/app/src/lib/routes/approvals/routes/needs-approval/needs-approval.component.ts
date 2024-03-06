@@ -28,6 +28,7 @@ export class NeedsApprovalComponent implements OnInit {
   profile!: NSProfileDataV2.IProfile
   profileData: any[] = []
   comment = ''
+  listupdateFieldValues: any[] = []
 
   constructor(
     private needApprService: NeedApprovalsService,
@@ -125,10 +126,14 @@ export class NeedsApprovalComponent implements OnInit {
     req.comment = this.comment
     this.needApprService.handleWorkflow(req).subscribe(res => {
       if (res.result.data) {
-        this.openSnackBar('Request Approved')
+        if (res.result.data.status === 'REJECTED') {
+          this.openSnackBar('Request Rejected Successfully')
+        }
+        else {
+          this.openSnackBar('Request Approved')
+        }
         this.comment = ''
-        this.needApprovalList = this.needApprovalList.filter(wf => wf.wfId !== res.result.data.wfIds[0]
-        )
+        this.needApprovalList = this.needApprovalList.filter(wf => wf.wfId !== res.result.data.wfIds[0])
       }
     })
   }
@@ -136,4 +141,87 @@ export class NeedsApprovalComponent implements OnInit {
   private openSnackBar(message: string) {
     this.matSnackBar.open(message)
   }
+
+  onClickAllHandleWorkflow(approvalList: any[], action: string) {
+    let user1Id = ''
+    let application1Id = ''
+
+    if (approvalList && approvalList.length > 0) {
+      approvalList.forEach(approvalItem => {
+        user1Id = approvalItem.wf.userId
+        application1Id = approvalItem.wf.applicationId
+      })
+    }
+
+    if (action === 'APPROVE') {
+      const dialogRef = this.dialog.open(this.approveDialog, {
+        width: '770px',
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          const req: any = {
+            action,
+            state: 'SEND_FOR_APPROVAL',
+            userId: user1Id,
+            actorUserId: this.userwfData.userInfo.wid,
+            serviceName: 'profile',
+          }
+
+          if (approvalList.length > 0) {
+            approvalList.forEach((approvalAttribute: any) => {
+              this.listupdateFieldValues = JSON.parse(approvalAttribute.wf.updateFieldValues)
+              req['applicationId'] = approvalAttribute.wf.applicationId
+              req['wfId'] = approvalAttribute.wf.wfId
+              req['updateFieldValues'] = this.listupdateFieldValues
+              this.onApproveOrRejectClick(req)
+            })
+          }
+
+        } else {
+          dialogRef.close()
+        }
+      })
+    } else {
+      const dialogRef = this.dialog.open(this.rejectDialog, {
+        width: '770px',
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          const req: any = {
+            action,
+            state: 'SEND_FOR_APPROVAL',
+            userId: user1Id,
+            actorUserId: this.userwfData.userInfo.wid,
+            serviceName: 'profile',
+          }
+
+          if (approvalList.length > 0) {
+            approvalList.forEach((approvalAttribute: any) => {
+              this.listupdateFieldValues = JSON.parse(approvalAttribute.wf.updateFieldValues)
+              req['applicationId'] = approvalAttribute.wf.applicationId
+              req['wfId'] = approvalAttribute.wf.wfId
+              req['updateFieldValues'] = this.listupdateFieldValues
+              this.onApproveOrRejectClick(req)
+            })
+          }
+        } else {
+          dialogRef.close()
+        }
+      })
+    }
+
+    this.events.raiseInteractTelemetry(
+      {
+        type: TelemetryEvents.EnumInteractTypes.CLICK,
+        subType: TelemetryEvents.EnumInteractSubTypes.BTN_CONTENT,
+      },
+      {
+        id: application1Id,
+        type: TelemetryEvents.EnumIdtype.APPLICATION,
+
+      }
+    )
+
+  }
+
 }
