@@ -36,16 +36,15 @@
               <button mat-icon-button aria-label="Reject" id="reject"
                 (click)="onClickAllHandleWorkflow(needApprovalList,'REJECT')">
                 <span class="mat-button-wrapper" style="color: white; padding:13px;"> Reject All </span>
-                <!-- <mat-icon class="reject" style="width:100px;">Reject All</mat-icon> -->
               </button>
               <button mat-icon-button aria-label="Accept" id="accept" class="accept-btn"
                 (click)="onClickAllHandleWorkflow(needApprovalList,'APPROVE')">
                 <span class="mat-button-wrapper" style="color:white; padding:13px;"> Approve All </span>
-                <!-- <mat-icon class="accept" style="width:100px;">Approve All</mat-icon> -->
               </button>
             </div>
           </div>
-          <div class="w-full profile-cols-full bg-grey" *ngIf="needApprovalList.length <= 0">
+          <!--needApprovalList.length <= 0-->
+          <div class="w-full profile-cols-full bg-grey" *ngIf="false">
             <ng-container>
               <div class="appr-label" *ngIf="changeLog">
                 <label class="field-key">{{changeLog.fieldKey}}</label>
