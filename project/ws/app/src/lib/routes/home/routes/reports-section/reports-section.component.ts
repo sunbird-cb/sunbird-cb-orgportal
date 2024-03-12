@@ -132,7 +132,7 @@ export class ReportsSectionComponent implements OnInit {
                   userID: user.id,
                   MDOAdmin: firstName,
                   MDOAdminemail: _.get(user, 'profileDetails.personalDetails.primaryEmail'),
-                  expiryDate: new Date(expireDate),
+                  expiryDate: expireDate >= currentDate ? new Date(expireDate) : '',
                   assigned: expireDate >= currentDate,
                   enableAccessBtn: false,
                 }
@@ -150,7 +150,7 @@ export class ReportsSectionComponent implements OnInit {
           this.adminTableDataSource = response.formatedAdminsList
           if (getNoteDetails) {
             const hasUsers = response.formatedAdminsList && response.formatedAdminsList.length ? true : false
-            this.getNoteList(isMDOLeader, hasUsers, _.get(response, 'currentUserAccessDetails.reportAccessExpiry', ''))
+            this.getNoteList(isMDOLeader, hasUsers, this.datePipe.transform(_.get(response, 'currentUserAccessDetails.reportAccessExpiry'), 'yyyy/MM/dd') || '')
           }
         },
         error: (error: HttpErrorResponse) => {
@@ -174,7 +174,7 @@ export class ReportsSectionComponent implements OnInit {
           `Please grant or renew access to these reports to the MDO Admin very carefully due to Personally Identifiable Information (PII) data security.`
         ]
       } else {
-        const todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd') || ''
+        const todayDate = this.datePipe.transform(new Date(), 'yyyy/MM/dd') || ''
         if (userAccessExpireDate === '') {
           this.hassAccessToreports = false
           this.reportsNoteList = [

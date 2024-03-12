@@ -43,7 +43,7 @@
           Reports
           <mat-icon>download_outlined</mat-icon></button>
       </div>
-      <span class="updatedDate">Last updated on: {{lastUpdatedOn}}</span>
+      <span *ngIf="lastUpdatedOn" class="updatedDate">Last updated on: {{lastUpdatedOn}}</span>
 
       <ng-container *ngIf="showPasswordView">
         <hr class="my-4" style="border-top: 0.1px solid #b9b9b9;">
