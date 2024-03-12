@@ -1,0 +1,126 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  padding: 0px 12px!important;
+}
+
+.table-container{
+  position: relative;
+  width: 100%;
+  @media screen and (max-width: 1024px) {
+    overflow-x: scroll;
+  }
+}
+
+.mat-column-fileName {
+  width: 25% !important;
+}
+.mat-column-dateCreatedOn {
+  width: 20% !important;
+}
+.mat-column-dateUpdatedOn {
+  width: 20% !important;
+}
+
+.text-span {
+  word-break: break-all!important;
+  min-width: 180px!important;
+  display: block;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+  @media screen and (max-width: 1024px) {
+  #upload-data-box {
+    overflow-x: scroll;
+  }
+}
+
+.download-btn {
+  min-width: 112px;
+  width: auto;
+  border: 1px solid #0075B7;
+  border-radius: 4px;
+  color: #0075B7 !important;
+}
+
+.upload-btn {
+  min-width: 112px;
+  width: auto;
+  background: #0075B7 !important;
+  color: white !important;
+}
+
+.upload-btn:disabled {
+  opacity: 0.7;
+}
+
+.file-name {
+  line-height: 2;
+}
+
+.mobile-wrapper {
+  border: 1px dashed rgba(0,0,0,.40);
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.radio-btn{
+  border: 1px solid #ddd;
+  padding: 5px 15px;
+  border-radius: 4px;
+  margin-right: 15px;
+}
+
+::ng-deep .bulkupload-table .mat-column-dateCreatedOn,
+::ng-deep .bulkupload-table .mat-column-dateUpdatedOn {
+  flex: 0 0 14% !important;
+  width: 14% !important;
+}
+
+::ng-deep .bulkupload-table .mat-column-status {
+  flex: 0 0 10% !important;
+  width: 10% !important;
+}
+
+::ng-deep .bulkupload-table .mat-column-fileName {
+  flex: 0 0 28% !important;
+  width: 28% !important;
+}
+
+::ng-deep .bulkupload-table .mat-column-status {
+  flex: 0 0 10% !important;
+  width: 10% !important;
+}
+
+::ng-deep .bulkupload-table .mat-header-cell,
+::ng-deep .bulkupload-table .mat-cell {
+  padding-right: 8px !important;
+}
+
+::ng-deep.textclass {
+  margin: 0 !important;
+}
+
+::ng-deep .bulkupload-table .mat-sort-header-button {
+  line-height: 1.5;
+  text-align: left;
+}

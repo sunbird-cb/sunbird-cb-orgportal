@@ -18,18 +18,30 @@
           <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'toapprove',
               'ws-mat-accent-border font-medium':currentFilter !== 'toapprove'}" mat-button
             (click)="filter('toapprove'); tabTelemetry('toapprove', 0)" role="button">To approve</a>
+
+          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'uploadApprovals',
+                          'ws-mat-accent-border font-medium':currentFilter !== 'uploadApprovals'}" mat-button
+            (click)="filter('uploadApprovals'); tabTelemetry('uploadApprovals', 1)" role="button">File uploads</a>
           <!-- <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'userflags',
               'ws-mat-accent-border font-medium':currentFilter !== 'userflags'}" mat-button
             (click)="filter('userflags')" role="button">User flags</a> -->
         </div>
       </div>
-      <ng-container *ngIf="getTableData && getTableData.length>0">
-        <ws-widget-org-user-table-v2 [tableData]="tabledata" [data]="data" (eOnRowClick)="onApprovalClick($event)"
-          [totalRecords]="approvalTotalCount" (pageChangeClick)="onPaginateChange($event)">
-        </ws-widget-org-user-table-v2>
-      </ng-container>
-      <ng-container *ngIf="!getTableData || getTableData.length<=0">
-        <p class="text-center">No approvals pending</p>
+
+      <ng-container [ngSwitch]="currentFilter">
+        <ng-container *ngSwitchCase="'toapprove'">
+          <ng-container *ngIf="getTableData && getTableData.length>0">
+            <ws-widget-org-user-table-v2 [tableData]="tabledata" [data]="data" (eOnRowClick)="onApprovalClick($event)"
+              [totalRecords]="approvalTotalCount" (pageChangeClick)="onPaginateChange($event)">
+            </ws-widget-org-user-table-v2>
+          </ng-container>
+          <ng-container *ngIf="!getTableData || getTableData.length<=0">
+            <p class="text-center">No approvals pending</p>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'uploadApprovals'">
+          <ws-app-profle-bulk-upload></ws-app-profle-bulk-upload>
+        </ng-container>
       </ng-container>
     </mat-card-content>
   </mat-card>
