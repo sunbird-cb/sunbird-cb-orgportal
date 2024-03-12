@@ -94,7 +94,7 @@ import { ProfleBulkUploadComponent } from './routes/profle-bulk-upload/profle-bu
     TrainingPlanDashboardComponent,
     AdminsTableComponent,
     ReportsVideoComponent,
-    ProfleBulkUploadComponent
+    ProfleBulkUploadComponent,
   ],
   imports: [
     CommonModule,
@@ -148,14 +148,14 @@ import { ProfleBulkUploadComponent } from './routes/profle-bulk-upload/profle-bu
     MatSortModule,
     UsersModule,
     MatDatepickerModule,
-    PipeDurationTransformModule
+    PipeDurationTransformModule,
   ],
   entryComponents: [
     AdduserpopupComponent,
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
-    ReportsVideoComponent
+    ReportsVideoComponent,
   ],
   providers: [
     // CKEditorService,

@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ProfleBulkUploadComponent } from './profle-bulk-upload.component';
+import { ProfleBulkUploadComponent } from './profle-bulk-upload.component'
 
 describe('ProfleBulkUploadComponent', () => {
-  let component: ProfleBulkUploadComponent;
-  let fixture: ComponentFixture<ProfleBulkUploadComponent>;
+  let component: ProfleBulkUploadComponent
+  let fixture: ComponentFixture<ProfleBulkUploadComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfleBulkUploadComponent ]
+      declarations: [ProfleBulkUploadComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProfleBulkUploadComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ProfleBulkUploadComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

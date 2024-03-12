@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common'
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms'
 import { MatSort, MatSnackBar, MatRadioChange } from '@angular/material'
 import { ActivatedRoute } from '@angular/router'
@@ -11,14 +11,14 @@ import { environment } from 'src/environments/environment'
 import { FileService } from '../../../users/services/upload.service'
 import { UsersService } from '../../../users/services/users.service'
 import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/interfaces'
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 @Component({
   selector: 'ws-app-profle-bulk-upload',
   templateUrl: './profle-bulk-upload.component.html',
-  styleUrls: ['./profle-bulk-upload.component.scss']
+  styleUrls: ['./profle-bulk-upload.component.scss'],
 })
-export class ProfleBulkUploadComponent implements OnInit {
+export class ProfleBulkUploadComponent implements OnInit, OnDestroy, AfterViewInit {
 
   tableList!: any[]
   public fileName: any
