@@ -16,7 +16,7 @@ export namespace TelemetryEvents {
     APPROVAL_TAB = 'approval-tab',
     SCROLLY_MENU = 'scrolly-menu',
     NOMINATE_BTN = 'nominate-learners-btn',
-    BTN_DOWNLOAD_REPORTS = 'btn-download-reports'
+    BTN_DOWNLOAD_REPORTS = 'btn-download-reports',
 
   }
   export enum EnumIdtype {

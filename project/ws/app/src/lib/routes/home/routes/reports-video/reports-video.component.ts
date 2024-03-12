@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser'
 @Component({
   selector: 'ws-app-reports-video',
   templateUrl: './reports-video.component.html',
-  styleUrls: ['./reports-video.component.scss']
+  styleUrls: ['./reports-video.component.scss'],
 })
 export class ReportsVideoComponent implements OnInit {
   videoLink = ''
