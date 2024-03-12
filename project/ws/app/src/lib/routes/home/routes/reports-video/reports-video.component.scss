@@ -1,0 +1,27 @@
+.reports-video-content {
+  position: relative;
+  height: 100%;
+}
+
+.popup-close {
+  position: absolute;
+  right: -55px;
+  top: -55px;
+  color: #2f2e2e;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 11px;
+
+  .close-icon {
+    font-size: 30px;
+    margin-top: -4px;
+    margin-left: -3px;
+    pointer-events: all;
+    cursor: pointer;
+  }
+}
+
+::ng-deep.overflow-visable .mat-dialog-container {
+    overflow: visible !important; /* or any other value that suits your needs */
+  }
