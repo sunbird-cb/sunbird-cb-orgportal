@@ -1,0 +1,205 @@
+<div class="flex flex-wrap">
+  <div class="flex flex-row fle-wrap w-full">
+    <mat-card class="my-5 flex-custom ws-mat-accent-border mat-card w-full">
+      <div class="flex flex-row">
+        <form [formGroup]="formGroup" #form class="">
+          <button *ngIf="!fileName" type="button" (click)="fileInput.click()" (dblclick)="$event.preventDefault();"
+            class="download-btn mat-accent-border mat-button mat-button-base">Choose file</button>
+          <label class="file-name mr-5" *ngIf="fileName">Selected file : <b>{{fileName}}</b></label>
+          <input hidden type="file" #fileInput class="" (click)="fileClick($event)" (change)="onFileChange($event)"
+            name="file" placeholder="Choose file" (dblclick)="$event.preventDefault();"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .xlsx, .xls" />
+          <mat-error *ngIf="showFileError">Only .xlsx or .csv files are accepted</mat-error>
+          <form *ngIf="fileName" [formGroup]="registrationForm" class="mobile-wrapper">
+            <ng-container *ngIf="fileName">
+              <label class="file-name mr-5" aria-label="Send OTP to">Send OTP to </label>
+              <div>
+                <mat-radio-group aria-label="Select an option" formControlName='otpType' #otpType
+                  (change)="radioChange($event)">
+                  <mat-radio-button [value]="'email'" color="accent" class="radio-btn">Email</mat-radio-button>
+                  <mat-radio-button [value]="'mobile'" color="accent" class="radio-btn">Mobile</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="fileName && registrationForm.value.otpType==='email'">
+              <ng-container *ngIf="userEmail && !otpEmailSend">
+                <p for="email" class=" margin-remove-bottom margin-top-s" i18n-aria-label aria-label="Email label">
+                  OTP will be sent to your registered email
+                </p>
+              </ng-container>
+              <ng-container *ngIf="!userEmail">
+                <p for="email" class=" margin-remove-bottom margin-top-s" i18n-aria-label aria-label="Email label">
+                  No email associated with your account
+                </p>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="fileName && registrationForm.value.otpType==='mobile'">
+              <ng-container *ngIf="userMobile">
+                <p for="email" class=" margin-remove-bottom margin-top-s" i18n-aria-label aria-label="Email label">
+                  OTP will be sent to your registered mobile number
+                </p>
+              </ng-container>
+              <ng-container *ngIf="!userMobile">
+                <p for="email" class=" margin-remove-bottom margin-top-s" i18n-aria-label aria-label="Email label">
+                  No mobile number associated with your account.
+                  <a *ngIf="getKarmayogiLink" [href]="getKarmayogiLink">
+                    <span i18n>Click here to update</span>
+                  </a>
+                </p>
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="fileName && registrationForm.value.otpType==='email' && userEmail">
+              <div class="input-wrapper margin-top-l">
+                <p class="flex items-center margin-remove-bottom form-label" i18n-aria-label aria-label="Email label"
+                  [hidden]="!isEmailVerified">
+                  OTP has been verified
+                  <mat-icon class="ws-mat-green-text margin-xs" svgIcon="verified"></mat-icon>
+                </p>
+                <div *ngIf="!isEmailVerified" class="flex flex-1  justify-end">
+                  <button *ngIf="!otpEmailSend" mat-raised-button type="button" (click)="sendOtpEmail()"
+                    class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive"
+                    [disabled]="registrationForm?.email?.invalid">
+                    <a class="text-white" i18n>
+                      Send OTP
+                    </a>
+                  </button>
+                  <div *ngIf="otpEmailSend" class="flex flex-1 flex-column">
+                    <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                      <input id="emailOTP" #emailotp type="password" minlength="4" maxlength="6" matInput
+                        placeholder="Enter OTP" i18n-aria-label aria-label="OTP input"
+                        onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
+                      <mat-hint *ngIf="timeLeftforOTPEmail > 0 ">
+                        <span>Resend OTP after {{timeLeftforOTPEmail | pipeDurationTransform: 'hms2M'}}</span>
+                      </mat-hint>
+                      <mat-hint *ngIf="timeLeftforOTPEmail <= 0 ">
+                        <span class="cursor-pointer ws-mat-default-text" (click)="resendOTPEmail()">Resend
+                          OTP</span>
+                      </mat-hint>
+                    </mat-form-field>
+                    <div class="flex flex-1 margin-top-s justify-end">
+                      <button mat-raised-button type="button" (click)="verifyOtpEmail(emailotp)"
+                        class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
+                        [disabled]="registrationForm?.email?.invalid || disableEmailVerifyBtn">
+                        <span class="text-white" i18n>
+                          Verify OTP
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </ng-container>
+            <ng-container *ngIf="fileName && registrationForm.value.otpType==='mobile' && userMobile">
+              <div class="input-wrapper margin-top-l">
+                <p class="flex items-center margin-remove-bottom form-label" i18n-aria-label aria-label="Email label"
+                  [hidden]="!isMobileVerified">
+                  OTP has been verified
+                  <mat-icon class="ws-mat-green-text margin-xs" svgIcon="verified"></mat-icon>
+                </p>
+                <div *ngIf="!isMobileVerified" class="flex flex-1 justify-end">
+                  <button *ngIf="!otpSend" mat-raised-button type="button" (click)="sendOtp()"
+                    class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text btn-responsive"
+                    [disabled]="registrationForm?.mobile?.invalid">
+                    <a class="text-white" i18n>
+                      Send OTP
+                    </a>
+                  </button>
+                  <div *ngIf="otpSend" class="flex flex-1 flex-column">
+                    <mat-form-field appearance="outline" class="margin-top-xs w-full">
+                      <input id="mobileNumber" #otp type="password" minlength="4" maxlength="6" matInput
+                        placeholder="Enter OTP" i18n-aria-label aria-label="OTP input"
+                        onKeyPress="if(this.value.length === 8) return false;" autocomplete="new-password">
+                      <mat-hint *ngIf="timeLeftforOTP > 0 ">
+                        <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform: 'hms2M'}}</span>
+                      </mat-hint>
+                      <mat-hint *ngIf="timeLeftforOTP <= 0 ">
+                        <span class="cursor-pointer ws-mat-default-text" (click)="resendOTP()">Resend
+                          OTP</span>
+                      </mat-hint>
+                      {{otp.errors}}
+                      <mat-error [hidden]="false" *ngIf="otp.errors?.minlength">
+                        Mobile otp is required
+                      </mat-error>
+                    </mat-form-field>
+                    <div class="flex flex-1 margin-top-s justify-end">
+                      <button mat-raised-button type="button" (click)="verifyOtp(otp)"
+                        class="submitBtnSmall text-white ws-mat-primary-background ws-mat-white-text margin-top-s otp"
+                        [disabled]="registrationForm?.mobile?.invalid || disableVerifyBtn">
+                        <span class="text-white" i18n>
+                          Verify OTP
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </form>
+
+          <ng-container *ngIf="fileName && (isEmailVerified || isMobileVerified)">
+            <div class="flex mt-5 items-end justify-start">
+              <div class="text-left mr-5">
+                <button mat-button class="download-btn mat-accent-border mat-button mat-button-base" type="button" i18n
+                  (click)="cancelSelected()" (dblclick)="$event.preventDefault();" *ngIf="fileName">
+                  <ng-container i18n>Cancel</ng-container>
+                </button>
+              </div>
+              <div class="text-left flex">
+
+                <button mat-button class="upload-btn mat-button mat-button-base mr-5" type="submit" i18n
+                  [disabled]="formGroup.invalid || (displayLoader | async)" (click)="onSubmit(form)"
+                  (dblclick)="$event.preventDefault();" *ngIf="fileName">
+                  <ng-container i18n>Upload</ng-container>
+                </button>
+                <div *ngIf="displayLoader | async" class="pr-4 ml-4 flex items-center justify-center">
+                  <mat-spinner [diameter]="30"></mat-spinner>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+        </form>
+        <div class="flex-1 inline-flex items-start justify-end">
+          <button class="download-btn mat-accent-border mat-button mat-button-base" i18n (click)="downloadFile()">
+            <ng-container i18n>Download sample file</ng-container>
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="flex flex-row fle-wrap w-full">
+    <div class="flex-1 inline-flex items-end justify-flex-start">
+      <h2 class="contacts-head">File uploads</h2>
+    </div>
+    <div class="flex-1 inline-flex items-end justify-end">
+      <div class="mb-4 ws-mat-black60-text">
+        Need help? contact us <a class="mat-accent" target="_blank" href="{{contactUsUrl}}">here</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full relative bulkupload-table">
+
+    <ng-container *ngIf="fetching">
+      <div class="example-loading w-full text-center">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!fetching && tableList && tableList.length > 0">
+      <ws-widget-org-user-table [tableData]='tabledata' [data]='tableList' (actionsClick)="downloadFullFile($event)">
+      </ws-widget-org-user-table>
+    </ng-container>
+    <ng-container *ngIf="(!bulkUploadData || !bulkUploadData.length) && !fetching">
+      <h4 class="w-full
+       ws-mat-black60-text text-center">No data to be displayed!</h4>
+    </ng-container>
+  </div>
+</div>
+
+<input type="hidden" i18-value i18-aria-value aria-value="File upload successful..!" [value]="uplaodSuccessMsg"
+  #toastSuccess />
+<input type="hidden" i18-value i18-aria-value aria-value="Unable to process file upload..!"
+  value="Unable to process file upload..!" #toastError />

@@ -67,6 +67,7 @@ import { TrainingPlanDashboardComponent } from './routes/training-plan-dashboard
 import { TrainingPlanDashboardService } from './services/training-plan-dashboard.service'
 import { AdminsTableComponent } from './routes/admins-table/admins-table.component'
 import { ReportsVideoComponent } from './routes/reports-video/reports-video.component'
+import { ProfleBulkUploadComponent } from './routes/profle-bulk-upload/profle-bulk-upload.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -93,6 +94,7 @@ import { ReportsVideoComponent } from './routes/reports-video/reports-video.comp
     TrainingPlanDashboardComponent,
     AdminsTableComponent,
     ReportsVideoComponent,
+    ProfleBulkUploadComponent,
   ],
   imports: [
     CommonModule,
@@ -146,14 +148,14 @@ import { ReportsVideoComponent } from './routes/reports-video/reports-video.comp
     MatSortModule,
     UsersModule,
     MatDatepickerModule,
-    PipeDurationTransformModule
+    PipeDurationTransformModule,
   ],
   entryComponents: [
     AdduserpopupComponent,
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
-    ReportsVideoComponent
+    ReportsVideoComponent,
   ],
   providers: [
     // CKEditorService,
