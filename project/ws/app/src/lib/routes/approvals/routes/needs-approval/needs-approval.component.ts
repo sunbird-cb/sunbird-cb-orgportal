@@ -126,8 +126,7 @@ export class NeedsApprovalComponent implements OnInit {
       if (res.result.data) {
         if (res.result.data.status === 'REJECTED') {
           this.openSnackBar('Request Rejected Successfully')
-        }
-        else {
+        } else {
           this.openSnackBar('Request Approved')
         }
         this.comment = ''

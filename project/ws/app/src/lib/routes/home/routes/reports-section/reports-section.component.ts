@@ -27,15 +27,15 @@ export class ReportsSectionComponent implements OnInit {
   configSvc!: any
   userDetails: any
   lastUpdatedOn: string | null = ''
-  showPasswordView = false;
-  password = '';
-  showPassword = false;
-  showAdminsTable = false;
+  showPasswordView = false
+  password = ''
+  showPassword = false
+  showAdminsTable = false
   adminTableData: any
   adminTableDataSource: any
-  showLoaderOnTable = false;
-  noteLoaded = false;
-  reportsNoteList: string[] = [];
+  showLoaderOnTable = false
+  noteLoaded = false
+  reportsNoteList: string[] = []
   hassAccessToreports = false
   reportsAvailbale = false
   reportsDownlaoding = false
@@ -63,16 +63,16 @@ export class ReportsSectionComponent implements OnInit {
   getReportInfo() {
     this.reportsAvailbale = false
     this.downloadService.getReportInfo().subscribe({
-      next: (response) => {
+      next: response => {
         if (response) {
           this.lastUpdatedOn = response.lastModified ? this.datePipe.transform(response.lastModified, 'dd/MM/yy, hh:mm a') : ''
-          this.reportsAvailbale = response.fileMetaData!.empty === false && response.lastModified ? true : false
+          this.reportsAvailbale = _.get(response, 'fileMetaData.empty') === false && response.lastModified ? true : false
         }
       },
       error: (error: HttpErrorResponse) => {
         const errorMessage = _.get(error, 'error.message', 'Some thing went wrong')
         this.openSnackbar(errorMessage)
-      }
+      },
     })
   }
 
@@ -90,23 +90,23 @@ export class ReportsSectionComponent implements OnInit {
   }
 
   getAdminTableData(getNoteDetails = false) {
-    const isMDOLeader = this.configSvc && this.userDetails!.roles!.includes('MDO_LEADER') ? true : false
+    const isMDOLeader = this.configSvc && this.userDetails.roles.includes('MDO_LEADER') ? true : false
     this.showAdminsTable = isMDOLeader ? true : false
     const filters = {
       request: {
         filters: {
           rootOrgId: this.configSvc.userProfile.rootOrgId,
           'organisations.roles': [
-            isMDOLeader ? 'MDO_ADMIN' : 'MDO_LEADER'
-          ]
-        }
-      }
+            isMDOLeader ? 'MDO_ADMIN' : 'MDO_LEADER',
+          ],
+        },
+      },
     }
     const readAssessEndPoint = isMDOLeader ? 'leader/readaccess' : 'admin/readaccess'
     this.showLoaderOnTable = true
     forkJoin([
       this.downloadService.getAdminsList(filters),
-      this.downloadService.getAccessDetails(readAssessEndPoint)
+      this.downloadService.getAccessDetails(readAssessEndPoint),
     ])
       .pipe(
         mergeMap(([adminDetails, accessDetailsList]) => {
@@ -115,7 +115,7 @@ export class ReportsSectionComponent implements OnInit {
             formatedAdminsList: any[]
           } = {
             currentUserAccessDetails: {},
-            formatedAdminsList: []
+            formatedAdminsList: [],
           }
           if (adminDetails && adminDetails.content) {
             formatedResponse.currentUserAccessDetails = accessDetailsList && accessDetailsList.length > 0 ?
@@ -144,13 +144,14 @@ export class ReportsSectionComponent implements OnInit {
         })
       )
       .subscribe({
-        next: (response) => {
+        next: response => {
           this.showLoaderOnTable = false
           this.noteLoaded = true
           this.adminTableDataSource = response.formatedAdminsList
           if (getNoteDetails) {
             const hasUsers = response.formatedAdminsList && response.formatedAdminsList.length ? true : false
-            this.getNoteList(isMDOLeader, hasUsers, this.datePipe.transform(_.get(response, 'currentUserAccessDetails.reportAccessExpiry'), 'yyyy/MM/dd') || '')
+            this.getNoteList(isMDOLeader, hasUsers, this.datePipe.transform(
+              _.get(response, 'currentUserAccessDetails.reportAccessExpiry'), 'yyyy/MM/dd') || '')
           }
         },
         error: (error: HttpErrorResponse) => {
@@ -160,7 +161,7 @@ export class ReportsSectionComponent implements OnInit {
           this.showLoaderOnTable = false
           const userAccessExpireDate = this.datePipe.transform(_.get(this.userDetails, 'report_access_expiry'), 'yyyy/MM/dd') || ''
           this.getNoteList(isMDOLeader, false, userAccessExpireDate)
-        }
+        },
       })
   }
   //#endregion
@@ -170,31 +171,39 @@ export class ReportsSectionComponent implements OnInit {
       if (isMDOLeader) {
         this.hassAccessToreports = true
         this.reportsNoteList = [
-          `You can grant access to these reports to your existing MDO Admins. Similarly, if you want to onboard new MDO Admins, it can be done in the 'User' tab, and then grant the access.`,
-          `Please grant or renew access to these reports to the MDO Admin very carefully due to Personally Identifiable Information (PII) data security.`
+          `You can grant access to these reports to your existing
+          MDO Admins. Similarly, if you want to onboard new MDO Admins, it can
+          be done in the 'User' tab, and then grant the access.`,
+          `Please grant or renew access to these reports to the MDO Admin
+          very carefully due to Personally Identifiable Information (PII) data security.`,
         ]
       } else {
         const todayDate = this.datePipe.transform(new Date(), 'yyyy/MM/dd') || ''
         if (userAccessExpireDate === '') {
           this.hassAccessToreports = false
           this.reportsNoteList = [
-            `Currently, your MDO Leader has not granted you access to these reports.Kindly contact your MDO Leader to provide you access.`
+            `Currently, your MDO Leader has not granted you access to these
+            reports.Kindly contact your MDO Leader to provide you access.`,
           ]
         } else if (userAccessExpireDate >= todayDate) {
           this.hassAccessToreports = true
           this.reportsNoteList = [
-            `These reports contain Personally Identifiable Information (PII) data. Please use them cautiously.`,
-            `Your access to the report is available until ${userAccessExpireDate}. Please contact your MDO Leader to renew your access.`
+            `These reports contain Personally Identifiable Information (PII) data.
+            Please use them cautiously.`,
+            `Your access to the report is available until ${userAccessExpireDate}.
+            Please contact your MDO Leader to renew your access.`,
           ]
         } else if (userAccessExpireDate < todayDate) {
           this.hassAccessToreports = false
           this.reportsNoteList = [
-            `Your access to reports expired on ${userAccessExpireDate}. Please contact your MDO Leader to renew access.`,
+            `Your access to reports expired on ${userAccessExpireDate}. Please
+            contact your MDO Leader to renew access.`,
           ]
         } else {
           this.hassAccessToreports = false
           this.reportsNoteList = [
-            `Currently, your MDO Leader has not granted you access to these reports.Kindly contact your MDO Leader to provide you access.`
+            `Currently, your MDO Leader has not granted you access to these
+            reports.Kindly contact your MDO Leader to provide you access.`,
           ]
         }
       }
@@ -202,15 +211,23 @@ export class ReportsSectionComponent implements OnInit {
       if (isMDOLeader) {
         this.hassAccessToreports = true
         this.reportsNoteList = [
-          `Your organization doesn’t have an MDO Admin role. Please assign the MDO Admin role in the 'User' tab.`,
-          `After successfully onboarding an MDO Admin, they can be granted access to these reports.`,
-          `Please grant or renew access to these reports to the MDO Admin very carefully due to Personally Identifiable Information (PII) data security.`
+          `Your organization doesn’t have an MDO Admin role. Please assign the
+          MDO Admin role in the 'User' tab.`,
+          `After successfully onboarding an MDO Admin, they can be granted
+          access to these reports.`,
+          `Please grant or renew access to these reports to the MDO Admin very
+          carefully due to Personally Identifiable Information (PII) data security.`,
         ]
       } else {
         this.hassAccessToreports = false
         this.reportsNoteList = [
-          `Your organization does not have an MDO Leader onboarded. Every organization must have a leader assigned to iGOT to access these reports. Please reach out to us at mission.karmayogi@gov.in or connect with us via Video Conferencing by clicking the button below: [Join Now]`,
-          `Once the MDO Leader is onboarded, they will grant you access to download the reports, and you are requested to connect with your MDO Leader for further process.`
+          `Your organization does not have an MDO Leader onboarded.
+          Every organization must have a leader assigned to
+          iGOT to access these reports.
+          Please reach out to us at mission.karmayogi@gov.in or
+          connect with us via Video Conferencing by clicking the button below: [Join Now]`,
+          `Once the MDO Leader is onboarded, they will grant you access to download the
+          reports, and you are requested to connect with your MDO Leader for further process.`,
         ]
       }
     }
@@ -226,7 +243,7 @@ export class ReportsSectionComponent implements OnInit {
         if (response.body) {
           const contentType = response.headers.get('Content-Type')
           const blob = new Blob([response.body], {
-            type: contentType ? contentType : 'application/octet-stream'
+            type: contentType ? contentType : 'application/octet-stream',
           })
           const blobUrl = window.URL.createObjectURL(blob)
           const a = document.createElement('a')
@@ -245,7 +262,7 @@ export class ReportsSectionComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         const errorMessage = _.get(error, 'error.message', 'Some thing went wrong')
         this.openSnackbar(errorMessage)
-      }
+      },
     })
 
   }
@@ -255,7 +272,7 @@ export class ReportsSectionComponent implements OnInit {
       {
         type: TelemetryEvents.EnumInteractTypes.CLICK,
         subType: TelemetryEvents.EnumInteractSubTypes.BTN_DOWNLOAD_REPORTS,
-        id: "report-download",
+        id: 'report-download',
       },
       {},
     )
@@ -265,21 +282,22 @@ export class ReportsSectionComponent implements OnInit {
     const formData = {
       request: {
         userId: rowData.userID,
-        reportExpiryDate: rowData.expiryDate
-      }
+        reportExpiryDate: rowData.expiryDate,
+      },
     }
     this.showLoaderOnTable = true
     this.downloadService.updateAccessToReports(formData).subscribe({
       next: (response: any) => {
-        if (response.result)
+        if (response.result) {
           this.openSnackbar(_.get(response, 'result.message', 'Report access has been granted successfully'))
+        }
         this.getAdminTableData()
       },
       error: (error: HttpErrorResponse) => {
         const errorMessage = _.get(error, 'error.message', 'Some thing went wrong')
         this.openSnackbar(errorMessage)
         this.getAdminTableData()
-      }
+      },
     })
   }
 
@@ -295,12 +313,12 @@ export class ReportsSectionComponent implements OnInit {
   openVideoPopup() {
     this.dialog.open(ReportsVideoComponent, {
       data: {
-        videoLink: 'https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1'
+        videoLink: 'https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1',
       },
       disableClose: true,
       width: '50%',
       height: '60%',
-      panelClass: 'overflow-visable'
+      panelClass: 'overflow-visable',
     })
   }
 

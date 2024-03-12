@@ -5,7 +5,7 @@ import * as _ from 'lodash'
 @Component({
   selector: 'ws-app-admins-table',
   templateUrl: './admins-table.component.html',
-  styleUrls: ['./admins-table.component.scss']
+  styleUrls: ['./admins-table.component.scss'],
 })
 export class AdminsTableComponent implements OnInit {
 
@@ -13,14 +13,14 @@ export class AdminsTableComponent implements OnInit {
   @Input() tableData: any
   dataSource!: any
 
-  @Output() updateAccess = new EventEmitter<any>();
+  @Output() updateAccess = new EventEmitter<any>()
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
       this.dataSource.sort = sort
     }
   }
 
-  minDate = new Date();
+  minDate = new Date()
 
   constructor() {
     this.dataSource = new MatTableDataSource<any>()

@@ -3,8 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
-import _ from 'lodash'
-
+import * as _ from 'lodash'
 
 const API_END_POINTS = {
   GET_REPORTS_INFO: `/apis/proxies/v8/operationalreports/v1/reportInfo`,
@@ -36,7 +35,8 @@ export class DownloadReportService {
   }
 
   getAccessDetails(readAssessEndPoint: string) {
-    return this.http.get<any>(`${API_END_POINTS.GET_ADMINS_ACCESSS_DETAILS}${readAssessEndPoint}`).pipe(map(res => _.get(res, 'result.response')))
+    return this.http.get<any>(`${API_END_POINTS.GET_ADMINS_ACCESSS_DETAILS}${readAssessEndPoint}`)
+      .pipe(map(res => _.get(res, 'result.response')))
   }
 
   updateAccessToReports(formData: any) {
