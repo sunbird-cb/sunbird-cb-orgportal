@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
+import { PipeDurationTransformModule, PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
@@ -20,6 +20,7 @@ import {
   MatRadioModule,
   MatTabsModule,
   MatCheckboxModule,
+  MatDatepickerModule,
 } from '@angular/material'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatPaginatorModule } from '@angular/material/paginator'
@@ -64,6 +65,8 @@ import { BlendedApprovalsComponent } from './routes/blended-approvals/blended-ap
 import { ReportsSectionComponent } from './routes/reports-section/reports-section.component'
 import { TrainingPlanDashboardComponent } from './routes/training-plan-dashboard/training-plan-dashboard.component'
 import { TrainingPlanDashboardService } from './services/training-plan-dashboard.service'
+import { AdminsTableComponent } from './routes/admins-table/admins-table.component'
+import { ReportsVideoComponent } from './routes/reports-video/reports-video.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -88,6 +91,8 @@ import { TrainingPlanDashboardService } from './services/training-plan-dashboard
     BlendedApprovalsComponent,
     ReportsSectionComponent,
     TrainingPlanDashboardComponent,
+    AdminsTableComponent,
+    ReportsVideoComponent,
   ],
   imports: [
     CommonModule,
@@ -140,12 +145,15 @@ import { TrainingPlanDashboardService } from './services/training-plan-dashboard
     MatTooltipModule,
     MatSortModule,
     UsersModule,
+    MatDatepickerModule,
+    PipeDurationTransformModule
   ],
   entryComponents: [
     AdduserpopupComponent,
     StaffdetailspopupComponent,
     BudgetschemepopupComponent,
     BudgetproofspopupComponent,
+    ReportsVideoComponent
   ],
   providers: [
     // CKEditorService,

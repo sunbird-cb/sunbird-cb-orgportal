@@ -1,31 +1,117 @@
-.upload-btn {
-  //width: 150px;
-  border: 1px solid #DEDEDE;
-  border-radius: 4px;
-  color: #848484 !important;
-  font-family: 'Lato';
-  font-weight: 700;
-  font-size: 14px;
-}
+// .upload-btn {
+//   //width: 150px;
+//   border: 1px solid #DEDEDE;
+//   border-radius: 4px;
+//   color: #848484 !important;
+//   font-family: 'Lato';
+//   font-weight: 700;
+//   font-size: 14px;
+// }
 
-::ng-deep .p1-btn {
-  box-shadow: none !important;
-  padding: 0 !important;
-  text-align: left !important;
-  span {
-    text-decoration: underline !important;
-    color: #0075B7 !important;
+// ::ng-deep .p1-btn {
+//   box-shadow: none !important;
+//   padding: 0 !important;
+//   text-align: left !important;
+//   span {
+//     text-decoration: underline !important;
+//     color: #0075B7 !important;
+//   }
+// }
+
+// ::ng-deep .reports-section .cdk-column-reportName .textclass {
+//   cursor: default!important;
+// }
+
+// ::ng-deep .reports-section .cdk-column-reportType .textclass {
+//   cursor: default!important;
+// }
+
+// ::ng-deep .reports-section .cdk-column-reportUpdatedOn .textclass {
+//   cursor: default!important;
+// }
+
+.reports {
+  .infoIcon {
+    rotate: 180deg;
+    color: #000000;
+    opacity: 0.6;
+    font-size: 20px;
+    margin-top: -3px;
+    margin-left: -4px;
+  }
+
+  .reportsDemo {
+    width: 300px;
+
+    .reportsDemoVideo {
+      width: 290px;
+      height: 163px;
+      border-radius: 5px;
+      background-color: #FDEAD5;
+      font-weight: 600;
+      pointer-events: all;
+      cursor: pointer;
+
+      .video_icon {
+        font-size: 32px;
+      }
+    }
+  }
+
+  .btn-reports-downlaod {
+    background: #1b4ca1 !important;
+    color: white !important;
+    font-family: 'Lato';
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .disable-btn {
+    opacity: 0.6;
+  }
+
+  .updatedDate {
+    color: gray;
+    font-size: 12px;
+  }
+
+  .password-lable {
+    font-weight: 600;
+  }
+
+  .password {
+    width: 50%;
+
+    .password-input {
+      width: calc(100% - 50px);
+
+      ::ng-deep .mat-form-field-infix {
+        display: flex;
+        padding-top: 0.6rem;
+      }
+    }
+
+    .eye-icon {
+      cursor: pointer;
+      color: #000000;
+      opacity: 0.6;
+    }
+
+    .copy-icon {
+      cursor: copy;
+      margin-bottom: 10px;
+      color: #000000;
+      opacity: 0.6;
+    }
   }
 }
 
-::ng-deep .reports-section .cdk-column-reportName .textclass {
-  cursor: default!important;
+.reports-loader {
+  position: fixed;
+  top: calc(50vh - 25px);
+  left: calc(50% + 135px);
 }
 
-::ng-deep .reports-section .cdk-column-reportType .textclass {
-  cursor: default!important;
-}
-
-::ng-deep .reports-section .cdk-column-reportUpdatedOn .textclass {
-  cursor: default!important;
+.fullHeigh {
+  height: 75vh;
 }

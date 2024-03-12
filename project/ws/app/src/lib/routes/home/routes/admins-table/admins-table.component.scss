@@ -1,0 +1,59 @@
+
+
+.successText {
+  color: #1D8923;
+}
+
+.disableAccessBtn {
+  background-color: #212529 !important;
+  color: white !important;
+  pointer-events: none !important;
+  width: 125px;
+  opacity: 0.7;
+}
+
+.enableAccessBtn {
+  background-color: #1b4ca1 !important;
+  color: white !important;
+  width: 125px;
+}
+
+.mat-header-cell {
+    background-color: #f5f5f5;
+}
+
+.mat-header-row {
+    min-height: 40px;
+}
+
+.SNoCell {
+  max-width: 100px;
+}
+
+.expireDateForm {
+  width: 185px;
+
+  //To make form border radious
+  ::ng-deep .mat-form-field-outline-start {
+    border-radius: 28px 0 0 28px !important;
+    min-width: 28px !important;
+  }
+
+  ::ng-deep .mat-form-field-outline-end {
+    border-radius: 0 28px 28px 0 !important;
+    min-width: 28px !important;
+  }
+
+  //To adjust height
+  ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0.5em 0.7em !important;}
+  ::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
+
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    padding: 1rem 0rem;
+  }
+}
