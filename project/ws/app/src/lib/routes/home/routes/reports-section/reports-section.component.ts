@@ -65,7 +65,7 @@ export class ReportsSectionComponent implements OnInit {
     this.downloadService.getReportInfo().subscribe({
       next: response => {
         if (response) {
-          this.lastUpdatedOn = response.lastModified ? this.datePipe.transform(response.lastModified, 'dd/MM/yy, hh:mm a') : ''
+          this.lastUpdatedOn = response.lastModified ? this.datePipe.transform(response.lastModified, 'dd/MM/yyyy, hh:mm a') : ''
           this.reportsAvailbale = _.get(response, 'fileMetaData.empty') === false && response.lastModified ? true : false
         }
       },
