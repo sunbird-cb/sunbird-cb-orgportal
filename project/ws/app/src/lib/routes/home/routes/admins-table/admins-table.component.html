@@ -20,15 +20,15 @@
           </ng-container>
           <ng-container *ngSwitchCase="'datePicker'">
             <mat-form-field color="accent" appearance="outline" class="expireDateForm">
-              <input matInput [matDatepicker]="expireDate" placeholder="Enter date" [(ngModel)]="element[col.key]"
-                [min]="minDate" (dateChange)="enableAccessBtn(element)">
+              <input matInput readonly [matDatepicker]="expireDate" placeholder="Enter date"
+                [(ngModel)]="element[col.key]" [min]="minDate" [max]="maxDate" (dateChange)="enableAccessBtn(element)">
               <mat-datepicker-toggle matSuffix [for]="expireDate">
               </mat-datepicker-toggle>
               <mat-datepicker #expireDate></mat-datepicker>
             </mat-form-field>
           </ng-container>
           <ng-container *ngSwitchCase="'action'">
-            <ng-container *ngIf="element[col.key] ===true; else giveAccess">
+            <ng-container *ngIf="element[col.key] === true; else giveAccess">
               <div class="flex successText">
                 <mat-icon class="mr-2">check_circle</mat-icon>
                 <span>Access Given</span>
@@ -44,7 +44,7 @@
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="getFinalColumns()"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection.toggle(row);">
+      <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection && selection.toggle(row);">
       </mat-row>
     </mat-table>
   </div>

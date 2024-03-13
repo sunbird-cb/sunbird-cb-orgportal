@@ -308,6 +308,7 @@ export class ReportsSectionComponent implements OnInit {
     dummyTextArea.select()
     document.execCommand('copy')
     document.body.removeChild(dummyTextArea)
+    this.openSnackbar('Copied to clipboard.')
   }
 
   openVideoPopup() {

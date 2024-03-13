@@ -64,7 +64,9 @@
           <div class="flex flex-middle password justify-between">
             <mat-form-field appearance="outline" class="margin-top-xs password-input">
               <input [type]="showPassword ? 'text' : 'password'" matInput [(ngModel)]="password" readonly>
-              <mat-icon (click)="showPassword = !showPassword" class="eye-icon">visibility</mat-icon>
+              <mat-icon (click)="showPassword = !showPassword" class="eye-icon">
+                {{showPassword ? 'visibility' : 'visibility_off'}}
+              </mat-icon>
             </mat-form-field>
             <mat-icon class="copy-icon" (click)="copyToClipboard()">content_copy</mat-icon>
           </div>
