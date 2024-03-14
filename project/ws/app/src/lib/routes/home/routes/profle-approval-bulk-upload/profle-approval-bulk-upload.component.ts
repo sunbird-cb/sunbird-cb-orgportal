@@ -14,11 +14,11 @@ import { ITableData } from '@sunbird-cb/collection/lib/ui-org-table/interface/in
 import * as _ from 'lodash'
 
 @Component({
-  selector: 'ws-app-profle-bulk-upload',
-  templateUrl: './profle-bulk-upload.component.html',
-  styleUrls: ['./profle-bulk-upload.component.scss'],
+  selector: 'ws-app-profle-approval-bulk-upload',
+  templateUrl: './profle-approval-bulk-upload.component.html',
+  styleUrls: ['./profle-approval-bulk-upload.component.scss'],
 })
-export class ProfleBulkUploadComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ProfleApprovalBulkUploadComponent implements OnInit, OnDestroy, AfterViewInit {
 
   tableList!: any[]
   public fileName: any
@@ -141,6 +141,7 @@ export class ProfleBulkUploadComponent implements OnInit, OnDestroy, AfterViewIn
       actions: [{ icon: 'download', label: 'Download file', name: 'DownloadFile', type: 'link', disabled: false }],
       actionColumnName: 'Download file',
     }
+
     this.getBulkUploadData()
     this.onPhoneChange()
     this.onEmailChange()
@@ -257,9 +258,7 @@ export class ProfleBulkUploadComponent implements OnInit, OnDestroy, AfterViewIn
     this.disableVerifyBtn = false
   }
 
-  public refreshTable() {
-    this.getBulkUploadData()
-  }
+
   public downloadFile(): void {
     this.fileService.download(this.downloadSampleFilePath, this.downloadAsFileName)
   }

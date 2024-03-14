@@ -67,7 +67,7 @@ import { TrainingPlanDashboardComponent } from './routes/training-plan-dashboard
 import { TrainingPlanDashboardService } from './services/training-plan-dashboard.service'
 import { AdminsTableComponent } from './routes/admins-table/admins-table.component'
 import { ReportsVideoComponent } from './routes/reports-video/reports-video.component'
-import { ProfleBulkUploadComponent } from './routes/profle-bulk-upload/profle-bulk-upload.component'
+import { ProfleApprovalBulkUploadComponent } from './routes/profle-approval-bulk-upload/profle-approval-bulk-upload.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -94,7 +94,7 @@ import { ProfleBulkUploadComponent } from './routes/profle-bulk-upload/profle-bu
     TrainingPlanDashboardComponent,
     AdminsTableComponent,
     ReportsVideoComponent,
-    ProfleBulkUploadComponent,
+    ProfleApprovalBulkUploadComponent,
   ],
   imports: [
     CommonModule,
