@@ -188,7 +188,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   replaceWords(inputString: any, wordConditions: any) {
     return wordConditions.reduce((acc: any, [word, condition]: any) => {
       return acc.replace(new RegExp(word, 'gi'), condition)
-    }, inputString)
+    },                           inputString)
   }
 
   onPaginateChange(event: PageEvent) {
