@@ -59,7 +59,6 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentFilter = this.route.snapshot.params['tab']
-    console.log("this.currentFilter ", this.currentFilter)
     if (this.currentFilter === 'pending') {
       this.fetchApprovals()
     }
@@ -189,7 +188,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   replaceWords(inputString: any, wordConditions: any) {
     return wordConditions.reduce((acc: any, [word, condition]: any) => {
       return acc.replace(new RegExp(word, 'gi'), condition)
-    }, inputString)
+    },                           inputString)
   }
 
   onPaginateChange(event: PageEvent) {

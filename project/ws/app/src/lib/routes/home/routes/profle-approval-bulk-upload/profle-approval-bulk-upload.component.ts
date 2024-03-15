@@ -258,7 +258,6 @@ export class ProfleApprovalBulkUploadComponent implements OnInit, OnDestroy, Aft
     this.disableVerifyBtn = false
   }
 
-
   public downloadFile(): void {
     this.fileService.download(this.downloadSampleFilePath, this.downloadAsFileName)
   }
