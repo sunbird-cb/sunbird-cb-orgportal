@@ -51,16 +51,18 @@ export class NeedsApprovalComponent implements OnInit {
                   const labelKey = Object.keys(field.toValue)[0]
                   const feildNameObj = this.profileData.filter(userData => userData.key === labelKey)[0]
 
-                  this.needApprovalList.push(
-                    Object.assign({
-                      wf,
-                      feildName: labelKey,
-                      label: feildNameObj ? feildNameObj.name : null,
-                      value: field.toValue[labelKey],
-                      fieldKey: field.fieldKey,
-                      wfId: wf.wfId,
-                    })
-                  )
+                  if (feildNameObj !== undefined) {
+                    this.needApprovalList.push(
+                      Object.assign({
+                        wf,
+                        feildName: labelKey,
+                        label: feildNameObj ? feildNameObj.name : null,
+                        value: field.toValue[labelKey],
+                        fieldKey: field.fieldKey,
+                        wfId: wf.wfId,
+                      })
+                    )
+                  }
                 })
               }
             }
