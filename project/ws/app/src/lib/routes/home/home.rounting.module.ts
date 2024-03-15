@@ -95,11 +95,32 @@ const routes: Routes = [
         },
       },
       {
-        path: 'approvals',
+        path: 'approvals/:tab',
         component: ApprovalsComponent,
         data: {
           pageId: 'approvals',
           module: 'Approvals',
+          pageType: 'feature',
+          pageKey: 'approval-view',
+        },
+        resolve: {
+          pageData: PageResolve,
+          configService: ConfigResolveService,
+        },
+      },
+      {
+        path: 'approvals',
+        redirectTo: 'approvals/pending',
+        component: ApprovalsComponent,
+        resolve: {
+          pageData: PageResolve,
+          configService: ConfigResolveService,
+        },
+        data: {
+          pageId: 'approvals',
+          module: 'Approvals',
+          pageType: 'feature',
+          pageKey: 'approval-view',
         },
       },
       {

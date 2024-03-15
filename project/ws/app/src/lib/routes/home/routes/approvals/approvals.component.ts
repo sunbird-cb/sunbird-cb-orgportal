@@ -17,7 +17,7 @@ import { TelemetryEvents } from '../../../../head/_services/telemetry.event.mode
 })
 export class ApprovalsComponent implements OnInit, OnDestroy {
   data: any = []
-  currentFilter = 'toapprove'
+  currentFilter = 'pending'
   discussionList!: any
   discussProfileData!: any
   departName = ''
@@ -58,34 +58,20 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.fetchApprovals()
+    this.currentFilter = this.route.snapshot.params['tab']
+    console.log("this.currentFilter ", this.currentFilter)
+    if (this.currentFilter === 'pending') {
+      this.fetchApprovals()
+    }
   }
 
   filter(key: string | 'timestamp' | 'best' | 'saved') {
     if (key) {
       this.currentFilter = key
-      switch (key) {
-        case 'toapprove':
-          this.fetchApprovals()
-          break
-        case 'userflags':
-          this.data = [{
-            fullname: 'Nancy Jimenez',
-            requestedon: new Date(),
-            fields: 'Period,Position',
-          }]
-          break
-
-        default:
-          break
+      if (key === 'pending') {
+        this.fetchApprovals()
       }
     }
-    // this.events.raiseInteractTelemetry(
-    //   {
-    //     type: TelemetryEvents.EnumInteractTypes.CLICK,
-    //     subType: TelemetryEvents.EnumInteractSubTypes.TAB_CONTENT,
-    //   }, {}
-    // )
   }
 
   public tabTelemetry(label: string, index: number) {
@@ -203,7 +189,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   replaceWords(inputString: any, wordConditions: any) {
     return wordConditions.reduce((acc: any, [word, condition]: any) => {
       return acc.replace(new RegExp(word, 'gi'), condition)
-    },                           inputString)
+    }, inputString)
   }
 
   onPaginateChange(event: PageEvent) {
