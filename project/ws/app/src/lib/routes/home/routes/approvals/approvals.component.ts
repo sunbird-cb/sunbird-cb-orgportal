@@ -59,7 +59,6 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentFilter = this.route.snapshot.params['tab']
-    console.log("this.currentFilter ", this.currentFilter)
     if (this.currentFilter === 'pending') {
       this.fetchApprovals()
     }
