@@ -1,4 +1,4 @@
-<ng-container *ngIf="dataSource && dataSource.data.length > 0; else noDataFount">
+<ng-container *ngIf="dataSource && dataSource?.data?.length > 0; else noDataFount">
   <div>
     <mat-table #table matSort [matSortActive]="tableHeaders!.sortColumn" [matSortDirection]="tableHeaders!.sortState"
       [dataSource]="dataSource" class="example-table table1 responsiveTable">
