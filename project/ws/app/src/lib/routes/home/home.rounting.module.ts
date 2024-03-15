@@ -48,7 +48,7 @@ const routes: Routes = [
         path: 'users/:tab',
         component: UsersViewComponent,
         resolve: {
-          usersList: UsersListResolve,
+          // usersList: UsersListResolve,
           pageData: PageResolve,
           configService: ConfigResolveService,
         },

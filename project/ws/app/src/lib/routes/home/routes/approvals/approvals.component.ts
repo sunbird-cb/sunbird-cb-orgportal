@@ -9,6 +9,7 @@ import { MatSnackBar, PageEvent } from '@angular/material'
 import _ from 'lodash'
 import { EventService } from '@sunbird-cb/utils'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import { LoaderService } from '../../../../../../../../../src/app/services/loader.service'
 /* tslint:enable */
 @Component({
   selector: 'ws-app-approvals',
@@ -49,7 +50,8 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
     private activeRouter: ActivatedRoute,
     private route: ActivatedRoute,
     private events: EventService,
-    private snackbar: MatSnackBar) {
+    private snackbar: MatSnackBar,
+    private loaderService: LoaderService) {
     this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     if (this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService.unMappedUser.channel
     ) {
@@ -119,6 +121,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   }
 
   fetchApprovals() {
+    this.loaderService.changeLoad.next(true)
     const conditions = [
       ['location', 'Country'],
       ['designation', 'Designation'],
@@ -129,7 +132,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
       ['industryOther', 'Other Industry'],
       ['doj', 'Date of Joining'],
       ['organisationType', 'Type of Organisation'],
-      ['orgDesc', 'Organisation Description'],
+      ['description', 'Organisation Description'],
       ['verifiedKarmayogi', 'Verified Karmayogi'],
     ]
 
@@ -155,18 +158,21 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
               if (fields.length > 0) {
                 fields.forEach((field: any) => {
                   if (Object.keys(field.fromValue).length > 0) {
-
-                    keys += `${_.first(Object.keys(field.fromValue))}, `
+                    if (!field.fromValue.hasOwnProperty('osid')) {
+                      keys += `${_.first(Object.keys(field.fromValue))}, `
+                    }
                   } else {
-                    keys += `${_.first(Object.keys(field.toValue))}, `
+                    if (!field.toValue.hasOwnProperty('osid')) {
+                      keys += `${_.first(Object.keys(field.toValue))}, `
+                    }
                   }
                 })
               }
             }
           })
+          keys = keys.replace(/,\s*$/, '')
 
           this.data.push({
-
             fullname: approval.userInfo ? `${approval.userInfo.first_name}` : '--',
             // fullname: approval.userInfo ? `${approval.userInfo.first_name} ${approval.userInfo.last_name}` : '--',
             // requestedon: `${currentdate.getDate()}
@@ -184,6 +190,10 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
             tag: (approval.userInfo && approval.userInfo.tag) ? `${approval.userInfo.tag}` : '',
           })
         })
+        this.loaderService.changeLoad.next(false)
+      },                                           (error: any) => {
+        this.snackbar.open(_.get(error, 'error.result.errmsg') ||
+          'Something went wrong, please try again later!')
       })
     } else {
       this.snackbar.open('Please connect to your SPV admin, to update MDO name.')
