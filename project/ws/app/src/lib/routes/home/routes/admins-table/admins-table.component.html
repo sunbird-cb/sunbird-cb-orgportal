@@ -21,7 +21,8 @@
           <ng-container *ngSwitchCase="'datePicker'">
             <mat-form-field color="accent" appearance="outline" class="expireDateForm">
               <input matInput readonly [matDatepicker]="expireDate" placeholder="Enter date"
-                [(ngModel)]="element[col.key]" [min]="minDate" [max]="maxDate" (dateChange)="enableAccessBtn(element)">
+                [(ngModel)]="element[col.key]" [min]="element['startDate']" [max]="maxDate"
+                (dateChange)="enableAccessBtn(element)">
               <mat-datepicker-toggle matSuffix [for]="expireDate">
               </mat-datepicker-toggle>
               <mat-datepicker #expireDate></mat-datepicker>
@@ -35,10 +36,19 @@
               </div>
             </ng-container>
             <ng-template #giveAccess>
-              <button mat-button [ngClass]="element.enableAccessBtn ? 'enableAccessBtn' : 'disableAccessBtn'"
-                (click)="emitSelectedDate(element)">
-                Give Access
-              </button>
+              <div *ngIf="element['buttonText'] === 'Access Expired'">
+                <div class="flex dangerText">
+                  <mat-icon class="mr-2">info</mat-icon>
+                  <span>{{element['buttonText']}}</span>
+                </div>
+              </div>
+              <div *ngIf="element['buttonText'] !== 'Access Expired'">
+                <button mat-button [ngClass]="element.enableAccessBtn ? 'enableAccessBtn' : 'disableAccessBtn'"
+                  (click)="emitSelectedDate(element)">
+                  {{element['buttonText']}}
+                </button>
+              </div>
+
             </ng-template>
           </ng-container>
         </mat-cell>

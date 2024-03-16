@@ -65,6 +65,9 @@ export class AdminsTableComponent implements OnInit {
   enableAccessBtn(rowData: any) {
     rowData.enableAccessBtn = true
     rowData.assigned = false
+    if (rowData.preExpiryDate) {
+      rowData.buttonText = 'Update Access'
+    }
   }
 
   emitSelectedDate(rowData: any) {

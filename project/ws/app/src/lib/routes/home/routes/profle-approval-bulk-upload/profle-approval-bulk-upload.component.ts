@@ -160,19 +160,19 @@ export class ProfleApprovalBulkUploadComponent implements OnInit, OnDestroy, Aft
   }
 
   getBulkUploadData() {
-    this.fileService.getBulkUploadDataV1(this.rootOrgId).subscribe((res: any) => {
+    this.fileService.getBulkApprovalUploadDataV1().subscribe((res: any) => {
       this.tableList = []
-      if (res.result && res.result.content) {
-        this.bulkUploadData = res.result.content
+      if (res.result && res.result.response) {
+        this.bulkUploadData = res.result.response
         this.bulkUploadData.forEach((element: any) => {
           this.tableList.push({
-            fileName: element.fileName,
+            fileName: element.filename,
             status: element.status ? element.status : '',
             failedRecordsCount: element.failedRecordsCount ? element.failedRecordsCount : 0,
             successfulRecordsCount: element.successfulRecordsCount ? element.successfulRecordsCount : 0,
             totalRecords: element.totalRecords ? element.totalRecords : 0,
-            dateCreatedOn: element.dateCreatedOn ? element.dateCreatedOn : '',
-            dateUpdatedOn: element.dateUpdatedOn ? element.dateUpdatedOn : '',
+            dateCreatedOn: element.datecreatedon ? element.datecreatedon : '',
+            dateUpdatedOn: element.dateupdatedon ? element.dateupdatedon : '',
           })
         })
         this.fetching = false
@@ -225,7 +225,7 @@ export class ProfleApprovalBulkUploadComponent implements OnInit, OnDestroy, Aft
         const formData: FormData = new FormData()
         formData.append('data', this.fileSelected, this.fileName)
         // tslint:disable-next-line: no-non-null-assertion
-        this.fileService.upload(this.fileName, formData)
+        this.fileService.uploadApproval(this.fileName, formData)
           .subscribe(
             _res => {
               // this.uplaodSuccessMsg = res
@@ -279,7 +279,7 @@ export class ProfleApprovalBulkUploadComponent implements OnInit, OnDestroy, Aft
   }
 
   downloadFullFile(event: any) {
-    const url = `/apis/proxies/v8/user/v1/bulkuser/download/${event.row.fileName}`
+    const url = `/apis/proxies/v8/workflow/admin/bulkuploadfile/download/${event.row.fileName}`
     window.open(url, '_blank')
   }
 

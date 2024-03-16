@@ -11,6 +11,8 @@ const API_ENDPOINTS = {
   // getBulkUploadData: '/apis/protected/v8/admin/userRegistration/bulkUploadData',
   getBulkUploadData: '/apis/proxies/v8/user/v1/bulkupload',
   // downloadfile: '/apis/proxies/v8/user/v1/bulkuser/download',
+  getBulkApproval: '/apis/proxies/v8/workflow/admin/bulkupdate/getstatus',
+  bulkApprovalUpload: `/apis/proxies/v8/workflow/admin/transition/bulkupdate`,
 }
 
 @Injectable()
@@ -86,6 +88,16 @@ export class FileService {
 
   public getBulkUploadDataV1(rootOrgId: any): Observable<any> {
     return this.http.get(`${API_ENDPOINTS.getBulkUploadData}/${rootOrgId}`)
+  }
+
+  public getBulkApprovalUploadDataV1(): Observable<any> {
+    return this.http.get(`${API_ENDPOINTS.getBulkApproval}`)
+  }
+
+  public uploadApproval(_fileName: string, fileContent: FormData): Observable<any> {
+    this.displayLoader$.next(true)
+    return this.http.post<any>(API_ENDPOINTS.bulkApprovalUpload, fileContent)
+      .pipe(finalize(() => this.displayLoader$.next(false)))
   }
 
   // public downloadFile(filename: string) {
