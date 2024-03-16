@@ -128,13 +128,23 @@ export class ReportsSectionComponent implements OnInit {
                 const expireDate = this.datePipe.transform(_.get(accessDetails, 'reportAccessExpiry', ''), 'yyyy/MM/dd') || ''
                 const firstName = _.get(user, 'firstName', '')
                 // const fullName = user.lastName ? `${user.lastName}' '${firstName}` : firstName
+
+                let _startDate = new Date()
+                if (expireDate) {
+                  if (expireDate < currentDate) {
+                    _startDate = new Date(expireDate)
+                  }
+                }
                 const formatedUserDetails = {
                   userID: user.id,
                   MDOAdmin: firstName,
                   MDOAdminemail: _.get(user, 'profileDetails.personalDetails.primaryEmail'),
-                  expiryDate: expireDate >= currentDate ? new Date(expireDate) : '',
+                  expiryDate: expireDate ? new Date(expireDate) : '',
                   assigned: expireDate >= currentDate,
                   enableAccessBtn: false,
+                  buttonText: expireDate && expireDate < currentDate ? 'Access Expired' : 'Give Access',
+                  preExpiryDate: expireDate,
+                  startDate: _startDate,
                 }
                 formatedResponse.formatedAdminsList.push(formatedUserDetails)
               }
@@ -173,7 +183,7 @@ export class ReportsSectionComponent implements OnInit {
         this.reportsNoteList = [
           `You can grant access to these reports to your existing
           MDO Admins. Similarly, if you want to onboard new MDO Admins, it can
-          be done in the 'User' tab, and then grant the access.`,
+          be done in the 'Users' tab, and then grant the access.`,
           `Please grant or renew access to these reports to the MDO Admin
           very carefully due to Personally Identifiable Information (PII) data security.`,
         ]
@@ -308,7 +318,7 @@ export class ReportsSectionComponent implements OnInit {
     dummyTextArea.select()
     document.execCommand('copy')
     document.body.removeChild(dummyTextArea)
-    this.openSnackbar('Copied to clipboard.')
+    this.openSnackbar('Password copied to clipboard.')
   }
 
   openVideoPopup() {
