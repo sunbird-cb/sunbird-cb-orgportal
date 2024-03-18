@@ -162,8 +162,8 @@ export class ProfleApprovalBulkUploadComponent implements OnInit, OnDestroy, Aft
   getBulkUploadData() {
     this.fileService.getBulkApprovalUploadDataV1().subscribe((res: any) => {
       this.tableList = []
-      if (res.result && res.result.response) {
-        this.bulkUploadData = res.result.response
+      if (res.result && res.result.content) {
+        this.bulkUploadData = res.result.content
         this.bulkUploadData.forEach((element: any) => {
           this.tableList.push({
             fileName: element.filename,
