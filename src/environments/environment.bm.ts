@@ -11,4 +11,5 @@ export const environment = {
   domainName: (window as { [key: string]: any })['env']['domainName'] || '',
   mdoPath: (window as { [key: string]: any })['env']['mdoPath'] || '',
   resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
+  teamsUrl: (window as { [key: string]: any })['env']['teamsUrl'] || '',
 }

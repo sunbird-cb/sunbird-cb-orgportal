@@ -10,6 +10,8 @@ import { ReportsVideoComponent } from '../reports-video/reports-video.component'
 import { EventService } from '@sunbird-cb/utils'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http'
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
+import { environment } from '../../../../../../../../../src/environments/environment'
 
 @Component({
   selector: 'ws-app-reports-section',
@@ -39,17 +41,19 @@ export class ReportsSectionComponent implements OnInit {
   hassAccessToreports = false
   reportsAvailbale = false
   reportsDownlaoding = false
-
+  teamUrl: any
   constructor(
     private activeRouter: ActivatedRoute,
     private downloadService: DownloadReportService,
     private datePipe: DatePipe,
     private dialog: MatDialog,
     private events: EventService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private sanitizer: DomSanitizer,
   ) {
     this.configSvc = this.activeRouter.parent && this.activeRouter.parent.snapshot.data.configService
     this.userDetails = this.configSvc.unMappedUser
+    this.teamUrl = environment.teamsUrl
   }
 
   ngOnInit() {
@@ -58,6 +62,10 @@ export class ReportsSectionComponent implements OnInit {
     this.getReportInfo()
     this.setTableHeaders()
     this.getAdminTableData(getNoteDetails)
+  }
+
+  sanitizeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html)
   }
 
   getReportInfo() {
@@ -235,7 +243,8 @@ export class ReportsSectionComponent implements OnInit {
           Every organization must have a leader assigned to
           iGOT to access these reports.
           Please reach out to us at mission.karmayogi@gov.in or
-          connect with us via Video Conferencing by clicking the button below: [Join Now]`,
+          connect with us via Video Conferencing by clicking the button below:
+          [<a target='_blank' href='${this.teamUrl}'>Join Now</a>]`,
           `Once the MDO Leader is onboarded, they will grant you access to download the
           reports, and you are requested to connect with your MDO Leader for further process.`,
         ]
