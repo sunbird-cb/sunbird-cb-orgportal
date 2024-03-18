@@ -15,6 +15,7 @@ export const environment: IEnvironment = {
   domainName: (window as { [key: string]: any })['env']['domainName'] || '',
   mdoPath: (window as { [key: string]: any })['env']['mdoPath'] || '',
   resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
+  teamsUrl: (window as { [key: string]: any })['env']['teamsUrl'] || '',
 }
 interface IEnvironment {
   name: null | string
@@ -29,6 +30,7 @@ interface IEnvironment {
   domainName?: string
   mdoPath: string,
   resendOTPTIme: number,
+  teamsUrl?: string,
 }
 
 /*

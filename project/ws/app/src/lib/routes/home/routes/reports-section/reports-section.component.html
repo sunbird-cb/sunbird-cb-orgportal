@@ -12,7 +12,7 @@
               <div>
                 <mat-icon class="infoIcon">info_outlined</mat-icon>
               </div>
-              <div>{{note}}</div>
+              <div [innerHTML]="sanitizeHtml(note)"></div>
             </div>
           </ng-container>
         </div>
