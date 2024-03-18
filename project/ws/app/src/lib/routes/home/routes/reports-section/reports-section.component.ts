@@ -230,7 +230,7 @@ export class ReportsSectionComponent implements OnInit {
         this.hassAccessToreports = true
         this.reportsNoteList = [
           `Your organization doesn’t have an MDO Admin role. Please assign the
-          MDO Admin role in the 'User' tab.`,
+          MDO Admin role in the 'Users' tab.`,
           `After successfully onboarding an MDO Admin, they can be granted
           access to these reports.`,
           `Please grant or renew access to these reports to the MDO Admin very
