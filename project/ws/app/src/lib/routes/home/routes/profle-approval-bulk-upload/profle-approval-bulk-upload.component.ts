@@ -168,9 +168,9 @@ export class ProfleApprovalBulkUploadComponent implements OnInit, OnDestroy, Aft
           this.tableList.push({
             fileName: element.filename,
             status: element.status ? element.status : '',
-            failedRecordsCount: element.failedRecordsCount ? element.failedRecordsCount : 0,
-            successfulRecordsCount: element.successfulRecordsCount ? element.successfulRecordsCount : 0,
-            totalRecords: element.totalRecords ? element.totalRecords : 0,
+            failedRecordsCount: element.failedrecordscount ? element.failedrecordscount : 0,
+            successfulRecordsCount: element.successfulrecordscount ? element.successfulrecordscount : 0,
+            totalRecords: element.totalrecords ? element.totalrecords : 0,
             dateCreatedOn: element.datecreatedon ? element.datecreatedon : '',
             dateUpdatedOn: element.dateupdatedon ? element.dateupdatedon : '',
           })
