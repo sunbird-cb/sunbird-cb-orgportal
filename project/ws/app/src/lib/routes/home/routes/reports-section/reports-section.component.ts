@@ -208,13 +208,13 @@ export class ReportsSectionComponent implements OnInit {
           this.reportsNoteList = [
             `These reports contain Personally Identifiable Information (PII) data.
             Please use them cautiously.`,
-            `Your access to the report is available until ${userAccessExpireDate}.
+            `Your access to the report is available until ${this.datePipe.transform(userAccessExpireDate, 'dd/MM/yyyy')}.
             Please contact your MDO Leader to renew your access.`,
           ]
         } else if (userAccessExpireDate < todayDate) {
           this.hassAccessToreports = false
           this.reportsNoteList = [
-            `Your access to reports expired on ${userAccessExpireDate}. Please
+            `Your access to reports expired on ${this.datePipe.transform(userAccessExpireDate, 'dd/MM/yyyy')}. Please
             contact your MDO Leader to renew access.`,
           ]
         } else {
