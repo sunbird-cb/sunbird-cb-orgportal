@@ -31,6 +31,12 @@
 // }
 
 .reports {
+  .section-1 {
+    width: 80%;
+  }
+  .section-2 {
+    width: 20%;
+  }
   .infoIcon {
     rotate: 180deg;
     color: #000000;
@@ -41,7 +47,7 @@
   }
 
   .reportsDemo {
-    width: 300px;
+
 
     .reportsDemoVideo {
       width: 290px;
