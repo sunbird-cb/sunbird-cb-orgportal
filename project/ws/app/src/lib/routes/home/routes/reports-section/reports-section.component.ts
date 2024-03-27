@@ -201,7 +201,7 @@ export class ReportsSectionComponent implements OnInit {
           this.hassAccessToreports = false
           this.reportsNoteList = [
             `Currently, your MDO Leader has not granted you access to these
-            reports.Kindly contact your MDO Leader to provide you access.`,
+            reports. Kindly contact your MDO Leader to provide you access.`,
           ]
         } else if (userAccessExpireDate >= todayDate) {
           this.hassAccessToreports = true
