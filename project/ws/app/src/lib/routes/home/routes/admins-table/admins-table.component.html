@@ -21,8 +21,7 @@
           <ng-container *ngSwitchCase="'datePicker'">
             <mat-form-field color="accent" appearance="outline" class="expireDateForm">
               <input matInput readonly [matDatepicker]="expireDate" placeholder="Enter date"
-                [(ngModel)]="element[col.key]" [min]="element['startDate']" [max]="maxDate"
-                (dateChange)="enableAccessBtn(element)">
+                [(ngModel)]="element[col.key]" [min]="minDate" [max]="maxDate" (dateChange)="enableAccessBtn(element)">
               <mat-datepicker-toggle matSuffix [for]="expireDate">
               </mat-datepicker-toggle>
               <mat-datepicker #expireDate></mat-datepicker>
