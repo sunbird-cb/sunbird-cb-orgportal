@@ -162,9 +162,17 @@
 
         </form>
         <div class="flex-1 inline-flex items-start justify-end">
-          <button class="download-btn mat-accent-border mat-button mat-button-base" i18n (click)="downloadFile()">
-            <ng-container i18n>Download sample file</ng-container>
-          </button>
+          <div class="mr-5">
+            <button class="download-btn mat-accent-border mat-button mat-button-base mr-10" i18n
+              (click)="downloadDefaultValuesFile()">
+              <ng-container i18n>Default field values</ng-container>
+            </button>
+          </div>
+          <div>
+            <button class="download-btn mat-accent-border mat-button mat-button-base" i18n (click)="downloadFile()">
+              <ng-container i18n>Download sample file</ng-container>
+            </button>
+          </div>
         </div>
       </div>
     </mat-card>

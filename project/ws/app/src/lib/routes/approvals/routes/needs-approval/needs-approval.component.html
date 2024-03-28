@@ -32,7 +32,7 @@
                 </button>
               </div>
             </ng-container>
-            <div style="margin-top: 17px; margin-left: 155px;">
+            <div style="margin-top: 17px; margin-left: 155px;" *ngIf="needApprovalList.length > 1">
               <button mat-icon-button aria-label="Reject" id="reject"
                 (click)="onClickAllHandleWorkflow(needApprovalList,'REJECT')">
                 <span class="mat-button-wrapper" style="color: white; padding:13px;"> Reject All </span>
