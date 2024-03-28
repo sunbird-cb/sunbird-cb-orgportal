@@ -43,6 +43,8 @@ export class ProfleApprovalBulkUploadComponent implements OnInit, OnDestroy, Aft
   pageDataSubscription!: any
   downloadSampleFilePath = ''
   downloadAsFileName = ''
+  defaultValuesFilePath = ''
+  defaultValuesFileName = ''
   rootOrgId!: any
   phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$'
   emailPattern = `^[\\w\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$`
@@ -98,6 +100,8 @@ export class ProfleApprovalBulkUploadComponent implements OnInit, OnDestroy, Aft
       if (data && data.pageData) {
         this.downloadSampleFilePath = data.pageData.data.downloadSampleFilePath
         this.downloadAsFileName = data.pageData.data.downloadAsFileName
+        this.defaultValuesFilePath = data.pageData.data.defaultValuesFilePath
+        this.defaultValuesFileName = data.pageData.data.defaultValuesFileName
       }
     })
 
@@ -260,6 +264,10 @@ export class ProfleApprovalBulkUploadComponent implements OnInit, OnDestroy, Aft
 
   public downloadFile(): void {
     this.fileService.download(this.downloadSampleFilePath, this.downloadAsFileName)
+  }
+
+  public downloadDefaultValuesFile(): void {
+    this.fileService.download(this.defaultValuesFilePath, this.defaultValuesFileName)
   }
 
   private openSnackbar(primaryMsg: string, duration: number = 5000) {
