@@ -53,7 +53,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   notmyuserUsersDataCount?: number | 0
   content: NsContent.IContent = {} as NsContent.IContent
   isMdoAdmin = false
-
+  userList: any = []
   reportsNoteList: string[] = []
 
   currentOffset = 0
@@ -234,21 +234,41 @@ export class UsersViewComponent implements OnInit, OnDestroy {
       },
     }
     this.usersService.getAllKongUsers(reqBody).subscribe((data: any) => {
-      const allusersData = data.result.response
-      this.activeUsersData = allusersData.content
-      // this.activeUsersData = this.activeUsersData.filter((wf: any) => wf.profileDetails.profileStatus !== 'NOT-MY-USER')
-      this.activeUsersDataCount = allusersData.count
-      // this.filterFacets = allusersData.facets ? allusersData.facets : []
+      const allusersData = data && data.result.response
+      let userContent = allusersData.content
+      const searchText = this.getSearchText(query).toLowerCase()
+      console.log(searchText, "searchText===")
+      if (searchText.length > 0) {
+        let userData: any = []
+        if (data.result.response.count > 0) {
+          userContent.forEach((element: any) => {
+            let userMail = element.email && element.email.toLowerCase()
+            let userName = element.firstName && element.firstName.toLowerCase()
+            const emailMatch = userMail.includes(searchText)
+            const firstNameMatch = userName.includes(searchText)
+            const phoneMatch = element.phone && element.phone.includes(searchText)
 
-      // const i = this.activeUsersData.findIndex((wf: any) => wf.userId === this.currentUser)
-      // if (i > -1) {
-      //   this.activeUsersData.splice(i, 1)
-      //   allusersData.count = allusersData.count - 1
-      // }
+            if (emailMatch || firstNameMatch || phoneMatch) {
+              userData.push(element)
+              console.log("code enter===")
+              console.log(userData, "userData===")
+              this.activeUsersData = userData
+              this.activeUsersDataCount = userData.length
+              console.log(this.activeUsersData, "this.activeUsersData====")
+            } else {
+              this.activeUsersData = []
+              this.activeUsersDataCount = 0
+            }
+          })
+        } else {
+          this.activeUsersData = allusersData.content
+          this.activeUsersDataCount = allusersData.count
+        }
 
-      // if (this.notmyuserUsersDataCount && allusersData.count > this.notmyuserUsersDataCount) {
-      //   this.activeUsersDataCount = allusersData.count - this.notmyuserUsersDataCount
-      // }
+      } else {
+        this.activeUsersData = allusersData.content
+        this.activeUsersDataCount = allusersData.count
+      }
     })
   }
   async getVUsers(query: any) {
@@ -291,8 +311,45 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     }
     this.usersService.getAllKongUsers(reqBody).subscribe((data: any) => {
       const allusersData = data.result.response
-      this.verifiedUsersData = allusersData.content
-      this.verifiedUsersDataCount = data.result.response.count
+      let userContent = allusersData.content
+      console.log(allusersData, "allusersData----")
+      console.log(userContent, "userContent----")
+      const searchText = this.getSearchText(query).toLowerCase()
+      console.log(searchText, "searchText===")
+      if (searchText.length > 0) {
+        let userData: any = []
+        if (data.result.response.count > 0) {
+          userContent.forEach((element: any) => {
+            let userMail = element.email && element.email.toLowerCase()
+            let userName = element.firstName && element.firstName.toLowerCase()
+            const emailMatch = userMail.includes(searchText)
+            const firstNameMatch = userName.includes(searchText)
+            const phoneMatch = element.phone && element.phone.includes(searchText)
+            console.log(emailMatch, "emailMatch")
+            console.log(firstNameMatch, "firstNameMatch")
+            console.log(phoneMatch, "phoneMatch")
+            if (emailMatch || firstNameMatch || phoneMatch) {
+              userData.push(element)
+              console.log("code enter===")
+              console.log(userData, "userData===")
+              this.verifiedUsersData = userData
+              this.verifiedUsersDataCount = userData.length
+              console.log(this.verifiedUsersData, "this.verifiedUsersData====")
+            } else {
+              console.log("code enter in else ===")
+              this.verifiedUsersData = []
+              this.verifiedUsersDataCount = 0
+            }
+          })
+        } else {
+          this.verifiedUsersData = allusersData.content
+          this.verifiedUsersDataCount = data.result.response.count
+        }
+
+      } else {
+        this.verifiedUsersData = allusersData.content
+        this.verifiedUsersDataCount = data.result.response.count
+      }
       // this.filterFacets = allusersData.facets ? allusersData.facets : []
 
       // if (this.currentUserStatus === 'VERIFIED') {
@@ -345,8 +402,43 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     }
     this.usersService.getAllKongUsers(reqBody).subscribe((data: any) => {
       const allusersData = data.result.response
-      this.nonverifiedUsersData = allusersData.content
-      this.nonverifiedUsersDataCount = data.result.response.count
+      // this.nonverifiedUsersData = allusersData.content
+      // this.nonverifiedUsersDataCount = data.result.response.count
+      let userContent = allusersData.content
+      const searchText = this.getSearchText(query).toLowerCase()
+      console.log(searchText, "searchText===")
+      if (searchText.length > 0) {
+        let userData: any = []
+        if (data.result.response.count > 0) {
+
+          userContent.forEach((element: any) => {
+            let userMail = element.email && element.email.toLowerCase()
+            let userName = element.firstName && element.firstName.toLowerCase()
+            const emailMatch = userMail.includes(searchText)
+            const firstNameMatch = userName.includes(searchText)
+            const phoneMatch = element.phone && element.phone.includes(searchText)
+
+            if (emailMatch || firstNameMatch || phoneMatch) {
+              userData.push(element)
+              console.log("code enter===")
+              console.log(userData, "userData===")
+              this.nonverifiedUsersData = userData
+              this.nonverifiedUsersDataCount = userData.length
+              console.log(this.nonverifiedUsersData, "this.nonverifiedUsersData====")
+            } else {
+              this.nonverifiedUsersData = []
+              this.nonverifiedUsersDataCount = 0
+            }
+          })
+        } else {
+          this.nonverifiedUsersData = allusersData.content
+          this.nonverifiedUsersDataCount = data.result.response.count
+        }
+
+      } else {
+        this.nonverifiedUsersData = allusersData.content
+        this.nonverifiedUsersDataCount = data.result.response.count
+      }
       // this.filterFacets = allusersData.facets ? allusersData.facets : []
 
       // if (this.currentUserStatus === 'NOT-VERIFIED') {
@@ -400,8 +492,42 @@ export class UsersViewComponent implements OnInit, OnDestroy {
     }
     this.usersService.getAllKongUsers(reqBody).subscribe((data: any) => {
       const allusersData = data.result.response
-      this.notmyuserUsersData = allusersData.content
-      this.notmyuserUsersDataCount = data.result.response.count
+      // this.notmyuserUsersData = allusersData.content
+      // this.notmyuserUsersDataCount = data.result.response.count
+      let userContent = allusersData.content
+      const searchText = this.getSearchText(query).toLowerCase()
+      console.log(searchText, "searchText===")
+      if (searchText.length > 0) {
+        let userData: any = []
+        if (data.result.response.count > 0) {
+          userContent.forEach((element: any) => {
+            let userMail = element.email && element.email.toLowerCase()
+            let userName = element.firstName && element.firstName.toLowerCase()
+            const emailMatch = userMail.includes(searchText)
+            const firstNameMatch = userName.includes(searchText)
+            const phoneMatch = element.phone && element.phone.includes(searchText)
+
+            if (emailMatch || firstNameMatch || phoneMatch) {
+              userData.push(element)
+              console.log("code enter===")
+              console.log(userData, "userData===")
+              this.notmyuserUsersData = userData
+              this.notmyuserUsersDataCount = userData.length
+              console.log(this.nonverifiedUsersData, "this.nonverifiedUsersData====")
+            } else {
+              this.notmyuserUsersData = []
+              this.notmyuserUsersDataCount = 0
+            }
+          })
+        } else {
+          this.notmyuserUsersData = allusersData.content
+          this.notmyuserUsersDataCount = data.result.response.count
+        }
+
+      } else {
+        this.notmyuserUsersData = allusersData.content
+        this.notmyuserUsersDataCount = data.result.response.count
+      }
       // this.filterFacets = allusersData.facets ? allusersData.facets : []
     })
   }
@@ -490,6 +616,7 @@ export class UsersViewComponent implements OnInit, OnDestroy {
 
   onEnterkySearch(enterValue: any) {
     this.searchQuery = enterValue
+    console.log(this.searchQuery, "this.searchQuery=========")
     this.filterData(this.searchQuery)
   }
 
