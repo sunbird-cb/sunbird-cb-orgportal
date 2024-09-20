@@ -722,3 +722,19 @@ $title-line-count: 2;
 ::ng-deep.custom-btn {
   margin-right: 10px !important;
 }
+
+
+::ng-deep .example-table .mat-column-Menu {
+  flex: 0 0 8% !important;
+  width: 8% !important;
+}
+
+::ng-deep .example-table .mat-column-Errors {
+  flex: 0 0 6% !important;
+  width: 6% !important;
+}
+
+::ng-deep .example-table .mat-column-lastupdatedon, ::ng-deep .example-table .mat-column-lastupdatedby {
+  flex: 0 0 17% !important;
+  width: 17% !important;
+}

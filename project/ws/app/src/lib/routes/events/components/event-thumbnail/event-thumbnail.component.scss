@@ -1,2 +1,16 @@
 @import 'ws-common';
 @import 'ws-vars';
+
+
+
+.mat-action-box {
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  right: 0;
+  margin-right: 0px;
+  top: 0;
+  margin-top: 0px;
+}

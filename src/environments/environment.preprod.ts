@@ -7,5 +7,12 @@ export const environment = {
   portalRoles: (((window as { [key: string]: any })['env']['portalRoles'] || '').split(',')) || [],
   contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
-
+  userBucket: (window as { [key: string]: any })['env']['userBucket'] || '',
+  domainName: (window as { [key: string]: any })['env']['domainName'] || '',
+  mdoPath: (window as { [key: string]: any })['env']['mdoPath'] || '',
+  resendOTPTIme: (window as { [key: string]: any })['env']['resendOTPTIme'] || 120,
+  teamsUrl: (window as { [key: string]: any })['env']['teamsUrl'] || '',
+  connectionType: (window as { [key: string]: any })['env']['connectionType'] || '',
+  KCMframeworkName: (window as { [key: string]: any })['env']['KCMframeworkName'] || '',
+  ODCSMasterFramework: (window as { [key: string]: any })['env']['ODCSMasterFramework'] || '',
 }

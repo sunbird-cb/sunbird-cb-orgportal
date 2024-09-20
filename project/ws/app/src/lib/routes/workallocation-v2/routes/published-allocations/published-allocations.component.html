@@ -72,14 +72,15 @@
               <div class="search margin-top-l">
                 <div class=rsearch>
                   <mat-icon class="color-60 search-icon">search</mat-icon>
-                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal" [(ngModel)]="term"
-                    placeholder="Search">
+                  <input class="sinput color-60 margin-top-m mat-body-2" type="Standard" label="searchVal"
+                    [(ngModel)]="term" placeholder="Search" maxlength="200">
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <table class="allocation-table margin-bottom-l mat-body-2" id="allocation-table" cell-spacing='0' cell-padding='0'>
+        <table class="allocation-table margin-bottom-l mat-body-2" id="allocation-table" cell-spacing='0'
+          cell-padding='0'>
           <tr>
             <th>Name and designation <mat-icon class="sort-icon">arrow_upward</mat-icon>
             </th>
@@ -88,7 +89,8 @@
             <th>Submit to</th>
             <th>Submission from</th>
           </tr>
-          <tr *ngFor="let d of data | filter: term | paginate: { itemsPerPage: 5, currentPage: p, totalItems: data.length }"
+          <tr
+            *ngFor="let d of data | filter: term | paginate: { itemsPerPage: 5, currentPage: p, totalItems: data.length }"
             class="data-row">
             <td aria-rowspan="d.roles.length+1">
               <div class="initials">
@@ -139,7 +141,8 @@
                                 <mat-icon class="ws-mat-default-text veralign-btm">sports_score</mat-icon>
                               </span>
                               <span class="initials" *ngIf="a.submittedFromId">
-                                <ws-app-initial-avatar *ngIf="a.submittedFromName !== null" [name]="a.submittedFromName">
+                                <ws-app-initial-avatar *ngIf="a.submittedFromName !== null"
+                                  [name]="a.submittedFromName">
                                 </ws-app-initial-avatar>
                               </span>
                               {{a.submittedFromName}}
@@ -165,16 +168,17 @@
 
         <mat-menu #cardMenu="matMenu">
           <ng-template matMenuContent let-rowData="data">
-            <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item name="channel-analytics-button"
-              class="ws-mat-primary-text downlaod-btn" i18n-aria-label aria-label="Analytics">
+            <button type="button" (click)="buttonClick('Download',rowData)" mat-menu-item
+              name="channel-analytics-button" class="ws-mat-primary-text downlaod-btn" i18n-aria-label
+              aria-label="Analytics">
               <mat-icon>cloud_download</mat-icon> <span>Download</span>
             </button>
             <!-- <button (click)="buttonClick('Print',rowData)"mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text" i18n-aria-label
                         aria-label="Analytics">
                         <mat-icon>print</mat-icon> <span>Print</span>
                     </button> -->
-            <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button" class="ws-mat-primary-text"
-              i18n-aria-label aria-label="Analytics">
+            <button (click)="buttonClick('Archive',rowData)" mat-menu-item name="channel-analytics-button"
+              class="ws-mat-primary-text" i18n-aria-label aria-label="Analytics">
               <mat-icon>archive</mat-icon> <span>Archive allocation</span>
             </button>
           </ng-template>

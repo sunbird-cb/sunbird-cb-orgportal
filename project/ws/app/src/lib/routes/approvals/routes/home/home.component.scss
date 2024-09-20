@@ -4,7 +4,8 @@
 @import 'ws-mixins';
 
 .container-balanced{
-  max-width: 99%;
+  min-height: 85vh;
+  max-width: 100%;
   margin-left: auto!important;
   margin-right: auto!important;
 }
@@ -328,6 +329,9 @@ a:not([href]):not([tabindex]) {
   font:400 14px Lato;
   color: #999999
 
+}
+.change-log-main {
+  border-left: 1px solid #0000000f;
 }
 
 .change-log-wrapper{

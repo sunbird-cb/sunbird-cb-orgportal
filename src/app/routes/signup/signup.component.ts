@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   ) {
     this.signupForm = new FormGroup({
       fname: new FormControl('', [Validators.required]),
-      lname: new FormControl('', [Validators.required]),
+      // lname: new FormControl('', [Validators.required]),
       // mobile: new FormControl('', [Validators.required, Validators.minLength(10)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       code: new FormControl('', [Validators.required]),
@@ -32,7 +32,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.unseenCtrlSub = this.signupForm.valueChanges.subscribe(value => {
-    //   console.log('ngOnInit - value', value);
+
     // })
   }
 

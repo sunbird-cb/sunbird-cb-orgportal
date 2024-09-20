@@ -1,0 +1,65 @@
+<div class="flex flex-row items-center card-container ws-mat-primary-tags">
+  <a href="javascript:void(0)" class="flex flex-1 items-center ws-mat-primary-tags" i18n-aria-label role="link"
+    aria-label="click on it to visit user profile">
+    <div class="mr-3">
+      <ws-widget-avatar-photo [name]="getUseravatarName()" [photoUrl]="user?.photo" size="m" (click)="loadUser(user)">
+      </ws-widget-avatar-photo>
+    </div>
+    <div class="flex flex-col flex-1" *ngIf="user && user.userInfo" (click)="loadUser(user)">
+      <p class="truncate margin-remove mat-body-1">{{user?.userInfo.first_name}}</p>
+      <p class="truncate ws-mat-black60-text margin-remove mat-body-2">{{user?.wfInfo[0].deptName | slice:0:30}}</p>
+    </div>
+    <div class="flex flex-col flex-1" *ngIf="user && !user.userInfo" (click)="loadUser(user)">
+      <p class="truncate margin-remove mat-body-1">{{user?.first_name}}</p>
+      <p class="truncate ws-mat-black60-text margin-remove mat-body-2">{{user?.deptName || user?.department}}</p>
+    </div>
+    <div *ngIf="approvalType" class="flex flex-middle">
+      <div [ngSwitch]="user?.approvalAction">
+        <div *ngSwitchCase="'rejected'" class="flex flex-row flex-middle">
+          <mat-icon class="rejectedIcon">cancel</mat-icon>
+          <span class="margin-left-xs">Rejected by me</span>
+        </div>
+        <div *ngSwitchCase="'pending'" class="flex flex-row flex-middle">
+          <mat-icon class="pendingIcon">error</mat-icon>
+          <span class="margin-left-xs">Pending with me</span>
+        </div>
+        <div *ngSwitchCase="'rejectedByMdo'" class="flex flex-row flex-middle">
+          <mat-icon class="rejectedIcon">cancel</mat-icon>
+          <span class="margin-left-xs">Rejected by MDO Admin</span>
+        </div>
+        <div *ngSwitchCase="'rejectedByPc'" class="flex flex-row flex-middle">
+          <mat-icon class="rejectedIcon">cancel</mat-icon>
+          <span class="margin-left-xs">Rejected by Program Coordinator</span>
+        </div>
+        <div *ngSwitchCase="'pendingForMdo'" class="flex flex-row flex-middle">
+          <mat-icon class="pendingIcon">error</mat-icon>
+          <span class="margin-left-xs">Pending with MDO Admin</span>
+        </div>
+        <div *ngSwitchCase="'pendingForPc'" class="flex flex-row flex-middle">
+          <mat-icon class="pendingIcon">error</mat-icon>
+          <span class="margin-left-xs">Pending with Program Coordinator</span>
+        </div>
+        <div *ngSwitchCase="'removeByMdo'" class="flex flex-row flex-middle">
+          <mat-icon class="rejectedIcon">delete</mat-icon>
+          <span class="margin-left-xs">Removed by MDO Admin</span>
+        </div>
+        <div *ngSwitchCase="'removeByPc'" class="flex flex-row flex-middle">
+          <mat-icon class="rejectedIcon">delete</mat-icon>
+          <span class="margin-left-xs">Removed by Program Coordinator</span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="actions && !remove">
+      <button type="button" mat-button class="view-report-btn cursor-pointer mat-accent-border mr-10"
+        (click)="openReportDialog()" *ngIf="isViewReport">View response</button>
+      <button type="button" mat-button class="margin-right-m cursor-pointer border-0"
+        (click)="clickReject()">Reject</button>
+      <button type="button" mat-button class="approve-btn cursor-pointer mat-accent-border"
+        (click)="clickApprove()">Approve</button>
+    </div>
+    <div *ngIf="remove && remove.toString() === 'true'">
+      <button type="button" mat-button class="cursor-pointer border-0 remove-user" (click)="clickRemove()"
+        [disabled]="canDisableRemoveLink()">Remove</button>
+    </div>
+  </a>
+</div>

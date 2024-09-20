@@ -1,0 +1,27 @@
+@import 'ws-common';
+::ng-deep .mat-dialog-container {
+  // padding: 0 !important;
+  overflow: unset !important;
+}
+.verify-otp-dialog {
+  // padding: 22px !important;
+  .timer-div {
+    margin-bottom: 16px;
+
+    .time-remaining {
+      color: rgba($color: #000, $alpha: 0.6);
+    }
+  }
+
+  .resend-otp {
+    color: $color-blue;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+}
+.action-button:disabled,
+.action-button[disabled] {
+  opacity: 0.6;
+  cursor: auto;
+}

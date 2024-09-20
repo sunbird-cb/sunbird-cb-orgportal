@@ -1,0 +1,143 @@
+<div class="flex flex-4 flex-column" *ngIf="batchData">
+  <mat-card class="flex-custom batch-detailspage">
+    <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs" *ngIf="breadcrumbs"></ws-widget-breadcrumbs-org>
+    <div class="flex-4 mobile-margin mat-h2 margin-top-m">
+      {{batchData.name}}
+    </div>
+    <mat-card-content>
+      <ng-container>
+        <div class="margin-bottom-xl margin-top-l grey-box paddig-m ws-mat-accent-border">
+          <p class="font-bold">Batch details</p>
+          <ul class="margin-top-m margin-bottom-m batch-data" *ngIf="batchData">
+            <li><mat-icon>tag</mat-icon> {{batchData.batchId}}</li>
+            <li><mat-icon>event</mat-icon> {{batchData.startDate | date: 'mediumDate'}} - {{batchData.endDate | date:
+              'mediumDate'}}</li>
+            <li><mat-icon>event</mat-icon> {{batchData.enrollmentEndDate | date: 'mediumDate'}}</li>
+            <li><mat-icon>people</mat-icon> {{showLearners()}} Learners
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+
+      <ng-container>
+        <div class="flex flex-1 flex-row margin-fix">
+          <div class="flex flex-1 filter max-height-60">
+            <a class="filter-option cursor-pointer" [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'pending',
+                                                'ws-mat-accent-border font-medium':currentFilter !== 'pending'}"
+              mat-button (click)="filter('pending')" role="button">New requests
+              <!-- <span *ngIf="newUsers" class="ws-mat-black60-text">({{newUsers.length}})</span> -->
+            </a>
+            <a class="filter-option cursor-pointer"
+              [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'approved',
+                                                              'ws-mat-accent-border font-medium':currentFilter !== 'approved'}" mat-button
+              (click)="filter('approved')" role="button">Learners
+              <!-- <span *ngIf="approvedUsers" class="ws-mat-black60-text">({{approvedUsers.length}})</span> -->
+            </a>
+            <a class="filter-option cursor-pointer"
+              [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'approvalStatus',
+                                                                                    'ws-mat-accent-border font-medium':currentFilter !== 'approvalStatus'}"
+              mat-button (click)="filter('approvalStatus')" role="button">Enroll status
+            </a>
+            <a class="filter-option cursor-pointer" *ngIf="batchData?.batchAttributes?.sessionDetails_v2"
+              [ngClass]="{'ws-mat-accent-border-active font-bold' : currentFilter === 'sessions',
+                                                                                    'ws-mat-accent-border font-medium':currentFilter !== 'sessions'}" mat-button (click)="filter('sessions')" role="button">Session
+              details
+              <!-- <span *ngIf="rejectedUsers" class="ws-mat-black60-text">({{rejectedUsers.length}})</span> -->
+            </a>
+          </div>
+          <div class="flex-2 right-align margin-top-l" *ngIf="currentFilter === 'approved' && allowToNominate()">
+            <button type="button" mat-button class="add-nomine-btn" (click)="onNominateUsersClick('nominateUsers')"
+              [disabled]="programData.wfApprovalType === 'oneStepPCApproval' || programData.wfApprovalType === 'twoStepPCAndMDOApproval'">
+              Nominate learners
+            </button>
+          </div>
+        </div>
+        <ng-container *ngIf="currentFilter === 'pending'">
+          <div class="flex flex-1 flex-row margin-top-l" *ngIf="clonedNewUsers && clonedNewUsers.length > 0">
+            <div class="flex-1">
+              <div class="search">
+                <div class="rsearch">
+                  <mat-icon class="color-60 search-icon">search</mat-icon>
+                  <input class="search-input color-60" type="Standard" #searchText placeholder="Search for a learner"
+                    (input)="onSearchLearners(searchText.value)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="new-request-count" *ngIf="newUsers.length > 0"> {{newUsers.length}} New
+            request(s)</p>
+          <div class="b-c box" *ngIf="newUsers && newUsers.length > 0">
+            <div *ngFor="let user of newUsers">
+              <ws-app-users-card [user]="user" [actions]="true" [programData]="linkData" (userClick)="onSubmit($event)"
+                [contentData]="programData" [type]="'newRequest'"></ws-app-users-card>
+            </div>
+          </div>
+          <div class="b-c box" *ngIf="newUsers && newUsers.length == 0">
+            <p class="padding-m">No new requests yet</p>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="currentFilter === 'approved'">
+          <div class="flex flex-1 flex-row margin-top-l" *ngIf="clonedApprovedUsers && clonedApprovedUsers.length > 0">
+            <div class="flex-1">
+              <div class="search">
+                <div class="rsearch">
+                  <mat-icon class="color-60 search-icon">search</mat-icon>
+                  <input class="search-input color-60" type="Standard" #searchText placeholder="Search for a learner"
+                    (input)="onSearchLearners(searchText.value)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="font-bold" *ngIf="approvedUsers.length > 0"> {{approvedUsers.length}} learner(s) in this batch from
+            your MDO
+          </p>
+          <div class="b-c box" *ngIf="approvedUsers && approvedUsers.length > 0">
+            <div *ngFor="let user of approvedUsers">
+              <ws-app-users-card [user]="user" [actions]="false" [remove]="removeLearner(batchData.startDate)"
+                (userClick)="removeUser($event)" [programData]="linkData"></ws-app-users-card>
+            </div>
+          </div>
+          <div class="b-c box" *ngIf="approvedUsers && approvedUsers.length == 0">
+            <p class="padding-m">No learner(s) yet</p>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="currentFilter === 'approvalStatus'">
+          <div class="flex flex-1 flex-row margin-top-l"
+            *ngIf="clonedApprovalStatusUsers && clonedApprovalStatusUsers.length > 0">
+            <div class="flex-1">
+              <div class="search">
+                <div class="rsearch">
+                  <mat-icon class="color-60 search-icon">search</mat-icon>
+                  <input class="search-input color-60" type="Standard" #searchText placeholder="Search for a learner"
+                    (input)="onSearchLearners(searchText.value)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class=" b-c box" *ngIf="approvalStatus && approvalStatus.length > 0">
+            <div *ngFor="let user of approvalStatus">
+              <ws-app-users-card [user]="user" [actions]="false" [programData]="linkData"
+                [approvalType]="true"></ws-app-users-card>
+            </div>
+          </div>
+          <div class="b-c box" *ngIf="approvalStatus && approvalStatus.length == 0">
+            <p class="padding-m">No requests yet</p>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="currentFilter === 'sessions'">
+          <div *ngIf="sessionDetails && sessionDetails.length > 0">
+            <div class="flex-4 mobile-margin mat-h2 margin-top-m">
+              Sessions
+            </div>
+            <div *ngFor="let individulaSession of sessionDetails">
+              <ws-app-session-card [session]="individulaSession" [batch]="batchData"></ws-app-session-card>
+            </div>
+          </div>
+          <div class="b-c box" *ngIf="sessionDetails && sessionDetails.length == 0">
+            <p class="padding-m">No sessions yet</p>
+          </div>
+        </ng-container>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,11 +1,13 @@
 <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs" (click)="userClickHandler(user)">
   <div class="flex flex-start ">
-    <span class="letter-color1">{{user?.firstName.charAt(0)}}{{user?.lastName.charAt(0)}}</span>
+    <span class="letter-color1">{{user?.firstName.charAt(0)}}</span>
+    <!-- <span class="letter-color1">{{user?.firstName.charAt(0)}}{{user?.lastName.charAt(0)}}</span> -->
     <mat-icon class="groupicon ws-mat-accent-text ws-mat-accent-border">group</mat-icon>
   </div>
   <div class="margin-top-s">
     <p class="username mat-body-2 font-bold-i margin-bottom-xxs">{{user.firstName}}
-      {{user?.lastName ? user?.lastName : ''}}</p>
+      <!-- {{user?.lastName ? user?.lastName : ''}}</p> -->
+    </p>
     <p class="useremail mat-body-2 margin-bottom-xxs">{{user?.profileDetails?.personalDetails.primaryEmail ||
       user.email}}</p>
     <p class="userpos mat-body-2 ws-mat-black60-text margin-bottom-xxs">

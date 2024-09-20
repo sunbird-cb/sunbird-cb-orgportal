@@ -1,0 +1,56 @@
+<!-- <div class="w-full">
+  <div class="w-full conformation-popup flex justify-center items-center">
+    <span class="msgDescription">{{dialogData?.message}}</span>
+  </div>
+  <div class="w-full flex justify-end items-center gap-4">
+    <button mat-raised-button [mat-dialog-close]="true">Close</button>
+    <button mat-raised-button (click)="closePopup(true)" class="remove">Remove</button>
+  </div>
+</div> -->
+
+<div class="dialog-container">
+  <ng-container [ngSwitch]="dialogDetails.dialogType">
+    <!-- <ng-container *ngSwitchCase="'success'">
+      <div class="flex justify-center items-center mb-4">
+        <mat-icon aria-hidden="false" class="success-icon">done</mat-icon>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'fail'">
+      <div class="flex justify-center items-center mb-4">
+        <mat-icon aria-hidden="false" class="fail-icon">priority_high</mat-icon>
+      </div>
+    </ng-container> -->
+    <ng-container *ngSwitchCase="'warning'">
+      <div class="flex justify-center items-center mb-4">
+        <mat-icon aria-hidden="false" class="warning-icon">info_outlined</mat-icon>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="dialogDetails.iconDetails">
+    <div class="circule mb2" [ngClass]="dialogDetails.iconDetails.iconClass">
+      <mat-icon aria-hidden="false" class="success-icon">{{dialogDetails.iconDetails.icon}}</mat-icon>
+    </div>
+  </ng-container>
+  <ng-container *ngFor="let description of dialogDetails?.descriptions">
+    <ng-container *ngIf="description.header">
+      <div [ngClass]="description.headerClass">
+        <span>{{description.header}}</span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="description.messages">
+      <div class="description mt-1 mb-6 flex w-full justify-center">
+        <span>
+          <ng-container *ngFor="let msgDetails of description.messages">
+            <span [ngClass]="msgDetails.msgClass">{{msgDetails.msg}}</span>
+          </ng-container>
+        </span>
+        <!-- <span>{{description.message}}</span> -->
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+<div class="px2 footer flex w-full gap-2" [ngClass]="dialogDetails.footerClass">
+  <ng-container *ngFor="let btn of dialogDetails?.buttons">
+    <button mat-raised-button (click)="closePopup(btn.response)" [ngClass]="btn.btnClass">{{btn.btnText}}</button>
+  </ng-container>
+</div>

@@ -52,6 +52,18 @@ const routes: Routes = [
     },
   },
   {
+    path: 'app/training-plan',
+    loadChildren: () => import('./routes/route-training-plan.module').then(u => u.RouteTrainingPlanAppModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      // pageKey: 'training-plan-home',
+    },
+    resolve: {
+      pageData: PageResolve,
+    },
+  },
+  {
     path: 'app/roles',
     loadChildren: () => import('./routes/route-roles-access.module').then(u => u.RouteAccessAppModule),
     canActivate: [GeneralGuard],
@@ -187,6 +199,18 @@ const routes: Routes = [
     component: TncComponent,
     resolve: {
       tnc: TncAppResolverService,
+    },
+  },
+  {
+    path: 'app/blended-approvals',
+    loadChildren: () => import('./routes/route-blended-approvals.module').then(u => u.RouteBlendedApprovalsModule),
+    canActivate: [GeneralGuard],
+    data: {
+      pageType: 'feature',
+      pageKey: 'blended-approvals',
+    },
+    resolve: {
+      pageData: PageResolve,
     },
   },
   {

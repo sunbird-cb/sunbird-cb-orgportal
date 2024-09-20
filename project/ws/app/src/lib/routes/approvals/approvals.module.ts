@@ -7,7 +7,7 @@ import { ApprovalsRoutingModule } from './approvals.routing.module'
 import { BreadcrumbsOrgModule, ScrollspyLeftMenuModule } from '@sunbird-cb/collection'
 import {
   MatSidenavModule, MatGridListModule, MatListModule, MatCardModule, MatFormFieldModule, MatInputModule,
-  MatIconModule, MatButtonModule, MatRadioModule, MatDialogModule,
+  MatIconModule, MatButtonModule, MatRadioModule, MatDialogModule, MatChipsModule,
 } from '@angular/material'
 import { NeedsApprovalComponent } from './routes/needs-approval/needs-approval.component'
 import { BasicInfoComponent } from './routes/basic-info/basic-info.component'
@@ -22,7 +22,7 @@ import { CertificationAndSkillsComponent } from './routes/certification-and-skil
     CommonModule, RouterModule, ApprovalsRoutingModule, BreadcrumbsOrgModule,
     MatSidenavModule, MatListModule, ScrollspyLeftMenuModule, MatCardModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatGridListModule,
-    MatRadioModule, MatDialogModule,
+    MatRadioModule, MatDialogModule, MatChipsModule,
   ],
 })
 export class ApprovalsModule { }

@@ -1,0 +1,57 @@
+.card-container {
+    padding: 20px 12px;
+    margin-bottom: 8px;
+    margin-right: 12px;
+    border-radius: 4px;
+}
+
+.name{
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: capitalize;
+}
+.designation{
+    line-height: 21px;
+}
+
+.approve-btn {
+    width: auto;
+    border: 1px solid #0075B7;
+    border-radius: 4px;
+    color: #0075B7 !important;
+}
+
+button {
+    display: inline;
+    font: 600 14px/20px Lato;
+    padding: 0.5em 1em;
+    color: rgba(0,0,0,0.7);
+    background: transparent;
+}
+
+.view-report-btn {
+  width: auto;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.87) !important;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+.remove-user {
+    color: #0075B7!important;
+}
+.remove-user[disabled] {
+    opacity: 0.6;
+}
+
+.rejectedIcon {
+  padding-top: 1px;
+  color: #d13924 !important;
+}
+
+.pendingIcon {
+  padding-top: 1px;
+  color: #e99e38 !important;
+}

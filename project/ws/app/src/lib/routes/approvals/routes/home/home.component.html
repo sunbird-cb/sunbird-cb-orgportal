@@ -4,7 +4,7 @@
       <div class="flex flex-4 flex-column">
         <div class="flex flex-1 margin-left-xl">
           <ws-widget-breadcrumbs-org
-            [widgetData]="{titles:[{title:'Approvals', url:'/app/home/approvals'},{title:'To approve', url:'none'},{title:fullname,url:'none'}] }">
+            [widgetData]="{titles:[{title:'Approvals', url:'/app/home/approvals/pending'},{title:'To approve', url:'none'},{title:fullname,url:'none'}] }">
           </ws-widget-breadcrumbs-org>
         </div>
         <div class="flex flex-1 custom">
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="flex-1" style="border-left: 1px solid #0000000f;">
+    <div class="flex-1 change-log-main" *ngIf="isChangeLog">
       <ng-container id="changelog">
         <div>
           <label class="change-log-text margin-top-l margin-bottom-l margin-left-m margin-right-m">Change log</label>

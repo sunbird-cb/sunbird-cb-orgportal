@@ -60,8 +60,6 @@ export class OrgProfileService {
   }
 
   updateFormStatus(keyName: keyof IATIOnbaording, value: boolean) {
-    // tslint:disable-next-line: no-console
-    console.log('updateFormStatus: ', value)
     this.formStatus[keyName] = value
   }
 

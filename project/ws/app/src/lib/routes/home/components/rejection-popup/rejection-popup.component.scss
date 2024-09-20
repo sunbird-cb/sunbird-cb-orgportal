@@ -1,0 +1,57 @@
+::ng-deep .rejection-modal {
+  .mat-dialog-container {
+    // padding: 0px !important;
+  }
+}
+
+.rejection {
+
+  .header {
+    height: 80px;
+    background-color: rgba(27, 76, 161, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 24px;
+    font-weight: 700;
+
+    .editBox {
+      width: 24px;
+      cursor: pointer;
+    }
+  }
+
+  .reason-description {
+    padding: 20px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 1);
+  }
+
+  .reason-text-area {
+    height: 170px;
+    resize: none;
+  }
+
+  .footer {
+    height: 75px;
+    background-color: rgba(241, 240, 244, 1);
+
+    .submit-btn {
+      height: 40px;
+      padding: 12px, 16px, 12px, 16px;
+      background-color: rgba(27, 76, 161, 1);
+      color: rgba(255, 255, 255, 1);
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 4px;
+    }
+
+    .cancel-btn {
+      height: 40px;
+      padding: 12px, 16px, 12px, 16px;
+      color: rgba(27, 76, 161, 1);
+      border: 1px solid rgba(27, 76, 161, 1);
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 4px;
+    }
+  }
+}

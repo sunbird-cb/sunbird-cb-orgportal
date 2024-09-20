@@ -29,7 +29,7 @@ const API_END_POINTS = {
 })
 export class EventsService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   crreateAsset(req: any): Observable<any> {
     return this.http.post<any>(`${API_END_POINTS.CREATE_ASSET}`, req)
@@ -52,8 +52,8 @@ export class EventsService {
     return this.http.post<any>(API_END_POINTS.UPDATE_EVENT, req)
   }
 
-  publishEvent(eventId: string): Observable<any> {
-    return this.http.post<any>(`${API_END_POINTS.PUBLISH_EVENT}/${eventId}`, '')
+  publishEvent(eventId: string, req: any): Observable<any> {
+    return this.http.post<any>(`${API_END_POINTS.PUBLISH_EVENT}/${eventId}`, req)
   }
 
   searchEvent(req: any) {

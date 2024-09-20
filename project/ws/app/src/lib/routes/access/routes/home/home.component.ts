@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         this.bindUrl(event.urlAfterRedirects.replace('/app/roles-access/', ''))
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
-        const departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
+        const departmentName = fullProfile ? fullProfile.unMappedUser.rootOrg.orgName : ''
         // if (this.activeRoute.snapshot.data.department.data) {
         if (fullProfile) {
           const leftData = this.activeRoute.snapshot.data.pageData.data.menus

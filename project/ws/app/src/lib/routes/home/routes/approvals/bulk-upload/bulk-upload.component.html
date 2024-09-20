@@ -1,0 +1,105 @@
+<div class="flex flex-col gap-6">
+  <div class="flex flex-row gap-4 items-center">
+    <mat-icon class="cursor-pointer" [routerLink]="['/app/home/approvals/approval']">arrow_back</mat-icon>
+    <div class="flex font-bold">Bulk profile update</div>
+  </div>
+
+  <div class="flex flex-col gap-4 bulk-container">
+    <div class="flex font-bold">Bulk profile update</div>
+    <div class="flex flex-row gap-8">
+      <div class="flex-1">
+        <div class="flex flex-col gap-3 dashed-card">
+          <div>Follow these steps to update multiple user profiles:</div>
+          <div class="flex flex-col gap-4">
+            <ol class="custom-ol">
+              <li>Download the Sample File ZIP.</li>
+              <li>Fill in user details in the Sample File.</li>
+              <li>Verify via OTP.</li>
+              <li>Upload the populated sample csv file.</li>
+              <li>Check the upload results for confirmation.</li>
+            </ol>
+          </div>
+          <div class="flex flex-row gap-6">
+            <button class="outline-button" (click)="handleDownloadSampleFile()">Download Sample File</button>
+          </div>
+        </div>
+      </div>
+      <div class="flex-1">
+        <div class="flex flex-col gap-2 dashed-card items-center">
+          <div class="flex cursor-pointer margin-top-m" (click)="fileInput.click()"
+            (dblclick)="$event.preventDefault()">
+            <img src="/assets/icons/csv-file.svg" alt="CSV file logo" />
+          </div>
+          <div *ngIf="showFileError" class="error-msg">Upload xlsx format file only</div>
+          <div class="flex flex-col items-center">
+            <div class="text-primary cursor-pointer" (click)="fileInput.click()" (dblclick)="$event.preventDefault()">
+              Browse files</div>
+            <input hidden type="file" #fileInput (click)="handleFileClick($event)" (change)="handleOnFileChange($event)"
+              name="file" placeholder="Choose file" (dblclick)="$event.preventDefault();" accept=".xlsx, .xls" />
+            <!-- <div class="flex">or</div>
+            <div class="flex">Drag file to upload</div> -->
+          </div>
+          <div class="flex flex-col items-center margin-bottom-m">
+            <div class="flex">Max file size: 100 MB</div>
+            <div class="flex">Supported file types: xlsx</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-base font-bold">File logs</div>
+  <div class="flex flex-col gap-6">
+    <div class="file-container"
+      *ngFor="let list of lastUploadList | slice : startIndex : lastIndex | orderBy:'datecreatedon':'desc'">
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-row justify-between items-center">
+          <div class="flex flex-row gap-1">
+            <div class="font-bold">File Information</div>
+          </div>
+          <div class="flex flex-row gap-2 outline-button items-center" (click)="handleDownloadFile(list)">
+            <mat-icon>download_2</mat-icon>
+            {{ list?.status !== 'SUCCESSFUL' ? 'Download error log' : 'Download file' }}
+          </div>
+        </div>
+        <div class="grid grid-flow-row sm:grid-flow-col gap-10 grid-col grid-container-25">
+          <div class="flex flex-col">
+            <div class="label">Name</div>
+            <div class="value">{{ list?.filename }}</div>
+          </div>
+          <div class="flex flex-col">
+            <div class="label">Status</div>
+            <div class="value">{{ list?.status }}</div>
+          </div>
+          <div class="flex flex-col">
+            <div class="label">Failed Records</div>
+            <div class="value">{{ list?.failedrecordscount }}</div>
+          </div>
+          <div class="flex flex-col">
+            <div class="label">Success Records</div>
+            <div class="value">{{ list?.successfulrecordscount }}</div>
+          </div>
+        </div>
+        <div class="grid grid-flow-row sm:grid-flow-col gap-10 grid-col grid-container-25">
+          <div class="flex flex-col">
+            <div class="label">Total Records</div>
+            <div class="value">{{ list?.totalrecords }}</div>
+          </div>
+          <div class="flex flex-col">
+            <div class="label">Initiated On</div>
+            <div class="value">{{ list?.datecreatedon | date: 'dd MMM yyyy h:mm a' }}</div>
+          </div>
+          <div class="flex flex-col">
+            <div class="label">Completed On</div>
+            <div class="value">{{ list?.dateupdatedon | date: 'dd MMM yyyy h:mm a' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-row justify-end mt-4">
+    <mat-paginator [pageSize]="pageSize" [length]="lastUploadList.length" [pageSizeOptions]="sizeOptions"
+      (page)="handleChangePage($event)"></mat-paginator>
+  </div>
+</div>

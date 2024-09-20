@@ -66,7 +66,6 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
         const lst = _.map(_.get(this.dataStructure[index], 'levelList') || [], r => {
           return { alias: r.alias, level: r.level }
         })
-        // debugger
         const fg = this.formBuilder.group({
           localId: this.dataStructure[index].localId,
           compId: this.dataStructure[index].compId,
@@ -88,8 +87,6 @@ export class CompDetailsComponent implements OnInit, OnDestroy {
     return `<ul>${(_.compact(data.split('• '))
       .map(i => { if (i) { return `<li>${i}</li>` } return null })).join('')}</ul>`
   }
-  log(a: any) {
-    // tslint:disable-next-line
-    console.log(a)
+  log(_a: any) {
   }
 }

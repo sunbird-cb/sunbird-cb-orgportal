@@ -1,0 +1,78 @@
+<div class="flex flex-1 flex-row margin-top-m margin-bottom-m justify-start">
+    <div class="search flex margin-right-m" [ngClass]="{'disable': isContentLive}">
+        <div class="rsearch flex w-full">
+            <mat-icon
+                class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
+            <input class="sinput color-60 w-full" [(ngModel)]="searchText" (keyup.enter)="searchData($event)" label=""
+                placeholder="Search by name or email" type="Standard" [ngClass]="{'disable': isContentLive}">
+        </div>
+    </div>
+    <div class="filter-section flex" *ngIf="!isApprovals && !forMentor">
+        <button mat-button type="button" (click)="sort()" class="apply-filter margin-right-s"
+            [matMenuTriggerFor]="cardMenu">
+            <mat-icon class="margin-right-xs">sort</mat-icon> Sort
+        </button>
+        <mat-menu #cardMenu="matMenu">
+            <ng-template matMenuContent>
+                <div mat-menu-item class="flex items-center" (click)="sortData('alphabetical')">
+                    <span>Alphabetical</span>
+                </div>
+                <div mat-menu-item class="flex items-center" (click)="sortData('newest')">
+                    <span>Newest</span>
+                </div>
+                <div mat-menu-item class="flex items-center" (click)="sortData('oldest')">
+                    <span>Oldest</span>
+                </div>
+            </ng-template>
+        </mat-menu>
+    </div>
+    <div class="filter-section flex" *ngIf="!isApprovals && !forMentor">
+        <button mat-button type="button" (click)="openFilter()" class="apply-filter margin-right-s">
+            Apply Filter <mat-icon class="margin-right-xs">filter_list</mat-icon>
+        </button>
+    </div>
+    <div class="flex flex-row">
+        <div class="flex flex-end" *ngIf="!isApprovals && currentFilter === 'allusers'">
+            <button mat-button type="button" class="search-btn" [routerLink]="['/app/home/user-creation']"
+                [ngClass]="{'disable': isContentLive}">Create user</button>
+        </div>
+        <div class="flex flex-end margin-right-s" *ngIf="isApprovals && showApproveALL">
+            <button mat-button type="button" class="search-btn" (click)="confirmApproval(approvalconfirm)"
+                [disabled]="disableApproveALL">Approve all requests</button>
+        </div>
+        <div class="flex flex-end" *ngIf="isApprovals && showBulkUpdate">
+            <button mat-button type="button" class="search-btn" [routerLink]="['/app/home/approvals/bulkupdate']"
+                [ngClass]="{'disable': isContentLive}">Bulk profile update</button>
+        </div>
+
+    </div>
+</div>
+
+<div [hidden]="!filterVisibilityFlag" *ngIf="!isApprovals">
+    <ws-app-filter [from]="from" (toggleFilter)="hideFilter($event)"
+        [filterFacetsData]="filterFacetsData"></ws-app-filter>
+</div>
+
+<ng-template #approvalconfirm>
+    <div class="confirm-dialog text-center padding-l">
+        <mat-icon class="infoIcon orangeicon-dialog">error_outline</mat-icon>
+        <div mat-dialog-content i18n class="margin-top-xs blue-text">
+            Are you sure you want to apporve all the requests of this page?
+        </div>
+        <div class="mat-caption margin-top-xs">Do you want to proceed?</div>
+        <div mat-dialog-actions class="flex-center margin-top-s">
+            <button mat-raised-button type="submit" [mat-dialog-close]="false"
+                class="margin-right-m  btn-success btn-responsive cancelbtn">
+                <span i18n>
+                    No
+                </span>
+            </button>
+            <button mat-raised-button type="submit" [mat-dialog-close]="true"
+                class="btn-success btn-responsive successbtn">
+                <span class="text-white" i18n>
+                    Yes
+                </span>
+            </button>
+        </div>
+    </div>
+</ng-template>

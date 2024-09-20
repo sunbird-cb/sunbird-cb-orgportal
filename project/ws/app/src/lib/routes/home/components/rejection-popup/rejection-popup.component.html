@@ -1,0 +1,39 @@
+<div class="rejection">
+  <div class="header flex justify-between gap-4 items-center px-6">
+    <div>{{rejectionsDetails?.header?.headerText}}</div>
+    <ng-container *ngIf="rejectionsDetails?.header?.showEditButton">
+      <div>
+        <img (click)="editReason()" src="../assets/icons/pencil-square.svg" class="editBox">
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="px-5 mb-6">
+    <ng-container *ngIf="!rejectionsDetails?.body?.showTextArea; else textArea">
+      <div class="reason-description">
+        {{rejectionsDetails?.body?.reason}}
+      </div>
+    </ng-container>
+    <ng-template #textArea>
+      <div>
+        <mat-form-field class="w-full mt-5" appearance="outline">
+          <textarea matInput class="reason-text-area" [formControl]="reason"
+            [placeholder]="rejectionsDetails?.body?.placeholder" i18n-placeholder resizable="none"></textarea>
+        </mat-form-field>
+      </div>
+    </ng-template>
+  </div>
+
+  <ng-container *ngIf="rejectionsDetails?.footer?.showFooter">
+    <div class="footer flex justify-end items-center gap-3 px-5">
+      <ng-container *ngFor="let btn of rejectionsDetails?.footer?.buttons">
+        <ng-container *ngIf="btn.btnType === 'submit'; else cancelBtn">
+          <button mat-button class="submit-btn" (click)="onButtonClick(btn)">{{btn.btnText}}</button>
+        </ng-container>
+        <ng-template #cancelBtn>
+          <button mat-button class="cancel-btn" (click)="onButtonClick(btn)">{{btn.btnText}}</button>
+        </ng-template>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

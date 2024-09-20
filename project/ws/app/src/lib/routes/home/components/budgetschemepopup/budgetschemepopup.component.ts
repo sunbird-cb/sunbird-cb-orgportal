@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import { preventHtmlAndJs } from '../../../validators/prevent-html-and-js.validator'
 
 @Component({
   selector: 'ws-app-budgetschemepopup',
@@ -17,9 +18,9 @@ export class BudgetschemepopupComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<BudgetschemepopupComponent>, @Inject(MAT_DIALOG_DATA) data: any) {
     this.schemeform = new FormGroup({
       budgetyear: new FormControl({ value: '', disabled: true }),
-      schemename: new FormControl('', [Validators.required]),
+      schemename: new FormControl('', [Validators.required, preventHtmlAndJs()]),
       budgetallocated: new FormControl({ value: '', disabled: true }, [Validators.required]),
-      budgetutilized: new FormControl('', [Validators.required]),
+      budgetutilized: new FormControl('', [Validators.required, preventHtmlAndJs()]),
     })
 
     this.yearsList = data.yearlist

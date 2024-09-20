@@ -1,0 +1,83 @@
+@import 'ws-common';
+
+.bulk-container {
+  box-shadow: 0px 1px 5px 0px #0000001F, 0px 2px 2px 0px #00000024, 0px 3px 1px -2px #00000033;
+  padding: 24px;
+  border: 1px solid $border-color;
+}
+
+.required {
+  &::after {
+    color: $color-red;
+    content: ' *';
+    display:inline;
+  }
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .label {
+    color: #212529;
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+
+.input-text.mat-chip-input {
+  flex: 1 0 0px;
+}
+
+.icon-include-input {
+  width: calc(100% + -12px);
+  margin: 0px !important;
+}
+
+.auto-complete-row {
+  border: 1px solid $border-color;
+  border-radius: 4px;
+
+  input {
+    border: none;
+    margin: 0px !important;
+  }
+
+  .mat-icon {
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 16px;
+    left: -16px;
+    font-size: 24px;
+    width: 20px;
+    height: 18px;
+    color: rgba(0, 0, 0, 0.54);
+  }
+}
+
+::ng-deep .profile-form-field {
+  .mat-form-field-suffix {
+    position: relative;
+    left: -16px;
+  }
+}
+
+::ng-deep .required-select .mat-form-field-subscript-wrapper {
+  margin-top: 20px;
+}
+
+.rolehead {
+  border: 1px solid #dedede !important;
+  border-radius: 4px !important;
+  margin: 0 12px 12px 0;
+  padding: 0.4em 0.7em;
+  display: inline-table;
+  font: 400 14px / 20px Lato !important;
+}
+
+.roletitle {
+  display: inline-block;
+  padding-right: 10px;
+}

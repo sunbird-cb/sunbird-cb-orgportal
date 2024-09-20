@@ -1,0 +1,84 @@
+// .conformation-popup {
+//   height: 300px;
+//   max-height: 80vh;
+
+//   .msgDescription {
+//     font-size: 14px;
+//   }
+
+// }
+
+// .remove {
+//   background-color: red !important;
+//   color: #ffffff !important;
+// }
+
+.dialog-container {
+
+    .warning-icon {
+        color: #F3962F;
+        font-size: 45px;
+        height: 45px;
+        width: 45px;
+    }
+
+    // .success-icon {
+    //     color: green;
+    //     font-size: 40px;
+    //     height: 40px;
+    // }
+
+    // .fail-icon {
+    //     color: red;
+    //     font-size: 40px;
+    //     height: 40px;
+    // }
+
+    .description {
+        font-size: 14px;
+    }
+
+
+}
+.footer {
+    height: 60px;
+
+    .btn-full-success {
+        min-width: 80px;
+        border: none;
+        background-color: #045dad;
+        color: white;
+        border-radius: 5px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .btn-full-red {
+        min-width: 80px;
+        border: none;
+        background-color: red;
+        color: white;
+        border-radius: 5px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .btn-outline {
+        min-width: 80px;
+        background-color: white;
+        color: #045dad;
+        border: 2px solid #045dad;
+        border-radius: 5px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+}
+
+.textBold {
+    font-weight: 700;
+}
+
+.text-blue {
+    font-size: 16px !important;
+    color: #1B4CA1 !important;
+}

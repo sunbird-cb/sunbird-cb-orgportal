@@ -487,3 +487,37 @@ textarea {
   height: 30px;
   width: 30px
 }
+
+.text_hint {
+  margin-top: -20px;
+  color: rgba($color: #000000, $alpha: .4);
+}
+
+.left-input-div {
+  width: auto;
+  display: inline-flex;
+}
+.right-input-div {
+  // width: 14%;
+  display: inline-flex;
+  vertical-align: top;
+}
+
+.btn-add-activity {
+  background: no-repeat padding-box #0074b6 !important;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin: 4px 16px 0 16px !important;
+  line-height: 28px;
+  height: 36px;
+}
+
+.mat-chip-list {
+  margin-top: 2px;
+  display: flex;
+}
+
+.roles-list {
+  list-style: none;
+  padding: 0;
+}

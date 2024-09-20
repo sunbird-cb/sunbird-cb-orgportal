@@ -19,13 +19,14 @@ import {
   NsInstanceConfig,
   // NsUser,
   UserPreferenceService,
-  AuthKeycloakService,
+  // AuthKeycloakService,
 } from '@sunbird-cb/utils'
 import { map } from 'rxjs/operators'
 import { environment } from '../../environments/environment'
 /* tslint:disable*/
 import _ from 'lodash'
 import { v4 as uuid } from 'uuid'
+import { Subscription } from 'rxjs'
 /* tslint:enable*/
 // interface IDetailsResponse {
 //   tncStatus: boolean
@@ -40,6 +41,7 @@ interface IFeaturePermissionConfigs {
 
 const endpoint = {
   profilePid: '/apis/proxies/v8/api/user/v2/read',
+  orgRead: '/apis/proxies/v8/org/v1/read',
   // profileV2: '/apis/protected/v8/user/profileRegistry/getUserRegistryById',
   // details: `/apis/protected/v8/user/details?ts=${Date.now()}`,
   orgProfile: (orgId: string) => `/apis/proxies/v8/org/v1/profile/read?orgId=${orgId}`,
@@ -50,10 +52,11 @@ const endpoint = {
 })
 export class InitService {
   private baseUrl = this.configSvc.baseUrl
+  updateOrgReadDataSubscription: Subscription | null = null
   constructor(
     private logger: LoggerService,
     private configSvc: ConfigurationsService,
-    private authSvc: AuthKeycloakService,
+    // private authSvc: AuthKeycloakService,
     private widgetResolverService: WidgetResolverService,
     private settingsSvc: BtnSettingsService,
     private userPreference: UserPreferenceService,
@@ -92,6 +95,10 @@ export class InitService {
     iconRegistry.addSvgIcon(
       'hubs',
       domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/hubs.svg'),
+    )
+    iconRegistry.addSvgIcon(
+      'verified',
+      domSanitizer.bypassSecurityTrustResourceUrl('mdo-assets/icons/verified.svg'),
     )
   }
 
@@ -174,6 +181,16 @@ export class InitService {
       this.settingsSvc.initializePrefChanges(environment.production)
     }
     this.updateNavConfig()
+
+    if (this.updateOrgReadDataSubscription) {
+      this.updateOrgReadDataSubscription.unsubscribe()
+    }
+    // to update the profile from user read api
+    this.updateOrgReadDataSubscription = this.configSvc.updateOrgReadDataObservable.subscribe(async (value: string) => {
+      if (value) {
+        await this.fetchOrgReadDataCopy(value)
+      }
+    })
     // await this.widgetContentSvc
     //   .setS3ImageCookie()
     //   .toPromise()
@@ -268,7 +285,7 @@ export class InitService {
             givenName: completeProdata.firstName,
             userId: completeProdata.userId,
             firstName: completeProdata.firstName,
-            lastName: completeProdata.lastName,
+            // lastName: completeProdata.lastName,
             userName: completeProdata.userName,
             // tslint:disable-next-line: max-line-length
             // userName: `${completeProdata.firstName ? completeProdata.firstName : ' '}${completeProdata.lastName ? completeProdata.lastName : ' '}`,
@@ -298,8 +315,9 @@ export class InitService {
             userId: _.get(profileV2, 'userId') || completeProdata.userId,
             email: _.get(profileV2, 'personalDetails.primaryEmail') || completeProdata.email,
             firstName: _.get(profileV2, 'personalDetails.firstname') || completeProdata.firstName,
-            surName: _.get(profileV2, 'personalDetails.surname') || completeProdata.lastName,
-            middleName: _.get(profileV2, 'personalDetails.middlename') || '',
+            mobile: _.get(completeProdata, 'profileDetails.personalDetails.mobile') || '',
+            // surName: _.get(profileV2, 'personalDetails.surname') || completeProdata.lastName,
+            // middleName: _.get(profileV2, 'personalDetails.middlename') || '',
             departmentName: _.get(profileV2, 'employmentDetails.departmentName') || completeProdata.channel,
             // tslint:disable-next-line: max-line-length
             // userName: `${_.get(profileV2, 'personalDetails.firstname') ? _.get(profileV2, 'personalDetails.firstname') : ''}${_.get(profileV2, 'personalDetails.surname') ? _.get(profileV2, 'personalDetails.surname') : ''}`,
@@ -309,7 +327,6 @@ export class InitService {
             isManager: false,
           }
           if (completeProdata.rootOrg && completeProdata.rootOrg.isInstitute) {
-            // console.log('inside is institute ---- calling org profile')
             try {
               const orgProfile = await this.http
                 .get<any>(endpoint.orgProfile(completeProdata.rootOrgId))
@@ -322,12 +339,19 @@ export class InitService {
               this.configSvc.unMappedUser.orgProfile = null
             }
           } else {
-            // console.log('outside is institute ---- NOT calling org profile')
             this.configSvc.unMappedUser.orgProfile = null
+          }
+          localStorage.setItem('login', 'true')
+
+          // get orgReadData from logged in users organisation
+          if (completeProdata.organisations && completeProdata.organisations.length) {
+            this.fetchOrgReadData(completeProdata)
           }
 
         } else {
-          this.authSvc.force_logout()
+          // this.authSvc.force_logout()
+          // await this.http.get('/apis/reset').toPromise()
+          window.location.href = `${this.defaultRedirectUrl}apis/reset`
         }
         const details = {
           group: [],
@@ -417,6 +441,48 @@ export class InitService {
   //   // this.configSvc.userRoles = new Set(userRoles)
   //   // return details
   // }
+
+  async fetchOrgReadData(completeProdata: any) {
+    const request = {
+      request: {
+        organisationId: completeProdata.organisations[0].organisationId,
+      },
+    }
+    let orgReadData: any | null = null
+    orgReadData = await this.http
+      .post<any>(endpoint.orgRead, request)
+      .pipe(map((res: any) => {
+        // const roles = _.map(_.get(res, 'result.response.roles'), 'role')
+        // _.set(res, 'result.response.roles', roles)
+        return _.get(res, 'result.response')
+      }))
+      .toPromise()
+    if (orgReadData) {
+      this.configSvc.orgReadData = orgReadData
+    }
+  }
+
+  async fetchOrgReadDataCopy(id: string) {
+    if (id) {
+      const request = {
+        request: {
+          organisationId: id,
+        },
+      }
+      let orgReadData: any | null = null
+      orgReadData = await this.http
+        .post<any>(endpoint.orgRead, request)
+        .pipe(map((res: any) => {
+          // const roles = _.map(_.get(res, 'result.response.roles'), 'role')
+          // _.set(res, 'result.response.roles', roles)
+          return _.get(res, 'result.response')
+        }))
+        .toPromise()
+      if (orgReadData) {
+        this.configSvc.orgReadData = orgReadData
+      }
+    }
+  }
 
   private async fetchInstanceConfig(): Promise<NsInstanceConfig.IConfig> {
     // TODO: use the rootOrg and org to fetch the instance
@@ -554,5 +620,14 @@ export class InitService {
       }
     })
     return returnValue
+  }
+
+  private get defaultRedirectUrl(): string {
+    try {
+      const baseUrl = document.baseURI
+      return baseUrl || location.origin
+    } catch (error) {
+      return location.origin
+    }
   }
 }

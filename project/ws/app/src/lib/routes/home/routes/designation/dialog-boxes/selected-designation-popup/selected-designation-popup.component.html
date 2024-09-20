@@ -1,0 +1,25 @@
+<div class="flex items-center">
+  <span class="designationHeader mt-3 mb-6">
+    Selected Designations ( {{selectedDesignationsList.length}} )</span>
+</div>
+
+<div class="w-full flex flex-4 flex-row flex-wrap gap-5">
+  <ng-container *ngFor="let designation of selectedDesignationsList; let i = index">
+    <div class="flex flex-4 custom-user-card items-center justify-center">
+      <div class="card-cross-icon">
+        <button mat-mini-fab class="card-cross-btn flex flex-middle flex-center" type="button"
+          (click)="removeSelectedDesignation(i)">
+          <mat-icon class="font-size-20">close</mat-icon>
+        </button>
+      </div>
+      <div class="custom-user-desc">
+        <p>{{designation?.designation | titlecase}}</p>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<div class="flex justify-end items-center gap-4 mt-4">
+  <button mat-raised-button class="close-btn" [mat-dialog-close]="true">Close</button>
+  <button mat-raised-button class="update-btn" (click)="updateList()">Update</button>
+</div>

@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { MdoInfoService } from '../../services/mdoinfo.service'
+import { preventHtmlAndJs } from '../../../validators/prevent-html-and-js.validator'
 
 @Component({
   selector: 'ws-app-staffdetailspopup',
@@ -20,8 +21,8 @@ export class StaffdetailspopupComponent implements OnInit {
     private mdoinfoSrvc: MdoInfoService) {
     this.staffform = new FormGroup({
       designation: new FormControl('', [Validators.required]),
-      posfilled: new FormControl('', [Validators.required]),
-      posvacant: new FormControl('', [Validators.required]),
+      posfilled: new FormControl('', [Validators.required, preventHtmlAndJs()]),
+      posvacant: new FormControl('', [Validators.required, preventHtmlAndJs()]),
     })
 
     if (data.data) {

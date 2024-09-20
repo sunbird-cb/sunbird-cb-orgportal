@@ -13,7 +13,7 @@ const routes: Routes = [
     component: ViewUserComponent,
     data: {
       pageId: ':userId',
-      module: 'user',
+      module: 'User',
     },
     resolve: {
       profileData: UserResolve,
@@ -28,7 +28,7 @@ const routes: Routes = [
     component: CreateUserComponent,
     data: {
       pageId: 'create-user',
-      module: 'user',
+      module: 'User',
     },
     resolve: {
       // department: DepartmentResolve,

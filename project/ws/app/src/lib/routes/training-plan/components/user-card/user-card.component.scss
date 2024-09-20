@@ -1,0 +1,122 @@
+.assignee-card-container {
+    margin-top: 30px
+}
+
+.assignee-card {
+    width: 292px;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 4px;
+    padding: 16px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.assignee-card-without-checkbox {
+    background-color: rgb(240, 240, 240);
+    width: 301px;
+    border: none !important;
+    border-radius: 4px;
+    padding: 22px 12px !important;
+    position: relative;
+}
+
+.avatar {
+    height: 48px;
+    width: 49px;
+    border-radius: 4px;
+    background: #306933;
+    color: #fff;
+}
+
+.avatar div {
+    padding: 14px 13.5px;
+}
+
+.assignee-desc {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+    width: 230px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.assignee-desc .sub-heading {
+    font-size: 14px;
+    color: rgb(0, 0, 0, 0.6);
+}
+
+
+.assignee-desc p {
+    padding: 0;
+    margin: 0;
+    width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.assignee-card-container .check-action {
+    margin-top: 12px;
+    margin-right: 16px;
+
+}
+
+/** Custom User **/
+
+.custom-user-card-container {
+    margin-top: 30px
+}
+
+.custom-user-card {
+    width: 292px;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 4px;
+    padding: 24px 16px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.active-card {
+    border: 1px solid #1B4CA1 !important;
+}
+
+.custom-user-desc {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+    width: 230px;
+    white-space: nowrap;
+
+}
+
+
+.custom-user-desc p {
+    padding: 0;
+    margin: 0;
+    width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.custom-user-card-container .check-action {
+    margin-right: 16px;
+
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+
+.card-cross-icon {
+    position: absolute;
+    right: -12px;
+    top:-12px;
+}
+
+.card-cross-btn  {
+    background: white !important;
+    width: 35px !important;
+    height: 35px !important;
+}

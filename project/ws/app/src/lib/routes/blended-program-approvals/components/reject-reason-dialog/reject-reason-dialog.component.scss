@@ -1,0 +1,31 @@
+@import 'ws-mixins';
+@import 'ws-vars';
+@import 'ws-common';
+
+
+.ws-mat-primary-background {
+  background-color: #0075B7 !important;
+  border-radius: 4px;
+  color: white !important;
+}
+
+.ws-mat-primary-background:disabled, .ws-mat-primary-background[disabled] {
+  opacity: 0.6;
+}
+
+.reason-dialog {
+  position: relative;
+}
+.required:after {
+  content:" *";
+  color: red;
+  position: absolute;
+  right: -5px;
+}
+.mat-form-field {
+  width: 100%!important;
+}
+
+.mat-form-field-flex.no-padding {
+  padding-left: 0!important;
+}

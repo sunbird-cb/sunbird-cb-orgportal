@@ -17,10 +17,11 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "preserveSymlinks": true,
             "assets": [
-              "src/favicon.ico",
               "src/favicon.png",
-              "src/mdo-assets"
+              "src/mdo-assets/icons/",
+              "src/mdo-assets/images/"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -88,7 +89,8 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/@project-sunbird/telemetry-sdk/index.js",
-              "node_modules/shepherd.js/dist/js/shepherd.min.js"
+              "node_modules/shepherd.js/dist/js/shepherd.min.js",
+              "node_modules/leader-line/leader-line.min.js"
             ]
           },
           "configurations": {
@@ -253,8 +255,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/mdo-assets"
+              "src/favicon.png"
             ],
             "styles": [
               "src/styles.scss"

@@ -1,0 +1,62 @@
+<mat-card class="competency-view-card" *ngIf="dData && dData.name">
+    <mat-card-content class="flex flex-1 custom">
+      <span class="mat-h2 font-medium">{{dData.name}}</span>
+      <h3 class="mat-h3">{{dData.description}}</h3>
+      <div class="flex">
+        <h3 class="mat-h3">Competency type: &nbsp;</h3>
+        <span class="mat-h3 font-medium">{{dData?.additionalProperties?.competencyType || dData?.competencyType}}</span>
+      </div>
+      <div>
+        <mat-radio-group class="flex tgl-group margin-top-s flex-wrap level-group-container" aria-label="Select an option"
+          name="competencyLevel" [(ngModel)]="levelSelected" *ngIf="dData?.children.length > 0">
+          <mat-radio-button matInput [name]="'radio-' + item.id" color="banner"
+            class="example-radio-button w-full mb-5 pt-3 pl-5 pr-5" *ngFor="let item of dData?.children" [value]="item">
+            <span class="pl-2 pt-3">{{item.level}}</span>
+            <span class="mat-body-1 ws-mat-black60-text" [innerHtml]="item.formatedText"></span>
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="flex flex-row-reverse responsive">
+      <div class="mb-2 ml-2 mr-2 ws-mat-accent-text view-all wid-auro">
+        <a href="javascript:void(0)" mat-button mat-dialog-close i18n-aria-label class="flex">
+          <span i18n>{{'Close'}}</span>
+        </a>
+      </div>
+      <div class="mb-2 view-all wid-auro others text-white">
+        <a href="javascript:void(0)" mat-button i18n-aria-label  (click)="remove()">
+          <span i18n>{{'Remove'}}</span>
+        </a>
+
+      </div>
+    </mat-card-actions>
+  </mat-card>
+  
+  <mat-card class="competency-view-card" *ngIf="dData && !dData.name">
+    <mat-card-content class="flex flex-1 custom margin-remove">
+      <div class="flex">
+        <h3 class="mat-h3">Competency area: &nbsp;</h3>
+        <span class="mat-h3 font-medium">{{dData.competencyArea}}</span>
+      </div>
+      <div class="flex">
+        <h3 class="mat-h3">Competency theme: &nbsp;</h3>
+        <span class="mat-h3 font-medium">{{dData?.competencyTheme}}</span>
+      </div>
+      <div class="flex">
+        <h3 class="mat-h3">Competency subtheme: &nbsp;</h3>
+        <span class="mat-h3 font-medium">{{dData?.competencySubTheme}}</span>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="flex flex-row-reverse responsive">
+      <div class="mb-2 ml-2 mr-2 ws-mat-accent-text view-all wid-auro">
+        <a href="javascript:void(0)" mat-button mat-dialog-close i18n-aria-label class="flex">
+          <span i18n>{{'Close'}}</span>
+        </a>
+      </div>
+      <div class="mb-2 view-all wid-auro others text-white">
+        <a href="javascript:void(0)" mat-button i18n-aria-label  (click)="remove()">
+          <span i18n>{{'Remove'}}</span>
+        </a>
+      </div>
+    </mat-card-actions>
+  </mat-card>

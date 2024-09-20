@@ -4,12 +4,10 @@ import { Injectable } from '@angular/core'
 @Injectable()
 export class LoaderService {
   changeLoad = new BehaviorSubject<boolean>(false)
+  $currentState = this.changeLoad.asObservable()
 
-  private doubleBack = new BehaviorSubject(false)
-  currentState = this.doubleBack.asObservable()
-
-  changeLoadState(state: boolean) {
-    this.doubleBack.next(state)
+  changeLoaderState(state: boolean) {
+    this.changeLoad.next(state)
   }
 
 }

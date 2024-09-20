@@ -5,10 +5,12 @@
   <ng-container [wsResolverWidget]="banner"></ng-container>
 </div> -->
 
-<mat-sidenav-container autosize name="discuss-menu" class="nav-container" name="exp">
+<mat-sidenav-container autosize name="discuss-menu" class="nav-container" name="exp"
+  [ngClass]="{'custom-odcs':containerCustomCls}">
   <mat-sidenav [mode]="mode$ | async" [(opened)]="sideNavBarOpened" class="left-nav border-0">
-    <div class="contain">
-      <ng-container [wsResolverWidget]="widgetData"></ng-container>
+    <div class="container2" *ngIf="widgetData">
+      <!-- <ng-container [wsResolverWidget]="widgetData"></ng-container> -->
+      <ws-widget-left-menu [widgetData]="widgetData"></ws-widget-left-menu>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -18,7 +20,7 @@
         <mat-icon>menu</mat-icon>
       </button>
     </div>
-    <div class="container-balanced">
+    <div class="container-balanced" [ngClass]="{'custom-odcs':containerCustomCls}">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

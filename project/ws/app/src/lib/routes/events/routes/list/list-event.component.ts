@@ -6,6 +6,8 @@ import * as moment from 'moment'
 /* tslint:disable */
 import _ from 'lodash'
 import { TelemetryEvents } from '../../../../head/_services/telemetry.event.model'
+import { DatePipe } from '@angular/common'
+
 /* tslint:enable */
 @Component({
     selector: 'ws-app-list-event',
@@ -28,15 +30,17 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     usersData!: any
     department: any
     departmentID: any
-
+    configService: any
     constructor(
         private router: Router,
         private eventSvc: EventsService,
         private configSvc: ConfigurationsService,
         private activeRoute: ActivatedRoute,
-        private events: EventService
+        private events: EventService,
+        private datePipe: DatePipe
     ) {
         this.math = Math
+        this.configService = this.activeRoute.snapshot.data.configService
         if (this.configSvc.userProfile) {
             this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
             this.department = this.configSvc.userProfile && this.configSvc.userProfile.departmentName
@@ -47,9 +51,13 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
             }
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')) {
                 this.department = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.departmentName')
+                _.set(this.department, 'snapshot.data.configService.userProfile.departmentName', this.department ? this.department : '')
             }
             if (_.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')) {
                 this.currentUser = _.get(this.activeRoute, 'snapshot.data.configService.userProfile.userId')
+            }
+            if (this.configService.userProfile && this.configService.userProfile.departmentName) {
+                this.configService.userProfile.departmentName = this.department
             }
         }
     }
@@ -57,17 +65,17 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit() {
         this.tabledata = {
             columns: [
-                { displayName: 'Cover Picture', key: 'eventThumbnail' },
+                { displayName: 'Cover picture', key: 'eventThumbnail' },
                 { displayName: 'Title', key: 'eventName' },
                 { displayName: 'Date and time', key: 'eventStartDate' },
-                { displayName: 'Created On', key: 'eventCreatedOn' },
+                { displayName: 'Created on', key: 'eventCreatedOn' },
                 { displayName: 'Duration', key: 'eventDuration' },
                 { displayName: 'Joined', key: 'eventjoined' },
             ],
             needCheckBox: false,
             needHash: false,
-            sortColumn: '',
-            sortState: 'asc',
+            sortColumn: 'eventCreatedOn',
+            sortState: 'desc',
         }
         this.fetchEvents()
     }
@@ -121,13 +129,13 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
                     const minutes = obj.duration % 60
                     const duration = (hours === 0) ? ((minutes === 0) ? '---' : `${minutes} minutes`) : (minutes === 0) ? (hours === 1) ?
                         `${hours} hour` : `${hours} hours` : (hours === 1) ? `${hours} hour ${minutes} minutes` :
-                            `${hours} hours ${minutes} minutes`
+                        `${hours} hours ${minutes} minutes`
                     const creatordata = obj.creatorDetails !== undefined ? obj.creatorDetails : []
                     const str = creatordata && creatordata.length > 0 ? creatordata.replace(/\\/g, '') : []
                     const creatorDetails = str && str.length > 0 ? JSON.parse(str) : creatordata
                     const eventDataObj = {
                         eventName: obj.name.substring(0, 100),
-                        eventStartDate: this.customDateFormat(obj.startDate, obj.startTime),
+                        eventStartDate: this.customDateFormat(this.datePipe.transform(obj.startDate, 'MMM dd, yyyy'), obj.startTime),
                         eventCreatedOn: this.allEventDateFormat(obj.createdOn),
                         eventDuration: duration,
                         eventjoined: (creatorDetails !== undefined && creatorDetails.length > 0) ?
@@ -216,7 +224,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         const formatedDate = new Date(year, month, date, hours, minutes, seconds, 0)
         // let format = 'YYYY-MM-DD hh:mm a'
         // if (!timeAllow) {
-        const format = 'YYYY-MM-DD'
+        const format = 'MMM DD, yyyy'
         // }
         const readableDateMonth = moment(formatedDate).format(format)
         const finalDateTimeValue = `${readableDateMonth}`

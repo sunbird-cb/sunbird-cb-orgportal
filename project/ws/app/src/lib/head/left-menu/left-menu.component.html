@@ -1,0 +1,52 @@
+<div class="flex flex-1 flex-column min-wid sidenav-wrap text-center">
+  <div class="margin-top-xs flex flex-column max-width width-1-1">
+    <a href="javascript:void(0)" role="link" class="flex flex-column padding-right-m  padding-left-m">
+      <div class="dept-logo-block flex flex-middle flex-center">
+        <img src="../assets/icons/govtlogo.jpg" class="img-logo" />
+      </div>
+      <!-- <div class="dept-logo-block flex flex-middle flex-center" *ngIf="!widgetData.logo">
+        <img [src]="img.json" [alt]="widgetData.name" class="img-logo" />
+      </div> -->
+      <span i18n="title" class="mat-subheading-2 margin-top-m  dept-name">
+        <!-- this will be dynamic -->
+        {{mdoname}}
+      </span>
+    </a>
+  </div>
+</div>
+<ng-container *ngFor="let menu of menulist; let mi = index">
+  <ng-container *ngIf="menu.subMenu">
+    <mat-accordion [multi]="true" class="custom-leftmenu">
+      <mat-expansion-panel class="menuPannel bg-gray-accordian" hideToggle="true" [expanded]="false" #example>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-panel-description>
+              <p class="margin-remove">{{menu?.menuCategory}}</p>
+              <mat-icon *ngIf="!example.expanded">arrow_drop_down</mat-icon>
+              <mat-icon *ngIf="example.expanded">arrow_drop_up</mat-icon>
+            </mat-panel-description>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list class="nav-list-menu flex-1">
+          <ng-container *ngFor="let tab of menu?.subMenu; let i = index">
+            <ng-container>
+              <a mat-list-item disableRipple class="flex outline-1 menu-item-a" [attr.data-index]="i"
+                [routerLink]="[tab.routerLink]" [queryParamsHandling]="preserve" routerLinkActive="ws-active-route-men">
+                <span class="padding-left-xs">{{tab?.name}}</span>
+              </a>
+            </ng-container>
+          </ng-container>
+        </mat-nav-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ng-container>
+
+  <ng-container *ngIf="!menu.subMenu">
+    <mat-nav-list class="nav-list-menu flex-1">
+      <a mat-list-item disableRipple class="flex outline-1 main-menuitem" [attr.data-index]="mi"
+        [routerLink]="[menu.routerLink]" [queryParamsHandling]="preserve" routerLinkActive="ws-active-route-men">
+        <span class="padding-left-xs sub-menu-text">{{menu?.menuCategory}}</span>
+      </a>
+    </mat-nav-list>
+  </ng-container>
+</ng-container>

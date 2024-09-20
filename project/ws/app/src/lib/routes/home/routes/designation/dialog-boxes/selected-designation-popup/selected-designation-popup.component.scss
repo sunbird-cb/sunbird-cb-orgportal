@@ -1,0 +1,47 @@
+
+.designationHeader {
+  font: 600 16px / 24px Montserrat;
+}
+.custom-user-card {
+  width: 292px;
+  border: 1px solid #1B4CA1;
+  border-radius: 4px;
+  height: 70px;
+  display: flex;
+  padding: 0 16px;
+  width: 230px;
+  white-space: nowrap;
+  position: relative;
+  p {
+    padding: 0;
+    margin: 0;
+    width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-cross-icon {
+    position: absolute;
+    right: -12px;
+    top:-12px;
+  }
+
+  .card-cross-btn  {
+    background: white !important;
+    width: 35px !important;
+    height: 35px !important;
+  }
+}
+
+.close-btn {
+  color: #1b4ca1 !important;
+  border: 1px solid #1b4ca1;
+  width: 100px;
+
+}
+
+.update-btn {
+  background: #1b4ca1 !important;
+  color: white !important;
+  width: 100px;
+}

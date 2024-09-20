@@ -1,0 +1,389 @@
+<div class="flex flex-4 flex-column main-container">
+  <mat-card class="card-section">
+    <!-- <mat-card-header class="flex-custom-m">
+        <div class="flex-1" role="link" tabindex="1">
+          <div class="flex flex-1">
+            <mat-card-title class="flex-4 mobile-margin mat-h2">
+              Roles and access
+            </mat-card-title>
+          </div>
+        </div>
+      </mat-card-header> -->
+    <span class="flex">
+      <mat-icon class="arrow-btn" (click)="navigateBack()">arrow_back</mat-icon>
+      <mat-card-title class="flex-4 mobile-margin mat-h2 title-request">
+        {{isHideData ? 'Go Back':'Request Content'}}
+      </mat-card-title>
+    </span>
+
+    <mat-card-content>
+      <div class="form-element">
+        <form [formGroup]="requestForm">
+          <div class="title-name">
+            <div class="fonm-element-label label-text">Title <span class="required"></span></div>
+            <mat-form-field appearance="outline" class="w-full field-height" fxFlex="40">
+              <input class="w-full placeholder-text" matInput placeholder="Enter the content name"
+                formControlName="TitleName" maxlength="70">
+              <mat-hint align="end">{{ requestForm.controls['TitleName'].value.length }} / 70</mat-hint>
+              <mat-error *ngIf="requestForm.controls['TitleName'].hasError('required')">
+                Please enter a title for the request."
+              </mat-error>
+              <mat-error
+                *ngIf="requestForm.controls['TitleName'].hasError('minlength') && !requestForm.controls['TitleName'].errors?.pattern"
+                i18n="name Error|Explains name is required">
+                Minimum characters left to create {{10 - requestForm.controls['TitleName'].value.length}}
+              </mat-error>
+              <mat-error *ngIf="requestForm.controls['TitleName'].errors?.pattern"
+                i18n="name Error|Explains name is required">
+                Only {{specialCharList}} characters are supported
+              </mat-error>
+              <mat-hint>
+                Only {{specialCharList}} characters are supported
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="title-name">
+            <div class="fonm-element-label label-text">Objective <span class="required"></span></div>
+            <mat-form-field appearance="outline" class="w-full field-height" fxFlex="40">
+              <!-- <input class="w-full" matInput placeholder="Provide the objective of the content" formControlName="Objective" maxlength="500"> -->
+              <textarea matInput class="w-full  placeholder-text" [matTextareaAutosize] [matAutosizeMaxRows]="10"
+                [matAutosizeMinRows]="5" formControlName="Objective" placeholder="Provide the objective of the content"
+                maxlength="500" i18n-placeholder></textarea>
+              <mat-hint align="end">{{ requestForm.controls['Objective'].value.length }} / 500</mat-hint>
+              <mat-error *ngIf="requestForm.controls['Objective'].hasError('required')">
+                Please enter the objective of the request.
+              </mat-error>
+              <mat-error
+                *ngIf="requestForm.controls['Objective'].hasError('minlength') && !requestForm.controls['Objective'].errors?.pattern"
+                i18n="name Error|Explains name is required">
+                Minimum characters left to create {{10 - requestForm.controls['Objective'].value.length}}
+              </mat-error>
+              <mat-error *ngIf="requestForm.controls['Objective'].errors?.pattern"
+                i18n="name Error|Explains name is required">
+                Only {{specialCharList}} characters are supported
+              </mat-error>
+              <mat-hint>
+                Only {{specialCharList}} characters are supported
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="title-name">
+            <div class="fonm-element-label label-text">Type of user</div>
+            <mat-form-field appearance="outline" class="w-full field-height" fxFlex="40">
+              <!-- <input class="w-full" matInput placeholder="Example for ASO and above" formControlName="userType" maxlength="500"> -->
+              <textarea matInput class="w-full  placeholder-text" [matTextareaAutosize] [matAutosizeMaxRows]="10"
+                [matAutosizeMinRows]="2" formControlName="userType" placeholder="Example for ASO and above"
+                maxlength="500" i18n-placeholder></textarea>
+              <mat-hint align="end">{{ requestForm.controls['userType'].value.length }} / 500</mat-hint>
+              <mat-error
+                *ngIf="requestForm.controls['userType'].hasError('minlength') && !requestForm.controls['userType'].errors?.pattern"
+                i18n="name Error|Explains name is required">
+                Minimum characters left to create {{10 - requestForm.controls['userType'].value.length}}
+              </mat-error>
+              <mat-error *ngIf="requestForm.controls['userType'].errors?.pattern"
+                i18n="name Error|Explains name is required">
+                Only {{specialCharList}} characters are supported
+              </mat-error>
+              <mat-hint>
+                Only {{specialCharList}} characters are supported
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="title-name">
+            <div class="fonm-element-label label-text">Learning Mode</div>
+            <div class="mt-5">
+              <mat-radio-group aria-label="Select an option" formControlName="learningMode">
+                <mat-radio-button class="learning-section" *ngFor="let item of learningList"
+                  [value]="item.key">{{item.name}}</mat-radio-button>
+
+              </mat-radio-group>
+            </div>
+          </div>
+
+          <div class="title-name">
+            <span class="comp-heading">Targeted Competencies</span>
+            <!-- <div>
+                        <div class="fonm-element-label label-text">Competency Area</div>
+                        <mat-form-field appearance="outline" class="w-full field-height" fxFlex="40">
+                            <mat-select placeholder="Select Area" formControlName="compArea" (selectionChange)="onAreaSelection($event)">
+                                <mat-option *ngFor="let type of competencyList"  [value]="type">
+                                    {{type.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+
+            <div class="flex-1">
+              <div class="margin-bottom-m">
+                <p class="mat-subheading-2">Competency Area</p>
+                <ng-container *ngIf="filteredallCompetencies">
+                  <mat-radio-group name="competencyArea" class="flex tgl-group margin-top-s flex-wrap"
+                    formControlName="compArea">
+                    <mat-radio-button matInput [name]="'radio-' + option.name"
+                      class="flex flex-row itm-center ws-mat-accent-border margin-right-s"
+                      *ngFor="let option of filteredallCompetencies" [value]="option.name"
+                      (change)="compAreaSelected(option)">
+                      <span class="mat-body-2">{{option.name}}</span>
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </ng-container>
+              </div>
+
+              <div class="margin-bottom-m" *ngIf="allCompetencyTheme && allCompetencyTheme.length > 0">
+                <p class="mat-subheading-2">Competency Theme</p>
+                <div class="flex flex-1 flex-row margin-fix search">
+                  <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
+                    <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                    <mat-label>Search</mat-label>
+                    <input type="search" #searchInput class="ml-2 flex-1" i18n-placeholder="search"
+                      [placeholder]="'Search'" i18-aria-label aria-label="Search" matInput
+                      formControlName="queryThemeControl" maxlength="50" (keyup)="updateQuery('theme')" />
+                  </mat-form-field>
+                  <button class="margin-top-s" mat-icon-button (click)="resetSearch('theme')">
+                    <mat-icon>refresh</mat-icon>
+                  </button>
+                </div>
+                <div>
+                  <span class="display-inline-block complabels mat-caption cursor-pointer"
+                    [ngClass]="{active: (seletedCompetencyTheme && option.id === seletedCompetencyTheme.id)}"
+                    (click)="compThemeSelected(option)"
+                    *ngFor="let option of filteredallCompetencyTheme">{{option.name}}</span>
+                </div>
+              </div>
+
+              <div class="margin-bottom-m" *ngIf="allCompetencySubtheme && allCompetencySubtheme.length > 0">
+                <p class="mat-subheading-2">Competency Sub theme</p>
+                <div class="flex flex-1 flex-row margin-fix search">
+                  <mat-form-field appearance="outline" class="autocomplete-form" color="primary" [floatLabel]="'never'">
+                    <mat-icon matPrefix class="search-home flex items-center justify-center">search</mat-icon>
+                    <mat-label>Search</mat-label>
+                    <input type="search" #searchInput class="ml-2 flex-1" i18n-placeholder="search"
+                      [placeholder]="'Search'" i18-aria-label aria-label="Search" matInput
+                      formControlName="querySubThemeControl" maxlength="50" (keyup)="updateQuery('subtheme')" />
+                  </mat-form-field>
+                  <button class="margin-top-s" mat-icon-button (click)="resetSearch('subtheme')">
+                    <mat-icon>refresh</mat-icon>
+                  </button>
+                </div>
+                <div>
+                  <span class="display-inline-block complabels mat-caption cursor-pointer"
+                    [ngClass]="{active: (seletedCompetencySubTheme && option.id === seletedCompetencySubTheme.id)}"
+                    (click)="compSubThemeSelected(option)"
+                    *ngFor="let option of filteredallCompetencySubtheme">{{option.name}}</span>
+                </div>
+              </div>
+
+              <div class="margin-bottom-l">
+                <button mat-raised-button type="button"
+                  class="ws-mat-default-text ws-mat-accent-border-active compbutton" [disabled]="!enableCompetencyAdd"
+                  (click)="addCompetency()">
+                  <span class="mat-subheading-2 padding-xs" i18n style="vertical-align: unset;">Add</span>
+                </button>
+              </div>
+            </div>
+            <div class="flex new-mobile">
+              <div class="flex-1">
+                <div class="flex flex-1" *ngIf="requestForm.controls?.competencies_v5?.value?.length > 0">
+                  <table class="compt-table width-1-1 text-left margin-bottom-xl" cellspacing="0">
+                    <tr>
+                      <th class="padding-xs ws-mat-black60-text mat-body-1">Area</th>
+                      <th class="padding-xs ws-mat-black60-text mat-body-1">Theme</th>
+                      <th class="padding-xs ws-mat-black60-text mat-body-1">Sub theme</th>
+                    </tr>
+                    <tr *ngFor="let comp of requestForm.controls?.competencies_v5?.value"
+                      [attr.disabled]="isCompetencyHide ? true : null" (click)=view(comp)>
+                      <td class="padding-xs mat-body-1 cursor-pointer">{{comp.competencyArea}}</td>
+                      <td class="padding-xs mat-body-1 cursor-pointer">{{comp.competencyTheme || comp.name}}</td>
+                      <td class="padding-xs mat-body-1 cursor-pointer">{{comp.competencySubTheme ||
+                        comp.selectedLevelLevel}}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="" *ngIf="showSaveButton()">
+                <button mat-raised-button type="button" style="line-height: 48px;"
+                  class="ws-mat-default-text ws-mat-accent-border-active"
+                  (click)="!requestForm.invalid ? data.emit('save') : showToasterMessage('mandatoryFields')">
+                  <span class="mat-subheading-2 padding-xs" i18n style="vertical-align: unset;">Save</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- //old design -->
+            <!-- <div *ngIf="allCompetencyTheme && allCompetencyTheme.length > 0">
+                    <div class="fonm-element-label label-text">Competency Theme</div>
+                    <mat-form-field appearance="outline" class="w-full" fxFlex="40">
+                        <mat-label>Select theme</mat-label>
+                        <mat-select (openedChange)="openedChange($event,'themeText')"  (selectionChange)="onThemeSelection($event)" formControlName="compTheme"  multiple>
+
+                          <mat-select-trigger>
+                            <mat-chip-list>
+                              <mat-chip *ngFor="let item of requestForm.get('compTheme').value"
+                                [removable]="true" (removed)="onThemeRemoved(item)">
+                                {{ item.name }}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                              </mat-chip>
+                            </mat-chip-list>
+                          </mat-select-trigger>
+                          <mat-optgroup>
+                            <mat-form-field floatLabel="never">
+                              <input #search autocomplete="off" placeholder="Search" (keyup)="searchValueData($event,'themeText')"  formControlName="themeText" matInput>
+                              <button [disableRipple]="true" *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
+                                (click)="clearSearch($event,'themeText')"><mat-icon>close</mat-icon></button>
+                            </mat-form-field>
+                          </mat-optgroup>
+                          <mat-optgroup *ngIf="filterCompetencyThemes.length === 0">
+                            <div>No results found!</div>
+                          </mat-optgroup>
+                          <mat-option *ngFor="let option of filterCompetencyThemes"  [value]="option">{{option.name}}</mat-option>
+
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+
+                <div *ngIf="allCompetencySubtheme && allCompetencySubtheme.length > 0">
+                    <div class="fonm-element-label label-text">Competency Sub Theme</div>
+                    <mat-form-field appearance="outline" class="w-full" fxFlex="40">
+                        <mat-label>Select Sub theme</mat-label>
+                        <mat-select (openedChange)="openedChange($event,'subthemeText')" (selectionChange)="onSubThemeSelection($event)" formControlName="compSubTheme"  multiple>
+
+                          <mat-select-trigger>
+                            <mat-chip-list>
+                              <mat-chip *ngFor="let item of requestForm.get('compSubTheme').value"
+                                [removable]="true" (removed)="onSubThemeRemoved(item)">
+                                {{ item.name }}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                              </mat-chip>
+                            </mat-chip-list>
+                          </mat-select-trigger>
+                          <mat-optgroup>
+                            <mat-form-field floatLabel="never">
+                              <input #search autocomplete="off" placeholder="Search" (keyup)="searchValueData($event,'subthemeText')"  formControlName="subthemeText" matInput>
+                              <button [disableRipple]="true" *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
+                                (click)="clearSearch($event,'subthemeText')"><mat-icon>close</mat-icon></button>
+                            </mat-form-field>
+                          </mat-optgroup>
+                          <mat-optgroup *ngIf="filteredSubTheme.length === 0">
+                            <div>No results found!</div>
+                          </mat-optgroup>
+                          <mat-option *ngFor="let option of filteredSubTheme"  [value]="option">{{option.name}}</mat-option>
+
+                        </mat-select>
+                      </mat-form-field>
+
+
+                </div> -->
+          </div>
+          <!-- <div class="title-name">
+
+                </div> -->
+
+          <div class="title-text">
+            <div class="fonm-element-label label-text">Refrence Link</div>
+            <mat-form-field appearance="outline" class="w-full field-height" fxFlex="40">
+              <input class="w-full  placeholder-text" matInput placeholder="Provide reference link"
+                formControlName="referenceLink">
+              <mat-error *ngIf="requestForm.controls['referenceLink'].errors?.hasHtml"
+                i18n="name Error|Explains name is required">
+                HTML or Js is not allowed
+              </mat-error>
+            </mat-form-field>
+
+
+          </div>
+          <div class="title-text">
+            <div class="fonm-element-label label-text">Request Type<span class="required"></span></div>
+            <div class="mt-5">
+              <mat-radio-group aria-label="Select an option" formControlName="requestType">
+                <mat-radio-button class="learning-section" *ngFor="let item of requestTypeList" [value]="item"
+                  (change)="selectRequestType(item)">{{item}}</mat-radio-button>
+                <!-- <mat-error *ngIf="requestForm.controls['requestType'].hasError('required')">
+                          Please select a request type (Single Provider or Broadcast).
+                        </mat-error> -->
+
+              </mat-radio-group>
+            </div>
+          </div>
+          <div class="title-name" *ngIf="isAssignee">
+            <div class="fonm-element-label label-text">Assignee <span class="required"></span></div>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-full field-height" fxFlex="40">
+                <mat-select class=" placeholder-text" placeholder="Choose the Assignee" formControlName="assignee">
+                  <input #search autocomplete="off" placeholder="Search" class="assigneeSearch"
+                    (keydown.space)="$event.stopPropagation()" formControlName="assigneeText" matInput>
+                  <mat-option *ngFor="let option of filteredAssigneeType"
+                    [value]="option">{{option.orgName}}</mat-option>
+
+                </mat-select>
+                <mat-error *ngIf="requestForm.controls['assignee'].hasError('required')">
+                  Please select a provider/assignee for the request.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="title-name" *ngIf="isBroadCast">
+            <div class="fonm-element-label label-text">Preffered Providers <span class="required"></span>
+              <span class="tooltip-span">
+                <mat-icon class="info-icon cursor-pointer" [matTooltip]="'You can select upto 5 preferred provider'"
+                  matTooltipClass="tooltip-sec">info</mat-icon>
+
+              </span>
+
+            </div>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-full field-height" fxFlex="40">
+                <mat-select class=" placeholder-text" placeholder="Choose the provider"
+                  (openedChange)="openedChange($event,'providerText')" formControlName="providers" multiple>
+
+                  <mat-select-trigger [ngClass]="{'disbaledSelect':isHideData}">
+                    <mat-chip-list>
+                      <mat-chip *ngFor="let item of requestForm.get('providers').value" [removable]="true"
+                        (removed)="onProviderRemoved(item)">
+                        {{ item.orgName }}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                      </mat-chip>
+                    </mat-chip-list>
+                    <!-- {{requestForm.get('compTheme').value | json}} -->
+                  </mat-select-trigger>
+                  <mat-optgroup>
+                    <mat-form-field floatLabel="never">
+                      <input #search autocomplete="off" placeholder="Search" (keydown.space)="$event.stopPropagation()"
+                        formControlName="providerText" matInput>
+                      <button [disableRipple]="true" *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="clearSearch($event,'providerText')"><mat-icon>close</mat-icon></button>
+                    </mat-form-field>
+                  </mat-optgroup>
+                  <mat-optgroup *ngIf="filteredRequestType.length === 0">
+                    <div>No results found!</div>
+                  </mat-optgroup>
+                  <!-- <mat-option *ngFor="let option of requestObjData.preferredProvider" [value]="option.providerName">{{option.providerName}}</mat-option> -->
+                  <ng-container *ngFor="let option of filteredRequestType">
+                    <mat-option [ngClass]="{'hideOptions': (option.hideOption && option.hideOption === 'hide')}"
+                      [disabled]="isOptionDisabled(option)" [value]="option">{{option.orgName}}</mat-option>
+                  </ng-container>
+
+                </mat-select>
+                <mat-error *ngIf="requestForm.controls['providerText'].hasError('required')">
+                  Please select up to five preferred providers for the request.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="flex flex-start margin-top-l" *ngIf="!isHideData">
+            <button mat-button class="submit-btn margin-right-xs" type="button" (click)="submit()"
+              [disabled]="!requestForm.valid">Submit</button>
+            <button mat-button class="close-btn" (click)="navigateBack()" type="button">Cancel</button>
+
+          </div>
+
+          <div class="flex flex-start margin-top-l" *ngIf="isHideData">
+            <button mat-button class="close-btn" (click)="navigateBack()" type="button">Cancel</button>
+
+          </div>
+        </form>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

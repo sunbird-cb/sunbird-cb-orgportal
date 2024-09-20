@@ -1,0 +1,58 @@
+<div class="main-container">
+    <div class="full-table-container" *ngIf="requestTypeData?.length > 0">
+      <form [formGroup]="requestForm">
+          <div class="header-section">
+              <div class="title">
+                  <h2 class="titleText">{{'Re-Assign'}}</h2>
+              </div>
+              <div class="actions">
+                  <button mat-button type="button" class="search-btn" [ngClass]="{'disableBtn': !requestForm.valid}"  (click)="onSubmitAssign()"  [disabled]="!requestForm.valid" >{{submitAssign}}</button>
+  
+                  <button mat-button class="cancel" (click)="cancel()">
+                      <span>Cancel</span>
+                  </button>
+  
+              </div>
+             
+            </div>
+            <!-- <div class="input-group rounded search-btns">
+                <input type="search" class="form-control rounded search-int" formControlName="orgSearch" placeholder="Search" aria-label="Search" (keyup)="searchText('orgSearch')" aria-describedby="search-addon" />
+                <span class="input-group-text border-0" id="search-addon">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div> -->
+
+        <mat-radio-group formControlName="assignee">
+          <div class="nav-container">
+            <div class="sidenav-content">
+              <div class="table-class">
+                <table mat-table [dataSource]="dataSource">
+                  <ng-container matColumnDef="select">
+                      <th mat-header-cell *matHeaderCellDef class="row-heading radio-width"></th>
+                    <td mat-cell class="title-class" *matCellDef="let provider">
+                      <mat-radio-button [value]="provider" ></mat-radio-button>
+                    </td>
+                  </ng-container>
+  
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="row-heading">Provider Name</th>
+                    <td mat-cell class="title-class" *matCellDef="let provider">{{ provider?.orgName }}</td>
+                  </ng-container>
+  
+  
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-row-data"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{'row-bg':row === this.requestTypeData[0]}"></tr>
+                </table>
+                <!-- <mat-paginator [pageSize]=5 [length]="this.requestTypeData?.length" [pageSizeOptions]="[5,10,20]"
+                (page)="onChangePage($event)"></mat-paginator> -->
+                <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons
+            ></mat-paginator>
+    
+              </div>
+            </div>
+          </div>
+        </mat-radio-group>
+      </form>
+    </div>
+  </div>
+  

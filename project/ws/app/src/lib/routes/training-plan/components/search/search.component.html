@@ -1,0 +1,44 @@
+<div class="flex flex-1 flex-row search-container">
+    <!-- Category Drop down -->
+    <ng-container>
+        <ws-app-category-drop-down [categoryData]="categoryData" [from]="from"
+            (handleCategorySelection)="handleCategorySelection($event)"
+            [ngClass]="{'disable': isContentLive}"></ws-app-category-drop-down>
+    </ng-container>
+    <div class="search flex w-full margin-left-xl margin-right-xl" [ngClass]="{'disable': isContentLive}">
+        <div class="rsearch flex w-full"><mat-icon
+                class="color-60 search-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
+            <input class="sinput color-60 w-full margin-right-m" [(ngModel)]="searchText" (keyup.enter)="searchData()"
+                label="" placeholder="Select" type="Standard" [ngClass]="{'disable': isContentLive}">
+        </div>
+        <button mat-button type="button" class="search-btn" (click)="searchData()"
+            [ngClass]="{'disable': isContentLive}">Search</button>
+    </div>
+    <div class="filter-section flex flex-end" *ngIf="!(tpdsSvc?.trainingPlanAssigneeData?.category === 'Designation'
+    || tpdsSvc?.trainingPlanAssigneeData?.category === 'AllUser') || from === 'content'"
+        [ngClass]="{'disable': isContentLive}">
+        <button mat-button type="button" (click)="openFilter()" class="apply-filter">
+            <mat-icon class="margin-right-xs">filter_list</mat-icon> Apply Filters
+        </button>
+    </div>
+</div>
+<!-- <div [hidden]="!filterVisibilityFlag">
+    <ws-app-filter (toggleFilter)="hideFilter($event)" [from]="from" [designationList]="designationList"
+        (getFilterData)="getFilterData($event)" [clearFilterFlag]="clearFilter"></ws-app-filter>
+</div> -->
+
+<!-- <mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">      
+      <button (click)="showFiller = !showFiller" mat-raised-button>
+        Toggle extra text
+      </button>
+    </mat-drawer>
+    <div class="example-sidenav-content">
+        <button type="button" mat-button (click)="drawer.toggle()">
+          Toggle sidenav
+        </button>
+      </div>
+   
+  
+  </mat-drawer-container> -->
+   

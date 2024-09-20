@@ -176,6 +176,7 @@ iframe {
 
 .mat-menu-panel {
   max-width: 290px !important;
+  min-height: 55px !important;
 }
 
 // Material Over-rides
@@ -644,7 +645,7 @@ h3.shepherd-title {
 }
 
 .theme-igot.day-mode .mat-card {
-  box-shadow: none !important;
+  box-shadow: none ;
 }
 
 .card-heading {
@@ -660,4 +661,18 @@ h3.shepherd-title {
   border-radius: 5px;
   max-width: 500px;
   padding: 16px;
+}
+
+.leader-line {
+    z-index: 20;
+}
+
+.custom-height-odcs {
+    overflow: hidden;
+    contain: content;
+
+    .app-footer {
+    z-index: 25;
+    position: relative;
+  }
 }

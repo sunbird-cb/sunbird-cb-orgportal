@@ -1,0 +1,211 @@
+<div class="flex flex-4 flex-column">
+  <ws-widget-breadcrumbs-org [widgetData]="breadcrumbs" *ngIf="breadcrumbs"></ws-widget-breadcrumbs-org>
+  <mat-card class="flex-custom mat-card" id="profileInfo">
+    <mat-card-header class="flex-custom-m mat-card-header ng-star-inserted">
+      <!-- <mat-card-header class="flex-custom-m" *ngIf="portalProfile && portalProfile?.personalDetails"></mat-card-header> -->
+      <div mat-card-avatar class="example-header-image">
+        <ng-container *ngIf="portalProfile?.personalDetails?.firstname">
+          <ws-widget-avatar-photo [photoUrl]="null" [name]="portalProfile?.personalDetails?.firstname" size="xxl-s">
+          </ws-widget-avatar-photo>
+        </ng-container>
+      </div>
+      <div class="flex-1">
+        <div class="flex flex-1">
+          <div class="flex flex-4">
+            <ng-container *ngIf="portalProfile?.personalDetails?.firstname">
+              <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2"
+                [innerHTML]="portalProfile?.personalDetails?.firstname">
+              </mat-card-title>
+            </ng-container>
+            <ng-container *ngIf="portalProfile?.personalDetails?.firstName">
+              <mat-card-title role="link" tabindex="0" class="flex mobile-margin text-capitalize mat-h2"
+                [innerHTML]="portalProfile?.personalDetails?.firstName">
+                <!-- <span *ngIf="verifiedBadge" class="profile-badge"> <img class="profile-badge"
+                    src="fusion-assets/images/profile-badge.png" height="18">
+                </span> -->
+              </mat-card-title>
+            </ng-container>
+          </div>
+        </div>
+        <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
+          {{ portalProfile?.employmentDetails?.departmentName }}
+        </mat-card-subtitle>
+        <mat-card-subtitle role="link" tabindex="0" i18n-aria-label>
+          {{ portalProfile?.employmentDetails?.officialPostalAddress }}
+        </mat-card-subtitle>
+      </div>
+    </mat-card-header>
+    <!-- <mat-card-header class="flex-custom-m" *ngIf="!portalProfile || !portalProfile?.personalDetails">
+      <div class="flex-1" role="link" tabindex="0">
+        <div class="flex flex-1">
+          <mat-card-title class="flex-4 mobile-margin text-capitalize mat-h2">
+            No Information Available
+          </mat-card-title>
+        </div>
+      </div>
+    </mat-card-header> -->
+  </mat-card>
+
+  <div class="container sidenav">
+    <mat-nav-list class="margin-left-xs margin-right-s flex-1 mat-nav-list mat-list-base" role="navigation">
+      <!-- <a class="mat-list-item  " mat-list-item="" matripple="" style="">
+        <div class="mat-list-item-content">
+          <div class="mat-list-item-ripple mat-ripple" mat-ripple=""></div>
+          <div class="mat-list-text"></div>
+          <span class="padding-left-xs">Profile info</span>
+        </div>
+      </a> -->
+
+      <a class="mat-list-item" [ngClass]="{'ws-active-discuss-route font-bold' : selectedTab === 2}"
+        (click)="selectTab(2)">
+        <div class="mat-list-item-content">
+          <div class="mat-list-item-ripple mat-ripple" mat-ripple=""></div>
+          <div class="mat-list-text"></div>
+          <span class="padding-left-xs">Certifications</span>
+        </div>
+      </a>
+
+      <a class="mat-list-item" [ngClass]="{'ws-active-discuss-route font-bold' : selectedTab === 3}"
+        (click)="selectTab(3)">
+        <div class="mat-list-item-content">
+          <div class="mat-list-item-ripple mat-ripple" mat-ripple=""></div>
+          <div class="mat-list-text"></div>
+          <span class="padding-left-xs">Career history</span>
+        </div>
+      </a>
+
+      <a class="mat-list-item" [ngClass]="{'ws-active-discuss-route font-bold' : selectedTab === 4}"
+        (click)="selectTab(4)">
+        <div class="mat-list-item-content">
+          <div class="mat-list-item-ripple mat-ripple" mat-ripple=""></div>
+          <div class="mat-list-text"></div>
+          <span class="padding-left-xs">Academics</span>
+        </div>
+      </a>
+
+      <a class="mat-list-item" [ngClass]="{'ws-active-discuss-route font-bold' : selectedTab === 5}"
+        (click)="selectTab(5)">
+        <div class="mat-list-item-content">
+          <div class="mat-list-item-ripple mat-ripple" mat-ripple=""></div>
+          <div class="mat-list-text"></div>
+          <span class="padding-left-xs">Hobbies</span>
+        </div>
+      </a>
+    </mat-nav-list>
+
+    <div class="container sidenav-right">
+      <mat-card class="card-container-sidenav-profile-card" *ngIf="selectedTab === 2">
+        <mat-card-header>
+          <mat-card-title>Certifications</mat-card-title>
+        </mat-card-header>
+        <div *ngIf="allCertificate && allCertificate.length > 0" class="certificate-box">
+          <!-- <div class="card-container-sidenav-profile" *ngFor="let data of allCertificate">
+            <div class="image-container image-card-container">
+              <img mat-card-lg-image [src]="data.courseLogoUrl" height="50" alt="Image" class="card-image" />
+            </div>
+            <div class="content-container">
+              <mat-card-content>
+                <mat-card-title>{{data.content.name}}</mat-card-title>
+                <mat-card-subtitle>{{data.content.description}}</mat-card-subtitle>
+              </mat-card-content>
+            </div>
+          </div> -->
+          <mat-card class="mt-2 mat-list-item dark-card" *ngFor="let certificate of allCertificate" role="link"
+            tabindex="0">
+            <div (click)="openCertificateDialog(certificate)" class="flex flex-1 cursor-pointer">
+              <div *ngIf="certificate.content?.appIcon" class="float-left">
+                <img [src]="certificate.content?.appIcon | pipeCertImageURL" class="app-icon example-header-image"
+                  [alt]="certificate.content.name || iGOT" />
+              </div>
+              <div *ngIf="!certificate.content?.appIcon" class="float-left">
+                <img src="/assets/instances/eagle/app_logos/default.png" class="app-icon example-header-image"
+                  [alt]="certificate.content.name || iGOT" />
+              </div>
+              <div class="flex flex-col gap-1">
+                <div class="subheading">{{certificate.content?.name}}</div>
+                <div>{{certificate.content?.description}}</div>
+                <div>{{certpaDate(certificate.issuedCertificates.lastIssuedOn)}}</div>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+        <div class="margin-left-s" *ngIf="allCertificate && allCertificate.length === 0">
+          No certifications
+        </div>
+      </mat-card>
+
+      <mat-card class="card-container-sidenav-profile-card" *ngIf="selectedTab === 3">
+        <mat-card-header>
+          <mat-card-title>Career history</mat-card-title>
+        </mat-card-header>
+        <div class="flex flex-1 flex-column margin-top-xs margin-left-xs margin-right-xs">
+          <div class="flex-custom" id="hobbies">
+            <mat-card-content class="mat-card-content" *ngIf="designation && designation.length > 0">
+              <mat-card class="no-shadow mt-2 mat-list-item dark-card mat-card"
+                *ngFor="let designationData of designation">
+                <div class="mt-2 mat-list-item" role="link" tabindex="0">
+                  <div class="flex flex-1">
+
+                    <span class="flex-1 mat-subheading-1"> {{designationData.designation}} </span>
+                    <span class="mat-subheading-2 ws-mat-black60-text">
+                      Joined {{designationData.doj}}
+                    </span>
+                  </div>
+                  <div class="mat-body-2 flex-1"> {{designationData.description}}</div>
+                  <div class="mat-body-2 flex-1 ws-mat-black60-text"> {{designationData.location}} </div>
+                </div>
+              </mat-card>
+            </mat-card-content>
+            <mat-card-content class="margin-left-s" *ngIf="designation && designation.length === 0">
+              <div>No career history</div>
+            </mat-card-content>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="card-container-sidenav-profile-card" *ngIf="selectedTab === 4">
+        <mat-card-header>
+          <mat-card-title>Academics</mat-card-title>
+        </mat-card-header>
+        <div class="flex flex-1 flex-column margin-top-xs margin-left-xs margin-right-xs">
+          <div class="flex-custom" id="academics">
+            <mat-card-content class="mat-card-content" *ngIf="academics && academics.length > 0">
+              <mat-card class="no-shadow mt-2 mat-list-item dark-card mat-card"
+                *ngFor="let academicsData of academics | orderBy:'yearOfPassing':'desc'">
+                <div class="flex flex-1 mobile-margin margin-f">
+                  <span class="flex-1 mat-subheading-1">{{academicsData.type}}</span>
+                  <span
+                    class="mat-subheading-2 ws-mat-black60-text ng-star-inserted">{{academicsData.yearOfPassing}}</span>
+                </div>
+                <div class="mat-body-2 flex-1 mobile-margin">{{academicsData.nameOfInstitute}}</div>
+              </mat-card>
+            </mat-card-content>
+            <mat-card-content class="margin-left-s" *ngIf="academics && academics.length === 0">
+              <div>No academics</div>
+            </mat-card-content>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="card-container-sidenav-profile-card" *ngIf="selectedTab === 5">
+        <mat-card-header>
+          <mat-card-title>Hobbies</mat-card-title>
+        </mat-card-header>
+        <div class="flex flex-1 flex-column margin-top-xs margin-left-xs margin-right-xs">
+          <div class="flex-custom" id="hobbies">
+            <mat-card-content *ngIf="hobbies && hobbies.length > 0">
+              <mat-card class="no-shadow mt-2 mat-list-item dark-card mat-card" *ngFor="let hobby of hobbies">
+                <div class="hobby">
+                  <span role="link" tabindex="0" class="text-capitalize mat-body-2">{{hobby}}</span>
+                </div>
+              </mat-card>
+            </mat-card-content>
+            <mat-card-content class="margin-left-s" *ngIf="hobbies && hobbies.length === 0">
+              <div>No hobbies</div>
+            </mat-card-content>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

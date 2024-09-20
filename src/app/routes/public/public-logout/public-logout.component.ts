@@ -24,7 +24,9 @@ export class PublicLogoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptionContact = this.activateRoute.data.subscribe(data => {
-      this.contactPage = data.pageData.data
+      if (data && data.pageData && data.pageData.data) {
+        this.contactPage = data.pageData.data
+      }
     })
     if (this.configSvc.instanceConfig) {
       this.contactUsMail = this.configSvc.instanceConfig.mailIds.contactUs

@@ -1,0 +1,109 @@
+<div class="flex flex-column gap-4 pt-4">
+  <div class="flex justify-between items-center">
+    <div class="mobile-margin text-capitalize mat-h2">{{designationConfig.mainHeading}}</div>
+    <div>
+      <button mat-raised-button class="importBtn" [routerLink]="'import-designation'" type="button">
+        Import from iGOT master
+      </button>
+    </div>
+  </div>
+
+  <mat-card class="mb-4" [ngStyle]="{'background-color': showTopSection ? '#fff' : 'rgba(235, 235, 235, 1)'}">
+    <div class="flex">
+      <span class="mat-body-1 font-bold-imp flex-1">{{designationConfig?.topsection?.heading}}</span>
+      <mat-icon class="cursor-pointer mat-icon mr-4" *ngIf="showTopSection"
+        (click)="showTopSection = !showTopSection">keyboard_arrow_up</mat-icon>
+      <mat-icon class="cursor-pointer mat-icon mr-4" *ngIf="!showTopSection"
+        (click)="showTopSection = !showTopSection">keyboard_arrow_down</mat-icon>
+    </div>
+    <div class="mt-5" *ngIf="showTopSection">
+      <div class="flex gap-20">
+        <div class="flex-1 flex-col gap-4">
+          <p class="flex items-center" *ngFor="let step of designationConfig?.topsection?.steps">
+            <mat-icon class="mat-icon mr-4">error_outline</mat-icon>
+            <span [innerHTML]="step.title"></span>
+          </p>
+        </div>
+        <div class="">
+          <div class="videoDemo flex justify-end section-2">
+            <div class="videoDemoVideo flex flex-column flex-middle justify-center" (click)="openVideoPopup()">
+              <mat-icon class="video_icon mb-2">play_arrow</mat-icon>
+              <div>
+                Watch how it works
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- <mat-card class="mb-4">
+    <mat-card-content class="flex gap-4">
+      <div class="section-1">
+        <div class="flex-4 mobile-margin text-capitalize mat-h2">{{designationConfig?.topsection?.heading}}</div>
+        <ng-container *ngFor="let step of designationConfig?.topsection?.steps">
+          <div class="flex gap-4">
+            <div>
+              <mat-icon class="infoIcon">error_outline</mat-icon>
+            </div>
+            <div>
+              <p>{{step.title}}</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="designationConfig?.topsection?.guideVideo?.enabled">
+        <video width="173" height="102" controls>
+          <source src="{{designationConfig?.topsection?.guideVideo?.url}}"
+            type="{{designationConfig?.topsection?.guideVideo?.type}}">
+        </video>
+      </ng-container>
+    </mat-card-content>
+  </mat-card> -->
+
+  <div class="w-full">
+    <ng-container *ngIf="!showCreateLoader; else fw_create_loader">
+      <div class="w-full flex justify-between items-center mb-6">
+        <div class="flex items-center">
+          <div class="search">
+            <div class=rsearch>
+              <mat-icon class="color-60 search-icon">search</mat-icon>
+              <input [formControl]="searchControl" class="sinput color-60" type="Standard" placeholder="Search">
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="!showLoader">
+        <ng-container *ngIf="designationsList?.length === 0; else designationsTable">
+          <div class="w-full flex flex-col justify-center items-center emptyDesignations">
+            <img src="/assets/icons/empty_data.svg" class="empty-desigantions-img">
+            <div>
+              <p class="empty-desigantions-text">No designation has been imported from iGOT master.</p>
+            </div>
+            <div class="mt-4">
+              <button mat-raised-button class="importBtn" [routerLink]="'import-designation'">
+                Start Importing</button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #designationsTable>
+          <ws-widget-org-user-table [tableData]="tableData" [data]="filteredDesignationsList"
+            [actionMenuItem]="actionMenuItem" [isSearchBar]=false
+            (actionsClick)="menuSelected($event)"></ws-widget-org-user-table>
+        </ng-template>
+      </ng-container>
+      <ng-container *ngIf="showLoader">
+        <div class="flex flex-1 items-center justify-center loader-box w-full designations-loader">
+          <mat-spinner strokeWidth="3" diameter="50"></mat-spinner>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-template #fw_create_loader>
+      <div class="flex flex-col flex-1 w-100 items-center pt-5 text-center">
+        <mat-spinner class="display-inline-block mb-5" [diameter]="50" [strokeWidth]="3"></mat-spinner>
+        <p>{{loaderMsg}}</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

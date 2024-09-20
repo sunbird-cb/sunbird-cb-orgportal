@@ -40,7 +40,7 @@ export class AdduserpopupComponent implements OnInit {
     this.usersListData = data.data
     this.usersListData.forEach((user: any) => {
       const obj = {
-        fullname: `${user.firstName} ${user.lastName}`,
+        fullname: `${user.firstName}`,
         email: user.email,
         position: user.channel,
         id: user.id,

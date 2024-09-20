@@ -9,6 +9,8 @@ import { ActivatedRoute, Router, NavigationEnd, Event } from '@angular/router'
 export class PositionComponent implements OnInit {
   professionalDetails: any
   employmentDetails: any
+  additionalProperties: any
+  selectedtags: any[] = []
   constructor(private activeRoute: ActivatedRoute, private router: Router) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
@@ -16,6 +18,10 @@ export class PositionComponent implements OnInit {
         const profileData = this.activeRoute.snapshot.data.profileData.data.result.response.profileDetails || {}
         this.professionalDetails = profileData.professionalDetails[0]
         this.employmentDetails = profileData.employmentDetails
+        this.additionalProperties = profileData.additionalProperties
+        if (this.additionalProperties && this.additionalProperties.tag) {
+          this.selectedtags = this.additionalProperties.tag
+        }
       }
     })
   }

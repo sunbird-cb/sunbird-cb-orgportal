@@ -39,7 +39,7 @@
                     <input [attr.id]="'actDesc_' + i" matInput #actDesc formControlName="activityDescription"
                       i18n-placeholder placeholder="Type here" i18n-aria-label aria-label="Activity name input"
                       class="form-input flex-1" (input)="filterActivities(actDesc.value)"
-                      [matAutocomplete]="activityAuto" autocomplete="off" />
+                      [matAutocomplete]="activityAuto" autocomplete="off" maxlength="250" />
                     <mat-autocomplete #activityAuto="matAutocomplete">
                       <div class="mat-body-4 ws-mat-accent-text padding-s">From activity dictionary</div>
                       <mat-option *ngFor="let activity of filteredActivityDesc | async" [value]="activity.description">
@@ -57,7 +57,8 @@
                     </ws-app-initial-avatar>
                     <input [attr.id]="'assignto_' + i" matInput #assignto formControlName="assignedTo" i18n-placeholder
                       placeholder="Type here" i18n-aria-label #assignedTo class="form-input flex-1"
-                      [matAutocomplete]="assignToAuto" (input)="filterUsers(assignedTo.value)" autocomplete="off" />
+                      [matAutocomplete]="assignToAuto" (input)="filterUsers(assignedTo.value)" autocomplete="off"
+                      maxlength="250" />
                     <mat-autocomplete #assignToAuto="matAutocomplete" (optionSelected)="userClicked($event, i,'to')">
                       <mat-option [value]="''">
                         <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">
@@ -195,7 +196,7 @@
                         class="form-input flex-1" [matAutocomplete]="roleDescriptionAuto"
                         (click)="setSelectedFilter(gaIdx)" (input)="filterActivities(actDesc.value, gaIdx)"
                         autocomplete="off" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                        cdkAutosizeMaxRows="5"></textarea>
+                        cdkAutosizeMaxRows="5" maxlength="2000"></textarea>
                       <mat-autocomplete #roleDescriptionAuto="matAutocomplete"
                         (optionSelected)="activitySelected($event,i)">
                         <ng-container
@@ -240,7 +241,7 @@
                       <input [attr.id]="'assignto_' + gaIdx" class="form-input flex-1" matInput #assignedTo
                         formControlName="assignedTo" i18n-placeholder placeholder="Type here" i18n-aria-label
                         aria-label="Type here" [matAutocomplete]="auto" (input)="filterUsers(assignedTo.value)"
-                        autocomplete="off" (click)="setSelectedFilter(gaIdx)">
+                        autocomplete="off" (click)="setSelectedFilter(gaIdx)" maxlength="250">
                       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="userClicked($event, i,'to')">
                         <mat-option [value]="'Final authority'">
                           <div class="ws-mat-accent-border-bottom padding-m padding-left-s padding-bottom-xs">

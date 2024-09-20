@@ -47,7 +47,8 @@ export class ViewEventComponent implements OnInit, AfterViewInit {
         this.employmentDetails = profileData.employmentDetails
         this.skillDetails = profileData.skills
         this.interests = profileData.interests
-        this.fullname = `${this.basicInfo.firstname} ${this.basicInfo.surname}`
+        // this.fullname = `${this.basicInfo.firstname} ${this.basicInfo.surname}`
+        this.fullname = `${this.basicInfo.firstname}`
 
         let wfHistoryDatas = this.activeRoute.snapshot.data.workflowHistoryData.data.result.data || {}
         const datas: any[] = Object.values(wfHistoryDatas)

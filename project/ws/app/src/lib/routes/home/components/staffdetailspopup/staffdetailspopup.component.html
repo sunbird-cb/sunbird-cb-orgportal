@@ -46,12 +46,20 @@
                             <mat-form-field appearance="outline" class="margin-top-xs">
                                 <input id="posfilled" matInput #posfilled formControlName="posfilled" i18n-placeholder
                                     placeholder="Add number" i18n-aria-label aria-label="Total positions filled input"
-                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
+                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)"
+                                    maxlength="5" />
                                 <mat-error [hidden]="false"
                                     i18n="Total positions filled Error|Explains name is required" i18n-aria-label
                                     aria-label="Total positions filled Error|Explains name is required "
                                     *ngIf="staffform?.controls['posfilled']?.touched && staffform?.controls['posfilled'].errors?.required">
                                     Field is mandatory
+                                </mat-error>
+                                <mat-error [hidden]="false"
+                                    i18n="Total positions filled Error|Explains name is required" i18n-aria-label
+                                    aria-label="Total positions filled Error|Explains name is required " *ngIf="staffform?.controls['posfilled']?.touched &&
+                                        !staffform?.controls['posfilled'].errors?.required &&
+                                        staffform?.controls['posfilled'].errors?.hasHtml">
+                                    HTML or Js is not allowed
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -65,12 +73,20 @@
                             <mat-form-field appearance="outline" class="margin-top-xs">
                                 <input id="posvacant" matInput #posvacant formControlName="posvacant" i18n-placeholder
                                     placeholder="Add number" i18n-aria-label aria-label="Total positions vacant input"
-                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)" />
+                                    class="form-input" autocomplete="off" (keypress)="keyPressNumbers($event)"
+                                    maxlength="5" />
                                 <mat-error [hidden]="false"
                                     i18n="Total positions vacant Error|Explains name is required" i18n-aria-label
                                     aria-label="Total positions vacant Error|Explains name is required "
                                     *ngIf="staffform?.controls['posvacant']?.touched && staffform?.controls['posvacant'].errors?.required">
                                     Field is mandatory
+                                </mat-error>
+                                <mat-error [hidden]="false"
+                                    i18n="Total positions filled Error|Explains name is required" i18n-aria-label
+                                    aria-label="Total positions filled Error|Explains name is required " *ngIf="staffform?.controls['posvacant']?.touched &&
+                                        !staffform?.controls['posvacant'].errors?.required &&
+                                        staffform?.controls['posvacant'].errors?.hasHtml">
+                                    HTML or Js is not allowed
                                 </mat-error>
                             </mat-form-field>
                         </div>

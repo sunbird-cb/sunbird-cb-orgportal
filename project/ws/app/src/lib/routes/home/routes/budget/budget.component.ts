@@ -11,6 +11,7 @@ import { BudgetproofspopupComponent } from '../../components/budgetproofspopup/b
 import { MdoInfoService } from '../../services/mdoinfo.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import { ActivatedRoute } from '@angular/router'
+import { preventHtmlAndJs } from '../../../validators/prevent-html-and-js.validator'
 
 @Component({
   selector: 'ws-app-budget',
@@ -63,7 +64,7 @@ export class BudgetComponent implements OnInit, OnChanges {
   mdotrainingdata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
   schemewisedata!: { srnumber: number; filename: string; filetype: string; filesize: string; uploadedon: string }[]
   scehemetableDatadata!: {
-    srnumber: number; schemeName: string; trainingBudgetAllocated: number;
+    srnumber: number; schemeName: string; trainingBudgetAllocated: number
     trainingBudgetUtilization: number; budgetYear: string
   }[]
   yearsList: any = []
@@ -92,9 +93,9 @@ export class BudgetComponent implements OnInit, OnChanges {
     private mdoinfoSrvc: MdoInfoService, private activeRoute: ActivatedRoute) {
     this.budgetdata = new FormGroup({
       budgetyear: new FormControl('', [Validators.required]),
-      salarybudget: new FormControl('', [Validators.required]),
-      trainingbudget: new FormControl('', [Validators.required]),
-      budgetutilized: new FormControl('', [Validators.required]),
+      salarybudget: new FormControl('', [Validators.required, preventHtmlAndJs()]),
+      trainingbudget: new FormControl('', [Validators.required, preventHtmlAndJs()]),
+      budgetutilized: new FormControl('', [Validators.required, preventHtmlAndJs()]),
     })
     // this.dataSource1 = new MatTableDataSource<any>()
     this.dataSource = new MatTableDataSource<any>()
@@ -443,7 +444,6 @@ export class BudgetComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response) {
-        // console.log('response', response)
       }
     })
 

@@ -1,0 +1,187 @@
+<div class="mat-title">Create a New User</div>
+<div class="flex flex-col gap-6 bulk-container">
+  <div class="text-xl font-semibold">User Details</div>
+
+  <form [formGroup]="userCreationForm" class="flex flex-col gap-6">
+    <div class="flex flex-row gap-6">
+      <div class="input-container">
+        <div class="label required">Full name</div>
+        <input type="text" class="input-text" formControlName="firstName" placeholder="Type here" maxlength="50" />
+        <mat-error class="text-xs"
+          *ngIf="userCreationForm?.get('firstName')?.touched && userCreationForm?.controls['firstName'].errors?.pattern">
+          Please enter a valid name
+        </mat-error>
+        <mat-error class="text-xs"
+          *ngIf="userCreationForm?.get('firstName')?.touched && userCreationForm?.controls['firstName'].errors?.required">
+          Full name is mandatory
+        </mat-error>
+      </div>
+      <div class="input-container">
+        <div class="label required">Email</div>
+        <!-- <input type="email" class="input-text" formControlName="email" placeholder="Type here" />
+        <mat-error class="text-xs" *ngIf="userCreationForm?.controls['email'].errors?.pattern">
+          Please enter a valid email address
+        </mat-error> -->
+
+        <input type="email" class="input-text" placeholder="Type here" #email formControlName="email" i18n-aria-label
+          aria-label="Primary Email readonly input" maxlength="320">
+        <mat-error [hidden]="false" class="custom-error" *ngIf="userCreationForm?.get('email')?.touched &&
+        userCreationForm?.controls['email'].errors?.pattern" i18n-aria-label aria-label="Please enter a valid email">
+          Please enter a valid email
+        </mat-error>
+      </div>
+    </div>
+
+    <div class="flex flex-row gap-6">
+      <div class="input-container">
+        <div class="label required">Mobile number</div>
+        <input type="text" class="input-text" formControlName="phone" maxlength="10" placeholder="Type here" />
+        <mat-error class="text-xs"
+          *ngIf="userCreationForm?.get('phone')?.touched && userCreationForm?.get('phone')?.invalid">
+          Please enter a valid mobile number
+        </mat-error>
+      </div>
+
+      <div class="input-container">
+        <div class="label required">Designation</div>
+        <mat-form-field class="profile-form-field required-select" appearance="none">
+          <div class="flex flex-row auto-complete-row">
+            <input type="text" class="input-text" aria-label="Designation" placeholder="Select designation" matInput
+              formControlName="designation" [matAutocomplete]="designationAuto" />
+            <mat-icon>arrow_drop_down</mat-icon>
+          </div>
+          <mat-autocomplete #designationAuto="matAutocomplete">
+            <mat-option *ngFor="let designation of masterData?.designation" [value]="designation.name">
+              {{ designation.name }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error class="text-xs"
+            *ngIf="userCreationForm?.get('designation')?.touched && userCreationForm?.get('designation')?.invalid">
+            Please choose a designation
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="flex flex-row gap-6">
+      <div class="input-container">
+        <div class="label required">Group</div>
+        <mat-form-field class="profile-form-field required-select" appearance="none">
+          <mat-select formControlName="group">
+            <mat-option value="">Choose a group</mat-option>
+            <mat-option *ngFor="let group of masterData.group" value="{{group}}">{{ group }}</mat-option>
+          </mat-select>
+          <mat-error class="text-xs"
+            *ngIf="userCreationForm?.get('group')?.touched && userCreationForm?.get('group')?.invalid">
+            Please choose a group
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="input-container">
+        <div class="label">Date of birth</div>
+        <mat-form-field class="profile-form-field" appearance="none">
+          <input matInput class="input-text icon-include-input" [matDatepicker]="picker" readonly formControlName="dob"
+            [max]="today" placeholder="Choose date of birth" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="flex flex-row gap-6">
+      <div class="input-container">
+        <div class="label">Mother tongue</div>
+        <mat-form-field class="profile-form-field" appearance="none">
+          <div class="flex flex-row auto-complete-row">
+            <input type="text" class="input-text" aria-label="Domicile medium" placeholder="Type here" matInput
+              formControlName="domicileMedium" [matAutocomplete]="languageAuto" />
+            <mat-icon>arrow_drop_down</mat-icon>
+          </div>
+          <mat-autocomplete #languageAuto="matAutocomplete">
+            <mat-option *ngFor="let language of masterData?.language" [value]="language?.name">
+              {{ language?.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="input-container">
+        <div class="label">Gender</div>
+        <mat-form-field class="profile-form-field">
+          <mat-select formControlName="gender">
+            <mat-option value="">Select gender</mat-option>
+            <mat-option value="Male">Male</mat-option>
+            <mat-option value="Female">Female</mat-option>
+            <mat-option value="Others">Others</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="flex flex-row gap-6">
+      <div class="input-container">
+        <div class="label">Category</div>
+        <mat-form-field class="profile-form-field">
+          <mat-select formControlName="category">
+            <mat-option value="">Select category</mat-option>
+            <mat-option value="General">General</mat-option>
+            <mat-option value="OBC">OBC</mat-option>
+            <mat-option value="SC">SC</mat-option>
+            <mat-option value="ST">ST</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="input-container">
+        <div class="label">Office pin code</div>
+        <input type="text" class="input-text" formControlName="pincode" placeholder="Type here" pattern="^[0-9]{1,6}$"
+          maxlength="6" />
+        <mat-error class="text-xs"
+          *ngIf="userCreationForm?.get('pincode')?.touched && userCreationForm?.get('pincode')?.invalid">
+          Please enter valid pin
+        </mat-error>
+      </div>
+    </div>
+
+    <div class="flex flex-row gap-6">
+      <div class="input-container">
+        <div class="label">Tags</div>
+        <input type="text" class="input-text" matInput i18n-placeholder="Type tag here"
+          placeholder="Type tag here and press enter" [matChipInputFor]="chipListTags" autocomplete="off"
+          maxlength="100" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (keypress)="handleValidTags($event)"
+          (matChipInputTokenEnd)="handleAddTags($event)" />
+        <mat-chip-list #chipListTags>
+          <mat-chip *ngFor="let tag of userCreationForm?.get('tags')?.value" [selectable]="true" [removable]="true"
+            (removed)="handleRemoveTag(tag)">
+            {{ tag }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+      <div class="input-container"></div>
+    </div>
+
+    <div class="flex flex-row gap-6">
+      <div class="input-container">
+        <div class="label required mb-2">Role</div>
+        <div class="custom-roles">
+          <ng-container *ngFor="let role of masterData?.mdoRoles">
+            <div class="rolehead" *ngIf="role !== 'MDO_LEADER'">
+              <div class="roletitle">{{ role }}</div>
+              <mat-checkbox value="{{ role }}" #rolesCheckbox [checked]="role === 'PUBLIC'"
+                [disabled]="role === 'PUBLIC'" (change)="handleRolesCheck($event, role)"></mat-checkbox>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <!-- <div class="input-container"></div> -->
+    </div>
+
+    <div class="flex flex-row gap-4">
+      <button class="action-button" [ngClass]="{'disable-button': (userCreationForm?.invalid || displayLoader)}"
+        [disabled]="userCreationForm?.invalid || displayLoader" (click)="handleUserCreation()">Create user</button>
+      <button class="outline-button" (click)="handleFormClear()">Clear</button>
+      <div *ngIf="displayLoader" class="pr-4 flex items-center justify-center">
+        <mat-spinner [diameter]="30"></mat-spinner>
+      </div>
+    </div>
+  </form>
+</div>

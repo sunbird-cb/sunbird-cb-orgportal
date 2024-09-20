@@ -1,0 +1,19 @@
+<div class="flex flex-col gap-6">
+  <div class="flex flex-row gap-4 items-center">
+    <mat-icon class="cursor-pointer" [routerLink]="['/app/home/users/allusers']">arrow_back</mat-icon>
+    <div class="flex font-bold">User creation</div>
+  </div>
+
+  <mat-tab-group class="user-creation-mat-group" (selectedTabChange)="handleTabChanged($event)">
+    <mat-tab label="Bulk Creation">
+      <div class="mt-6">
+        <ws-bulk-upload></ws-bulk-upload>
+      </div>
+    </mat-tab>
+    <mat-tab label="Individual Creation">
+      <div class="mt-6">
+        <ws-single-user-creation></ws-single-user-creation>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

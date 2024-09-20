@@ -55,7 +55,8 @@ export class PublishPopupComponent implements OnInit {
   }
 
   closeDialog() {
-    const username = `${this.userData.firstName} ${this.userData.lastName}`
+    const username = `${this.userData.firstName}`
+    // const username = `${this.userData.firstName} ${this.userData.lastName}`
     const org = []
     const createdforarray: any[] = []
     if (this.configSvc.userProfile) {
@@ -99,7 +100,6 @@ export class PublishPopupComponent implements OnInit {
     })
     // tslint:disable-next-line:forin
     // for (const key in this.progress) {
-    //   this.progress[key].progress.subscribe((val: any) => console.log(val))
     // }
   }
 

@@ -10,6 +10,7 @@ import { StaffdetailspopupComponent } from '../../components/staffdetailspopup/s
 import { ActivatedRoute } from '@angular/router'
 import { MdoInfoService } from '../../services/mdoinfo.service'
 import { ConfigurationsService } from '@sunbird-cb/utils'
+import { preventHtmlAndJs } from '../../../validators/prevent-html-and-js.validator'
 
 @Component({
   selector: 'ws-app-staff',
@@ -40,7 +41,7 @@ export class StaffComponent implements OnInit, OnChanges {
   displayedColumns: IColums[] | undefined
   selection = new SelectionModel<any>(true, [])
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
-  data!: { srnumber: number; position: string; positionfilled: number; positionvacant: number; }[]
+  data!: { srnumber: number; position: string; positionfilled: number; positionvacant: number }[]
   deptID: any
   overallpos: any
   isDisabled = true
@@ -55,8 +56,8 @@ export class StaffComponent implements OnInit, OnChanges {
     private configSvc: ConfigurationsService, private mdoinfoSrvc: MdoInfoService) {
     this.staffdata = new FormGroup({
       totalpositions: new FormControl({ value: '', disabled: true }),
-      posfilled: new FormControl('', [Validators.required]),
-      posvacant: new FormControl('', [Validators.required]),
+      posfilled: new FormControl('', [Validators.required, preventHtmlAndJs()]),
+      posvacant: new FormControl('', [Validators.required, preventHtmlAndJs()]),
     })
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator

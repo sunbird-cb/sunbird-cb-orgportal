@@ -1,0 +1,36 @@
+<div class="verify-otp-dialog">
+  <form [formGroup]="otpSelectionForm" class="mobile-wrapper" *ngIf="!otpTypeSelected">
+    <label class="mat-title-1 font-bold" aria-label="Send OTP to">Send OTP to </label>
+    <div class="margin-bottom-l margin-top-m">
+      <!-- <mat-radio-group aria-label="Select an option" formControlName='otpType' #otpType (change)="radioChange($event)"> -->
+      <mat-radio-group aria-label="Select an option" formControlName='otpType' #otpType>
+        <mat-radio-button [value]="'email'" color="accent" class="radio-btn margin-right-xl">Email</mat-radio-button>
+        <mat-radio-button [value]="'phone'" color="accent" class="radio-btn">Mobile</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <button class="action-button margin-top-l" (click)="sendOtp()" [disabled]="otpSelectionForm.invalid">Send
+      OTP</button>
+  </form>
+  <div class="flex flex-col gap-4" *ngIf="otpTypeSelected">
+    <div class="text-base font-semibold text-center mb-4">
+      Enter the OTP sent to your {{ otpTypeSelectedValue === 'phone' ? 'mobile number' : 'email address' }}
+    </div>
+    <div class="flex flex-col gap-1">
+      <div class="text-sm font-bold">Enter OTP</div>
+      <input type="text" class="input-text" placeholder="Enter the OTP" maxlength="6" [(ngModel)]="otpEntered" />
+    </div>
+    <div class="flex flex-row gap-2 items-center justify-center timer-div" *ngIf="!showResendOTP">
+      <div class="flex flex-row gap-1 time-remaining text-sm ">
+        Time remaining to resend OTP: <div #timerDiv></div>
+      </div>
+    </div>
+    <div class="flex justify-end" *ngIf="showResendOTP">
+      <div class="resend-otp" (click)="handleResendOTP()">Resend OTP</div>
+    </div>
+
+    <div class="flex flex-row justify-between">
+      <button class="outline-button" (click)="handleCloseModal()">Cancel</button>
+      <button class="action-button" (click)="handleVerifyOTP()" [disabled]="otpEntered === ''">Submit</button>
+    </div>
+  </div>
+</div>

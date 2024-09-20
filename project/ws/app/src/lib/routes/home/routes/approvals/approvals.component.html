@@ -1,32 +1,58 @@
-<div class="flex flex-4 flex-column">
-  <mat-card class="flex-custom">
-    <mat-card-header class="flex-custom-m">
-      <div class="flex-1" role="link" tabindex="0">
-        <div class="flex flex-1">
-          <mat-card-title class="flex-4 mobile-margin text-capitalize">
-            <span class="mat-subheading-1">Approvals</span>
-          </mat-card-title>
+<router-outlet></router-outlet>
+<!-- <div class="flex flex-4 flex-column">
+  <mat-card>
+    <mat-card-title class="flex-4 mobile-margin text-capitalize">
+      <span class="mat-subheading-1">Approvals</span>
+    </mat-card-title>
+    <mat-card class="mb-8">
+      <mat-card-content class="flex gap-10">
+        <div class="section-1">
+          <div class="flex-4 mobile-margin text-capitalize mat-h2">Note:</div>
+          <ng-container *ngFor="let note of reportsNoteList">
+            <div class="flex gap-4 mb-4">
+              <div>
+                <mat-icon class="infoIcon">error_outline</mat-icon>
+              </div>
+              <div [innerHTML]="sanitizeHtml(note)"></div>
+            </div>
+          </ng-container>
         </div>
-      </div>
-    </mat-card-header>
+        <div class="reportsDemo flex justify-end section-2">
+          <div class="reportsDemoVideo flex flex-column flex-middle justify-center margin-top-m"
+            (click)="openVideoPopup()">
+            <mat-icon class="video_icon mb-2">play_circle</mat-icon>
+            <div>
+              Watch how it works
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
     <mat-card-content>
       <div class="flex flex-1 flex-column margin-fix">
         <div class="flex flex-1 filter max-height-60">
-          <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'toapprove',
-              'ws-mat-accent-border font-medium':currentFilter !== 'toapprove'}" mat-button
-            (click)="filter('toapprove'); tabTelemetry('toapprove', 0)" role="button">To approve</a>
-          <!-- <a href="javascript:void(0)" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'userflags',
-              'ws-mat-accent-border font-medium':currentFilter !== 'userflags'}" mat-button
-            (click)="filter('userflags')" role="button">User flags</a> -->
+          <a routerLink="/app/home/approvals/pending" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'pending',
+              'ws-mat-accent-border font-medium':currentFilter !== 'pending'}" mat-button
+            (click)="filter('pending'); tabTelemetry('toapprove', 0)" role="button">To approve</a>
+
+          <a routerLink="/app/home/approvals/upload" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'uploadApprovals',
+            'ws-mat-accent-border font-medium':currentFilter !== 'uploadApprovals'}" mat-button
+            (click)="filter('uploadApprovals'); tabTelemetry('uploadApprovals', 1)" role="button">File uploads</a>
         </div>
       </div>
-      <ng-container *ngIf="getTableData && getTableData.length>0">
-        <ws-widget-org-user-table [tableData]='tabledata' [data]='getTableData' (eOnRowClick)="onApprovalClick($event)">
-        </ws-widget-org-user-table>
+      <ng-container *ngIf="currentFilter === 'pending'">
+        <ng-container *ngIf="getTableData && getTableData.length>0">
+          <ws-widget-org-user-table-v2 [tableData]="tabledata" [data]="data" (eOnRowClick)="onApprovalClick($event)"
+            [totalRecords]="approvalTotalCount" (pageChangeClick)="onPaginateChange($event)">
+          </ws-widget-org-user-table-v2>
+        </ng-container>
+        <ng-container *ngIf="!getTableData || getTableData.length<=0">
+          <p class="text-center">No approvals pending</p>
+        </ng-container>
       </ng-container>
-      <ng-container *ngIf="!getTableData || getTableData.length<=0">
-        <p class="text-center">No approvals pending</p>
+      <ng-container *ngIf="currentFilter === 'uploadApprovals'">
+        <ws-app-profle-approval-bulk-upload></ws-app-profle-approval-bulk-upload>
       </ng-container>
     </mat-card-content>
   </mat-card>
-</div>
+</div> -->

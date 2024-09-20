@@ -1,0 +1,30 @@
+<ng-container>
+    <ws-app-add-timeline-form></ws-app-add-timeline-form>
+</ng-container>
+<ng-container *ngIf="contentData?.length">
+    <div class="margin-top-xl">
+        <div class="flex flex-middle flex-between">
+            <div class="mat-subheading-1 margin-remove">Selected Content <span *ngIf="totalContentCount">(
+                    {{totalContentCount }} )</span></div>
+            <a mat-button (click)="showAll('content')" class="show-all" *ngIf="totalContentCount > 4">Show all
+                <mat-icon>keyboard_arrow_right</mat-icon></a>
+        </div>
+    </div>
+    <ws-app-standard-card [checkboxVisibility]="false" [contentData]="contentData" [showDeleteFlag]="true"
+        [ngClass]="{'disable': isContentLive}" (selectedContentRemoved)="contentRemoved()"></ws-app-standard-card>
+</ng-container>
+<ng-container *ngIf="assigneeData && (assigneeData?.data?.length || assigneeData?.data?.content?.length)">
+    <div class="margin-top-m">
+        <div class=" flex flex-middle flex-between">
+            <div class="mat-subheading-1 margin-remove">Selected Assignee
+                <span *ngIf="totalAssigneeCount > 0">
+                    ( {{totalAssigneeCount}} )
+                </span>
+            </div>
+            <a mat-button (click)="showAll('assignee')" class="show-all" *ngIf="totalAssigneeCount > 4">Show all
+                <mat-icon>keyboard_arrow_right</mat-icon></a>
+        </div>
+    </div>
+    <ws-app-user-card [checkboxVisibility]="false" [assigneeData]="assigneeData" [showDeleteFlag]="true"
+        (userRemoved)="selectedUserRemoved()"></ws-app-user-card>
+</ng-container>

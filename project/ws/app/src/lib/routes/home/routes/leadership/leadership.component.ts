@@ -6,6 +6,7 @@ import { IColums, ITableData } from '../../interface/interfaces'
 import { MatSort } from '@angular/material/sort'
 import * as _ from 'lodash'
 import { MdoInfoService } from '../../services/mdoinfo.service'
+import { ProfileV2UtillService } from '../../services/home-utill.service'
 
 @Component({
   selector: 'ws-app-leadership',
@@ -43,12 +44,13 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
   }
   ltdata: any = []
   admindata: any = []
-  usersData:  any = []
+  usersData: any = []
   bodyHeight = document.body.clientHeight - 125
   deptID: any
   tabData = 'MDO_LEADER'
 
-  constructor(private activeRoute: ActivatedRoute, private configSvc: ConfigurationsService, private mdoinfoSrvc: MdoInfoService) {
+  constructor(private activeRoute: ActivatedRoute, private configSvc: ConfigurationsService,
+              private mdoinfoSrvc: MdoInfoService, private profileUtilSvc: ProfileV2UtillService) {
     this.dataSource = new MatTableDataSource<any>()
     this.dataSource.paginator = this.paginator
   }
@@ -124,9 +126,9 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
     const req = {
       request: {
         filters: {
-            rootOrgId: this.deptID,
-            'roles.role': [
-              role,
+          rootOrgId: this.deptID,
+          'roles.role': [
+            role,
           ],
         },
       },
@@ -135,10 +137,10 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
       (res: any) => {
         this.usersData = res.result.response.content
         if (this.usersData.length > 0) {
-          this.usersData.forEach((user: any, index: any)  => {
+          this.usersData.forEach((user: any, index: any) => {
             const obj = {
-              fullname: `${user.firstName} ${user.lastName}`,
-              email: user.email,
+              fullname: `${user.firstName}`,
+              email: this.profileUtilSvc.emailTransform(user.email),
               position: user.channel,
               id: user.id,
               srnumber: index + 1,
@@ -151,7 +153,6 @@ export class LeadershipComponent implements OnInit, AfterViewInit, OnChanges {
           })
 
           if (this.data) {
-            // console.log('this.data', this.data)
             this.dataSource.data = this.data
             this.dataSource.paginator = this.paginator
           }

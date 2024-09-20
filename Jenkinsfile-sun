@@ -15,13 +15,13 @@ node('build-slave') {
                     } else
                         println(ANSI_BOLD + ANSI_GREEN + "Found environment variable named hub_org with value as: " + hub_org + ANSI_NORMAL)
                 }
-                
+
                 cleanWs()
                 checkout scm
                 commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
                 build_tag = sh(script: "echo " + params.github_release_tag.split('/')[-1] + "_" + commit_hash + "_" + env.BUILD_NUMBER, returnStdout: true).trim()
                 echo "build_tag: " + build_tag
-		
+
 		stage('assets-pull') {
 
                 dir("${env.WORKSPACE}/assets") {
@@ -29,22 +29,22 @@ node('build-slave') {
                 sh('cd MDO/client-assets && docker build -t assetsmdo . && docker run --name assetsmdo assetsmdo && docker cp assetsmdo:/usr/src/app/dist.zip . && docker rm -f assetsmdo && docker rmi -f assetsmdo && unzip dist.zip')
                 }
                 }
-		
+
 		stage('Build') {
                 env.NODE_ENV = "build"
                 print "Environment will be : ${env.NODE_ENV}"
                 sh('chmod 777 build.sh')
                 sh("bash -x build.sh ${build_tag} ${env.NODE_NAME} ${hub_org}")
             }
-		  
-	      
+
+
                stage('ArchiveArtifacts') {
 	       	   sh ("echo ${build_tag} > build_tag.txt")
-                   archiveArtifacts "metadata.json"		     
-                    archiveArtifacts "build_tag.txt" 
+                   archiveArtifacts "metadata.json"
+                    archiveArtifacts "build_tag.txt"
                     currentBuild.description = "${build_tag}"
                 }
-            
+
         }
     }
     catch (err) {
@@ -52,6 +52,6 @@ node('build-slave') {
         throw err
     }
     finally {
-        email_notify()
+        // email_notify()
     }
 }

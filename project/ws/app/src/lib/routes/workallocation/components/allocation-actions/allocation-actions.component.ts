@@ -314,7 +314,6 @@ export class AllocationActionsComponent implements OnInit {
   }
 
   showRemoveActivity(index: any) {
-    // console.log(document.getElementById(`showremove${index}`))
     // tslint:disable-next-line:no-non-null-assertion
     const vart = document.getElementById(`showremove${index}`)!
     vart.style.display = 'block'
@@ -328,7 +327,6 @@ export class AllocationActionsComponent implements OnInit {
   }
 
   showRemoveCompetency(index: any) {
-    // console.log(document.getElementById(`showremoveComp${index}`))
     // tslint:disable-next-line:no-non-null-assertion
     const vart = document.getElementById(`showremoveComp${index}`)!
     vart.style.display = 'block'

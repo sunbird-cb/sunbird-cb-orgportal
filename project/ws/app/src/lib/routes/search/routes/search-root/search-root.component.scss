@@ -5,6 +5,7 @@
 .container-balanced {
   @extend %page-center;
   height: auto;
+  min-height: 85vh;
   // min-height: 400px;
 }
 

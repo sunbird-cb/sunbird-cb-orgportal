@@ -3,7 +3,7 @@
 
 <ws-app-public-nav-bar *ngIf=""></ws-app-public-nav-bar>
 <!-- <ws-widget-sticky-header> -->
-<ws-app-nav-bar class="top-nav-bar" *ngIf="
+<ws-app-nav-bar class="top-nav-bar" id="top-nav-bar" *ngIf="
     isNavBarRequired && (isXSmall$ | async) === false
   " [hidden]="!showNavbar" [mode]="'top'"></ws-app-nav-bar>
 <!-- </ws-widget-sticky-header> -->
@@ -20,6 +20,14 @@
 
   }">
   <router-outlet></router-outlet>
+</div>
+<div class="overlay" *ngIf="isLoading">
+  <div class="loader-container">
+    <div class="loader-ripple">
+      <div></div>
+      <div></div>
+    </div>
+  </div>
 </div>
 <ws-app-footer class="app-footer" [ngClass]="{ 'padding-bottom: 56px': !isSetupPage}" *ngIf="showNavbar">
 </ws-app-footer>

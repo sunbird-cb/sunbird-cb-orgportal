@@ -95,12 +95,10 @@ export class BudgetproofspopupComponent implements OnInit {
     this.uploading = true
     const fileList = (<HTMLInputElement>files.target).files
     if (fileList && fileList.length > 0) {
-      // console.log('fileList', fileList)
       // const file: File = fileList[0]
       // this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total)
       Array.from(fileList).forEach((file: any, index: any) => {
         this.uploadedFiles.push(file)
-        // console.log('this.uploadedFiles', this.uploadedFiles)
         const currentDate = new Date()
         const tabinfo = {
           srno: index + 1,
@@ -113,7 +111,6 @@ export class BudgetproofspopupComponent implements OnInit {
         // file.identifier = res.result.identifier
         this.uploadedFilesAssets.push(tabinfo)
         this.dataSource.data.push(tabinfo)
-        // console.log('this.uploadedFilesAssets', this.uploadedFilesAssets)
         // this.uploadFilesList(file, index)
       })
     }
@@ -121,8 +118,6 @@ export class BudgetproofspopupComponent implements OnInit {
 
   // uploadFilesList(file: any) {
   //   // this.dataSource.data = this.uploadedFilesAssets
-  //   // console.log('this.dataSource', this.dataSource)
-  //   // console.log('index', index)
   //   const username = `${this.userData.firstName} ${this.userData.lastName}`
   //   const org = []
   //   const createdforarray: any[] = []
@@ -146,12 +141,10 @@ export class BudgetproofspopupComponent implements OnInit {
   //       },
   //     },
   //   }
-  //   // console.log('req', request)
   //   // start the upload and save the progress map
   //   this.progress = this.uploadService.crreateAsset(request).subscribe((res: any) => {
   //     if (event.type === HttpEventType.UploadProgress) {
   //       const progress = Math.round(100 * event.loaded / event.total)
-  //       console.log(progress)
   //     } else if (event instanceof HttpResponse) {
   //     }
   //     const contentID = res.result.identifier
@@ -174,7 +167,6 @@ export class BudgetproofspopupComponent implements OnInit {
   // }
 
   addSelectedFiles(form: any) {
-    // console.log('form value', form.value)
     this.dialogRef.close({ data: form.value })
   }
 
@@ -199,14 +191,11 @@ export class BudgetproofspopupComponent implements OnInit {
   //     (event: any) => {
   //       if (event.type === HttpEventType.UploadProgress) {
   //         this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total)
-  //         console.log('this.progressInfos', this.progressInfos)
   //       } else if (event instanceof HttpResponse) {
   //         this.fileInfos = this.uploadService.getFiles()
-  //         console.log('this.fileInfos', this.fileInfos)
   //       }
   //     },
   //     (err: any) => {
-  //       console.log('err', err)
   //       this.progressInfos[idx].value = 0
   //       this.message = 'Could not upload the file:' + file.name
   //     })

@@ -1,0 +1,148 @@
+<div class="filter-overlay">
+    <div class="filter">
+        <div class="filter-header flex flex-1">
+            <div class="flex flex-2 flex-row">
+                <div class="label">Filters</div>
+                <div class="cross-filter cursor-pointer" (click)="hideFilter('close')"><img
+                        src="assets/icons/close.svg"></div>
+            </div>
+        </div>
+        <div class="filter-content-container">
+            <div class="filter-content flex flex-1" *ngIf="groupList && groupList.length > 0">
+                <mat-accordion>
+                    <mat-expansion-panel disableRipple [expanded]="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Groups
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <div class="filterSearch flex w-full">
+                                <mat-icon
+                                    class="color-60 filterSearch-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
+                                <input class="sinput filterSinput color-60 w-full" [(ngModel)]="groupSearchKey"
+                                    (ngModelChange)="searchGroup($event)" label="" placeholder="Enter group"
+                                    type="Standard">
+                            </div>
+                            <div *ngIf="filteredGroupList && filteredGroupList.length > 0">
+                                <div class="flex flex-1 flex-row category-item" *ngFor="let group of filteredGroupList">
+                                    <mat-checkbox #checkboxes disableRipple class="example-margin"
+                                        [checked]="group?.selected"
+                                        (change)="manageSelectedGroup($event, group)">{{group?.name |
+                                        titlecase}}</mat-checkbox>
+                                </div>
+                            </div>
+                            <div *ngIf="filteredGroupList && filteredGroupList.length === 0" class="margin-top-xs">No
+                                groups found</div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <div class="filter-content flex flex-1" *ngIf="designationList && designationList.length > 0">
+                <mat-accordion>
+                    <mat-expansion-panel disableRipple [expanded]="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Designation
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <div class="filterSearch flex w-full">
+                                <mat-icon
+                                    class="color-60 filterSearch-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
+                                <input class="sinput filterSinput color-60 w-full" [(ngModel)]="designationSearchKey"
+                                    (ngModelChange)="searchDesignation($event)" label="" placeholder="Enter designation"
+                                    type="Standard">
+                            </div>
+                            <div *ngIf="filteredDesignationList && filteredDesignationList.length > 0">
+                                <div class="flex flex-1 flex-row category-item"
+                                    *ngFor="let des of filteredDesignationList">
+                                    <mat-checkbox #checkboxes disableRipple class="example-margin"
+                                        [checked]="des?.selected" (change)="manageSelectedDesignation($event, des)"
+                                        *ngIf="des?.name !== ''">{{des?.name |
+                                        titlecase}}</mat-checkbox>
+                                </div>
+                            </div>
+                            <div *ngIf="filteredDesignationList && filteredDesignationList.length === 0"
+                                class="margin-top-xs">No designation
+                                found</div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <!-- roles -->
+            <div class="filter-content flex flex-1" *ngIf="rolesList && rolesList.length > 0">
+                <mat-accordion>
+                    <mat-expansion-panel disableRipple [expanded]="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Roles
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <div class="filterSearch flex w-full">
+                                <mat-icon
+                                    class="color-60 filterSearch-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
+                                <input class="sinput filterSinput color-60 w-full" [(ngModel)]="rolesSearchKey"
+                                    (ngModelChange)="searchRoles($event)" label="" placeholder="Enter roles"
+                                    type="Standard">
+                            </div>
+                            <div *ngIf="filteredRolesList && filteredRolesList.length > 0">
+                                <div class="flex flex-1 flex-row category-item" *ngFor="let role of filteredRolesList">
+                                    <mat-checkbox #checkboxes disableRipple class="example-margin"
+                                        [checked]="role?.selected"
+                                        (change)="manageSelectedRoles($event, role)">{{role?.name
+                                        |
+                                        titlecase}}</mat-checkbox>
+                                </div>
+                            </div>
+                            <div *ngIf="filteredRolesList && filteredRolesList.length === 0" class="margin-top-xs">No
+                                roles found</div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <!-- tage -->
+            <div class="filter-content flex flex-1" *ngIf="tagsList && tagsList.length > 0">
+                <mat-accordion>
+                    <mat-expansion-panel disableRipple [expanded]="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Tags
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <div class="filterSearch flex w-full">
+                                <mat-icon
+                                    class="color-60 filterSearch-icon mat-icon notranslate material-icons mat-icon-no-color">search</mat-icon>
+                                <input class="sinput filterSinput color-60 w-full" [(ngModel)]="tagsSearchKey"
+                                    (ngModelChange)="searchTags($event)" label="" placeholder="Enter tags"
+                                    type="Standard">
+                            </div>
+                            <div *ngIf="filteredTagsList && filteredTagsList.length > 0">
+                                <div class="flex flex-1 flex-row category-item" *ngFor="let tag of filteredTagsList">
+                                    <mat-checkbox #checkboxes disableRipple class="example-margin"
+                                        [checked]="tag?.selected" (change)="manageSelectedTags($event, tag)">{{tag?.name
+                                        |
+                                        titlecase}}</mat-checkbox>
+                                </div>
+                            </div>
+                            <div *ngIf="filteredTagsList && filteredTagsList.length === 0" class="margin-top-xs">No tags
+                                found</div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+        <div class="filter-footer flex flex-1">
+            <div class="flex flex-2 flex-row">
+                <div class="filter-clear" (click)="clearFilter()">
+                    Clear
+                </div>
+                <div class="filter-apply" (click)="applyFilter()">
+                    Apply
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

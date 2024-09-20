@@ -1,0 +1,181 @@
+<div class="request-container">
+  <h2>Content Request</h2>
+  <mat-card class="mb-8">
+    <mat-card-content class="flex gap-10">
+      <div class="section-1">
+        <div class="flex-4 mobile-margin text-capitalize mat-h2">Note:</div>
+        <ng-container *ngFor="let note of requestList">
+          <div class="flex gap-4 mb-4">
+            <div>
+              <mat-icon class="infoIcon">error_outline</mat-icon>
+            </div>
+            <div [innerHTML]="sanitizeHtml(note)"></div>
+          </div>
+        </ng-container>
+      </div>
+      <!-- <div class="reportsDemo flex justify-end section-2">
+        <div class="reportsDemoVideo flex flex-column flex-middle justify-center margin-top-m"
+          (click)="openVideoPopup()">
+          <mat-icon class="video_icon mb-2">play_circle</mat-icon>
+          <div>
+            Watch how it works
+          </div>
+        </div>
+      </div> -->
+    </mat-card-content>
+  </mat-card>
+  <div class="create-action">
+    <button mat-button type="button" class="search-btn" [routerLink]="['/app/home/create-request-form']">Request
+      Content</button>
+  </div>
+
+  <div class="nav-container">
+    <div class="sidenav-content">
+      <div class="table-class">
+        <ng-container *ngIf="dataSource?.filteredData?.length > 0">
+          <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="RequestId">
+              <th mat-header-cell *matHeaderCellDef class="row-heading">Request ID </th>
+              <td mat-cell class="title-class" *matCellDef="let element">{{element?.demand_id}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef class="row-heading">Title </th>
+              <td mat-cell class="title-class" *matCellDef="let element">{{element?.title}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="requestor">
+              <th mat-header-cell *matHeaderCellDef class="row-heading">Requestor </th>
+              <td mat-cell class="title-class" *matCellDef="let element">{{element?.ownerName}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="requestType">
+              <th mat-header-cell *matHeaderCellDef class="row-heading">Request Type </th>
+              <td mat-cell class="title-class" *matCellDef="let element">{{element?.requestType}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="requestStatus">
+              <th mat-header-cell *matHeaderCellDef class="row-heading">Request Status </th>
+
+              <td mat-cell class="title-class" *matCellDef="let element">
+                <span [ngClass]="getStatusClass(element?.status)">{{element?.status === statusKey.fullfill ? 'Fulfilled'
+                  : element?.status}}</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="assignee">
+              <th mat-header-cell *matHeaderCellDef class="row-heading">Assignee </th>
+              <td mat-cell class="title-class" *matCellDef="let element">{{element?.assignedProvider ?
+                element?.assignedProvider : 'Not Assigned' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="requestedOn">
+              <th mat-header-cell *matHeaderCellDef class="row-heading">Requested On </th>
+              <td mat-cell class="title-class" *matCellDef="let element">{{element?.createdOn | date}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="interests">
+              <th mat-header-cell *matHeaderCellDef class="row-heading">Interests</th>
+              <td mat-cell class="title-class" *matCellDef="let element">
+                <a class="action-btn-view" *ngIf="element?.interestCount!== 0" href="javascript:void(0)"
+                  [ngStyle]="getPointerEventsStyle(element)">
+                  <span (click)="handleClick(element)">
+                    {{element?.interestCount}}
+                  </span></a>
+                <a class="" *ngIf="element?.interestCount === 0" href="javascript:void(0)">{{element?.requestType ==
+                  'Single' ? 'N/A' : element?.interestCount}}</a>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="details">
+              <th mat-header-cell *matHeaderCellDef class="row-heading">Details</th>
+              <td mat-cell *matCellDef="let element">
+                <mat-icon (click)="navigateToDetails(element?.demand_id)" class="cursor-pointer">visibility</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef class="row-heading"></th>
+              <td mat-cell *matCellDef="let element">
+
+                <!-- <a class="action-btn-view" *ngIf="element.status === 'Unassigned'" (click)="showInterestPopup()"
+                    href="javascript:void(0)">Show
+                    Interest</a> -->
+
+
+                <span>
+                  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="onClickMenu(element,'viewContent')">
+                      <span>View</span>
+                    </button>
+                    <button
+                      *ngIf="element?.status === statusKey.Unassigned && element?.status!== statusKey.Inprogress &&  element?.status!== statusKey.invalid "
+                      mat-menu-item (click)="onClickMenu(element,'invalidContent')">
+                      <span>Mark as invalid</span>
+                    </button>
+                    <button mat-menu-item
+                      *ngIf="element?.status!== statusKey.Assigned && element?.interestCount >0 && element?.status!== statusKey.Inprogress &&  element?.status!== statusKey.invalid && element?.status!==statusKey.fullfill"
+                      (click)="onClickMenu(element,'assignContent')">
+                      <span>Assign</span>
+                    </button>
+                    <button
+                      *ngIf="element?.status === statusKey.Assigned && element?.status!== statusKey.Inprogress &&  element?.status!== statusKey.invalid && element?.status!==statusKey.fullfill "
+                      mat-menu-item (click)="onClickMenu(element,'reAssignContent')">
+                      <span> Re-Assign</span>
+                    </button>
+                    <button mat-menu-item (click)="onClickMenu(element,'copyContent')">
+                      <span>Copy</span>
+                    </button>
+                  </mat-menu>
+                </span>
+              </td>
+
+
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-row-data"></tr>
+            <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
+
+
+          </table>
+        </ng-container>
+
+        <div class="no-cbp-data" *ngIf="dataSource?.filteredData?.length === 0">
+          <div><img src="/mdo-assets/images/no-content-data.svg"></div>
+          <!-- <div class="mat-subheading-1 margin-remove">No CBP plan created yet</div> -->
+          <div>No Request yet made</div>
+          <!-- <div class="margin-top-m">
+                  <button mat-button type="button" class="search-btn"
+                  [routerLink]="['/app/home/create-request-form']">Request Content</button>
+              </div> -->
+          <div class=" margin-top-m no-content-create">
+            <button mat-button type="button" class="search-btns"
+              [routerLink]="['/app/home/create-request-form']">Request Content</button>
+          </div>
+
+        </div>
+
+        <mat-paginator *ngIf="dataSource?.filteredData?.length > 0" [pageSize]="pageSize" [length]="this.requestCount"
+          [pageSizeOptions]="[10,20,40]" (page)="onChangePage($event)"></mat-paginator>
+
+
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <!-- <div class="margin-top-l custom-table" *ngIf="requestListData"
+     [ngClass]="{ 'assignedClass':isAssigned }"
+     >
+    <ws-widget-org-user-table  [tableData]="tabledata" [data]="requestListData" [actionMenuItem]="pageConfig?.data?.actionMenu"  (actionsClick)="menuSelected($event)" (eOnRowClick)="viewDetails($event)">
+    </ws-widget-org-user-table>
+    <mat-paginator [pageSize]="pageSize" [length]="this.requestCount" [pageSizeOptions]="[20,30,40]"
+    (page)="onChangePage($event)"></mat-paginator>
+</div> -->
+
+</div>

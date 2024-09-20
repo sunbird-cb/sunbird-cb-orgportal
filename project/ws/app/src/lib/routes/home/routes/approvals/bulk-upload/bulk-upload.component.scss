@@ -1,0 +1,72 @@
+@import 'ws-common';
+
+.bulk-container, .file-container {
+  box-shadow: 0px 1px 5px 0px #0000001F, 0px 2px 2px 0px #00000024, 0px 3px 1px -2px #00000033;
+  padding: 24px;
+  border: 1px solid $border-color;
+
+  .label {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba($color: #000000, $alpha: 0.6);
+  }
+
+  .value {
+    font-size: 14px;
+    line-height: 18px;
+    color: rgba($color: #000000, $alpha: 0.88);
+    word-break: break-all;
+  }
+
+  .outline-button {
+    padding: 8px 16px;
+  }
+}
+
+.dashed-card {
+  border: 1px dashed $border-color;
+  padding: 20px 24px;
+  font-size: 14px;
+
+  .custom-ol {
+    margin: 0px;
+    padding-left: 12px;
+  }
+
+  .text-primary {
+    color: $color-blue;
+    font-weight: bold;
+  }
+}
+
+.error-msg {
+  color: $color-red;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+::ng-deep .common-modal {
+  width: 420px;
+  padding: 0px;
+
+  .mat-dialog-container {
+    border-radius: 12px;
+    background-color: #EEE !important;
+  }
+}
+
+::ng-deep .progress-modal {
+  width: 920px;
+  height: 420px;
+
+  .mat-dialog-container {
+    border-radius: 4px;
+    background-color: #FFF !important;
+  }
+}
+
+@media screen and (max-width: 641px) {
+  ::ng-deep .common-modal, ::ng-deep .progress-modal {
+    max-width: 90vw !important;
+  }
+}

@@ -1,0 +1,108 @@
+<div class="flex flex-4 flex-column">
+  <mat-card>
+    <mat-card-title class="flex-4 mobile-margin text-capitalize">
+      <span class="mat-subheading-1">Approvals</span>
+    </mat-card-title>
+    <mat-card class="mb-8">
+      <mat-card-content class="flex gap-10">
+        <div class="section-1">
+          <div class="flex-4 mobile-margin text-capitalize mat-h2">Note:</div>
+          <ng-container *ngFor="let note of reportsNoteList">
+            <div class="flex gap-4 mb-4">
+              <div>
+                <mat-icon class="infoIcon">error_outline</mat-icon>
+              </div>
+              <div [innerHTML]="sanitizeHtml(note)"></div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="reportsDemo flex justify-end section-2">
+          <div class="reportsDemoVideo flex flex-column flex-middle justify-center margin-top-m"
+            (click)="openVideoPopup()">
+            <mat-icon class="video_icon mb-2">play_circle</mat-icon>
+            <div>
+              Watch how it works
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card-content>
+      <div class="flex flex-1 flex-row margin-fix">
+        <div class="flex flex-3 filter max-height-60">
+          <a class="filter-option"
+            [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'profileverification', 'ws-mat-accent-border font-medium': currentFilter !== 'profileverification'}"
+            mat-button (click)="filter('profileverification'); tabTelemetry('toapprove', 0)" role="button">Profile
+            Verifications ({{totalProfileVerificationRecords}})</a>
+
+          <a class="filter-option"
+            [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'transfers', 'ws-mat-accent-border font-medium': currentFilter !== 'transfers'}"
+            mat-button (click)="filter('transfers'); tabTelemetry('transfers', 1)" role="button">Transfers
+            ({{totalTransfersRecords}})</a>
+        </div>
+        <!-- <div class="flex flex-3 flex-end" *ngIf="currentFilter === 'profileverification'">
+          <a (click)="getPendingResquests()"
+            class="customlink cursor-pointer mat-body-2"><mat-icon>download_outlined</mat-icon> Download
+            Pending Requests</a>
+        </div> -->
+      </div>
+      <ng-container *ngIf="currentFilter === 'profileverification'">
+        <div class="searchfilter">
+          <ws-app-searchuser (handleApiData)="onSearch($event)" [isApprovals]="true" (handleapproveAll)="onApproveALL()"
+            [showApproveALL]="showApproveALL" [showBulkUpdate]="true"
+            [disableApproveALL]="disableApproveALL"></ws-app-searchuser>
+        </div>
+        <ng-container *ngIf="totalProfileVerificationRecords > 0">
+          <ws-widget-user-card [currentFilter]="currentFilter" [usersData]="profileVerificationData"
+            [isApprovals]="true" [totalRecords]="totalProfileVerificationRecords" [tabChangeIndex]="pageIndex"
+            (searchByEnterKey)="onEnterkySearch($event)" (disableButton)="showButton()"
+            (paginationData)="onPaginateChange($event)" (updateList)="fetchApprovals()"></ws-widget-user-card>
+        </ng-container>
+        <ng-container *ngIf="totalProfileVerificationRecords === 0">
+          <p class="margin-top-xl margin-bottom-xl">No approvals</p>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="currentFilter === 'transfers'">
+        <div class="searchfilter">
+          <ws-app-searchuser (handleApiData)="onSearch($event)" [isApprovals]="true" (handleapproveAll)="onApproveALL()"
+            [showApproveALL]="false" [showBulkUpdate]="false"></ws-app-searchuser>
+        </div>
+        <ng-container *ngIf="totalTransfersRecords > 0">
+          <ws-widget-user-card [currentFilter]="currentFilter" [usersData]="transfersData" [isApprovals]="true"
+            [totalRecords]="totalTransfersRecords" [tabChangeIndex]="pageIndex"
+            (searchByEnterKey)="onEnterkySearch($event)" (disableButton)="showButton()"
+            (paginationData)="onPaginateChange($event)" (updateList)="fetchApprovals()"></ws-widget-user-card>
+        </ng-container>
+        <ng-container *ngIf="totalTransfersRecords === 0">
+          <p class="margin-top-xl margin-bottom-xl">No transfers</p>
+        </ng-container>
+      </ng-container>
+    </mat-card-content>
+    <!-- <mat-card-content>
+      <div class="flex flex-1 flex-column margin-fix">
+        <div class="flex flex-1 filter max-height-60">
+          <a routerLink="/app/home/approvals/pending" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'pending',
+              'ws-mat-accent-border font-medium':currentFilter !== 'pending'}" mat-button
+            (click)="filter('pending'); tabTelemetry('toapprove', 0)" role="button">To approve</a>
+
+          <a routerLink="/app/home/approvals/upload" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'uploadApprovals',
+            'ws-mat-accent-border font-medium':currentFilter !== 'uploadApprovals'}" mat-button
+            (click)="filter('uploadApprovals'); tabTelemetry('uploadApprovals', 1)" role="button">File uploads</a>
+        </div>
+      </div>
+      <ng-container *ngIf="currentFilter === 'pending'">
+        <ng-container *ngIf="getTableData && getTableData.length>0">
+          <ws-widget-org-user-table-v2 [tableData]="tabledata" [data]="data" (eOnRowClick)="onApprovalClick($event)"
+            [totalRecords]="approvalTotalCount" (pageChangeClick)="onPaginateChange($event)">
+          </ws-widget-org-user-table-v2>
+        </ng-container>
+        <ng-container *ngIf="!getTableData || getTableData.length<=0">
+          <p class="text-center">No approvals pending</p>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="currentFilter === 'uploadApprovals'">
+        <ws-app-profle-approval-bulk-upload></ws-app-profle-approval-bulk-upload>
+      </ng-container>
+    </mat-card-content> -->
+  </mat-card>
+</div>

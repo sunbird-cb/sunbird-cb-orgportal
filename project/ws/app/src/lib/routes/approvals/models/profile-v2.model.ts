@@ -77,6 +77,7 @@ export namespace NSProfileDataV2 {
     dob: string
     domicileMedium: string
     firstname: string
+    firstName: string
     lasttname: string
     gender: string
     knownLanguages: any[]

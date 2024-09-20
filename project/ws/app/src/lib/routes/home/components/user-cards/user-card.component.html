@@ -1,0 +1,1091 @@
+<!-- <div class="searchfilter" *ngIf="!isApprovals">
+  <ws-app-searchuser (handleApiData)="onSearch($event)" (handleapproveAll)="onApproveALL()"
+    [showApproveALL]="showApproveALL" [currentFilter]="currentFilter"></ws-app-searchuser>
+</div> -->
+<div *ngIf="!isApprovals">
+  <mat-accordion [multi]="true">
+    <mat-expansion-panel class="user-card" *ngFor="let user of usersData; let i = index" #panel
+      (opened)="closeOtherPanels(panel)" [hideToggle]="forMentor ? true : false" [disabled]="forMentor ? true : false">
+      <mat-expansion-panel-header (click)="getUerData(user, panel, index)">
+        <div class="float-left width88 flex" (click)="$event.stopPropagation();">
+          <div class="initialcircle display-inline-block margin-right-m">
+            <!-- <span>AB</span> -->
+            <ws-widget-avatar-photo [name]="getUseravatarName(user)" [photoUrl]="user?.photo" size="l">
+            </ws-widget-avatar-photo>
+          </div>
+          <div class="username display-inline-block">
+            <div class="mat-subheading-2 margin-remove flex black-color">
+              <div class="word-wrap userName">
+                <span
+                  *ngIf="user?.profileDetails && user?.profileDetails?.personalDetails && user?.profileDetails?.personalDetails?.firstname">
+                  {{user?.profileDetails?.personalDetails?.firstname}}
+                </span>
+                <span
+                  *ngIf="user?.profileDetails && user?.profileDetails?.personalDetails && user?.profileDetails?.personalDetails?.firstName">
+                  {{user?.profileDetails?.personalDetails?.firstName}}
+                </span>
+                <span *ngIf="!user?.profileDetails?.personalDetails">
+                  {{user?.firstName}}
+                </span>
+              </div>
+              <div>
+                <span class="status-label margin-left-s verified"
+                  *ngIf="user?.profileDetails?.profileStatus === 'VERIFIED'">Verified
+                  <mat-icon>check_circle</mat-icon></span>
+                <span class="status-label margin-left-s nonverified"
+                  *ngIf="user?.profileDetails?.profileStatus === 'NOT-VERIFIED'">Non-verified
+                  <mat-icon>check_circle</mat-icon></span>
+                <span class="status-label margin-left-s notmyuser"
+                  *ngIf="user?.profileDetails?.profileStatus === 'NOT-MY-USER'">Not my user
+                  <mat-icon>error</mat-icon></span>
+              </div>
+              <div *ngIf="getUserRoles(user)">
+                <span class="mentor-status-label margin-left-s mentor">Mentor
+                </span>
+              </div>
+            </div>
+            <div class="mat-body-2 ws-mat-black40-text">{{(user?.profileDetails &&
+              user?.profileDetails?.professionalDetails &&
+              user?.profileDetails?.professionalDetails[0]?.designation) ?
+              user?.profileDetails?.professionalDetails[0]?.designation : '-'}}</div>
+            <div class="mat-caption ws-mat-black40-text">
+              Marked on: {{user?.profileDetails?.profileStatusUpdatedOn || ' NA'}}</div>
+            <!-- <div class="mat-caption ws-mat-black40-text" *ngIf="!user?.profileDetails?.profileStatusUpdatedOn">-</div> -->
+          </div>
+        </div>
+        <div class="float-right flex items-center" *ngIf="(isMdoAdmin || isMdoLeader) && !forMentor">
+          <!-- <ng-container *ngIf="checkForMDOAdmin(user)"> -->
+          <div class="button mat-body" (click)="onEditUser(user, panel);$event.stopPropagation();"
+            *ngIf="currentFilter !== 'notmyuser' && !user?.enableEdit">
+            <mat-icon>edit</mat-icon> Edit
+          </div>
+          <!-- </ng-container> -->
+          <div class="button mat-body" (click)="confirmReassign(confirm, user);$event.stopPropagation();"
+            *ngIf="currentFilter === 'notmyuser'">Reassign</div>
+        </div>
+        <div class="float-right flex flex-col items-center" *ngIf="(isMdoAdmin || isMdoLeader) && forMentor">
+          <div class="black-color">Mentor</div>
+          <div>
+            <div class="black-color">No&nbsp;<mat-slide-toggle [checked]="getUserRoles(user)"
+                (change)="toggleMentor(mentorconfirm, $event, user)">&nbsp;Yes</mat-slide-toggle>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+
+      <div class="panel-body profile-box" *ngIf="user?.enableEdit">
+        <form [formGroup]="updateUserDataForm" class="margin-top-m">
+          <div class="inner-body">
+            Primary Details <mat-icon class="ws-mat-black40-text custominfo">info_outline</mat-icon>
+            <p class="float-right mat-body-2" *ngIf="user?.profileDetails?.profileStatus === 'VERIFIED'">
+              <mat-slide-toggle (change)="confirmUserRequest(updateconfirm,'NOT-VERIFIED', user, $event)">Mark this user
+                as
+                non-verified</mat-slide-toggle>
+            </p>
+            <p class="float-right mat-body-2" *ngIf="user?.profileDetails?.profileStatus === 'NOT-VERIFIED'">
+              <mat-slide-toggle (change)="confirmUserRequest(updateconfirm,'NOT-MY-USER', user, $event)"
+                [checked]="true">This is my
+                user</mat-slide-toggle>
+            </p>
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label required">Group</label>
+                <mat-form-field appearance="outline">
+                  <mat-select #group formControlName="group" i18n-placeholder placeholder="Select group">
+                    <mat-option [value]="g" *ngFor="let g of groupsList">
+                      {{g}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error [hidden]="false" i18n="Group Error | Explains group is required"
+                    *ngIf="updateUserDataForm?.controls['group'].errors?.required">
+                    Group is mandatory
+                  </mat-error>
+                </mat-form-field>
+                <mat-icon class="verified-icon margin-left-xs"
+                  *ngIf="user?.profileDetails?.profileGroupStatus === 'VERIFIED'">
+                  check_circle</mat-icon> <span *ngIf="user?.profileDetails?.profileGroupStatus === 'VERIFIED'"
+                  class="mat-caption status-text ws-mat-black40-text"> Verified</span>
+
+                <mat-icon class="nonverified-icon margin-left-xs"
+                  *ngIf="user?.profileDetails?.profileGroupStatus === 'NOT-VERIFIED'">
+                  cancel</mat-icon> <span *ngIf="user?.profileDetails?.profileGroupStatus === 'NOT-VERIFIED'"
+                  class="mat-caption status-text ws-mat-black40-text"> Non-verified</span>
+              </div>
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label">Designation</label>
+                <mat-form-field appearance="outline">
+                  <mat-select #designation formControlName="designation" i18n-placeholder
+                    placeholder="Select designation"
+                    (selectionChange)="otherDropDownChange(designation?.value, 'designation')">
+                    <mat-option [value]="designation?.name" *ngFor="let designation of designationsMeta">
+                      {{designation?.name}}
+                    </mat-option>
+                    <mat-option [value]="'Other'">Other</mat-option>
+                  </mat-select>
+                  <!-- <mat-error [hidden]="false" i18n="Designation Error | Explains designation is required"
+                    *ngIf="updateUserDataForm?.controls['designation'].errors?.required">
+                    Designation is mandatory
+                  </mat-error> -->
+                </mat-form-field>
+                <mat-icon class="verified-icon margin-left-xs"
+                  *ngIf="user?.profileDetails?.profileDesignationStatus === 'VERIFIED'">
+                  check_circle</mat-icon>
+                <span *ngIf="user?.profileDetails?.profileDesignationStatus === 'VERIFIED'"
+                  class="mat-caption status-text ws-mat-black40-text"> Verified</span>
+                <mat-icon class="nonverified-icon margin-left-xs"
+                  *ngIf="user?.profileDetails?.profileDesignationStatus === 'NOT-VERIFIED'">
+                  cancel</mat-icon>
+                <span *ngIf="user?.profileDetails?.profileDesignationStatus === 'NOT-VERIFIED'"
+                  class="mat-caption status-text ws-mat-black40-text"> Non-verified</span>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="inner-body">
+            Other Details <mat-icon class="ws-mat-black40-text custominfo">info_outline</mat-icon>
+
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label">Employee ID</label>
+                <mat-form-field appearance="outline">
+                  <input type="text" matInput #employeeID formControlName="employeeID">
+                  <mat-error [hidden]="false" class="custom-error" *ngIf="updateUserDataForm?.controls['employeeID'].touched &&
+                    updateUserDataForm?.controls['employeeID'].errors?.pattern" i18n-aria-label
+                    aria-label="Please enter a valid id">
+                    Please enter a valid employee Id
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label required">Email</label>
+                <mat-form-field appearance="outline">
+                  <input id="primaryEmail" name="primaryEmailField" type="email" matInput placeholder="Type here"
+                    #primaryEmail formControlName="primaryEmail" i18n-aria-label
+                    aria-label="Primary Email readonly input" maxlength="320">
+                  <mat-error [hidden]="false" i18n="Primary Email Error|Explains name is required"
+                    *ngIf="updateUserDataForm?.controls['primaryEmail'].errors?.required">
+                    Email is mandatory
+                  </mat-error>
+                  <mat-error [hidden]="false" class="custom-error"
+                    *ngIf="updateUserDataForm?.controls['primaryEmail'].errors?.pattern" i18n-aria-label
+                    aria-label="Please enter a valid email">
+                    Please enter a valid email
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label required">Mobile number</label>
+                <!-- <mat-form-field appearance="outline" class="w82 mobile-country-code"> -->
+                <!-- <mat-select formControlName="countryCode" default="+91" i18n-placeholder placeholder="Select code"
+                    i18n-aria-label aria-label="Mobile Number label">
+                    <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
+                  </mat-select> -->
+                <div class="country-code margin-right-xs">
+                  +91
+                </div>
+                <!-- </mat-form-field> -->
+                <mat-form-field appearance="outline" class="flex-expand w-48p">
+                  <input id="mobileNumber" #mobile type="text" matInput placeholder="Type here" formControlName="mobile"
+                    i18n-aria-label aria-label="Mobile Number input" maxlength="10" (keypress)="numericOnly($event)"
+                    (paste)="numericOnly($event)">
+                  <mat-error [hidden]="false" i18n="Mobile Number Error | Explains Mobile no is required"
+                    *ngIf="updateUserDataForm?.controls['mobile'].errors?.required" i18n-aria-label
+                    aria-label="Please enter your mobile number">
+                    Please enter your mobile number
+                  </mat-error>
+                  <mat-error [hidden]="false" *ngIf="updateUserDataForm?.controls['mobile'].errors?.pattern"
+                    i18n-aria-label aria-label="Please enter a valid 10 digit mobile number">
+                    Please enter a valid 10 digit mobile number
+                  </mat-error>
+                </mat-form-field>
+                <!-- <div class="flex m-auto" *ngIf="isMobileVerified">
+                  <mat-icon class="ws-mat-green-text margin-xs" svgIcon="verified"></mat-icon>
+                </div> -->
+                <!-- <div *ngIf="!isMobileVerified" class="flex flex-1">
+                  <button *ngIf="!otpSend" mat-raised-button type="button" (click)="sendOtp()"
+                    class="text-white btn-success btn-responsive" [disabled]="updateUserDataForm?.mobile?.invalid">
+                    <a class="text-white" i18n>
+                      Send OTP
+                    </a>
+                  </button>
+                  <div *ngIf="otpSend" class="flex flex-1 flex-column">
+                    <div class="flex flex-1 flex-row margin-bottom-m">
+                      <mat-form-field appearance="outline" class="margin-top-xs flex-expand w-minus-w50">
+                        <input id="mobileNumber" #otp type="number" matInput placeholder="Enter OTP" i18n-aria-label
+                          aria-label="OTP input" onKeyPress="if(this.value.length === 8) return false;">
+                        <mat-hint *ngIf="timeLeftforOTP > 0 ">
+                          <span>Resend OTP after {{timeLeftforOTP | pipeDurationTransform:
+                            'hms2M'}}</span>
+                        </mat-hint>
+                        <mat-hint *ngIf="timeLeftforOTP <= 0 ">
+                          <span class="cursor-pointer ws-mat-default-text" (click)="resendOTP()">
+                            Resend OTP
+                          </span>
+                        </mat-hint>
+                      </mat-form-field>
+                      <button mat-raised-button type="button" (click)="verifyOtp(otp)"
+                        class="text-white btn-success btn-responsive margin-top-s otp"
+                        [disabled]="updateUserDataForm?.mobile?.invalid  || disableVerifyBtn">
+                        <span class="text-white" i18n>
+                          Verify OTP
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label">Date of Birth</label>
+                <mat-form-field appearance="outline" class="customdob">
+                  <input id="birthDate" matInput #dob formControlName="dob" [matDatepicker]="picker" i18n-placeholder
+                    (focus)="picker.open()" placeholder="Choose date of birth" [min]="1/1/1900" [max]="today">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker (closed)="dob.blur()" i18n-aria-label aria-label="Date picker">
+                  </mat-datepicker>
+                  <!-- <mat-error [hidden]="false" i18n="Date of Birth Error | Explains name is required">
+                    Date of birth is mandatory
+                  </mat-error> -->
+                </mat-form-field>
+              </div>
+
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label">Mother Tongue</label>
+                <mat-form-field appearance="outline">
+                  <input id="language" matInput type="text" placeholder="Type here" i18n-placeholder="Mother Tongue"
+                    formControlName="domicileMedium" [matAutocomplete]="motherTongueAuto" i18n-aria-label
+                    aria-label="Domicile Medium (Mother Tongue)" #motherTongue maxlength="30" />
+                  <!-- <mat-error *ngIf="updateUserDataForm?.controls['domicileMedium'].errors?.forbiddenNames"
+                    i18n-aria-label aria-label="Please choose a value from the list provided above.">
+                    Please choose a value from the list provided above
+                  </mat-error> -->
+                  <!-- <mat-error [hidden]="false" i18n="domicileMedium Error|Explains Domicile Medium is required"
+                    *ngIf="updateUserDataForm?.controls['domicileMedium'].errors?.required" i18n-aria-label
+                    aria-label="Domicile Medium is mandatory">
+                    Mother Tongue is mandatory
+                  </mat-error> -->
+                </mat-form-field>
+                <mat-autocomplete #motherTongueAuto="matAutocomplete" autoActiveFirstOption="true">
+                  <mat-option *ngFor="let option of masterLanguages | async" [value]="option.name">
+                    {{ option.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label">Gender</label>
+                <mat-form-field appearance="outline">
+                  <mat-select #gender formControlName="gender" i18n-placeholder placeholder="Select gender">
+                    <mat-option [value]="gender" *ngFor="let gender of genderList">
+                      {{gender}}
+                    </mat-option>
+                  </mat-select>
+                  <!-- <mat-error [hidden]="false" i18n="Gender Error | Explains gender is required">
+                    Gender is mandatory
+                  </mat-error> -->
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label">Office Pin Code</label>
+                <mat-form-field appearance="outline">
+                  <input id="pinCode" #pincode type="text" matInput placeholder="Type here" formControlName="pincode"
+                    i18n-aria-label aria-label="Pin Code input field" autocomplete="off"
+                    (keypress)="numericOnly($event)" maxlength="6">
+                  <!-- <mat-error [hidden]="false" i18n="Pin code | Explains pin code is required">
+                    Pin code is mandatory
+                  </mat-error> -->
+                </mat-form-field>
+              </div>
+
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label">eHRMS ID</label>
+                <mat-form-field appearance="outline">
+                  <input type="text" matInput #ehrmsID formControlName="ehrmsID">
+                </mat-form-field>
+              </div>
+
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label">Category</label>
+                <mat-form-field appearance="outline">
+                  <mat-select #category formControlName="category" i18n-placeholder placeholder="Select category">
+                    <mat-option [value]="ctg" *ngFor="let ctg of categoryList">
+                      {{ctg}}
+                    </mat-option>
+                  </mat-select>
+                  <!-- <mat-error [hidden]="false" i18n="Category Error | Explains category is required">
+                    Category is mandatory
+                  </mat-error> -->
+                </mat-form-field>
+              </div>
+            </div>
+            <!-- Cader Related Code-->
+
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/3">
+                <label class="margin-remove-bottom form-label">Are you a Cadre Employee?</label>
+                <mat-form-field appearance="outline">
+                  <input type="text" matInput [disabled]="true"
+                    [value]="user?.profileDetails?.hasOwnProperty('cadreDetails') ? (user?.profileDetails?.cadreDetails?.civilServiceType ? 'Yes': 'No') : ''">
+                </mat-form-field>
+              </div>
+
+              <div class="md:w-1/3" *ngIf="user?.profileDetails?.cadreDetails?.civilServiceType">
+                <label class="margin-remove-bottom form-label">Type of Civil Service</label>
+                <mat-form-field appearance="outline">
+                  <input type="text" matInput [disabled]="true"
+                    [value]="user?.profileDetails?.cadreDetails?.civilServiceType ? user?.profileDetails?.cadreDetails?.civilServiceType: ''">
+                </mat-form-field>
+              </div>
+
+              <div class="md:w-1/3" *ngIf="user?.profileDetails?.cadreDetails?.civilServiceType">
+                <label class="margin-remove-bottom form-label">Service</label>
+                <mat-form-field appearance="outline">
+                  <input type="text" matInput [disabled]="true"
+                    [value]="user?.profileDetails?.cadreDetails?.civilServiceName ? user?.profileDetails?.cadreDetails?.civilServiceName: ''">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/3" *ngIf="user?.profileDetails?.cadreDetails?.civilServiceType &&
+              (user?.profileDetails?.cadreDetails?.civilServiceName.trim() === 'Indian Administrative Service (IAS)' ||
+            user?.profileDetails?.cadreDetails?.civilServiceName.trim() === 'Indian Police Service (IPS)' ||
+            user?.profileDetails?.cadreDetails?.civilServiceName.trim() === 'Indian Forest Service (IFoS)')">
+                <label class="margin-remove-bottom form-label">Cadre</label>
+                <mat-form-field appearance="outline">
+                  <input type="text" matInput [disabled]="true"
+                    [value]="user?.profileDetails?.cadreDetails?.cadreName ? user?.profileDetails?.cadreDetails?.cadreName: ''">
+                </mat-form-field>
+              </div>
+
+              <div class="md:w-1/3" *ngIf="user?.profileDetails?.cadreDetails?.civilServiceType">
+                <label class="margin-remove-bottom form-label">Batch</label>
+                <mat-form-field appearance="outline">
+                  <input type="text" matInput [disabled]="true"
+                    [value]="user?.profileDetails?.cadreDetails?.cadreBatch ? user?.profileDetails?.cadreDetails?.cadreBatch: ''">
+                </mat-form-field>
+              </div>
+
+              <div class="md:w-1/3" *ngIf="user?.profileDetails?.cadreDetails?.civilServiceType">
+                <label class="margin-remove-bottom form-label">Cadre Controlling Authority</label>
+                <mat-form-field appearance="outline">
+                  <input type="text" matInput [disabled]="true"
+                    [value]="user?.profileDetails?.cadreDetails?.cadreControllingAuthorityName ? user?.profileDetails?.cadreDetails?.cadreControllingAuthorityName: ''">
+                </mat-form-field>
+              </div>
+            </div>
+            <!-- End of Cadre Related Code-->
+
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/2">
+                <label class="margin-remove-bottom form-label">Tags</label>
+                <!-- <mat-form-field> -->
+                <div class="left-input-div">
+                  <div class="flex-col">
+                    <input class="appr-text-field w-full-imp" #tags matInput i18n-placeholder="Type here"
+                      placeholder="Type here" formControlName="tags" i18n-aria-label aria-label="Type here"
+                      [matChipInputFor]="chipListTags" autocomplete="off" maxlength="100"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addActivity($event)"
+                      maxlength="100" />
+                  </div>
+                </div>
+                <div class="right-input-div">
+                  <button mat-raised-button type="button" [disabled]="!tags.value"
+                    (click)="addActivity({input: tags, value: tags.value})"
+                    class="btn-success btn-responsive btn-add-activity">
+                    <span class="text-white" i18n>Add tag</span>
+                  </button>
+                </div>
+                <p class="margin-left-xs mat-caption">
+                  <mat-error class="hintErr" *ngIf="updateUserDataForm?.controls['tags'].errors?.pattern"
+                    i18n="name Error|Explains name is required">
+                    Only space and alphabets are supported
+                  </mat-error>
+                </p>
+                <mat-chip-list #chipListTags>
+                  <mat-chip *ngFor="let tag of selectedtags" [selectable]="true" [removable]="true"
+                    (removed)="removeActivity(tag)">
+                    {{ tag }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+                <!-- </mat-form-field> -->
+              </div>
+            </div>
+
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/1" *ngIf="isMdoLeader || isBoth">
+                <label for="roles" class="margin-remove-bottom form-label required" i18n-aria-label
+                  aria-label="Roles label" i18n="Role label|Label which explains the user to select the roles">
+                  Role
+                </label>
+                <div>
+                  <mat-selection-list id="roles" formControlName="roles" #roles class="roles-list">
+                    <mat-list-option *ngFor="let role of rolesList" (click)="modifyUserRoles(role.roleName)"
+                      [selected]="userRoles.has(role.roleName)" [value]="role?.roleName">
+                      {{role.roleName}}
+                    </mat-list-option>
+                  </mat-selection-list>
+                </div>
+              </div>
+
+              <div class="md:w-1/1" *ngIf="!isMdoLeader">
+                <label class="view-text-label">Roles</label>
+                <div *ngIf="user?.organisations && user?.organisations[0].roles.length > 0">
+                  <ul class="roleslist">
+                    <li *ngFor="let t of user?.organisations[0]?.roles">{{t}}
+                    </li>
+                  </ul>
+                </div>
+                <p *ngIf="user?.organisations && user?.organisations[0]?.roles.length === 0">-</p>
+              </div>
+            </div>
+
+            <div class="flex flex-row margin-top-l">
+              <button mat-raised-button type="submit"
+                (click)="confirmUpdate(updateconfirm, updateUserDataForm, user, panel)"
+                class="margin-right-m btn-success btn-responsive successbtn" [disabled]="updateUserDataForm?.invalid">
+                <span class="text-white" i18n>
+                  Update
+                </span>
+              </button>
+              <button mat-raised-button type="submit" (click)="cancelSubmit(user)"
+                class="btn-success btn-responsive cancelbtn">
+                <span i18n>
+                  Cancel
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel-body" *ngIf="!user?.enableEdit">
+        <!-- <button mat-button class="my-4 mr-4" (click)="addRejection()">add reason</button>
+        <button mat-button class="my-4 mr-4" (click)="updateRejection()">update reason</button> -->
+        <div class="inner-body mat-body-2">
+          <div class="margin-bottom-m">
+            <span class="font-bold">Primary Details</span> <mat-icon
+              class="ws-mat-black40-text infoicon">info_outline</mat-icon>
+          </div>
+          <div class="flex flex-row margin-top-m">
+            <div class="md:w-1/3">
+              <label class="view-text-label">Group</label>
+              <p>{{(user?.profileDetails && user?.profileDetails?.professionalDetails &&
+                user?.profileDetails?.professionalDetails[0]?.group) ?
+                user?.profileDetails?.professionalDetails[0]?.group : '-'}}
+                <mat-icon class="verified-icon margin-left-xs"
+                  *ngIf="user?.profileDetails?.profileGroupStatus === 'VERIFIED'">
+                  check_circle</mat-icon>
+                <span *ngIf="user?.profileDetails?.profileGroupStatus === 'VERIFIED'"
+                  class="mat-caption status-text ws-mat-black40-text"> Verified</span>
+                <mat-icon class="nonverified-icon margin-left-xs"
+                  *ngIf="user?.profileDetails?.profileGroupStatus === 'NOT-VERIFIED'">
+                  cancel</mat-icon>
+                <span *ngIf="user?.profileDetails?.profileGroupStatus === 'NOT-VERIFIED'"
+                  class="mat-caption status-text ws-mat-black40-text"> Non-verified</span>
+              </p>
+            </div>
+            <div class="md:w-1/3">
+              <label class="view-text-label">Designation</label>
+              <p>{{(user?.profileDetails && user?.profileDetails?.professionalDetails &&
+                user?.profileDetails?.professionalDetails[0]?.designation) ?
+                user?.profileDetails?.professionalDetails[0]?.designation : '-'}}
+                <mat-icon class="verified-icon margin-left-xs"
+                  *ngIf="user?.profileDetails?.profileDesignationStatus === 'VERIFIED'">
+                  check_circle</mat-icon>
+                <span *ngIf="user?.profileDetails?.profileDesignationStatus === 'VERIFIED'"
+                  class="mat-caption status-text ws-mat-black40-text"> Verified</span>
+                <mat-icon class="nonverified-icon margin-left-xs"
+                  *ngIf="user?.profileDetails?.profileDesignationStatus === 'NOT-VERIFIED'">
+                  cancel</mat-icon>
+                <span *ngIf="user?.profileDetails?.profileDesignationStatus === 'NOT-VERIFIED'"
+                  class="mat-caption status-text ws-mat-black40-text"> Non-verified</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="inner-body margin-top-m mat-body-2">
+          <div class="margin-bottom-m">
+            <span class="font-bold">Other Details</span> <mat-icon
+              class="ws-mat-black40-text infoicon">info_outline</mat-icon>
+          </div>
+
+          <div class="flex flex-row margin-top-m">
+            <div class="md:w-1/4">
+              <label class="view-text-label">Employee ID</label>
+              <p class="word-wrap margin-right-l">{{(user?.profileDetails && user?.profileDetails?.employmentDetails &&
+                user?.profileDetails?.employmentDetails?.employeeCode) ?
+                user?.profileDetails?.employmentDetails?.employeeCode : '-'}}</p>
+            </div>
+
+            <div class="md:w-1/4">
+              <label class="view-text-label">Email</label>
+              <p class="word-wrap">{{(user?.profileDetails && user?.profileDetails?.personalDetails) ?
+                user?.profileDetails?.personalDetails?.primaryEmail : '-'}}</p>
+            </div>
+
+            <div class="md:w-1/4">
+              <label class="view-text-label">Mobile Number</label>
+              <p>+91 {{(user?.profileDetails && user?.profileDetails?.personalDetails) ?
+                user?.profileDetails?.personalDetails?.mobile : '-'}}</p>
+            </div>
+
+            <div class="md:w-1/4">
+              <label class="view-text-label">Gender</label>
+              <p>{{(user?.profileDetails && user?.profileDetails?.personalDetails &&
+                user?.profileDetails?.personalDetails?.gender) ?
+                user?.profileDetails?.personalDetails?.gender : '-'}}</p>
+            </div>
+          </div>
+          <div class="flex flex-row margin-top-m">
+            <div class="md:w-1/4">
+              <label class="view-text-label">Date Of Birth</label>
+              <p>{{(user?.profileDetails && user?.profileDetails?.personalDetails &&
+                user?.profileDetails?.personalDetails?.dob)
+                ? user?.profileDetails?.personalDetails?.dob
+                : '-'}}</p>
+            </div>
+
+            <div class="md:w-1/4">
+              <label class="view-text-label">Mother Tongue</label>
+              <p>{{(user?.profileDetails && user?.profileDetails?.personalDetails &&
+                user?.profileDetails?.personalDetails?.domicileMedium) ?
+                user?.profileDetails?.personalDetails?.domicileMedium : '-'}}</p>
+            </div>
+
+            <div class="md:w-1/4">
+              <label class="view-text-label">Category</label>
+              <p>{{(user?.profileDetails && user?.profileDetails?.personalDetails &&
+                user?.profileDetails?.personalDetails?.category) ?
+                user?.profileDetails?.personalDetails?.category : '-'}}</p>
+            </div>
+
+            <!-- <div class="md:w-1/4">
+              <label class="view-text-label">Pay Band</label>
+              <p>{{user.profileDetails && user.profileDetails.employmentDetails &&
+                user.profileDetails.employmentDetails.payType ?
+                user.profileDetails.employmentDetails.payType : '-'}}</p>
+            </div> -->
+          </div>
+          <div class="flex flex-row margin-top-m">
+            <div class="md:w-1/4">
+              <label class="view-text-label">Office Pin Code</label>
+              <p>{{(user?.profileDetails && user?.profileDetails?.employmentDetails &&
+                user?.profileDetails?.employmentDetails?.pinCode) ?
+                user?.profileDetails?.employmentDetails?.pinCode : '-'}}</p>
+            </div>
+
+            <div class="md:w-1/4">
+              <label class="view-text-label">eHRMS ID</label>
+              <p>{{(user?.profileDetails && user?.profileDetails?.additionalProperties &&
+                user?.profileDetails?.additionalProperties?.externalSystemId) ?
+                user?.profileDetails?.additionalProperties?.externalSystemId : '-'}}</p>
+            </div>
+
+            <div class="md:w-1/2">
+              <label class="view-text-label">Tags</label>
+              <div *ngIf="user?.profileDetails && user?.profileDetails?.additionalProperties &&
+              user?.profileDetails?.additionalProperties?.tag &&
+              user?.profileDetails?.additionalProperties?.tag.length > 0">
+                <ul class="tagslist">
+                  <li *ngFor="let t of user.profileDetails.additionalProperties.tag">{{t}}</li>
+                </ul>
+              </div>
+              <p *ngIf="user.profileDetails && !user.profileDetails.additionalProperties">-</p>
+            </div>
+          </div>
+          <!-- Cader Related Code-->
+          <div class="flex flex-row margin-top-m">
+            <div class="md:w-1/4">
+              <label class="view-text-label">Are you a Cadre Employee?</label>
+              <p *ngIf="user?.profileDetails?.hasOwnProperty('cadreDetails')">
+                {{user?.profileDetails?.cadreDetails?.civilServiceType ? 'Yes': 'No'}}</p>
+              <p *ngIf="!(user?.profileDetails?.hasOwnProperty('cadreDetails'))">-</p>
+            </div>
+
+            <div class="md:w-1/4" *ngIf="user?.profileDetails?.cadreDetails?.civilServiceType">
+              <label class="view-text-label">Type of Civil Service</label>
+              <p>{{user?.profileDetails?.cadreDetails?.civilServiceType ?
+                user?.profileDetails?.cadreDetails?.civilServiceType: '-'}}</p>
+
+            </div>
+
+            <div class="md:w-1/4" *ngIf="user?.profileDetails?.cadreDetails?.civilServiceType">
+              <label class="view-text-label">Service</label>
+              <p>{{user?.profileDetails?.cadreDetails?.civilServiceName ?
+                user?.profileDetails?.cadreDetails?.civilServiceName: '-'}}</p>
+
+            </div>
+            <div class="md:w-1/4" *ngIf="user?.profileDetails?.cadreDetails?.civilServiceType &&
+            (user?.profileDetails?.cadreDetails?.civilServiceName.trim() === 'Indian Administrative Service (IAS)' ||
+            user?.profileDetails?.cadreDetails?.civilServiceName.trim() === 'Indian Police Service (IPS)' ||
+            user?.profileDetails?.cadreDetails?.civilServiceName.trim() === 'Indian Forest Service (IFoS)')
+            ">
+              <label class="view-text-label">Cadre</label>
+              <p>{{user?.profileDetails?.cadreDetails?.cadreName ? user?.profileDetails?.cadreDetails?.cadreName: '-'}}
+              </p>
+
+            </div>
+          </div>
+          <div class="flex flex-row margin-top-m">
+            <div class="md:w-1/4" *ngIf="user?.profileDetails?.cadreDetails?.civilServiceType">
+              <label class="view-text-label">Batch</label>
+              <p>{{user?.profileDetails?.cadreDetails?.cadreBatch ? user?.profileDetails?.cadreDetails?.cadreBatch:
+                '-'}}
+              </p>
+
+            </div>
+
+            <div class="md:w-1/2" *ngIf="user?.profileDetails?.cadreDetails?.civilServiceType">
+              <label class="view-text-label">Cadre Controlling Authority</label>
+              <p>{{user?.profileDetails?.cadreDetails?.cadreControllingAuthorityName ?
+                user?.profileDetails?.cadreDetails?.cadreControllingAuthorityName: '-'}}</p>
+
+            </div>
+          </div>
+          <!-- End of Cadre Related Code-->
+          <div class="flex flex-row margin-top-m">
+            <div class="md:w-1/1">
+              <label class="view-text-label">Roles</label>
+              <div *ngIf="user?.organisations && user?.organisations[0]?.roles?.length > 0">
+                <ul class="roleslist">
+                  <li *ngFor="let t of user.organisations[0].roles">{{t}}
+                  </li>
+                </ul>
+              </div>
+              <p *ngIf="user?.organisations && user?.organisations[0]?.roles?.length === 0">-</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div *ngIf="usersData && usersData.length === 0">
+    <p class="margin-top-xl margin-bottom-xl">No users found</p>
+  </div>
+</div>
+
+<!-- for Approvals page -->
+<div *ngIf="isApprovals">
+  <mat-accordion [multi]="true" *ngIf="approvalData">
+    <mat-expansion-panel class="user-card" *ngFor="let appData of approvalData | orderBy: 'firstName':'asc'" #panel
+      (opened)="closeOtherPanels(panel)">
+      <mat-expansion-panel-header (click)="getApprovalUserData(appData.user, appData.userWorkflow, panel);">
+        <div class="float-left width82 flex" (click)="$event.stopPropagation();">
+          <div class="initialcircle display-inline-block margin-right-s" *ngIf="appData?.user">
+            <ws-widget-avatar-photo [name]="getUseravatarName(appData?.user)" [photoUrl]="appData?.user?.photo"
+              size="l">
+            </ws-widget-avatar-photo>
+          </div>
+          <div class="initialcircle display-inline-block margin-right-s" *ngIf="!appData?.user">
+            <ws-widget-avatar-photo [name]="appData?.userWorkflow?.userInfo?.first_name" [photoUrl]="" size="l">
+            </ws-widget-avatar-photo>
+          </div>
+          <div class="username display-inline-block">
+            <div class="mat-subheading-2 margin-remove word-wrap">
+              {{appData?.userWorkflow?.userInfo?.first_name}}
+            </div>
+            <div class="mat-body-2 ws-mat-black40-text">{{(appData?.user &&
+              appData?.user?.profileDetails?.professionalDetails &&
+              appData?.user?.profileDetails?.professionalDetails[0]?.designation) ?
+              appData?.user?.profileDetails?.professionalDetails[0]?.designation : '-'}}</div>
+            <div class="mat-caption ws-mat-black40-text">Requested on: {{appData?.requestedon | date: 'dd/MM/yyyy'}}
+            </div>
+          </div>
+        </div>
+
+        <div class="float-right">
+          <p class="mat-body-2 margin-top-m margin-right-m"><mat-icon class="orangeicon">error</mat-icon>
+            {{appData?.needApprovalList.length}} approval pending</p>
+        </div>
+      </mat-expansion-panel-header>
+
+      <div class="panel-body profile-box">
+        <form [formGroup]="approveUserDataForm" class="margin-top-m">
+          <!-- <button mat-button class="my-4 mr-4" (click)="addRejection()">add reason</button>
+              <button mat-button class="my-4 mr-4" (click)="updateRejection()">update reason</button> -->
+          <div class="inner-body mat-body-2">
+            <div class="margin-bottom-m">
+              <span class="font-bold">Primary Details</span> <mat-icon
+                class="ws-mat-black40-text infoicon">info_outline</mat-icon>
+              <p class="float-right mat-body-2" *ngIf="currentFilter === 'transfers'">
+                <mat-slide-toggle #toggleElement
+                  (change)="confirmTransferRequest(notmyuserconfirm, appData, $event, panel)"
+                  [checked]="appData.enableToggle">Approve transfer</mat-slide-toggle>
+              </p>
+            </div>
+            <div class="flex flex-row margin-top-m">
+              <ng-container *ngFor="let field of appData.needApprovalList">
+                <div class="md:w-1/3 margin-bottom-s" *ngIf="field.label === 'Group'">
+                  <label class="view-text-label">Group</label>
+                  <div>
+                    <span>
+                      <input type="text" class="appr-text-field margin-bottom-s" [value]="field.value"
+                        [disabled]="true">
+                      <mat-icon class="verified-icon margin-left-s"
+                        *ngIf="field.action === 'APPROVE'">check_circle</mat-icon>
+                      <mat-icon class="nonverified-icon margin-left-s"
+                        *ngIf="field.action === 'REJECT'">cancel</mat-icon>
+                    </span>
+                    <div class="flex flex-1">
+                      <mat-radio-group aria-label="Select an option" name="approveGroup" formControlName="approveGroup"
+                        class="mat-caption">
+                        <mat-radio-button value="approvegroup" class="margin-right-s"
+                          (click)="onClickHandleWorkflow(field,'APPROVE')">Approve</mat-radio-button>
+                        <mat-radio-button value="rejectgroup"
+                          (click)="onClickHandleWorkflow(field,'REJECT')">Reject</mat-radio-button>
+                        <mat-icon class="margin-left-m editreasonicon cursor-pointer"
+                          *ngIf="field.action === 'REJECT' && comment !== '' && !htmlDetected"
+                          (click)="updateRejection(field)">chat_bubble</mat-icon>
+                      </mat-radio-group>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="md:w-1/3 margin-bottom-s" *ngIf="field.label === 'Designation'">
+                  <label class="view-text-label">Designation</label>
+                  <div>
+                    <span>
+                      <input type="text" class="appr-text-field margin-bottom-s" [value]="field.value"
+                        [disabled]="true">
+                      <mat-icon class="verified-icon margin-left-s"
+                        *ngIf="field.action === 'APPROVE'">check_circle</mat-icon>
+                      <mat-icon class="nonverified-icon margin-left-s"
+                        *ngIf="field.action === 'REJECT'">cancel</mat-icon>
+                    </span>
+                    <div class="flex flex-1">
+                      <mat-radio-group aria-label="Select an option" name="approveDesignation"
+                        formControlName="approveDesignation" class="mat-caption">
+                        <mat-radio-button value="approvedesg" class="margin-right-s"
+                          (click)="onClickHandleWorkflow(field,'APPROVE')">Approve</mat-radio-button>
+                        <mat-radio-button value="rejectdesg"
+                          (click)="onClickHandleWorkflow(field,'REJECT')">Reject</mat-radio-button>
+                        <mat-icon class="margin-left-m editreasonicon cursor-pointer"
+                          *ngIf="field.action === 'REJECT' && comment !== '' && !htmlDetected"
+                          (click)="updateRejection(field)">chat_bubble</mat-icon>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-container *ngFor="let field of appData.noneedApprovalList">
+                <div class="md:w-1/3 margin-bottom-s" *ngIf="field.label === 'Group'">
+                  <label class="view-text-label">Group</label>
+                  <input type="text" class="appr-text-field margin-bottom-s" [value]="field.value" [disabled]="true">
+                </div>
+                <div class="md:w-1/3 margin-bottom-s" *ngIf="field.label === 'Designation'">
+                  <label class="view-text-label">Designation</label>
+                  <input type="text" class="appr-text-field margin-bottom-s" [value]="field.value" [disabled]="true">
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <hr>
+          <div class="inner-body margin-top-m mat-body-2" *ngIf="appData?.user">
+            <div class="margin-bottom-m">
+              <span class="font-bold">Other Details</span> <mat-icon
+                class="ws-mat-black40-text infoicon">info_outline</mat-icon>
+            </div>
+
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/4">
+                <label class="view-text-label">Employee ID</label>
+                <p class="word-wrap margin-right-l">{{(appData?.user?.profileDetails &&
+                  appData?.user?.profileDetails?.employmentDetails &&
+                  appData?.user?.profileDetails?.employmentDetails?.employeeCode) ?
+                  appData?.user?.profileDetails?.employmentDetails?.employeeCode : '-'}}</p>
+              </div>
+
+              <div class="md:w-1/4">
+                <label class="view-text-label">Email</label>
+                <p>{{(appData?.user?.profileDetails && appData?.user?.profileDetails?.personalDetails) ?
+                  appData?.user?.profileDetails?.personalDetails?.primaryEmail : '-'}}</p>
+              </div>
+
+              <div class="md:w-1/4">
+                <label class="view-text-label">Mobile Number</label>
+                <p>+91 {{(appData?.user?.profileDetails && appData?.user?.profileDetails?.personalDetails) ?
+                  appData?.user?.profileDetails?.personalDetails?.mobile : '-'}}</p>
+              </div>
+
+              <div class="md:w-1/4">
+                <label class="view-text-label">Gender</label>
+                <p>{{(appData?.user?.profileDetails && appData?.user?.profileDetails?.personalDetails &&
+                  appData?.user?.profileDetails?.personalDetails?.gender) ?
+                  appData?.user?.profileDetails?.personalDetails?.gender : '-'}}</p>
+              </div>
+            </div>
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/4">
+                <label class="view-text-label">Date Of Birth</label>
+                <p>{{(appData?.user?.profileDetails && appData?.user?.profileDetails?.personalDetails &&
+                  appData?.user?.profileDetails?.personalDetails?.dob)
+                  ? appData?.user?.profileDetails?.personalDetails?.dob
+                  : '-'}}</p>
+              </div>
+
+              <div class="md:w-1/4">
+                <label class="view-text-label">Mother Tongue</label>
+                <p>{{(appData?.user?.profileDetails && appData?.user?.profileDetails?.personalDetails &&
+                  appData?.user?.profileDetails?.personalDetails?.domicileMedium) ?
+                  appData?.user?.profileDetails?.personalDetails?.domicileMedium : '-'}}</p>
+              </div>
+
+              <div class="md:w-1/4">
+                <label class="view-text-label">Category</label>
+                <p>{{(appData?.user?.profileDetails && appData?.user?.profileDetails?.personalDetails &&
+                  appData?.user?.profileDetails?.personalDetails?.category) ?
+                  appData?.user?.profileDetails?.personalDetails?.category : '-'}}</p>
+              </div>
+
+              <!-- <div class="md:w-1/4">
+                <label class="view-text-label">Pay Band</label>
+                <p>{{appData.user.profileDetails && appData.user.profileDetails.employmentDetails &&
+                  appData.user.profileDetails.employmentDetails.payType ?
+                  appData.user.profileDetails.employmentDetails.payType : '-'}}</p>
+              </div> -->
+            </div>
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/4">
+                <label class="view-text-label">Office Pin Code</label>
+                <p>{{(appData?.user?.profileDetails && appData?.user?.profileDetails?.employmentDetails &&
+                  appData?.user?.profileDetails?.employmentDetails?.pinCode) ?
+                  appData?.user?.profileDetails?.employmentDetails?.pinCode : '-'}}</p>
+              </div>
+
+              <div class="md:w-1/4">
+                <label class="view-text-label">eHRMS ID</label>
+                <p>{{(appData?.user?.profileDetails && appData?.user?.profileDetails?.additionalProperties &&
+                  appData?.user?.profileDetails?.additionalProperties?.externalSystemId) ?
+                  appData?.user?.profileDetails?.additionalProperties?.externalSystemId : '-'}}</p>
+              </div>
+
+              <div class="md:w-1/2">
+                <label class="view-text-label">Tags</label>
+                <div *ngIf="appData?.user?.profileDetails && appData?.user?.profileDetails?.additionalProperties &&
+                    appData?.user?.profileDetails?.additionalProperties?.tag &&
+                    appData?.user?.profileDetails?.additionalProperties?.tag.length > 0">
+                  <ul class="tagslist">
+                    <li *ngFor="let t of appData?.user?.profileDetails?.additionalProperties.tag">{{t}}</li>
+                  </ul>
+                </div>
+                <p *ngIf="appData?.user?.profileDetails && !appData?.user?.profileDetails?.additionalProperties">-</p>
+              </div>
+            </div>
+            <div class="flex flex-row margin-top-m">
+              <div class="md:w-1/1">
+                <label class="view-text-label">Roles</label>
+                <div *ngIf="appData?.user?.organisations && appData?.user?.organisations[0]?.roles && appData?.user?.organisations[0]?.roles.length
+                 &&  appData?.user?.organisations[0]?.roles.length > 0">
+                  <ul class="roleslist">
+                    <li *ngFor="let t of appData?.user?.organisations[0]?.roles">{{t}}
+                    </li>
+                  </ul>
+                </div>
+                <p
+                  *ngIf="appData?.user?.organisations && appData?.user?.organisations[0].roles &&
+                    appData?.user?.organisations[0].roles.length && appData?.user?.organisations[0].roles.length === 0">
+                  -</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-body" *ngIf="!appData?.user">
+            <p class="text-center margin-top-m">No user data</p>
+          </div>
+
+          <div class="flex flex-row margin-top-l">
+            <button mat-raised-button type="submit" (click)="confirmApproval(approvalconfirm, panel, appData)"
+              class="margin-right-m btn-success btn-responsive successbtn"
+              [disabled]="appData.needApprovalList.length !== actionList.length">
+              <span class="text-white" i18n>
+                Update
+              </span>
+            </button>
+            <button mat-raised-button type="submit" (click)="onApprovalCancel(panel, appData)"
+              class="btn-success btn-responsive cancelbtn">
+              <span i18n>
+                Cancel
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div *ngIf="!approvalData">
+    <p class="margin-top-xl margin-bottom-xl">No approval requests</p>
+  </div>
+</div>
+
+<div class="flex flex-row justify-center" *ngIf="totalRecords">
+  <mat-paginator [pageSize]="pageSize" [length]="totalRecords" [pageSizeOptions]="[20,30,40]"
+    (page)="onChangePage($event)" showFirstLastButtons="true"></mat-paginator>
+</div>
+
+<ng-template #rejectDialog>
+  <form class="rejectdialog">
+    <p mat-dialog-title class="dialog-title">Reason for rejection</p>
+    <mat-dialog-content>
+      <mat-form-field class="w-full mt-5" appearance="outline">
+        <textarea matInput class="reason-text-area" [(ngModel)]="comment" name="reason"
+          placeholder="Type the description in fewer than 100 characters" i18n-placeholder resizable="none"
+          maxlength="100" (input)="validateText($event.target.value)"></textarea>
+        <mat-error [hidden]="false" i18n="Budget year Error|Explains name is required" i18n-aria-label
+          aria-label="Budget year Error|Explains name is required" *ngIf="htmlDetected">
+          Field is mandatory
+        </mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions class="flex flex-wrap justify-end">
+      <button mat-raised-button class="btn-success btn-responsive successbtn" [mat-dialog-close]="true"
+        [disabled]="!comment || htmlDetected">
+        <span class="text-white">Submit</span></button>
+      <button mat-raised-button class="btn-success btn-responsive cancelbtn" matDialogClose>Cancel</button>
+    </mat-dialog-actions>
+  </form>
+</ng-template>
+
+<ng-template #updaterejectDialog>
+  <form class="rejectdialog">
+    <p mat-dialog-title class="dialog-title">Reason for rejection
+      <mat-icon (click)="showedit()" *ngIf="!showeditText" class="float-right cursor-pointer">edit_square</mat-icon>
+    </p>
+    <mat-dialog-content>
+      <p class="margin-top-l margin-bottom-l" *ngIf="!showeditText">{{comment}}</p>
+      <mat-form-field class="w-full mt-5" appearance="outline" *ngIf="showeditText">
+        <textarea matInput class="reason-text-area" [(ngModel)]="comment" name="reason"
+          placeholder="Type the description in fewer than 100 characters" i18n-placeholder resizable="none"
+          maxlength="100" (input)="validateText($event.target.value)"></textarea>
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions class="flex flex-wrap justify-end" *ngIf="showeditText">
+      <button mat-raised-button class="btn-success btn-responsive successbtn" [disabled]="!comment || htmlDetected"
+        [mat-dialog-close]="true">
+        <span class="text-white">Update</span></button>
+      <button mat-raised-button class="btn-success btn-responsive cancelbtn" matDialogClose>Cancel</button>
+    </mat-dialog-actions>
+  </form>
+</ng-template>
+
+<ng-template #confirm>
+  <div class="confirm-dialog text-center padding-l">
+    <mat-icon class="infoIcon orangeicon-dialog">error_outline</mat-icon>
+    <div mat-dialog-content i18n class="margin-top-xs blue-text">
+      Are you sure you want to re-assign this user to your MDO?
+    </div>
+    <div class="mat-caption margin-top-xs">Note: The user will be shifted to non-verified tab</div>
+    <div mat-dialog-actions class="flex-center margin-top-s">
+      <button mat-raised-button type="submit" [mat-dialog-close]="false"
+        class="margin-right-m btn-success btn-responsive cancelbtn">
+        <span i18n>
+          No
+        </span>
+      </button>
+      <button mat-raised-button type="submit" [mat-dialog-close]="true" class="btn-success btn-responsive successbtn">
+        <span class="text-white" i18n>
+          Yes
+        </span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #updateconfirm>
+  <div class="confirm-dialog text-center padding-l">
+    <mat-icon class="infoIcon orangeicon-dialog">error_outline</mat-icon>
+    <div mat-dialog-content i18n class="margin-top-xs blue-text">
+      <span *ngIf="currentUserStatus === 'NOT-MY-USER'">You are about to remove this user from your
+        organization. The user will lose all learning access and be moved out of
+        your organization in 48 hours unless you reverse the action from the "Not My Users" tab.</span>
+      <span *ngIf="currentUserStatus !== 'NOT-MY-USER'">Are you sure you want to update?</span>
+    </div>
+    <div mat-dialog-actions class="flex-center margin-top-s">
+      <button mat-raised-button type="submit" [mat-dialog-close]="false"
+        class="margin-right-m  btn-success btn-responsive cancelbtn">
+        <span i18n>
+          No
+        </span>
+      </button>
+      <button mat-raised-button type="submit" [mat-dialog-close]="true" class="btn-success btn-responsive successbtn">
+        <span class="text-white" i18n>
+          Yes
+        </span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #approvalconfirm>
+  <div class="confirm-dialog text-center padding-l">
+    <mat-icon class="infoIcon orangeicon-dialog">error_outline</mat-icon>
+    <div mat-dialog-content i18n class="margin-top-xs blue-text">
+      Are you sure you want to save changes?
+    </div>
+    <div mat-dialog-actions class="flex-center margin-top-s">
+      <button mat-raised-button type="submit" [mat-dialog-close]="false"
+        class="margin-right-m  btn-success btn-responsive cancelbtn">
+        <span i18n>
+          No
+        </span>
+      </button>
+      <button mat-raised-button type="submit" [mat-dialog-close]="true" class="btn-success btn-responsive successbtn">
+        <span class="text-white" i18n>
+          Yes
+        </span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #notmyuserconfirm>
+  <div class="confirm-dialog text-center padding-l">
+    <mat-icon class="infoIcon orangeicon-dialog">error_outline</mat-icon>
+    <div mat-dialog-content i18n class="margin-top-xs blue-text">
+      Are you sure you want to cancel this transfer request?
+    </div>
+    <div mat-dialog-actions class="flex-center margin-top-s">
+      <button mat-raised-button type="submit" [mat-dialog-close]="false"
+        class="margin-right-m  btn-success btn-responsive cancelbtn">
+        <span i18n>
+          No
+        </span>
+      </button>
+      <button mat-raised-button type="submit" [mat-dialog-close]="true" class="btn-success btn-responsive successbtn">
+        <span class="text-white" i18n>
+          Yes
+        </span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #mentorconfirm>
+  <div class="confirm-dialog text-center padding-l">
+    <mat-icon class="infoIcon orangeicon-dialog">error_outline</mat-icon>
+    <div mat-dialog-content i18n class="margin-top-xs blue-text">
+      {{memberAlertMessage}}
+    </div>
+    <div mat-dialog-actions class="flex-center margin-top-s">
+      <button mat-raised-button type="submit" [mat-dialog-close]="false"
+        class="margin-right-m btn-success btn-responsive cancelbtn">
+        <span i18n>
+          No
+        </span>
+      </button>
+      <button mat-raised-button type="submit" [mat-dialog-close]="true" class="btn-success btn-responsive successbtn">
+        <span class="text-white" i18n>
+          Yes
+        </span>
+      </button>
+    </div>
+  </div>

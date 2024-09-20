@@ -1,0 +1,59 @@
+@import 'ws-common';
+@import 'ws-vars';
+@import 'ws-mixins';
+
+.grey-box {
+  background: #f0f3f4 !important;
+  display: inline-block;
+  width: 31%;
+  border-radius: 4px;
+  padding-bottom: 10px;
+
+  .title-div {
+    min-height: 35px;
+  }
+
+  span {
+    display: inline-block;
+  }
+
+  .sub-header {
+    font-size: 12px!important;
+  }
+
+  .mat-body-2 {
+    margin-bottom: 0 !important;
+    line-height: 1.9em !important;
+    .mat-icon {
+      color: RGBA(0, 0, 0, 0.4);
+      vertical-align: text-bottom;
+      font-size: 16px;
+      width: 15px;
+      height: 16px;
+      margin-right: 6px;
+    }
+  }
+
+  .request-box {
+    color: #D13924;
+    padding: 8px 14px;
+    //border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .extra-padding {
+    padding-top: 10px;
+  }
+
+  .circle {
+    width: 8px;
+    height: 8px;
+    background:red;
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    line-height:20px;
+    vertical-align:middle;
+    text-align:center;
+    color:white;
+    margin-bottom: 4px;
+  }
+}

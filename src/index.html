@@ -14,12 +14,47 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- <link id="id-app-fav-icon" rel="icon" type="image/png" /> -->
   <link id="id-app-x-icon" rel="icon" type="x-icon" />
-  <link id="id-app-fav-icon" rel="icon" type="image/png" href="favicon.png" />
+  <link id="id-app-fav-icon" rel="icon" type="image/x-icon" href="/assets/configurations/manifest/favicon.ico" />
+  <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico"> -->
+  <!-- <link id="id-app-fav-icon" rel="icon" type="image/png" href="favicon.png" /> -->
   <link id="id-app-webmanifest" rel="manifest" />
   <meta id="id-app-theme-color" name="theme-color" content="#000" />
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="/assets/env.js"></script>
+  <!-- <script src="/assets/env.js"></script> -->
+  <script rel="preload">
+    (async function getData() {
+      const url = "/assets/env.json"
+      try {
+        const response = await fetch(url)
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`)
+        }
+        const envJson = await response.json()
+        window["env"] = window["env"] || {}
+        // Environment variables
+        window["env"]["sitePath"] = envJson.sitePath
+        window["env"]["name"] = envJson.name
+        window["env"]["debug"] = envJson.debug
+        window["env"]["karmYogiPath"] = envJson.karmYogiPath
+        window["env"]["cbpPath"] = envJson.cbpPath
+        window["env"]["contentHost"] = envJson.contentHost
+        window["env"]["mdoPath"] = envJson.mdoPath
+        window["env"]["azureBucket"] = envJson.azureBucket
+        window["env"]["contentBucket"] = envJson.contentBucket
+        window["env"]["teamsUrl"] = envJson.teamsUrl
+        window["env"]["portalRoles"] = envJson.portalRoles
+        window["env"]["resendOTPTIme"] = envJson.resendOTPTIme
+        window["env"]["domainName"] = envJson.domainName
+        window["env"]["userBucket"] = envJson.userBucket
+        window["env"]["KCMframeworkName"] = envJson.KCMframeworkName
+        window["env"]["connectionType"] = envJson.connectionType
+        window["env"]["ODCSMasterFramework"] = envJson.ODCSMasterFramework
+      } catch (error) {
+        console.error("Error in fetching env json")
+      }
+    })(this);
+  </script>
 </head>
 
 <body class="mat-app-background mat-body mat-typography custom-scroll">
@@ -79,11 +114,11 @@
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 <script>
-  var MATCHING_IE = navigator.userAgent.match(/(msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+  var MATCHING_IE = navigator.userAgent.match(/(msie|trident(?=\/))\/?\s*(\d+)/i) || []
   if (/trident/i.test(MATCHING_IE[1])) {
     // tslint:disable-next-line: max-line-length
     document.body.innerHTML =
-      '<h1 style="margin-top: 50px; text-align: center">IE 11 and lesser version browsers are not supported.</h1><h3 style="margin-top: 16px; text-align: center">For best experience, use Google Chrome</h3>';
+      '<h1 style="margin-top: 50px; text-align: center">IE 11 and lesser version browsers are not supported.</h1><h3 style="margin-top: 16px; text-align: center">For best experience, use Google Chrome</h3>'
   }
 
 </script>

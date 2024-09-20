@@ -14,11 +14,15 @@
         <div class="flex flex-wrap mobile-break">
           <div class="w-full profile-cols-full bg-grey" *ngIf="needApprovalList.length>0">
             <ng-container *ngFor="let field of needApprovalList">
-              <div class="appr-label">
+              <div class="appr-label" *ngIf="field.fieldKey !== 'verifiedKarmayogi'">
                 <label class="appr-text-label">{{field.label}}</label>
               </div>
-              <div>
-                <input type="text" class="appr-text-field" [value]="field.value">
+              <div [class.mt-4]="field.fieldKey === 'verifiedKarmayogi'">
+                <span [hidden]="field.fieldKey === 'verifiedKarmayogi'">
+                  <input type="text" class="appr-text-field" [value]="field.value">
+                </span>
+                <label class="appr-text-label mt-2" *ngIf="field.fieldKey === 'verifiedKarmayogi'">{{field.label}}
+                </label>
                 <button mat-icon-button aria-label="Reject" id="reject" (click)="onClickHandleWorkflow(field,'REJECT')">
                   <mat-icon class="reject">close</mat-icon>
                 </button>
@@ -28,8 +32,19 @@
                 </button>
               </div>
             </ng-container>
+            <div style="margin-top: 17px; margin-left: 155px;" *ngIf="needApprovalList.length > 1">
+              <button mat-icon-button aria-label="Reject" id="reject"
+                (click)="onClickAllHandleWorkflow(needApprovalList,'REJECT')">
+                <span class="mat-button-wrapper" style="color: white; padding:13px;"> Reject All </span>
+              </button>
+              <button mat-icon-button aria-label="Accept" id="accept" class="accept-btn"
+                (click)="onClickAllHandleWorkflow(needApprovalList,'APPROVE')">
+                <span class="mat-button-wrapper" style="color:white; padding:13px;"> Approve All </span>
+              </button>
+            </div>
           </div>
-          <div class="w-full profile-cols-full bg-grey" *ngIf="needApprovalList.length <= 0">
+          <!--needApprovalList.length <= 0-->
+          <div class="w-full profile-cols-full bg-grey" *ngIf="false">
             <ng-container>
               <div class="appr-label" *ngIf="changeLog">
                 <label class="field-key">{{changeLog.fieldKey}}</label>

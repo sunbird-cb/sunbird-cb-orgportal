@@ -1,0 +1,130 @@
+<div class="flex flex-4 flex-column main-flex-box">
+  <mat-card class="no-border">
+    <!-- <mat-card-header class="flex-custom-m">
+      <div class="flex-1" role="link" tabindex="0">
+        <div class="flex flex-1">
+          <mat-card-title class="flex-4 mobile-margin text-capitalize">
+            <span class="h-600-s-20-m color-87">Users</span>
+          </mat-card-title>
+        </div>
+      </div>
+    </mat-card-header> -->
+    <mat-card-title class="flex-4 mobile-margin text-capitalize margin-bottom-l">
+      <span class="h-600-s-20-m color-87">Mentor management</span>
+    </mat-card-title>
+    <mat-card class="mb-8">
+      <mat-card-content class="flex gap-10">
+        <div class="section-1">
+          <div class="flex-4 mobile-margin text-capitalize mat-h2">Note:</div>
+          <ng-container *ngFor="let note of reportsNoteList">
+            <div class="flex gap-4 mb-4">
+              <div>
+                <mat-icon class="infoIcon">error_outline</mat-icon>
+              </div>
+              <div [innerHTML]="sanitizeHtml(note)"></div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="reportsDemo flex justify-end section-2">
+          <div class="reportsDemoVideo flex flex-column flex-middle justify-center margin-top-m"
+            (click)="openVideoPopup()">
+            <mat-icon class="video_icon mb-2">play_circle</mat-icon>
+            <div>
+              Watch how it works
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card-content>
+      <div class="flex flex-1 flex-column margin-fix">
+        <div class="flex flex-1 filter max-height-60">
+          <!-- <a routerLink="/app/home/users/active" routerLinkActive="router-link-active" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'active',
+              'ws-mat-accent-border font-medium':currentFilter !== 'active'}" mat-button
+            (click)="filter('active'); tabTelemetry('active', 0)" role="button">Registered</a>
+          <a routerLink="/app/home/users/inactive" routerLinkActive="router-link-active" class="filter-option"
+            [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'inactive',
+                          'ws-mat-accent-border font-medium':currentFilter !== 'inactive'}" mat-button
+            (click)="filter('inactive'); tabTelemetry('inactive', 1)" role="button">Inactive</a>
+          <a routerLink="/app/home/users/upload" routerLinkActive="router-link-active" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'upload',
+                                      'ws-mat-accent-border font-medium':currentFilter !== 'upload'}" mat-button
+            (click)="filter('upload'); tabTelemetry('upload', 2)" role="button">File uploads</a> -->
+
+          <!-- <a routerLink="/app/home/mentor-manage/allusers" routerLinkActive="router-link-active" class="filter-option"
+            [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'allusers','ws-mat-accent-border font-medium':currentFilter !== 'allusers'}"
+            mat-button (click)="filter('allusers'); tabTelemetry('allusers', 0)" role="button">All users
+            ({{activeUsersDataCount}})</a> -->
+
+          <a routerLink="/app/home/mentor-manage/verified" routerLinkActive="router-link-active" class="filter-option"
+            [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'verified','ws-mat-accent-border font-medium':currentFilter !== 'verified'}"
+            mat-button (click)="filter('verified'); tabTelemetry('verified', 0)" role="button">All Verified <span
+              *ngIf="verifiedUsersDataCount === 1 || verifiedUsersDataCount === 0">User</span> <span
+              *ngIf="verifiedUsersDataCount > 1">Users</span>
+            ({{verifiedUsersDataCount}})</a>
+          <a routerLink="/app/home/mentor-manage/mentor" routerLinkActive="router-link-active" class="filter-option"
+            [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'mentor','ws-mat-accent-border font-medium':currentFilter !== 'verified'}"
+            mat-button (click)="filter('mentor'); tabTelemetry('mentor', 0)" role="button">Assigned <span
+              *ngIf="mentorUsersDataCount === 1 || mentorUsersDataCount === 0">Mentor</span> <span
+              *ngIf="mentorUsersDataCount > 1">Mentors</span>
+            ({{mentorUsersDataCount}})</a>
+          <!-- <a routerLink="/app/home/mentor-manage/non-mentor" routerLinkActive="router-link-active" class="filter-option"
+            [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'non-mentor','ws-mat-accent-border font-medium':currentFilter !== 'verified'}"
+            mat-button (click)="filter('verified'); tabTelemetry('non-mentor', 0)" role="button">Non-Mentor
+            ({{verifiedUsersDataCount}})</a> -->
+
+
+        </div>
+      </div>
+      <!-- <ws-widget-org-user-table-v2 [userId]="currentUser" [tableData]="tabledata" [data]="dataForTable"
+        [isUpload]=false [isCreate]=true (eOnButtonClick)="clickHandler($event)" (actionsClick)="menuActions($event)"
+        (searchByEnterKey)="onEnterkySearch($event)" (pageChangeClick)="onPaginateChange($event)"
+        [showEditOnCondition]=true [totalRecords]="userDataTotalCount" [tabChangeIndex]="pageIndex">
+      </ws-widget-org-user-table-v2> -->
+      <!--
+      <ng-container *ngIf="currentFilter === 'allusers'">
+        <div class="searchfilter" *ngIf="activeUsersData">
+          <ws-app-searchuser (handleApiData)="onEnterkySearch($event)" [showApproveALL]="showApproveALL"
+            [currentFilter]="currentFilter" [filterFacetsData]="filterFacets"></ws-app-searchuser>
+        </div>
+        <ws-widget-user-card [userId]="currentUser" [currentFilter]="currentFilter" [usersData]="activeUsersData"
+          [totalRecords]="activeUsersDataCount" [tabChangeIndex]="pageIndex" [isApprovals]="false"
+          (paginationData)="onPaginateChange($event)" (updateList)="getAllUsers('')"></ws-widget-user-card>
+      </ng-container> -->
+
+      <ng-container *ngIf="currentFilter === 'verified'">
+        <div class="searchfilter" *ngIf="verifiedUsersData">
+          <ws-app-searchuser (handleApiData)="onEnterkySearch($event)" [showApproveALL]="showApproveALL"
+            [currentFilter]="currentFilter" [filterFacetsData]="filterFacets" [forMentor]="true"></ws-app-searchuser>
+        </div>
+
+        <ws-widget-user-card [userId]="currentUser" [currentFilter]="currentFilter" [usersData]="verifiedUsersData"
+          [totalRecords]="verifiedUsersDataCount" [tabChangeIndex]="pageIndex" [forMentor]="true"
+          (paginationData)="onPaginateChange($event)" (updateList)="getAllVerifiedUsers('')"
+          [activeTab]="currentFilter"></ws-widget-user-card>
+      </ng-container>
+      <ng-container *ngIf="currentFilter === 'mentor'">
+        <div class="searchfilter" *ngIf="mentorUsersData">
+          <ws-app-searchuser (handleApiData)="onEnterkySearch($event)" [showApproveALL]="showApproveALL"
+            [currentFilter]="currentFilter" [filterFacetsData]="filterFacets" [forMentor]="true"></ws-app-searchuser>
+        </div>
+
+        <ws-widget-user-card [userId]="currentUser" [currentFilter]="currentFilter" [usersData]="mentorUsersData"
+          [totalRecords]="mentorUsersDataCount" [tabChangeIndex]="pageIndex" [forMentor]="true"
+          (paginationData)="onPaginateChange($event)" (updateList)="getMentorUsers('')"
+          [activeTab]="currentFilter"></ws-widget-user-card>
+      </ng-container>
+      <!-- <ng-container *ngIf="currentFilter === 'non-mentor'">
+        <div class="searchfilter" *ngIf="verifiedUsersData">
+          <ws-app-searchuser (handleApiData)="onEnterkySearch($event)" [showApproveALL]="showApproveALL"
+            [currentFilter]="currentFilter" [filterFacetsData]="filterFacets"></ws-app-searchuser>
+        </div>
+
+        <ws-widget-user-card [userId]="currentUser" [currentFilter]="currentFilter" [usersData]="verifiedUsersData"
+          [totalRecords]="verifiedUsersDataCount" [tabChangeIndex]="pageIndex" [forMentor]="true"
+          (paginationData)="onPaginateChange($event)" (updateList)="getVUsers('')"></ws-widget-user-card>
+      </ng-container> -->
+
+
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,163 @@
+.backicon {
+  font-size: 20px;
+  width: 16px;
+  height: 20px;
+  color: #797979;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.header-text {
+  margin-bottom: 0px !important;
+}
+
+.clearAll {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1B4CA1 !important;
+}
+
+.cancel-btn {
+  border: 1px solid #1B4CA1;
+  color: #1B4CA1 !important;
+  background-color: #ffffff;
+  height: 40px;
+  width: 80px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.importBtn {
+  background: #1b4ca1 !important;
+  color: #ffffff !important;
+  font-family: "Lato";
+  height: 40px;
+  font-size: 14px;
+  font-weight: 700;
+  width: 220px;
+}
+
+.disabl-btn {
+  background-color: #999 !important;
+  pointer-events: none;
+  font-family: "Lato";
+  height: 40px;
+  font-size: 14px;
+  font-weight: 700;
+  width: 220px;
+}
+
+
+.search {
+
+  .search-icon {
+    position: absolute;
+    top: 14px;
+    font-size: 22px;
+    left: 10px;
+  }
+
+  .rsearch {
+    display: flex;
+    position: relative;
+    flex: 1 1 auto;
+  }
+
+  .sinput {
+    width: 700px;
+    height: 30px;
+    max-width: 80vw;
+    border-radius: 4px;
+    border: 1px solid #d5d0d0;
+    padding: 9px 9px 9px 40px;
+    margin-top: 0;
+    font: normal 14px Lato;
+    font-weight: 400;
+  }
+}
+
+.selected-designation-label {
+    margin: 10px 0px;
+    font-size: 14px;
+    color: rgb(0, 0, 0, 0.87);
+    font-weight: 400;
+    letter-spacing: 0.25px;
+}
+
+.chips {
+  border-radius: 63px;
+  width: 178px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  align-items: center;
+
+  span {
+    font-size: 14px;
+    letter-spacing: 0.25px;
+  }
+
+  .cross-icon {
+    vertical-align: middle;
+    margin-left: 0;
+    margin-right: 16px;
+    margin-top: 6px;
+  }
+}
+
+.chips-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 16px;
+  width: 131px;
+}
+
+.select-more-link {
+  color: #1b4ca1 !important;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  font-family: 'Lato';
+}
+
+.master-designations {
+
+  .designations-card-container {
+    .active-card {
+      border: 1px solid #1B4CA1 !important;
+      color: #1B4CA1;
+    }
+
+    .custom-user-card {
+      width: 360px;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      border-radius: 4px;
+      height: 82px;
+    }
+
+    .disableCard {
+      background-color: #d6d6d6;
+      pointer-events: none;
+    }
+
+    .custom-user-desc {
+      display: flex;
+      flex-direction: column;
+      padding: 0 16px;
+      width: 230px;
+      white-space: nowrap;
+      p {
+          padding: 0;
+          margin: 0;
+          width: 190px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+    }
+
+    .check-action {
+      margin-right: 16px;
+    }
+  }
+}

@@ -1,0 +1,128 @@
+:host ::ng-deep .designationTable {
+   .mat-column-CBP-Menu {
+    max-width: 100px;
+   }
+}
+
+.videoDemo {
+  .videoDemoVideo {
+    width: 173px;
+    height: 102px;
+    border-radius: 5px;
+    background-color: #FDEAD5;
+    font-weight: 600;
+    pointer-events: all;
+    cursor: pointer;
+
+    .video_icon {
+      font-size: 32px;
+    }
+  }
+}
+
+.importBtn {
+  background: #1b4ca1 !important;
+  color: #ffffff !important;
+  font-family: "Lato";
+  height: 40px;
+  font-size: 14px;
+  font-weight: 700;
+  width: 220px;
+}
+
+.font-bold-imp{
+  font-weight: 700 !important;
+}
+
+.designationsDemo {
+    .designationsDemoVideo {
+      width: 290px;
+      height: 163px;
+      border-radius: 5px;
+      background-color: #FDEAD5;
+      font-weight: 600;
+      pointer-events: all;
+      cursor: pointer;
+
+      .video_icon {
+        font-size: 32px;
+      }
+    }
+  }
+
+.organisation-lable {
+  font-family: 'lato';
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.organisation {
+  width: 300px;
+}
+
+.btn-upload {
+  background: #1b4ca1 !important;
+  color: white !important;
+  font-family: 'Lato';
+  font-weight: 700;
+  font-size: 14px;
+  height: 40px;
+}
+
+.btn-create-designation {
+  width: auto;
+  border: 1px solid #0075B7;
+  border-radius: 4px;
+  color: #0075B7 !important;
+  height: 40px;
+}
+
+.search {
+
+  .search-icon {
+    position: absolute;
+    top: 9px;
+    font-size: 20px;
+    left: 10px;
+  }
+
+  .rsearch {
+    display: flex;
+    position: relative;
+    flex: 1 1 auto;
+  }
+
+  .sinput {
+    width: 315px;
+    border-radius: 4px;
+    border: 1px solid #d5d0d0;
+    padding: 9px 9px 9px 35px;
+    margin-top: 0;
+    font: normal 14px Lato;
+    font-weight: 400;
+  }
+}
+
+.empty-desigantions-img {
+  height: 90px;
+  width: 170px;
+}
+
+.emptyDesignations{
+  height: calc(100vh - 600px);
+}
+
+.empty-desigantions-text {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: Lato;
+}
+
+.download-icon {
+  margin-right: 5px;
+}
+
+.designations-loader {
+  height: calc(100vh - 600px);
+}

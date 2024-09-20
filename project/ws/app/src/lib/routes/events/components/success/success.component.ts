@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog'
 
 export interface IParticipantElement {
   firstname: string,
-  lastname: string,
+  // lastname: string,
   email: number
 }
 

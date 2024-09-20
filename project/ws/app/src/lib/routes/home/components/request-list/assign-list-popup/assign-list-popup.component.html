@@ -1,0 +1,64 @@
+<div class="main-container">
+  <div class="full-table-container" *ngIf="providerList?.length > 0">
+    <form [formGroup]="requestForm">
+        <div class="header-section">
+            <div class="title">
+                <h2 class="titleText">{{assignText}}</h2>
+            </div>
+            <div class="actions">
+                <button mat-button type="button" class="search-btn" [ngClass]="{'disableBtn': !requestForm.valid}"  (click)="onSubmitAssign()"  [disabled]="!requestForm.valid" >{{submitAssign}}</button>
+
+                <button mat-button class="cancel" (click)="cancel()">
+                    <span>Cancel</span>
+                </button>
+
+            </div>
+           
+          </div>
+      <mat-radio-group formControlName="assignee">
+        <div class="nav-container">
+          <div class="sidenav-content">
+            <div class="table-class">
+              <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef class="row-heading radio-width"></th>
+                  <td mat-cell class="title-class" *matCellDef="let provider">
+                    <mat-radio-button [value]="provider"></mat-radio-button>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="providerName">
+                  <th mat-header-cell *matHeaderCellDef class="row-heading">Provider Name</th>
+                  <td mat-cell class="title-class" *matCellDef="let provider">{{ provider?.orgName ? provider?.orgName  : '_' }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="details">
+                  <th mat-header-cell *matHeaderCellDef class="row-heading">Details</th>
+                  <td mat-cell class="title-class" *matCellDef="let provider">{{ provider?.description ? provider?.description: '_' }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="eta">
+                  <th mat-header-cell *matHeaderCellDef class="row-heading">ETA</th>
+                  <td mat-cell class="title-class" *matCellDef="let provider">{{ provider?.turnAroundTime ? provider?.turnAroundTime : '_' }}</td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-row-data"></tr>
+                <ng-container *ngIf="data?.assignedProvider">
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{'row-bg':row === this.providerList[0]}"></tr>
+
+                </ng-container>
+                <ng-container *ngIf="!data?.assignedProvider">
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                </ng-container>
+              </table>
+              <mat-paginator [pageSize]="pageSize" [length]="this.providerCount" [pageSizeOptions]="[5,10,20]"
+              (page)="onChangePage($event)"></mat-paginator>
+  
+            </div>
+          </div>
+        </div>
+      </mat-radio-group>
+    </form>
+  </div>
+</div>

@@ -26,7 +26,7 @@ const routes: Routes = [
           pageType: 'feature',
           pageKey: 'wat-comp-defaults',
           pageId: 'create/:workorder',
-          module: 'workallocation',
+          module: 'Work Allocation',
         },
 
         resolve: {
@@ -40,7 +40,7 @@ const routes: Routes = [
           pageType: 'feature',
           pageKey: 'wat-comp-defaults',
           pageId: 'update',
-          module: 'workallocation',
+          module: 'Work Allocation',
         },
         resolve: {
           pageData: PageResolve,
@@ -52,7 +52,7 @@ const routes: Routes = [
         component: DraftAllocationsComponent,
         data: {
           pageId: 'drafts/:workorder',
-          module: 'workallocation',
+          module: 'Work Allocation',
         },
       },
       {
@@ -60,14 +60,14 @@ const routes: Routes = [
         component: PublishedAllocationsComponent,
         data: {
           pageId: 'published/:workorder',
-          module: 'workallocation',
+          module: 'Work Allocation',
         },
       },
       {
         path: ':userId',
         data: {
           pageId: ':userId',
-          module: 'workallocation',
+          module: 'Work Allocation',
         },
         // component: UpdateWorkallocationComponent,
       }],

@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   department: any = {}
   departmentName = ''
   subscription: Subscription
+  containerCustomCls = false
 
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
@@ -74,6 +75,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
+        const urlData = _.get(this.activeRoute, 'snapshot._routerState.url')
+        this.containerCustomCls = urlData && urlData.includes('odcs-mapping') ? true : false
+
+        if (this.containerCustomCls) {
+          document.getElementsByTagName('body')[0].classList.add('custom-height-odcs')
+        } else {
+          document.getElementsByTagName('body')[0].classList.remove('custom-height-odcs')
+        }
         this.bindUrl(event.urlAfterRedirects.replace('/app/home/', ''))
         // this.widgetData = this.activeRoute.snapshot.data &&
         //   this.activeRoute.snapshot.data.pageData.data.menus || []
@@ -81,7 +90,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         // if (_.get(this.activeRoute.snapshot, 'data.department.data')) {
         const fullProfile = _.get(this.activeRoute.snapshot, 'data.configService')
         this.department = fullProfile.unMappedUser.rootOrgId
-        this.departmentName = fullProfile ? fullProfile.unMappedUser.channel : ''
+        this.departmentName = fullProfile ? fullProfile.unMappedUser.rootOrg.orgName : ''
         if (fullProfile) {
           const leftData = this.activeRoute.snapshot.data.pageData.data.menus
           _.set(leftData, 'widgetData.logo', true)
